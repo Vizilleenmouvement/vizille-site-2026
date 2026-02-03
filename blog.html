@@ -808,23 +808,6 @@
             </nav>
         </div>
     </header>
-<!-- Bandeau actualités -->
-<link rel="stylesheet" href="css/news-ticker.css">
-<div class="news-ticker" id="newsTicker">
-    <div class="news-ticker-track">
-        <span class="news-ticker-item">📢 Nouveau : Consultez notre galerie Médias avec photos et vidéos de la campagne !</span>
-        <span class="news-ticker-item">📅 Prochaine réunion publique : consultez les Actualités</span>
-        <span class="news-ticker-item">✨ Site mis à jour le 3 février 2026</span>
-        <span class="news-ticker-item">🗳️ Élections municipales 2026 - Ensemble pour Vizille !</span>
-        <span class="news-ticker-item">📢 Nouveau : Consultez notre galerie Médias avec photos et vidéos de la campagne !</span>
-        <span class="news-ticker-item">📅 Prochaine réunion publique : consultez les Actualités</span>
-        <span class="news-ticker-item">✨ Site mis à jour le 3 février 2026</span>
-        <span class="news-ticker-item">🗳️ Élections municipales 2026 - Ensemble pour Vizille !</span>
-    </div>
-    <button class="news-ticker-close" onclick="document.getElementById('newsTicker').style.display='none';localStorage.setItem('tickerClosed',Date.now())">✕</button>
-</div>
-<script>if(localStorage.getItem('tickerClosed')&&(Date.now()-localStorage.getItem('tickerClosed'))<86400000)document.getElementById('newsTicker').style.display='none';</script>
-<!-- Fin bandeau -->
     <script src="js/menu-mobile.js"></script>
 
     <section class="hero-unified">
