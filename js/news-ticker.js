@@ -1,5 +1,6 @@
-// Bandeau d'actualités défilant
+// Bandeau d'actualités défilant v2
 (function() {
+    console.log('News ticker script loaded');
     // Configuration des messages - MODIFIEZ ICI
     const NEWS_ITEMS = [
         "📢 Nouveau : Consultez notre galerie Médias avec photos et vidéos de la campagne !",
