@@ -1049,7 +1049,7 @@
             padding: 1rem;
         }
         
-        .modal-overlay.active { display: flex; }
+        .modal-overlay.active { display: flex !important; visibility: visible !important; opacity: 1 !important; }
         
         .modal {
             background: white;
@@ -1114,8 +1114,12 @@
     <header class="header">
         <h1>⚙️ Administration - Vizille en Mouvement</h1>
         <div class="header-actions">
+            <button id="mode-toggle" class="btn btn-sm" style="background: #17a2b8; color: white;" onclick="toggleLocalMode()">
+                <span id="mode-icon">🌐</span> <span id="mode-text">GitHub</span>
+            </button>
             <input type="password" class="token-input" id="github-token" placeholder="🔐 Token GitHub" onchange="saveToken()">
             <button class="btn btn-sm" style="background: rgba(255,255,255,0.2);" onclick="toggleToken()">👁️</button>
+            <button id="download-btn" class="btn btn-sm" style="background: #28a745; color: white; display: none;" onclick="downloadAllData()">💾 Télécharger JSON</button>
             <a href="guide.html" target="_blank" class="btn btn-sm" style="background: #28a745; color: white;">📖 Guide</a>
             <a href="https://Vizilleenmouvement.github.io/Vizille-en-mouvement/" target="_blank" class="btn btn-sm" style="background: var(--or); color: var(--bleu);">🌐 Voir le site</a>
         </div>
@@ -1139,6 +1143,7 @@
         <button class="nav-tab" data-tab="candidats">👥 Candidats</button>
         <button class="nav-tab" data-tab="faq">🤝 Construisons ensemble</button>
         <button class="nav-tab" data-tab="articles">📰 Articles</button>
+        <button class="nav-tab" data-tab="medias">🖼️ Médias</button>
         <button class="nav-tab" data-tab="communication">📢 Communication</button>
         <button class="nav-tab" data-tab="config">⚙️ Paramètres</button>
     </nav>
@@ -1291,6 +1296,7 @@
                     <div class="publish-bar">
                         <span class="status saved" id="status-projets">✓ À jour</span>
                         <button class="btn-publish" onclick="publish('projets')">🚀 Publier</button>
+                        <button class="btn-publish local-only" style="background: #fd7e14; display: none;" onclick="downloadSingleFile('projets.json', 'projets')">🚀 Publier</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -1454,23 +1460,44 @@
                             <button class="theme-btn active" data-theme="" onclick="filterActions('')">
                                 📋 Tous (<span id="count-all">0</span>)
                             </button>
-                            <button class="theme-btn" data-theme="Urbanisme" onclick="filterActions('Urbanisme')">
-                                🏗️ Urbanisme (<span id="count-Urbanisme">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Santé" onclick="filterActions('Santé')">
-                                🏥 Santé (<span id="count-Santé">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Environnement" onclick="filterActions('Environnement')">
-                                🌱 Environnement (<span id="count-Environnement">0</span>)
+                            <button class="theme-btn" data-theme="Administration" onclick="filterActions('Administration')">
+                                📋 Administration (<span id="count-Administration">0</span>)
                             </button>
                             <button class="theme-btn" data-theme="Culture" onclick="filterActions('Culture')">
                                 🎭 Culture (<span id="count-Culture">0</span>)
                             </button>
-                            <button class="theme-btn" data-theme="Patrimoine" onclick="filterActions('Patrimoine')">
-                                🏛️ Patrimoine (<span id="count-Patrimoine">0</span>)
+                            <button class="theme-btn" data-theme="Économie" onclick="filterActions('Économie')">
+                                💼 Économie (<span id="count-Économie">0</span>)
                             </button>
                             <button class="theme-btn" data-theme="Enfance" onclick="filterActions('Enfance')">
                                 👶 Enfance (<span id="count-Enfance">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="Environnement" onclick="filterActions('Environnement')">
+                                🌱 Environnement (<span id="count-Environnement">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="Finance" onclick="filterActions('Finance')">
+                                💰 Finance (<span id="count-Finance">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="Intercommunalité" onclick="filterActions('Intercommunalité')">
+                                🏛️ Intercommunalité (<span id="count-Intercommunalité">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="Jumelages" onclick="filterActions('Jumelages')">
+                                🌍 Jumelages (<span id="count-Jumelages">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="Mobilités" onclick="filterActions('Mobilités')">
+                                🚲 Mobilités (<span id="count-Mobilités">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="Patrimoine" onclick="filterActions('Patrimoine')">
+                                🏛️ Patrimoine (<span id="count-Patrimoine">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="Personnel" onclick="filterActions('Personnel')">
+                                👥 Personnel (<span id="count-Personnel">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="Plan Climat" onclick="filterActions('Plan Climat')">
+                                🌍 Plan Climat (<span id="count-Plan Climat">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="Santé" onclick="filterActions('Santé')">
+                                🏥 Santé (<span id="count-Santé">0</span>)
                             </button>
                             <button class="theme-btn" data-theme="Solidarité" onclick="filterActions('Solidarité')">
                                 🤝 Solidarité (<span id="count-Solidarité">0</span>)
@@ -1478,35 +1505,14 @@
                             <button class="theme-btn" data-theme="Sport" onclick="filterActions('Sport')">
                                 ⚽ Sport (<span id="count-Sport">0</span>)
                             </button>
-                            <button class="theme-btn" data-theme="Économie" onclick="filterActions('Économie')">
-                                💼 Économie (<span id="count-Économie">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Intercommunalité" onclick="filterActions('Intercommunalité')">
-                                🏛️ Intercommunalité (<span id="count-Intercommunalité">0</span>)
-                            </button>
                             <button class="theme-btn" data-theme="Tranquillité publique" onclick="filterActions('Tranquillité publique')">
                                 🛡️ Tranquillité (<span id="count-Tranquillité publique">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Mobilités" onclick="filterActions('Mobilités')">
-                                🚲 Mobilités (<span id="count-Mobilités">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Finance" onclick="filterActions('Finance')">
-                                💰 Finance (<span id="count-Finance">0</span>)
                             </button>
                             <button class="theme-btn" data-theme="Travaux" onclick="filterActions('Travaux')">
                                 🏗️ Travaux (<span id="count-Travaux">0</span>)
                             </button>
-                            <button class="theme-btn" data-theme="Administration" onclick="filterActions('Administration')">
-                                📋 Administration (<span id="count-Administration">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Jumelages" onclick="filterActions('Jumelages')">
-                                🌍 Jumelages (<span id="count-Jumelages">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Personnel" onclick="filterActions('Personnel')">
-                                👥 Personnel (<span id="count-Personnel">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Plan Climat" onclick="filterActions('Plan Climat')">
-                                🌍 Plan Climat (<span id="count-Plan Climat">0</span>)
+                            <button class="theme-btn" data-theme="Urbanisme" onclick="filterActions('Urbanisme')">
+                                🏗️ Urbanisme (<span id="count-Urbanisme">0</span>)
                             </button>
                         </div>
                     </div>
@@ -1531,6 +1537,7 @@
                     <div class="publish-bar">
                         <span class="status saved" id="status-candidats">✓ À jour</span>
                         <button class="btn-publish" onclick="publish('candidats')">🚀 Publier</button>
+                        <button class="btn-publish local-only" style="background: #fd7e14; display: none;" onclick="downloadSingleFile('candidats.json', 'candidats')">🚀 Publier</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -1555,6 +1562,7 @@
                     <div class="publish-bar">
                         <span class="status saved" id="status-faq">✓ À jour</span>
                         <button class="btn-publish" onclick="publish('faq')">🚀 Publier</button>
+                        <button class="btn-publish local-only" style="background: #fd7e14; display: none;" onclick="downloadSingleFile('faq.json', 'faq')">🚀 Publier</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -1578,6 +1586,7 @@
                     <div class="publish-bar">
                         <span class="status saved" id="status-articles">✓ À jour</span>
                         <button class="btn-publish" onclick="publish('articles')">🚀 Publier</button>
+                        <button class="btn-publish local-only" style="background: #fd7e14; display: none;" onclick="downloadSingleFile('articles.json', 'articles')">🚀 Publier</button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -1623,6 +1632,98 @@
                             <input type="text" id="search-articles" placeholder="🔍 Rechercher..." style="padding: 0.5rem 1rem; border: 2px solid var(--gris-border); border-radius: 8px; width: 200px;" oninput="renderArticles()">
                         </div>
                         <div id="articles-list" class="cards-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: MEDIAS -->
+        <section class="tab-content" id="tab-medias">
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%);">
+                    <h2>🖼️ Gestion des Médias</h2>
+                    <div class="publish-bar">
+                        <span class="status saved" id="status-medias">✓ À jour</span>
+                        <button class="btn-publish" onclick="publish('medias')">🚀 Publier</button>
+                        <button class="btn-publish local-only" style="background: #fd7e14; display: none;" onclick="downloadSingleFile('medias.json', 'medias')">🚀 Publier</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Zone média le plus récent -->
+                    <div id="latest-media-zone" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; display: none;">
+                        <h3 style="margin: 0 0 1rem; color: var(--bleu); font-size: 1.1rem;">✨ Dernier média ajouté</h3>
+                        <div id="latest-media-content"></div>
+                    </div>
+
+                    <!-- Bouton collecte automatique -->
+                    <div style="background: #e8f4fc; border: 1px solid #3498db; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
+                        <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                            <span style="font-size: 1.5rem;">📥</span>
+                            <div style="flex: 1;">
+                                <strong style="color: var(--bleu);">Importer depuis les Actualités</strong>
+                                <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: #666;">Récupère les images et vidéos des articles (événements, rencontres, communiqués...)</p>
+                                <p style="margin: 0.25rem 0 0; font-size: 0.8rem; color: #888; font-style: italic;">Les médias des Projets ne sont pas inclus (ajout manuel uniquement)</p>
+                            </div>
+                            <button class="btn btn-primary" onclick="collectAllMedia()">📥 Importer</button>
+                        </div>
+                    </div>
+
+                    <!-- Sous-onglets médias -->
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                        <button class="theme-btn active" data-media-tab="photos" onclick="switchMediaTab('photos')">📷 Photos</button>
+                        <button class="theme-btn" data-media-tab="presse" onclick="switchMediaTab('presse')">📰 Presse</button>
+                        <button class="theme-btn" data-media-tab="videos" onclick="switchMediaTab('videos')">🎬 Vidéos</button>
+                        <button class="theme-btn" data-media-tab="bobines" onclick="switchMediaTab('bobines')">🎞️ Bobines</button>
+                        <button class="theme-btn" data-media-tab="documents" onclick="switchMediaTab('documents')">📄 Documents</button>
+                    </div>
+
+                    <!-- PHOTOS -->
+                    <div class="media-tab-content active" id="media-photos">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center;">
+                            <button class="btn btn-primary" onclick="openAddPhoto()">+ Ajouter une photo</button>
+                            <span style="color: var(--gris-texte);">📷 <span id="photos-count">0</span> photos</span>
+                        </div>
+                        <div id="photos-list" class="cards-grid"></div>
+                    </div>
+
+                    <!-- PRESSE -->
+                    <div class="media-tab-content" id="media-presse" style="display: none;">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center;">
+                            <button class="btn btn-primary" onclick="openAddPresse()">+ Ajouter un article de presse</button>
+                            <span style="color: var(--gris-texte);">📰 <span id="presse-count">0</span> articles</span>
+                        </div>
+                        <div id="presse-list"></div>
+                    </div>
+
+                    <!-- VIDEOS -->
+                    <div class="media-tab-content" id="media-videos" style="display: none;">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center;">
+                            <button class="btn btn-primary" onclick="openAddVideo()">+ Ajouter une vidéo</button>
+                            <span style="color: var(--gris-texte);">🎬 <span id="videos-count">0</span> vidéos</span>
+                        </div>
+                        <div id="videos-list" class="cards-grid"></div>
+                    </div>
+
+                    <!-- BOBINES (vidéos thématiques courtes) -->
+                    <div class="media-tab-content" id="media-bobines" style="display: none;">
+                        <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                            <strong>🎞️ Bobines</strong> = Vidéos thématiques courtes affichées dans l'onglet "Bobines" du Blog.
+                            <br><small>Chaque bobine est associée à un thème (Culture, Environnement, etc.)</small>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center;">
+                            <button class="btn btn-primary" onclick="openAddBobine()">+ Ajouter une bobine</button>
+                            <span style="color: var(--gris-texte);">🎞️ <span id="bobines-count">0</span> bobines</span>
+                        </div>
+                        <div id="bobines-list" class="cards-grid"></div>
+                    </div>
+
+                    <!-- DOCUMENTS -->
+                    <div class="media-tab-content" id="media-documents" style="display: none;">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center;">
+                            <button class="btn btn-primary" onclick="openAddDocument()">+ Ajouter un document</button>
+                            <span style="color: var(--gris-texte);">📄 <span id="documents-count">0</span> documents</span>
+                        </div>
+                        <div id="documents-list"></div>
                     </div>
                 </div>
             </div>
@@ -2009,6 +2110,7 @@
             faq: [],
             articles: [],
             abonnes: [],
+            medias: { photos: [], presse: [], videos: [], documents: [] },
             config: {
                 email: '',
                 telephone: '',
@@ -2285,11 +2387,205 @@
             return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
         }
 
+        // ===== MODE LOCAL =====
+        let localMode = false;
+
+        function toggleLocalMode() {
+            localMode = !localMode;
+            const btn = document.getElementById('mode-toggle');
+            const icon = document.getElementById('mode-icon');
+            const text = document.getElementById('mode-text');
+            const downloadBtn = document.getElementById('download-btn');
+            const tokenInput = document.getElementById('github-token');
+
+            // En mode local, les boutons Publier utilisent l'API locale automatiquement
+            // Plus besoin de masquer/afficher différents boutons
+            document.querySelectorAll('.local-only').forEach(el => {
+                el.style.display = 'none'; // On n'utilise plus les boutons local-only séparés
+            });
+
+            if (localMode) {
+                btn.style.background = '#fd7e14';
+                icon.textContent = '💻';
+                text.textContent = 'Local';
+                downloadBtn.style.display = 'inline-block';
+                tokenInput.style.display = 'none';
+                tokenInput.nextElementSibling.style.display = 'none'; // Bouton œil
+                showToast('💻 Mode local activé - Chargement des fichiers locaux...', 'info');
+                loadLocalData();
+            } else {
+                btn.style.background = '#17a2b8';
+                icon.textContent = '🌐';
+                text.textContent = 'GitHub';
+                downloadBtn.style.display = 'none';
+                tokenInput.style.display = 'block';
+                tokenInput.nextElementSibling.style.display = 'inline-block'; // Bouton œil
+                showToast('🌐 Mode GitHub activé - Chargement depuis GitHub...', 'info');
+                loadAllData();
+            }
+        }
+
+        async function loadLocalData() {
+            showToast('⏳ Chargement des fichiers locaux...', 'info');
+
+            // Réinitialiser les données
+            data.projets = [];
+            data.themes = [];
+            data.actions = [];
+            data.candidats = [];
+            data.faq = [];
+            data.articles = [];
+            data.abonnes = [];
+            data.medias = { photos: [], presse: [], videos: [], documents: [] };
+
+            const files = {
+                projets: 'projets.json',
+                themes: 'themes.json',
+                actions: 'data.json',
+                candidats: 'candidats.json',
+                faq: 'faq.json',
+                articles: 'articles.json',
+                abonnes: 'abonnes.json',
+                config: 'config.json',
+                medias: 'medias.json'
+            };
+
+            for (const [key, file] of Object.entries(files)) {
+                setStatus(key, 'loading', '⏳...');
+                try {
+                    const response = await fetch(file + '?t=' + Date.now());
+                    if (response.ok) {
+                        const loaded = await response.json();
+                        if (key === 'config') {
+                            data.config = { ...data.config, ...loaded };
+                        } else if (key === 'themes') {
+                            data.themes = loaded;
+                            THEMES_CONFIG = [...loaded];
+                        } else {
+                            data[key] = loaded;
+                        }
+                        setStatus(key, 'saved', '✓ Local');
+                    } else {
+                        console.warn(`Fichier ${file} non trouvé localement`);
+                        setStatus(key, 'saved', '⚠️ Absent');
+                    }
+                } catch (e) {
+                    console.warn(`Erreur chargement ${file}:`, e);
+                    setStatus(key, 'saved', '⚠️ Erreur');
+                }
+            }
+
+            renderAll();
+            showToast('✅ Données locales chargées !', 'success');
+        }
+
+        async function downloadAllData() {
+            const filesToSave = [
+                { name: 'articles.json', data: data.articles },
+                { name: 'projets.json', data: data.projets },
+                { name: 'candidats.json', data: data.candidats },
+                { name: 'faq.json', data: data.faq },
+                { name: 'medias.json', data: data.medias },
+                { name: 'abonnes.json', data: data.abonnes }
+            ];
+
+            // Si on est sur localhost, sauvegarder via l'API du serveur
+            if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+                showToast('⏳ Sauvegarde en cours...', 'info');
+                let success = 0;
+                let errors = [];
+
+                for (const file of filesToSave) {
+                    try {
+                        const response = await fetch(`/api/save/${file.name}`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(file.data)
+                        });
+                        if (response.ok) {
+                            success++;
+                        } else {
+                            const err = await response.json();
+                            errors.push(`${file.name}: ${err.error}`);
+                        }
+                    } catch (err) {
+                        errors.push(`${file.name}: ${err.message}`);
+                    }
+                }
+
+                if (errors.length === 0) {
+                    showToast(`✅ ${success} fichiers publiés avec succès !`, 'success');
+                } else {
+                    showToast(`⚠️ ${success} OK, ${errors.length} erreurs`, 'warning');
+                    console.error('Erreurs:', errors);
+                }
+                return;
+            }
+
+            // Fallback : téléchargement classique si pas en local
+            filesToSave.forEach(file => {
+                const blob = new Blob([JSON.stringify(file.data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file.name;
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+
+            showToast('💾 Fichiers JSON téléchargés !', 'success');
+        }
+
+        async function downloadSingleFile(filename, dataKey) {
+            const content = dataKey === 'medias' ? data.medias : data[dataKey];
+
+            // Si on est sur localhost avec le serveur de dev, sauvegarder directement
+            if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+                try {
+                    showToast(`⏳ Sauvegarde de ${filename}...`, 'info');
+                    const response = await fetch(`/api/save/${filename}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(content)
+                    });
+
+                    if (response.ok) {
+                        showToast(`✅ ${filename} publié !`, 'success');
+                        setStatus(dataKey, 'saved', '✓ À jour');
+                        return;
+                    } else {
+                        const err = await response.json();
+                        throw new Error(err.error || 'Erreur serveur');
+                    }
+                } catch (err) {
+                    console.error('Erreur sauvegarde locale:', err);
+                    showToast(`⚠️ Serveur non disponible, téléchargement...`, 'warning');
+                    // Fallback vers téléchargement
+                }
+            }
+
+            // Fallback : téléchargement classique
+            const blob = new Blob([JSON.stringify(content, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast(`💾 ${filename} téléchargé !`, 'success');
+        }
+
         // ===== INITIALISATION =====
         document.addEventListener('DOMContentLoaded', () => {
             setupTabs();
             loadToken();
-            loadAllData();
+            // Détecter si on est en local (file:// ou localhost)
+            if (location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+                // Activer automatiquement le mode local
+                toggleLocalMode();
+            } else {
+                loadAllData();
+            }
         });
 
         function setupTabs() {
@@ -2336,6 +2632,7 @@
             data.faq = [];
             data.articles = [];
             data.abonnes = [];
+            data.medias = { photos: [], presse: [], videos: [], documents: [] };
 
             const files = {
                 projets: 'projets.json',
@@ -2345,7 +2642,8 @@
                 faq: 'faq.json',
                 articles: 'articles.json',
                 abonnes: 'abonnes.json',
-                config: 'config.json'
+                config: 'config.json',
+                medias: 'medias.json'
             };
 
             for (const [key, file] of Object.entries(files)) {
@@ -2412,6 +2710,7 @@
             renderFaq();
             renderArticles();
             renderAbonnes();
+            renderMedias();
             renderFacebookSelect();
             renderConfig();
             initNewsletterDate();
@@ -3252,22 +3551,26 @@
 
                 <div class="form-group">
                     <label>Image principale</label>
-                    <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
-                        <input type="text" id="edit-image" value="${p.image || ''}" placeholder="Chemin de l'image" style="flex: 1; min-width: 200px;">
-                        <label class="btn btn-outline btn-sm" style="cursor: pointer; margin: 0;">
-                            📁 Importer
-                            <input type="file" id="import-image" accept="image/*" onchange="handleImageImport(this)" style="display: none;">
-                        </label>
+                    <div id="projet-image-dropzone" style="border: 2px dashed var(--gris-border); border-radius: 8px; padding: 1rem; text-align: center; cursor: pointer; transition: all 0.2s;" onclick="document.getElementById('import-image').click()">
+                        <input type="file" id="import-image" accept="image/*" onchange="handleImageImport(this)" style="display: none;">
+                        <div style="font-size: 1.5rem;">📁</div>
+                        <p style="margin: 0.5rem 0 0; font-size: 0.85rem; color: #666;">Cliquez ou glissez-déposez une image</p>
+                        <input type="text" id="edit-image" value="${p.image || ''}" placeholder="Ou entrez le chemin" style="margin-top: 0.5rem; width: 100%;" onclick="event.stopPropagation()">
                     </div>
                     <div id="image-preview" style="margin-top: 0.5rem; ${p.image ? '' : 'display: none;'}">
                         <img src="${p.image || ''}" style="max-width: 150px; max-height: 100px; border-radius: 8px; border: 1px solid var(--gris-border);">
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label>Galerie d'images</label>
+                    <div id="projet-gallery-dropzone" style="border: 2px dashed var(--gris-border); border-radius: 8px; padding: 1rem; text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 0.5rem;" onclick="document.getElementById('import-projet-gallery').click()">
+                        <input type="file" id="import-projet-gallery" accept="image/*" multiple onchange="handleProjetGalleryImport(this)" style="display: none;">
+                        <div style="font-size: 1.2rem;">📷</div>
+                        <p style="margin: 0.25rem 0 0; font-size: 0.8rem; color: #666;">Glissez-déposez plusieurs images</p>
+                    </div>
                     <div id="images-container">${imagesHTML}</div>
-                    <button type="button" class="btn btn-outline btn-sm" onclick="addImageRow()" style="margin-top: 0.5rem;">+ Ajouter une image</button>
+                    <button type="button" class="btn btn-outline btn-sm" onclick="addImageRow()" style="margin-top: 0.5rem;">+ Ajouter manuellement</button>
                 </div>
                 
                 <hr style="margin: 1.5rem 0; border: none; border-top: 2px solid var(--or);">
@@ -3368,8 +3671,171 @@
             `;
             document.getElementById('modal-save').onclick = saveProjet;
             document.getElementById('modal-edit').classList.add('active');
+
+            // Activer le drag & drop pour l'image principale
+            setupDropzone('projet-image-dropzone', (files) => {
+                if (files.length > 0) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        document.getElementById('edit-image').value = e.target.result;
+                        const preview = document.getElementById('image-preview');
+                        preview.innerHTML = `<img src="${e.target.result}" style="max-width: 150px; max-height: 100px; border-radius: 8px; border: 1px solid var(--gris-border);">`;
+                        preview.style.display = 'block';
+                        showToast('✅ Image ajoutée', 'success');
+                    };
+                    reader.readAsDataURL(files[0]);
+                }
+            });
+
+            // Activer le drag & drop pour la galerie
+            setupDropzone('projet-gallery-dropzone', (files) => {
+                files.forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        addImageRowWithUrl(e.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                });
+                showToast(`✅ ${files.length} image(s) ajoutée(s)`, 'success');
+            });
+
+            // Activer le copier-coller (Ctrl+V / Cmd+V) pour les projets
+            enablePasteForModal((files) => {
+                files.forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => addImageRowWithUrl(e.target.result);
+                    reader.readAsDataURL(file);
+                });
+            });
         }
-        
+
+        // Fonction utilitaire pour configurer le drag & drop + copier-coller
+        function setupDropzone(id, onDrop) {
+            const dropzone = document.getElementById(id);
+            if (!dropzone) return;
+
+            dropzone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropzone.style.borderColor = 'var(--vert)';
+                dropzone.style.background = '#e8f5e9';
+            });
+            dropzone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                dropzone.style.borderColor = 'var(--gris-border)';
+                dropzone.style.background = 'transparent';
+            });
+            dropzone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropzone.style.borderColor = 'var(--gris-border)';
+                dropzone.style.background = 'transparent';
+                const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+                if (files.length > 0) onDrop(files);
+            });
+
+            // Support du copier-coller (Ctrl+V / Cmd+V)
+            dropzone.setAttribute('tabindex', '0'); // Rendre focusable
+            dropzone.addEventListener('paste', (e) => {
+                const items = e.clipboardData?.items;
+                if (!items) return;
+
+                const imageFiles = [];
+                for (const item of items) {
+                    if (item.type.startsWith('image/')) {
+                        const file = item.getAsFile();
+                        if (file) imageFiles.push(file);
+                    }
+                }
+
+                if (imageFiles.length > 0) {
+                    e.preventDefault();
+                    onDrop(imageFiles);
+                    showToast(`📋 ${imageFiles.length} image(s) collée(s)`, 'success');
+                }
+            });
+
+            // Indicateur visuel au focus
+            dropzone.addEventListener('focus', () => {
+                dropzone.style.outline = '2px solid var(--bleu)';
+            });
+            dropzone.addEventListener('blur', () => {
+                dropzone.style.outline = 'none';
+            });
+        }
+
+        // Gestionnaire global de copier-coller quand un modal est ouvert
+        let currentPasteHandler = null;
+
+        function enablePasteForModal(onPaste) {
+            // Supprimer l'ancien handler
+            if (currentPasteHandler) {
+                document.removeEventListener('paste', currentPasteHandler);
+            }
+
+            currentPasteHandler = (e) => {
+                // Ignorer si on est dans un champ texte
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+                const items = e.clipboardData?.items;
+                if (!items) return;
+
+                const imageFiles = [];
+                for (const item of items) {
+                    if (item.type.startsWith('image/')) {
+                        const file = item.getAsFile();
+                        if (file) imageFiles.push(file);
+                    }
+                }
+
+                if (imageFiles.length > 0) {
+                    e.preventDefault();
+                    onPaste(imageFiles);
+                    showToast(`📋 ${imageFiles.length} image(s) collée(s)`, 'success');
+                }
+            };
+
+            document.addEventListener('paste', currentPasteHandler);
+        }
+
+        function disablePasteForModal() {
+            if (currentPasteHandler) {
+                document.removeEventListener('paste', currentPasteHandler);
+                currentPasteHandler = null;
+            }
+        }
+
+        // Ajouter une image à la galerie avec une URL
+        function addImageRowWithUrl(url) {
+            const container = document.getElementById('images-container');
+            const row = document.createElement('div');
+            row.className = 'img-row';
+            row.style.cssText = 'display: grid; grid-template-columns: 2fr 1fr auto; gap: 0.5rem; margin-bottom: 0.5rem;';
+            row.innerHTML = `
+                <input type="text" class="img-url" value="${url}" placeholder="URL de l'image">
+                <input type="text" class="img-alt" value="" placeholder="Description">
+                <button type="button" class="btn btn-danger btn-sm" onclick="this.parentElement.remove()">🗑️</button>
+            `;
+            container.appendChild(row);
+        }
+
+        // Import de la galerie de projet
+        function handleProjetGalleryImport(input) {
+            const files = Array.from(input.files);
+            if (!files.length) return;
+
+            showToast(`📷 Import de ${files.length} image(s)...`, 'info');
+            files.forEach(file => {
+                if (file.size > 5 * 1024 * 1024) {
+                    showToast(`⚠️ ${file.name} trop grande`, 'warning');
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = (e) => addImageRowWithUrl(e.target.result);
+                reader.readAsDataURL(file);
+            });
+            showToast(`✅ Images ajoutées`, 'success');
+            input.value = '';
+        }
+
         // Fonctions pour ajouter des lignes dynamiquement
         function addChiffreRow() {
             const container = document.getElementById('chiffres-container');
@@ -3490,29 +3956,47 @@
 
         // Import d'image pour les articles (dossier images/articles/)
         async function handleArticleImageImport(input) {
-            const file = input.files[0];
-            if (!file) return;
+            const files = Array.from(input.files);
+            if (!files.length) return;
 
-            if (file.size > 2 * 1024 * 1024) {
-                showToast('Image trop grande (max 2 Mo)', 'warning');
-                return;
+            showToast(`📷 Import de ${files.length} image(s)...`, 'info');
+
+            // Fonction pour lire un fichier en Promise
+            function readFileAsDataURL(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = (e) => reject(e);
+                    reader.readAsDataURL(file);
+                });
             }
 
-            const fileName = file.name.replace(/\s+/g, '_').toLowerCase();
-            const imagePath = 'images/articles/' + fileName;
+            // Fonction pour uploader une image
+            async function uploadSingleImage(file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    showToast(`⚠️ ${file.name} trop grande (max 5 Mo)`, 'warning');
+                    return null;
+                }
 
-            const preview = document.getElementById('image-preview');
-            const reader = new FileReader();
-            reader.onload = async function(e) {
-                preview.innerHTML = `<label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--bleu);">Aperçu image :</label><img src="${e.target.result}" style="max-width: 200px; max-height: 150px; border-radius: 8px; border: 2px solid var(--gris-border);">`;
-                preview.style.display = 'block';
+                const fileName = file.name.replace(/\s+/g, '_').toLowerCase();
+                const imagePath = 'images/articles/' + fileName;
 
-                const token = getToken();
-                if (token) {
-                    showToast('Upload de l\'image en cours...', 'info');
-                    const base64Content = e.target.result.split(',')[1];
+                try {
+                    const dataUrl = await readFileAsDataURL(file);
 
-                    try {
+                    // En mode local, on utilise directement le dataUrl pour l'aperçu
+                    if (localMode) {
+                        showToast(`✅ ${fileName} ajoutée (local)`, 'info');
+                        // Retourner le dataUrl pour afficher l'aperçu en local
+                        return { path: imagePath, preview: dataUrl };
+                    }
+
+                    const token = getToken();
+                    if (token) {
+                        showToast(`Upload ${fileName}...`, 'info');
+                        const base64Content = dataUrl.split(',')[1];
+
+                        // Vérifier si le fichier existe déjà
                         let sha = null;
                         const getResponse = await fetch(
                             `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${imagePath}?ref=${GITHUB_CONFIG.branch}`,
@@ -3542,22 +4026,36 @@
                         );
 
                         if (response.ok) {
-                            showToast('Image uploadée sur GitHub !', 'success');
-                            document.getElementById('edit-image').value = imagePath;
+                            showToast(`✅ ${fileName} uploadée !`, 'success');
+                            return { path: imagePath, preview: null };
                         } else {
                             const error = await response.json();
                             throw new Error(error.message);
                         }
-                    } catch (err) {
-                        showToast('Erreur upload: ' + err.message, 'error');
-                        document.getElementById('edit-image').value = imagePath;
+                    } else {
+                        // Pas de token et pas en mode local
+                        showToast(`✅ ${fileName} ajoutée`, 'info');
+                        return { path: imagePath, preview: dataUrl };
                     }
-                } else {
-                    document.getElementById('edit-image').value = imagePath;
-                    showToast('Image sélectionnée (local)', 'info');
+                } catch (err) {
+                    showToast(`Erreur ${file.name}: ${err.message}`, 'error');
+                    return null;
                 }
-            };
-            reader.readAsDataURL(file);
+            }
+
+            // Traiter toutes les images séquentiellement
+            for (const file of files) {
+                const result = await uploadSingleImage(file);
+                if (result) {
+                    const images = getArticleImages();
+                    // En mode local, stocker le dataUrl pour l'aperçu
+                    images.push(result.preview || result.path);
+                    setArticleImages(images);
+                }
+            }
+
+            showToast(`✅ Import de ${files.length} image(s) terminé !`, 'success');
+            input.value = ''; // Reset pour permettre de re-sélectionner
         }
 
         function addImageRow() {
@@ -3915,9 +4413,17 @@
             const themeConf = THEMES_ACTIONS_CONFIG[a.theme] || { icon: '📋', color: '#1a3a5c' };
             const statut = a.statut || 'Réalisé';
             const statutClass = statut.toLowerCase().replace(/\s+/g, '-').replace('é', 'e');
+            const hasImages = a.images && a.images.length > 0;
+            const coverImage = hasImages ? a.images[0] : (a.image || '');
 
             return `
                 <div class="admin-card">
+                    ${coverImage ? `
+                        <div class="admin-card-image" style="position: relative;">
+                            <img src="${coverImage}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                            ${hasImages && a.images.length > 1 ? `<span style="position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.7); color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem;">📷 ${a.images.length}</span>` : ''}
+                        </div>
+                    ` : ''}
                     <div class="admin-card-header">
                         <span class="admin-card-theme" style="background: ${themeConf.color}">
                             ${themeConf.icon} ${a.theme}
@@ -3977,9 +4483,126 @@
                     <label>Description</label>
                     <textarea id="edit-description" rows="3">${a.description || ''}</textarea>
                 </div>
+
+                <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                    <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; color: var(--bleu);">📷 Images de l'action</label>
+                    <div id="action-dropzone" class="photo-upload" onclick="document.getElementById('import-action-images').click()" style="padding: 1rem; text-align: center; border: 2px dashed var(--gris-border); border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+                        <input type="file" id="import-action-images" accept="image/*" multiple onchange="handleActionImageImport(this)" style="display: none;">
+                        <div style="font-size: 1.5rem;">📁</div>
+                        <p style="margin: 0.5rem 0 0; font-size: 0.85rem; color: #666;">Cliquez ou glissez-déposez des images</p>
+                    </div>
+                    <input type="hidden" id="edit-action-images" value='${JSON.stringify(a.images || [])}'>
+                    <div id="action-images-gallery" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem;">
+                        ${(a.images || []).map((img, idx) => `
+                            <div style="position: relative;">
+                                <img src="${img}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 6px;">
+                                <button type="button" onclick="removeActionImage(${idx})" style="position: absolute; top: -6px; right: -6px; background: var(--rouge); color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 0.7rem;">✕</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
             `;
             document.getElementById('modal-save').onclick = saveAction;
             document.getElementById('modal-edit').classList.add('active');
+
+            // Activer le drag & drop
+            const dropzone = document.getElementById('action-dropzone');
+            dropzone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropzone.style.borderColor = 'var(--vert)';
+                dropzone.style.background = '#e8f5e9';
+            });
+            dropzone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                dropzone.style.borderColor = 'var(--gris-border)';
+                dropzone.style.background = 'transparent';
+            });
+            dropzone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropzone.style.borderColor = 'var(--gris-border)';
+                dropzone.style.background = 'transparent';
+                const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+                if (files.length > 0) {
+                    processActionDroppedFiles(files);
+                }
+            });
+
+            // Activer le copier-coller (Ctrl+V / Cmd+V)
+            enablePasteForModal((files) => processActionDroppedFiles(files));
+        }
+
+        function processActionDroppedFiles(files) {
+            showToast(`📷 Import de ${files.length} image(s)...`, 'info');
+            files.forEach(file => {
+                if (file.size > 5 * 1024 * 1024) {
+                    showToast(`⚠️ ${file.name} trop grande`, 'warning');
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const images = getActionImages();
+                    images.push(e.target.result);
+                    setActionImages(images);
+                };
+                reader.readAsDataURL(file);
+            });
+            showToast(`✅ Images ajoutées`, 'success');
+        }
+
+        // Gestion des images pour les actions
+        function getActionImages() {
+            try {
+                return JSON.parse(document.getElementById('edit-action-images').value || '[]');
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function setActionImages(images) {
+            document.getElementById('edit-action-images').value = JSON.stringify(images);
+            renderActionImagesGallery();
+        }
+
+        function renderActionImagesGallery() {
+            const images = getActionImages();
+            const gallery = document.getElementById('action-images-gallery');
+            gallery.innerHTML = images.map((img, idx) => `
+                <div style="position: relative;">
+                    <img src="${img}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 6px;" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22><rect fill=%22%23eee%22 width=%2280%22 height=%2280%22/><text x=%2240%22 y=%2245%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2210%22>Erreur</text></svg>'">
+                    <button type="button" onclick="removeActionImage(${idx})" style="position: absolute; top: -6px; right: -6px; background: var(--rouge); color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 0.7rem;">✕</button>
+                </div>
+            `).join('');
+        }
+
+        function removeActionImage(index) {
+            const images = getActionImages();
+            images.splice(index, 1);
+            setActionImages(images);
+        }
+
+        async function handleActionImageImport(input) {
+            const files = Array.from(input.files);
+            if (!files.length) return;
+
+            showToast(`📷 Import de ${files.length} image(s)...`, 'info');
+
+            for (const file of files) {
+                if (file.size > 5 * 1024 * 1024) {
+                    showToast(`⚠️ ${file.name} trop grande (max 5 Mo)`, 'warning');
+                    continue;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const images = getActionImages();
+                    images.push(e.target.result);
+                    setActionImages(images);
+                };
+                reader.readAsDataURL(file);
+            }
+
+            showToast(`✅ Images ajoutées`, 'success');
+            input.value = '';
         }
 
         function saveAction() {
@@ -3987,18 +4610,26 @@
             const theme = document.getElementById('edit-theme').value;
             const statut = document.getElementById('edit-statut').value;
             const description = document.getElementById('edit-description').value.trim();
-            
+            const images = getActionImages();
+
             if (!titre || !theme) {
                 showToast('⚠️ Titre et thème obligatoires', 'warning');
                 return;
             }
 
-            if (currentEdit.index === -1) {
-                data.actions.push({ id: Date.now(), titre, theme, statut, description });
-            } else {
-                Object.assign(data.actions[currentEdit.index], { titre, theme, statut, description });
+            const actionData = { titre, theme, statut, description };
+            if (images.length > 0) {
+                actionData.images = images;
+                actionData.image = images[0]; // Première image comme couverture
             }
-            
+
+            if (currentEdit.index === -1) {
+                actionData.id = Date.now();
+                data.actions.push(actionData);
+            } else {
+                Object.assign(data.actions[currentEdit.index], actionData);
+            }
+
             markModified('actions');
             renderActions();
             closeModal();
@@ -4586,7 +5217,7 @@
             updateArticleCategoryCounts();
 
             const search = (document.getElementById('search-articles')?.value || '').toLowerCase();
-            let filtered = [...data.articles].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+            let filtered = [...data.articles];
 
             // Filtre par catégorie
             if (currentArticleFilter) {
@@ -4605,40 +5236,96 @@
 
             document.getElementById('articles-count').textContent = filtered.length;
 
-            document.getElementById('articles-list').innerHTML = filtered.length === 0
-                ? '<div class="empty-state"><div class="icon">📰</div><p>Aucun article' + (search || currentArticleFilter ? ' trouvé' : '') + '</p></div>'
-                : filtered.map((a, i) => {
-                    const realIndex = data.articles.indexOf(a);
-                    const categoryClass = getCategoryClass(a.categorie);
-                    const categoryIcon = getCategoryIcon(a.categorie);
+            // Séparer : à préciser, à venir, passés
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
 
-                    return `
-                        <div class="article-card">
-                            <div class="article-card-image">
-                                ${a.image
-                                    ? `<img src="${a.image}" alt="${a.titre}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                                       <span class="no-image" style="display:none;">📰</span>`
-                                    : '<span class="no-image">📰</span>'}
-                                ${a.categorie ? `<span class="article-card-category ${categoryClass}">${categoryIcon} ${a.categorie}</span>` : ''}
-                            </div>
-                            <div class="article-card-body">
-                                <div class="article-card-date">📅 ${formatDate(a.date)}</div>
-                                <div class="article-card-title">${a.titre || 'Sans titre'}</div>
-                                <div class="article-card-extrait">${a.extrait || a.contenu?.substring(0, 150) || 'Aucun extrait'}</div>
-                                <div class="article-card-footer">
-                                    <div class="article-card-share">
-                                        <button class="btn btn-sm" style="background: #25D366; color: white;" onclick="copyForWhatsApp('article', ${realIndex})" title="WhatsApp">💬</button>
-                                        <button class="btn btn-sm" style="background: #1877f2; color: white;" onclick="copyForFacebook(${realIndex})" title="Facebook">📘</button>
-                                    </div>
-                                    <div style="display: flex; gap: 0.5rem;">
-                                        <button class="btn btn-sm btn-primary" onclick="openEditArticle(${realIndex})">✏️</button>
-                                        <button class="btn btn-sm btn-danger" onclick="deleteArticle(${realIndex})">🗑️</button>
-                                    </div>
+            const aPreciser = filtered.filter(a => a.a_preciser);
+            const aVenir = filtered.filter(a => !a.a_preciser && a.date && new Date(a.date) >= today)
+                .sort((a, b) => new Date(a.date) - new Date(b.date)); // Plus proche en premier
+            const passes = filtered.filter(a => !a.a_preciser && (!a.date || new Date(a.date) < today))
+                .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0)); // Plus récent en premier
+
+            function renderArticleCard(a) {
+                const realIndex = data.articles.indexOf(a);
+                const categoryClass = getCategoryClass(a.categorie);
+                const categoryIcon = getCategoryIcon(a.categorie);
+                const isUpcoming = !a.a_preciser && a.date && new Date(a.date) >= today;
+                const isPreciser = a.a_preciser;
+
+                return `
+                    <div class="article-card" style="${isPreciser ? 'opacity: 0.7; border: 2px dashed #f39c12;' : isUpcoming ? 'border: 2px solid #27ae60;' : ''}">
+                        <div class="article-card-image">
+                            ${a.image
+                                ? `<img src="${a.image}" alt="${a.titre}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                   <span class="no-image" style="display:none;">📰</span>`
+                                : '<span class="no-image">📰</span>'}
+                            ${a.categorie ? `<span class="article-card-category ${categoryClass}">${categoryIcon} ${a.categorie}</span>` : ''}
+                            ${isPreciser ? '<span style="position:absolute;top:8px;right:8px;background:#f39c12;color:white;padding:2px 8px;border-radius:4px;font-size:0.75rem;">⏳ À préciser</span>' : ''}
+                            ${isUpcoming ? '<span style="position:absolute;top:8px;right:8px;background:#27ae60;color:white;padding:2px 8px;border-radius:4px;font-size:0.75rem;">📅 À venir</span>' : ''}
+                        </div>
+                        <div class="article-card-body">
+                            <div class="article-card-date">📅 ${formatDate(a.date)}</div>
+                            <div class="article-card-title">${a.titre || 'Sans titre'}</div>
+                            <div class="article-card-extrait">${a.extrait || a.contenu?.substring(0, 150) || 'Aucun extrait'}</div>
+                            <div class="article-card-footer">
+                                <div class="article-card-share">
+                                    <button class="btn btn-sm" style="background: #25D366; color: white;" onclick="copyForWhatsApp('article', ${realIndex})" title="WhatsApp">💬</button>
+                                    <button class="btn btn-sm" style="background: #1877f2; color: white;" onclick="copyForFacebook(${realIndex})" title="Facebook">📘</button>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-sm btn-primary" onclick="openEditArticle(${realIndex})">✏️</button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteArticle(${realIndex})">🗑️</button>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                `;
+            }
+
+            let html = '';
+
+            if (filtered.length === 0) {
+                html = '<div class="empty-state"><div class="icon">📰</div><p>Aucun article' + (search || currentArticleFilter ? ' trouvé' : '') + '</p></div>';
+            } else {
+                // Section : À préciser
+                if (aPreciser.length > 0) {
+                    html += `
+                        <div style="grid-column: 1 / -1; margin-bottom: 0.5rem;">
+                            <h4 style="color: #f39c12; border-bottom: 2px solid #f39c12; padding-bottom: 0.5rem; margin-bottom: 1rem;">
+                                ⏳ À préciser (${aPreciser.length})
+                            </h4>
+                        </div>
+                        ${aPreciser.map(renderArticleCard).join('')}
                     `;
-                }).join('');
+                }
+
+                // Section : À venir
+                if (aVenir.length > 0) {
+                    html += `
+                        <div style="grid-column: 1 / -1; margin-bottom: 0.5rem; ${aPreciser.length > 0 ? 'margin-top: 1.5rem;' : ''}">
+                            <h4 style="color: #27ae60; border-bottom: 2px solid #27ae60; padding-bottom: 0.5rem; margin-bottom: 1rem;">
+                                📅 À venir (${aVenir.length})
+                            </h4>
+                        </div>
+                        ${aVenir.map(renderArticleCard).join('')}
+                    `;
+                }
+
+                // Section : Passés
+                if (passes.length > 0) {
+                    html += `
+                        <div style="grid-column: 1 / -1; margin-bottom: 0.5rem; ${(aPreciser.length > 0 || aVenir.length > 0) ? 'margin-top: 1.5rem;' : ''}">
+                            <h4 style="color: #888; border-bottom: 2px solid #ddd; padding-bottom: 0.5rem; margin-bottom: 1rem;">
+                                📰 Articles & événements passés (${passes.length})
+                            </h4>
+                        </div>
+                        ${passes.map(renderArticleCard).join('')}
+                    `;
+                }
+            }
+
+            document.getElementById('articles-list').innerHTML = html;
 
             // Mettre à jour la liste pour le partage Facebook
             updateFacebookArticleSelect();
@@ -4682,84 +5369,255 @@
                             <option value="">-- Sans catégorie --</option>
                             <option value="Événement" ${a.categorie === 'Événement' ? 'selected' : ''}>📅 Événement</option>
                             <option value="Communiqué" ${a.categorie === 'Communiqué' ? 'selected' : ''}>📣 Communiqué</option>
+                            <option value="Presse" ${a.categorie === 'Presse' ? 'selected' : ''}>📰 Presse</option>
                             <option value="Réunion" ${a.categorie === 'Réunion' ? 'selected' : ''}>🤝 Réunion</option>
+                            <option value="Réunion de quartier" ${a.categorie === 'Réunion de quartier' ? 'selected' : ''}>🏘️ Réunion de quartier</option>
                             <option value="Action" ${a.categorie === 'Action' ? 'selected' : ''}>✊ Action</option>
                             <option value="Bilan" ${a.categorie === 'Bilan' ? 'selected' : ''}>📊 Bilan</option>
                             <option value="Projet" ${a.categorie === 'Projet' ? 'selected' : ''}>🚀 Projet</option>
                             <option value="Tribune" ${a.categorie === 'Tribune' ? 'selected' : ''}>📝 Tribune</option>
+                            <option value="Vidéo" ${a.categorie === 'Vidéo' ? 'selected' : ''}>🎬 Vidéo</option>
                             <option value="Info" ${a.categorie === 'Info' ? 'selected' : ''}>ℹ️ Info</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Image</label>
-                        <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
-                            <input type="text" id="edit-image" value="${a.image || ''}" placeholder="https://... ou images/nom.jpg" style="flex: 1; min-width: 200px;">
-                            <label class="btn btn-outline btn-sm" style="cursor: pointer; margin: 0;">
-                                📁 Importer
-                                <input type="file" id="import-image-article" accept="image/*" onchange="handleArticleImageImport(this)" style="display: none;">
-                            </label>
-                        </div>
+                        <label>À préciser ?</label>
+                        <select id="edit-a-preciser">
+                            <option value="false" ${!a.a_preciser ? 'selected' : ''}>Non - Article visible</option>
+                            <option value="true" ${a.a_preciser ? 'selected' : ''}>Oui - Masqué (date à préciser)</option>
+                        </select>
                     </div>
                 </div>
+
+                <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; color: var(--bleu);">📷 Images de l'article (galerie)</label>
+                    <div class="photo-upload" id="article-image-dropzone" onclick="document.getElementById('import-image-article').click()">
+                        <input type="file" id="import-image-article" accept="image/*" multiple onchange="handleArticleImageImport(this)" style="display: none;">
+                        <div class="icon">📁</div>
+                        <p><strong>Cliquez ou glissez-déposez</strong> une ou plusieurs images</p>
+                        <p style="font-size: 0.8rem; color: #888;">JPG, PNG, WebP • Max 5 Mo par image</p>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.75rem;">
+                        <span style="color: #888; font-size: 0.85rem;">ou URL :</span>
+                        <input type="text" id="add-image-url" placeholder="https://... ou images/nom.jpg" style="flex: 1;">
+                        <button type="button" class="btn btn-sm btn-primary" onclick="addArticleImageUrl()">+ Ajouter</button>
+                    </div>
+                    <input type="hidden" id="edit-images" value='${JSON.stringify(a.images || (a.image ? [a.image] : []))}'>
+                    <div id="images-gallery" style="display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem;">
+                        ${(a.images || (a.image ? [a.image] : [])).map((img, idx) => `
+                            <div class="gallery-thumb" data-index="${idx}" style="position: relative;">
+                                <img src="${img}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 2px solid ${idx === 0 ? 'var(--vert)' : 'var(--gris-border)'};">
+                                ${idx === 0 ? '<span style="position: absolute; top: -8px; left: -8px; background: var(--vert); color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 10px;">Couverture</span>' : ''}
+                                <button type="button" onclick="removeArticleImage(${idx})" style="position: absolute; top: -8px; right: -8px; background: var(--rouge); color: white; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; font-size: 0.8rem;">✕</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <p style="font-size: 0.8rem; color: #888; margin-top: 0.5rem;">La première image sera utilisée comme couverture sur les cartes.</p>
+                </div>
+
+                <div style="background: #fff3e0; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; color: #e65100;">🎬 Vidéo YouTube (optionnel)</label>
+                    <input type="text" id="edit-youtube" value="${a.youtube || ''}" placeholder="https://www.youtube.com/watch?v=... ou https://youtu.be/...">
+                    <p style="font-size: 0.8rem; color: #888; margin-top: 0.5rem;">Collez l'URL complète de la vidéo YouTube</p>
+                    <div id="youtube-preview" style="margin-top: 0.75rem; display: ${a.youtube ? 'block' : 'none'};">
+                        <iframe id="youtube-iframe" width="280" height="157" src="${a.youtube ? getYoutubeEmbed(a.youtube) : ''}" frameborder="0" allowfullscreen style="border-radius: 8px;"></iframe>
+                    </div>
+                </div>
+
+                <div style="background: #e3f2fd; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <label style="display: block; margin-bottom: 0.75rem; font-weight: 600; color: #1565c0;">📄 Lier un document (optionnel)</label>
+                    <select id="edit-document" style="width: 100%; padding: 0.5rem;">
+                        <option value="">-- Aucun document lié --</option>
+                        ${(data.medias?.documents || []).map(d => `
+                            <option value="${d.id}" ${a.document_id == d.id ? 'selected' : ''}>${d.titre}</option>
+                        `).join('')}
+                    </select>
+                    <p style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">
+                        Un bouton "📄 Voir le document" apparaîtra dans l'article avec lien direct vers la page Médias.
+                    </p>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Source (si article de presse)</label>
+                        <input type="text" id="edit-source" value="${a.source || ''}" placeholder="Ex: Le Dauphiné Libéré">
+                    </div>
+                    <div class="form-group">
+                        <label>Auteur</label>
+                        <input type="text" id="edit-auteur" value="${a.auteur || ''}" placeholder="Ex: Jean Dupont">
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label>Extrait (aperçu court)</label>
                     <textarea id="edit-extrait" rows="2" placeholder="Court résumé affiché dans la liste des actualités...">${a.extrait || ''}</textarea>
                 </div>
                 <div class="form-group">
                     <label>Contenu complet</label>
-                    <textarea id="edit-contenu" rows="8" placeholder="Le texte complet de l'article. Utilisez des sauts de ligne pour séparer les paragraphes.">${a.contenu || ''}</textarea>
-                </div>
-                <div id="image-preview" style="margin-top: 1rem; display: ${a.image ? 'block' : 'none'};">
-                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--bleu);">Aperçu image :</label>
-                    <img src="${a.image || ''}" alt="Aperçu" style="max-width: 200px; max-height: 150px; border-radius: 8px; border: 2px solid var(--gris-border);" onerror="this.parentElement.style.display='none'">
+                    <textarea id="edit-contenu" rows="8" placeholder="Le texte complet de l'article. Utilisez des sauts de ligne pour séparer les paragraphes.&#10;&#10;Formatage :&#10;• **texte** pour mettre en gras&#10;• Lignes commençant par • pour les listes">${a.contenu || ''}</textarea>
                 </div>
             `;
-            
-            // Prévisualiser l'image quand l'URL change
-            document.getElementById('edit-image').addEventListener('input', function() {
-                const preview = document.getElementById('image-preview');
-                const img = preview.querySelector('img');
-                if (this.value) {
-                    img.src = this.value;
+
+            // Plus besoin de listener pour edit-image car on utilise maintenant la galerie
+
+            // Prévisualiser YouTube quand l'URL change
+            document.getElementById('edit-youtube').addEventListener('input', function() {
+                const preview = document.getElementById('youtube-preview');
+                const iframe = document.getElementById('youtube-iframe');
+                const embedUrl = getYoutubeEmbed(this.value);
+                if (embedUrl) {
+                    iframe.src = embedUrl;
                     preview.style.display = 'block';
                 } else {
                     preview.style.display = 'none';
                 }
             });
-            
+
+            // Drag & drop pour l'image
+            const dropzone = document.getElementById('article-image-dropzone');
+            dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+            dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+            dropzone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropzone.classList.remove('dragover');
+                const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+                files.forEach(file => processArticleImage(file));
+            });
+
+            // Activer le copier-coller (Ctrl+V / Cmd+V) pour les articles
+            enablePasteForModal((files) => {
+                files.forEach(file => processArticleImage(file));
+            });
+
             document.getElementById('modal-save').onclick = saveArticle;
             document.getElementById('modal-edit').classList.add('active');
+        }
+
+        function getYoutubeEmbed(url) {
+            if (!url) return '';
+            // Extraire l'ID YouTube de différents formats d'URL
+            const patterns = [
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+                /^([a-zA-Z0-9_-]{11})$/
+            ];
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match) return `https://www.youtube.com/embed/${match[1]}`;
+            }
+            return '';
+        }
+
+        function getArticleImages() {
+            try {
+                return JSON.parse(document.getElementById('edit-images').value || '[]');
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function setArticleImages(images) {
+            document.getElementById('edit-images').value = JSON.stringify(images);
+            renderImagesGallery();
+        }
+
+        function renderImagesGallery() {
+            const images = getArticleImages();
+            const gallery = document.getElementById('images-gallery');
+            gallery.innerHTML = images.map((img, idx) => `
+                <div class="gallery-thumb" data-index="${idx}" style="position: relative;">
+                    <img src="${img}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 2px solid ${idx === 0 ? 'var(--vert)' : 'var(--gris-border)'};" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><rect fill=%22%23eee%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%23999%22>Erreur</text></svg>'">
+                    ${idx === 0 ? '<span style="position: absolute; top: -8px; left: -8px; background: var(--vert); color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 10px;">Couverture</span>' : ''}
+                    <button type="button" onclick="removeArticleImage(${idx})" style="position: absolute; top: -8px; right: -8px; background: var(--rouge); color: white; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; font-size: 0.8rem;">✕</button>
+                </div>
+            `).join('');
+        }
+
+        function addArticleImageUrl() {
+            const urlInput = document.getElementById('add-image-url');
+            const url = urlInput.value.trim();
+            if (!url) {
+                showToast('⚠️ Entrez une URL', 'warning');
+                return;
+            }
+            const images = getArticleImages();
+            images.push(url);
+            setArticleImages(images);
+            urlInput.value = '';
+            showToast('✅ Image ajoutée', 'success');
+        }
+
+        function removeArticleImage(index) {
+            const images = getArticleImages();
+            images.splice(index, 1);
+            setArticleImages(images);
+            showToast('🗑️ Image supprimée', 'info');
+        }
+
+        function processArticleImage(file) {
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('⚠️ Image trop volumineuse (max 5 Mo)', 'warning');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const images = getArticleImages();
+                images.push(e.target.result);
+                setArticleImages(images);
+                showToast('✅ Image ajoutée', 'success');
+            };
+            reader.readAsDataURL(file);
         }
 
         function saveArticle() {
             const titre = document.getElementById('edit-titre').value.trim();
             const date = document.getElementById('edit-date').value;
             const categorie = document.getElementById('edit-categorie').value;
-            const image = document.getElementById('edit-image').value.trim();
+            const images = getArticleImages();
+            const youtube = document.getElementById('edit-youtube').value.trim();
+            const source = document.getElementById('edit-source').value.trim();
+            const auteur = document.getElementById('edit-auteur').value.trim();
             const extrait = document.getElementById('edit-extrait').value.trim();
             const contenu = document.getElementById('edit-contenu').value.trim();
-            
+            const aPreciser = document.getElementById('edit-a-preciser').value === 'true';
+            const documentId = document.getElementById('edit-document').value;
+
             if (!titre) {
                 showToast('⚠️ Titre obligatoire', 'warning');
                 return;
             }
 
-            const articleData = { 
+            const articleData = {
                 id: currentEdit.index === -1 ? Date.now() : data.articles[currentEdit.index].id,
-                titre, 
-                date, 
+                titre,
+                date,
                 categorie,
-                image,
-                extrait, 
-                contenu 
+                extrait,
+                contenu
             };
+
+            // Gérer les images : garder compatibilité avec ancien format
+            if (images.length > 0) {
+                articleData.images = images;
+                articleData.image = images[0]; // Première image = couverture (rétrocompatibilité)
+            }
+
+            // Ajouter les champs optionnels seulement s'ils sont remplis
+            if (youtube) articleData.youtube = youtube;
+            if (source) articleData.source = source;
+            if (auteur) articleData.auteur = auteur;
+            if (aPreciser) articleData.a_preciser = true;
+            if (documentId) articleData.document_id = parseInt(documentId);
+
+            // Ajouter la date de modification (pour le mettre en tête de gondole)
+            articleData.modifie_le = new Date().toISOString();
 
             if (currentEdit.index === -1) {
                 data.articles.push(articleData);
             } else {
                 data.articles[currentEdit.index] = articleData;
             }
-            
+
             markModified('articles');
             renderArticles();
             updateFacebookArticleSelect();
@@ -5135,7 +5993,25 @@ Pour vous désabonner, répondez à cet email.
                 showToast('⏳ Publication déjà en cours...', 'info');
                 return;
             }
-                        const token = getToken();
+
+            // Si on est en mode local ou sur localhost, utiliser l'API locale
+            if (localMode || location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+                const files = {
+                    projets: 'projets.json',
+                    themes: 'themes.json',
+                    actions: 'data.json',
+                    candidats: 'candidats.json',
+                    faq: 'faq.json',
+                    articles: 'articles.json',
+                    abonnes: 'abonnes.json',
+                    config: 'config.json',
+                    medias: 'medias.json'
+                };
+                downloadSingleFile(files[section], section);
+                return;
+            }
+
+            const token = getToken();
             if (!token) {
                 showToast('⚠️ Configurez votre token GitHub', 'warning');
                 return;
@@ -5149,7 +6025,8 @@ Pour vous désabonner, répondez à cet email.
                 faq: 'faq.json',
                 articles: 'articles.json',
                 abonnes: 'abonnes.json',
-                config: 'config.json'
+                config: 'config.json',
+                medias: 'medias.json'
             };
 
             const filename = files[section];
@@ -5251,6 +6128,7 @@ Pour vous désabonner, répondez à cet email.
         function closeModal() {
             document.getElementById('modal-edit').classList.remove('active');
             pendingPhoto = null;
+            disablePasteForModal(); // Désactiver le copier-coller
         }
 
         // Fermer modal avec Escape
@@ -5264,6 +6142,953 @@ Pour vous désabonner, répondez à cet email.
             toast.textContent = message;
             toast.className = 'toast show ' + type;
             setTimeout(() => toast.className = 'toast', 3000);
+        }
+
+        // ===== MÉDIAS =====
+        let currentMediaTab = 'photos';
+
+        function switchMediaTab(tab) {
+            currentMediaTab = tab;
+            document.querySelectorAll('[data-media-tab]').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.mediaTab === tab);
+            });
+            document.querySelectorAll('.media-tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            document.getElementById('media-' + tab).style.display = 'block';
+        }
+
+        function renderMedias() {
+            renderPhotos();
+            renderPresse();
+            renderVideos();
+            renderDocuments();
+            renderBobinesAdmin();
+            showLatestMedia();
+        }
+
+        // === PHOTOS ===
+        function renderPhotos() {
+            const photos = data.medias?.photos || [];
+            document.getElementById('photos-count').textContent = photos.length;
+
+            if (photos.length === 0) {
+                document.getElementById('photos-list').innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #888;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📷</div>
+                        <p>Aucune photo pour le moment</p>
+                    </div>
+                `;
+                return;
+            }
+
+            document.getElementById('photos-list').innerHTML = photos.map((photo, index) => `
+                <div class="item-card" style="position: relative;">
+                    <img src="${photo.thumbnail || photo.src}" alt="${photo.titre}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 0.5rem;">
+                    <h4 style="margin: 0 0 0.25rem; font-size: 0.95rem; color: var(--bleu);">${photo.titre}</h4>
+                    <p style="font-size: 0.8rem; color: #888; margin: 0;">${photo.categorie || ''} ${photo.date ? '• ' + photo.date : ''}</p>
+                    <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+                        <button class="btn btn-sm btn-outline" onclick="openEditPhoto(${index})">✏️ Modifier</button>
+                        <button class="btn btn-sm" style="background: #e74c3c; color: white;" onclick="deletePhoto(${index})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openAddPhoto() {
+            currentEdit = { type: 'photo', index: null };
+            document.getElementById('modal-title').textContent = '📷 Ajouter une photo';
+            document.getElementById('modal-body').innerHTML = getPhotoForm({});
+            document.getElementById('modal-save').onclick = savePhoto;
+            document.getElementById('modal-edit').classList.add('active');
+        }
+
+        function openEditPhoto(index) {
+            currentEdit = { type: 'photo', index };
+            const photo = data.medias.photos[index];
+            document.getElementById('modal-title').textContent = '📷 Modifier la photo';
+            document.getElementById('modal-body').innerHTML = getPhotoForm(photo);
+            document.getElementById('modal-save').onclick = savePhoto;
+            document.getElementById('modal-edit').classList.add('active');
+        }
+
+        function getPhotoForm(photo) {
+            const today = new Date().toISOString().split('T')[0];
+            return `
+                <div class="form-group">
+                    <label>Titre *</label>
+                    <input type="text" id="photo-titre" value="${photo.titre || ''}" placeholder="Ex: Réunion publique quartier Nord" required>
+                </div>
+                <div class="form-group">
+                    <label>Importer une image</label>
+                    <div class="photo-upload" onclick="document.getElementById('media-photo-file').click()"
+                         ondragover="event.preventDefault(); this.classList.add('dragover')"
+                         ondragleave="this.classList.remove('dragover')"
+                         ondrop="handleMediaPhotoDrop(event)"
+                         style="padding: 1.5rem; text-align: center; border: 2px dashed var(--gris-border); border-radius: 8px; cursor: pointer;">
+                        <input type="file" id="media-photo-file" accept="image/*" onchange="handleMediaPhotoSelect(event)" style="display: none;">
+                        <div id="media-photo-preview" style="display: ${photo.src ? 'block' : 'none'};">
+                            ${photo.src ? `<img src="${photo.src}" style="max-width: 200px; max-height: 150px; border-radius: 8px;">` : ''}
+                        </div>
+                        <div id="media-photo-placeholder" style="display: ${photo.src ? 'none' : 'block'};">
+                            <span style="font-size: 2rem;">📷</span>
+                            <p style="margin: 0.5rem 0 0 0; color: var(--gris-texte);">Cliquez ou glissez une image</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>URL de l'image *</label>
+                        <input type="text" id="photo-src" value="${photo.src || ''}" placeholder="images/photo.jpg">
+                    </div>
+                    <div class="form-group">
+                        <label>URL miniature (optionnel)</label>
+                        <input type="text" id="photo-thumbnail" value="${photo.thumbnail || ''}" placeholder="images/thumb-photo.jpg">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Catégorie</label>
+                        <select id="photo-categorie">
+                            <option value="">-- Choisir --</option>
+                            <option value="Réunions" ${photo.categorie === 'Réunions' ? 'selected' : ''}>Réunions</option>
+                            <option value="Équipe" ${photo.categorie === 'Équipe' ? 'selected' : ''}>Équipe</option>
+                            <option value="Ville" ${photo.categorie === 'Ville' ? 'selected' : ''}>Ville</option>
+                            <option value="Événements" ${photo.categorie === 'Événements' ? 'selected' : ''}>Événements</option>
+                            <option value="Terrain" ${photo.categorie === 'Terrain' ? 'selected' : ''}>Terrain</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date *</label>
+                        <input type="date" id="photo-date" value="${photo.date || today}" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description (optionnel)</label>
+                    <textarea id="photo-description" rows="2" placeholder="Description de la photo...">${photo.description || ''}</textarea>
+                </div>
+            `;
+        }
+
+        // Upload de photo pour la section Médias
+        function handleMediaPhotoSelect(event) {
+            const file = event.target.files[0];
+            if (file) processMediaPhoto(file);
+        }
+
+        function handleMediaPhotoDrop(event) {
+            event.preventDefault();
+            event.target.classList.remove('dragover');
+            const file = event.dataTransfer.files[0];
+            if (file) processMediaPhoto(file);
+        }
+
+        async function processMediaPhoto(file) {
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('⚠️ Image trop grande (max 5 Mo)', 'warning');
+                return;
+            }
+
+            if (!file.type.startsWith('image/')) {
+                showToast('⚠️ Fichier non valide', 'warning');
+                return;
+            }
+
+            showToast('⏳ Upload en cours...', 'info');
+
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                const base64Content = e.target.result.split(',')[1];
+                const fileName = file.name.replace(/\s+/g, '_').toLowerCase();
+                const imagePath = `images/medias/${fileName}`;
+
+                // Mode local : upload vers le serveur local
+                if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                    try {
+                        const response = await fetch(`/api/upload/${imagePath}`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ content: base64Content })
+                        });
+
+                        if (response.ok) {
+                            document.getElementById('photo-src').value = imagePath;
+                            document.getElementById('media-photo-preview').innerHTML = `<img src="${e.target.result}" style="max-width: 200px; max-height: 150px; border-radius: 8px;">`;
+                            document.getElementById('media-photo-preview').style.display = 'block';
+                            document.getElementById('media-photo-placeholder').style.display = 'none';
+
+                            // Suggérer un titre depuis le nom de fichier si vide
+                            const titreInput = document.getElementById('photo-titre');
+                            if (!titreInput.value) {
+                                const suggestedTitle = fileName
+                                    .replace(/\.[^/.]+$/, '') // enlever extension
+                                    .replace(/[-_]/g, ' ')    // remplacer - et _ par espaces
+                                    .replace(/\b\w/g, c => c.toUpperCase()); // capitaliser
+                                titreInput.value = suggestedTitle;
+                            }
+
+                            showToast('✅ Image uploadée !', 'success');
+                        } else {
+                            const error = await response.json();
+                            throw new Error(error.error || 'Upload failed');
+                        }
+                    } catch (err) {
+                        showToast('❌ Erreur upload: ' + err.message, 'error');
+                    }
+                } else {
+                    // Mode non-local : juste afficher preview et mettre le chemin
+                    document.getElementById('photo-src').value = imagePath;
+                    document.getElementById('media-photo-preview').innerHTML = `<img src="${e.target.result}" style="max-width: 200px; max-height: 150px; border-radius: 8px;">`;
+                    document.getElementById('media-photo-preview').style.display = 'block';
+                    document.getElementById('media-photo-placeholder').style.display = 'none';
+                    showToast('⚠️ Upload GitHub requis (utilisez le token)', 'warning');
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function savePhoto() {
+            const photo = {
+                id: currentEdit.index !== null ? data.medias.photos[currentEdit.index].id : Date.now(),
+                titre: document.getElementById('photo-titre').value.trim(),
+                src: document.getElementById('photo-src').value.trim(),
+                thumbnail: document.getElementById('photo-thumbnail').value.trim() || null,
+                categorie: document.getElementById('photo-categorie').value,
+                date: document.getElementById('photo-date').value,
+                description: document.getElementById('photo-description').value.trim()
+            };
+
+            if (!photo.titre || !photo.src) {
+                showToast('Veuillez remplir le titre et l\'URL de l\'image', 'error');
+                return;
+            }
+
+            if (currentEdit.index !== null) {
+                data.medias.photos[currentEdit.index] = photo;
+            } else {
+                data.medias.photos.push(photo);
+            }
+
+            closeModal();
+            renderPhotos();
+            markModified('medias');
+            showToast('📷 Photo enregistrée', 'success');
+        }
+
+        function deletePhoto(index) {
+            if (confirm('Supprimer cette photo ?')) {
+                data.medias.photos.splice(index, 1);
+                renderPhotos();
+                markModified('medias');
+                showToast('Photo supprimée', 'success');
+            }
+        }
+
+        // === PRESSE ===
+        function renderPresse() {
+            const articles = data.medias?.presse || [];
+            document.getElementById('presse-count').textContent = articles.length;
+
+            if (articles.length === 0) {
+                document.getElementById('presse-list').innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #888;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📰</div>
+                        <p>Aucun article de presse pour le moment</p>
+                    </div>
+                `;
+                return;
+            }
+
+            document.getElementById('presse-list').innerHTML = articles.map((article, index) => `
+                <div class="item-row" style="display: flex; gap: 1rem; align-items: center; padding: 1rem; background: white; border-radius: 8px; margin-bottom: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                    ${article.image ? `<img src="${article.image}" style="width: 80px; height: 60px; object-fit: cover; border-radius: 6px;">` : '<div style="width: 80px; height: 60px; background: #f0f0f0; border-radius: 6px; display: flex; align-items: center; justify-content: center;">📰</div>'}
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600; color: var(--bleu);">${article.titre}</div>
+                        <div style="font-size: 0.85rem; color: #888;">${article.source} • ${article.date}</div>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-sm btn-outline" onclick="openEditPresse(${index})">✏️</button>
+                        <button class="btn btn-sm" style="background: #e74c3c; color: white;" onclick="deletePresse(${index})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openAddPresse() {
+            currentEdit = { type: 'presse', index: null };
+            document.getElementById('modal-title').textContent = '📰 Ajouter un article de presse';
+            document.getElementById('modal-body').innerHTML = getPresseForm({});
+            document.getElementById('modal-save').onclick = savePresse;
+            document.getElementById('modal-edit').classList.add('active');
+        }
+
+        function openEditPresse(index) {
+            currentEdit = { type: 'presse', index };
+            const article = data.medias.presse[index];
+            document.getElementById('modal-title').textContent = '📰 Modifier l\'article de presse';
+            document.getElementById('modal-body').innerHTML = getPresseForm(article);
+            document.getElementById('modal-save').onclick = savePresse;
+            document.getElementById('modal-edit').classList.add('active');
+        }
+
+        function getPresseForm(article) {
+            return `
+                <div class="form-group">
+                    <label>Titre de l'article *</label>
+                    <input type="text" id="presse-titre" value="${article.titre || ''}" placeholder="Ex: Municipales : Catherine Troton candidate">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Source / Média *</label>
+                        <input type="text" id="presse-source" value="${article.source || ''}" placeholder="Ex: Le Dauphiné Libéré">
+                    </div>
+                    <div class="form-group">
+                        <label>Date de publication</label>
+                        <input type="date" id="presse-date" value="${article.date || ''}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Extrait / Résumé</label>
+                    <textarea id="presse-extrait" rows="3" placeholder="Court résumé de l'article...">${article.extrait || ''}</textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Lien vers l'article (optionnel)</label>
+                        <input type="url" id="presse-lien" value="${article.lien || ''}" placeholder="https://...">
+                    </div>
+                    <div class="form-group">
+                        <label>Image (optionnel)</label>
+                        <input type="text" id="presse-image" value="${article.image || ''}" placeholder="images/article.jpg">
+                    </div>
+                </div>
+            `;
+        }
+
+        function savePresse() {
+            const article = {
+                id: currentEdit.index !== null ? data.medias.presse[currentEdit.index].id : Date.now(),
+                titre: document.getElementById('presse-titre').value.trim(),
+                source: document.getElementById('presse-source').value.trim(),
+                date: document.getElementById('presse-date').value,
+                extrait: document.getElementById('presse-extrait').value.trim(),
+                lien: document.getElementById('presse-lien').value.trim(),
+                image: document.getElementById('presse-image').value.trim()
+            };
+
+            if (!article.titre || !article.source) {
+                showToast('Veuillez remplir le titre et la source', 'error');
+                return;
+            }
+
+            if (currentEdit.index !== null) {
+                data.medias.presse[currentEdit.index] = article;
+            } else {
+                data.medias.presse.push(article);
+            }
+
+            closeModal();
+            renderPresse();
+            markModified('medias');
+            showToast('📰 Article de presse enregistré', 'success');
+        }
+
+        function deletePresse(index) {
+            if (confirm('Supprimer cet article de presse ?')) {
+                data.medias.presse.splice(index, 1);
+                renderPresse();
+                markModified('medias');
+                showToast('Article supprimé', 'success');
+            }
+        }
+
+        // === VIDEOS ===
+        function renderVideos() {
+            const videos = data.medias?.videos || [];
+            document.getElementById('videos-count').textContent = videos.length;
+
+            if (videos.length === 0) {
+                document.getElementById('videos-list').innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #888;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🎬</div>
+                        <p>Aucune vidéo pour le moment</p>
+                    </div>
+                `;
+                return;
+            }
+
+            document.getElementById('videos-list').innerHTML = videos.map((video, index) => `
+                <div class="item-card">
+                    <div style="position: relative; aspect-ratio: 16/9; background: #000; border-radius: 8px; overflow: hidden; margin-bottom: 0.75rem;">
+                        <img src="${video.thumbnail || (video.type === 'youtube' ? `https://img.youtube.com/vi/${video.videoId}/mqdefault.jpg` : '')}"
+                             style="width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.7); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">▶</div>
+                    </div>
+                    <h4 style="margin: 0 0 0.25rem; font-size: 0.95rem; color: var(--bleu);">${video.titre}</h4>
+                    <p style="font-size: 0.8rem; color: #888; margin: 0;">${video.type === 'youtube' ? 'YouTube' : 'Facebook'} ${video.date ? '• ' + video.date : ''}</p>
+                    <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+                        <button class="btn btn-sm btn-outline" onclick="openEditVideo(${index})">✏️ Modifier</button>
+                        <button class="btn btn-sm" style="background: #e74c3c; color: white;" onclick="deleteVideo(${index})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openAddVideo() {
+            currentEdit = { type: 'video', index: null };
+            document.getElementById('modal-title').textContent = '🎬 Ajouter une vidéo';
+            document.getElementById('modal-body').innerHTML = getVideoForm({});
+            document.getElementById('modal-save').onclick = saveVideo;
+            document.getElementById('modal-edit').classList.add('active');
+        }
+
+        function openEditVideo(index) {
+            currentEdit = { type: 'video', index };
+            const video = data.medias.videos[index];
+            document.getElementById('modal-title').textContent = '🎬 Modifier la vidéo';
+            document.getElementById('modal-body').innerHTML = getVideoForm(video);
+            document.getElementById('modal-save').onclick = saveVideo;
+            document.getElementById('modal-edit').classList.add('active');
+        }
+
+        function getVideoForm(video) {
+            return `
+                <div class="form-group">
+                    <label>🔗 Coller l'URL de la vidéo (YouTube ou Facebook)</label>
+                    <input type="text" id="video-url" value="" placeholder="https://www.youtube.com/watch?v=... ou https://www.facebook.com/watch?v=..."
+                           oninput="parseVideoUrl(this.value)" style="font-size: 0.95rem;">
+                    <small style="color: var(--vert);">Collez l'URL complète - le type et l'ID seront extraits automatiquement</small>
+                </div>
+                <div class="form-group">
+                    <label>Titre de la vidéo *</label>
+                    <input type="text" id="video-titre" value="${video.titre || ''}" placeholder="Ex: Interview de Catherine Troton">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Type de vidéo</label>
+                        <select id="video-type">
+                            <option value="youtube" ${video.type === 'youtube' || !video.type ? 'selected' : ''}>YouTube</option>
+                            <option value="facebook" ${video.type === 'facebook' ? 'selected' : ''}>Facebook</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>ID de la vidéo</label>
+                        <input type="text" id="video-id" value="${video.videoId || ''}" placeholder="Extrait automatiquement de l'URL">
+                    </div>
+                </div>
+                <div id="video-preview" style="margin: 1rem 0; display: ${video.videoId ? 'block' : 'none'};">
+                    <label style="display: block; margin-bottom: 0.5rem;">Aperçu :</label>
+                    <div style="position: relative; aspect-ratio: 16/9; max-width: 300px; background: #000; border-radius: 8px; overflow: hidden;">
+                        <img id="video-preview-img" src="${video.videoId ? `https://img.youtube.com/vi/${video.videoId}/mqdefault.jpg` : ''}"
+                             style="width: 100%; height: 100%; object-fit: cover;">
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255,0,0,0.8); color: white; width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">▶</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="video-date" value="${video.date || new Date().toISOString().split('T')[0]}">
+                    </div>
+                    <div class="form-group">
+                        <label>Miniature personnalisée (optionnel)</label>
+                        <input type="text" id="video-thumbnail" value="${video.thumbnail || ''}" placeholder="images/video-thumb.jpg">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description (optionnel)</label>
+                    <textarea id="video-description" rows="2" placeholder="Description de la vidéo...">${video.description || ''}</textarea>
+                </div>
+            `;
+        }
+
+        // Parser automatique d'URL vidéo
+        function parseVideoUrl(url) {
+            if (!url) return;
+
+            let videoId = '';
+            let type = 'youtube';
+
+            // YouTube formats
+            // https://www.youtube.com/watch?v=VIDEO_ID
+            // https://youtu.be/VIDEO_ID
+            // https://www.youtube.com/embed/VIDEO_ID
+            const youtubeMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|v\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+            if (youtubeMatch) {
+                videoId = youtubeMatch[1];
+                type = 'youtube';
+            }
+
+            // Facebook formats
+            // https://www.facebook.com/watch?v=VIDEO_ID
+            // https://fb.watch/VIDEO_ID
+            const facebookMatch = url.match(/(?:facebook\.com\/.*\/videos\/|facebook\.com\/watch\?v=|fb\.watch\/)(\d+)/);
+            if (facebookMatch) {
+                videoId = facebookMatch[1];
+                type = 'facebook';
+            }
+
+            if (videoId) {
+                document.getElementById('video-id').value = videoId;
+                document.getElementById('video-type').value = type;
+
+                // Afficher l'aperçu
+                const preview = document.getElementById('video-preview');
+                const previewImg = document.getElementById('video-preview-img');
+                preview.style.display = 'block';
+
+                if (type === 'youtube') {
+                    previewImg.src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+                } else {
+                    previewImg.src = ''; // Facebook n'a pas d'API simple pour les miniatures
+                }
+
+                showToast('✅ Vidéo détectée : ' + type.charAt(0).toUpperCase() + type.slice(1), 'success');
+            }
+        }
+
+        function saveVideo() {
+            const video = {
+                id: currentEdit.index !== null ? data.medias.videos[currentEdit.index].id : Date.now(),
+                titre: document.getElementById('video-titre').value.trim(),
+                type: document.getElementById('video-type').value,
+                videoId: document.getElementById('video-id').value.trim(),
+                date: document.getElementById('video-date').value,
+                thumbnail: document.getElementById('video-thumbnail').value.trim() || null,
+                description: document.getElementById('video-description').value.trim()
+            };
+
+            if (!video.titre || !video.videoId) {
+                showToast('Veuillez remplir le titre et l\'ID de la vidéo', 'error');
+                return;
+            }
+
+            if (currentEdit.index !== null) {
+                data.medias.videos[currentEdit.index] = video;
+            } else {
+                data.medias.videos.push(video);
+            }
+
+            closeModal();
+            renderVideos();
+            markModified('medias');
+            showToast('🎬 Vidéo enregistrée', 'success');
+        }
+
+        function deleteVideo(index) {
+            if (confirm('Supprimer cette vidéo ?')) {
+                data.medias.videos.splice(index, 1);
+                renderVideos();
+                markModified('medias');
+                showToast('Vidéo supprimée', 'success');
+            }
+        }
+
+        // === DOCUMENTS ===
+        function renderDocuments() {
+            const docs = data.medias?.documents || [];
+            document.getElementById('documents-count').textContent = docs.length;
+
+            if (docs.length === 0) {
+                document.getElementById('documents-list').innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #888;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📄</div>
+                        <p>Aucun document pour le moment</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const icons = { pdf: '📕', doc: '📘', docx: '📘', jpg: '🖼️', jpeg: '🖼️', png: '🖼️', zip: '📦' };
+
+            document.getElementById('documents-list').innerHTML = docs.map((doc, index) => `
+                <div class="item-row" style="display: flex; gap: 1rem; align-items: center; padding: 1rem; background: white; border-radius: 8px; margin-bottom: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                    <div style="font-size: 2rem;">${icons[doc.type?.toLowerCase()] || '📄'}</div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600; color: var(--bleu);">${doc.titre}</div>
+                        <div style="font-size: 0.85rem; color: #888;">${doc.type?.toUpperCase() || 'Fichier'} ${doc.taille ? '• ' + doc.taille : ''}</div>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <a href="${doc.fichier}" target="_blank" class="btn btn-sm btn-outline">👁️ Voir</a>
+                        <button class="btn btn-sm btn-outline" onclick="openEditDocument(${index})">✏️</button>
+                        <button class="btn btn-sm" style="background: #e74c3c; color: white;" onclick="deleteDocument(${index})">🗑️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openAddDocument() {
+            currentEdit = { type: 'document', index: null };
+            document.getElementById('modal-title').textContent = '📄 Ajouter un document';
+            document.getElementById('modal-body').innerHTML = getDocumentForm({});
+            document.getElementById('modal-save').onclick = saveDocument;
+            document.getElementById('modal-edit').classList.add('active');
+        }
+
+        function openEditDocument(index) {
+            currentEdit = { type: 'document', index };
+            const doc = data.medias.documents[index];
+            document.getElementById('modal-title').textContent = '📄 Modifier le document';
+            document.getElementById('modal-body').innerHTML = getDocumentForm(doc);
+            document.getElementById('modal-save').onclick = saveDocument;
+            document.getElementById('modal-edit').classList.add('active');
+        }
+
+        function getDocumentForm(doc) {
+            return `
+                <div class="form-group">
+                    <label>Titre du document *</label>
+                    <input type="text" id="doc-titre" value="${doc.titre || ''}" placeholder="Ex: Programme municipal 2026">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="doc-description" rows="2" placeholder="Description du document...">${doc.description || ''}</textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Chemin du fichier *</label>
+                        <input type="text" id="doc-fichier" value="${doc.fichier || ''}" placeholder="documents/programme.pdf">
+                    </div>
+                    <div class="form-group">
+                        <label>Type de fichier</label>
+                        <select id="doc-type">
+                            <option value="pdf" ${doc.type === 'pdf' ? 'selected' : ''}>PDF</option>
+                            <option value="doc" ${doc.type === 'doc' ? 'selected' : ''}>Word (.doc)</option>
+                            <option value="docx" ${doc.type === 'docx' ? 'selected' : ''}>Word (.docx)</option>
+                            <option value="jpg" ${doc.type === 'jpg' ? 'selected' : ''}>Image (JPG)</option>
+                            <option value="png" ${doc.type === 'png' ? 'selected' : ''}>Image (PNG)</option>
+                            <option value="zip" ${doc.type === 'zip' ? 'selected' : ''}>Archive (ZIP)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Taille du fichier</label>
+                        <input type="text" id="doc-taille" value="${doc.taille || ''}" placeholder="Ex: 2.5 Mo">
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="doc-date" value="${doc.date || ''}">
+                    </div>
+                </div>
+            `;
+        }
+
+        function saveDocument() {
+            const doc = {
+                id: currentEdit.index !== null ? data.medias.documents[currentEdit.index].id : Date.now(),
+                titre: document.getElementById('doc-titre').value.trim(),
+                description: document.getElementById('doc-description').value.trim(),
+                fichier: document.getElementById('doc-fichier').value.trim(),
+                type: document.getElementById('doc-type').value,
+                taille: document.getElementById('doc-taille').value.trim(),
+                date: document.getElementById('doc-date').value
+            };
+
+            if (!doc.titre || !doc.fichier) {
+                showToast('Veuillez remplir le titre et le chemin du fichier', 'error');
+                return;
+            }
+
+            if (currentEdit.index !== null) {
+                data.medias.documents[currentEdit.index] = doc;
+            } else {
+                data.medias.documents.push(doc);
+            }
+
+            closeModal();
+            renderDocuments();
+            markModified('medias');
+            showToast('📄 Document enregistré', 'success');
+        }
+
+        function deleteDocument(index) {
+            if (confirm('Supprimer ce document ?')) {
+                data.medias.documents.splice(index, 1);
+                renderDocuments();
+                markModified('medias');
+                showToast('Document supprimé', 'success');
+            }
+        }
+
+        // === BOBINES (vidéos thématiques) ===
+        function renderBobinesAdmin() {
+            const bobines = data.medias?.bobines || [];
+            document.getElementById('bobines-count').textContent = bobines.length;
+
+            if (bobines.length === 0) {
+                document.getElementById('bobines-list').innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #888;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🎞️</div>
+                        <p>Aucune bobine pour le moment</p>
+                        <p style="font-size: 0.85rem;">Les bobines sont des vidéos thématiques courtes affichées dans le Blog</p>
+                    </div>
+                `;
+                return;
+            }
+
+            document.getElementById('bobines-list').innerHTML = bobines.map((b, index) => {
+                const themeData = data.themes?.find(t => t.theme === b.theme);
+                const themeColor = themeData?.color || '#1a3a5c';
+                const themeIcon = themeData?.icon || '🎞️';
+                const thumbnail = b.thumbnail || `https://img.youtube.com/vi/${b.videoId}/mqdefault.jpg`;
+
+                return `
+                <div class="media-card" style="position: relative;">
+                    <div style="position: relative;">
+                        <img src="${thumbnail}" alt="${b.titre}" style="width: 100%; height: 140px; object-fit: cover; border-radius: 8px 8px 0 0;" onerror="this.src='https://img.youtube.com/vi/${b.videoId}/hqdefault.jpg'">
+                        <span style="position: absolute; top: 8px; left: 8px; background: ${themeColor}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem;">${themeIcon} ${b.theme || 'Sans thème'}</span>
+                        <a href="https://www.youtube.com/watch?v=${b.videoId}" target="_blank" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(229,57,53,0.9); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; text-decoration: none;">▶</a>
+                    </div>
+                    <div style="padding: 1rem;">
+                        <div style="font-weight: 600; color: var(--bleu); margin-bottom: 0.5rem;">${b.titre}</div>
+                        ${b.description ? `<div style="font-size: 0.85rem; color: #666; margin-bottom: 0.5rem;">${b.description.substring(0, 80)}${b.description.length > 80 ? '...' : ''}</div>` : ''}
+                        <div style="font-size: 0.8rem; color: #888;">${b.date ? new Date(b.date).toLocaleDateString('fr-FR') : ''}</div>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+                            <button class="btn btn-sm btn-outline" onclick="openEditBobine(${index})">✏️ Modifier</button>
+                            <button class="btn btn-sm" style="background: #e74c3c; color: white;" onclick="deleteBobine(${index})">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function openAddBobine() {
+            currentEdit = { type: 'bobine', index: null };
+            document.getElementById('modal-title').textContent = '🎞️ Ajouter une bobine';
+            document.getElementById('modal-body').innerHTML = getBobineForm({});
+            document.getElementById('modal-save').onclick = saveBobine;
+            document.getElementById('modal-edit').classList.add('active');
+        }
+
+        function openEditBobine(index) {
+            currentEdit = { type: 'bobine', index };
+            const bobine = data.medias.bobines[index];
+            document.getElementById('modal-title').textContent = '🎞️ Modifier la bobine';
+            document.getElementById('modal-body').innerHTML = getBobineForm(bobine);
+            document.getElementById('modal-save').onclick = saveBobine;
+            document.getElementById('modal-edit').classList.add('active');
+        }
+
+        function getBobineForm(b) {
+            const themesOptions = (data.themes || []).map(t =>
+                `<option value="${t.theme}" ${b.theme === t.theme ? 'selected' : ''}>${t.icon} ${t.theme}</option>`
+            ).join('');
+
+            return `
+                <div class="form-group">
+                    <label>Titre de la bobine *</label>
+                    <input type="text" id="bobine-titre" value="${b.titre || ''}" placeholder="Ex: La transition écologique à Vizille">
+                </div>
+                <div class="form-group">
+                    <label>Thème *</label>
+                    <select id="bobine-theme">
+                        <option value="">-- Choisir un thème --</option>
+                        ${themesOptions}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>URL YouTube ou ID de la vidéo *</label>
+                    <input type="text" id="bobine-url" value="${b.videoId || ''}" placeholder="Ex: https://www.youtube.com/watch?v=XXXXX ou juste l'ID" onpaste="setTimeout(() => parseBobineUrl(), 100)" oninput="parseBobineUrl()">
+                    <small style="color: #888;">Collez l'URL YouTube, l'ID sera extrait automatiquement</small>
+                </div>
+                <div class="form-group">
+                    <label>ID YouTube (extrait automatiquement)</label>
+                    <input type="text" id="bobine-videoid" value="${b.videoId || ''}" readonly style="background: #f5f5f5;">
+                </div>
+                <div id="bobine-preview" style="display: ${b.videoId ? 'block' : 'none'}; margin-bottom: 1rem;">
+                    <img id="bobine-preview-img" src="${b.videoId ? `https://img.youtube.com/vi/${b.videoId}/mqdefault.jpg` : ''}" style="width: 100%; max-width: 320px; border-radius: 8px;">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="bobine-description" rows="3" placeholder="Description de la bobine...">${b.description || ''}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" id="bobine-date" value="${b.date || new Date().toISOString().split('T')[0]}">
+                </div>
+                <div class="form-group">
+                    <label>Miniature personnalisée (optionnel)</label>
+                    <input type="text" id="bobine-thumbnail" value="${b.thumbnail || ''}" placeholder="URL de l'image ou laisser vide pour YouTube">
+                </div>
+            `;
+        }
+
+        function parseBobineUrl() {
+            const input = document.getElementById('bobine-url').value;
+            let videoId = input;
+
+            // Extraire l'ID YouTube de différents formats d'URL
+            const youtubeMatch = input.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+            if (youtubeMatch) {
+                videoId = youtubeMatch[1];
+            } else if (input.length === 11 && /^[a-zA-Z0-9_-]+$/.test(input)) {
+                // C'est déjà un ID
+                videoId = input;
+            }
+
+            if (videoId && videoId.length === 11) {
+                document.getElementById('bobine-videoid').value = videoId;
+                document.getElementById('bobine-preview').style.display = 'block';
+                document.getElementById('bobine-preview-img').src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+            }
+        }
+
+        function saveBobine() {
+            const bobine = {
+                id: currentEdit.index !== null ? data.medias.bobines[currentEdit.index].id : Date.now(),
+                titre: document.getElementById('bobine-titre').value.trim(),
+                theme: document.getElementById('bobine-theme').value,
+                videoId: document.getElementById('bobine-videoid').value.trim(),
+                description: document.getElementById('bobine-description').value.trim(),
+                date: document.getElementById('bobine-date').value,
+                thumbnail: document.getElementById('bobine-thumbnail').value.trim() || null
+            };
+
+            if (!bobine.titre || !bobine.videoId || !bobine.theme) {
+                showToast('Veuillez remplir le titre, le thème et l\'ID YouTube', 'error');
+                return;
+            }
+
+            // Initialiser le tableau si nécessaire
+            if (!data.medias.bobines) {
+                data.medias.bobines = [];
+            }
+
+            if (currentEdit.index !== null) {
+                data.medias.bobines[currentEdit.index] = bobine;
+            } else {
+                data.medias.bobines.push(bobine);
+            }
+
+            closeModal();
+            renderBobinesAdmin();
+            markModified('medias');
+            showToast('🎞️ Bobine enregistrée', 'success');
+        }
+
+        function deleteBobine(index) {
+            if (confirm('Supprimer cette bobine ?')) {
+                data.medias.bobines.splice(index, 1);
+                renderBobinesAdmin();
+                markModified('medias');
+                showToast('Bobine supprimée', 'success');
+            }
+        }
+
+        // === COLLECTE AUTOMATIQUE DES MÉDIAS ===
+        function collectAllMedia() {
+            let photosAdded = 0;
+            let videosAdded = 0;
+            const existingPhotoSrcs = new Set((data.medias?.photos || []).map(p => p.src));
+            const existingVideoIds = new Set((data.medias?.videos || []).map(v => v.videoId));
+
+            // Collecter depuis les ARTICLES / ACTUALITÉS
+            (data.articles || []).forEach(article => {
+                // Déterminer la catégorie (Événement, Rencontre, Communiqué, etc.)
+                const categorie = article.categorie || 'Actualités';
+
+                // Images des articles
+                if (article.images && article.images.length > 0) {
+                    article.images.forEach(img => {
+                        if (img && !img.startsWith('data:') && !existingPhotoSrcs.has(img)) {
+                            data.medias.photos.push({
+                                id: Date.now() + Math.random(),
+                                titre: article.titre || 'Image actualité',
+                                src: img,
+                                thumbnail: img,
+                                categorie: categorie,
+                                date: article.date || new Date().toISOString().split('T')[0],
+                                description: article.titre || ''
+                            });
+                            existingPhotoSrcs.add(img);
+                            photosAdded++;
+                        }
+                    });
+                }
+                // Vidéos YouTube des articles
+                if (article.youtube) {
+                    const videoId = article.youtube.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/)?.[1] || article.youtube;
+                    if (!existingVideoIds.has(videoId)) {
+                        data.medias.videos.push({
+                            id: Date.now() + Math.random(),
+                            titre: article.titre || 'Vidéo actualité',
+                            type: 'youtube',
+                            videoId: videoId,
+                            date: article.date || new Date().toISOString().split('T')[0],
+                            categorie: categorie,
+                            description: article.titre || ''
+                        });
+                        existingVideoIds.add(videoId);
+                        videosAdded++;
+                    }
+                }
+            });
+
+            // NOTE: Les projets ne sont PAS collectés automatiquement
+            // Leurs médias doivent être ajoutés manuellement par le gestionnaire
+
+            // Mettre à jour l'affichage
+            renderPhotos();
+            renderVideos();
+            showLatestMedia();
+
+            if (photosAdded > 0 || videosAdded > 0) {
+                markModified('medias');
+                showToast(`✅ Collecte terminée : ${photosAdded} photos, ${videosAdded} vidéos ajoutées`, 'success');
+            } else {
+                showToast('ℹ️ Aucun nouveau média trouvé', 'info');
+            }
+        }
+
+        // Afficher le dernier média ajouté
+        function showLatestMedia() {
+            const allMedia = [];
+
+            // Collecter tous les médias avec leur date
+            (data.medias?.photos || []).forEach(p => {
+                allMedia.push({ type: 'photo', data: p, date: p.date || '1900-01-01' });
+            });
+            (data.medias?.videos || []).forEach(v => {
+                allMedia.push({ type: 'video', data: v, date: v.date || '1900-01-01' });
+            });
+
+            if (allMedia.length === 0) {
+                document.getElementById('latest-media-zone').style.display = 'none';
+                return;
+            }
+
+            // Trier par date décroissante
+            allMedia.sort((a, b) => b.date.localeCompare(a.date));
+            const latest = allMedia[0];
+
+            const zone = document.getElementById('latest-media-zone');
+            const content = document.getElementById('latest-media-content');
+            zone.style.display = 'block';
+
+            if (latest.type === 'photo') {
+                content.innerHTML = `
+                    <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                        <img src="${latest.data.src}" style="width: 150px; height: 100px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                        <div>
+                            <div style="font-weight: 600; color: var(--bleu);">📷 ${latest.data.titre}</div>
+                            <div style="font-size: 0.85rem; color: #666;">${latest.data.categorie || ''} • ${latest.data.date || ''}</div>
+                        </div>
+                    </div>
+                `;
+            } else if (latest.type === 'video') {
+                const thumb = latest.data.thumbnail || (latest.data.type === 'youtube' ? `https://img.youtube.com/vi/${latest.data.videoId}/mqdefault.jpg` : '');
+                content.innerHTML = `
+                    <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                        <div style="position: relative; width: 150px; height: 85px; background: #000; border-radius: 8px; overflow: hidden;">
+                            <img src="${thumb}" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255,0,0,0.8); color: white; width: 30px; height: 30px; border-radius: 6px; display: flex; align-items: center; justify-content: center;">▶</div>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; color: var(--bleu);">🎬 ${latest.data.titre}</div>
+                            <div style="font-size: 0.85rem; color: #666;">${latest.data.type === 'youtube' ? 'YouTube' : 'Facebook'} • ${latest.data.date || ''}</div>
+                        </div>
+                    </div>
+                `;
+            }
         }
     </script>
 

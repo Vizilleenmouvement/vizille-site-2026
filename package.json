@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "eslint js/*.js app.js",
     "lint:fix": "eslint js/*.js app.js --fix",
+    "dev": "node server.js",
     "serve": "npx serve -l 3000",
     "optimize-images": "echo 'Utilisez: npx @squoosh/cli --webp auto images/*.png'",
     "validate-json": "node -e \"['data.json', 'articles.json', 'faq.json', 'projets.json', 'themes.json', 'config.json', 'stats.json', 'candidats.json'].forEach(f => { try { require('./' + f); console.log('✓ ' + f); } catch(e) { console.error('✗ ' + f + ': ' + e.message); } })\"",

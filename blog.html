@@ -1,207 +1,787 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actualités – Vizille en Mouvement</title>
-    <meta name="description" content="Toutes les actualités de Vizille en Mouvement - Événements, communiqués, rendez-vous.">
+    <meta name="description" content="Les actualités de Vizille en Mouvement - Informations et événements pour notre ville.">
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="article">
     <meta property="og:url" content="https://vizilleenmouvement.fr/blog.html">
     <meta property="og:title" content="Actualités - Vizille en Mouvement">
-    <meta property="og:description" content="Toutes les actualités de Vizille en Mouvement - Événements, communiqués, rendez-vous.">
+    <meta property="og:description" content="Les actualités de Vizille en Mouvement.">
     <meta property="og:image" content="https://vizilleenmouvement.fr/images/logo.png">
     <meta property="og:locale" content="fr_FR">
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Actualités - Vizille en Mouvement">
-    <meta name="twitter:description" content="Toutes les actualités de Vizille en Mouvement.">
-    <meta name="twitter:image" content="https://vizilleenmouvement.fr/images/logo.png">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/pages/blog.css">
 
     <style>
-        /* Conteneur principal */
         .content {
-            max-width: 900px;
+            max-width: 1300px;
             margin: 0 auto;
-            padding: 3rem 1.5rem;
+            padding: 3rem 2rem 4rem;
         }
-        /* Séparation entre sections */
-        .section-separator {
-            margin: 2.5rem 0 1.5rem;
-            padding: 1.5rem;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-left: 4px solid #1a3a5c;
-            border-radius: 0 8px 8px 0;
-            text-align: center;
-        }
-        .section-separator h3 {
-            margin: 0 0 0.5rem;
-            color: #1a3a5c;
-            font-size: 1.2rem;
-        }
-        .section-separator p {
-            margin: 0;
-            color: #666;
-            font-style: italic;
-        }
-        /* Événement prochain mis en avant */
-        .article-card.prochain {
-            background: linear-gradient(135deg, #1a3a5c 0%, #2c5282 100%);
-            color: white;
-            border: 3px solid #c9a227;
-            box-shadow: 0 8px 24px rgba(26, 58, 92, 0.3);
-            transform: scale(1.02);
-        }
-        .article-card.prochain .article-title {
-            color: white;
-        }
-        .article-card.prochain .article-excerpt {
-            color: rgba(255,255,255,0.9);
-        }
-        .article-card.prochain .article-date {
-            background: #c9a227;
-            color: #1a3a5c;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-        .article-card.prochain .article-category {
-            background: rgba(255,255,255,0.2);
-            color: white;
-        }
-        .article-card.prochain .article-link {
-            color: #c9a227;
-            font-weight: 600;
-        }
-        .prochain-badge {
-            display: inline-block;
-            background: #c9a227;
-            color: #1a3a5c;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        /* Image réduite dans les cartes */
-        .article-card .article-image {
-            max-height: 150px;
-            max-width: 150px;
-            object-fit: cover;
-            border-radius: 8px;
-            background: white;
-            padding: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin: 1rem auto;
-            display: block;
-        }
-        /* Image dans le détail d'article */
-        .article-full-image {
-            max-width: 300px;
-            max-height: 250px;
-            object-fit: cover;
+
+        /* Onglets Actualités / À venir */
+        .blog-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            background: #f5f5f5;
+            padding: 0.4rem;
             border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            margin: 1rem 0;
-            display: block;
+            width: fit-content;
+        }
+
+        .blog-tab {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .article-full-image:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-        }
-        .article-full-image.clickable::after {
-            content: '🔍 Cliquer pour agrandir';
-            display: block;
-            font-size: 0.75rem;
+            font-size: 0.95rem;
+            font-weight: 500;
             color: #666;
-            margin-top: 0.3rem;
+            transition: all 0.2s;
         }
-        
-        /* Lightbox pour afficher image en grand */
-        .lightbox-overlay {
+
+        .blog-tab:hover {
+            color: #1a3a5c;
+        }
+
+        .blog-tab.active {
+            background: white;
+            color: #1a3a5c;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .tab-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 22px;
+            height: 22px;
+            padding: 0 6px;
+            background: #E91E63;
+            color: white;
+            border-radius: 11px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .blog-tab.active .tab-count {
+            background: #1a3a5c;
+        }
+
+        /* Toolbar minimaliste */
+        .blog-toolbar {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1.5rem;
+        }
+
+        .search-box {
+            position: relative;
+            min-width: 200px;
+            max-width: 280px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.5rem 1rem 0.5rem 2rem;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            font-size: 0.9rem;
+            background: transparent;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-bottom-color: #1a3a5c;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.3;
+            font-size: 0.85rem;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #888;
+            transition: color 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-btn:hover {
+            color: #1a3a5c;
+        }
+
+        .filter-btn.active {
+            color: #1a3a5c;
+            font-weight: 600;
+        }
+
+        /* Grille style MASU */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2.5rem 2rem;
+        }
+
+        .article-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .article-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .article-card-media {
+            position: relative;
+            margin-bottom: 0;
+        }
+
+        .article-card-image {
+            width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+        }
+
+        .article-card-placeholder {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: linear-gradient(145deg, #1a3a5c 0%, #2d5a87 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: rgba(255,255,255,0.3);
+        }
+
+        .video-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255,255,255,0.9);
+            color: #1a3a5c;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .badge-preciser {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            background: #f39c12;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-prochain {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: linear-gradient(135deg, #e53935, #c62828);
+            color: white;
+            padding: 0.4rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: capitalize;
+            letter-spacing: 0.3px;
+            animation: pulse-badge 2s infinite;
+            box-shadow: 0 3px 12px rgba(229, 57, 53, 0.5);
+        }
+
+        @keyframes pulse-badge {
+            0%, 100% { transform: scale(1); box-shadow: 0 3px 12px rgba(229, 57, 53, 0.5); }
+            50% { transform: scale(1.03); box-shadow: 0 4px 16px rgba(229, 57, 53, 0.7); }
+        }
+
+        .badge-gallery {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .article-card-content {
+            padding: 1rem 1.25rem 1.25rem;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .article-date {
+            font-size: 0.8rem;
+            color: #888;
+            font-weight: 500;
+        }
+
+        .article-category {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .article-category.evenement { background: #e3f2fd; color: #1565c0; }
+        .article-category.communique { background: #fff3e0; color: #e65100; }
+        .article-category.reunion { background: #f3e5f5; color: #7b1fa2; }
+        .article-category.presse { background: #e8f5e9; color: #2e7d32; }
+        .article-category.action { background: #fce4ec; color: #c2185b; }
+        .article-category.bilan { background: #e0f2f1; color: #00695c; }
+
+        .article-card-title {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #1a3a5c;
+            margin: 0;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .article-card-excerpt {
+            display: block;
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.5rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .read-more {
             display: none;
+        }
+
+        /* Article complet */
+        .article-view {
+            display: none;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .article-view.active {
+            display: block;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #1a3a5c;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .back-link:hover {
+            color: #E91E63;
+        }
+
+        .article-full {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .article-hero-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+        }
+
+        .article-video {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .article-video iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .article-header {
+            padding: 2rem 2rem 1rem;
+        }
+
+        .article-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #1a3a5c;
+            margin: 0.75rem 0 0.5rem;
+            line-height: 1.3;
+        }
+
+        .article-author {
+            font-size: 0.9rem;
+            color: #888;
+            margin: 0.25rem 0;
+        }
+
+        .article-body {
+            padding: 0.5rem 2rem 2rem;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .article-body p {
+            margin-bottom: 1.25rem;
+        }
+
+        .article-body ul {
+            margin: 1rem 0 1.5rem 1.5rem;
+        }
+
+        .article-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .article-body blockquote {
+            border-left: 4px solid #E91E63;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #555;
+        }
+
+        /* Partage */
+        .share-box {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+            flex-wrap: wrap;
+        }
+
+        .share-label {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .share-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .share-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .share-facebook { background: #1877F2; color: white; }
+        .share-twitter { background: #000; color: white; }
+        .share-copy { background: #e0e0e0; color: #333; }
+
+        /* Galerie d'images */
+        .article-gallery {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-gallery-main {
+            position: relative;
+            background: #000;
+        }
+
+        .article-gallery-main img {
+            width: 100%;
+            max-height: 450px;
+            object-fit: contain;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-nav:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .gallery-nav.prev { left: 10px; }
+        .gallery-nav.next { right: 10px; }
+
+        .gallery-counter {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .article-gallery-thumbs {
+            display: flex;
+            gap: 8px;
+            padding: 10px;
+            background: #f5f5f5;
+            overflow-x: auto;
+        }
+
+        .gallery-thumb {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid transparent;
+            opacity: 0.6;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .gallery-thumb:hover {
+            opacity: 0.9;
+        }
+
+        .gallery-thumb.active {
+            border-color: #1a3a5c;
+            opacity: 1;
+        }
+
+        /* Lien document */
+        .document-link-box {
+            padding: 1rem 2rem;
+            background: #e3f2fd;
+            border-top: 1px solid #bbdefb;
+        }
+
+        .document-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: #1565c0;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .document-link-btn:hover {
+            background: #0d47a1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(21, 101, 192, 0.3);
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            color: #888;
+        }
+
+        .empty-state .icon {
+            font-size: 3rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Pagination minimaliste */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #eee;
+        }
+
+        .pagination-btn {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #333;
+            transition: all 0.2s;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            border-color: #1a3a5c;
+            color: #1a3a5c;
+        }
+
+        .pagination-btn.active {
+            background: #1a3a5c;
+            border-color: #1a3a5c;
+            color: white;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .pagination-info {
+            font-size: 0.8rem;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1a3a5c;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.3s;
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Bobines styles */
+        .bobine-card {
+            position: relative;
+        }
+
+        .bobine-play {
+            background: rgba(229, 57, 53, 0.95) !important;
+            color: white !important;
+            width: 55px !important;
+            height: 55px !important;
+            font-size: 1.4rem !important;
+        }
+
+        .badge-theme {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        /* Modal Bobine */
+        .bobine-modal {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
             background: rgba(0,0,0,0.9);
-            z-index: 3000;
+            display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 3000;
             padding: 1rem;
         }
-        .lightbox-overlay.active {
-            display: flex;
-        }
-        .lightbox-content {
+
+        .bobine-modal-content {
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            max-width: 900px;
+            width: 100%;
             position: relative;
-            max-width: 95vw;
-            max-height: 95vh;
         }
-        .lightbox-image {
-            max-width: 95vw;
-            max-height: 90vh;
-            object-fit: contain;
-            border-radius: 8px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-        }
-        .lightbox-close {
+
+        .bobine-modal-close {
             position: absolute;
-            top: -40px;
+            top: -45px;
             right: 0;
-            background: rgba(255,255,255,0.2);
+            background: none;
             border: none;
             color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
+            font-size: 2.5rem;
             cursor: pointer;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .lightbox-close:hover {
-            background: rgba(255,255,255,0.4);
-        }
-        .lightbox-caption {
-            color: white;
-            text-align: center;
-            margin-top: 1rem;
-            font-size: 0.9rem;
+            z-index: 10;
+            line-height: 1;
             opacity: 0.8;
+            transition: opacity 0.2s;
         }
-        .lightbox-hint {
+
+        .bobine-modal-close:hover {
+            opacity: 1;
+        }
+
+        .bobine-video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+        }
+
+        .bobine-video-container iframe {
             position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .bobine-modal-title {
             color: white;
-            opacity: 0.6;
-            font-size: 0.8rem;
+            padding: 1rem 1.25rem;
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+            background: #111;
+        }
+
+        @media (max-width: 1100px) {
+            .articles-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 800px) {
+            .articles-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem 1.5rem;
+            }
+
+            .content {
+                padding: 2rem 1.5rem 3rem;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .articles-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .blog-toolbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .search-box {
+                max-width: none;
+                width: 100%;
+            }
+
+            .filters {
+                gap: 1rem;
+            }
+
+            .article-title {
+                font-size: 1.5rem;
+            }
+
+            .article-header,
+            .article-body {
+                padding-left: 1.25rem;
+                padding-right: 1.25rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Skip Link pour navigation clavier -->
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
     <header class="header">
@@ -221,6 +801,7 @@
                     <li><a href="projet.html">Projet</a></li>
                     <li><a href="blog.html" class="active">Actualités</a></li>
                     <li><a href="equipe.html">Équipe</a></li>
+                    <li><a href="medias.html">Médias</a></li>
                     <li><a href="faq.html">Construisons ensemble</a></li>
                     <li><a href="admin.html" class="admin-link" title="Administration">⚙️</a></li>
                 </ul>
@@ -234,232 +815,632 @@
         <div class="hero-text">
             <h1>Actualités</h1>
             <p class="slogan">Ensemble pour une ville dynamique et solidaire</p>
-            <p class="hero-subtitle">Suivez notre campagne et nos événements</p>
         </div>
     </section>
 
     <main class="content" id="main-content">
         <!-- Liste des articles -->
-        <div id="articles-view">
-            <div class="filters" id="filters">
-                <button class="filter-btn active" data-category="">Tous</button>
+        <div id="blog-list-view">
+            <!-- Onglets Actualités / Prochainement / À préciser -->
+            <div class="blog-tabs">
+                <button class="blog-tab active" id="tab-past" onclick="switchTab('past')">
+                    📰 Actualités
+                </button>
+                <button class="blog-tab" id="tab-future" onclick="switchTab('future')">
+                    📅 Prochainement <span class="tab-count" id="future-count"></span>
+                </button>
+                <button class="blog-tab" id="tab-tbd" onclick="switchTab('tbd')">
+                    🕐 À préciser <span class="tab-count" id="tbd-count"></span>
+                </button>
+                <button class="blog-tab" id="tab-bobines" onclick="switchTab('bobines')">
+                    🎬 Bobines <span class="tab-count" id="bobines-count"></span>
+                </button>
             </div>
 
-            <div class="articles-list" id="articles-list">
-                <div class="loading">
-                    <span style="font-size: 2rem;">⏳</span>
-                    <p>Chargement des actualités...</p>
+            <div class="blog-toolbar">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="search-input" placeholder="Rechercher..." oninput="searchArticles()">
+                </div>
+                <div class="filters" id="filters"></div>
+            </div>
+
+            <div class="articles-grid" id="articles-grid">
+                <div class="empty-state">
+                    <div class="icon">⏳</div>
+                    <p>Chargement...</p>
                 </div>
             </div>
+
+            <div class="pagination" id="pagination"></div>
         </div>
 
         <!-- Article complet -->
-        <div class="article-full" id="article-full">
-            <a href="#" class="back-link" onclick="showArticlesList(); return false;">
-                ← Retour aux actualités
-            </a>
-            <div id="article-full-content"></div>
+        <div class="article-view" id="article-view">
+            <a href="#" class="back-link" onclick="showList(); return false;">← Retour aux actualités</a>
+            <article class="article-full" id="article-content"></article>
         </div>
     </main>
 
-    <footer class="footer">
-        <p class="footer-slogan">« Ensemble pour une ville dynamique et solidaire »</p>
-        <p>© 2025 Vizille en Mouvement</p>
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="images/logo.png" alt="" style="height: 40px; filter: brightness(0) invert(1);">
+                <p>Liste citoyenne pour les élections municipales 2026.</p>
+            </div>
+            <div>
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="bilan.html">Bilan</a></li>
+                    <li><a href="projet.html">Projet</a></li>
+                    <li><a href="blog.html">Actualités</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Informations</h4>
+                <ul>
+                    <li><a href="equipe.html">L'Équipe</a></li>
+                    <li><a href="medias.html">Médias</a></li>
+                    <li><a href="faq.html">Construisons ensemble</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Liens</h4>
+                <ul>
+                    <li><a href="mentions-legales.html">Mentions légales</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Vizille en Mouvement</p>
+        </div>
     </footer>
 
-    <!-- Lightbox pour afficher les images en grand -->
-    <div class="lightbox-overlay" id="lightbox-overlay" onclick="closeLightbox(event)">
-        <div class="lightbox-content">
-            <button class="lightbox-close" onclick="closeLightbox(event)">✕</button>
-            <img src="" alt="" class="lightbox-image" id="lightbox-image">
-            <p class="lightbox-caption" id="lightbox-caption"></p>
-        </div>
-        <span class="lightbox-hint">Cliquer à l'extérieur ou Échap pour fermer</span>
-    </div>
+    <div class="toast" id="toast"></div>
 
     <script>
-        let articlesData = [];
-        let currentCategory = '';
+        let articles = [];
+        let pastArticles = [];
+        let futureArticles = [];
+        let tbdArticles = []; // Articles avec date à préciser
+        let bobines = []; // Vidéos courtes thématiques
+        let themes = []; // Thèmes pour les bobines
+        let currentTab = 'past'; // 'past', 'future', 'tbd' ou 'bobines'
+        let currentFilter = '';
+        let searchQuery = '';
+        let currentPage = 1;
+        const articlesPerPage = 12;
 
         async function loadArticles() {
             try {
-                const response = await fetch('articles.json');
-                if (!response.ok) throw new Error('Erreur');
-                articlesData = await response.json();
+                // Charger articles, médias et thèmes en parallèle
+                const [resArticles, resMedias, resThemes] = await Promise.all([
+                    fetch('articles.json'),
+                    fetch('medias.json'),
+                    fetch('themes.json')
+                ]);
+                articles = await resArticles.json();
+                const medias = await resMedias.json();
+                themes = await resThemes.json();
+
+                // Charger les bobines depuis medias.json
+                bobines = medias.bobines || [];
+
+                // Séparer événements passés, futurs et à préciser
+                const now = new Date();
+                now.setHours(0, 0, 0, 0);
+
+                // Articles avec "a_preciser" = true → onglet "À préciser"
+                tbdArticles = articles.filter(a => a.a_preciser === true);
+
+                // Articles passés (sans les "à préciser")
+                pastArticles = articles.filter(a => {
+                    if (a.a_preciser) return false;
+                    if (!a.date) return true; // Sans date et pas "à préciser" → passés
+                    return new Date(a.date) < now;
+                });
+
+                // Articles futurs (sans les "à préciser")
+                futureArticles = articles.filter(a => {
+                    if (a.a_preciser) return false;
+                    if (!a.date) return false;
+                    return new Date(a.date) >= now;
+                });
+
+                // Trier passés : du plus récent au plus ancien
+                pastArticles.sort((a, b) => {
+                    const dateA = a.date ? new Date(a.date).getTime() : 0;
+                    const dateB = b.date ? new Date(b.date).getTime() : 0;
+                    if (!dateA) return 1;
+                    if (!dateB) return -1;
+                    return dateB - dateA;
+                });
+
+                // Trier futurs : du plus proche au plus lointain
+                futureArticles.sort((a, b) => {
+                    const dateA = new Date(a.date).getTime();
+                    const dateB = new Date(b.date).getTime();
+                    return dateA - dateB;
+                });
+
+                // Mettre le PROCHAIN événement en tête des Actualités
+                if (futureArticles.length > 0) {
+                    const prochainEvent = futureArticles[0];
+                    pastArticles.unshift(prochainEvent);
+                    // Retirer des futurs pour éviter doublon
+                    futureArticles = futureArticles.slice(1);
+                }
+
+                // Afficher le compteur des événements à venir (sans le prochain qui est dans Actualités)
+                const futureCount = document.getElementById('future-count');
+                if (futureArticles.length > 0) {
+                    futureCount.textContent = futureArticles.length;
+                    futureCount.style.display = 'inline-flex';
+                } else {
+                    futureCount.style.display = 'none';
+                }
+
+                // Afficher le compteur des événements à préciser
+                const tbdCount = document.getElementById('tbd-count');
+                if (tbdArticles.length > 0) {
+                    tbdCount.textContent = tbdArticles.length;
+                    tbdCount.style.display = 'inline-flex';
+                } else {
+                    tbdCount.style.display = 'none';
+                }
+
+                // Afficher le compteur des bobines
+                const bobinesCount = document.getElementById('bobines-count');
+                if (bobines.length > 0) {
+                    bobinesCount.textContent = bobines.length;
+                    bobinesCount.style.display = 'inline-flex';
+                } else {
+                    bobinesCount.style.display = 'none';
+                }
+
                 renderFilters();
-                renderArticles();
-            } catch (err) {
-                document.getElementById('articles-list').innerHTML = `
+                renderList();
+                checkUrl();
+            } catch (e) {
+                document.getElementById('articles-grid').innerHTML = `
                     <div class="empty-state">
-                        <div class="icon">📭</div>
-                        <h3>Aucune actualité pour le moment</h3>
-                        <p>Revenez bientôt !</p>
+                        <div class="icon">📝</div>
+                        <p>Aucun article pour le moment.</p>
                     </div>
                 `;
             }
         }
 
-        function renderFilters() {
-            const categories = [...new Set(articlesData.map(a => a.categorie).filter(c => c))];
-            const filtersContainer = document.getElementById('filters');
+        function switchTab(tab) {
+            currentTab = tab;
+            currentPage = 1;
+            currentFilter = '';
 
-            filtersContainer.innerHTML = `
-                <button class="filter-btn ${currentCategory === '' ? 'active' : ''}" data-category="" onclick="filterByCategory('')">Tous</button>
-                ${categories.map(cat => `
-                    <button class="filter-btn ${currentCategory === cat ? 'active' : ''}" data-category="${cat}" onclick="filterByCategory('${cat}')">${cat}</button>
-                `).join('')}
-            `;
-        }
+            // Mettre à jour les onglets visuellement
+            document.getElementById('tab-past').classList.toggle('active', tab === 'past');
+            document.getElementById('tab-future').classList.toggle('active', tab === 'future');
+            document.getElementById('tab-tbd').classList.toggle('active', tab === 'tbd');
+            document.getElementById('tab-bobines').classList.toggle('active', tab === 'bobines');
 
-        function filterByCategory(category) {
-            currentCategory = category;
             renderFilters();
-            renderArticles();
+            renderList();
         }
 
-        function renderArticles() {
-            const container = document.getElementById('articles-list');
-
-            let filtered = articlesData;
-            if (currentCategory) {
-                filtered = articlesData.filter(a => a.categorie === currentCategory);
-            }
-
-            if (filtered.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="icon">📭</div>
-                        <h3>Aucun article dans cette catégorie</h3>
-                    </div>
+        function renderFilters() {
+            // Pour les bobines, utiliser les thèmes
+            if (currentTab === 'bobines') {
+                const usedThemes = [...new Set(bobines.map(b => b.theme).filter(t => t))];
+                document.getElementById('filters').innerHTML = `
+                    <button class="filter-btn ${currentFilter === '' ? 'active' : ''}" onclick="filter('')">Tous</button>
+                    ${usedThemes.map(t => {
+                        const themeData = themes.find(th => th.theme === t);
+                        const icon = themeData ? themeData.icon : '';
+                        return `<button class="filter-btn ${currentFilter === t ? 'active' : ''}" onclick="filter('${t}')">${icon} ${t}</button>`;
+                    }).join('')}
                 `;
                 return;
             }
 
-            // Séparer les événements avec date précise et ceux à préciser
-            const avecDate = filtered.filter(a => !a.a_preciser);
-            const aPreciser = filtered.filter(a => a.a_preciser);
+            // Pour les articles
+            const source = currentTab === 'past' ? pastArticles : (currentTab === 'future' ? futureArticles : tbdArticles);
+            const cats = [...new Set(source.map(a => a.categorie).filter(c => c))];
+            document.getElementById('filters').innerHTML = `
+                <button class="filter-btn ${currentFilter === '' ? 'active' : ''}" onclick="filter('')">Tous</button>
+                ${cats.map(c => `<button class="filter-btn ${currentFilter === c ? 'active' : ''}" onclick="filter('${c}')">${c}</button>`).join('')}
+            `;
+        }
 
-            // Trier les événements avec date du plus proche au plus lointain
-            avecDate.sort((a, b) => new Date(a.date) - new Date(b.date));
+        function filter(cat) {
+            currentFilter = cat;
+            currentPage = 1;
+            renderFilters();
+            renderList();
+        }
 
-            let html = '';
+        function searchArticles() {
+            searchQuery = document.getElementById('search-input').value.toLowerCase();
+            currentPage = 1;
+            renderList();
+        }
 
-            // Afficher les événements avec date précise EN PREMIER
-            html += avecDate.map(article => renderArticleCard(article, false)).join('');
-
-            // Afficher la séparation et les événements à préciser APRÈS
-            if (aPreciser.length > 0) {
-                html += `
-                    <div class="section-separator">
-                        <h3>📅 Réunions de quartier — Janvier/Février 2026</h3>
-                        <p>Dates à confirmer prochainement</p>
-                    </div>
-                `;
-                html += aPreciser.map(article => renderArticleCard(article, true)).join('');
+        function renderList() {
+            // Onglet Bobines : afficher les vidéos thématiques
+            if (currentTab === 'bobines') {
+                renderBobines();
+                return;
             }
 
-            container.innerHTML = html;
+            // Utiliser la source selon l'onglet actif
+            let filtered;
+            if (currentTab === 'past') {
+                filtered = [...pastArticles];
+            } else if (currentTab === 'future') {
+                filtered = [...futureArticles];
+            } else {
+                filtered = [...tbdArticles];
+            }
+
+            if (currentFilter) {
+                filtered = filtered.filter(a => a.categorie === currentFilter);
+            }
+
+            if (searchQuery) {
+                filtered = filtered.filter(a =>
+                    a.titre.toLowerCase().includes(searchQuery) ||
+                    (a.extrait && a.extrait.toLowerCase().includes(searchQuery))
+                );
+            }
+
+            if (filtered.length === 0) {
+                let emptyMessage, emptyIcon;
+                if (currentTab === 'future') {
+                    emptyMessage = 'Aucun événement à venir pour le moment.';
+                    emptyIcon = '📅';
+                } else if (currentTab === 'tbd') {
+                    emptyMessage = 'Aucun événement avec date à préciser.';
+                    emptyIcon = '🕐';
+                } else {
+                    emptyMessage = 'Aucun article trouvé.';
+                    emptyIcon = '🔍';
+                }
+                document.getElementById('articles-grid').innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">${emptyIcon}</div>
+                        <p>${emptyMessage}</p>
+                    </div>
+                `;
+                document.getElementById('pagination').innerHTML = '';
+                return;
+            }
+
+            // Pagination
+            const totalPages = Math.ceil(filtered.length / articlesPerPage);
+            const startIndex = (currentPage - 1) * articlesPerPage;
+            const paged = filtered.slice(startIndex, startIndex + articlesPerPage);
+
+            // ID du prochain événement (le premier dans futureArticles)
+            const prochainId = futureArticles.length > 0 ? futureArticles[0].id : null;
+
+            document.getElementById('articles-grid').innerHTML = paged.map(a => {
+                // Utiliser la première image du tableau images, ou l'ancien champ image
+                const coverImage = (a.images && a.images.length > 0) ? a.images[0] : a.image;
+                const hasMultipleImages = a.images && a.images.length > 1;
+                const categoryClass = (a.categorie || '').toLowerCase()
+                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                    .replace(/\s+/g, '-');
+                const dateFormatted = a.date ? new Date(a.date).toLocaleDateString('fr-FR', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                }) : '';
+
+                // Badge "PROCHAIN" pour le premier événement à venir (maintenant en tête des Actualités)
+                const isProchain = a.id === prochainId;
+
+                return `
+                <div class="article-card" onclick="showArticle(${a.id})">
+                    <div class="article-card-media">
+                        ${coverImage
+                            ? `<img src="${coverImage}" alt="" class="article-card-image">`
+                            : `<div class="article-card-placeholder">${a.youtube ? '▶' : '✦'}</div>`
+                        }
+                        ${isProchain ? `<span class="badge-prochain">📍 Rendez-vous ${new Date(a.date).toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric', month: 'short'})}</span>` : ''}
+                        ${a.youtube && coverImage ? '<span class="video-badge">▶</span>' : ''}
+                        ${hasMultipleImages ? '<span class="badge-gallery">📷 ' + a.images.length + '</span>' : ''}
+                        ${a.a_preciser ? '<span class="badge-preciser">Date à préciser</span>' : ''}
+                    </div>
+                    <div class="article-card-content">
+                        <div class="article-meta">
+                            ${dateFormatted ? `<span class="article-date">${dateFormatted}</span>` : ''}
+                            ${a.categorie ? `<span class="article-category ${categoryClass}">${a.categorie}</span>` : ''}
+                        </div>
+                        <h2 class="article-card-title">${a.titre.replace(/^[📰📅📣🎯✊🤝📊🚀📝ℹ️🎬]\s*/, '')}</h2>
+                        ${a.extrait ? `<p class="article-card-excerpt">${a.extrait}</p>` : ''}
+                    </div>
+                </div>
+            `}).join('');
+
+            renderPagination(totalPages, filtered.length);
         }
 
-        function renderArticleCard(article, hidePreciseDate) {
-            const dateDisplay = hidePreciseDate ? 'Janvier/Février 2026' : formatDate(article.date);
-            const prochainClass = article.prochain ? ' prochain' : '';
-            const prochainBadge = article.prochain ? '<span class="prochain-badge">⏰ PROCHAIN ÉVÉNEMENT</span>' : '';
-            return `
-                <article class="article-card${prochainClass} ${article.image ? 'has-image' : ''}" tabindex="0" role="article" onkeydown="if(event.key==='Enter'){showArticle(${article.id})}">
-                    ${article.image ? `<img src="${article.image}" alt="" class="article-image">` : ''}
-                    <div class="article-content">
-                        ${prochainBadge}
-                        <div class="article-meta">
-                            <span class="article-date">📅 ${dateDisplay}</span>
-                            ${article.categorie ? `<span class="article-category">${article.categorie}</span>` : ''}
-                        </div>
-                        <h2 class="article-title">${article.titre}</h2>
-                        <p class="article-excerpt">${article.extrait || article.contenu.substring(0, 150) + '...'}</p>
-                        <a href="#" class="article-link" onclick="showArticle(${article.id}); return false;">
-                            Lire la suite →
-                        </a>
-                    </div>
-                </article>
+        function renderPagination(totalPages, totalItems) {
+            if (totalPages <= 1) {
+                document.getElementById('pagination').innerHTML = '';
+                return;
+            }
+
+            let html = `
+                <button class="pagination-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>←</button>
             `;
+
+            // Afficher les numéros de page
+            for (let i = 1; i <= totalPages; i++) {
+                if (totalPages <= 7 || i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                    html += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+                } else if (i === currentPage - 2 || i === currentPage + 2) {
+                    html += `<span class="pagination-info">…</span>`;
+                }
+            }
+
+            html += `
+                <button class="pagination-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>→</button>
+                <span class="pagination-info">${totalItems} article${totalItems > 1 ? 's' : ''}</span>
+            `;
+
+            document.getElementById('pagination').innerHTML = html;
         }
+
+        function goToPage(page) {
+            currentPage = page;
+            renderList();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderBobines() {
+            let filtered = [...bobines];
+
+            // Filtrer par thème
+            if (currentFilter) {
+                filtered = filtered.filter(b => b.theme === currentFilter);
+            }
+
+            // Filtrer par recherche
+            if (searchQuery) {
+                filtered = filtered.filter(b =>
+                    b.titre.toLowerCase().includes(searchQuery) ||
+                    (b.description && b.description.toLowerCase().includes(searchQuery))
+                );
+            }
+
+            // Trier par date (plus récent d'abord)
+            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            if (filtered.length === 0) {
+                document.getElementById('articles-grid').innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">🎬</div>
+                        <p>Aucune bobine pour le moment.</p>
+                    </div>
+                `;
+                document.getElementById('pagination').innerHTML = '';
+                return;
+            }
+
+            // Pagination
+            const totalPages = Math.ceil(filtered.length / articlesPerPage);
+            const startIndex = (currentPage - 1) * articlesPerPage;
+            const paged = filtered.slice(startIndex, startIndex + articlesPerPage);
+
+            document.getElementById('articles-grid').innerHTML = paged.map(b => {
+                const themeData = themes.find(t => t.theme === b.theme);
+                const themeIcon = themeData ? themeData.icon : '🎬';
+                const themeColor = themeData ? themeData.color : '#1a3a5c';
+                const thumbnail = b.thumbnail || `https://img.youtube.com/vi/${b.videoId}/maxresdefault.jpg`;
+                const dateFormatted = b.date ? new Date(b.date).toLocaleDateString('fr-FR', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                }) : '';
+
+                return `
+                <div class="article-card bobine-card" onclick="showBobine('${b.videoId}', '${b.titre.replace(/'/g, "\\'")}')">
+                    <div class="article-card-media">
+                        <img src="${thumbnail}" alt="" class="article-card-image" onerror="this.src='https://img.youtube.com/vi/${b.videoId}/hqdefault.jpg'">
+                        <span class="video-badge bobine-play">▶</span>
+                        <span class="badge-theme" style="background: ${themeColor}">${themeIcon} ${b.theme}</span>
+                    </div>
+                    <div class="article-card-content">
+                        <div class="article-meta">
+                            ${dateFormatted ? `<span class="article-date">${dateFormatted}</span>` : ''}
+                        </div>
+                        <h2 class="article-card-title">${b.titre}</h2>
+                        ${b.description ? `<p class="article-card-excerpt">${b.description}</p>` : ''}
+                    </div>
+                </div>
+            `}).join('');
+
+            renderPagination(totalPages, filtered.length);
+        }
+
+        function showBobine(videoId, titre) {
+            // Ouvrir la vidéo dans une modal
+            const modal = document.createElement('div');
+            modal.className = 'bobine-modal';
+            modal.innerHTML = `
+                <div class="bobine-modal-content">
+                    <button class="bobine-modal-close" onclick="this.parentElement.parentElement.remove()">×</button>
+                    <div class="bobine-video-container">
+                        <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                    </div>
+                    <h3 class="bobine-modal-title">${titre}</h3>
+                </div>
+            `;
+            modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+            document.body.appendChild(modal);
+        }
+
+        let currentGalleryIndex = 0;
+        let currentGalleryImages = [];
 
         function showArticle(id) {
-            const article = articlesData.find(a => a.id === id);
-            if (!article) return;
+            const a = articles.find(x => x.id === id);
+            if (!a) return;
 
-            document.getElementById('articles-view').style.display = 'none';
-            document.getElementById('article-full').classList.add('active');
+            const content = formatContent(a.contenu || '');
+            const youtubeEmbed = a.youtube ? getYoutubeEmbed(a.youtube) : '';
 
-            const dateDisplay = article.a_preciser ? 'Janvier/Février 2026' : formatDate(article.date);
-            
-            // Image cliquable avec lightbox
-            const imageHtml = article.image 
-                ? `<div style="position: relative; display: inline-block;">
-                     <img src="${article.image}" alt="${article.titre}" class="article-full-image" 
-                          onclick="openLightbox('${article.image}', '${article.source || article.titre}')" 
-                          title="Cliquer pour agrandir">
-                     <small style="display: block; color: #666; font-size: 0.75rem; margin-top: 0.3rem;">🔍 Cliquer sur l'image pour l'agrandir</small>
-                   </div>`
-                : '';
+            // Gérer images : nouveau format (tableau) ou ancien format (string unique)
+            const images = a.images || (a.image ? [a.image] : []);
+            currentGalleryImages = images;
+            currentGalleryIndex = 0;
 
-            document.getElementById('article-full-content').innerHTML = `
-                ${imageHtml}
-                <div class="article-meta">
-                    <span class="article-date">📅 ${dateDisplay}</span>
-                    ${article.categorie ? `<span class="article-category">${article.categorie}</span>` : ''}
+            // Générer HTML de la galerie
+            let galleryHtml = '';
+            if (images.length > 1) {
+                galleryHtml = `
+                    <div class="article-gallery">
+                        <div class="article-gallery-main">
+                            <img id="gallery-main-img" src="${images[0]}" alt="">
+                            <button class="gallery-nav prev" onclick="prevGalleryImage()">‹</button>
+                            <button class="gallery-nav next" onclick="nextGalleryImage()">›</button>
+                            <span class="gallery-counter"><span id="gallery-index">1</span>/${images.length}</span>
+                        </div>
+                        <div class="article-gallery-thumbs">
+                            ${images.map((img, i) => `
+                                <img src="${img}" class="gallery-thumb ${i === 0 ? 'active' : ''}" onclick="goToGalleryImage(${i})" alt="">
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (images.length === 1) {
+                galleryHtml = `<img src="${images[0]}" alt="" class="article-hero-image">`;
+            }
+
+            document.getElementById('article-content').innerHTML = `
+                ${galleryHtml}
+                ${youtubeEmbed ? `
+                    <div class="article-video">
+                        <iframe src="${youtubeEmbed}" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                    </div>
+                ` : ''}
+                <div class="article-header">
+                    <div class="article-meta">
+                        <span class="article-date">${formatDate(a.date)}</span>
+                        ${a.categorie ? `<span class="article-category">${a.categorie}</span>` : ''}
+                    </div>
+                    <h1 class="article-title">${a.titre}</h1>
+                    ${a.auteur ? `<p class="article-author">Par ${a.auteur}</p>` : ''}
+                    ${a.source ? `<p class="article-author">Source : ${a.source}</p>` : ''}
                 </div>
-                <h1 class="article-title" style="font-size: 2rem; margin: 1rem 0;">${article.titre}</h1>
-                <div class="article-full-content">
-                    ${article.contenu.split('\n').map(p => p.trim() ? `<p>${p}</p>` : '').join('')}
+                <div class="article-body">${content}</div>
+                ${a.document_id ? `
+                    <div class="document-link-box">
+                        <a href="medias.html?doc=${a.document_id}" class="document-link-btn">
+                            📄 Voir le document associé
+                        </a>
+                    </div>
+                ` : ''}
+                <div class="share-box">
+                    <span class="share-label">Partager :</span>
+                    <div class="share-buttons">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.origin + location.pathname + '?article=' + id)}" target="_blank" class="share-btn share-facebook" title="Facebook">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(location.origin + location.pathname + '?article=' + id)}&text=${encodeURIComponent(a.titre)}" target="_blank" class="share-btn share-twitter" title="X/Twitter">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <button class="share-btn share-copy" onclick="copyLink(${id})" title="Copier le lien">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        </button>
+                    </div>
                 </div>
             `;
 
+            document.getElementById('blog-list-view').style.display = 'none';
+            document.getElementById('article-view').classList.add('active');
             window.scrollTo(0, 0);
+            history.pushState({ id }, '', '?article=' + id);
         }
 
-        function showArticlesList() {
-            document.getElementById('articles-view').style.display = 'block';
-            document.getElementById('article-full').classList.remove('active');
+        function showList() {
+            document.getElementById('blog-list-view').style.display = 'block';
+            document.getElementById('article-view').classList.remove('active');
+            history.pushState({}, '', location.pathname);
         }
 
-        function formatDate(dateStr) {
-            const date = new Date(dateStr);
-            return date.toLocaleDateString('fr-FR', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
+        function formatContent(text) {
+            text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            text = text.replace(/^• (.*?)$/gm, '<li>$1</li>');
+            text = text.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
+
+            const paras = text.split('\n\n');
+            return paras.map(p => {
+                p = p.trim();
+                if (!p || p.startsWith('<ul>') || p.startsWith('<li>')) return p;
+                return `<p>${p.replace(/\n/g, '<br>')}</p>`;
+            }).join('');
+        }
+
+        function formatDate(d) {
+            return new Date(d).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+        }
+
+        function getYoutubeEmbed(url) {
+            if (!url) return '';
+            const patterns = [
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+                /^([a-zA-Z0-9_-]{11})$/
+            ];
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match) return `https://www.youtube.com/embed/${match[1]}`;
+            }
+            return '';
+        }
+
+        function copyLink(id) {
+            navigator.clipboard.writeText(location.origin + location.pathname + '?article=' + id);
+            const t = document.getElementById('toast');
+            t.textContent = 'Lien copié !';
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2500);
+        }
+
+        function goToGalleryImage(index) {
+            if (index < 0 || index >= currentGalleryImages.length) return;
+            currentGalleryIndex = index;
+            document.getElementById('gallery-main-img').src = currentGalleryImages[index];
+            document.getElementById('gallery-index').textContent = index + 1;
+            document.querySelectorAll('.gallery-thumb').forEach((t, i) => {
+                t.classList.toggle('active', i === index);
             });
         }
 
-        // Lightbox functions
-        function openLightbox(imageSrc, caption) {
-            document.getElementById('lightbox-image').src = imageSrc;
-            document.getElementById('lightbox-caption').textContent = caption || '';
-            document.getElementById('lightbox-overlay').classList.add('active');
-            document.body.style.overflow = 'hidden'; // Empêcher le scroll
+        function prevGalleryImage() {
+            const newIndex = currentGalleryIndex === 0 ? currentGalleryImages.length - 1 : currentGalleryIndex - 1;
+            goToGalleryImage(newIndex);
         }
 
-        function closeLightbox(event) {
-            // Fermer seulement si on clique sur l'overlay ou le bouton close
-            if (event.target.id === 'lightbox-overlay' || event.target.classList.contains('lightbox-close')) {
-                document.getElementById('lightbox-overlay').classList.remove('active');
-                document.body.style.overflow = ''; // Rétablir le scroll
-            }
+        function nextGalleryImage() {
+            const newIndex = currentGalleryIndex === currentGalleryImages.length - 1 ? 0 : currentGalleryIndex + 1;
+            goToGalleryImage(newIndex);
         }
 
-        // Fermer avec Échap
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.getElementById('lightbox-overlay').classList.remove('active');
-                document.body.style.overflow = '';
-            }
+        function checkUrl() {
+            const p = new URLSearchParams(location.search);
+            const id = p.get('article');
+            if (id) showArticle(parseInt(id));
+        }
+
+        window.addEventListener('popstate', e => {
+            if (e.state && e.state.id) showArticle(e.state.id);
+            else showList();
         });
 
         document.addEventListener('DOMContentLoaded', loadArticles);
     </script>
 
-    <!-- Site Features JS -->
     <script src="js/site-features.js"></script>
 </body>
 </html>

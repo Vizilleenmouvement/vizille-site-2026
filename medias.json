@@ -1,0 +1,101 @@
+{
+  "bobines": [],
+  "photos": [
+    {
+      "id": 2,
+      "titre": "Catherine Troton - Maire de Vizille",
+      "src": "images/catherine-troton.jpg",
+      "thumbnail": "images/catherine-troton.jpg",
+      "categorie": "Équipe",
+      "date": "2026-01-10",
+      "description": "Portrait de Catherine Troton"
+    },
+    {
+      "id": 3,
+      "titre": "Vue panoramique de Vizille",
+      "src": "images/vizille-panorama.png",
+      "thumbnail": "images/vizille-panorama.png",
+      "categorie": "Ville",
+      "date": "2025-12-01",
+      "description": "Panorama de notre belle ville"
+    },
+    {
+      "id": 1770127914621,
+      "titre": "réunion chez l'habitant",
+      "src": "images/medias/whatsapp_image_2026-02-02_at_14.24.15.jpeg",
+      "thumbnail": null,
+      "categorie": "",
+      "date": "2026-02-02",
+      "description": ""
+    },
+    {
+      "id": 1770128308750,
+      "titre": "réunion chez l'habitant2026 02 02 At 14.24.15",
+      "src": "images/medias/whatsapp_image_2026-02-02_at_14.24.01.jpeg",
+      "thumbnail": null,
+      "categorie": "",
+      "date": "2026-02-03",
+      "description": ""
+    },
+    {
+      "id": 1770137790420,
+      "titre": "Pour une ville dynamique et et solidaire",
+      "src": "images/medias/615406480_122109496719169933_2030527121759158223_n.jpg",
+      "thumbnail": null,
+      "categorie": "",
+      "date": "2026-02-03",
+      "description": ""
+    }
+  ],
+  "presse": [
+    {
+      "id": 1,
+      "titre": "Municipales 2026 : Catherine Troton candidate à sa succession",
+      "source": "Le Dauphiné Libéré",
+      "date": "2026-01-20",
+      "extrait": "La maire sortante de Vizille a officialisé sa candidature pour les élections municipales de mars 2026, portée par la liste Vizille en Mouvement.",
+      "lien": "",
+      "image": "images/article-dl-web.jpg"
+    }
+  ],
+  "videos": [
+    {
+      "id": 1770101663550.8564,
+      "titre": "Présence sur les marchés",
+      "type": "youtube",
+      "videoId": "FxuZfxrORLs",
+      "date": "2026-01-20",
+      "categorie": "Événement",
+      "description": "Présence sur les marchés"
+    },
+    {
+      "id": 1770101663550.021,
+      "titre": "Réunion de quartier - Les Mattons",
+      "type": "youtube",
+      "videoId": "0jqtkQCRHUM",
+      "date": "2026-01-23",
+      "categorie": "Réunion de quartier",
+      "description": "Réunion de quartier - Les Mattons"
+    },
+    {
+      "id": 1770101663550.5415,
+      "titre": "Réunion publique #1 — Bilan du mandat",
+      "type": "youtube",
+      "videoId": "KWA9YgAsjQY",
+      "date": "2026-01-30",
+      "thumbnail": null,
+      "description": "Réunion publique #1 — Bilan du mandat"
+    }
+  ],
+  "documents": [
+    {
+      "id": 1,
+      "titre": "Lettre de candidature 2026",
+      "description": "Lettre de Catherine Troton aux Vizilloises et Vizillois",
+      "fichier": "documents/lettre-candidature-2026.pdf",
+      "type": "pdf",
+      "taille": "2 Mo",
+      "date": "2026-01-15"
+    }
+  ]
+}

@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Médias – Vizille en Mouvement</title>
+    <meta name="description" content="Galerie photos, revue de presse, vidéos et documents de la campagne Vizille en Mouvement 2026.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vizilleenmouvement.fr/medias.html">
+    <meta property="og:title" content="Médias - Vizille en Mouvement">
+    <meta property="og:description" content="Galerie photos, revue de presse, vidéos et documents de la campagne.">
+    <meta property="og:image" content="https://vizilleenmouvement.fr/images/logo.png">
+    <meta property="og:locale" content="fr_FR">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Médias - Vizille en Mouvement">
+    <meta name="twitter:description" content="Galerie photos, revue de presse, vidéos et documents de la campagne.">
+    <meta name="twitter:image" content="https://vizilleenmouvement.fr/images/logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/pages/medias.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+    <header class="header">
+        <div class="header-top">
+            <p>Médias • Vizille en Mouvement</p>
+        </div>
+
+        <div class="header-main">
+            <a href="index.html">
+                <img src="images/logo.png" alt="Vizille en Mouvement" class="nav-header-logo">
+            </a>
+            <button class="menu-toggle" aria-label="Menu">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="bilan.html">Bilan</a></li>
+                    <li><a href="projet.html">Projet</a></li>
+                    <li><a href="blog.html">Actualités</a></li>
+                    <li><a href="equipe.html">Équipe</a></li>
+                    <li><a href="medias.html" class="active">Médias</a></li>
+                    <li><a href="faq.html">Construisons ensemble</a></li>
+                    <li><a href="admin.html" class="admin-link" title="Administration">⚙️</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <script src="js/menu-mobile.js"></script>
+
+    <section class="hero-unified">
+        <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo">
+        <div class="hero-text">
+            <h1>Médias</h1>
+            <p class="slogan">Ensemble pour une ville dynamique et solidaire</p>
+            <p class="hero-subtitle">Photos, vidéos, presse et documents</p>
+        </div>
+    </section>
+
+    <main class="content" id="main-content">
+        <!-- Navigation par onglets -->
+        <div class="media-tabs">
+            <button class="media-tab active" data-tab="photos" onclick="switchTab('photos')">
+                <span class="tab-icon">📷</span>
+                <span class="tab-label">Galerie photos</span>
+            </button>
+            <button class="media-tab" data-tab="presse" onclick="switchTab('presse')">
+                <span class="tab-icon">📰</span>
+                <span class="tab-label">Revue de presse</span>
+            </button>
+            <button class="media-tab" data-tab="videos" onclick="switchTab('videos')">
+                <span class="tab-icon">🎬</span>
+                <span class="tab-label">Vidéos</span>
+            </button>
+            <button class="media-tab" data-tab="documents" onclick="switchTab('documents')">
+                <span class="tab-icon">📄</span>
+                <span class="tab-label">Documents</span>
+            </button>
+        </div>
+
+        <!-- Section Photos -->
+        <section class="media-section active" id="section-photos">
+            <div class="section-header">
+                <h2>Galerie photos</h2>
+                <p>Les moments forts de notre campagne et de notre action</p>
+            </div>
+
+            <!-- Filtres photos -->
+            <div class="photo-filters" id="photo-filters"></div>
+
+            <!-- Grille photos -->
+            <div class="photo-grid" id="photo-grid">
+                <div class="loading">
+                    <span>⏳</span>
+                    <p>Chargement des photos...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Presse -->
+        <section class="media-section" id="section-presse">
+            <div class="section-header">
+                <h2>Revue de presse</h2>
+                <p>Ce que les médias disent de notre campagne</p>
+            </div>
+
+            <div class="presse-list" id="presse-list">
+                <div class="loading">
+                    <span>⏳</span>
+                    <p>Chargement des articles...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Vidéos -->
+        <section class="media-section" id="section-videos">
+            <div class="section-header">
+                <h2>Vidéos</h2>
+                <p>Interviews, présentations et moments de campagne</p>
+            </div>
+
+            <div class="video-grid" id="video-grid">
+                <div class="loading">
+                    <span>⏳</span>
+                    <p>Chargement des vidéos...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Documents -->
+        <section class="media-section" id="section-documents">
+            <div class="section-header">
+                <h2>Documents à télécharger</h2>
+                <p>Tracts, programmes et documents de campagne</p>
+            </div>
+
+            <div class="documents-list" id="documents-list">
+                <div class="loading">
+                    <span>⏳</span>
+                    <p>Chargement des documents...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Lightbox pour les photos -->
+    <div class="lightbox-overlay" id="lightbox-overlay" onclick="closeLightbox(event)">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox(event)">✕</button>
+            <button class="lightbox-prev" onclick="navigateLightbox(-1, event)">❮</button>
+            <button class="lightbox-next" onclick="navigateLightbox(1, event)">❯</button>
+            <img src="" alt="" class="lightbox-image" id="lightbox-image">
+            <p class="lightbox-caption" id="lightbox-caption"></p>
+        </div>
+        <span class="lightbox-hint">Échap pour fermer • ← → pour naviguer</span>
+    </div>
+
+    <!-- Visionneuse de documents -->
+    <div class="doc-viewer-overlay" id="doc-viewer-overlay" onclick="closeDocViewer(event)">
+        <div class="doc-viewer-container">
+            <div class="doc-viewer-header">
+                <h3 id="doc-viewer-title">Document</h3>
+                <button class="doc-viewer-close" onclick="closeDocViewer(event)">✕</button>
+            </div>
+            <div class="doc-viewer-content" id="doc-viewer-content"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="images/logo.png" alt="" role="presentation" style="height: 40px; filter: brightness(0) invert(1);">
+                <p>Liste citoyenne pour les élections municipales 2026.<br>Ensemble pour une ville dynamique et solidaire.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/profile.php?id=61585097998743" target="_blank" aria-label="Facebook"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                    <a href="https://www.instagram.com/vizilleenmouvement" target="_blank" aria-label="Instagram"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                </div>
+            </div>
+            <div>
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="bilan.html">Bilan</a></li>
+                    <li><a href="projet.html">Projet</a></li>
+                    <li><a href="blog.html">Actualités</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Informations</h4>
+                <ul>
+                    <li><a href="faq.html">Construisons ensemble</a></li>
+                    <li><a href="equipe.html">L'Équipe</a></li>
+                    <li><a href="medias.html">Médias</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Liens</h4>
+                <ul>
+                    <li><a href="mentions-legales.html">Mentions légales</a></li>
+                    <li><a href="https://Vizilleenmouvement.github.io/test2/" target="_blank">Données ouvertes</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>2025 Vizille en Mouvement - Campagne municipale 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        let mediasData = { photos: [], presse: [], videos: [], documents: [] };
+        let currentPhotoCategory = '';
+        let currentLightboxIndex = 0;
+        let currentPhotos = [];
+
+        // Charger les données
+        async function loadMedias() {
+            try {
+                const response = await fetch('medias.json');
+                if (!response.ok) throw new Error('Erreur');
+                mediasData = await response.json();
+                renderPhotos();
+                renderPresse();
+                renderVideos();
+                renderDocuments();
+            } catch (err) {
+                console.log('Fichier medias.json non trouvé, affichage des exemples');
+                showEmptyStates();
+            }
+        }
+
+        // Changer d'onglet
+        function switchTab(tabId) {
+            // Désactiver tous les onglets
+            document.querySelectorAll('.media-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.media-section').forEach(section => section.classList.remove('active'));
+
+            // Activer l'onglet sélectionné
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+            document.getElementById(`section-${tabId}`).classList.add('active');
+        }
+
+        // ===== PHOTOS =====
+        function renderPhotos() {
+            let photos = mediasData.photos || [];
+
+            // Trier par date (plus récent en premier)
+            photos = [...photos].sort((a, b) => {
+                const dateA = a.date ? new Date(a.date).getTime() : 0;
+                const dateB = b.date ? new Date(b.date).getTime() : 0;
+                return dateB - dateA;
+            });
+
+            if (photos.length === 0) {
+                document.getElementById('photo-grid').innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📷</div>
+                        <h3>Galerie en préparation</h3>
+                        <p>Les photos de la campagne seront bientôt disponibles.</p>
+                    </div>
+                `;
+                document.getElementById('photo-filters').innerHTML = '';
+                return;
+            }
+
+            // Filtres
+            const categories = [...new Set(photos.map(p => p.categorie).filter(c => c))];
+            document.getElementById('photo-filters').innerHTML = `
+                <button class="filter-btn ${currentPhotoCategory === '' ? 'active' : ''}" onclick="filterPhotos('')">Toutes</button>
+                ${categories.map(cat => `
+                    <button class="filter-btn ${currentPhotoCategory === cat ? 'active' : ''}" onclick="filterPhotos('${cat}')">${cat}</button>
+                `).join('')}
+            `;
+
+            // Filtrer les photos
+            let filtered = photos;
+            if (currentPhotoCategory) {
+                filtered = photos.filter(p => p.categorie === currentPhotoCategory);
+            }
+            currentPhotos = filtered;
+
+            // Afficher la grille
+            document.getElementById('photo-grid').innerHTML = filtered.map((photo, index) => `
+                <div class="photo-card">
+                    <div class="photo-item" onclick="openLightbox(${index})">
+                        <img src="${photo.thumbnail || photo.src}" alt="${photo.titre}" loading="lazy">
+                        <div class="photo-zoom-icon">🔍</div>
+                    </div>
+                    <div class="photo-info">
+                        <h3 class="photo-title">${photo.titre}</h3>
+                        <div class="photo-meta">
+                            ${photo.categorie ? `<span class="photo-category">${photo.categorie}</span>` : ''}
+                            ${photo.date ? `<span class="photo-date">${formatDate(photo.date)}</span>` : ''}
+                        </div>
+                        ${photo.description ? `<p class="photo-description">${photo.description}</p>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterPhotos(category) {
+            currentPhotoCategory = category;
+            renderPhotos();
+        }
+
+        // ===== PRESSE =====
+        function renderPresse() {
+            const articles = mediasData.presse || [];
+
+            if (articles.length === 0) {
+                document.getElementById('presse-list').innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📰</div>
+                        <h3>Revue de presse en cours</h3>
+                        <p>Les articles de presse seront ajoutés au fil de la campagne.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            document.getElementById('presse-list').innerHTML = articles.map(article => `
+                <article class="presse-item">
+                    ${article.image ? `<img src="${article.image}" alt="" class="presse-image">` : ''}
+                    <div class="presse-content">
+                        <div class="presse-meta">
+                            <span class="presse-source">${article.source}</span>
+                            <span class="presse-date">${formatDate(article.date)}</span>
+                        </div>
+                        <h3 class="presse-title">${article.titre}</h3>
+                        <p class="presse-excerpt">${article.extrait}</p>
+                        ${article.lien ? `<a href="${article.lien}" target="_blank" class="presse-link">Lire l'article →</a>` : ''}
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        // ===== VIDEOS =====
+        function renderVideos() {
+            const videos = mediasData.videos || [];
+
+            if (videos.length === 0) {
+                document.getElementById('video-grid').innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">🎬</div>
+                        <h3>Vidéos à venir</h3>
+                        <p>Les vidéos de la campagne seront publiées prochainement.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            document.getElementById('video-grid').innerHTML = videos.map(video => {
+                // Supporter les deux formats : videoId (nouveau) ou id (ancien)
+                const ytId = video.videoId || video.id;
+                const thumbnail = video.thumbnail || `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
+                return `
+                <div class="video-item">
+                    <div class="video-thumbnail" onclick="playVideo('${ytId}', '${video.type || 'youtube'}')">
+                        <img src="${thumbnail}" alt="${video.titre}" onerror="this.src='https://img.youtube.com/vi/${ytId}/hqdefault.jpg'">
+                        <div class="video-play-btn">▶</div>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">${video.titre}</h3>
+                        ${video.date ? `<span class="video-date">${formatDate(video.date)}</span>` : ''}
+                        ${video.description ? `<p class="video-description">${video.description}</p>` : ''}
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function playVideo(videoId, type) {
+            const embedUrl = type === 'facebook'
+                ? `https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/watch/?v=${videoId}`
+                : `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+
+            const modal = document.createElement('div');
+            modal.className = 'video-modal';
+            modal.innerHTML = `
+                <div class="video-modal-content">
+                    <button class="video-modal-close" onclick="this.parentElement.parentElement.remove()">✕</button>
+                    <iframe src="${embedUrl}" frameborder="0" allowfullscreen allow="autoplay"></iframe>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // ===== DOCUMENTS =====
+        function renderDocuments() {
+            const docs = mediasData.documents || [];
+
+            if (docs.length === 0) {
+                document.getElementById('documents-list').innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">📄</div>
+                        <h3>Documents en préparation</h3>
+                        <p>Les documents de campagne seront disponibles prochainement.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            document.getElementById('documents-list').innerHTML = docs.map((doc, index) => `
+                <div class="document-item" id="doc-${doc.id}">
+                    <div class="document-icon">${getDocIcon(doc.type)}</div>
+                    <div class="document-info">
+                        <h3 class="document-title">${doc.titre}</h3>
+                        ${doc.description ? `<p class="document-description">${doc.description}</p>` : ''}
+                        <span class="document-meta">${doc.type?.toUpperCase() || 'Fichier'} ${doc.taille ? `• ${doc.taille}` : ''}</span>
+                    </div>
+                    <div class="document-actions">
+                        ${canPreview(doc.type) ? `<button class="doc-btn doc-btn-view" onclick="openDocViewer('${doc.fichier}', '${doc.titre}', '${doc.type}')">👁️ Voir</button>` : ''}
+                        <a href="${doc.fichier}" download class="doc-btn doc-btn-download">⬇️ Télécharger</a>
+                    </div>
+                </div>
+            `).join('');
+
+            // Vérifier si on doit afficher un document spécifique
+            checkDocumentUrl();
+        }
+
+        function getDocIcon(type) {
+            const icons = {
+                pdf: '📕',
+                doc: '📘',
+                docx: '📘',
+                jpg: '🖼️',
+                jpeg: '🖼️',
+                png: '🖼️',
+                zip: '📦'
+            };
+            return icons[(type || '').toLowerCase()] || '📄';
+        }
+
+        function canPreview(type) {
+            const previewable = ['pdf', 'jpg', 'jpeg', 'png', 'gif', 'webp'];
+            return previewable.includes((type || '').toLowerCase());
+        }
+
+        function openDocViewer(fichier, titre, type) {
+            const viewer = document.getElementById('doc-viewer-overlay');
+            const content = document.getElementById('doc-viewer-content');
+            const titleEl = document.getElementById('doc-viewer-title');
+
+            titleEl.textContent = titre;
+
+            const imgTypes = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+            if (type?.toLowerCase() === 'pdf') {
+                content.innerHTML = `<iframe src="${fichier}" class="doc-viewer-iframe"></iframe>`;
+            } else if (imgTypes.includes(type?.toLowerCase())) {
+                content.innerHTML = `<img src="${fichier}" alt="${titre}" class="doc-viewer-image">`;
+            } else {
+                content.innerHTML = `<p style="text-align: center; padding: 2rem;">Aperçu non disponible pour ce type de fichier.</p>`;
+            }
+
+            viewer.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDocViewer(event) {
+            if (event.target.id === 'doc-viewer-overlay' || event.target.classList.contains('doc-viewer-close')) {
+                document.getElementById('doc-viewer-overlay').classList.remove('active');
+                document.getElementById('doc-viewer-content').innerHTML = '';
+                document.body.style.overflow = '';
+            }
+        }
+
+        // ===== LIGHTBOX =====
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            const photo = currentPhotos[index];
+            document.getElementById('lightbox-image').src = photo.src;
+            document.getElementById('lightbox-caption').textContent = photo.titre + (photo.date ? ` • ${formatDate(photo.date)}` : '');
+            document.getElementById('lightbox-overlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox(event) {
+            if (event.target.id === 'lightbox-overlay' || event.target.classList.contains('lightbox-close')) {
+                document.getElementById('lightbox-overlay').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function navigateLightbox(direction, event) {
+            event.stopPropagation();
+            currentLightboxIndex = (currentLightboxIndex + direction + currentPhotos.length) % currentPhotos.length;
+            const photo = currentPhotos[currentLightboxIndex];
+            document.getElementById('lightbox-image').src = photo.src;
+            document.getElementById('lightbox-caption').textContent = photo.titre + (photo.date ? ` • ${formatDate(photo.date)}` : '');
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // Fermer la lightbox photos
+                if (document.getElementById('lightbox-overlay').classList.contains('active')) {
+                    document.getElementById('lightbox-overlay').classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+                // Fermer la visionneuse de documents
+                if (document.getElementById('doc-viewer-overlay').classList.contains('active')) {
+                    document.getElementById('doc-viewer-overlay').classList.remove('active');
+                    document.getElementById('doc-viewer-content').innerHTML = '';
+                    document.body.style.overflow = '';
+                }
+            }
+            // Navigation photos avec flèches
+            if (document.getElementById('lightbox-overlay').classList.contains('active')) {
+                if (e.key === 'ArrowLeft') navigateLightbox(-1, e);
+                if (e.key === 'ArrowRight') navigateLightbox(1, e);
+            }
+        });
+
+        // ===== UTILITAIRES =====
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+
+        function showEmptyStates() {
+            renderPhotos();
+            renderPresse();
+            renderVideos();
+            renderDocuments();
+        }
+
+        // Initialisation
+        // Vérifier si l'URL contient un paramètre pour ouvrir un document
+        function checkDocumentUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const docId = params.get('doc');
+            if (docId) {
+                // Aller à l'onglet documents
+                switchTab('documents');
+
+                // Trouver le document
+                const doc = mediasData.documents.find(d => d.id == docId);
+                if (doc) {
+                    // Scroll vers le document
+                    setTimeout(() => {
+                        const el = document.getElementById('doc-' + docId);
+                        if (el) {
+                            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            el.style.animation = 'highlight 2s ease';
+                        }
+                        // Ouvrir directement le viewer si c'est un PDF
+                        if (canPreview(doc.type)) {
+                            openDocViewer(doc.fichier, doc.titre, doc.type);
+                        }
+                    }, 300);
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadMedias);
+    </script>
+
+    <style>
+        @keyframes highlight {
+            0%, 100% { background: transparent; }
+            50% { background: #fff3cd; }
+        }
+    </style>
+
+    <script src="js/site-features.js"></script>
+</body>
+</html>
