@@ -168,6 +168,114 @@
       "date": "2026-02-03",
       "description": "",
       "albumId": null
+    },
+    {
+      "id": 1770199482972.3562,
+      "titre": "Présence sur les marchés",
+      "src": "images/articles/art_2_0.jpg",
+      "thumbnail": "images/articles/art_2_0.jpg",
+      "categorie": "Événement",
+      "date": "2026-01-20",
+      "description": "Présence sur les marchés"
+    },
+    {
+      "id": 1770199482972.9854,
+      "titre": "Réunion de quartier - Les Mattons",
+      "src": "images/articles/art_3_0.jpg",
+      "thumbnail": "images/articles/art_3_0.jpg",
+      "categorie": "Réunion de quartier",
+      "date": "2026-01-23",
+      "description": "Réunion de quartier - Les Mattons"
+    },
+    {
+      "id": 1770199482972.5515,
+      "titre": "Réunion de quartier - Les Mattons",
+      "src": "images/articles/art_3_1.jpg",
+      "thumbnail": "images/articles/art_3_1.jpg",
+      "categorie": "Réunion de quartier",
+      "date": "2026-01-23",
+      "description": "Réunion de quartier - Les Mattons"
+    },
+    {
+      "id": 1770199482972.77,
+      "titre": "Réunion publique #1 — Bilan du mandat",
+      "src": "images/articles/art_4_0.jpg",
+      "thumbnail": "images/articles/art_4_0.jpg",
+      "categorie": "Événement",
+      "date": "2026-01-30",
+      "description": "Réunion publique #1 — Bilan du mandat"
+    },
+    {
+      "id": 1770199482972.7898,
+      "titre": "Réunion publique #1 — Bilan du mandat",
+      "src": "images/articles/art_4_1.jpg",
+      "thumbnail": "images/articles/art_4_1.jpg",
+      "categorie": "Événement",
+      "date": "2026-01-30",
+      "description": "Réunion publique #1 — Bilan du mandat"
+    },
+    {
+      "id": 1770199482972.5332,
+      "titre": "Réunion publique #1 — Bilan du mandat",
+      "src": "images/articles/art_4_2.jpg",
+      "thumbnail": "images/articles/art_4_2.jpg",
+      "categorie": "Événement",
+      "date": "2026-01-30",
+      "description": "Réunion publique #1 — Bilan du mandat"
+    },
+    {
+      "id": 1770199482972.788,
+      "titre": "Réunion publique #2 — Projets pour Vizille",
+      "src": "images/articles/art_5_0.jpg",
+      "thumbnail": "images/articles/art_5_0.jpg",
+      "categorie": "Événement",
+      "date": "2026-02-27",
+      "description": "Réunion publique #2 — Projets pour Vizille"
+    },
+    {
+      "id": 1770199482972.9185,
+      "titre": "Réunion de quartier - Centre-ville",
+      "src": "images/articles/art_8_0.jpg",
+      "thumbnail": "images/articles/art_8_0.jpg",
+      "categorie": "Réunion de quartier",
+      "date": "2026-02-04",
+      "description": "Réunion de quartier - Centre-ville"
+    },
+    {
+      "id": 1770199482972.9792,
+      "titre": "Réunion de quartier - Le Péage",
+      "src": "images/articles/art_9_0.jpg",
+      "thumbnail": "images/articles/art_9_0.jpg",
+      "categorie": "Réunion de quartier",
+      "date": "2026-02-04",
+      "description": "Réunion de quartier - Le Péage"
+    },
+    {
+      "id": 1770199482972.4424,
+      "titre": "Réunion de quartier -Chez l'habitant",
+      "src": "images/articles/art_10_0.jpg",
+      "thumbnail": "images/articles/art_10_0.jpg",
+      "categorie": "Réunion de quartier",
+      "date": "2026-02-02",
+      "description": "Réunion de quartier -Chez l'habitant"
+    },
+    {
+      "id": 1770199482972.848,
+      "titre": "Réunion de quartier -Chez l'habitant",
+      "src": "images/articles/art_10_1.jpg",
+      "thumbnail": "images/articles/art_10_1.jpg",
+      "categorie": "Réunion de quartier",
+      "date": "2026-02-02",
+      "description": "Réunion de quartier -Chez l'habitant"
+    },
+    {
+      "id": 1770199482972.231,
+      "titre": "Rencontre devant l'école Jean-Jaurès",
+      "src": "images/articles/article_12_0.png",
+      "thumbnail": "images/articles/article_12_0.png",
+      "categorie": "Événement",
+      "date": "2026-02-07",
+      "description": "Rencontre devant l'école Jean-Jaurès"
     }
   ],
   "presse": [
