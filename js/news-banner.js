@@ -127,7 +127,7 @@
     }
 
     // Afficher une news
-    function showNews(index) {
+    function showNews(index, immediate = false) {
         const content = document.querySelector('.news-banner-content');
         const iconEl = document.querySelector('.news-icon');
         const textEl = document.querySelector('.news-text');
@@ -137,10 +137,7 @@
 
         const news = newsItems[index];
 
-        // Fade out
-        content.classList.add('fade-out');
-
-        setTimeout(() => {
+        function updateContent() {
             // Mettre à jour le contenu
             iconEl.textContent = news.icon || '📢';
 
@@ -161,6 +158,19 @@
 
             // Fade in
             content.classList.remove('fade-out');
+        }
+
+        // Affichage immédiat pour la première news
+        if (immediate) {
+            updateContent();
+            return;
+        }
+
+        // Fade out puis mise à jour
+        content.classList.add('fade-out');
+
+        setTimeout(() => {
+            updateContent();
         }, FADE_DURATION / 2);
     }
 
@@ -250,8 +260,8 @@
             // Ajouter les dots si plusieurs news
             addDots(banner, newsItems.length);
 
-            // Afficher la première news
-            showNews(0);
+            // Afficher la première news immédiatement
+            showNews(0, true);
             console.log('[News Banner] Bandeau affiché !');
 
             // Démarrer la rotation si plusieurs news
