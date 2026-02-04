@@ -2088,6 +2088,61 @@
 
         let currentCategoryFilter = null;
 
+        // ===== COMPRESSION IMAGES =====
+        // Compresse et redimensionne les images avant upload
+        async function compressImage(file, maxWidth = 1920, quality = 0.85) {
+            return new Promise((resolve, reject) => {
+                // Si ce n'est pas une image, retourner tel quel
+                if (!file.type.startsWith('image/')) {
+                    resolve(file);
+                    return;
+                }
+
+                const img = new Image();
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                img.onload = () => {
+                    let { width, height } = img;
+
+                    // Redimensionner si trop large
+                    if (width > maxWidth) {
+                        height = Math.round((height * maxWidth) / width);
+                        width = maxWidth;
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    // Dessiner l'image redimensionnée
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    // Convertir en blob JPEG compressé
+                    canvas.toBlob((blob) => {
+                        if (blob) {
+                            // Créer un nouveau fichier avec le blob compressé
+                            const compressedFile = new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), {
+                                type: 'image/jpeg',
+                                lastModified: Date.now()
+                            });
+                            console.log(`🗜️ Image compressée: ${(file.size/1024).toFixed(0)} Ko → ${(blob.size/1024).toFixed(0)} Ko (${Math.round((1-blob.size/file.size)*100)}% réduit)`);
+                            resolve(compressedFile);
+                        } else {
+                            resolve(file); // Fallback si échec
+                        }
+                    }, 'image/jpeg', quality);
+                };
+
+                img.onerror = () => resolve(file); // Fallback si erreur
+
+                // Charger l'image depuis le fichier
+                const reader = new FileReader();
+                reader.onload = (e) => { img.src = e.target.result; };
+                reader.onerror = () => resolve(file);
+                reader.readAsDataURL(file);
+            });
+        }
+
         // ===== DONNÉES =====
         let data = {
             projets: [],
@@ -3973,16 +4028,24 @@
 
             // Fonction pour uploader une image
             async function uploadSingleImage(file) {
-                if (file.size > 5 * 1024 * 1024) {
-                    showToast(`⚠️ ${file.name} trop grande (max 5 Mo)`, 'warning');
+                if (file.size > 10 * 1024 * 1024) {
+                    showToast(`⚠️ ${file.name} trop grande (max 10 Mo)`, 'warning');
                     return null;
                 }
 
-                const fileName = file.name.replace(/\s+/g, '_').toLowerCase();
+                // Compresser l'image avant upload
+                const compressedFile = await compressImage(file, 1920, 0.85);
+                const originalSize = (file.size / 1024).toFixed(0);
+                const newSize = (compressedFile.size / 1024).toFixed(0);
+                if (compressedFile.size < file.size) {
+                    showToast(`🗜️ ${file.name}: ${originalSize} Ko → ${newSize} Ko`, 'info');
+                }
+
+                const fileName = compressedFile.name.replace(/\s+/g, '_').toLowerCase();
                 const imagePath = 'images/articles/' + fileName;
 
                 try {
-                    const dataUrl = await readFileAsDataURL(file);
+                    const dataUrl = await readFileAsDataURL(compressedFile);
 
                     // En mode local, on utilise directement le dataUrl pour l'aperçu
                     if (localMode) {
@@ -4640,24 +4703,33 @@
             const files = Array.from(input.files);
             if (!files.length) return;
 
-            showToast(`📷 Import de ${files.length} image(s)...`, 'info');
+            showToast(`📷 Compression et import de ${files.length} image(s)...`, 'info');
 
             for (const file of files) {
-                if (file.size > 5 * 1024 * 1024) {
-                    showToast(`⚠️ ${file.name} trop grande (max 5 Mo)`, 'warning');
+                if (file.size > 10 * 1024 * 1024) {
+                    showToast(`⚠️ ${file.name} trop grande (max 10 Mo)`, 'warning');
                     continue;
                 }
 
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const images = getActionImages();
-                    images.push(e.target.result);
-                    setActionImages(images);
-                };
-                reader.readAsDataURL(file);
+                try {
+                    // Compresser l'image (max 1200px pour les actions, qualité 80%)
+                    const compressedFile = await compressImage(file, 1200, 0.80);
+                    const originalSize = (file.size / 1024).toFixed(0);
+                    const newSize = (compressedFile.size / 1024).toFixed(0);
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const images = getActionImages();
+                        images.push(e.target.result);
+                        setActionImages(images);
+                        showToast(`🗜️ ${file.name}: ${originalSize} Ko → ${newSize} Ko`, 'success');
+                    };
+                    reader.readAsDataURL(compressedFile);
+                } catch (err) {
+                    showToast(`❌ Erreur: ${file.name}`, 'error');
+                }
             }
 
-            showToast(`✅ Images ajoutées`, 'success');
             input.value = '';
         }
 
@@ -4861,21 +4933,21 @@
             document.getElementById('modal-edit').classList.add('active');
         }
 
-        function handlePhotoSelect(event) {
+        async function handlePhotoSelect(event) {
             const file = event.target.files[0];
-            if (file) processPhoto(file);
+            if (file) await processPhoto(file);
         }
 
-        function handlePhotoDrop(event) {
+        async function handlePhotoDrop(event) {
             event.preventDefault();
             event.target.classList.remove('dragover');
             const file = event.dataTransfer.files[0];
-            if (file) processPhoto(file);
+            if (file) await processPhoto(file);
         }
 
-        function processPhoto(file) {
-            if (file.size > 1024 * 1024) {
-                showToast('⚠️ Image trop grande (max 1 Mo)', 'warning');
+        async function processPhoto(file) {
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('⚠️ Image trop grande (max 5 Mo)', 'warning');
                 return;
             }
 
@@ -4884,12 +4956,20 @@
                 return;
             }
 
+            // Compresser la photo (max 800px pour les portraits, qualité 85%)
+            const compressedFile = await compressImage(file, 800, 0.85);
+            const originalSize = (file.size / 1024).toFixed(0);
+            const newSize = (compressedFile.size / 1024).toFixed(0);
+            if (compressedFile.size < file.size) {
+                showToast(`🗜️ Photo: ${originalSize} Ko → ${newSize} Ko`, 'info');
+            }
+
             const reader = new FileReader();
             reader.onload = function(e) {
                 pendingPhoto = {
                     data: e.target.result,
-                    name: file.name,
-                    type: file.type
+                    name: compressedFile.name,
+                    type: 'image/jpeg'
                 };
                 
                 document.getElementById('photo-preview-img').src = e.target.result;
@@ -6456,21 +6536,21 @@ Pour vous désabonner, répondez à cet email.
         }
 
         // Upload de photo pour la section Médias
-        function handleMediaPhotoSelect(event) {
+        async function handleMediaPhotoSelect(event) {
             const file = event.target.files[0];
-            if (file) processMediaPhoto(file);
+            if (file) await processMediaPhoto(file);
         }
 
-        function handleMediaPhotoDrop(event) {
+        async function handleMediaPhotoDrop(event) {
             event.preventDefault();
             event.target.classList.remove('dragover');
             const file = event.dataTransfer.files[0];
-            if (file) processMediaPhoto(file);
+            if (file) await processMediaPhoto(file);
         }
 
         async function processMediaPhoto(file) {
-            if (file.size > 5 * 1024 * 1024) {
-                showToast('⚠️ Image trop grande (max 5 Mo)', 'warning');
+            if (file.size > 10 * 1024 * 1024) {
+                showToast('⚠️ Image trop grande (max 10 Mo)', 'warning');
                 return;
             }
 
@@ -6479,12 +6559,20 @@ Pour vous désabonner, répondez à cet email.
                 return;
             }
 
-            showToast('⏳ Upload en cours...', 'info');
+            showToast('🗜️ Compression en cours...', 'info');
+
+            // Compresser l'image (max 1920px pour les médias, qualité 85%)
+            const compressedFile = await compressImage(file, 1920, 0.85);
+            const originalSize = (file.size / 1024).toFixed(0);
+            const newSize = (compressedFile.size / 1024).toFixed(0);
+            if (compressedFile.size < file.size) {
+                showToast(`🗜️ ${originalSize} Ko → ${newSize} Ko`, 'info');
+            }
 
             const reader = new FileReader();
             reader.onload = async function(e) {
                 const base64Content = e.target.result.split(',')[1];
-                const fileName = file.name.replace(/\s+/g, '_').toLowerCase();
+                const fileName = compressedFile.name.replace(/\s+/g, '_').toLowerCase();
                 const imagePath = `images/medias/${fileName}`;
 
                 // Mode local : upload vers le serveur local
