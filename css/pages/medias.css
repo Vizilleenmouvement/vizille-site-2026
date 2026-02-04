@@ -153,8 +153,15 @@
 .media-type-toggle {
     display: flex;
     justify-content: center;
-    gap: 1.5rem;
+    align-items: center;
+    gap: 1rem;
     flex-wrap: wrap;
+}
+
+.media-type-label-intro {
+    font-size: 0.95rem;
+    color: #666;
+    font-weight: 500;
 }
 
 .media-type-option {
@@ -1226,7 +1233,11 @@
     }
 
     .media-type-toggle {
-        gap: 0.75rem;
+        gap: 0.5rem;
+    }
+
+    .media-type-label-intro {
+        font-size: 0.85rem;
     }
 
     .media-type-option {
@@ -1372,13 +1383,22 @@
     }
 
     .media-type-toggle {
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
         width: 100%;
         gap: 0.5rem;
     }
 
+    .media-type-label-intro {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 0.25rem;
+    }
+
     .media-type-option {
         justify-content: center;
+        flex: 1;
+        min-width: 120px;
     }
 
     .media-grid {

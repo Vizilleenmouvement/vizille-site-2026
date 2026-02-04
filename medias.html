@@ -69,8 +69,8 @@
         <!-- Navigation par onglets -->
         <div class="media-tabs">
             <button class="media-tab active" data-tab="photos" onclick="switchTab('photos')">
-                <span class="tab-icon">📷</span>
-                <span class="tab-label">Galerie photos</span>
+                <span class="tab-icon">🖼️</span>
+                <span class="tab-label">Galerie</span>
             </button>
             <button class="media-tab" data-tab="presse" onclick="switchTab('presse')">
                 <span class="tab-icon">📰</span>
@@ -86,11 +86,11 @@
             </button>
         </div>
 
-        <!-- Section Galerie (Photos + Vidéos) -->
+        <!-- Section Galerie -->
         <section class="media-section active" id="section-photos">
             <div class="section-header">
-                <h2>Galerie médias</h2>
-                <p>Les moments forts de notre campagne et de notre action</p>
+                <h2>Galerie</h2>
+                <p>Photos et vidéos de notre campagne et de notre action</p>
             </div>
 
             <!-- Barre de contrôle principale -->
@@ -99,16 +99,17 @@
                 <div class="view-toggle-large" id="view-toggle">
                     <button class="view-btn-large active" data-view="albums" onclick="switchPhotoView('albums')">
                         <span class="view-icon">📁</span>
-                        <span class="view-label">Albums</span>
+                        <span class="view-label">Par album</span>
                     </button>
                     <button class="view-btn-large" data-view="all" onclick="switchPhotoView('all')">
                         <span class="view-icon">🗂️</span>
-                        <span class="view-label">Tous les médias</span>
+                        <span class="view-label">Tout voir</span>
                     </button>
                 </div>
 
-                <!-- Filtre type de média -->
+                <!-- Filtre type de contenu -->
                 <div class="media-type-toggle" id="media-type-toggle">
+                    <span class="media-type-label-intro">Afficher :</span>
                     <label class="media-type-option">
                         <input type="checkbox" id="filter-photos" checked onchange="updateMediaTypeFilter()">
                         <span class="media-type-label">📷 Photos</span>
