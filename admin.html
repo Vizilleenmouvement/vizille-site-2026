@@ -4014,111 +4014,89 @@
             const files = Array.from(input.files);
             if (!files.length) return;
 
-            showToast(`📷 Import de ${files.length} image(s)...`, 'info');
-
-            // Fonction pour lire un fichier en Promise
-            function readFileAsDataURL(file) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => resolve(e.target.result);
-                    reader.onerror = (e) => reject(e);
-                    reader.readAsDataURL(file);
-                });
+            const token = getToken();
+            if (!token) {
+                showToast(`❌ Token GitHub requis pour uploader des images. Connectez-vous d'abord.`, 'error');
+                input.value = '';
+                return;
             }
 
-            // Fonction pour uploader une image
-            async function uploadSingleImage(file) {
+            showToast(`📷 Compression et upload de ${files.length} image(s)...`, 'info');
+
+            for (const file of files) {
                 if (file.size > 10 * 1024 * 1024) {
                     showToast(`⚠️ ${file.name} trop grande (max 10 Mo)`, 'warning');
-                    return null;
+                    continue;
                 }
-
-                // Compresser l'image avant upload
-                const compressedFile = await compressImage(file, 1920, 0.85);
-                const originalSize = (file.size / 1024).toFixed(0);
-                const newSize = (compressedFile.size / 1024).toFixed(0);
-                if (compressedFile.size < file.size) {
-                    showToast(`🗜️ ${file.name}: ${originalSize} Ko → ${newSize} Ko`, 'info');
-                }
-
-                const fileName = compressedFile.name.replace(/\s+/g, '_').toLowerCase();
-                const imagePath = 'images/articles/' + fileName;
 
                 try {
-                    const dataUrl = await readFileAsDataURL(compressedFile);
+                    // Compresser l'image avant upload
+                    const compressedFile = await compressImage(file, 1920, 0.85);
+                    const originalSize = (file.size / 1024).toFixed(0);
+                    const newSize = (compressedFile.size / 1024).toFixed(0);
 
-                    // En mode local, on utilise directement le dataUrl pour l'aperçu
-                    if (localMode) {
-                        showToast(`✅ ${fileName} ajoutée (local)`, 'info');
-                        // Retourner le dataUrl pour afficher l'aperçu en local
-                        return { path: imagePath, preview: dataUrl };
+                    // Générer un nom unique
+                    const timestamp = Date.now();
+                    const fileName = `article_${timestamp}_${compressedFile.name.replace(/\s+/g, '_').toLowerCase()}`;
+                    const imagePath = `images/articles/${fileName}`;
+
+                    // Lire en base64 pour l'upload GitHub
+                    const dataUrl = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = (e) => resolve(e.target.result);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(compressedFile);
+                    });
+
+                    showToast(`⏳ Upload ${file.name}...`, 'info');
+                    const base64Content = dataUrl.split(',')[1];
+
+                    // Vérifier si le fichier existe déjà
+                    let sha = null;
+                    const getResponse = await fetch(
+                        `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${imagePath}?ref=${GITHUB_CONFIG.branch}`,
+                        { headers: { 'Authorization': `token ${token}` } }
+                    );
+                    if (getResponse.ok) {
+                        sha = (await getResponse.json()).sha;
                     }
 
-                    const token = getToken();
-                    if (token) {
-                        showToast(`Upload ${fileName}...`, 'info');
-                        const base64Content = dataUrl.split(',')[1];
+                    const body = {
+                        message: `Upload image article ${fileName}`,
+                        content: base64Content,
+                        branch: GITHUB_CONFIG.branch
+                    };
+                    if (sha) body.sha = sha;
 
-                        // Vérifier si le fichier existe déjà
-                        let sha = null;
-                        const getResponse = await fetch(
-                            `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${imagePath}?ref=${GITHUB_CONFIG.branch}`,
-                            { headers: { 'Authorization': `token ${token}` } }
-                        );
-                        if (getResponse.ok) {
-                            sha = (await getResponse.json()).sha;
+                    const response = await fetch(
+                        `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${imagePath}`,
+                        {
+                            method: 'PUT',
+                            headers: {
+                                'Authorization': `token ${token}`,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(body)
                         }
+                    );
 
-                        const body = {
-                            message: `Upload image article ${fileName}`,
-                            content: base64Content,
-                            branch: GITHUB_CONFIG.branch
-                        };
-                        if (sha) body.sha = sha;
-
-                        const response = await fetch(
-                            `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${imagePath}`,
-                            {
-                                method: 'PUT',
-                                headers: {
-                                    'Authorization': `token ${token}`,
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(body)
-                            }
-                        );
-
-                        if (response.ok) {
-                            showToast(`✅ ${fileName} uploadée !`, 'success');
-                            return { path: imagePath, preview: null };
-                        } else {
-                            const error = await response.json();
-                            throw new Error(error.message);
-                        }
+                    if (response.ok) {
+                        // Stocker le CHEMIN (jamais le base64!)
+                        const images = getArticleImages();
+                        images.push(imagePath);
+                        setArticleImages(images);
+                        showToast(`✅ ${file.name} uploadée (${originalSize} → ${newSize} Ko)`, 'success');
                     } else {
-                        // Pas de token et pas en mode local
-                        showToast(`✅ ${fileName} ajoutée`, 'info');
-                        return { path: imagePath, preview: dataUrl };
+                        const error = await response.json();
+                        throw new Error(error.message || 'Erreur upload');
                     }
                 } catch (err) {
-                    showToast(`Erreur ${file.name}: ${err.message}`, 'error');
-                    return null;
+                    console.error('Erreur upload image article:', err);
+                    showToast(`❌ Échec ${file.name}: ${err.message}`, 'error');
                 }
             }
 
-            // Traiter toutes les images séquentiellement
-            for (const file of files) {
-                const result = await uploadSingleImage(file);
-                if (result) {
-                    const images = getArticleImages();
-                    // En mode local, stocker le dataUrl pour l'aperçu
-                    images.push(result.preview || result.path);
-                    setArticleImages(images);
-                }
-            }
-
-            showToast(`✅ Import de ${files.length} image(s) terminé !`, 'success');
-            input.value = ''; // Reset pour permettre de re-sélectionner
+            input.value = '';
         }
 
         function addImageRow() {
@@ -5709,13 +5687,19 @@
         function renderImagesGallery() {
             const images = getArticleImages();
             const gallery = document.getElementById('images-gallery');
-            gallery.innerHTML = images.map((img, idx) => `
+            gallery.innerHTML = images.map((img, idx) => {
+                // Convertir chemin relatif en URL GitHub si nécessaire
+                let imgSrc = img;
+                if (img && !img.startsWith('data:') && !img.startsWith('http')) {
+                    imgSrc = `https://raw.githubusercontent.com/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/${GITHUB_CONFIG.branch}/${img}`;
+                }
+                return `
                 <div class="gallery-thumb" data-index="${idx}" style="position: relative;">
-                    <img src="${img}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 2px solid ${idx === 0 ? 'var(--vert)' : 'var(--gris-border)'};" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><rect fill=%22%23eee%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%23999%22>Erreur</text></svg>'">
+                    <img src="${imgSrc}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 2px solid ${idx === 0 ? 'var(--vert)' : 'var(--gris-border)'};" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><rect fill=%22%23eee%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%23999%22>Erreur</text></svg>'">
                     ${idx === 0 ? '<span style="position: absolute; top: -8px; left: -8px; background: var(--vert); color: white; font-size: 0.7rem; padding: 2px 6px; border-radius: 10px;">Couverture</span>' : ''}
                     <button type="button" onclick="removeArticleImage(${idx})" style="position: absolute; top: -8px; right: -8px; background: var(--rouge); color: white; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; font-size: 0.8rem;">✕</button>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         function addArticleImageUrl() {
