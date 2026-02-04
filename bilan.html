@@ -961,8 +961,33 @@ function openModal(id) {
     }
     if (p.chronologie && p.chronologie.length) {
         html += `<div class="modal-section"><h4>📆 Chronologie</h4>`;
-        p.chronologie.slice(0, 6).forEach(c => {
-            html += `<div class="chrono-item"><span class="chrono-date">${c.date}</span> ${c.evenement}</div>`;
+        // Trier par date et formater uniformément
+        const chronoTriee = [...p.chronologie].sort((a, b) => {
+            const parseDate = (d) => {
+                if (!d) return new Date(0);
+                // Format YYYY-MM-DD
+                if (/^\d{4}-\d{2}-\d{2}$/.test(d)) return new Date(d);
+                // Format DD/MM/YYYY
+                if (/^\d{2}\/\d{2}\/\d{4}$/.test(d)) {
+                    const [j,m,a] = d.split('/');
+                    return new Date(`${a}-${m}-${j}`);
+                }
+                // Format YYYY seul
+                if (/^\d{4}$/.test(d)) return new Date(`${d}-01-01`);
+                return new Date(0);
+            };
+            return parseDate(a.date) - parseDate(b.date);
+        });
+        chronoTriee.slice(0, 6).forEach(c => {
+            // Formater la date en DD/MM/YYYY
+            let dateAffichee = c.date;
+            if (/^\d{4}-\d{2}-\d{2}$/.test(c.date)) {
+                const [a,m,j] = c.date.split('-');
+                dateAffichee = `${j}/${m}/${a}`;
+            } else if (/^\d{4}$/.test(c.date)) {
+                dateAffichee = c.date; // Garder l'année seule
+            }
+            html += `<div class="chrono-item"><span class="chrono-date">${dateAffichee}</span> ${c.evenement}</div>`;
         });
         html += `</div>`;
     }
