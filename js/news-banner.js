@@ -34,14 +34,15 @@
             #news-banner {
                 background: linear-gradient(135deg, #1a3a5c 0%, #2d5a87 100%);
                 color: white;
-                padding: 0.6rem 1rem;
+                padding: 0.4rem 1rem;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 1rem;
-                font-size: 0.95rem;
+                gap: 0.75rem;
+                font-size: 0.9rem;
                 position: relative;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+                box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+                min-height: 32px;
             }
             #news-banner.hidden {
                 display: none;
@@ -218,43 +219,30 @@
 
     // Initialisation
     async function init() {
-        console.log('[News Banner] Initialisation...');
-
         // Vérifier si l'utilisateur a fermé le bandeau
         if (sessionStorage.getItem('news-banner-closed') === 'true') {
-            console.log('[News Banner] Bandeau fermé par l\'utilisateur, skip.');
             return;
         }
 
         try {
             const response = await fetch('news.json?v=' + Date.now());
-            console.log('[News Banner] Fetch response:', response.status);
             if (!response.ok) return;
 
             const allNews = await response.json();
-            console.log('[News Banner] News chargées:', allNews.length);
             newsItems = filterActiveNews(allNews);
-            console.log('[News Banner] News actives:', newsItems.length);
 
-            if (newsItems.length === 0) {
-                console.log('[News Banner] Aucune news active à afficher');
-                return;
-            }
+            if (newsItems.length === 0) return;
 
             // Injecter styles et créer le bandeau
             injectStyles();
             const banner = createBanner();
-            console.log('[News Banner] Bandeau créé:', banner);
 
             // Insérer après le header
             const header = document.querySelector('header.header');
-            console.log('[News Banner] Header trouvé:', header);
             if (header && header.nextSibling) {
                 header.parentNode.insertBefore(banner, header.nextSibling);
-                console.log('[News Banner] Inséré après le header');
             } else {
                 document.body.insertBefore(banner, document.body.firstChild);
-                console.log('[News Banner] Inséré en début de body');
             }
 
             // Ajouter les dots si plusieurs news
@@ -262,7 +250,6 @@
 
             // Afficher la première news immédiatement
             showNews(0, true);
-            console.log('[News Banner] Bandeau affiché !');
 
             // Démarrer la rotation si plusieurs news
             if (newsItems.length > 1) {
