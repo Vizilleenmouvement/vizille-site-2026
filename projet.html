@@ -560,16 +560,38 @@ function initializeFilters() {
                 btn.classList.add('active');
 
                 currentCategoryFilter = catId || null;
-                document.getElementById('filter-theme').value = '';
 
                 // Afficher les sous-thèmes de cette catégorie
                 renderSubThemes(catId);
 
+                // Sélectionner automatiquement le premier sous-thème
                 if (catId) {
+                    const cat = CATEGORIES_PROJET.find(c => c.id === catId);
+                    if (cat && cat.themes.length > 0) {
+                        // Trouver le premier thème qui a des projets
+                        const firstThemeWithData = cat.themes.find(t =>
+                            allData.filter(p => getProjectThemes(p).includes(t)).length > 0
+                        );
+                        if (firstThemeWithData) {
+                            document.getElementById('filter-theme').value = firstThemeWithData;
+                            // Marquer le premier sous-thème comme actif
+                            setTimeout(() => {
+                                const firstSubBtn = document.querySelector(`.sub-theme-btn[data-theme="${firstThemeWithData}"]`);
+                                if (firstSubBtn) firstSubBtn.classList.add('active');
+                            }, 10);
+                        } else {
+                            document.getElementById('filter-theme').value = '';
+                        }
+                    } else {
+                        document.getElementById('filter-theme').value = '';
+                    }
+
                     currentView = 'cards';
                     document.querySelectorAll('.view-btn').forEach(b => {
                         b.classList.toggle('active', b.dataset.view === 'cards');
                     });
+                } else {
+                    document.getElementById('filter-theme').value = '';
                 }
             } else if (theme !== undefined) {
                 // C'est un sous-thème
