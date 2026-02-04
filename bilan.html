@@ -17,51 +17,6 @@
         
         /* Hero utilise .hero-unified de page-header.css */
         
-        /* Onglets principaux (thèmes) */
-        .tabs-container {
-            background: white;
-            border-bottom: 2px solid var(--gris-doux);
-            position: sticky;
-            top: 110px;
-            z-index: 100;
-        }
-        .tabs {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            overflow-x: auto;
-            padding: 0;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .tab {
-            padding: 0.8rem 1rem;
-            cursor: pointer;
-            border-bottom: 4px solid transparent;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            white-space: nowrap;
-            transition: all 0.2s;
-            font-weight: 500;
-            color: var(--gris-texte);
-            font-size: 0.9rem;
-        }
-        .tab:hover { background: var(--blanc-casse); }
-        .tab.active { font-weight: 700; border-bottom-color: var(--bleu-vizille); color: var(--bleu-vizille); }
-        .tab .badge {
-            background: var(--gris-doux);
-            color: var(--gris-texte);
-            padding: 0.15rem 0.5rem;
-            border-radius: 10px;
-            font-size: 0.75rem;
-        }
-        .tab.active .badge { background: var(--bleu-vizille); color: white; }
-        
-        /* Onglet Plan Climat spécial */
-        .tab.special { background: linear-gradient(135deg, #2c3e50, #34495e); color: white !important; }
-        .tab.special:hover { background: linear-gradient(135deg, #34495e, #2c3e50); }
-        .tab.special .badge { background: #9b59b6; color: white; }
         
         /* Sous-onglets (catégories) */
         .subtabs-container { background: var(--blanc-casse); padding: 1rem 0; }
@@ -306,56 +261,144 @@
 
         /* Compteur */
         .results-count { text-align: center; padding: 1rem; color: var(--gris-texte); font-size: 0.9rem; }
-        
-        /* ===== ACCORDÉON MOBILE POUR LES ONGLETS ===== */
-        .tabs-toggle {
-            display: none;
-            width: 100%;
-            padding: 0.8rem 1rem;
+
+        /* ===== CATÉGORIES PRINCIPALES ===== */
+        .categories-container {
             background: white;
-            border: none;
+            border-bottom: 2px solid var(--gris-doux);
+            position: sticky;
+            top: 110px;
+            z-index: 100;
+            padding: 1rem 0;
+        }
+        .categories {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+        .category-btn {
+            position: relative;
+            padding: 0.7rem 1.2rem;
+            background: var(--blanc-casse);
+            border: 2px solid var(--gris-doux);
+            border-radius: 12px;
             cursor: pointer;
-            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: var(--bleu-vizille);
-            text-align: left;
-            align-items: center;
-            justify-content: space-between;
+            transition: all 0.2s;
         }
-        .tabs-toggle .toggle-icon { transition: transform 0.3s; font-size: 0.8rem; }
-        .tabs-toggle.open .toggle-icon { transform: rotate(180deg); }
-        .tabs-toggle .current-theme { display: flex; align-items: center; gap: 0.5rem; }
-        .tabs-toggle .hint { font-size: 0.75rem; color: var(--gris-texte); font-weight: 400; }
+        .category-btn:hover {
+            background: var(--bleu-vizille);
+            color: white;
+            border-color: var(--bleu-vizille);
+        }
+        .category-btn.active {
+            background: var(--bleu-vizille);
+            color: white;
+            border-color: var(--bleu-vizille);
+        }
+        .category-btn .cat-icon { font-size: 1.2rem; }
+        .category-btn .cat-arrow {
+            font-size: 0.7rem;
+            margin-left: 0.3rem;
+            transition: transform 0.2s;
+        }
+        .category-btn.open .cat-arrow { transform: rotate(180deg); }
+        .category-btn .badge {
+            background: var(--bleu-clair);
+            color: white;
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            margin-left: 0.3rem;
+        }
+        .category-btn:hover .badge,
+        .category-btn.active .badge { background: rgba(255,255,255,0.3); }
+
+        /* Menu déroulant */
+        .category-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            min-width: 240px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+            padding: 0.5rem 0;
+            display: none;
+            z-index: 200;
+            margin-top: 0.5rem;
+        }
+        .category-btn.open .category-dropdown { display: block; }
+        .dropdown-item {
+            padding: 0.65rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gris-texte);
+            transition: all 0.15s;
+        }
+        .dropdown-item:hover {
+            background: var(--blanc-casse);
+            color: var(--bleu-vizille);
+        }
+        .dropdown-item.active-theme {
+            background: var(--bleu-vizille);
+            color: white;
+        }
+        .dropdown-item .theme-icon { font-size: 1rem; }
+        .dropdown-item .theme-name { flex: 1; font-weight: 500; }
+        .dropdown-item .theme-count {
+            font-size: 0.75rem;
+            background: var(--gris-doux);
+            padding: 0.15rem 0.4rem;
+            border-radius: 8px;
+        }
+        .dropdown-item.active-theme .theme-count { background: rgba(255,255,255,0.3); }
+
+        /* Thème sélectionné affiché */
+        .selected-theme-bar {
+            background: var(--blanc-casse);
+            padding: 0.5rem 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--gris-texte);
+            border-bottom: 1px solid var(--gris-doux);
+        }
+        .selected-theme-bar strong { color: var(--bleu-vizille); }
+        
         
         @media (max-width: 768px) {
             body { padding-top: 80px; }
-            .tabs-container { top: 80px; }
+            .categories-container { top: 80px; padding: 0.7rem 0; }
+            .categories { gap: 0.5rem; }
+            .category-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            .category-btn .cat-icon { font-size: 1rem; }
+            .category-btn .cat-name { display: none; }
+            .category-dropdown {
+                min-width: 200px;
+                left: 0;
+                transform: none;
+            }
             .bilan-hero { padding: 1.5rem 1rem; }
             .bilan-hero .logo-pulse { width: 80px; }
             .bilan-hero h1 { font-size: 1.5rem; }
             .bilan-hero .stat-val { font-size: 2rem; }
             .cards-grid { grid-template-columns: 1fr; }
-            
-            /* Accordéon mobile */
-            .tabs-toggle { display: flex; }
-            .tabs {
-                display: none;
-                flex-direction: column;
-                background: white;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                max-height: 60vh;
-                overflow-y: auto;
-            }
-            .tabs.open { display: flex; }
-            .tabs .tab {
-                justify-content: flex-start;
-                padding: 0.7rem 1rem;
-                border-bottom: 1px solid var(--gris-doux);
-                border-left: 4px solid transparent;
-            }
-            .tabs .tab.active { border-left-color: var(--bleu-vizille); background: var(--blanc-casse); }
-            .tabs .tab:last-child { border-bottom: none; }
-            
+
             /* Sous-onglets plus compacts */
             .subtabs { gap: 0.3rem; padding: 0 0.5rem; }
             .subtab { padding: 0.4rem 0.7rem; font-size: 0.8rem; }
@@ -395,13 +438,11 @@
         </div>
     </section>
     
-    <div class="tabs-container">
-        <button class="tabs-toggle" id="tabs-toggle" onclick="toggleTabs()">
-            <span class="current-theme" id="current-theme-display">🎭 Culture (43)</span>
-            <span class="toggle-icon">▼</span>
-        </button>
-        <div class="tabs" id="tabs"></div>
+    <div class="categories-container">
+        <div class="categories" id="categories"></div>
     </div>
+
+    <div class="selected-theme-bar" id="selected-theme-bar"></div>
     
     <div class="theme-banner-container">
         <div class="theme-banner" id="theme-banner"></div>
@@ -429,16 +470,56 @@
     </div>
 
 <script>
+// Configuration des 5 catégories principales
+const CATEGORIES = [
+    {
+        id: 'environnement',
+        name: 'Environnement & Cadre de vie',
+        shortName: 'Environnement',
+        icon: '🌿',
+        themes: ['Environnement', 'Plan Climat', 'Urbanisme', 'Travaux', 'Mobilités']
+    },
+    {
+        id: 'social',
+        name: 'Social & Solidarité',
+        shortName: 'Social',
+        icon: '🤝',
+        themes: ['Solidarité', 'Enfance', 'Santé', 'Personnel']
+    },
+    {
+        id: 'culture',
+        name: 'Culture & Loisirs',
+        shortName: 'Culture',
+        icon: '🎭',
+        themes: ['Culture', 'Sport', 'Patrimoine', 'Jumelages']
+    },
+    {
+        id: 'municipal',
+        name: 'Vie municipale',
+        shortName: 'Municipal',
+        icon: '🏛️',
+        themes: ['Administration', 'Finance', 'Intercommunalité', 'Concertation Citoyenne']
+    },
+    {
+        id: 'securite',
+        name: 'Sécurité & Économie',
+        shortName: 'Sécurité',
+        icon: '🛡️',
+        themes: ['Tranquillité publique', 'Économie']
+    }
+];
+
+// Configuration des icônes par thème
 const THEMES = [
-    { id: 'Plan Climat', label: '🌍 Plan Climat', icon: '📋', special: true },
+    { id: 'Plan Climat', label: '🌍 Plan Climat', icon: '🌍', special: true },
     { id: 'Concertation Citoyenne', label: '🗳️ Concertation', icon: '🗳️', special: true },
-    { id: 'Administration', label: 'Admin', icon: '📋' },
+    { id: 'Administration', label: 'Administration', icon: '📋' },
     { id: 'Culture', label: 'Culture', icon: '🎭' },
     { id: 'Économie', label: 'Économie', icon: '💼' },
     { id: 'Enfance', label: 'Enfance', icon: '👶' },
     { id: 'Environnement', label: 'Environnement', icon: '🌿' },
     { id: 'Finance', label: 'Finance', icon: '💰' },
-    { id: 'Intercommunalité', label: 'Interco', icon: '🏙️' },
+    { id: 'Intercommunalité', label: 'Intercommunalité', icon: '🏙️' },
     { id: 'Jumelages', label: 'Jumelages', icon: '🌍' },
     { id: 'Mobilités', label: 'Mobilités', icon: '🚲' },
     { id: 'Patrimoine', label: 'Patrimoine', icon: '🏛️' },
@@ -596,16 +677,102 @@ const SUBCATEGORIES = {
 let allData = [];
 let currentTheme = 'Culture';
 let currentSubcat = 'Festivals';
+let openDropdown = null;
 
 async function init() {
     const r = await fetch('data.json');
     allData = await r.json();
     renderHeroStats();
-    renderTabs();
+    renderCategories();
+    renderSelectedThemeBar();
     renderBanner();
     renderSubtabs();
     renderCards();
 }
+
+// Compte le nombre d'actions pour une catégorie
+function getCategoryCount(category) {
+    return category.themes.reduce((sum, theme) => {
+        return sum + allData.filter(a => a.theme === theme && !a.suspendu).length;
+    }, 0);
+}
+
+// Trouve la catégorie contenant le thème actuel
+function getCurrentCategory() {
+    return CATEGORIES.find(cat => cat.themes.includes(currentTheme));
+}
+
+// Rendu des catégories
+function renderCategories() {
+    const container = document.getElementById('categories');
+    const currentCat = getCurrentCategory();
+
+    container.innerHTML = CATEGORIES.map(cat => {
+        const count = getCategoryCount(cat);
+        const isActive = currentCat && currentCat.id === cat.id;
+
+        // Génère les items du dropdown
+        const themesHtml = cat.themes.map(theme => {
+            const themeCount = allData.filter(a => a.theme === theme && !a.suspendu).length;
+            if (themeCount === 0) return '';
+            const themeData = THEMES.find(t => t.id === theme) || {};
+            const isActiveTheme = theme === currentTheme;
+            return `<div class="dropdown-item ${isActiveTheme ? 'active-theme' : ''}" onclick="selectThemeFromDropdown('${theme}', event)">
+                <span class="theme-icon">${themeData.icon || '📌'}</span>
+                <span class="theme-name">${theme}</span>
+                <span class="theme-count">${themeCount}</span>
+            </div>`;
+        }).join('');
+
+        return `<div class="category-btn ${isActive ? 'active' : ''}" data-category="${cat.id}" onclick="toggleDropdown('${cat.id}')">
+            <span class="cat-icon">${cat.icon}</span>
+            <span class="cat-name">${cat.shortName}</span>
+            <span class="badge">${count}</span>
+            <span class="cat-arrow">▼</span>
+            <div class="category-dropdown">${themesHtml}</div>
+        </div>`;
+    }).join('');
+}
+
+// Affiche la barre du thème sélectionné
+function renderSelectedThemeBar() {
+    const bar = document.getElementById('selected-theme-bar');
+    const themeInfo = THEMES.find(t => t.id === currentTheme);
+    const count = allData.filter(p => p.theme === currentTheme && !p.suspendu).length;
+    bar.innerHTML = `Thème actuel : <strong>${themeInfo ? themeInfo.icon : ''} ${currentTheme}</strong> (${count} actions)`;
+}
+
+// Ouvre/ferme un dropdown
+function toggleDropdown(categoryId) {
+    const btn = document.querySelector(`[data-category="${categoryId}"]`);
+    if (!btn) return;
+
+    // Ferme l'autre dropdown si ouvert
+    if (openDropdown && openDropdown !== btn) {
+        openDropdown.classList.remove('open');
+    }
+
+    btn.classList.toggle('open');
+    openDropdown = btn.classList.contains('open') ? btn : null;
+}
+
+// Sélectionne un thème depuis le dropdown
+function selectThemeFromDropdown(theme, event) {
+    event.stopPropagation();
+    if (openDropdown) {
+        openDropdown.classList.remove('open');
+        openDropdown = null;
+    }
+    selectTheme(theme);
+}
+
+// Ferme les dropdowns au clic extérieur
+document.addEventListener('click', (e) => {
+    if (openDropdown && !e.target.closest('.category-btn')) {
+        openDropdown.classList.remove('open');
+        openDropdown = null;
+    }
+});
 
 function renderHeroStats() {
     const actionsCount = allData.filter(p => !p.suspendu && p.theme !== 'Plan Climat').length;
@@ -617,32 +784,6 @@ function renderHeroStats() {
     `;
 }
 
-function renderTabs() {
-    const container = document.getElementById('tabs');
-    container.innerHTML = THEMES.map(t => {
-        const count = allData.filter(p => p.theme === t.id && !p.suspendu).length;
-        const specialClass = t.special ? 'special' : '';
-        return `<div class="tab ${t.id === currentTheme ? 'active' : ''} ${specialClass}" onclick="selectTheme('${t.id}')">
-            <span>${t.icon}</span>
-            <span>${t.label}</span>
-            <span class="badge">${count}</span>
-        </div>`;
-    }).join('');
-    // Mise à jour bouton accordéon mobile
-    const themeInfo = THEMES.find(t => t.id === currentTheme);
-    const count = allData.filter(p => p.theme === currentTheme && !p.suspendu).length;
-    document.getElementById('current-theme-display').innerHTML = `${themeInfo.icon} ${themeInfo.label} <span class="hint">(${count}) — Changer</span>`;
-}
-
-function toggleTabs() {
-    document.getElementById('tabs').classList.toggle('open');
-    document.getElementById('tabs-toggle').classList.toggle('open');
-}
-
-function closeTabs() {
-    document.getElementById('tabs').classList.remove('open');
-    document.getElementById('tabs-toggle').classList.remove('open');
-}
 
 function renderSubtabs() {
     const container = document.getElementById('subtabs');
@@ -755,8 +896,8 @@ function selectTheme(theme) {
     } else {
         currentSubcat = 'all';
     }
-    closeTabs();
-    renderTabs();
+    renderCategories();
+    renderSelectedThemeBar();
     renderBanner();
     renderSubtabs();
     renderCards();
