@@ -633,7 +633,12 @@ function initializeFilters() {
     }
 
     const themeSelect = document.getElementById('filter-theme');
-    uniqueThemes.forEach(theme => {
+    // Construire la liste des thèmes depuis les catégories
+    const allThemesFromCategories = new Set();
+    CATEGORIES_PROJET.forEach(cat => cat.themes.forEach(t => allThemesFromCategories.add(t)));
+    // Ajouter aussi les thèmes utilisés dans les données
+    allData.forEach(p => getProjectThemes(p).forEach(t => allThemesFromCategories.add(t)));
+    [...allThemesFromCategories].sort().forEach(theme => {
         themeSelect.innerHTML += `<option value="${theme}">${theme}</option>`;
     });
 
