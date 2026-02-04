@@ -234,13 +234,17 @@
             // Injecter styles et créer le bandeau
             injectStyles();
             const banner = createBanner();
+            console.log('[News Banner] Bandeau créé:', banner);
 
             // Insérer après le header
             const header = document.querySelector('header.header');
+            console.log('[News Banner] Header trouvé:', header);
             if (header && header.nextSibling) {
                 header.parentNode.insertBefore(banner, header.nextSibling);
+                console.log('[News Banner] Inséré après le header');
             } else {
                 document.body.insertBefore(banner, document.body.firstChild);
+                console.log('[News Banner] Inséré en début de body');
             }
 
             // Ajouter les dots si plusieurs news
@@ -248,6 +252,7 @@
 
             // Afficher la première news
             showNews(0);
+            console.log('[News Banner] Bandeau affiché !');
 
             // Démarrer la rotation si plusieurs news
             if (newsItems.length > 1) {
