@@ -6638,7 +6638,9 @@ Pour vous désabonner, répondez à cet email.
             document.getElementById('albums-list').innerHTML = albums.map((album, idx) => {
                 const realIndex = data.medias.albums.findIndex(a => a.id === album.id);
                 const photos = (album.photos || []).map(id => data.medias.photos.find(p => p.id === id)).filter(p => p);
+                const videos = (album.videos || []).map(id => data.medias.videos.find(v => v.id === id)).filter(v => v);
                 const photoCount = photos.length;
+                const videoCount = videos.length;
                 const coverUrl = album.cover || (photos[0]?.src) || 'images/logo.png';
                 const cats = data.medias.categoriesAlbums?.[album.type] || [];
                 const cat = cats.find(c => c.id === album.categorie);
@@ -6651,7 +6653,10 @@ Pour vous désabonner, répondez à cet email.
                         </div>
                         <h4 style="margin: 0 0 0.25rem; font-size: 0.95rem; color: var(--bleu);">${album.titre}</h4>
                         <p style="font-size: 0.8rem; color: #888; margin: 0;">
-                            ${cat ? `${cat.icon} ${cat.label} • ` : ''}${album.date || ''} • 📷 ${photoCount} photos
+                            ${cat ? `${cat.icon} ${cat.label} • ` : ''}${album.date || ''}
+                        </p>
+                        <p style="font-size: 0.75rem; color: #666; margin: 0.25rem 0 0;">
+                            ${photoCount > 0 ? `📷 ${photoCount}` : ''} ${videoCount > 0 ? `🎬 ${videoCount}` : ''}
                         </p>
                         <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
                             <button class="btn btn-sm btn-outline" onclick="openEditAlbum(${realIndex})">✏️ Modifier</button>
@@ -6683,7 +6688,9 @@ Pour vous désabonner, répondez à cet email.
             const today = new Date().toISOString().split('T')[0];
             const cats = data.medias.categoriesAlbums || { campagne: [], bilan: [], objectifs: [] };
             const selectedPhotos = album.photos || [];
+            const selectedVideos = album.videos || [];
             const allPhotos = data.medias.photos || [];
+            const allVideos = data.medias.videos || [];
 
             return `
                 <div class="form-group">
@@ -6724,18 +6731,44 @@ Pour vous désabonner, répondez à cet email.
                     <label>Image de couverture (URL)</label>
                     <input type="text" id="album-cover" value="${album.cover || ''}" placeholder="images/medias/cover.jpg (laissez vide pour utiliser la 1ère photo)">
                 </div>
+
+                <!-- PHOTOS -->
                 <div class="form-group">
-                    <label>Photos de l'album (${selectedPhotos.length} sélectionnées)</label>
-                    <div style="max-height: 300px; overflow-y: auto; border: 1px solid var(--gris-border); border-radius: 8px; padding: 0.5rem;">
-                        ${allPhotos.length === 0 ? '<p style="text-align:center; color:#888; padding:1rem;">Aucune photo disponible. Ajoutez d\'abord des photos.</p>' : ''}
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.5rem;">
+                    <label>📷 Photos de l'album (${selectedPhotos.length} sélectionnées)</label>
+                    <div style="max-height: 200px; overflow-y: auto; border: 1px solid var(--gris-border); border-radius: 8px; padding: 0.5rem;">
+                        ${allPhotos.length === 0 ? '<p style="text-align:center; color:#888; padding:1rem;">Aucune photo disponible.</p>' : ''}
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 0.5rem;">
                             ${allPhotos.map(photo => `
                                 <label style="cursor: pointer; position: relative;">
                                     <input type="checkbox" name="album-photos" value="${photo.id}" ${selectedPhotos.includes(photo.id) ? 'checked' : ''} style="position: absolute; top: 5px; left: 5px; z-index: 1;">
-                                    <img src="${photo.thumbnail || photo.src}" alt="${photo.titre}" style="width: 100%; height: 70px; object-fit: cover; border-radius: 6px; opacity: ${selectedPhotos.includes(photo.id) ? '1' : '0.6'}; border: ${selectedPhotos.includes(photo.id) ? '3px solid #4CAF50' : '1px solid #ddd'};">
-                                    <div style="font-size: 0.7rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${photo.titre}</div>
+                                    <img src="${photo.thumbnail || photo.src}" alt="${photo.titre}" style="width: 100%; height: 60px; object-fit: cover; border-radius: 6px; opacity: ${selectedPhotos.includes(photo.id) ? '1' : '0.6'}; border: ${selectedPhotos.includes(photo.id) ? '3px solid #4CAF50' : '1px solid #ddd'};">
+                                    <div style="font-size: 0.65rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${photo.titre}</div>
                                 </label>
                             `).join('')}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIDEOS -->
+                <div class="form-group">
+                    <label>🎬 Vidéos de l'album (${selectedVideos.length} sélectionnées)</label>
+                    <div style="max-height: 200px; overflow-y: auto; border: 1px solid var(--gris-border); border-radius: 8px; padding: 0.5rem;">
+                        ${allVideos.length === 0 ? '<p style="text-align:center; color:#888; padding:1rem;">Aucune vidéo disponible.</p>' : ''}
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 0.5rem;">
+                            ${allVideos.map(video => {
+                                const ytId = video.videoId || video.id;
+                                const thumb = video.thumbnail || 'https://img.youtube.com/vi/' + ytId + '/mqdefault.jpg';
+                                const isSelected = selectedVideos.includes(video.id);
+                                return `
+                                <label style="cursor: pointer; position: relative;">
+                                    <input type="checkbox" name="album-videos" value="${video.id}" ${isSelected ? 'checked' : ''} style="position: absolute; top: 5px; left: 5px; z-index: 1;">
+                                    <div style="position: relative;">
+                                        <img src="${thumb}" alt="${video.titre}" style="width: 100%; height: 70px; object-fit: cover; border-radius: 6px; opacity: ${isSelected ? '1' : '0.6'}; border: ${isSelected ? '3px solid #E91E63' : '1px solid #ddd'};">
+                                        <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(233,30,99,0.8); color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem;">▶</span>
+                                    </div>
+                                    <div style="font-size: 0.65rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${video.titre}</div>
+                                </label>
+                            `}).join('')}
                         </div>
                     </div>
                 </div>
@@ -6765,7 +6798,11 @@ Pour vous désabonner, répondez à cet email.
 
             // Récupérer les photos sélectionnées
             const photoCheckboxes = document.querySelectorAll('input[name="album-photos"]:checked');
-            const photos = Array.from(photoCheckboxes).map(cb => parseInt(cb.value) || cb.value);
+            const photos = Array.from(photoCheckboxes).map(cb => parseFloat(cb.value) || cb.value);
+
+            // Récupérer les vidéos sélectionnées
+            const videoCheckboxes = document.querySelectorAll('input[name="album-videos"]:checked');
+            const videos = Array.from(videoCheckboxes).map(cb => parseFloat(cb.value) || cb.value);
 
             if (!titre) {
                 showToast('⚠️ Le titre est requis', 'warning');
@@ -6781,7 +6818,8 @@ Pour vous désabonner, répondez à cet email.
                 lieu,
                 description,
                 cover,
-                photos
+                photos,
+                videos
             };
 
             if (!data.medias.albums) data.medias.albums = [];

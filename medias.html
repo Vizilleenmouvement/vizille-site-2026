@@ -86,24 +86,41 @@
             </button>
         </div>
 
-        <!-- Section Photos -->
+        <!-- Section Galerie (Photos + Vidéos) -->
         <section class="media-section active" id="section-photos">
             <div class="section-header">
-                <h2>Galerie photos</h2>
+                <h2>Galerie médias</h2>
                 <p>Les moments forts de notre campagne et de notre action</p>
             </div>
 
-            <!-- Toggle Vue Albums / Toutes les photos -->
-            <div class="view-toggle" id="view-toggle">
-                <button class="view-btn active" data-view="albums" onclick="switchPhotoView('albums')">
-                    <span>📁</span> Albums
-                </button>
-                <button class="view-btn" data-view="all" onclick="switchPhotoView('all')">
-                    <span>🖼️</span> Toutes les photos
-                </button>
+            <!-- Barre de contrôle principale -->
+            <div class="gallery-controls">
+                <!-- Toggle Vue Albums / Tout -->
+                <div class="view-toggle-large" id="view-toggle">
+                    <button class="view-btn-large active" data-view="albums" onclick="switchPhotoView('albums')">
+                        <span class="view-icon">📁</span>
+                        <span class="view-label">Albums</span>
+                    </button>
+                    <button class="view-btn-large" data-view="all" onclick="switchPhotoView('all')">
+                        <span class="view-icon">🗂️</span>
+                        <span class="view-label">Tous les médias</span>
+                    </button>
+                </div>
+
+                <!-- Filtre type de média -->
+                <div class="media-type-toggle" id="media-type-toggle">
+                    <label class="media-type-option">
+                        <input type="checkbox" id="filter-photos" checked onchange="updateMediaTypeFilter()">
+                        <span class="media-type-label">📷 Photos</span>
+                    </label>
+                    <label class="media-type-option">
+                        <input type="checkbox" id="filter-videos" checked onchange="updateMediaTypeFilter()">
+                        <span class="media-type-label">🎬 Vidéos</span>
+                    </label>
+                </div>
             </div>
 
-            <!-- Filtres par type d'album -->
+            <!-- Filtres par type d'album (Campagne, Bilan, Objectifs) -->
             <div class="album-type-filter" id="album-type-filter">
                 <button class="type-btn active" data-type="all" onclick="filterAlbumType('all')">Tous</button>
                 <button class="type-btn" data-type="campagne" onclick="filterAlbumType('campagne')">🎤 Campagne</button>
@@ -128,16 +145,16 @@
                     ← Retour aux albums
                 </button>
                 <div class="album-header" id="album-header"></div>
-                <div class="photo-grid" id="album-photos"></div>
+                <div class="media-grid" id="album-media"></div>
             </div>
 
-            <!-- Vue Toutes les photos -->
+            <!-- Vue Tous les médias -->
             <div class="all-photos-view" id="all-photos-view" style="display: none;">
                 <div class="photo-filters" id="photo-filters"></div>
-                <div class="photo-grid" id="photo-grid">
+                <div class="media-grid" id="media-grid">
                     <div class="loading">
                         <span>⏳</span>
-                        <p>Chargement des photos...</p>
+                        <p>Chargement des médias...</p>
                     </div>
                 </div>
             </div>
@@ -261,6 +278,8 @@
         let currentPhotoCategory = '';
         let currentLightboxIndex = 0;
         let currentPhotos = [];
+        let showPhotos = true;
+        let showVideos = true;
 
         // Charger les données
         async function loadMedias() {
@@ -286,10 +305,34 @@
             document.getElementById(`section-${tabId}`).classList.add('active');
         }
 
+        // ===== FILTRES MÉDIAS =====
+        function updateMediaTypeFilter() {
+            showPhotos = document.getElementById('filter-photos').checked;
+            showVideos = document.getElementById('filter-videos').checked;
+
+            // Au moins un doit être coché
+            if (!showPhotos && !showVideos) {
+                showPhotos = true;
+                showVideos = true;
+                document.getElementById('filter-photos').checked = true;
+                document.getElementById('filter-videos').checked = true;
+            }
+
+            if (currentPhotoView === 'albums') {
+                if (currentAlbum) {
+                    openAlbum(currentAlbum.id);
+                } else {
+                    renderAlbums();
+                }
+            } else {
+                renderAllMedia();
+            }
+        }
+
         // ===== ALBUMS =====
         function switchPhotoView(view) {
             currentPhotoView = view;
-            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.view-btn-large').forEach(btn => btn.classList.remove('active'));
             document.querySelector(`[data-view="${view}"]`).classList.add('active');
 
             if (view === 'albums') {
@@ -305,7 +348,7 @@
                 document.getElementById('albums-grid').style.display = 'none';
                 document.getElementById('album-detail').style.display = 'none';
                 document.getElementById('all-photos-view').style.display = 'block';
-                renderAllPhotos();
+                renderAllMedia();
             }
         }
 
@@ -387,7 +430,9 @@
 
             grid.innerHTML = albums.map(album => {
                 const photos = (album.photos || []).map(id => mediasData.photos.find(p => p.id === id)).filter(p => p);
+                const videos = (album.videos || []).map(id => mediasData.videos.find(v => v.id === id)).filter(v => v);
                 const photoCount = photos.length;
+                const videoCount = videos.length;
                 const coverUrl = album.cover || (photos[0]?.src) || 'images/placeholder-album.jpg';
 
                 const typeLabels = { campagne: '🎤 Campagne', bilan: '📊 Bilan', objectifs: '🎯 Objectifs' };
@@ -397,12 +442,22 @@
                 const cat = cats.find(c => c.id === album.categorie);
                 const catLabel = cat ? `${cat.icon} ${cat.label}` : '';
 
+                // Compteurs médias
+                let mediaCount = '';
+                if (photoCount > 0 && videoCount > 0) {
+                    mediaCount = `📷 ${photoCount} • 🎬 ${videoCount}`;
+                } else if (photoCount > 0) {
+                    mediaCount = `📷 ${photoCount} photo${photoCount > 1 ? 's' : ''}`;
+                } else if (videoCount > 0) {
+                    mediaCount = `🎬 ${videoCount} vidéo${videoCount > 1 ? 's' : ''}`;
+                }
+
                 return `
                     <div class="album-card" onclick="openAlbum('${album.id}')">
                         <div class="album-cover">
                             <img src="${coverUrl}" alt="${album.titre}" loading="lazy" onerror="this.src='images/logo.png'">
                             <div class="album-overlay">
-                                <span class="photo-count">📷 ${photoCount} photo${photoCount > 1 ? 's' : ''}</span>
+                                <span class="photo-count">${mediaCount}</span>
                             </div>
                         </div>
                         <div class="album-info">
@@ -425,11 +480,22 @@
             document.getElementById('albums-grid').style.display = 'none';
             document.getElementById('album-type-filter').style.display = 'none';
             document.getElementById('category-filters').style.display = 'none';
-            document.getElementById('view-toggle').style.display = 'none';
+            document.querySelector('.gallery-controls').style.display = 'none';
             document.getElementById('album-detail').style.display = 'block';
 
             const cats = mediasData.categoriesAlbums?.[currentAlbum.type] || [];
             const cat = cats.find(c => c.id === currentAlbum.categorie);
+
+            // Récupérer photos et vidéos de l'album
+            const albumPhotos = (currentAlbum.photos || [])
+                .map(id => mediasData.photos.find(p => p.id === id))
+                .filter(p => p);
+            const albumVideos = (currentAlbum.videos || [])
+                .map(id => mediasData.videos.find(v => v.id === id))
+                .filter(v => v);
+
+            const photoCount = albumPhotos.length;
+            const videoCount = albumVideos.length;
 
             document.getElementById('album-header').innerHTML = `
                 <h2>${currentAlbum.titre}</h2>
@@ -438,27 +504,69 @@
                     <span>📅 ${formatDate(currentAlbum.date)}</span>
                     ${currentAlbum.lieu ? `<span>📍 ${currentAlbum.lieu}</span>` : ''}
                     ${cat ? `<span>${cat.icon} ${cat.label}</span>` : ''}
-                    <span>📷 ${currentAlbum.photos?.length || 0} photos</span>
+                    ${photoCount > 0 ? `<span>📷 ${photoCount} photo${photoCount > 1 ? 's' : ''}</span>` : ''}
+                    ${videoCount > 0 ? `<span>🎬 ${videoCount} vidéo${videoCount > 1 ? 's' : ''}</span>` : ''}
                 </div>
             `;
 
-            const albumPhotos = (currentAlbum.photos || [])
-                .map(id => mediasData.photos.find(p => p.id === id))
-                .filter(p => p);
-            currentPhotos = albumPhotos;
+            // Combiner et filtrer selon les checkboxes
+            let mediaItems = [];
+            if (showPhotos) {
+                mediaItems = mediaItems.concat(albumPhotos.map(p => ({ ...p, mediaType: 'photo' })));
+            }
+            if (showVideos) {
+                mediaItems = mediaItems.concat(albumVideos.map(v => ({ ...v, mediaType: 'video' })));
+            }
 
-            document.getElementById('album-photos').innerHTML = albumPhotos.map((photo, index) => `
-                <div class="photo-card">
-                    <div class="photo-item" onclick="openLightbox(${index})">
-                        <img src="${photo.thumbnail || photo.src}" alt="${photo.titre}" loading="lazy">
-                        <div class="photo-zoom-icon">🔍</div>
+            // Trier par date
+            mediaItems.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
+            currentPhotos = mediaItems.filter(m => m.mediaType === 'photo');
+
+            const mediaGrid = document.getElementById('album-media');
+            if (mediaItems.length === 0) {
+                mediaGrid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <div class="icon">🔍</div>
+                        <h3>Aucun média</h3>
+                        <p>Activez les filtres photos et/ou vidéos pour voir le contenu.</p>
                     </div>
-                    <div class="photo-info">
-                        <h3 class="photo-title">${photo.titre}</h3>
-                        ${photo.date ? `<span class="photo-date">${formatDate(photo.date)}</span>` : ''}
-                    </div>
-                </div>
-            `).join('');
+                `;
+                return;
+            }
+
+            mediaGrid.innerHTML = mediaItems.map((item, index) => {
+                if (item.mediaType === 'video') {
+                    const ytId = item.videoId || item.id;
+                    const thumbnail = item.thumbnail || `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
+                    return `
+                        <div class="media-card video-card">
+                            <div class="media-item" onclick="playVideo('${ytId}', '${item.type || 'youtube'}')">
+                                <img src="${thumbnail}" alt="${item.titre}" loading="lazy" onerror="this.src='https://img.youtube.com/vi/${ytId}/hqdefault.jpg'">
+                                <div class="media-play-btn">▶</div>
+                            </div>
+                            <div class="media-info">
+                                <h3 class="media-title">${item.titre}</h3>
+                                ${item.date ? `<span class="media-date">${formatDate(item.date)}</span>` : ''}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    const photoIndex = currentPhotos.findIndex(p => p.id === item.id);
+                    return `
+                        <div class="media-card photo-card">
+                            <div class="media-item" onclick="openLightbox(${photoIndex})">
+                                <img src="${item.thumbnail || item.src}" alt="${item.titre}" loading="lazy">
+                                <div class="photo-zoom-icon">🔍</div>
+                            </div>
+                            <div class="media-info">
+                                <h3 class="media-title">${item.titre}</h3>
+                                ${item.date ? `<span class="media-date">${formatDate(item.date)}</span>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
         }
 
         function closeAlbumDetail() {
@@ -467,76 +575,90 @@
             document.getElementById('albums-grid').style.display = 'grid';
             document.getElementById('album-type-filter').style.display = 'flex';
             document.getElementById('category-filters').style.display = 'flex';
-            document.getElementById('view-toggle').style.display = 'flex';
+            document.querySelector('.gallery-controls').style.display = 'flex';
         }
 
-        // ===== TOUTES LES PHOTOS =====
-        function renderAllPhotos() {
+        // ===== TOUS LES MÉDIAS =====
+        function renderAllMedia() {
             let photos = mediasData.photos || [];
-            photos = [...photos].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+            let videos = mediasData.videos || [];
 
-            // Filtres
-            const categories = [...new Set(photos.map(p => {
-                if (p.albumId) {
-                    const album = mediasData.albums?.find(a => a.id === p.albumId);
-                    return album?.titre || 'Album';
-                }
-                return 'Non classées';
-            }))];
+            // Combiner selon les filtres
+            let allMedia = [];
+            if (showPhotos) {
+                allMedia = allMedia.concat(photos.map(p => ({ ...p, mediaType: 'photo' })));
+            }
+            if (showVideos) {
+                allMedia = allMedia.concat(videos.map(v => ({ ...v, mediaType: 'video' })));
+            }
+
+            // Trier par date décroissante
+            allMedia.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
+            // Compteurs pour les filtres
+            const photoCount = photos.length;
+            const videoCount = videos.length;
+            const totalCount = allMedia.length;
 
             document.getElementById('photo-filters').innerHTML = `
-                <button class="filter-btn ${currentPhotoCategory === '' ? 'active' : ''}" onclick="filterPhotos('')">Toutes (${photos.length})</button>
-                ${categories.map(cat => {
-                    const count = photos.filter(p => {
-                        if (cat === 'Non classées') return !p.albumId;
-                        const album = mediasData.albums?.find(a => a.id === p.albumId);
-                        return album?.titre === cat;
-                    }).length;
-                    return `<button class="filter-btn ${currentPhotoCategory === cat ? 'active' : ''}" onclick="filterPhotos('${cat}')">${cat} (${count})</button>`;
-                }).join('')}
+                <span style="color: #666; font-size: 0.9rem; padding: 0.5rem 1rem;">
+                    ${showPhotos && showVideos ? `${totalCount} médias (${photoCount} photos, ${videoCount} vidéos)` :
+                      showPhotos ? `${photoCount} photos` :
+                      showVideos ? `${videoCount} vidéos` : ''}
+                </span>
             `;
 
-            let filtered = photos;
-            if (currentPhotoCategory) {
-                filtered = photos.filter(p => {
-                    if (currentPhotoCategory === 'Non classées') return !p.albumId;
-                    const album = mediasData.albums?.find(a => a.id === p.albumId);
-                    return album?.titre === currentPhotoCategory;
-                });
-            }
-            currentPhotos = filtered;
+            currentPhotos = allMedia.filter(m => m.mediaType === 'photo');
 
-            const grid = document.getElementById('photo-grid');
-            if (filtered.length === 0) {
+            const grid = document.getElementById('media-grid');
+            if (allMedia.length === 0) {
                 grid.innerHTML = `
-                    <div class="empty-state">
-                        <div class="icon">📷</div>
-                        <h3>Aucune photo</h3>
-                        <p>Les photos seront bientôt disponibles.</p>
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <div class="icon">🗂️</div>
+                        <h3>Aucun média</h3>
+                        <p>Activez les filtres photos et/ou vidéos pour voir le contenu.</p>
                     </div>
                 `;
                 return;
             }
 
-            grid.innerHTML = filtered.map((photo, index) => `
-                <div class="photo-card">
-                    <div class="photo-item" onclick="openLightbox(${index})">
-                        <img src="${photo.thumbnail || photo.src}" alt="${photo.titre}" loading="lazy">
-                        <div class="photo-zoom-icon">🔍</div>
-                    </div>
-                    <div class="photo-info">
-                        <h3 class="photo-title">${photo.titre}</h3>
-                        <div class="photo-meta">
-                            ${photo.date ? `<span class="photo-date">${formatDate(photo.date)}</span>` : ''}
+            grid.innerHTML = allMedia.map((item, index) => {
+                if (item.mediaType === 'video') {
+                    const ytId = item.videoId || item.id;
+                    const thumbnail = item.thumbnail || `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg`;
+                    return `
+                        <div class="media-card video-card">
+                            <div class="media-item" onclick="playVideo('${ytId}', '${item.type || 'youtube'}')">
+                                <img src="${thumbnail}" alt="${item.titre}" loading="lazy" onerror="this.src='https://img.youtube.com/vi/${ytId}/hqdefault.jpg'">
+                                <div class="media-play-btn">▶</div>
+                            </div>
+                            <div class="media-info">
+                                <h3 class="media-title">${item.titre}</h3>
+                                ${item.date ? `<span class="media-date">${formatDate(item.date)}</span>` : ''}
+                            </div>
                         </div>
-                    </div>
-                </div>
-            `).join('');
+                    `;
+                } else {
+                    const photoIndex = currentPhotos.findIndex(p => p.id === item.id);
+                    return `
+                        <div class="media-card photo-card">
+                            <div class="media-item" onclick="openLightbox(${photoIndex})">
+                                <img src="${item.thumbnail || item.src}" alt="${item.titre}" loading="lazy">
+                                <div class="photo-zoom-icon">🔍</div>
+                            </div>
+                            <div class="media-info">
+                                <h3 class="media-title">${item.titre}</h3>
+                                ${item.date ? `<span class="media-date">${formatDate(item.date)}</span>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
         }
 
         function filterPhotos(category) {
             currentPhotoCategory = category;
-            renderAllPhotos();
+            renderAllMedia();
         }
 
         // ===== PRESSE =====
