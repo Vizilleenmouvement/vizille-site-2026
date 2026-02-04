@@ -398,6 +398,17 @@ const defaultThemeConfig = {
 // Configuration des thèmes (sera mise à jour depuis themes.json)
 let themeConfig = { ...defaultThemeConfig };
 
+// Configuration des 5 catégories principales
+const CATEGORIES_PROJET = [
+    { id: 'cadre-vie', name: 'Cadre de vie', icon: '🌿', themes: ['Environnement', 'Plan Climat', 'Urbanisme', 'Travaux', 'Mobilités'] },
+    { id: 'social', name: 'Social', icon: '🤝', themes: ['Solidarité', 'Enfance', 'Santé', 'Personnel', 'Seniors', 'Enfance/Jeunesse', 'Jeunesse'] },
+    { id: 'culture', name: 'Culture', icon: '🎭', themes: ['Culture', 'Sport', 'Patrimoine', 'Jumelages', 'Éducation'] },
+    { id: 'municipal', name: 'Municipal', icon: '🏛️', themes: ['Administration', 'Finance', 'Intercommunalité', 'Concertation citoyenne', 'Démocratie', 'Démocratie locale', 'Métropole'] },
+    { id: 'securite', name: 'Sécurité', icon: '🛡️', themes: ['Tranquillité publique', 'Tranquillité', 'Économie'] }
+];
+
+let currentCategoryFilter = null;
+
 // Charger les thèmes depuis themes.json
 async function loadThemeConfig() {
     try {
@@ -494,71 +505,132 @@ window.addEventListener('popstate', (event) => {
 function initializeFilters() {
     const themesGrid = document.getElementById('theme-filters-grid');
 
+    // Collecter les thèmes utilisés
     const usedThemes = new Set();
     allData.forEach(p => {
         getProjectThemes(p).forEach(t => usedThemes.add(t));
     });
 
-    // N'afficher que les thèmes qui ont des fiches, Concertation en dernier (avant Tous)
-    const uniqueThemes = [...usedThemes].sort((a, b) => {
-        if (a === 'Concertation citoyenne') return 1;
-        if (b === 'Concertation citoyenne') return -1;
-        return a.localeCompare(b);
-    });
+    // Compter les projets par catégorie
+    function getCategoryCount(cat) {
+        return allData.filter(p => {
+            const themes = getProjectThemes(p);
+            return themes.some(t => cat.themes.includes(t));
+        }).length;
+    }
 
     let html = '';
 
-    uniqueThemes.forEach(theme => {
-        const config = themeConfig[theme] || { icon: '📌', color: '#1a3a5c' };
+    // Bouton "Tous" en premier
+    html += `
+        <button class="theme-filter-btn category-btn active" data-category="" data-theme="">
+            <span class="icon">🌐</span>
+            <span class="label">Tous (${allData.length})</span>
+        </button>
+    `;
+
+    // Boutons catégories
+    CATEGORIES_PROJET.forEach(cat => {
+        const count = getCategoryCount(cat);
+        if (count === 0) return;
         html += `
-            <button class="theme-filter-btn" data-theme="${theme}">
-                <span class="icon">${config.icon}</span>
-                <span class="label">${theme}</span>
+            <button class="theme-filter-btn category-btn" data-category="${cat.id}">
+                <span class="icon">${cat.icon}</span>
+                <span class="label">${cat.name} (${count})</span>
             </button>
         `;
     });
 
-    // Bouton "Tous" à la fin
-    html += `
-        <button class="theme-filter-btn active" data-theme="">
-            <span class="icon">🌐</span>
-            <span class="label">Tous</span>
-        </button>
-    `;
-
     themesGrid.innerHTML = html;
+
+    // Conteneur pour les sous-thèmes
+    const subContainer = document.createElement('div');
+    subContainer.id = 'theme-sub-filters';
+    subContainer.style.cssText = 'margin-top: 0.75rem; display: none;';
+    themesGrid.parentNode.appendChild(subContainer);
 
     document.querySelectorAll('.theme-filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.theme-filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById('filter-theme').value = btn.dataset.theme;
-            
-            // Si on clique sur un thème spécifique, passer en vue cards directement
-            if (btn.dataset.theme) {
-                currentView = 'cards';
-                document.querySelectorAll('.view-btn').forEach(b => {
-                    b.classList.toggle('active', b.dataset.view === 'cards');
-                });
-            }
-            
-            // Ajouter à l'historique du navigateur
+            const catId = btn.dataset.category;
             const theme = btn.dataset.theme;
-            history.pushState({ theme: theme, view: currentView }, '', theme ? `#theme=${encodeURIComponent(theme)}` : '#');
-            
+
+            // Si c'est une catégorie
+            if (catId !== undefined) {
+                document.querySelectorAll('.theme-filter-btn.category-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                currentCategoryFilter = catId || null;
+                document.getElementById('filter-theme').value = '';
+
+                // Afficher les sous-thèmes de cette catégorie
+                renderSubThemes(catId);
+
+                if (catId) {
+                    currentView = 'cards';
+                    document.querySelectorAll('.view-btn').forEach(b => {
+                        b.classList.toggle('active', b.dataset.view === 'cards');
+                    });
+                }
+            } else if (theme !== undefined) {
+                // C'est un sous-thème
+                document.querySelectorAll('.sub-theme-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('filter-theme').value = theme;
+            }
+
             applyFilters();
             updateBackButton();
 
             setTimeout(() => {
                 const target = document.getElementById('view-cards') || document.getElementById('view-themes') || document.getElementById('view-table');
                 if (target && !target.classList.contains('hidden')) {
-                    const offset = 150; // Compense le header fixe
+                    const offset = 150;
                     const y = target.getBoundingClientRect().top + window.pageYOffset - offset;
                     window.scrollTo({ top: y, behavior: 'smooth' });
                 }
             }, 150);
         });
     });
+
+    function renderSubThemes(catId) {
+        const subContainer = document.getElementById('theme-sub-filters');
+        if (!catId) {
+            subContainer.style.display = 'none';
+            return;
+        }
+
+        const cat = CATEGORIES_PROJET.find(c => c.id === catId);
+        if (!cat) return;
+
+        let html = '<small style="color: var(--gris-texte); margin-right: 0.5rem;">Thèmes :</small>';
+        cat.themes.forEach(theme => {
+            const count = allData.filter(p => getProjectThemes(p).includes(theme)).length;
+            if (count === 0) return;
+            const config = themeConfig[theme] || { icon: '📌', color: '#1a3a5c' };
+            html += `
+                <button class="theme-filter-btn sub-theme-btn" data-theme="${theme}" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">
+                    <span class="icon">${config.icon}</span>
+                    <span class="label">${theme} (${count})</span>
+                </button>
+            `;
+        });
+
+        subContainer.innerHTML = html;
+        subContainer.style.display = 'flex';
+        subContainer.style.flexWrap = 'wrap';
+        subContainer.style.gap = '0.5rem';
+        subContainer.style.alignItems = 'center';
+
+        // Ajouter les événements pour les sous-thèmes
+        subContainer.querySelectorAll('.sub-theme-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                subContainer.querySelectorAll('.sub-theme-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('filter-theme').value = btn.dataset.theme;
+                applyFilters();
+            });
+        });
+    }
 
     const themeSelect = document.getElementById('filter-theme');
     uniqueThemes.forEach(theme => {
@@ -602,9 +674,19 @@ function applyFilters() {
             (projet.resume && projet.resume.toLowerCase().includes(search)) ||
             (projet.description && projet.description.toLowerCase().includes(search));
 
+        // Filtre par catégorie (si pas de thème spécifique)
+        let matchCategory = true;
+        if (currentCategoryFilter && !theme) {
+            const cat = CATEGORIES_PROJET.find(c => c.id === currentCategoryFilter);
+            if (cat) {
+                const projectThemes = getProjectThemes(projet);
+                matchCategory = projectThemes.some(t => cat.themes.includes(t));
+            }
+        }
+
         const matchTheme = !theme || projectHasTheme(projet, theme);
 
-        return matchSearch && matchTheme;
+        return matchSearch && matchCategory && matchTheme;
     });
 
     filteredData.sort((a, b) => {
