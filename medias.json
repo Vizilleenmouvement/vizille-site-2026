@@ -1,31 +1,126 @@
 {
-  "albums": [],
+  "albums": [
+    {
+      "id": "album_1770199470236",
+      "titre": "Campagne",
+      "type": "campagne",
+      "categorie": "reunion",
+      "date": "2026-02-04",
+      "lieu": "",
+      "description": "",
+      "cover": "",
+      "photos": [
+        1770127914621,
+        1770128308750
+      ]
+    }
+  ],
   "categoriesAlbums": {
     "campagne": [
-      { "id": "reunion", "label": "Réunions", "icon": "🎤" },
-      { "id": "marche", "label": "Marchés", "icon": "🛒" },
-      { "id": "porte-a-porte", "label": "Porte-à-porte", "icon": "🚪" },
-      { "id": "rencontre", "label": "Rencontres", "icon": "🤝" },
-      { "id": "evenement", "label": "Événements", "icon": "📅" },
-      { "id": "autre", "label": "Autre", "icon": "📷" }
+      {
+        "id": "reunion",
+        "label": "Réunions",
+        "icon": "🎤"
+      },
+      {
+        "id": "marche",
+        "label": "Marchés",
+        "icon": "🛒"
+      },
+      {
+        "id": "porte-a-porte",
+        "label": "Porte-à-porte",
+        "icon": "🚪"
+      },
+      {
+        "id": "rencontre",
+        "label": "Rencontres",
+        "icon": "🤝"
+      },
+      {
+        "id": "evenement",
+        "label": "Événements",
+        "icon": "📅"
+      },
+      {
+        "id": "autre",
+        "label": "Autre",
+        "icon": "📷"
+      }
     ],
     "bilan": [
-      { "id": "environnement", "label": "Environnement", "icon": "🌿" },
-      { "id": "culture", "label": "Culture", "icon": "🎭" },
-      { "id": "sport", "label": "Sport", "icon": "⚽" },
-      { "id": "sante", "label": "Santé", "icon": "🏥" },
-      { "id": "solidarite", "label": "Solidarité", "icon": "🤝" },
-      { "id": "enfance", "label": "Enfance", "icon": "👶" },
-      { "id": "urbanisme", "label": "Urbanisme", "icon": "🏘️" },
-      { "id": "mobilites", "label": "Mobilités", "icon": "🚲" },
-      { "id": "patrimoine", "label": "Patrimoine", "icon": "🏛️" },
-      { "id": "securite", "label": "Sécurité", "icon": "🛡️" },
-      { "id": "economie", "label": "Économie", "icon": "💼" }
+      {
+        "id": "environnement",
+        "label": "Environnement",
+        "icon": "🌿"
+      },
+      {
+        "id": "culture",
+        "label": "Culture",
+        "icon": "🎭"
+      },
+      {
+        "id": "sport",
+        "label": "Sport",
+        "icon": "⚽"
+      },
+      {
+        "id": "sante",
+        "label": "Santé",
+        "icon": "🏥"
+      },
+      {
+        "id": "solidarite",
+        "label": "Solidarité",
+        "icon": "🤝"
+      },
+      {
+        "id": "enfance",
+        "label": "Enfance",
+        "icon": "👶"
+      },
+      {
+        "id": "urbanisme",
+        "label": "Urbanisme",
+        "icon": "🏘️"
+      },
+      {
+        "id": "mobilites",
+        "label": "Mobilités",
+        "icon": "🚲"
+      },
+      {
+        "id": "patrimoine",
+        "label": "Patrimoine",
+        "icon": "🏛️"
+      },
+      {
+        "id": "securite",
+        "label": "Sécurité",
+        "icon": "🛡️"
+      },
+      {
+        "id": "economie",
+        "label": "Économie",
+        "icon": "💼"
+      }
     ],
     "objectifs": [
-      { "id": "transition", "label": "Transition écologique", "icon": "🌱" },
-      { "id": "cadre-vie", "label": "Cadre de vie", "icon": "🏡" },
-      { "id": "services", "label": "Services publics", "icon": "🏛️" }
+      {
+        "id": "transition",
+        "label": "Transition écologique",
+        "icon": "🌱"
+      },
+      {
+        "id": "cadre-vie",
+        "label": "Cadre de vie",
+        "icon": "🏡"
+      },
+      {
+        "id": "services",
+        "label": "Services publics",
+        "icon": "🏛️"
+      }
     ]
   },
   "photos": [
