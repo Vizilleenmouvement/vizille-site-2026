@@ -341,6 +341,11 @@
     display: flex;
     justify-content: center;
     min-height: 400px;
+    overflow: hidden;
+}
+
+.facebook-widget-wrapper iframe {
+    max-height: 550px !important;
 }
 
 .facebook-widget-wrapper .fb-page {
