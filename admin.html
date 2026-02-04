@@ -165,7 +165,13 @@
             color: white;
             border-color: var(--bleu);
         }
-        
+
+        .album-type-btn.active {
+            background: var(--bleu) !important;
+            color: white !important;
+            border-color: var(--bleu) !important;
+        }
+
         /* ===== HEADER ===== */
         .header {
             background: linear-gradient(135deg, var(--bleu) 0%, var(--bleu-clair) 100%);
@@ -1614,15 +1620,36 @@
 
                     <!-- Sous-onglets médias -->
                     <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
-                        <button class="theme-btn active" data-media-tab="photos" onclick="switchMediaTab('photos')">📷 Photos</button>
+                        <button class="theme-btn active" data-media-tab="albums" onclick="switchMediaTab('albums')">📁 Albums</button>
+                        <button class="theme-btn" data-media-tab="photos" onclick="switchMediaTab('photos')">📷 Photos</button>
                         <button class="theme-btn" data-media-tab="presse" onclick="switchMediaTab('presse')">📰 Presse</button>
                         <button class="theme-btn" data-media-tab="videos" onclick="switchMediaTab('videos')">🎬 Vidéos</button>
                         <button class="theme-btn" data-media-tab="bobines" onclick="switchMediaTab('bobines')">🎞️ Bobines</button>
                         <button class="theme-btn" data-media-tab="documents" onclick="switchMediaTab('documents')">📄 Documents</button>
                     </div>
 
+                    <!-- ALBUMS -->
+                    <div class="media-tab-content active" id="media-albums">
+                        <div style="background: #e8f4fc; border: 1px solid #3498db; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                            <strong>📁 Albums</strong> = Regroupement de photos par événement ou thème.
+                            <br><small>3 types : <strong>Campagne</strong> (réunions, marchés...), <strong>Bilan</strong> (thèmes du mandat), <strong>Objectifs</strong> (projets futurs)</small>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center;">
+                            <button class="btn btn-primary" onclick="openAddAlbum()">+ Créer un album</button>
+                            <span style="color: var(--gris-texte);">📁 <span id="albums-count">0</span> albums</span>
+                        </div>
+                        <!-- Filtres par type -->
+                        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                            <button class="btn btn-sm btn-outline album-type-btn active" data-type="all" onclick="filterAlbumsAdmin('all')">Tous</button>
+                            <button class="btn btn-sm btn-outline album-type-btn" data-type="campagne" onclick="filterAlbumsAdmin('campagne')">🎤 Campagne</button>
+                            <button class="btn btn-sm btn-outline album-type-btn" data-type="bilan" onclick="filterAlbumsAdmin('bilan')">📊 Bilan</button>
+                            <button class="btn btn-sm btn-outline album-type-btn" data-type="objectifs" onclick="filterAlbumsAdmin('objectifs')">🎯 Objectifs</button>
+                        </div>
+                        <div id="albums-list" class="cards-grid"></div>
+                    </div>
+
                     <!-- PHOTOS -->
-                    <div class="media-tab-content active" id="media-photos">
+                    <div class="media-tab-content" id="media-photos" style="display: none;">
                         <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center;">
                             <button class="btn btn-primary" onclick="openAddPhoto()">+ Ajouter une photo</button>
                             <span style="color: var(--gris-texte);">📷 <span id="photos-count">0</span> photos</span>
@@ -2152,7 +2179,41 @@
             faq: [],
             articles: [],
             abonnes: [],
-            medias: { photos: [], presse: [], videos: [], documents: [] },
+            medias: {
+                albums: [],
+                photos: [],
+                presse: [],
+                videos: [],
+                documents: [],
+                categoriesAlbums: {
+                    campagne: [
+                        { id: "reunion", label: "Réunions", icon: "🎤" },
+                        { id: "marche", label: "Marchés", icon: "🛒" },
+                        { id: "porte-a-porte", label: "Porte-à-porte", icon: "🚪" },
+                        { id: "rencontre", label: "Rencontres", icon: "🤝" },
+                        { id: "evenement", label: "Événements", icon: "📅" },
+                        { id: "autre", label: "Autre", icon: "📷" }
+                    ],
+                    bilan: [
+                        { id: "environnement", label: "Environnement", icon: "🌿" },
+                        { id: "culture", label: "Culture", icon: "🎭" },
+                        { id: "sport", label: "Sport", icon: "⚽" },
+                        { id: "sante", label: "Santé", icon: "🏥" },
+                        { id: "solidarite", label: "Solidarité", icon: "🤝" },
+                        { id: "enfance", label: "Enfance", icon: "👶" },
+                        { id: "urbanisme", label: "Urbanisme", icon: "🏘️" },
+                        { id: "mobilites", label: "Mobilités", icon: "🚲" },
+                        { id: "patrimoine", label: "Patrimoine", icon: "🏛️" },
+                        { id: "securite", label: "Sécurité", icon: "🛡️" },
+                        { id: "economie", label: "Économie", icon: "💼" }
+                    ],
+                    objectifs: [
+                        { id: "transition", label: "Transition écologique", icon: "🌱" },
+                        { id: "cadre-vie", label: "Cadre de vie", icon: "🏡" },
+                        { id: "services", label: "Services publics", icon: "🏛️" }
+                    ]
+                }
+            },
             config: {
                 email: '',
                 telephone: '',
@@ -2478,7 +2539,41 @@
             data.faq = [];
             data.articles = [];
             data.abonnes = [];
-            data.medias = { photos: [], presse: [], videos: [], documents: [] };
+            data.medias = {
+                albums: [],
+                photos: [],
+                presse: [],
+                videos: [],
+                documents: [],
+                categoriesAlbums: {
+                    campagne: [
+                        { id: "reunion", label: "Réunions", icon: "🎤" },
+                        { id: "marche", label: "Marchés", icon: "🛒" },
+                        { id: "porte-a-porte", label: "Porte-à-porte", icon: "🚪" },
+                        { id: "rencontre", label: "Rencontres", icon: "🤝" },
+                        { id: "evenement", label: "Événements", icon: "📅" },
+                        { id: "autre", label: "Autre", icon: "📷" }
+                    ],
+                    bilan: [
+                        { id: "environnement", label: "Environnement", icon: "🌿" },
+                        { id: "culture", label: "Culture", icon: "🎭" },
+                        { id: "sport", label: "Sport", icon: "⚽" },
+                        { id: "sante", label: "Santé", icon: "🏥" },
+                        { id: "solidarite", label: "Solidarité", icon: "🤝" },
+                        { id: "enfance", label: "Enfance", icon: "👶" },
+                        { id: "urbanisme", label: "Urbanisme", icon: "🏘️" },
+                        { id: "mobilites", label: "Mobilités", icon: "🚲" },
+                        { id: "patrimoine", label: "Patrimoine", icon: "🏛️" },
+                        { id: "securite", label: "Sécurité", icon: "🛡️" },
+                        { id: "economie", label: "Économie", icon: "💼" }
+                    ],
+                    objectifs: [
+                        { id: "transition", label: "Transition écologique", icon: "🌱" },
+                        { id: "cadre-vie", label: "Cadre de vie", icon: "🏡" },
+                        { id: "services", label: "Services publics", icon: "🏛️" }
+                    ]
+                }
+            };
 
             const files = {
                 projets: 'projets.json',
@@ -2677,7 +2772,42 @@
             data.faq = [];
             data.articles = [];
             data.abonnes = [];
-            data.medias = { photos: [], presse: [], videos: [], documents: [], bobines: [] };
+            data.medias = {
+                albums: [],
+                photos: [],
+                presse: [],
+                videos: [],
+                documents: [],
+                bobines: [],
+                categoriesAlbums: {
+                    campagne: [
+                        { id: "reunion", label: "Réunions", icon: "🎤" },
+                        { id: "marche", label: "Marchés", icon: "🛒" },
+                        { id: "porte-a-porte", label: "Porte-à-porte", icon: "🚪" },
+                        { id: "rencontre", label: "Rencontres", icon: "🤝" },
+                        { id: "evenement", label: "Événements", icon: "📅" },
+                        { id: "autre", label: "Autre", icon: "📷" }
+                    ],
+                    bilan: [
+                        { id: "environnement", label: "Environnement", icon: "🌿" },
+                        { id: "culture", label: "Culture", icon: "🎭" },
+                        { id: "sport", label: "Sport", icon: "⚽" },
+                        { id: "sante", label: "Santé", icon: "🏥" },
+                        { id: "solidarite", label: "Solidarité", icon: "🤝" },
+                        { id: "enfance", label: "Enfance", icon: "👶" },
+                        { id: "urbanisme", label: "Urbanisme", icon: "🏘️" },
+                        { id: "mobilites", label: "Mobilités", icon: "🚲" },
+                        { id: "patrimoine", label: "Patrimoine", icon: "🏛️" },
+                        { id: "securite", label: "Sécurité", icon: "🛡️" },
+                        { id: "economie", label: "Économie", icon: "💼" }
+                    ],
+                    objectifs: [
+                        { id: "transition", label: "Transition écologique", icon: "🌱" },
+                        { id: "cadre-vie", label: "Cadre de vie", icon: "🏡" },
+                        { id: "services", label: "Services publics", icon: "🏛️" }
+                    ]
+                }
+            };
             data.ticker = [
                 "📢 Nouveau : Consultez notre galerie Médias avec photos et vidéos de la campagne !",
                 "📅 Prochaine réunion publique : consultez les Actualités",
@@ -6458,12 +6588,224 @@ Pour vous désabonner, répondez à cet email.
         }
 
         function renderMedias() {
+            renderAlbumsAdmin();
             renderPhotos();
             renderPresse();
             renderVideos();
             renderDocuments();
             renderBobinesAdmin();
             showLatestMedia();
+        }
+
+        // === ALBUMS ===
+        let currentAlbumTypeFilter = 'all';
+
+        function filterAlbumsAdmin(type) {
+            currentAlbumTypeFilter = type;
+            document.querySelectorAll('.album-type-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.type === type);
+            });
+            renderAlbumsAdmin();
+        }
+
+        function renderAlbumsAdmin() {
+            if (!data.medias.albums) data.medias.albums = [];
+            let albums = data.medias.albums || [];
+
+            // Filtrer par type
+            if (currentAlbumTypeFilter !== 'all') {
+                albums = albums.filter(a => a.type === currentAlbumTypeFilter);
+            }
+
+            // Trier par date décroissante
+            albums = [...albums].sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
+            document.getElementById('albums-count').textContent = (data.medias.albums || []).length;
+
+            if (albums.length === 0) {
+                document.getElementById('albums-list').innerHTML = `
+                    <div style="text-align: center; padding: 3rem; color: #888; grid-column: 1/-1;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📁</div>
+                        <p>Aucun album ${currentAlbumTypeFilter !== 'all' ? 'de ce type' : ''}</p>
+                        <button class="btn btn-primary" style="margin-top: 1rem;" onclick="openAddAlbum()">+ Créer un album</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const typeLabels = { campagne: '🎤 Campagne', bilan: '📊 Bilan', objectifs: '🎯 Objectifs' };
+
+            document.getElementById('albums-list').innerHTML = albums.map((album, idx) => {
+                const realIndex = data.medias.albums.findIndex(a => a.id === album.id);
+                const photos = (album.photos || []).map(id => data.medias.photos.find(p => p.id === id)).filter(p => p);
+                const photoCount = photos.length;
+                const coverUrl = album.cover || (photos[0]?.src) || 'images/logo.png';
+                const cats = data.medias.categoriesAlbums?.[album.type] || [];
+                const cat = cats.find(c => c.id === album.categorie);
+
+                return `
+                    <div class="item-card" style="position: relative;">
+                        <img src="${coverUrl}" alt="${album.titre}" style="width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 0.5rem;" onerror="this.src='images/logo.png'">
+                        <div style="position: absolute; top: 8px; right: 8px; background: ${album.type === 'campagne' ? '#E91E63' : album.type === 'bilan' ? '#2196F3' : '#4CAF50'}; color: white; padding: 0.2rem 0.5rem; border-radius: 12px; font-size: 0.7rem;">
+                            ${typeLabels[album.type] || album.type}
+                        </div>
+                        <h4 style="margin: 0 0 0.25rem; font-size: 0.95rem; color: var(--bleu);">${album.titre}</h4>
+                        <p style="font-size: 0.8rem; color: #888; margin: 0;">
+                            ${cat ? `${cat.icon} ${cat.label} • ` : ''}${album.date || ''} • 📷 ${photoCount} photos
+                        </p>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem;">
+                            <button class="btn btn-sm btn-outline" onclick="openEditAlbum(${realIndex})">✏️ Modifier</button>
+                            <button class="btn btn-sm" style="background: #e74c3c; color: white;" onclick="deleteAlbum(${realIndex})">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openAddAlbum() {
+            currentEdit = { type: 'album', index: null };
+            document.getElementById('modal-title').textContent = '📁 Créer un album';
+            document.getElementById('modal-body').innerHTML = getAlbumForm({});
+            document.getElementById('modal-save').onclick = saveAlbum;
+            document.getElementById('modal-edit').classList.add('active');
+        }
+
+        function openEditAlbum(index) {
+            currentEdit = { type: 'album', index };
+            const album = data.medias.albums[index];
+            document.getElementById('modal-title').textContent = '📁 Modifier l\'album';
+            document.getElementById('modal-body').innerHTML = getAlbumForm(album);
+            document.getElementById('modal-save').onclick = saveAlbum;
+            document.getElementById('modal-edit').classList.add('active');
+        }
+
+        function getAlbumForm(album) {
+            const today = new Date().toISOString().split('T')[0];
+            const cats = data.medias.categoriesAlbums || { campagne: [], bilan: [], objectifs: [] };
+            const selectedPhotos = album.photos || [];
+            const allPhotos = data.medias.photos || [];
+
+            return `
+                <div class="form-group">
+                    <label>Titre de l'album *</label>
+                    <input type="text" id="album-titre" value="${album.titre || ''}" placeholder="Ex: Réunion publique - Quartier Nord" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Type d'album *</label>
+                        <select id="album-type" onchange="updateAlbumCategories()">
+                            <option value="campagne" ${album.type === 'campagne' ? 'selected' : ''}>🎤 Campagne</option>
+                            <option value="bilan" ${album.type === 'bilan' ? 'selected' : ''}>📊 Bilan</option>
+                            <option value="objectifs" ${album.type === 'objectifs' ? 'selected' : ''}>🎯 Objectifs</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Catégorie</label>
+                        <select id="album-categorie">
+                            ${getCategoriesOptions(album.type || 'campagne', album.categorie)}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date *</label>
+                        <input type="date" id="album-date" value="${album.date || today}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Lieu (optionnel)</label>
+                        <input type="text" id="album-lieu" value="${album.lieu || ''}" placeholder="Ex: Salle des fêtes">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description (optionnel)</label>
+                    <textarea id="album-description" rows="2" placeholder="Description de l'album...">${album.description || ''}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Image de couverture (URL)</label>
+                    <input type="text" id="album-cover" value="${album.cover || ''}" placeholder="images/medias/cover.jpg (laissez vide pour utiliser la 1ère photo)">
+                </div>
+                <div class="form-group">
+                    <label>Photos de l'album (${selectedPhotos.length} sélectionnées)</label>
+                    <div style="max-height: 300px; overflow-y: auto; border: 1px solid var(--gris-border); border-radius: 8px; padding: 0.5rem;">
+                        ${allPhotos.length === 0 ? '<p style="text-align:center; color:#888; padding:1rem;">Aucune photo disponible. Ajoutez d\'abord des photos.</p>' : ''}
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.5rem;">
+                            ${allPhotos.map(photo => `
+                                <label style="cursor: pointer; position: relative;">
+                                    <input type="checkbox" name="album-photos" value="${photo.id}" ${selectedPhotos.includes(photo.id) ? 'checked' : ''} style="position: absolute; top: 5px; left: 5px; z-index: 1;">
+                                    <img src="${photo.thumbnail || photo.src}" alt="${photo.titre}" style="width: 100%; height: 70px; object-fit: cover; border-radius: 6px; opacity: ${selectedPhotos.includes(photo.id) ? '1' : '0.6'}; border: ${selectedPhotos.includes(photo.id) ? '3px solid #4CAF50' : '1px solid #ddd'};">
+                                    <div style="font-size: 0.7rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${photo.titre}</div>
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getCategoriesOptions(type, selected) {
+            const cats = data.medias.categoriesAlbums?.[type] || [];
+            return `<option value="">-- Choisir --</option>` + cats.map(c =>
+                `<option value="${c.id}" ${selected === c.id ? 'selected' : ''}>${c.icon} ${c.label}</option>`
+            ).join('');
+        }
+
+        function updateAlbumCategories() {
+            const type = document.getElementById('album-type').value;
+            document.getElementById('album-categorie').innerHTML = getCategoriesOptions(type, '');
+        }
+
+        function saveAlbum() {
+            const titre = document.getElementById('album-titre').value.trim();
+            const type = document.getElementById('album-type').value;
+            const categorie = document.getElementById('album-categorie').value;
+            const date = document.getElementById('album-date').value;
+            const lieu = document.getElementById('album-lieu').value.trim();
+            const description = document.getElementById('album-description').value.trim();
+            const cover = document.getElementById('album-cover').value.trim();
+
+            // Récupérer les photos sélectionnées
+            const photoCheckboxes = document.querySelectorAll('input[name="album-photos"]:checked');
+            const photos = Array.from(photoCheckboxes).map(cb => parseInt(cb.value) || cb.value);
+
+            if (!titre) {
+                showToast('⚠️ Le titre est requis', 'warning');
+                return;
+            }
+
+            const album = {
+                id: currentEdit.index !== null ? data.medias.albums[currentEdit.index].id : 'album_' + Date.now(),
+                titre,
+                type,
+                categorie,
+                date,
+                lieu,
+                description,
+                cover,
+                photos
+            };
+
+            if (!data.medias.albums) data.medias.albums = [];
+
+            if (currentEdit.index !== null) {
+                data.medias.albums[currentEdit.index] = album;
+                showToast('✅ Album modifié', 'success');
+            } else {
+                data.medias.albums.push(album);
+                showToast('✅ Album créé', 'success');
+            }
+
+            closeModal();
+            renderAlbumsAdmin();
+            markModified('medias');
+        }
+
+        function deleteAlbum(index) {
+            if (confirm('Supprimer cet album ? Les photos ne seront pas supprimées.')) {
+                data.medias.albums.splice(index, 1);
+                renderAlbumsAdmin();
+                markModified('medias');
+                showToast('🗑️ Album supprimé', 'success');
+            }
         }
 
         // === PHOTOS ===

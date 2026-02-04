@@ -1,50 +1,78 @@
 {
-  "bobines": [],
+  "albums": [],
+  "categoriesAlbums": {
+    "campagne": [
+      { "id": "reunion", "label": "Réunions", "icon": "🎤" },
+      { "id": "marche", "label": "Marchés", "icon": "🛒" },
+      { "id": "porte-a-porte", "label": "Porte-à-porte", "icon": "🚪" },
+      { "id": "rencontre", "label": "Rencontres", "icon": "🤝" },
+      { "id": "evenement", "label": "Événements", "icon": "📅" },
+      { "id": "autre", "label": "Autre", "icon": "📷" }
+    ],
+    "bilan": [
+      { "id": "environnement", "label": "Environnement", "icon": "🌿" },
+      { "id": "culture", "label": "Culture", "icon": "🎭" },
+      { "id": "sport", "label": "Sport", "icon": "⚽" },
+      { "id": "sante", "label": "Santé", "icon": "🏥" },
+      { "id": "solidarite", "label": "Solidarité", "icon": "🤝" },
+      { "id": "enfance", "label": "Enfance", "icon": "👶" },
+      { "id": "urbanisme", "label": "Urbanisme", "icon": "🏘️" },
+      { "id": "mobilites", "label": "Mobilités", "icon": "🚲" },
+      { "id": "patrimoine", "label": "Patrimoine", "icon": "🏛️" },
+      { "id": "securite", "label": "Sécurité", "icon": "🛡️" },
+      { "id": "economie", "label": "Économie", "icon": "💼" }
+    ],
+    "objectifs": [
+      { "id": "transition", "label": "Transition écologique", "icon": "🌱" },
+      { "id": "cadre-vie", "label": "Cadre de vie", "icon": "🏡" },
+      { "id": "services", "label": "Services publics", "icon": "🏛️" }
+    ]
+  },
   "photos": [
     {
       "id": 2,
       "titre": "Catherine Troton - Maire de Vizille",
       "src": "images/catherine-troton.jpg",
       "thumbnail": "images/catherine-troton.jpg",
-      "categorie": "Équipe",
       "date": "2026-01-10",
-      "description": "Portrait de Catherine Troton"
+      "description": "Portrait de Catherine Troton",
+      "albumId": null
     },
     {
       "id": 3,
       "titre": "Vue panoramique de Vizille",
       "src": "images/vizille-panorama.png",
       "thumbnail": "images/vizille-panorama.png",
-      "categorie": "Ville",
       "date": "2025-12-01",
-      "description": "Panorama de notre belle ville"
+      "description": "Panorama de notre belle ville",
+      "albumId": null
     },
     {
       "id": 1770127914621,
-      "titre": "réunion chez l'habitant",
+      "titre": "Réunion chez l'habitant",
       "src": "images/medias/whatsapp_image_2026-02-02_at_14.24.15.jpeg",
       "thumbnail": null,
-      "categorie": "",
       "date": "2026-02-02",
-      "description": ""
+      "description": "",
+      "albumId": null
     },
     {
       "id": 1770128308750,
-      "titre": "réunion chez l'habitant2026 02 02 At 14.24.15",
+      "titre": "Réunion chez l'habitant",
       "src": "images/medias/whatsapp_image_2026-02-02_at_14.24.01.jpeg",
       "thumbnail": null,
-      "categorie": "",
       "date": "2026-02-03",
-      "description": ""
+      "description": "",
+      "albumId": null
     },
     {
       "id": 1770137790420,
-      "titre": "Pour une ville dynamique et et solidaire",
+      "titre": "Pour une ville dynamique et solidaire",
       "src": "images/medias/615406480_122109496719169933_2030527121759158223_n.jpg",
       "thumbnail": null,
-      "categorie": "",
       "date": "2026-02-03",
-      "description": ""
+      "description": "",
+      "albumId": null
     }
   ],
   "presse": [
@@ -97,5 +125,6 @@
       "taille": "2 Mo",
       "date": "2026-01-15"
     }
-  ]
+  ],
+  "bobines": []
 }
