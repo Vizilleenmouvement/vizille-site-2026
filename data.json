@@ -6021,7 +6021,7 @@
   },
   {
     "id": 133,
-    "theme": "Mobilités",
+    "theme": "Urbanisme",
     "icon": "🚴",
     "color": "#1abc9c",
     "statut": "En cours",
@@ -6092,7 +6092,7 @@
     "images": [
       "images/data-extracted/action_133_0.heic"
     ],
-    "image": "images/data-extracted/action_133_main.heic"
+    "image": "images/data-extracted/action_133_0.heic"
   },
   {
     "id": 134,
@@ -13778,7 +13778,7 @@
   },
   {
     "id": 376,
-    "theme": "Culture",
+    "theme": "Solidarité",
     "icon": "🎭",
     "color": "#9b59b6",
     "statut": "En cours",
