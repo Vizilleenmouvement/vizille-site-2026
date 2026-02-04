@@ -4792,22 +4792,87 @@
             enablePasteForModal((files) => processActionDroppedFiles(files));
         }
 
-        function processActionDroppedFiles(files) {
-            showToast(`📷 Import de ${files.length} image(s)...`, 'info');
-            files.forEach(file => {
+        async function processActionDroppedFiles(files) {
+            const token = document.getElementById('github-token')?.value?.trim();
+            if (!token) {
+                showToast('❌ Token GitHub requis pour uploader des images', 'error');
+                return;
+            }
+
+            showToast(`📷 Upload de ${files.length} image(s)...`, 'info');
+
+            for (const file of files) {
                 if (file.size > 5 * 1024 * 1024) {
-                    showToast(`⚠️ ${file.name} trop grande`, 'warning');
-                    return;
+                    showToast(`⚠️ ${file.name} trop grande (max 5 Mo)`, 'warning');
+                    continue;
                 }
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const images = getActionImages();
-                    images.push(e.target.result);
-                    setActionImages(images);
-                };
-                reader.readAsDataURL(file);
-            });
-            showToast(`✅ Images ajoutées`, 'success');
+
+                try {
+                    // Compresser l'image
+                    const compressedFile = await compressImage(file, 1920, 0.85);
+                    const originalSize = (file.size / 1024).toFixed(0);
+                    const newSize = (compressedFile.size / 1024).toFixed(0);
+
+                    // Lire le fichier compressé
+                    const dataUrl = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = (e) => resolve(e.target.result);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(compressedFile);
+                    });
+
+                    const base64Content = dataUrl.split(',')[1];
+                    const timestamp = Date.now();
+                    const cleanName = file.name.replace(/[^a-zA-Z0-9.]/g, '_').toLowerCase();
+                    const fileName = `action_${timestamp}_${cleanName}`.replace(/\.[^.]+$/, '.jpg');
+                    const imagePath = `images/actions/${fileName}`;
+
+                    showToast(`⏳ Upload ${file.name} (${originalSize}→${newSize} Ko)...`, 'info');
+
+                    // Vérifier si le fichier existe
+                    let sha = null;
+                    const getResponse = await fetch(
+                        `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${imagePath}?ref=${GITHUB_CONFIG.branch}`,
+                        { headers: { 'Authorization': `token ${token}` } }
+                    );
+                    if (getResponse.ok) {
+                        sha = (await getResponse.json()).sha;
+                    }
+
+                    const body = {
+                        message: `Upload image action ${fileName}`,
+                        content: base64Content,
+                        branch: GITHUB_CONFIG.branch
+                    };
+                    if (sha) body.sha = sha;
+
+                    const response = await fetch(
+                        `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${imagePath}`,
+                        {
+                            method: 'PUT',
+                            headers: {
+                                'Authorization': `token ${token}`,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(body)
+                        }
+                    );
+
+                    if (response.ok) {
+                        // Stocker le CHEMIN (pas le base64!)
+                        const images = getActionImages();
+                        images.push(imagePath);
+                        setActionImages(images);
+                        showToast(`✅ ${file.name} uploadée !`, 'success');
+                    } else {
+                        const error = await response.json();
+                        throw new Error(error.message || 'Upload failed');
+                    }
+                } catch (err) {
+                    console.error('Erreur upload image action:', err);
+                    showToast(`❌ Échec ${file.name}: ${err.message}`, 'error');
+                }
+            }
         }
 
         // Gestion des images pour les actions
@@ -5893,20 +5958,84 @@
             showToast('🗑️ Image supprimée', 'info');
         }
 
-        function processArticleImage(file) {
+        async function processArticleImage(file) {
             if (file.size > 5 * 1024 * 1024) {
                 showToast('⚠️ Image trop volumineuse (max 5 Mo)', 'warning');
                 return;
             }
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const images = getArticleImages();
-                images.push(e.target.result);
-                setArticleImages(images);
-                showToast('✅ Image ajoutée', 'success');
-            };
-            reader.readAsDataURL(file);
+            const token = document.getElementById('github-token')?.value?.trim();
+            if (!token) {
+                showToast('❌ Token GitHub requis pour uploader des images', 'error');
+                return;
+            }
+
+            showToast('🗜️ Compression en cours...', 'info');
+
+            try {
+                // Compresser l'image
+                const compressedFile = await compressImage(file, 1920, 0.85);
+                const originalSize = (file.size / 1024).toFixed(0);
+                const newSize = (compressedFile.size / 1024).toFixed(0);
+
+                // Lire le fichier compressé
+                const dataUrl = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(compressedFile);
+                });
+
+                const base64Content = dataUrl.split(',')[1];
+                const timestamp = Date.now();
+                const fileName = `article_${timestamp}.jpg`;
+                const imagePath = `images/articles/${fileName}`;
+
+                showToast(`⏳ Upload vers GitHub (${originalSize}→${newSize} Ko)...`, 'info');
+
+                // Vérifier si le fichier existe
+                let sha = null;
+                const getResponse = await fetch(
+                    `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${imagePath}?ref=${GITHUB_CONFIG.branch}`,
+                    { headers: { 'Authorization': `token ${token}` } }
+                );
+                if (getResponse.ok) {
+                    sha = (await getResponse.json()).sha;
+                }
+
+                const body = {
+                    message: `Upload image article ${fileName}`,
+                    content: base64Content,
+                    branch: GITHUB_CONFIG.branch
+                };
+                if (sha) body.sha = sha;
+
+                const response = await fetch(
+                    `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${imagePath}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `token ${token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(body)
+                    }
+                );
+
+                if (response.ok) {
+                    // Stocker le CHEMIN (pas le base64!)
+                    const images = getArticleImages();
+                    images.push(imagePath);
+                    setArticleImages(images);
+                    showToast(`✅ Image uploadée !`, 'success');
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.message || 'Upload failed');
+                }
+            } catch (err) {
+                console.error('Erreur upload image article:', err);
+                showToast('❌ Échec upload: ' + err.message, 'error');
+            }
         }
 
         function saveArticle() {
