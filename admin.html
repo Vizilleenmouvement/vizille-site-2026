@@ -2115,6 +2115,40 @@
 
         let currentCategoryFilter = null;
 
+        // ===== SÉCURITÉ : NETTOYAGE BASE64 =====
+        // Fonction pour détecter et supprimer les données base64 avant sauvegarde
+        function cleanBase64FromData(obj) {
+            if (obj === null || obj === undefined) return obj;
+
+            if (typeof obj === 'string') {
+                // Supprimer toute chaîne qui ressemble à du base64 d'image
+                if (obj.startsWith('data:image')) {
+                    console.warn('⚠️ Base64 détecté et supprimé:', obj.substring(0, 50) + '...');
+                    return ''; // Retourner une chaîne vide
+                }
+                // Détecter aussi les chemins file:// locaux
+                if (obj.startsWith('file://')) {
+                    console.warn('⚠️ Chemin local détecté et supprimé:', obj);
+                    return '';
+                }
+                return obj;
+            }
+
+            if (Array.isArray(obj)) {
+                return obj.map(item => cleanBase64FromData(item));
+            }
+
+            if (typeof obj === 'object') {
+                const cleaned = {};
+                for (const key in obj) {
+                    cleaned[key] = cleanBase64FromData(obj[key]);
+                }
+                return cleaned;
+            }
+
+            return obj;
+        }
+
         // ===== COMPRESSION IMAGES =====
         // Compresse et redimensionne les images avant upload
         async function compressImage(file, maxWidth = 1920, quality = 0.85) {
@@ -4896,11 +4930,17 @@
             const theme = document.getElementById('edit-theme').value;
             const statut = document.getElementById('edit-statut').value;
             const description = document.getElementById('edit-description').value.trim();
-            const images = getActionImages();
+            let images = getActionImages();
 
             if (!titre || !theme) {
                 showToast('⚠️ Titre et thème obligatoires', 'warning');
                 return;
+            }
+
+            // SÉCURITÉ : Filtrer les images base64 (ne garder que les chemins)
+            images = images.filter(img => !img.startsWith('data:') && !img.startsWith('file://'));
+            if (images.length !== getActionImages().length) {
+                showToast('⚠️ Images non uploadées ignorées', 'warning');
             }
 
             const actionData = { titre, theme, statut, description };
@@ -5873,7 +5913,7 @@
             const titre = document.getElementById('edit-titre').value.trim();
             const date = document.getElementById('edit-date').value;
             const categorie = document.getElementById('edit-categorie').value;
-            const images = getArticleImages();
+            let images = getArticleImages();
             const youtube = document.getElementById('edit-youtube').value.trim();
             const source = document.getElementById('edit-source').value.trim();
             const auteur = document.getElementById('edit-auteur').value.trim();
@@ -5885,6 +5925,13 @@
             if (!titre) {
                 showToast('⚠️ Titre obligatoire', 'warning');
                 return;
+            }
+
+            // SÉCURITÉ : Filtrer les images base64 (ne garder que les chemins)
+            const originalCount = images.length;
+            images = images.filter(img => !img.startsWith('data:') && !img.startsWith('file://'));
+            if (images.length !== originalCount) {
+                showToast('⚠️ Images non uploadées ignorées', 'warning');
             }
 
             const articleData = {
@@ -6488,8 +6535,19 @@ Pour vous désabonner, répondez à cet email.
                     photo: c.photo && c.photo.startsWith('file://') ? '' : c.photo
                 }));
             }
-            
-            const content = JSON.stringify(data[section], null, 2);
+
+            // SÉCURITÉ GLOBALE : Nettoyer tout base64 avant publication
+            const cleanedData = cleanBase64FromData(data[section]);
+            const content = JSON.stringify(cleanedData, null, 2);
+
+            // Vérification taille (GitHub limite à 1 Mo pour l'API)
+            const sizeKB = (content.length / 1024).toFixed(0);
+            if (content.length > 900000) {
+                showToast(`⚠️ Fichier trop volumineux (${sizeKB} Ko) - vérifiez les images base64`, 'error');
+                publishingInProgress[section] = false;
+                return;
+            }
+            console.log(`📦 Taille ${filename}: ${sizeKB} Ko`);
 
             setStatus(section, 'loading', '⏳ Publication...');
 
@@ -7023,12 +7081,71 @@ Pour vous désabonner, répondez à cet email.
                         showToast('❌ Erreur upload: ' + err.message, 'error');
                     }
                 } else {
-                    // Mode non-local : juste afficher preview et mettre le chemin
-                    document.getElementById('photo-src').value = imagePath;
-                    document.getElementById('media-photo-preview').innerHTML = `<img src="${e.target.result}" style="max-width: 200px; max-height: 150px; border-radius: 8px;">`;
-                    document.getElementById('media-photo-preview').style.display = 'block';
-                    document.getElementById('media-photo-placeholder').style.display = 'none';
-                    showToast('⚠️ Upload GitHub requis (utilisez le token)', 'warning');
+                    // Mode GitHub Pages : upload obligatoire vers GitHub
+                    const token = document.getElementById('github-token')?.value?.trim();
+                    if (!token) {
+                        showToast('❌ Token GitHub requis pour uploader des images', 'error');
+                        return;
+                    }
+
+                    showToast('⏳ Upload vers GitHub...', 'info');
+
+                    try {
+                        // Vérifier si le fichier existe déjà
+                        let sha = null;
+                        const getResponse = await fetch(
+                            `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${imagePath}?ref=${GITHUB_CONFIG.branch}`,
+                            { headers: { 'Authorization': `token ${token}` } }
+                        );
+                        if (getResponse.ok) {
+                            sha = (await getResponse.json()).sha;
+                        }
+
+                        const body = {
+                            message: `Upload media photo ${fileName}`,
+                            content: base64Content,
+                            branch: GITHUB_CONFIG.branch
+                        };
+                        if (sha) body.sha = sha;
+
+                        const response = await fetch(
+                            `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${imagePath}`,
+                            {
+                                method: 'PUT',
+                                headers: {
+                                    'Authorization': `token ${token}`,
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(body)
+                            }
+                        );
+
+                        if (response.ok) {
+                            document.getElementById('photo-src').value = imagePath;
+                            document.getElementById('media-photo-preview').innerHTML = `<img src="${e.target.result}" style="max-width: 200px; max-height: 150px; border-radius: 8px;">`;
+                            document.getElementById('media-photo-preview').style.display = 'block';
+                            document.getElementById('media-photo-placeholder').style.display = 'none';
+
+                            // Suggérer un titre depuis le nom de fichier si vide
+                            const titreInput = document.getElementById('photo-titre');
+                            if (!titreInput.value) {
+                                const suggestedTitle = fileName
+                                    .replace(/\.[^/.]+$/, '')
+                                    .replace(/[-_]/g, ' ')
+                                    .replace(/\b\w/g, c => c.toUpperCase());
+                                titreInput.value = suggestedTitle;
+                            }
+
+                            showToast('✅ Image uploadée sur GitHub !', 'success');
+                        } else {
+                            const error = await response.json();
+                            throw new Error(error.message || 'Upload GitHub failed');
+                        }
+                    } catch (err) {
+                        console.error('Erreur upload GitHub:', err);
+                        showToast('❌ Échec upload GitHub: ' + err.message, 'error');
+                        // NE PAS mettre le chemin dans l'input si l'upload a échoué
+                    }
                 }
             };
             reader.readAsDataURL(file);
@@ -7048,6 +7165,15 @@ Pour vous désabonner, répondez à cet email.
             if (!photo.titre || !photo.src) {
                 showToast('Veuillez remplir le titre et l\'URL de l\'image', 'error');
                 return;
+            }
+
+            // SÉCURITÉ : Bloquer le stockage de base64
+            if (photo.src.startsWith('data:')) {
+                showToast('❌ Image non uploadée ! Veuillez d\'abord uploader l\'image.', 'error');
+                return;
+            }
+            if (photo.thumbnail && photo.thumbnail.startsWith('data:')) {
+                photo.thumbnail = null; // Ignorer les thumbnails base64
             }
 
             if (currentEdit.index !== null) {
