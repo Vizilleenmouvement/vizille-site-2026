@@ -4384,8 +4384,9 @@
 
             const themeConf = THEMES_ACTIONS_CONFIG[themeName] || { icon: '📋', color: '#1a3a5c' };
 
-            // Filtrer les actions de ce thème
-            const actions = data.actions.filter(a => a.theme === themeName);
+            // Filtrer les actions de ce thème et trier comme dans bilan.html
+            const actions = data.actions.filter(a => a.theme === themeName)
+                .sort((a, b) => (a.importance || 5) - (b.importance || 5) || (b.annee || '').toString().localeCompare((a.annee || '').toString()));
 
             document.getElementById('actions-count').textContent = actions.length;
 
@@ -4440,6 +4441,9 @@
                     (a.description || '').toLowerCase().includes(search)
                 );
             }
+
+            // Trier comme dans bilan.html (importance croissante, année décroissante)
+            filtered.sort((a, b) => (a.importance || 5) - (b.importance || 5) || (b.annee || '').toString().localeCompare((a.annee || '').toString()));
 
             document.getElementById('actions-count').textContent = filtered.length;
 
