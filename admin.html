@@ -1453,68 +1453,11 @@
                 <div class="card-body">
                     <button class="btn btn-primary" onclick="openAddAction()">+ Ajouter une action</button>
                     
-                    <!-- FILTRES PAR THÈME -->
+                    <!-- FILTRES PAR CATÉGORIE -->
                     <div style="margin: 1.5rem 0;">
-                        <h4 style="color: var(--bleu); margin-bottom: 0.75rem;">Filtrer par thème :</h4>
-                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" id="theme-filters">
-                            <button class="theme-btn active" data-theme="" onclick="filterActions('')">
-                                📋 Tous (<span id="count-all">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Administration" onclick="filterActions('Administration')">
-                                📋 Administration (<span id="count-Administration">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Culture" onclick="filterActions('Culture')">
-                                🎭 Culture (<span id="count-Culture">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Économie" onclick="filterActions('Économie')">
-                                💼 Économie (<span id="count-Économie">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Enfance" onclick="filterActions('Enfance')">
-                                👶 Enfance (<span id="count-Enfance">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Environnement" onclick="filterActions('Environnement')">
-                                🌱 Environnement (<span id="count-Environnement">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Finance" onclick="filterActions('Finance')">
-                                💰 Finance (<span id="count-Finance">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Intercommunalité" onclick="filterActions('Intercommunalité')">
-                                🏛️ Intercommunalité (<span id="count-Intercommunalité">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Jumelages" onclick="filterActions('Jumelages')">
-                                🌍 Jumelages (<span id="count-Jumelages">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Mobilités" onclick="filterActions('Mobilités')">
-                                🚲 Mobilités (<span id="count-Mobilités">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Patrimoine" onclick="filterActions('Patrimoine')">
-                                🏛️ Patrimoine (<span id="count-Patrimoine">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Personnel" onclick="filterActions('Personnel')">
-                                👥 Personnel (<span id="count-Personnel">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Plan Climat" onclick="filterActions('Plan Climat')">
-                                🌍 Plan Climat (<span id="count-Plan Climat">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Santé" onclick="filterActions('Santé')">
-                                🏥 Santé (<span id="count-Santé">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Solidarité" onclick="filterActions('Solidarité')">
-                                🤝 Solidarité (<span id="count-Solidarité">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Sport" onclick="filterActions('Sport')">
-                                ⚽ Sport (<span id="count-Sport">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Tranquillité publique" onclick="filterActions('Tranquillité publique')">
-                                🛡️ Tranquillité (<span id="count-Tranquillité publique">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Travaux" onclick="filterActions('Travaux')">
-                                🏗️ Travaux (<span id="count-Travaux">0</span>)
-                            </button>
-                            <button class="theme-btn" data-theme="Urbanisme" onclick="filterActions('Urbanisme')">
-                                🏗️ Urbanisme (<span id="count-Urbanisme">0</span>)
-                            </button>
-                        </div>
+                        <h4 style="color: var(--bleu); margin-bottom: 0.75rem;">Filtrer par catégorie :</h4>
+                        <div id="category-filters" style="display: flex; flex-wrap: wrap; gap: 0.5rem;"></div>
+                        <div id="theme-filters-sub" style="margin-top: 0.75rem; display: none;"></div>
                     </div>
                     
                     <div class="items-list">
@@ -2129,8 +2072,20 @@
             { value: 'Administration', label: '📋 Administration' },
             { value: 'Jumelages', label: '🌍 Jumelages' },
             { value: 'Personnel', label: '👥 Personnel' },
-            { value: 'Plan Climat', label: '🌍 Plan Climat' }
+            { value: 'Plan Climat', label: '🌍 Plan Climat' },
+            { value: 'Concertation Citoyenne', label: '🗳️ Concertation' }
         ];
+
+        // Configuration des 5 catégories principales
+        const CATEGORIES_ADMIN = [
+            { id: 'cadre-vie', name: 'Cadre de vie', icon: '🌿', themes: ['Environnement', 'Plan Climat', 'Urbanisme', 'Travaux', 'Mobilités'] },
+            { id: 'social', name: 'Social', icon: '🤝', themes: ['Solidarité', 'Enfance', 'Santé', 'Personnel'] },
+            { id: 'culture', name: 'Culture', icon: '🎭', themes: ['Culture', 'Sport', 'Patrimoine', 'Jumelages'] },
+            { id: 'municipal', name: 'Municipal', icon: '🏛️', themes: ['Administration', 'Finance', 'Intercommunalité', 'Concertation Citoyenne'] },
+            { id: 'securite', name: 'Sécurité', icon: '🛡️', themes: ['Tranquillité publique', 'Économie'] }
+        ];
+
+        let currentCategoryFilter = null;
 
         // ===== DONNÉES =====
         let data = {
@@ -4257,30 +4212,74 @@
 
         // ===== ACTIONS =====
         let currentActionFilter = '';
-        
-        function filterActions(theme) {
-            currentActionFilter = theme;
-            // Mettre à jour les boutons actifs
-            document.querySelectorAll('.theme-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.theme === theme);
+
+        function renderCategoryFilters() {
+            const container = document.getElementById('category-filters');
+            if (!container) return;
+
+            // Bouton "Tous"
+            let html = '<button class="theme-btn ' + (!currentActionFilter && !currentCategoryFilter ? 'active' : '') + '" onclick="clearFilters()">📋 Tous (' + data.actions.length + ')</button>';
+
+            // Boutons catégories
+            CATEGORIES_ADMIN.forEach(cat => {
+                const count = cat.themes.reduce((sum, t) => sum + data.actions.filter(a => a.theme === t).length, 0);
+                const isActive = currentCategoryFilter === cat.id;
+                html += '<button class="theme-btn ' + (isActive ? 'active' : '') + '" onclick="selectCategory(\'' + cat.id + '\')">' + cat.icon + ' ' + cat.name + ' (' + count + ')</button>';
             });
+
+            container.innerHTML = html;
+            renderThemeSubFilters();
+        }
+
+        function selectCategory(catId) {
+            currentCategoryFilter = catId;
+            currentActionFilter = '';
+            renderCategoryFilters();
             renderActions();
         }
-        
-        function updateThemeCounts() {
-            // Compter les actions par thème
-            const counts = {};
-            THEMES_ACTIONS.forEach(t => counts[t.value] = 0);
-            data.actions.forEach(a => {
-                if (counts[a.theme] !== undefined) counts[a.theme]++;
+
+        function renderThemeSubFilters() {
+            const container = document.getElementById('theme-filters-sub');
+            if (!container) return;
+
+            if (!currentCategoryFilter) {
+                container.style.display = 'none';
+                return;
+            }
+
+            const cat = CATEGORIES_ADMIN.find(c => c.id === currentCategoryFilter);
+            if (!cat) return;
+
+            container.style.display = 'block';
+            let html = '<small style="color: var(--gris-texte);">Thèmes : </small>';
+            cat.themes.forEach(theme => {
+                const count = data.actions.filter(a => a.theme === theme).length;
+                if (count === 0) return;
+                const config = THEMES_ACTIONS_CONFIG[theme] || {};
+                const isActive = currentActionFilter === theme;
+                html += '<button class="theme-btn small ' + (isActive ? 'active' : '') + '" onclick="filterByTheme(\'' + theme + '\')">' + (config.icon || '📌') + ' ' + theme + ' (' + count + ')</button>';
             });
-            
-            // Mettre à jour les compteurs
-            document.getElementById('count-all').textContent = data.actions.length;
-            THEMES_ACTIONS.forEach(t => {
-                const el = document.getElementById('count-' + t.value);
-                if (el) el.textContent = counts[t.value];
-            });
+            container.innerHTML = html;
+        }
+
+        function filterByTheme(theme) {
+            currentActionFilter = theme;
+            renderCategoryFilters();
+            renderActions();
+        }
+
+        function clearFilters() {
+            currentCategoryFilter = null;
+            currentActionFilter = '';
+            renderCategoryFilters();
+            renderActions();
+        }
+
+        function filterActions(theme) {
+            currentActionFilter = theme;
+            currentCategoryFilter = null;
+            renderCategoryFilters();
+            renderActions();
         }
         
         // Configuration des thèmes pour les actions (bilan)
@@ -4309,12 +4308,12 @@
         let currentActionThemeDetail = null;
 
         function renderActions() {
-            updateThemeCounts();
+            renderCategoryFilters();
 
             const search = (document.getElementById('search-actions')?.value || '').toLowerCase();
 
-            // Si recherche active ou filtre thème via boutons, afficher directement les cartes
-            if (search || currentActionFilter) {
+            // Si recherche active, filtre thème ou filtre catégorie, afficher directement les cartes
+            if (search || currentActionFilter || currentCategoryFilter) {
                 showActionsCards(search);
                 return;
             }
@@ -4414,6 +4413,14 @@
             document.getElementById('actions-detail-view').style.display = 'block';
 
             let filtered = data.actions;
+
+            // Filtre par catégorie (si pas de thème spécifique sélectionné)
+            if (currentCategoryFilter && !currentActionFilter) {
+                const cat = CATEGORIES_ADMIN.find(c => c.id === currentCategoryFilter);
+                if (cat) {
+                    filtered = filtered.filter(a => cat.themes.includes(a.theme));
+                }
+            }
 
             // Filtre par thème
             if (currentActionFilter) {
