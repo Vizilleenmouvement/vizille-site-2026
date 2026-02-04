@@ -4709,6 +4709,13 @@
             const files = Array.from(input.files);
             if (!files.length) return;
 
+            const token = getToken();
+            if (!token) {
+                showToast(`❌ Token GitHub requis pour uploader des images. Connectez-vous d'abord.`, 'error');
+                input.value = '';
+                return;
+            }
+
             showToast(`📷 Compression et upload de ${files.length} image(s)...`, 'info');
 
             for (const file of files) {
@@ -4736,47 +4743,40 @@
                         reader.readAsDataURL(compressedFile);
                     });
 
-                    const token = getToken();
-                    if (token) {
-                        // Upload vers GitHub
-                        const base64Content = dataUrl.split(',')[1];
+                    // Upload vers GitHub (obligatoire)
+                    showToast(`⏳ Upload ${file.name}...`, 'info');
+                    const base64Content = dataUrl.split(',')[1];
 
-                        const response = await fetch(
-                            `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${imagePath}`,
-                            {
-                                method: 'PUT',
-                                headers: {
-                                    'Authorization': `token ${token}`,
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    message: `Upload image action ${fileName}`,
-                                    content: base64Content,
-                                    branch: GITHUB_CONFIG.branch
-                                })
-                            }
-                        );
-
-                        if (response.ok) {
-                            // Stocker le chemin relatif (pas le base64!)
-                            const images = getActionImages();
-                            images.push(imagePath);
-                            setActionImages(images);
-                            showToast(`✅ ${file.name}: ${originalSize} Ko → ${newSize} Ko`, 'success');
-                        } else {
-                            const error = await response.json();
-                            throw new Error(error.message);
+                    const response = await fetch(
+                        `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${imagePath}`,
+                        {
+                            method: 'PUT',
+                            headers: {
+                                'Authorization': `token ${token}`,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                message: `Upload image action ${fileName}`,
+                                content: base64Content,
+                                branch: GITHUB_CONFIG.branch
+                            })
                         }
-                    } else {
-                        // Mode local ou pas de token : stocker le dataUrl pour aperçu
+                    );
+
+                    if (response.ok) {
+                        // Stocker le chemin relatif (JAMAIS le base64!)
                         const images = getActionImages();
-                        images.push(dataUrl);
+                        images.push(imagePath);
                         setActionImages(images);
-                        showToast(`🗜️ ${file.name}: ${originalSize} Ko → ${newSize} Ko (local)`, 'info');
+                        showToast(`✅ ${file.name} uploadée (${originalSize} → ${newSize} Ko)`, 'success');
+                    } else {
+                        const error = await response.json();
+                        throw new Error(error.message || 'Erreur upload GitHub');
                     }
                 } catch (err) {
                     console.error('Erreur upload image action:', err);
-                    showToast(`❌ Erreur: ${file.name} - ${err.message}`, 'error');
+                    showToast(`❌ Échec upload ${file.name}: ${err.message}`, 'error');
+                    // NE PAS stocker en base64 en cas d'erreur!
                 }
             }
 
