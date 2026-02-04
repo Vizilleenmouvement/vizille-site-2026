@@ -1144,6 +1144,7 @@
         <button class="nav-tab" data-tab="faq">🤝 Construisons ensemble</button>
         <button class="nav-tab" data-tab="articles">📰 Articles</button>
         <button class="nav-tab" data-tab="medias">🖼️ Médias</button>
+        <button class="nav-tab" data-tab="news">📣 News</button>
         <button class="nav-tab" data-tab="communication">📢 Communication</button>
         <button class="nav-tab" data-tab="config">⚙️ Paramètres</button>
     </nav>
@@ -1679,13 +1680,13 @@
                 <div class="card-header" style="background: linear-gradient(135deg, #1a3a5c 0%, #E91E63 100%);">
                     <h2>📢 Bandeau d'actualités</h2>
                     <div class="publish-bar">
-                        <span class="status saved" id="status-ticker">✓ À jour</span>
-                        <button class="btn-publish" onclick="publishTicker()">🚀 Publier</button>
+                        <span class="status saved" id="status-news">✓ À jour</span>
+                        <button class="btn-publish" onclick="publish('news')">🚀 Publier</button>
                     </div>
                 </div>
                 <div class="card-body">
                     <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
-                        <strong>💡 Info :</strong> Ces messages défilent en haut de toutes les pages du site.
+                        <strong>💡 Info :</strong> Ces messages s'affichent en bandeau animé sous le header de toutes les pages.
                         <br><small>Les visiteurs peuvent fermer le bandeau (il réapparaît après 24h).</small>
                     </div>
 
@@ -2433,7 +2434,8 @@
                 articles: 'articles.json',
                 abonnes: 'abonnes.json',
                 config: 'config.json',
-                medias: 'medias.json'
+                medias: 'medias.json',
+                news: 'news.json'
             };
 
             for (const [key, file] of Object.entries(files)) {
@@ -2444,6 +2446,8 @@
                         const loaded = await response.json();
                         if (key === 'config') {
                             data.config = { ...data.config, ...loaded };
+                        } else if (key === 'news') {
+                            data.news = loaded;
                         } else if (key === 'themes') {
                             data.themes = loaded;
                             THEMES_CONFIG = [...loaded];
@@ -2636,7 +2640,8 @@
                 articles: 'articles.json',
                 abonnes: 'abonnes.json',
                 config: 'config.json',
-                medias: 'medias.json'
+                medias: 'medias.json',
+                news: 'news.json'
             };
 
             for (const [key, file] of Object.entries(files)) {
@@ -2703,6 +2708,7 @@
             renderFaq();
             renderArticles();
             renderAbonnes();
+            migrateTickerToNews();
             renderTickerMessages();
             renderMedias();
             renderFacebookSelect();
@@ -5682,10 +5688,11 @@
 
         // ===== BANDEAU DÉFILANT =====
         function renderTickerMessages() {
-            const messages = data.ticker || [];
+            const news = data.news || [];
             const container = document.getElementById('ticker-messages-list');
+            const today = new Date().toISOString().split('T')[0];
 
-            if (messages.length === 0) {
+            if (news.length === 0) {
                 container.innerHTML = `
                     <div style="text-align: center; padding: 2rem; color: #888; background: #f8f9fa; border-radius: 8px;">
                         <div style="font-size: 2rem; margin-bottom: 0.5rem;">📢</div>
@@ -5695,48 +5702,106 @@
                 return;
             }
 
-            container.innerHTML = messages.map((msg, index) => `
-                <div style="display: flex; gap: 1rem; align-items: center; padding: 1rem; background: white; border: 1px solid var(--gris-border); border-radius: 8px; margin-bottom: 0.5rem;">
-                    <div style="cursor: move; color: #888;">⋮⋮</div>
-                    <input type="text" value="${msg.replace(/"/g, '&quot;')}"
-                           onchange="updateTickerMessage(${index}, this.value)"
-                           style="flex: 1; padding: 0.75rem; border: 1px solid var(--gris-border); border-radius: 6px; font-size: 1rem;">
-                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                        <input type="checkbox" ${data.tickerActive?.[index] !== false ? 'checked' : ''}
-                               onchange="toggleTickerMessage(${index}, this.checked)">
-                        Actif
-                    </label>
-                    <button class="btn btn-sm" style="background: #e74c3c; color: white;" onclick="deleteTickerMessage(${index})">🗑️</button>
+            container.innerHTML = news.map((item, index) => {
+                const isExpired = item.dateFin && item.dateFin < today;
+                const isNotStarted = item.dateDebut && item.dateDebut > today;
+                const statusStyle = isExpired ? 'opacity: 0.5; background: #fee;' : (isNotStarted ? 'background: #fff3cd;' : '');
+                const statusBadge = isExpired ? '<span style="background:#c00;color:white;padding:2px 6px;border-radius:4px;font-size:0.7rem;margin-left:8px;">Expiré</span>' :
+                                   (isNotStarted ? '<span style="background:#f90;color:white;padding:2px 6px;border-radius:4px;font-size:0.7rem;margin-left:8px;">Programmé</span>' : '');
+                return `
+                <div style="padding: 1rem; background: white; border: 1px solid var(--gris-border); border-radius: 8px; margin-bottom: 0.75rem; ${statusStyle}">
+                    <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 0.75rem;">
+                        <select onchange="updateNewsField(${index}, 'icon', this.value)" style="font-size: 1.3rem; padding: 0.3rem; border: 1px solid #ddd; border-radius: 4px;">
+                            ${['📢', '📅', '🆕', '🎉', '📍', '⚡', '🔔', '📰', '🗳️', '✨', '🏛️', '🤝'].map(e =>
+                                `<option ${item.icon === e ? 'selected' : ''}>${e}</option>`
+                            ).join('')}
+                        </select>
+                        <input type="text" value="${(item.texte || '').replace(/"/g, '&quot;')}"
+                               onchange="updateNewsField(${index}, 'texte', this.value)"
+                               placeholder="Texte du message..."
+                               style="flex: 1; padding: 0.6rem; border: 1px solid var(--gris-border); border-radius: 6px;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; white-space: nowrap;">
+                            <input type="checkbox" ${item.actif !== false ? 'checked' : ''}
+                                   onchange="updateNewsField(${index}, 'actif', this.checked)">
+                            Actif
+                        </label>
+                        ${statusBadge}
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <label style="font-size: 0.85rem; color: #666;">🔗 Lien:</label>
+                            <input type="text" value="${(item.lien || '').replace(/"/g, '&quot;')}"
+                                   onchange="updateNewsField(${index}, 'lien', this.value)"
+                                   placeholder="bilan.html ou URL..."
+                                   style="width: 180px; padding: 0.4rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <label style="font-size: 0.85rem; color: #666;">📅 Du:</label>
+                            <input type="date" value="${item.dateDebut || ''}"
+                                   onchange="updateNewsField(${index}, 'dateDebut', this.value)"
+                                   style="padding: 0.4rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem;">
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <label style="font-size: 0.85rem; color: #666;">au:</label>
+                            <input type="date" value="${item.dateFin || ''}"
+                                   onchange="updateNewsField(${index}, 'dateFin', this.value)"
+                                   style="padding: 0.4rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem;">
+                        </div>
+                        <button class="btn btn-sm" style="background: #e74c3c; color: white; margin-left: auto;" onclick="deleteNewsItem(${index})">🗑️</button>
+                    </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
 
         function addTickerMessage() {
-            if (!data.ticker) data.ticker = [];
-            if (!data.tickerActive) data.tickerActive = [];
-            data.ticker.push('📢 Nouveau message - cliquez pour modifier');
-            data.tickerActive.push(true);
+            if (!data.news) data.news = [];
+            const today = new Date().toISOString().split('T')[0];
+            const nextMonth = new Date(Date.now() + 30*24*60*60*1000).toISOString().split('T')[0];
+            data.news.push({
+                id: Date.now(),
+                texte: 'Nouveau message - cliquez pour modifier',
+                icon: '📢',
+                lien: '',
+                actif: true,
+                dateDebut: today,
+                dateFin: nextMonth
+            });
             renderTickerMessages();
-            markModified('ticker');
+            markModified('news');
         }
 
-        function updateTickerMessage(index, value) {
-            data.ticker[index] = value;
-            markModified('ticker');
+        function updateNewsField(index, field, value) {
+            if (!data.news) data.news = [];
+            if (!data.news[index]) return;
+            data.news[index][field] = value;
+            if (field === 'actif' || field === 'dateDebut' || field === 'dateFin') {
+                renderTickerMessages(); // Re-render pour mettre à jour les badges
+            }
+            markModified('news');
         }
 
-        function toggleTickerMessage(index, active) {
-            if (!data.tickerActive) data.tickerActive = data.ticker.map(() => true);
-            data.tickerActive[index] = active;
-            markModified('ticker');
-        }
-
-        function deleteTickerMessage(index) {
+        function deleteNewsItem(index) {
             if (confirm('Supprimer ce message ?')) {
-                data.ticker.splice(index, 1);
-                if (data.tickerActive) data.tickerActive.splice(index, 1);
+                data.news.splice(index, 1);
                 renderTickerMessages();
-                markModified('ticker');
+                markModified('news');
+            }
+        }
+
+        // Migration ancien format ticker -> nouveau format news
+        function migrateTickerToNews() {
+            if (data.ticker && data.ticker.length > 0 && (!data.news || data.news.length === 0)) {
+                const today = new Date().toISOString().split('T')[0];
+                data.news = data.ticker.map((msg, i) => ({
+                    id: Date.now() + i,
+                    texte: msg.replace(/^[📢📅🆕🎉📍⚡🔔📰🗳️✨🏛️🤝]\s*/, ''),
+                    icon: msg.match(/^([📢📅🆕🎉📍⚡🔔📰🗳️✨🏛️🤝])/)?.[1] || '📢',
+                    lien: '',
+                    actif: data.tickerActive?.[i] !== false,
+                    dateDebut: today,
+                    dateFin: ''
+                }));
+                console.log('Migration ticker -> news effectuée');
             }
         }
 
@@ -6119,7 +6184,8 @@ Pour vous désabonner, répondez à cet email.
                     articles: 'articles.json',
                     abonnes: 'abonnes.json',
                     config: 'config.json',
-                    medias: 'medias.json'
+                    medias: 'medias.json',
+                    news: 'news.json'
                 };
                 downloadSingleFile(files[section], section);
                 return;
@@ -6140,7 +6206,8 @@ Pour vous désabonner, répondez à cet email.
                 articles: 'articles.json',
                 abonnes: 'abonnes.json',
                 config: 'config.json',
-                medias: 'medias.json'
+                medias: 'medias.json',
+                news: 'news.json'
             };
 
             const filename = files[section];

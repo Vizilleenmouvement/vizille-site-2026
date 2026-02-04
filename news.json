@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "texte": "Nouveau : Découvrez le bilan complet de nos actions depuis 2020",
+    "lien": "bilan.html",
+    "icon": "📊",
+    "actif": true,
+    "dateDebut": "2025-02-01",
+    "dateFin": "2025-03-01"
+  },
+  {
+    "id": 2,
+    "texte": "Prochaine réunion publique le 15 février à 18h30 - Salle des fêtes",
+    "lien": "",
+    "icon": "📅",
+    "actif": true,
+    "dateDebut": "2025-02-01",
+    "dateFin": "2025-02-16"
+  },
+  {
+    "id": 3,
+    "texte": "Site mis à jour : nouvelles fiches actions ajoutées",
+    "lien": "bilan.html",
+    "icon": "🆕",
+    "actif": true,
+    "dateDebut": "2025-02-04",
+    "dateFin": "2025-02-15"
+  }
+]
