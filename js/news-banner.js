@@ -208,19 +208,28 @@
 
     // Initialisation
     async function init() {
+        console.log('[News Banner] Initialisation...');
+
         // Vérifier si l'utilisateur a fermé le bandeau
         if (sessionStorage.getItem('news-banner-closed') === 'true') {
+            console.log('[News Banner] Bandeau fermé par l\'utilisateur, skip.');
             return;
         }
 
         try {
             const response = await fetch('news.json?v=' + Date.now());
+            console.log('[News Banner] Fetch response:', response.status);
             if (!response.ok) return;
 
             const allNews = await response.json();
+            console.log('[News Banner] News chargées:', allNews.length);
             newsItems = filterActiveNews(allNews);
+            console.log('[News Banner] News actives:', newsItems.length);
 
-            if (newsItems.length === 0) return;
+            if (newsItems.length === 0) {
+                console.log('[News Banner] Aucune news active à afficher');
+                return;
+            }
 
             // Injecter styles et créer le bandeau
             injectStyles();
