@@ -309,7 +309,77 @@
     animation: pulse 1.5s ease-in-out infinite;
 }
 
-/* ===== SECTION CHIFFRES ===== */
+/* ===== SECTION FACEBOOK ===== */
+.facebook-section {
+    padding: 5rem 1.5rem;
+    background: linear-gradient(180deg, #f8f9fa 0%, white 100%);
+}
+
+.facebook-container {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.facebook-icon {
+    font-size: 1.5em;
+    margin-right: 0.5rem;
+}
+
+.section-intro {
+    font-size: 1.1rem;
+    color: #666;
+    margin: -1rem 0 2rem 0;
+}
+
+.facebook-widget-wrapper {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    min-height: 400px;
+}
+
+.facebook-widget-wrapper .fb-page {
+    width: 100%;
+    max-width: 500px;
+}
+
+.facebook-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-facebook {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: #1877F2;
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(24, 119, 242, 0.3);
+}
+
+.btn-facebook:hover {
+    background: #166fe5;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(24, 119, 242, 0.4);
+}
+
+.btn-facebook svg {
+    flex-shrink: 0;
+}
+
+/* ===== SECTION CHIFFRES (conservé pour référence) ===== */
 .stats-section {
     padding: 5rem 1.5rem;
     background: linear-gradient(180deg, #f8f9fa 0%, white 100%);
@@ -1016,6 +1086,20 @@
 }
 
 @media (max-width: 600px) {
+    .facebook-section {
+        padding: 3rem 1rem;
+    }
+
+    .facebook-widget-wrapper {
+        padding: 1rem;
+        min-height: 350px;
+    }
+
+    .facebook-cta {
+        flex-direction: column;
+        align-items: center;
+    }
+
     .hero-dynamic {
         min-height: auto;
         padding: 2rem 1rem 3rem;
