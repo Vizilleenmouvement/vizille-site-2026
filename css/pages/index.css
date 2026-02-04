@@ -103,6 +103,75 @@
     max-width: 800px;
 }
 
+/* Hero avec Catherine */
+.hero-candidate {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem 2.5rem;
+    border-radius: 100px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.hero-candidate-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--rose);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.hero-candidate-info {
+    text-align: left;
+}
+
+.hero-candidate-role {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--cyan);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.3rem;
+}
+
+.hero-candidate-name {
+    font-family: 'Caveat', cursive;
+    font-size: 3rem;
+    color: white;
+    margin: 0;
+    line-height: 1;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero-candidate-title {
+    display: block;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    margin-top: 0.3rem;
+}
+
+.hero-logo-small {
+    width: 180px;
+    max-width: 50vw;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 5px 20px rgba(0, 0, 0, 0.3));
+}
+
+.hero-quote {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 auto 2rem;
+    max-width: 700px;
+    line-height: 1.4;
+    font-style: italic;
+}
+
 .hero-dynamic .hero-logo {
     width: 280px;
     max-width: 80vw;
@@ -944,7 +1013,46 @@
 
 @media (max-width: 600px) {
     .hero-dynamic {
-        min-height: 90vh;
+        min-height: auto;
+        padding: 2rem 1rem 3rem;
+    }
+
+    .hero-candidate {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem;
+        border-radius: 20px;
+        gap: 1rem;
+    }
+
+    .hero-candidate-info {
+        text-align: center;
+    }
+
+    .hero-candidate-photo {
+        width: 100px;
+        height: 100px;
+    }
+
+    .hero-candidate-name {
+        font-size: 2.2rem;
+    }
+
+    .hero-candidate-role {
+        font-size: 0.75rem;
+    }
+
+    .hero-logo-small {
+        width: 140px;
+    }
+
+    .hero-quote {
+        font-size: 1.2rem;
+        padding: 0 1rem;
+    }
+
+    .hero-slogan {
+        font-size: 1.5rem;
     }
 
     .hero-cta {
