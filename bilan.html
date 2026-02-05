@@ -764,7 +764,9 @@ function toggleDropdown(categoryId) {
 
     // Si on clique sur un onglet différent du thème actuel, sélectionner le 1er sous-thème
     const currentCat = getCurrentCategory();
-    if (!currentCat || currentCat.id !== categoryId) {
+    const isNewCategory = !currentCat || currentCat.id !== categoryId;
+
+    if (isNewCategory) {
         // Trouver le 1er thème non vide de cette catégorie
         const firstTheme = cat.themes.find(theme => {
             return allData.filter(a => a.theme === theme && !a.suspendu).length > 0;
@@ -772,10 +774,14 @@ function toggleDropdown(categoryId) {
         if (firstTheme) {
             selectTheme(firstTheme);
         }
+        // Ouvrir le dropdown pour montrer les autres thèmes disponibles
+        btn.classList.add('open');
+        openDropdown = btn;
+    } else {
+        // Si on reclique sur la même catégorie, toggle le dropdown
+        btn.classList.toggle('open');
+        openDropdown = btn.classList.contains('open') ? btn : null;
     }
-
-    btn.classList.toggle('open');
-    openDropdown = btn.classList.contains('open') ? btn : null;
 }
 
 // Sélectionne un thème depuis le dropdown
@@ -885,7 +891,8 @@ function renderCards() {
             ).join('')}</div>`;
         }
         
-        const coverImage = p.images && p.images.length > 0 ? p.images[0] : (p.image || '');
+        const firstImg = p.images && p.images.length > 0 ? p.images[0] : null;
+        const coverImage = firstImg ? (typeof firstImg === 'string' ? firstImg : firstImg.url || '') : (p.image || '');
         const hasMultipleImages = p.images && p.images.length > 1;
 
         return `<div class="card ${isObjectif ? 'objectif' : ''}" onclick="openModal(${p.id})">
@@ -942,8 +949,10 @@ function openModal(id) {
 
     let html = '';
 
-    // Galerie d'images
-    const images = p.images || (p.image ? [p.image] : []);
+    // Galerie d'images - normaliser les URLs (objet {url, legende} ou string)
+    const rawImages = p.images || (p.image ? [p.image] : []);
+    const images = rawImages.map(img => typeof img === 'string' ? img : (img.url || ''));
+    const legends = rawImages.map(img => typeof img === 'object' ? (img.legende || '') : '');
     currentModalImages = images;
     currentModalImageIndex = 0;
 
@@ -952,7 +961,7 @@ function openModal(id) {
             html += `
                 <div class="modal-gallery">
                     <div class="modal-gallery-main">
-                        <img id="modal-gallery-img" src="${images[0]}" alt="">
+                        <img id="modal-gallery-img" src="${images[0]}" alt="${legends[0]}">
                         <button class="modal-gallery-nav prev" onclick="prevModalImage(event)">‹</button>
                         <button class="modal-gallery-nav next" onclick="nextModalImage(event)">›</button>
                         <span class="modal-gallery-counter"><span id="modal-gallery-index">1</span>/${images.length}</span>
@@ -964,7 +973,7 @@ function openModal(id) {
                     </div>
                 </div>`;
         } else {
-            html += `<div class="modal-single-image"><img src="${images[0]}" alt=""></div>`;
+            html += `<div class="modal-single-image"><img src="${images[0]}" alt="${legends[0] || ''}"></div>`;
         }
     }
 
