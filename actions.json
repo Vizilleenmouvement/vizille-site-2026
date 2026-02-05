@@ -335,7 +335,9 @@
         "url": "https://www.ville-vizille.fr/12634-centre-communal-d-action-sociale-ccas.htm"
       }
     ],
-    "sous_categorie": "Accès aux soins"
+    "sous_categorie": "Accès aux soins",
+    "image": "",
+    "images": []
   },
   {
     "id": 6,
@@ -456,7 +458,9 @@
         "url": "https://www.ville-vizille.fr/12634-centre-communal-d-action-sociale-ccas.htm"
       }
     ],
-    "sous_categorie": "Prévention"
+    "sous_categorie": "Prévention",
+    "image": "",
+    "images": []
   },
   {
     "id": 8,
@@ -730,7 +734,14 @@
         "url": "https://www.ville-vizille.fr/12618-decouvrir-vizille.htm"
       }
     ],
-    "sous_categorie": "Grands projets"
+    "sous_categorie": "Grands projets",
+    "image": "images/actions/patrimoine/ancienne-tannerie.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/ancienne-tannerie.jpg",
+        "legende": "Ancienne Tannerie Cros - Patrimoine industriel"
+      }
+    ]
   },
   {
     "id": 13,
@@ -948,7 +959,14 @@
         "url": "https://www.ville-vizille.fr/12618-decouvrir-vizille.htm"
       }
     ],
-    "sous_categorie": "Grands projets"
+    "sous_categorie": "Grands projets",
+    "image": "images/actions/patrimoine/ancienne-tannerie.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/ancienne-tannerie.jpg",
+        "legende": "Ancienne Tannerie Cros - Patrimoine industriel"
+      }
+    ]
   },
   {
     "id": 16,
@@ -1040,7 +1058,14 @@
         "url": "https://www.ville-vizille.fr/12618-decouvrir-vizille.htm"
       }
     ],
-    "sous_categorie": "Grands projets"
+    "sous_categorie": "Grands projets",
+    "image": "images/actions/patrimoine/roue-moulin.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/roue-moulin.jpg",
+        "legende": "Roue du moulin - Patrimoine bâti vizillois"
+      }
+    ]
   },
   {
     "id": 17,
@@ -3326,7 +3351,9 @@
         "url": "https://www.ville-vizille.fr/12672-petite-enfance.htm"
       }
     ],
-    "sous_categorie": "Écoles"
+    "sous_categorie": "Écoles",
+    "image": "",
+    "images": []
   },
   {
     "id": 92,
@@ -3586,7 +3613,9 @@
         "url": "https://www.ville-vizille.fr/12672-petite-enfance.htm"
       }
     ],
-    "sous_categorie": "Écoles"
+    "sous_categorie": "Écoles",
+    "image": "",
+    "images": []
   },
   {
     "id": 96,
@@ -3686,7 +3715,9 @@
         "url": "https://www.ville-vizille.fr/12672-petite-enfance.htm"
       }
     ],
-    "sous_categorie": "Écoles"
+    "sous_categorie": "Écoles",
+    "image": "",
+    "images": []
   },
   {
     "id": 97,
@@ -4625,7 +4656,9 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Équipements"
+    "sous_categorie": "Équipements",
+    "image": "",
+    "images": []
   },
   {
     "id": 114,
@@ -4673,7 +4706,9 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Équipements"
+    "sous_categorie": "Équipements",
+    "image": "",
+    "images": []
   },
   {
     "id": 115,
@@ -4744,7 +4779,9 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Équipements"
+    "sous_categorie": "Équipements",
+    "image": "",
+    "images": []
   },
   {
     "id": 116,
@@ -4787,7 +4824,9 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Mise à disposition"
+    "sous_categorie": "Mise à disposition",
+    "image": "",
+    "images": []
   },
   {
     "id": 117,
@@ -4883,7 +4922,9 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Associations & Partenariats"
+    "sous_categorie": "Associations & Partenariats",
+    "image": "",
+    "images": []
   },
   {
     "id": 118,
@@ -4958,7 +4999,9 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Événements"
+    "sous_categorie": "Événements",
+    "image": "",
+    "images": []
   },
   {
     "id": 119,
@@ -5393,7 +5436,9 @@
       }
     ],
     "sous_categorie": "Commerce",
-    "suspendu": true
+    "suspendu": true,
+    "image": "",
+    "images": []
   },
   {
     "id": 127,
@@ -5569,7 +5614,9 @@
       }
     ],
     "sous_categorie": "Commerce",
-    "suspendu": true
+    "suspendu": true,
+    "image": "",
+    "images": []
   },
   {
     "id": 131,
@@ -5613,7 +5660,14 @@
       }
     ],
     "sous_categorie": "Concertation",
-    "suspendu": true
+    "suspendu": true,
+    "image": "images/actions/patrimoine/roue-moulin.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/roue-moulin.jpg",
+        "legende": "Roue du moulin - Patrimoine bâti vizillois"
+      }
+    ]
   },
   {
     "id": 132,
@@ -6014,7 +6068,14 @@
         "url": "https://www.ville-vizille.fr/12658-environnement.htm"
       }
     ],
-    "sous_categorie": "Piétons & Vélos"
+    "sous_categorie": "Piétons & Vélos",
+    "image": "images/actions/patrimoine/place-chateau.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/place-chateau.jpg",
+        "legende": "Place du Château et Musée de la Révolution française"
+      }
+    ]
   },
   {
     "id": 140,
@@ -6057,7 +6118,9 @@
         "url": "https://www.ville-vizille.fr/12658-environnement.htm"
       }
     ],
-    "sous_categorie": "Stationnement"
+    "sous_categorie": "Stationnement",
+    "image": "",
+    "images": []
   },
   {
     "id": 141,
@@ -6792,7 +6855,9 @@
         "url": "https://www.ville-vizille.fr/12594-cadre-de-vie.htm"
       }
     ],
-    "sous_categorie": "Équipements"
+    "sous_categorie": "Équipements",
+    "image": "",
+    "images": []
   },
   {
     "id": 158,
@@ -7374,7 +7439,9 @@
         "url": "https://www.ville-vizille.fr/12603-intercommunalite.htm"
       }
     ],
-    "sous_categorie": "Métropole"
+    "sous_categorie": "Métropole",
+    "image": "",
+    "images": []
   },
   {
     "id": 172,
@@ -7460,7 +7527,9 @@
         "url": "https://www.ville-vizille.fr/12603-intercommunalite.htm"
       }
     ],
-    "sous_categorie": "Participations"
+    "sous_categorie": "Participations",
+    "image": "",
+    "images": []
   },
   {
     "id": 174,
@@ -9600,7 +9669,9 @@
         "url": "https://www.ville-vizille.fr/12816-transition-environnementale.htm"
       }
     ],
-    "sous_categorie": "Autres"
+    "sous_categorie": "Autres",
+    "image": "",
+    "images": []
   },
   {
     "id": 241,
@@ -10189,7 +10260,9 @@
         "url": "https://www.ville-vizille.fr/12658-environnement.htm"
       }
     ],
-    "sous_categorie": "Arrêtés & Courriers"
+    "sous_categorie": "Arrêtés & Courriers",
+    "image": "",
+    "images": []
   },
   {
     "id": 260,
@@ -10733,7 +10806,14 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Équipements"
+    "sous_categorie": "Équipements",
+    "image": "images/actions/patrimoine/poterne-vizille.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/poterne-vizille.jpg",
+        "legende": "La Poterne du Château du Roi"
+      }
+    ]
   },
   {
     "id": 279,
@@ -10769,7 +10849,14 @@
       }
     ],
     "sous_categorie": "Vœux & Actions",
-    "details": "Vizille, étape majeure sur la Route Napoléon (lieu du ralliement des troupes en 1815), participe aux actions de valorisation touristique et culturelle de cet itinéraire mythique reliant Golfe-Juan à Grenoble."
+    "details": "Vizille, étape majeure sur la Route Napoléon (lieu du ralliement des troupes en 1815), participe aux actions de valorisation touristique et culturelle de cet itinéraire mythique reliant Golfe-Juan à Grenoble.",
+    "image": "images/actions/patrimoine/place-chateau.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/place-chateau.jpg",
+        "legende": "Place du Château de Vizille"
+      }
+    ]
   },
   {
     "id": 280,
@@ -11728,7 +11815,9 @@
         "url": "https://www.ville-vizille.fr/12602-services-municipaux.htm"
       }
     ],
-    "sous_categorie": "Gestion"
+    "sous_categorie": "Gestion",
+    "image": "",
+    "images": []
   },
   {
     "id": 308,
@@ -12265,7 +12354,9 @@
         "url": "https://www.ville-vizille.fr/12640-seniors.htm"
       }
     ],
-    "sous_categorie": "Actions sociales"
+    "sous_categorie": "Actions sociales",
+    "image": "",
+    "images": []
   },
   {
     "id": 321,
@@ -12861,7 +12952,14 @@
     "budget": 0,
     "source": "Bilan adjoint culture - Espace Belledonne",
     "sous_categorie": "Autres",
-    "details": "Création du Camp de base de Vizille, hub pour les activités de pleine nature : sentiers de randonnée, parcours vélo, falaise d'escalade du Château du Roi. Vizille se positionne comme porte d'entrée vers les activités outdoor de montagne."
+    "details": "Création du Camp de base de Vizille, hub pour les activités de pleine nature : sentiers de randonnée, parcours vélo, falaise d'escalade du Château du Roi. Vizille se positionne comme porte d'entrée vers les activités outdoor de montagne.",
+    "image": "images/actions/patrimoine/poterne-vizille.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/poterne-vizille.jpg",
+        "legende": "La Poterne du Château du Roi"
+      }
+    ]
   },
   {
     "id": 349,
@@ -12876,7 +12974,14 @@
     "budget": 0,
     "source": "Bilan adjoint culture - Espace Belledonne",
     "sous_categorie": "Équipements",
-    "details": "Remise en fonctionnement de la falaise d'escalade du Château du Roi, intégrée au Camp de base de Vizille. Un équipement unique qui attire grimpeurs et amateurs de pleine nature."
+    "details": "Remise en fonctionnement de la falaise d'escalade du Château du Roi, intégrée au Camp de base de Vizille. Un équipement unique qui attire grimpeurs et amateurs de pleine nature.",
+    "image": "images/actions/patrimoine/poterne-vizille.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/poterne-vizille.jpg",
+        "legende": "La Poterne du Château du Roi"
+      }
+    ]
   },
   {
     "id": 350,
@@ -12904,7 +13009,14 @@
     "annee_fin": "2025",
     "budget": 0,
     "source": "Bilan adjoint culture - Espace Belledonne",
-    "sous_categorie": "Associations & Partenariats"
+    "sous_categorie": "Associations & Partenariats",
+    "image": "images/actions/culture/veillee-belledonne-2024.jpg",
+    "images": [
+      {
+        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
+        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
+      }
+    ]
   },
   {
     "id": 358,
@@ -12981,7 +13093,14 @@
     "details": "",
     "sources": [],
     "lien_source": [],
-    "sous_categorie": "Autres"
+    "sous_categorie": "Autres",
+    "image": "images/actions/culture/fete-musique-2023.jpg",
+    "images": [
+      {
+        "url": "images/actions/culture/fete-musique-2023.jpg",
+        "legende": "Fête de la Musique 2023"
+      }
+    ]
   },
   {
     "id": 363,
@@ -13004,8 +13123,12 @@
     "lien_source": [],
     "sous_categorie": "Festivals",
     "images": [
-      "images/actions/fete-science.jpg"
-    ]
+      {
+        "url": "images/actions/culture/fete-science.jpg",
+        "legende": "Fête de la Science - Sortie nature"
+      }
+    ],
+    "image": "images/actions/culture/fete-science.jpg"
   },
   {
     "id": 364,
@@ -13076,8 +13199,12 @@
     "lien_source": [],
     "sous_categorie": "Festivals",
     "images": [
-      "images/actions/fete-musique-2023.jpg"
-    ]
+      {
+        "url": "images/actions/culture/fete-musique-2023.jpg",
+        "legende": "Fête de la Musique 2023 à Vizille"
+      }
+    ],
+    "image": "images/actions/culture/fete-musique-2023.jpg"
   },
   {
     "id": 367,
@@ -13422,8 +13549,12 @@
     "sous_categorie": "Festivals",
     "suspendu": true,
     "images": [
-      "images/actions/veillee-belledonne-2024.jpg"
-    ]
+      {
+        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
+        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
+      }
+    ],
+    "image": "images/actions/culture/veillee-belledonne-2024.jpg"
   },
   {
     "id": 383,
@@ -13444,7 +13575,14 @@
     "details": "",
     "sources": [],
     "lien_source": [],
-    "sous_categorie": "Associations & Partenariats"
+    "sous_categorie": "Associations & Partenariats",
+    "image": "images/actions/culture/80-ans-liberation.jpg",
+    "images": [
+      {
+        "url": "images/actions/culture/80-ans-liberation.jpg",
+        "legende": "80 ans de la Libération - Reconstitution historique"
+      }
+    ]
   },
   {
     "id": 384,
@@ -13576,7 +13714,14 @@
     "details": "",
     "sources": [],
     "lien_source": [],
-    "sous_categorie": "Échanges"
+    "sous_categorie": "Échanges",
+    "image": "images/actions/culture/fete-amitie-2024.jpg",
+    "images": [
+      {
+        "url": "images/actions/culture/fete-amitie-2024.jpg",
+        "legende": "Fête de l'Amitié 2024 à Vizille"
+      }
+    ]
   },
   {
     "id": 390,
@@ -13641,8 +13786,12 @@
     "lien_source": [],
     "sous_categorie": "Échanges",
     "images": [
-      "images/actions/fete-amitie-2024.jpg"
-    ]
+      {
+        "url": "images/actions/culture/fete-amitie-2024.jpg",
+        "legende": "Fête de l'Amitié 2024 à Vizille"
+      }
+    ],
+    "image": "images/actions/culture/fete-amitie-2024.jpg"
   },
   {
     "id": 393,
@@ -13685,7 +13834,14 @@
     "sources": [],
     "lien_source": [],
     "sous_categorie": "Circuits & Tourisme",
-    "suspendu": true
+    "suspendu": true,
+    "image": "images/actions/culture/veillee-belledonne-2024.jpg",
+    "images": [
+      {
+        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
+        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
+      }
+    ]
   },
   {
     "id": 395,
@@ -13728,7 +13884,14 @@
     "details": "",
     "sources": [],
     "lien_source": [],
-    "sous_categorie": "Autres"
+    "sous_categorie": "Autres",
+    "image": "images/actions/patrimoine/roue-moulin.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/roue-moulin.jpg",
+        "legende": "Roue du moulin - Patrimoine bâti vizillois"
+      }
+    ]
   },
   {
     "id": 397,
@@ -13749,7 +13912,14 @@
     "details": "",
     "sources": [],
     "lien_source": [],
-    "sous_categorie": "Autres"
+    "sous_categorie": "Autres",
+    "image": "images/actions/patrimoine/ancienne-tannerie.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/ancienne-tannerie.jpg",
+        "legende": "Ancienne Tannerie Cros - Patrimoine industriel"
+      }
+    ]
   },
   {
     "id": 398,
@@ -13771,7 +13941,14 @@
     "sources": [],
     "lien_source": [],
     "sous_categorie": "Monuments",
-    "suspendu": true
+    "suspendu": true,
+    "image": "images/actions/patrimoine/prieure.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/prieure.jpg",
+        "legende": "Prieuré Sainte-Marie"
+      }
+    ]
   },
   {
     "id": 399,
@@ -13793,7 +13970,14 @@
     "sources": [],
     "lien_source": [],
     "sous_categorie": "Monuments",
-    "suspendu": true
+    "suspendu": true,
+    "image": "images/actions/patrimoine/portail-prieure.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/portail-prieure.jpg",
+        "legende": "Portail roman du Prieuré Sainte-Marie"
+      }
+    ]
   },
   {
     "id": 400,
@@ -13815,7 +13999,14 @@
     "sources": [],
     "lien_source": [],
     "sous_categorie": "Monuments",
-    "suspendu": true
+    "suspendu": true,
+    "image": "images/actions/patrimoine/restauration-poterne.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/restauration-poterne.jpg",
+        "legende": "Restauration de la poterne du Château du Roi"
+      }
+    ]
   },
   {
     "id": 401,
@@ -13836,7 +14027,14 @@
     "details": "",
     "sources": [],
     "lien_source": [],
-    "sous_categorie": "Monuments"
+    "sous_categorie": "Monuments",
+    "image": "images/actions/patrimoine/chapelle-peage.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/chapelle-peage.jpg",
+        "legende": "Chapelle du Péage de Vizille"
+      }
+    ]
   },
   {
     "id": 402,
@@ -13858,7 +14056,14 @@
     "sources": [],
     "lien_source": [],
     "sous_categorie": "Monuments",
-    "suspendu": true
+    "suspendu": true,
+    "image": "images/actions/patrimoine/prieure.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/prieure.jpg",
+        "legende": "Prieuré Sainte-Marie"
+      }
+    ]
   },
   {
     "id": 403,
@@ -13944,7 +14149,14 @@
     "sources": [],
     "lien_source": [],
     "sous_categorie": "Circuits & Tourisme",
-    "suspendu": true
+    "suspendu": true,
+    "image": "images/actions/patrimoine/place-chateau.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/place-chateau.jpg",
+        "legende": "Patrimoine vizillois"
+      }
+    ]
   },
   {
     "id": 407,
@@ -13966,7 +14178,14 @@
     "sources": [],
     "lien_source": [],
     "sous_categorie": "Monuments",
-    "suspendu": true
+    "suspendu": true,
+    "image": "images/actions/patrimoine/portail-prieure.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/portail-prieure.jpg",
+        "legende": "Portail roman du Prieuré Sainte-Marie"
+      }
+    ]
   },
   {
     "id": 408,
@@ -13988,7 +14207,14 @@
     "sources": [],
     "lien_source": [],
     "sous_categorie": "Monuments",
-    "suspendu": true
+    "suspendu": true,
+    "image": "images/actions/patrimoine/portail-prieure.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/portail-prieure.jpg",
+        "legende": "Portail roman du Prieuré Sainte-Marie"
+      }
+    ]
   },
   {
     "id": 409,
@@ -14009,7 +14235,14 @@
     "details": "",
     "sources": [],
     "lien_source": [],
-    "sous_categorie": "Associations & Partenariats"
+    "sous_categorie": "Associations & Partenariats",
+    "image": "images/actions/patrimoine/place-chateau.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/place-chateau.jpg",
+        "legende": "Place du Château de Vizille"
+      }
+    ]
   },
   {
     "id": 410,
@@ -14030,7 +14263,14 @@
     "details": "",
     "sources": [],
     "lien_source": [],
-    "sous_categorie": "Autres"
+    "sous_categorie": "Autres",
+    "image": "images/actions/patrimoine/place-chateau.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/place-chateau.jpg",
+        "legende": "Place du Château de Vizille"
+      }
+    ]
   },
   {
     "id": 304,
@@ -14184,7 +14424,14 @@
       }
     ],
     "sous_categorie": "Associations & Partenariats",
-    "suspendu": true
+    "suspendu": true,
+    "image": "images/actions/patrimoine/prieure.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/prieure.jpg",
+        "legende": "Prieuré Sainte-Marie"
+      }
+    ]
   },
   {
     "id": 72,
@@ -14232,7 +14479,14 @@
         "url": "https://www.ville-vizille.fr/12621-le-domaine-de-vizille.htm"
       }
     ],
-    "sous_categorie": "Autres"
+    "sous_categorie": "Autres",
+    "image": "images/actions/patrimoine/place-chateau.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/place-chateau.jpg",
+        "legende": "Place du Château et Musée de la Révolution française"
+      }
+    ]
   },
   {
     "id": 73,
@@ -14293,7 +14547,14 @@
         "url": "https://www.ville-vizille.fr/12621-le-domaine-de-vizille.htm"
       }
     ],
-    "sous_categorie": "Monuments"
+    "sous_categorie": "Monuments",
+    "image": "images/actions/patrimoine/portail-prieure.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/portail-prieure.jpg",
+        "legende": "Portail roman du Prieuré Sainte-Marie"
+      }
+    ]
   },
   {
     "id": 75,
@@ -14372,7 +14633,9 @@
         "url": "https://www.ville-vizille.fr/12621-le-domaine-de-vizille.htm"
       }
     ],
-    "sous_categorie": "Monuments"
+    "sous_categorie": "Monuments",
+    "image": "",
+    "images": []
   },
   {
     "id": 76,
@@ -14445,7 +14708,14 @@
         "url": "https://www.ville-vizille.fr/12621-le-domaine-de-vizille.htm"
       }
     ],
-    "sous_categorie": "Monuments"
+    "sous_categorie": "Monuments",
+    "image": "images/actions/patrimoine/portail-prieure.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/portail-prieure.jpg",
+        "legende": "Portail roman du Prieuré Sainte-Marie"
+      }
+    ]
   },
   {
     "id": 78,
@@ -14493,7 +14763,14 @@
         "url": "https://www.ville-vizille.fr/12621-le-domaine-de-vizille.htm"
       }
     ],
-    "sous_categorie": "Circuits & Tourisme"
+    "sous_categorie": "Circuits & Tourisme",
+    "image": "images/actions/patrimoine/place-chateau.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/place-chateau.jpg",
+        "legende": "Place du Château et Musée de la Révolution française"
+      }
+    ]
   },
   {
     "id": 79,
@@ -14573,7 +14850,14 @@
         "url": "https://www.ville-vizille.fr/12621-le-domaine-de-vizille.htm"
       }
     ],
-    "sous_categorie": "Monuments"
+    "sous_categorie": "Monuments",
+    "image": "images/actions/patrimoine/portail-prieure.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/portail-prieure.jpg",
+        "legende": "Portail roman du Prieuré Sainte-Marie"
+      }
+    ]
   },
   {
     "id": 80,
@@ -14644,7 +14928,14 @@
       }
     ],
     "sous_categorie": "Monuments",
-    "suspendu": true
+    "suspendu": true,
+    "image": "images/actions/patrimoine/prieure.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/prieure.jpg",
+        "legende": "Prieuré Sainte-Marie"
+      }
+    ]
   },
   {
     "id": 81,
@@ -14693,7 +14984,14 @@
       }
     ],
     "sous_categorie": "Monuments",
-    "suspendu": true
+    "suspendu": true,
+    "image": "images/actions/patrimoine/portail-prieure.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/portail-prieure.jpg",
+        "legende": "Portail roman du Prieuré Sainte-Marie"
+      }
+    ]
   },
   {
     "id": 272,
@@ -14754,7 +15052,14 @@
         "url": "https://www.ville-vizille.fr/12621-le-domaine-de-vizille.htm"
       }
     ],
-    "sous_categorie": "Monuments"
+    "sous_categorie": "Monuments",
+    "image": "images/actions/patrimoine/portail-prieure.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/portail-prieure.jpg",
+        "legende": "Portail roman du Prieuré Sainte-Marie"
+      }
+    ]
   },
   {
     "id": 331,
@@ -14797,7 +15102,14 @@
     "budget": 0,
     "source": "Bilan adjoint culture",
     "sous_categorie": "Monuments",
-    "suspendu": true
+    "suspendu": true,
+    "image": "images/actions/patrimoine/restauration-poterne.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/restauration-poterne.jpg",
+        "legende": "Restauration de la poterne du Château du Roi"
+      }
+    ]
   },
   {
     "id": 341,
@@ -14811,7 +15123,14 @@
     "annee_fin": "2024",
     "budget": 0,
     "source": "Bilan adjoint culture",
-    "sous_categorie": "Circuits & Tourisme"
+    "sous_categorie": "Circuits & Tourisme",
+    "image": "images/actions/patrimoine/place-chateau.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/place-chateau.jpg",
+        "legende": "Patrimoine vizillois"
+      }
+    ]
   },
   {
     "id": 342,
@@ -14826,7 +15145,14 @@
     "budget": 0,
     "source": "Bilan adjoint culture",
     "sous_categorie": "Monuments",
-    "suspendu": true
+    "suspendu": true,
+    "image": "images/actions/patrimoine/portail-prieure.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/portail-prieure.jpg",
+        "legende": "Portail roman du Prieuré Sainte-Marie"
+      }
+    ]
   },
   {
     "id": 356,
@@ -14857,7 +15183,14 @@
     "budget": 0,
     "source": "Bilan adjoint culture",
     "sous_categorie": "Monuments",
-    "suspendu": true
+    "suspendu": true,
+    "image": "images/actions/patrimoine/portail-prieure.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/portail-prieure.jpg",
+        "legende": "Portail roman du Prieuré Sainte-Marie"
+      }
+    ]
   },
   {
     "id": 64,
@@ -15161,8 +15494,12 @@
     ],
     "sous_categorie": "Festivals",
     "images": [
-      "images/actions/fete-musique-2023.jpg"
-    ]
+      {
+        "url": "images/actions/culture/fete-musique-2023.jpg",
+        "legende": "Fête de la Musique 2023 à Vizille"
+      }
+    ],
+    "image": "images/actions/culture/fete-musique-2023.jpg"
   },
   {
     "id": 902,
@@ -15220,7 +15557,14 @@
         "url": "https://www.ville-vizille.fr/12627-culture-et-loisirs.htm"
       }
     ],
-    "sous_categorie": "Festivals"
+    "sous_categorie": "Festivals",
+    "image": "images/actions/culture/fete-musique-2023.jpg",
+    "images": [
+      {
+        "url": "images/actions/culture/fete-musique-2023.jpg",
+        "legende": "Fête de la Musique 2023 à Vizille"
+      }
+    ]
   },
   {
     "id": 903,
@@ -15376,7 +15720,14 @@
         "url": "https://www.ville-vizille.fr/12619-patrimoine.htm"
       }
     ],
-    "sous_categorie": "Circuits & Tourisme"
+    "sous_categorie": "Circuits & Tourisme",
+    "image": "images/actions/patrimoine/chapelle-peage.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/chapelle-peage.jpg",
+        "legende": "Chapelle du Péage de Vizille"
+      }
+    ]
   },
   {
     "id": 906,
@@ -15452,7 +15803,14 @@
         "url": "https://www.ville-vizille.fr/12658-environnement.htm"
       }
     ],
-    "sous_categorie": "Associations & Partenariats"
+    "sous_categorie": "Associations & Partenariats",
+    "image": "images/actions/culture/veillee-belledonne-2024.jpg",
+    "images": [
+      {
+        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
+        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
+      }
+    ]
   },
   {
     "id": 907,
@@ -15550,7 +15908,14 @@
     "description": "Soirée participative sur la végétalisation dans le cadre du Plan Canopée. Ateliers sur l'aménagement des anciens tennis du Péage et du square de la Révolution.",
     "details": "Soirée organisée avec l'Espace Belledonne pour découvrir le projet d'implantation d'arbres et de végétalisation (zones d'ombrage). Les ateliers participatifs ont permis de co-construire les projets d'aménagement des anciens terrains de tennis du Péage et de la place devant le cinéma.",
     "annee": "2022",
-    "importance": 2
+    "importance": 2,
+    "image": "images/actions/culture/veillee-belledonne-2024.jpg",
+    "images": [
+      {
+        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
+        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
+      }
+    ]
   },
   {
     "id": 911,
@@ -15561,7 +15926,14 @@
     "description": "Soirée de concertation sur les enjeux des énergies renouvelables et le déploiement des EnR à Vizille. Présentation d'une maquette réalisée par les collégiens.",
     "details": "Concertation pour recueillir l'avis des habitants sur les premières réflexions pour le déploiement des énergies renouvelables. Maquette proposée par 'Les Mains d'Or', élaborée par les collégiens en lien avec les résidents de la résidence autonomie La Romanche - projet intergénérationnel.",
     "annee": "2024",
-    "importance": 2
+    "importance": 2,
+    "image": "images/actions/culture/veillee-belledonne-2024.jpg",
+    "images": [
+      {
+        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
+        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
+      }
+    ]
   },
   {
     "id": 912,
@@ -15769,7 +16141,14 @@
     "titre": "Optimiser le patrimoine bâti communal",
     "description": "Suivre les consommations énergétiques, rationaliser le patrimoine, rénover les bâtiments publics.",
     "details": "Actions : suivi annuel des consommations, instrumentation des bâtiments énergivores, programmation pluriannuelle de rénovation, remplacement des chaudières fioul, passage à l'éclairage LED, conformité décret tertiaire.",
-    "importance": 1
+    "importance": 1,
+    "image": "images/actions/patrimoine/roue-moulin.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/roue-moulin.jpg",
+        "legende": "Roue du moulin - Patrimoine bâti vizillois"
+      }
+    ]
   },
   {
     "id": 948,
@@ -15789,7 +16168,9 @@
     "titre": "Flotte de véhicules et mobilité des agents",
     "description": "Recenser et rationaliser la flotte, renouveler vers des véhicules faibles émissions, créer une flotte de vélos de service.",
     "details": "Actions : caractériser les usages, remplacer par véhicules électriques/GNV, développer vélos et VAE de service, tickets transports en commun, favoriser télétravail et visioconférences.",
-    "importance": 1
+    "importance": 1,
+    "image": "",
+    "images": []
   },
   {
     "id": 950,
@@ -15944,7 +16325,9 @@
       }
     ],
     "lien_source": [],
-    "sous_categorie": "Prévention"
+    "sous_categorie": "Prévention",
+    "image": "",
+    "images": []
   },
   {
     "id": 955,
@@ -15971,7 +16354,9 @@
       }
     ],
     "lien_source": [],
-    "sous_categorie": "Prévention"
+    "sous_categorie": "Prévention",
+    "image": "",
+    "images": []
   },
   {
     "id": 956,
@@ -16013,8 +16398,12 @@
     "importance": 2,
     "sous_categorie": "Veillées de Belledonne",
     "images": [
-      "images/actions/veillee-belledonne-2024.jpg"
-    ]
+      {
+        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
+        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
+      }
+    ],
+    "image": "images/actions/culture/veillee-belledonne-2024.jpg"
   },
   {
     "id": 958,
@@ -16027,7 +16416,14 @@
     "annee": 2022,
     "budget": 0,
     "importance": 2,
-    "sous_categorie": "Veillées de Belledonne"
+    "sous_categorie": "Veillées de Belledonne",
+    "image": "images/actions/culture/veillee-belledonne-2024.jpg",
+    "images": [
+      {
+        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
+        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
+      }
+    ]
   },
   {
     "id": 959,
@@ -16104,7 +16500,14 @@
         "label": "secteur concerné"
       }
     ],
-    "sous_categorie": "Concertations publiques"
+    "sous_categorie": "Concertations publiques",
+    "image": "images/actions/patrimoine/ancienne-tannerie.jpg",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/ancienne-tannerie.jpg",
+        "legende": "Ancienne Tannerie Cros - Patrimoine industriel"
+      }
+    ]
   },
   {
     "id": 964,
@@ -16162,7 +16565,14 @@
     "annee": 2024,
     "budget": 0,
     "importance": 2,
-    "sous_categorie": "Veillées de Belledonne"
+    "sous_categorie": "Veillées de Belledonne",
+    "image": "images/actions/culture/veillee-belledonne-2024.jpg",
+    "images": [
+      {
+        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
+        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
+      }
+    ]
   },
   {
     "id": 968,
@@ -16194,7 +16604,14 @@
     "annee": 2025,
     "budget": 0,
     "importance": 2,
-    "sous_categorie": "Veillées de Belledonne"
+    "sous_categorie": "Veillées de Belledonne",
+    "image": "images/actions/culture/veillee-belledonne-2024.jpg",
+    "images": [
+      {
+        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
+        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
+      }
+    ]
   },
   {
     "id": 970,
