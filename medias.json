@@ -134,15 +134,6 @@
       "albumId": null
     },
     {
-      "id": 3,
-      "titre": "Vue panoramique de Vizille",
-      "src": "images/vizille-panorama.png",
-      "thumbnail": "images/vizille-panorama.png",
-      "date": "2025-12-01",
-      "description": "Panorama de notre belle ville",
-      "albumId": null
-    },
-    {
       "id": 1770127914621,
       "titre": "Réunion chez l'habitant",
       "src": "images/medias/whatsapp_image_2026-02-02_at_14.24.15.jpeg",
