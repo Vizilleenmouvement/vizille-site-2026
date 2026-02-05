@@ -5019,7 +5019,14 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Événements"
+    "sous_categorie": "Événements",
+    "image": "images/actions/sport/grenoble-vizille.jpg",
+    "images": [
+      {
+        "url": "images/actions/sport/grenoble-vizille.jpg",
+        "legende": "Coureurs du Grenoble-Vizille dans le parc du Domaine"
+      }
+    ]
   },
   {
     "id": 120,
@@ -5205,7 +5212,14 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Événements"
+    "sous_categorie": "Événements",
+    "image": "images/actions/sport/viziclette-velo-smoothie.jpg",
+    "images": [
+      {
+        "url": "images/actions/sport/viziclette-velo-smoothie.jpg",
+        "legende": "Vélo-smoothie à la Viziclette"
+      }
+    ]
   },
   {
     "id": 124,
@@ -10557,7 +10571,14 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Événements"
+    "sous_categorie": "Événements",
+    "image": "images/actions/sport/grenoble-vizille.jpg",
+    "images": [
+      {
+        "url": "images/actions/sport/grenoble-vizille.jpg",
+        "legende": "Coureurs du Grenoble-Vizille dans le parc du Domaine"
+      }
+    ]
   },
   {
     "id": 274,
