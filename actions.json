@@ -5113,11 +5113,15 @@
       }
     ],
     "sous_categorie": "Événements",
-    "image": "images/actions/sport/rugby-entente-vizille.jpg",
+    "image": "images/actions/sport/rugby-champion-alpes.jpg",
     "images": [
       {
+        "url": "images/actions/sport/rugby-champion-alpes.jpg",
+        "legende": "L'équipe célèbre le titre de Champion des Alpes"
+      },
+      {
         "url": "images/actions/sport/rugby-entente-vizille.jpg",
-        "legende": "Entente Vaulnaveys-Vizille Rugby"
+        "legende": "Affiche de match - Entente Vaulnaveys-Vizille"
       }
     ]
   },
