@@ -4529,7 +4529,7 @@
         "evenement": "Réalisation"
       }
     ],
-    "details": "",
+    "details": "Les deux courts de tennis du Parc ont été entièrement rénovés en 2022 pour un budget de 155 000 €. Ces travaux ont permis de remettre à niveau les revêtements et les équipements, offrant aux clubs et aux pratiquants des conditions de jeu optimales.",
     "sources": [
       {
         "type": "doc",
@@ -4653,7 +4653,7 @@
         "evenement": "Réalisation"
       }
     ],
-    "details": "",
+    "details": "Remplacement de l'éclairage du gymnase du Parc par un système LED moderne pour un budget de 40 000 €. Cette opération améliore le confort visuel des sportifs tout en réduisant significativement la consommation énergétique de l'équipement.",
     "sources": [
       {
         "type": "doc",
@@ -4767,7 +4767,7 @@
         "evenement": "Réalisation"
       }
     ],
-    "details": "",
+    "details": "Vizille a obtenu en 2022 le label \"Terre de Jeux\" pour les Jeux Olympiques de Paris 2024, témoignant de l'engagement de la ville en faveur du sport. Ce label a permis d'organiser de nombreux événements : JO dans les écoles, relais de commune (Vizille ville départ), et Jeux Olympiques Vizillois rassemblant les habitants.",
     "sources": [
       {
         "type": "doc",
@@ -5042,7 +5042,7 @@
         "evenement": "Réalisation"
       }
     ],
-    "details": "",
+    "details": "Le Tour de France 2025 passe par Vizille le 24 juillet, avec une étape de 171 km. Un événement majeur qui met Vizille sous les projecteurs du cyclisme mondial.",
     "sources": [
       {
         "type": "doc",
@@ -5085,7 +5085,7 @@
         "evenement": "Réalisation"
       }
     ],
-    "details": "",
+    "details": "L'entente Vizille-Vaulnaveys a remporté le titre de Champion des Alpes en 2023, une fierté pour le rugby vizillois. La municipalité soutient activement le club à travers la mise aux normes des équipements et l'homologation du stade en Fédérale 3.",
     "sources": [
       {
         "type": "doc",
@@ -8822,7 +8822,7 @@
         "evenement": "Réalisation"
       }
     ],
-    "details": "",
+    "details": "Installation d'une main-courante avec garde-corps au stade de rugby, participant à la mise aux normes de l'équipement pour permettre à l'USV Rugby d'évoluer en Fédérale 3.",
     "sources": [
       {
         "type": "doc",
@@ -9923,7 +9923,7 @@
         "evenement": "Réalisation"
       }
     ],
-    "details": "",
+    "details": "Travaux de mise aux normes du stade municipal permettant l'homologation en Fédérale 3. L'USV Rugby peut désormais évoluer à ce niveau de compétition grâce aux investissements réalisés par la municipalité.",
     "sources": [
       {
         "type": "doc",
@@ -12814,7 +12814,8 @@
     "annee_fin": "2024",
     "budget": 0,
     "source": "Bilan adjoint culture - Espace Belledonne",
-    "sous_categorie": "Autres"
+    "sous_categorie": "Autres",
+    "details": "Création du Camp de base de Vizille, hub pour les activités de pleine nature : sentiers de randonnée, parcours vélo, falaise d'escalade du Château du Roi. Vizille se positionne comme porte d'entrée vers les activités outdoor de montagne."
   },
   {
     "id": 349,
@@ -12828,7 +12829,8 @@
     "annee_fin": "2023",
     "budget": 0,
     "source": "Bilan adjoint culture - Espace Belledonne",
-    "sous_categorie": "Équipements"
+    "sous_categorie": "Équipements",
+    "details": "Remise en fonctionnement de la falaise d'escalade du Château du Roi, intégrée au Camp de base de Vizille. Un équipement unique qui attire grimpeurs et amateurs de pleine nature."
   },
   {
     "id": 350,
@@ -16199,5 +16201,186 @@
     "budget": 0,
     "importance": 2,
     "sous_categorie": "Écoles participatives"
+  },
+  {
+    "id": 974,
+    "theme": "Sport",
+    "icon": "⚽",
+    "color": "#2ecc71",
+    "statut": "Réalisé",
+    "titre": "Rénovation sol gymnase des Mattons",
+    "description": "Rénovation complète du sol du gymnase des Mattons pour offrir des conditions de pratique optimales aux associations sportives.",
+    "annee": "2023",
+    "annee_fin": "2023",
+    "budget": 0,
+    "source": "Bilan mandat",
+    "importance": 2,
+    "resume": "Réfection du revêtement de sol du gymnase des Mattons.",
+    "chiffres": [],
+    "chronologie": [
+      {
+        "date": "2023",
+        "evenement": "Réalisation des travaux"
+      }
+    ],
+    "details": "Le sol du gymnase des Mattons, vieillissant et dégradé, a été entièrement rénové pour garantir la sécurité et le confort des sportifs. Ce gymnase accueille plusieurs associations et activités sportives tout au long de l'année.",
+    "sources": [],
+    "lien_source": "",
+    "sous_categorie": "Équipements",
+    "images": [],
+    "image": ""
+  },
+  {
+    "id": 975,
+    "theme": "Sport",
+    "icon": "⚽",
+    "color": "#2ecc71",
+    "statut": "Réalisé",
+    "titre": "L'Échappée Belle",
+    "description": "Soutien et promotion de l'Échappée Belle, course emblématique du calendrier sportif vizillois.",
+    "annee": "2023",
+    "annee_fin": "",
+    "budget": 0,
+    "source": "Bilan mandat",
+    "importance": 2,
+    "resume": "Événement sportif classique de Vizille.",
+    "chiffres": [],
+    "chronologie": [],
+    "details": "L'Échappée Belle fait partie des événements sportifs classiques de Vizille, aux côtés du Grenoble-Vizille et de la Vizilloise. La municipalité soutient activement cet événement qui contribue au rayonnement sportif de la ville.",
+    "sources": [],
+    "lien_source": "",
+    "sous_categorie": "Événements",
+    "images": [],
+    "image": ""
+  },
+  {
+    "id": 976,
+    "theme": "Sport",
+    "icon": "⚽",
+    "color": "#2ecc71",
+    "statut": "Réalisé",
+    "titre": "La Vizilloise",
+    "description": "Course populaire annuelle rassemblant les Vizillois autour du sport et de la convivialité.",
+    "annee": "2023",
+    "annee_fin": "",
+    "budget": 0,
+    "source": "Bilan mandat",
+    "importance": 2,
+    "resume": "Course populaire annuelle à Vizille.",
+    "chiffres": [],
+    "chronologie": [],
+    "details": "La Vizilloise est une course populaire devenue un rendez-vous incontournable du calendrier sportif vizillois. Ouverte à tous, elle rassemble chaque année de nombreux participants dans une ambiance conviviale et festive.",
+    "sources": [],
+    "lien_source": "",
+    "sous_categorie": "Événements",
+    "images": [],
+    "image": ""
+  },
+  {
+    "id": 977,
+    "theme": "Sport",
+    "icon": "⚽",
+    "color": "#2ecc71",
+    "statut": "Réalisé",
+    "titre": "Diffusion matchs Coupe du Monde de rugby",
+    "description": "Organisation de diffusions publiques des matchs de la Coupe du Monde de rugby 2023 en plein air, sous la halle Serge Gros et au stade municipal.",
+    "annee": "2023",
+    "annee_fin": "2023",
+    "budget": 0,
+    "source": "Bilan mandat",
+    "importance": 2,
+    "resume": "Retransmission des matchs en plein air pour les Vizillois.",
+    "chiffres": [],
+    "chronologie": [
+      {
+        "date": "2023",
+        "evenement": "Coupe du Monde de rugby - diffusions publiques"
+      }
+    ],
+    "details": "Lors de la Coupe du Monde de rugby 2023, la municipalité a organisé des retransmissions en plein air des matchs sous la halle Serge Gros et au stade municipal. Ces moments festifs ont rassemblé de nombreux Vizillois dans une ambiance chaleureuse et sportive.",
+    "sources": [],
+    "lien_source": "",
+    "sous_categorie": "Événements",
+    "images": [],
+    "image": ""
+  },
+  {
+    "id": 978,
+    "theme": "Sport",
+    "icon": "⚽",
+    "color": "#2ecc71",
+    "statut": "Réalisé",
+    "titre": "JO 2024 dans les écoles de Vizille",
+    "description": "Organisation d'événements olympiques dans les écoles de Vizille dans le cadre du label Terre de Jeux.",
+    "annee": "2024",
+    "annee_fin": "2024",
+    "budget": 0,
+    "source": "Bilan mandat",
+    "importance": 2,
+    "resume": "Animations olympiques pour les écoliers vizillois.",
+    "chiffres": [],
+    "chronologie": [
+      {
+        "date": "2024",
+        "evenement": "Organisation des JO dans les écoles"
+      }
+    ],
+    "details": "Dans le cadre du label Terre de Jeux, la ville a organisé des Jeux Olympiques dans les écoles de Vizille. Les élèves ont participé à des épreuves sportives ludiques, découvert les valeurs olympiques et vécu l'esprit des Jeux au plus proche de leur quotidien.",
+    "sources": [],
+    "lien_source": "",
+    "sous_categorie": "Événements",
+    "images": [],
+    "image": ""
+  },
+  {
+    "id": 979,
+    "theme": "Sport",
+    "icon": "⚽",
+    "color": "#2ecc71",
+    "statut": "Réalisé",
+    "titre": "Relais de commune JO 2024 - Vizille ville départ",
+    "description": "Vizille a participé au relais de commune dans le cadre des Jeux Olympiques 2024 en étant ville départ.",
+    "annee": "2024",
+    "annee_fin": "2024",
+    "budget": 0,
+    "source": "Bilan mandat",
+    "importance": 1,
+    "resume": "Vizille ville départ du relais de commune JO 2024.",
+    "chiffres": [],
+    "chronologie": [
+      {
+        "date": "2024",
+        "evenement": "Relais de commune - Vizille ville départ"
+      }
+    ],
+    "details": "Vizille a été sélectionnée comme ville départ du relais de commune organisé dans le cadre des Jeux Olympiques de Paris 2024. Cet événement a permis de célébrer les valeurs du sport et de l'olympisme à l'échelle locale, mobilisant les habitants et les associations sportives.",
+    "sources": [],
+    "lien_source": "",
+    "sous_categorie": "Événements",
+    "images": [],
+    "image": ""
+  },
+  {
+    "id": 980,
+    "theme": "Sport",
+    "icon": "⚽",
+    "color": "#2ecc71",
+    "statut": "Réalisé",
+    "titre": "Sport pour tous à l'Escale et au foyer résidence",
+    "description": "Mise en place d'activités sportives adaptées à l'Espace de vie sociale (l'Escale) avec des rendez-vous marche et au foyer résidence.",
+    "annee": "2022",
+    "annee_fin": "",
+    "budget": 0,
+    "source": "Bilan mandat",
+    "importance": 2,
+    "resume": "Activités sportives adaptées pour tous les publics.",
+    "chiffres": [],
+    "chronologie": [],
+    "details": "La municipalité a développé le sport pour tous avec des activités adaptées à l'espace de vie sociale l'Escale : rendez-vous marche réguliers, activités au foyer résidence pour les seniors. Des installations sportives en accès libre ont également été mises en place au parc de la Roselière, permettant à chacun de pratiquer une activité physique à son rythme.",
+    "sources": [],
+    "lien_source": "",
+    "sous_categorie": "Sport pour tous",
+    "images": [],
+    "image": ""
   }
 ]

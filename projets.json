@@ -1255,5 +1255,29 @@
     "indicateurs": "Actions ONF/partenaires • Indicateurs biodiversité • Entretien & fréquentation",
     "partenaires": "ONF, Département",
     "perimetre": "125 ha de forêt communale"
+  },
+  {
+    "id": 648,
+    "titre": "Étude de rénovation du gymnase Guy Mocquet",
+    "theme": "Sport",
+    "statut": "Programmé",
+    "annee": 2027,
+    "budget": 0,
+    "resume": "Lancement des études pour la rénovation complète voire la reconstruction du gymnase Guy Mocquet, équipement vieillissant accueillant la gymnastique et le judo.",
+    "description": "Vizille possède de nombreux équipements sportifs que nous continuons à entretenir et rénover. Mais certains sont très anciens et nécessitent des rénovations complètes voire des constructions neuves. Un travail de concertation avec le monde sportif sera lancé, notamment pour le gymnase Guy Mocquet qui accueille la gymnastique et le judo. L'objectif est de proposer des installations modernes, aux normes et adaptées aux besoins des pratiquants.",
+    "importance": 1,
+    "chiffres": []
+  },
+  {
+    "id": 649,
+    "titre": "Modernisation des équipements sportifs",
+    "theme": "Sport",
+    "statut": "Programmé",
+    "annee": 2027,
+    "budget": 0,
+    "resume": "Poursuite de l'entretien et de la rénovation des équipements sportifs existants, avec un travail de concertation avec les clubs et associations.",
+    "description": "Continuation du programme de rénovation des équipements sportifs de la ville : gymnases, stades, terrains de tennis, piscine. Un dialogue avec les associations sportives et les pratiquants permettra de définir les priorités et les besoins, notamment pour l'athlétisme et les sports collectifs.",
+    "importance": 2,
+    "chiffres": []
   }
 ]
