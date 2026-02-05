@@ -65,11 +65,7 @@
         "url": "https://www.ville-vizille.fr/12634-centre-communal-d-action-sociale-ccas.htm"
       }
     ],
-    "sous_categorie": "Accès aux soins",
-    "image": "images/actions-extracted/action_1_main.jpg",
-    "images": [
-      "images/actions-extracted/action_1_0.jpg"
-    ]
+    "sous_categorie": "Accès aux soins"
   },
   {
     "id": 2,
@@ -585,12 +581,7 @@
         "url": "https://www.ville-vizille.fr/12618-decouvrir-vizille.htm"
       }
     ],
-    "sous_categorie": "Grands projets",
-    "image": "images/actions-extracted/action_11_main.jpg",
-    "images": [
-      "images/actions-extracted/action_11_0.jpg",
-      "images/actions-extracted/action_11_1.jpg"
-    ]
+    "sous_categorie": "Grands projets"
   },
   {
     "id": 12,
@@ -650,14 +641,7 @@
         "url": "https://www.ville-vizille.fr/12618-decouvrir-vizille.htm"
       }
     ],
-    "sous_categorie": "Grands projets",
-    "image": "images/actions/patrimoine/ancienne-tannerie.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/ancienne-tannerie.jpg",
-        "legende": "Ancienne Tannerie Cros - Patrimoine industriel"
-      }
-    ]
+    "sous_categorie": "Grands projets"
   },
   {
     "id": 13,
@@ -871,14 +855,7 @@
         "url": "https://www.ville-vizille.fr/12618-decouvrir-vizille.htm"
       }
     ],
-    "sous_categorie": "Grands projets",
-    "image": "images/actions/patrimoine/ancienne-tannerie.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/ancienne-tannerie.jpg",
-        "legende": "Ancienne Tannerie Cros - Patrimoine industriel"
-      }
-    ]
+    "sous_categorie": "Grands projets"
   },
   {
     "id": 16,
@@ -966,14 +943,7 @@
         "url": "https://www.ville-vizille.fr/12618-decouvrir-vizille.htm"
       }
     ],
-    "sous_categorie": "Grands projets",
-    "image": "images/actions/patrimoine/roue-moulin.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/roue-moulin.jpg",
-        "legende": "Roue du moulin - Patrimoine bâti vizillois"
-      }
-    ]
+    "sous_categorie": "Grands projets"
   },
   {
     "id": 17,
@@ -2796,14 +2766,7 @@
       }
     ],
     "sous_categorie": "Associations & Partenariats",
-    "suspendu": true,
-    "image": "images/actions/patrimoine/prieure.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/prieure.jpg",
-        "legende": "Prieuré Sainte-Marie"
-      }
-    ]
+    "suspendu": true
   },
   {
     "id": 66,
@@ -2891,14 +2854,7 @@
         "url": "https://www.ville-vizille.fr/12621-le-domaine-de-vizille.htm"
       }
     ],
-    "sous_categorie": "Autres",
-    "image": "images/actions/patrimoine/place-chateau.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/place-chateau.jpg",
-        "legende": "Place du Château et Musée de la Révolution française"
-      }
-    ]
+    "sous_categorie": "Autres"
   },
   {
     "id": 73,
@@ -2950,14 +2906,7 @@
         "url": "https://www.ville-vizille.fr/12621-le-domaine-de-vizille.htm"
       }
     ],
-    "sous_categorie": "Monuments",
-    "image": "images/actions/patrimoine/portail-prieure.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/portail-prieure.jpg",
-        "legende": "Portail roman du Prieuré Sainte-Marie"
-      }
-    ]
+    "sous_categorie": "Monuments"
   },
   {
     "id": 75,
@@ -3099,14 +3048,7 @@
         "url": "https://www.ville-vizille.fr/12621-le-domaine-de-vizille.htm"
       }
     ],
-    "sous_categorie": "Monuments",
-    "image": "images/actions/patrimoine/portail-prieure.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/portail-prieure.jpg",
-        "legende": "Portail roman du Prieuré Sainte-Marie"
-      }
-    ]
+    "sous_categorie": "Monuments"
   },
   {
     "id": 78,
@@ -3151,14 +3093,7 @@
         "url": "https://www.ville-vizille.fr/12621-le-domaine-de-vizille.htm"
       }
     ],
-    "sous_categorie": "Circuits & Tourisme",
-    "image": "images/actions/patrimoine/place-chateau.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/place-chateau.jpg",
-        "legende": "Place du Château et Musée de la Révolution française"
-      }
-    ]
+    "sous_categorie": "Circuits & Tourisme"
   },
   {
     "id": 79,
@@ -3234,14 +3169,7 @@
         "url": "https://www.ville-vizille.fr/12621-le-domaine-de-vizille.htm"
       }
     ],
-    "sous_categorie": "Monuments",
-    "image": "images/actions/patrimoine/portail-prieure.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/portail-prieure.jpg",
-        "legende": "Portail roman du Prieuré Sainte-Marie"
-      }
-    ]
+    "sous_categorie": "Monuments"
   },
   {
     "id": 80,
@@ -3312,14 +3240,7 @@
       }
     ],
     "sous_categorie": "Monuments",
-    "suspendu": true,
-    "image": "images/actions/patrimoine/prieure.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/prieure.jpg",
-        "legende": "Prieuré Sainte-Marie"
-      }
-    ]
+    "suspendu": true
   },
   {
     "id": 81,
@@ -3368,14 +3289,7 @@
       }
     ],
     "sous_categorie": "Monuments",
-    "suspendu": true,
-    "image": "images/actions/patrimoine/portail-prieure.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/portail-prieure.jpg",
-        "legende": "Portail roman du Prieuré Sainte-Marie"
-      }
-    ]
+    "suspendu": true
   },
   {
     "id": 82,
@@ -5043,7 +4957,7 @@
         "evenement": "Réalisation"
       }
     ],
-    "details": "Les deux courts de tennis du Parc ont été entièrement rénovés en 2022 pour un budget de 155 000 €. Ces travaux ont permis de remettre à niveau les revêtements et les équipements, offrant aux clubs et aux pratiquants des conditions de jeu optimales.",
+    "details": "",
     "sources": [
       {
         "type": "doc",
@@ -5145,7 +5059,7 @@
         "evenement": "Réalisation"
       }
     ],
-    "details": "Remplacement de l'éclairage du gymnase du Parc par un système LED moderne pour un budget de 40 000 €. Cette opération améliore le confort visuel des sportifs tout en réduisant significativement la consommation énergétique de l'équipement.",
+    "details": "",
     "sources": [
       {
         "type": "doc",
@@ -5255,7 +5169,7 @@
         "evenement": "Réalisation"
       }
     ],
-    "details": "Vizille a obtenu en 2022 le label \"Terre de Jeux\" pour les Jeux Olympiques de Paris 2024, témoignant de l'engagement de la ville en faveur du sport. Ce label a permis d'organiser de nombreux événements : JO dans les écoles, relais de commune (Vizille ville départ), et Jeux Olympiques Vizillois rassemblant les habitants.",
+    "details": "",
     "sources": [
       {
         "type": "doc",
@@ -5490,14 +5404,7 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Événements",
-    "image": "images/actions/sport/grenoble-vizille.jpg",
-    "images": [
-      {
-        "url": "images/actions/sport/grenoble-vizille.jpg",
-        "legende": "Coureurs du Grenoble-Vizille dans le parc du Domaine"
-      }
-    ]
+    "sous_categorie": "Événements"
   },
   {
     "id": 120,
@@ -5520,7 +5427,7 @@
         "evenement": "Réalisation"
       }
     ],
-    "details": "Le Tour de France 2025 passe par Vizille le 24 juillet, avec une étape de 171 km. Un événement majeur qui met Vizille sous les projecteurs du cyclisme mondial.",
+    "details": "",
     "sources": [
       {
         "type": "doc",
@@ -5563,7 +5470,7 @@
         "evenement": "Réalisation"
       }
     ],
-    "details": "L'entente Vizille-Vaulnaveys a remporté le titre de Champion des Alpes en 2023, une fierté pour le rugby vizillois. La municipalité soutient activement le club à travers la mise aux normes des équipements et l'homologation du stade en Fédérale 3.",
+    "details": "",
     "sources": [
       {
         "type": "doc",
@@ -5583,18 +5490,7 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Événements",
-    "image": "images/actions/sport/rugby-champion-alpes.jpg",
-    "images": [
-      {
-        "url": "images/actions/sport/rugby-champion-alpes.jpg",
-        "legende": "L'équipe célèbre le titre de Champion des Alpes"
-      },
-      {
-        "url": "images/actions/sport/rugby-entente-vizille.jpg",
-        "legende": "Affiche de match - Entente Vaulnaveys-Vizille"
-      }
-    ]
+    "sous_categorie": "Événements"
   },
   {
     "id": 122,
@@ -5694,14 +5590,7 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Événements",
-    "image": "images/actions/sport/viziclette-velo-smoothie.jpg",
-    "images": [
-      {
-        "url": "images/actions/sport/viziclette-velo-smoothie.jpg",
-        "legende": "Vélo-smoothie à la Viziclette"
-      }
-    ]
+    "sous_categorie": "Événements"
   },
   {
     "id": 124,
@@ -6079,14 +5968,7 @@
       }
     ],
     "sous_categorie": "Concertation",
-    "suspendu": true,
-    "image": "images/actions/patrimoine/roue-moulin.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/roue-moulin.jpg",
-        "legende": "Roue du moulin - Patrimoine bâti vizillois"
-      }
-    ]
+    "suspendu": true
   },
   {
     "id": 132,
@@ -6482,14 +6364,7 @@
         "url": "https://www.ville-vizille.fr/12658-environnement.htm"
       }
     ],
-    "sous_categorie": "Piétons & Vélos",
-    "image": "images/actions/patrimoine/place-chateau.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/place-chateau.jpg",
-        "legende": "Place du Château et Musée de la Révolution française"
-      }
-    ]
+    "sous_categorie": "Piétons & Vélos"
   },
   {
     "id": 140,
@@ -9218,7 +9093,7 @@
         "evenement": "Réalisation"
       }
     ],
-    "details": "Installation d'une main-courante avec garde-corps au stade de rugby, participant à la mise aux normes de l'équipement pour permettre à l'USV Rugby d'évoluer en Fédérale 3.",
+    "details": "",
     "sources": [
       {
         "type": "doc",
@@ -9238,14 +9113,7 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Équipements",
-    "image": "images/actions/sport/rugby-entente-vizille.jpg",
-    "images": [
-      {
-        "url": "images/actions/sport/rugby-entente-vizille.jpg",
-        "legende": "Stade Municipal de Vizille"
-      }
-    ]
+    "sous_categorie": "Équipements"
   },
   {
     "id": 213,
@@ -10261,7 +10129,7 @@
         "evenement": "Réalisation"
       }
     ],
-    "details": "Travaux de mise aux normes du stade municipal permettant l'homologation en Fédérale 3. L'USV Rugby peut désormais évoluer à ce niveau de compétition grâce aux investissements réalisés par la municipalité.",
+    "details": "",
     "sources": [
       {
         "type": "doc",
@@ -10281,14 +10149,7 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Équipements",
-    "image": "images/actions/sport/rugby-entente-vizille.jpg",
-    "images": [
-      {
-        "url": "images/actions/sport/rugby-entente-vizille.jpg",
-        "legende": "Entente Vaulnaveys-Vizille au Stade Municipal"
-      }
-    ]
+    "sous_categorie": "Équipements"
   },
   {
     "id": 255,
@@ -10851,13 +10712,6 @@
     "sources": [
       "DRAC",
       "Monuments Historiques"
-    ],
-    "image": "images/actions/patrimoine/portail-prieure.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/portail-prieure.jpg",
-        "legende": "Portail roman du Prieuré Sainte-Marie"
-      }
     ]
   },
   {
@@ -10906,13 +10760,6 @@
     "sous_categorie": "Événements",
     "sources": [
       "Organisation semi-marathon"
-    ],
-    "image": "images/actions/sport/grenoble-vizille.jpg",
-    "images": [
-      {
-        "url": "images/actions/sport/grenoble-vizille.jpg",
-        "legende": "Coureurs du Grenoble-Vizille dans le parc du Domaine"
-      }
     ]
   },
   {
@@ -11043,14 +10890,7 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Équipements",
-    "image": "images/actions/patrimoine/poterne-vizille.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/poterne-vizille.jpg",
-        "legende": "La Poterne du Château du Roi"
-      }
-    ]
+    "sous_categorie": "Équipements"
   },
   {
     "id": 279,
@@ -11086,14 +10926,7 @@
       }
     ],
     "sous_categorie": "Vœux & Actions",
-    "details": "Vizille, étape majeure sur la Route Napoléon (lieu du ralliement des troupes en 1815), participe aux actions de valorisation touristique et culturelle de cet itinéraire mythique reliant Golfe-Juan à Grenoble.",
-    "image": "images/actions/patrimoine/place-chateau.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/place-chateau.jpg",
-        "legende": "Place du Château de Vizille"
-      }
-    ]
+    "details": "Vizille, étape majeure sur la Route Napoléon (lieu du ralliement des troupes en 1815), participe aux actions de valorisation touristique et culturelle de cet itinéraire mythique reliant Golfe-Juan à Grenoble."
   },
   {
     "id": 280,
@@ -13231,14 +13064,7 @@
     "budget": 0,
     "source": "Bilan adjoint culture",
     "sous_categorie": "Monuments",
-    "suspendu": true,
-    "image": "images/actions/patrimoine/restauration-poterne.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/restauration-poterne.jpg",
-        "legende": "Restauration de la poterne du Château du Roi"
-      }
-    ]
+    "suspendu": true
   },
   {
     "id": 341,
@@ -13252,14 +13078,7 @@
     "annee_fin": "2024",
     "budget": 0,
     "source": "Bilan adjoint culture",
-    "sous_categorie": "Circuits & Tourisme",
-    "image": "images/actions/patrimoine/place-chateau.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/place-chateau.jpg",
-        "legende": "Patrimoine vizillois"
-      }
-    ]
+    "sous_categorie": "Circuits & Tourisme"
   },
   {
     "id": 342,
@@ -13274,14 +13093,7 @@
     "budget": 0,
     "source": "Bilan adjoint culture",
     "sous_categorie": "Monuments",
-    "suspendu": true,
-    "image": "images/actions/patrimoine/portail-prieure.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/portail-prieure.jpg",
-        "legende": "Portail roman du Prieuré Sainte-Marie"
-      }
-    ]
+    "suspendu": true
   },
   {
     "id": 345,
@@ -13350,15 +13162,7 @@
     "annee_fin": "2024",
     "budget": 0,
     "source": "Bilan adjoint culture - Espace Belledonne",
-    "sous_categorie": "Autres",
-    "image": "images/actions/patrimoine/poterne-vizille.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/poterne-vizille.jpg",
-        "legende": "La Poterne du Château du Roi"
-      }
-    ],
-    "details": "Création du Camp de base de Vizille, hub pour les activités de pleine nature : sentiers de randonnée, parcours vélo, falaise d'escalade du Château du Roi. Vizille se positionne comme porte d'entrée vers les activités outdoor de montagne."
+    "sous_categorie": "Autres"
   },
   {
     "id": 349,
@@ -13372,15 +13176,7 @@
     "annee_fin": "2023",
     "budget": 0,
     "source": "Bilan adjoint culture - Espace Belledonne",
-    "sous_categorie": "Équipements",
-    "image": "images/actions/patrimoine/poterne-vizille.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/poterne-vizille.jpg",
-        "legende": "La Poterne du Château du Roi"
-      }
-    ],
-    "details": "Remise en fonctionnement de la falaise d'escalade du Château du Roi, intégrée au Camp de base de Vizille. Un équipement unique qui attire grimpeurs et amateurs de pleine nature."
+    "sous_categorie": "Équipements"
   },
   {
     "id": 350,
@@ -13418,13 +13214,6 @@
     "sources": [
       "Espace Belledonne",
       "Ville de Vizille"
-    ],
-    "image": "images/actions/culture/veillee-belledonne-2024.jpg",
-    "images": [
-      {
-        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
-        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
-      }
     ]
   },
   {
@@ -13504,14 +13293,7 @@
     "budget": 0,
     "source": "Bilan adjoint culture",
     "sous_categorie": "Monuments",
-    "suspendu": true,
-    "image": "images/actions/patrimoine/portail-prieure.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/portail-prieure.jpg",
-        "legende": "Portail roman du Prieuré Sainte-Marie"
-      }
-    ]
+    "suspendu": true
   },
   {
     "id": 360,
@@ -13605,14 +13387,7 @@
       "Ville de Vizille"
     ],
     "lien_source": [],
-    "sous_categorie": "Autres",
-    "image": "images/actions/culture/fete-musique-2023.jpg",
-    "images": [
-      {
-        "url": "images/actions/culture/fete-musique-2023.jpg",
-        "legende": "Fête de la Musique 2023"
-      }
-    ]
+    "sous_categorie": "Autres"
   },
   {
     "id": 363,
@@ -13641,14 +13416,7 @@
       "Partenaires scientifiques"
     ],
     "lien_source": [],
-    "sous_categorie": "Festivals",
-    "image": "images/actions/culture/fete-science.jpg",
-    "images": [
-      {
-        "url": "images/actions/culture/fete-science.jpg",
-        "legende": "Fête de la Science - Sortie nature"
-      }
-    ]
+    "sous_categorie": "Festivals"
   },
   {
     "id": 364,
@@ -13676,11 +13444,7 @@
       "Jeu de Paume"
     ],
     "lien_source": [],
-    "sous_categorie": "Festivals",
-    "images": [
-      "images/actions/culture-vizille.jpg"
-    ],
-    "image": ""
+    "sous_categorie": "Festivals"
   },
   {
     "id": 365,
@@ -13741,14 +13505,7 @@
       "Ville de Vizille"
     ],
     "lien_source": [],
-    "sous_categorie": "Festivals",
-    "image": "images/actions/culture/fete-musique-2023.jpg",
-    "images": [
-      {
-        "url": "images/actions/culture/fete-musique-2023.jpg",
-        "legende": "Fête de la Musique 2023 à Vizille"
-      }
-    ]
+    "sous_categorie": "Festivals"
   },
   {
     "id": 367,
@@ -14260,14 +14017,7 @@
       "Associations culturelles vizilloises"
     ],
     "lien_source": [],
-    "sous_categorie": "Associations & Partenariats",
-    "image": "images/actions/culture/80-ans-liberation.jpg",
-    "images": [
-      {
-        "url": "images/actions/culture/80-ans-liberation.jpg",
-        "legende": "80 ans de la Libération - Reconstitution historique"
-      }
-    ]
+    "sous_categorie": "Associations & Partenariats"
   },
   {
     "id": 384,
@@ -14353,11 +14103,7 @@
       "MPA Vizille"
     ],
     "lien_source": [],
-    "sous_categorie": "Festivals",
-    "images": [
-      "images/actions/culture-vizille.jpg"
-    ],
-    "image": ""
+    "sous_categorie": "Festivals"
   },
   {
     "id": 387,
@@ -14385,11 +14131,7 @@
       "LCA"
     ],
     "lien_source": [],
-    "sous_categorie": "Festivals",
-    "images": [
-      "images/actions/culture-vizille.jpg"
-    ],
-    "image": ""
+    "sous_categorie": "Festivals"
   },
   {
     "id": 388,
@@ -14438,14 +14180,7 @@
     "details": "",
     "sources": [],
     "lien_source": [],
-    "sous_categorie": "Échanges",
-    "image": "images/actions/culture/fete-amitie-2024.jpg",
-    "images": [
-      {
-        "url": "images/actions/culture/fete-amitie-2024.jpg",
-        "legende": "Fête de l'Amitié 2024 à Vizille"
-      }
-    ]
+    "sous_categorie": "Échanges"
   },
   {
     "id": 390,
@@ -14563,14 +14298,7 @@
     "sources": [],
     "lien_source": [],
     "sous_categorie": "Circuits & Tourisme",
-    "suspendu": true,
-    "image": "images/actions/culture/veillee-belledonne-2024.jpg",
-    "images": [
-      {
-        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
-        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
-      }
-    ]
+    "suspendu": true
   },
   {
     "id": 395,
@@ -14620,18 +14348,11 @@
       "ORT Vizille"
     ],
     "lien_source": [],
-    "sous_categorie": "Autres",
-    "image": "images/actions/patrimoine/roue-moulin.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/roue-moulin.jpg",
-        "legende": "Roue du moulin - Patrimoine bâti vizillois"
-      }
-    ]
+    "sous_categorie": "Autres"
   },
   {
     "id": 397,
-    "theme": "Patrimoine",
+    "theme": "Urbanisme",
     "icon": "🏛️",
     "color": "#8e44ad",
     "statut": "Réalisé",
@@ -14656,14 +14377,7 @@
       "Anah"
     ],
     "lien_source": [],
-    "sous_categorie": "Autres",
-    "image": "images/actions/patrimoine/ancienne-tannerie.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/ancienne-tannerie.jpg",
-        "legende": "Ancienne Tannerie Cros - Patrimoine industriel"
-      }
-    ]
+    "sous_categorie": "Autres"
   },
   {
     "id": 398,
@@ -14685,14 +14399,7 @@
     "sources": [],
     "lien_source": [],
     "sous_categorie": "Monuments",
-    "suspendu": true,
-    "image": "images/actions/patrimoine/prieure.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/prieure.jpg",
-        "legende": "Prieuré Sainte-Marie"
-      }
-    ]
+    "suspendu": true
   },
   {
     "id": 399,
@@ -14714,14 +14421,7 @@
     "sources": [],
     "lien_source": [],
     "sous_categorie": "Monuments",
-    "suspendu": true,
-    "image": "images/actions/patrimoine/portail-prieure.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/portail-prieure.jpg",
-        "legende": "Portail roman du Prieuré Sainte-Marie"
-      }
-    ]
+    "suspendu": true
   },
   {
     "id": 400,
@@ -14743,14 +14443,7 @@
     "sources": [],
     "lien_source": [],
     "sous_categorie": "Monuments",
-    "suspendu": true,
-    "image": "images/actions/patrimoine/restauration-poterne.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/restauration-poterne.jpg",
-        "legende": "Restauration de la poterne du Château du Roi"
-      }
-    ]
+    "suspendu": true
   },
   {
     "id": 401,
@@ -14778,14 +14471,7 @@
       "Ville de Vizille"
     ],
     "lien_source": [],
-    "sous_categorie": "Monuments",
-    "image": "images/actions/patrimoine/chapelle-peage.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/chapelle-peage.jpg",
-        "legende": "Chapelle du Péage de Vizille"
-      }
-    ]
+    "sous_categorie": "Monuments"
   },
   {
     "id": 402,
@@ -14807,14 +14493,7 @@
     "sources": [],
     "lien_source": [],
     "sous_categorie": "Monuments",
-    "suspendu": true,
-    "image": "images/actions/patrimoine/prieure.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/prieure.jpg",
-        "legende": "Prieuré Sainte-Marie"
-      }
-    ]
+    "suspendu": true
   },
   {
     "id": 403,
@@ -14914,14 +14593,7 @@
     "sources": [],
     "lien_source": [],
     "sous_categorie": "Circuits & Tourisme",
-    "suspendu": true,
-    "image": "images/actions/patrimoine/place-chateau.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/place-chateau.jpg",
-        "legende": "Patrimoine vizillois"
-      }
-    ]
+    "suspendu": true
   },
   {
     "id": 407,
@@ -14943,14 +14615,7 @@
     "sources": [],
     "lien_source": [],
     "sous_categorie": "Monuments",
-    "suspendu": true,
-    "image": "images/actions/patrimoine/portail-prieure.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/portail-prieure.jpg",
-        "legende": "Portail roman du Prieuré Sainte-Marie"
-      }
-    ]
+    "suspendu": true
   },
   {
     "id": 408,
@@ -14972,14 +14637,7 @@
     "sources": [],
     "lien_source": [],
     "sous_categorie": "Monuments",
-    "suspendu": true,
-    "image": "images/actions/patrimoine/portail-prieure.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/portail-prieure.jpg",
-        "legende": "Portail roman du Prieuré Sainte-Marie"
-      }
-    ]
+    "suspendu": true
   },
   {
     "id": 409,
@@ -15007,14 +14665,7 @@
       "Association Route Napoléon"
     ],
     "lien_source": [],
-    "sous_categorie": "Associations & Partenariats",
-    "image": "images/actions/patrimoine/place-chateau.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/place-chateau.jpg",
-        "legende": "Place du Château de Vizille"
-      }
-    ]
+    "sous_categorie": "Associations & Partenariats"
   },
   {
     "id": 410,
@@ -15051,14 +14702,7 @@
       "Comité Régional Tourisme Equestre"
     ],
     "lien_source": [],
-    "sous_categorie": "Autres",
-    "image": "images/actions/patrimoine/place-chateau.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/place-chateau.jpg",
-        "legende": "Place du Château de Vizille"
-      }
-    ]
+    "sous_categorie": "Autres"
   },
   {
     "id": 901,
@@ -15120,14 +14764,7 @@
         "url": "https://www.ville-vizille.fr/12627-culture-et-loisirs.htm"
       }
     ],
-    "sous_categorie": "Festivals",
-    "image": "images/actions/culture/fete-musique-2023.jpg",
-    "images": [
-      {
-        "url": "images/actions/culture/fete-musique-2023.jpg",
-        "legende": "Fête de la Musique 2023 à Vizille"
-      }
-    ]
+    "sous_categorie": "Festivals"
   },
   {
     "id": 902,
@@ -15169,14 +14806,7 @@
         "url": "https://www.ville-vizille.fr/12627-culture-et-loisirs.htm"
       }
     ],
-    "sous_categorie": "Festivals",
-    "image": "images/actions/culture/fete-musique-2023.jpg",
-    "images": [
-      {
-        "url": "images/actions/culture/fete-musique-2023.jpg",
-        "legende": "Fête de la Musique 2023 à Vizille"
-      }
-    ]
+    "sous_categorie": "Festivals"
   },
   {
     "id": 903,
@@ -15294,14 +14924,7 @@
         "url": "https://www.ville-vizille.fr/12619-patrimoine.htm"
       }
     ],
-    "sous_categorie": "Circuits & Tourisme",
-    "image": "images/actions/patrimoine/chapelle-peage.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/chapelle-peage.jpg",
-        "legende": "Chapelle du Péage de Vizille"
-      }
-    ]
+    "sous_categorie": "Circuits & Tourisme"
   },
   {
     "id": 906,
@@ -15357,14 +14980,7 @@
         "url": "https://www.ville-vizille.fr/12658-environnement.htm"
       }
     ],
-    "sous_categorie": "Associations & Partenariats",
-    "image": "images/actions/culture/veillee-belledonne-2024.jpg",
-    "images": [
-      {
-        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
-        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
-      }
-    ]
+    "sous_categorie": "Associations & Partenariats"
   },
   {
     "id": 907,
@@ -15470,13 +15086,6 @@
     ],
     "sources": [
       "Espace Belledonne"
-    ],
-    "image": "images/actions/culture/veillee-belledonne-2024.jpg",
-    "images": [
-      {
-        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
-        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
-      }
     ]
   },
   {
@@ -15497,13 +15106,6 @@
     ],
     "sources": [
       "Espace Belledonne"
-    ],
-    "image": "images/actions/culture/veillee-belledonne-2024.jpg",
-    "images": [
-      {
-        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
-        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
-      }
     ]
   },
   {
@@ -15721,14 +15323,7 @@
     "titre": "Optimiser le patrimoine bâti communal",
     "description": "Suivre les consommations énergétiques, rationaliser le patrimoine, rénover les bâtiments publics.",
     "details": "Actions : suivi annuel des consommations, instrumentation des bâtiments énergivores, programmation pluriannuelle de rénovation, remplacement des chaudières fioul, passage à l'éclairage LED, conformité décret tertiaire.",
-    "importance": 1,
-    "image": "images/actions/patrimoine/roue-moulin.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/roue-moulin.jpg",
-        "legende": "Roue du moulin - Patrimoine bâti vizillois"
-      }
-    ]
+    "importance": 1
   },
   {
     "id": 948,
@@ -16002,13 +15597,6 @@
     "sources": [
       "Convention Espace Belledonne",
       "Programme culturel municipal"
-    ],
-    "image": "images/actions/culture/veillee-belledonne-2024.jpg",
-    "images": [
-      {
-        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
-        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
-      }
     ]
   },
   {
@@ -16038,13 +15626,6 @@
     "sources": [
       "Espace Belledonne",
       "Programme culturel municipal"
-    ],
-    "image": "images/actions/culture/veillee-belledonne-2024.jpg",
-    "images": [
-      {
-        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
-        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
-      }
     ]
   },
   {
@@ -16226,13 +15807,6 @@
       "Ateliers citoyens",
       "ORT Vizille",
       "Délibérations du Conseil Municipal"
-    ],
-    "image": "images/actions/patrimoine/ancienne-tannerie.jpg",
-    "images": [
-      {
-        "url": "images/actions/patrimoine/ancienne-tannerie.jpg",
-        "legende": "Ancienne Tannerie Cros - Patrimoine industriel"
-      }
     ]
   },
   {
@@ -16379,13 +15953,6 @@
       "Espace Belledonne",
       "Grenoble Alpes Métropole",
       "Programme culturel municipal"
-    ],
-    "image": "images/actions/culture/veillee-belledonne-2024.jpg",
-    "images": [
-      {
-        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
-        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
-      }
     ]
   },
   {
@@ -16469,13 +16036,6 @@
     "sources": [
       "Partenariat Espace Belledonne",
       "Programme culturel municipal"
-    ],
-    "image": "images/actions/culture/veillee-belledonne-2024.jpg",
-    "images": [
-      {
-        "url": "images/actions/culture/veillee-belledonne-2024.jpg",
-        "legende": "Spectacle Point de Rupture - Veillées de Belledonne 2024"
-      }
     ]
   },
   {
@@ -16599,186 +16159,5 @@
       "École Paul Langevin",
       "Atelier des Cairns"
     ]
-  },
-  {
-    "id": 974,
-    "theme": "Sport",
-    "icon": "⚽",
-    "color": "#2ecc71",
-    "statut": "Réalisé",
-    "titre": "Rénovation sol gymnase des Mattons",
-    "description": "Rénovation complète du sol du gymnase des Mattons pour offrir des conditions de pratique optimales aux associations sportives.",
-    "annee": "2023",
-    "annee_fin": "2023",
-    "budget": 0,
-    "source": "Bilan mandat",
-    "importance": 2,
-    "resume": "Réfection du revêtement de sol du gymnase des Mattons.",
-    "chiffres": [],
-    "chronologie": [
-      {
-        "date": "2023",
-        "evenement": "Réalisation des travaux"
-      }
-    ],
-    "details": "Le sol du gymnase des Mattons, vieillissant et dégradé, a été entièrement rénové pour garantir la sécurité et le confort des sportifs. Ce gymnase accueille plusieurs associations et activités sportives tout au long de l'année.",
-    "sources": [],
-    "lien_source": "",
-    "sous_categorie": "Équipements",
-    "images": [],
-    "image": ""
-  },
-  {
-    "id": 975,
-    "theme": "Sport",
-    "icon": "⚽",
-    "color": "#2ecc71",
-    "statut": "Réalisé",
-    "titre": "L'Échappée Belle",
-    "description": "Soutien et promotion de l'Échappée Belle, course emblématique du calendrier sportif vizillois.",
-    "annee": "2023",
-    "annee_fin": "",
-    "budget": 0,
-    "source": "Bilan mandat",
-    "importance": 2,
-    "resume": "Événement sportif classique de Vizille.",
-    "chiffres": [],
-    "chronologie": [],
-    "details": "L'Échappée Belle fait partie des événements sportifs classiques de Vizille, aux côtés du Grenoble-Vizille et de la Vizilloise. La municipalité soutient activement cet événement qui contribue au rayonnement sportif de la ville.",
-    "sources": [],
-    "lien_source": "",
-    "sous_categorie": "Événements",
-    "images": [],
-    "image": ""
-  },
-  {
-    "id": 976,
-    "theme": "Sport",
-    "icon": "⚽",
-    "color": "#2ecc71",
-    "statut": "Réalisé",
-    "titre": "La Vizilloise",
-    "description": "Course populaire annuelle rassemblant les Vizillois autour du sport et de la convivialité.",
-    "annee": "2023",
-    "annee_fin": "",
-    "budget": 0,
-    "source": "Bilan mandat",
-    "importance": 2,
-    "resume": "Course populaire annuelle à Vizille.",
-    "chiffres": [],
-    "chronologie": [],
-    "details": "La Vizilloise est une course populaire devenue un rendez-vous incontournable du calendrier sportif vizillois. Ouverte à tous, elle rassemble chaque année de nombreux participants dans une ambiance conviviale et festive.",
-    "sources": [],
-    "lien_source": "",
-    "sous_categorie": "Événements",
-    "images": [],
-    "image": ""
-  },
-  {
-    "id": 977,
-    "theme": "Sport",
-    "icon": "⚽",
-    "color": "#2ecc71",
-    "statut": "Réalisé",
-    "titre": "Diffusion matchs Coupe du Monde de rugby",
-    "description": "Organisation de diffusions publiques des matchs de la Coupe du Monde de rugby 2023 en plein air, sous la halle Serge Gros et au stade municipal.",
-    "annee": "2023",
-    "annee_fin": "2023",
-    "budget": 0,
-    "source": "Bilan mandat",
-    "importance": 2,
-    "resume": "Retransmission des matchs en plein air pour les Vizillois.",
-    "chiffres": [],
-    "chronologie": [
-      {
-        "date": "2023",
-        "evenement": "Coupe du Monde de rugby - diffusions publiques"
-      }
-    ],
-    "details": "Lors de la Coupe du Monde de rugby 2023, la municipalité a organisé des retransmissions en plein air des matchs sous la halle Serge Gros et au stade municipal. Ces moments festifs ont rassemblé de nombreux Vizillois dans une ambiance chaleureuse et sportive.",
-    "sources": [],
-    "lien_source": "",
-    "sous_categorie": "Événements",
-    "images": [],
-    "image": ""
-  },
-  {
-    "id": 978,
-    "theme": "Sport",
-    "icon": "⚽",
-    "color": "#2ecc71",
-    "statut": "Réalisé",
-    "titre": "JO 2024 dans les écoles de Vizille",
-    "description": "Organisation d'événements olympiques dans les écoles de Vizille dans le cadre du label Terre de Jeux.",
-    "annee": "2024",
-    "annee_fin": "2024",
-    "budget": 0,
-    "source": "Bilan mandat",
-    "importance": 2,
-    "resume": "Animations olympiques pour les écoliers vizillois.",
-    "chiffres": [],
-    "chronologie": [
-      {
-        "date": "2024",
-        "evenement": "Organisation des JO dans les écoles"
-      }
-    ],
-    "details": "Dans le cadre du label Terre de Jeux, la ville a organisé des Jeux Olympiques dans les écoles de Vizille. Les élèves ont participé à des épreuves sportives ludiques, découvert les valeurs olympiques et vécu l'esprit des Jeux au plus proche de leur quotidien.",
-    "sources": [],
-    "lien_source": "",
-    "sous_categorie": "Événements",
-    "images": [],
-    "image": ""
-  },
-  {
-    "id": 979,
-    "theme": "Sport",
-    "icon": "⚽",
-    "color": "#2ecc71",
-    "statut": "Réalisé",
-    "titre": "Relais de commune JO 2024 - Vizille ville départ",
-    "description": "Vizille a participé au relais de commune dans le cadre des Jeux Olympiques 2024 en étant ville départ.",
-    "annee": "2024",
-    "annee_fin": "2024",
-    "budget": 0,
-    "source": "Bilan mandat",
-    "importance": 1,
-    "resume": "Vizille ville départ du relais de commune JO 2024.",
-    "chiffres": [],
-    "chronologie": [
-      {
-        "date": "2024",
-        "evenement": "Relais de commune - Vizille ville départ"
-      }
-    ],
-    "details": "Vizille a été sélectionnée comme ville départ du relais de commune organisé dans le cadre des Jeux Olympiques de Paris 2024. Cet événement a permis de célébrer les valeurs du sport et de l'olympisme à l'échelle locale, mobilisant les habitants et les associations sportives.",
-    "sources": [],
-    "lien_source": "",
-    "sous_categorie": "Événements",
-    "images": [],
-    "image": ""
-  },
-  {
-    "id": 980,
-    "theme": "Sport",
-    "icon": "⚽",
-    "color": "#2ecc71",
-    "statut": "Réalisé",
-    "titre": "Sport pour tous à l'Escale et au foyer résidence",
-    "description": "Mise en place d'activités sportives adaptées à l'Espace de vie sociale (l'Escale) avec des rendez-vous marche et au foyer résidence.",
-    "annee": "2022",
-    "annee_fin": "",
-    "budget": 0,
-    "source": "Bilan mandat",
-    "importance": 2,
-    "resume": "Activités sportives adaptées pour tous les publics.",
-    "chiffres": [],
-    "chronologie": [],
-    "details": "La municipalité a développé le sport pour tous avec des activités adaptées à l'espace de vie sociale l'Escale : rendez-vous marche réguliers, activités au foyer résidence pour les seniors. Des installations sportives en accès libre ont également été mises en place au parc de la Roselière, permettant à chacun de pratiquer une activité physique à son rythme.",
-    "sources": [],
-    "lien_source": "",
-    "sous_categorie": "Sport pour tous",
-    "images": [],
-    "image": ""
   }
 ]
