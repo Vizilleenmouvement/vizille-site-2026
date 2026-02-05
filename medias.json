@@ -1,126 +1,98 @@
 {
   "albums": [
     {
-      "id": "album_1770199470236",
-      "titre": "Campagne",
+      "id": "album_marches",
+      "titre": "Sur les marchés",
+      "type": "campagne",
+      "categorie": "marche",
+      "date": "2026-01-20",
+      "lieu": "Vizille",
+      "description": "À la rencontre des Vizillois sur les marchés",
+      "cover": "images/articles/art_2_0.jpg",
+      "photos": [1770199482972.3562]
+    },
+    {
+      "id": "album_quartier_mattons",
+      "titre": "Réunion de quartier - Les Mattons",
+      "type": "campagne",
+      "categorie": "reunion",
+      "date": "2026-01-23",
+      "lieu": "Les Mattons, Vizille",
+      "description": "Rencontre avec les habitants du quartier des Mattons",
+      "cover": "images/articles/art_3_0.jpg",
+      "photos": [1770199482972.9854, 1770199482972.5515]
+    },
+    {
+      "id": "album_reunion_bilan",
+      "titre": "Réunion publique #1 — Bilan du mandat",
+      "type": "campagne",
+      "categorie": "evenement",
+      "date": "2026-01-30",
+      "lieu": "Vizille",
+      "description": "Présentation du bilan du mandat 2020-2026",
+      "cover": "images/articles/art_4_0.jpg",
+      "photos": [1770199482972.77, 1770199482972.7898, 1770199482972.5332]
+    },
+    {
+      "id": "album_quartiers",
+      "titre": "Réunions de quartier",
       "type": "campagne",
       "categorie": "reunion",
       "date": "2026-02-04",
-      "lieu": "",
-      "description": "",
-      "cover": "",
-      "photos": [
-        1770127914621,
-        1770128308750
-      ]
+      "lieu": "Vizille",
+      "description": "Rencontres chez les habitants et dans les quartiers",
+      "cover": "images/medias/whatsapp_image_2026-02-02_at_14.24.15.jpeg",
+      "photos": [1770127914621, 1770128308750, 1770199482972.4424, 1770199482972.848, 1770199482972.9185, 1770199482972.9792]
+    },
+    {
+      "id": "album_reunion_projets",
+      "titre": "Réunion publique #2 — Projets pour Vizille",
+      "type": "campagne",
+      "categorie": "evenement",
+      "date": "2026-02-27",
+      "lieu": "Vizille",
+      "description": "Présentation de notre projet pour Vizille",
+      "cover": "images/articles/art_5_0.jpg",
+      "photos": [1770199482972.788]
+    },
+    {
+      "id": "album_rencontres",
+      "titre": "Rencontres sur le terrain",
+      "type": "campagne",
+      "categorie": "rencontre",
+      "date": "2026-02-07",
+      "lieu": "Vizille",
+      "description": "Au contact des Vizillois au quotidien",
+      "cover": "images/articles/article_12_0.png",
+      "photos": [1770199482972.231, 1770137790420]
     }
   ],
   "categoriesAlbums": {
     "campagne": [
-      {
-        "id": "reunion",
-        "label": "Réunions",
-        "icon": "🎤"
-      },
-      {
-        "id": "marche",
-        "label": "Marchés",
-        "icon": "🛒"
-      },
-      {
-        "id": "porte-a-porte",
-        "label": "Porte-à-porte",
-        "icon": "🚪"
-      },
-      {
-        "id": "rencontre",
-        "label": "Rencontres",
-        "icon": "🤝"
-      },
-      {
-        "id": "evenement",
-        "label": "Événements",
-        "icon": "📅"
-      },
-      {
-        "id": "autre",
-        "label": "Autre",
-        "icon": "📷"
-      }
+      { "id": "reunion", "label": "Réunions", "icon": "🎤" },
+      { "id": "marche", "label": "Marchés", "icon": "🛒" },
+      { "id": "porte-a-porte", "label": "Porte-à-porte", "icon": "🚪" },
+      { "id": "rencontre", "label": "Rencontres", "icon": "🤝" },
+      { "id": "evenement", "label": "Événements", "icon": "📅" },
+      { "id": "autre", "label": "Autre", "icon": "📷" }
     ],
     "bilan": [
-      {
-        "id": "environnement",
-        "label": "Environnement",
-        "icon": "🌿"
-      },
-      {
-        "id": "culture",
-        "label": "Culture",
-        "icon": "🎭"
-      },
-      {
-        "id": "sport",
-        "label": "Sport",
-        "icon": "⚽"
-      },
-      {
-        "id": "sante",
-        "label": "Santé",
-        "icon": "🏥"
-      },
-      {
-        "id": "solidarite",
-        "label": "Solidarité",
-        "icon": "🤝"
-      },
-      {
-        "id": "enfance",
-        "label": "Enfance",
-        "icon": "👶"
-      },
-      {
-        "id": "urbanisme",
-        "label": "Urbanisme",
-        "icon": "🏘️"
-      },
-      {
-        "id": "mobilites",
-        "label": "Mobilités",
-        "icon": "🚲"
-      },
-      {
-        "id": "patrimoine",
-        "label": "Patrimoine",
-        "icon": "🏛️"
-      },
-      {
-        "id": "securite",
-        "label": "Sécurité",
-        "icon": "🛡️"
-      },
-      {
-        "id": "economie",
-        "label": "Économie",
-        "icon": "💼"
-      }
+      { "id": "environnement", "label": "Environnement", "icon": "🌿" },
+      { "id": "culture", "label": "Culture", "icon": "🎭" },
+      { "id": "sport", "label": "Sport", "icon": "⚽" },
+      { "id": "sante", "label": "Santé", "icon": "🏥" },
+      { "id": "solidarite", "label": "Solidarité", "icon": "🤝" },
+      { "id": "enfance", "label": "Enfance", "icon": "👶" },
+      { "id": "urbanisme", "label": "Urbanisme", "icon": "🏘️" },
+      { "id": "mobilites", "label": "Mobilités", "icon": "🚲" },
+      { "id": "patrimoine", "label": "Patrimoine", "icon": "🏛️" },
+      { "id": "securite", "label": "Sécurité", "icon": "🛡️" },
+      { "id": "economie", "label": "Économie", "icon": "💼" }
     ],
     "objectifs": [
-      {
-        "id": "transition",
-        "label": "Transition écologique",
-        "icon": "🌱"
-      },
-      {
-        "id": "cadre-vie",
-        "label": "Cadre de vie",
-        "icon": "🏡"
-      },
-      {
-        "id": "services",
-        "label": "Services publics",
-        "icon": "🏛️"
-      }
+      { "id": "transition", "label": "Transition écologique", "icon": "🌱" },
+      { "id": "cadre-vie", "label": "Cadre de vie", "icon": "🏡" },
+      { "id": "services", "label": "Services publics", "icon": "🏛️" }
     ]
   },
   "photos": [
@@ -140,7 +112,7 @@
       "thumbnail": null,
       "date": "2026-02-02",
       "description": "",
-      "albumId": null
+      "albumId": "album_quartiers"
     },
     {
       "id": 1770128308750,
@@ -149,7 +121,7 @@
       "thumbnail": null,
       "date": "2026-02-03",
       "description": "",
-      "albumId": null
+      "albumId": "album_quartiers"
     },
     {
       "id": 1770137790420,
@@ -158,7 +130,7 @@
       "thumbnail": null,
       "date": "2026-02-03",
       "description": "",
-      "albumId": null
+      "albumId": "album_rencontres"
     },
     {
       "id": 1770199482972.3562,
@@ -167,7 +139,8 @@
       "thumbnail": "images/articles/art_2_0.jpg",
       "categorie": "Événement",
       "date": "2026-01-20",
-      "description": "Présence sur les marchés"
+      "description": "Présence sur les marchés",
+      "albumId": "album_marches"
     },
     {
       "id": 1770199482972.9854,
@@ -176,7 +149,8 @@
       "thumbnail": "images/articles/art_3_0.jpg",
       "categorie": "Réunion de quartier",
       "date": "2026-01-23",
-      "description": "Réunion de quartier - Les Mattons"
+      "description": "Réunion de quartier - Les Mattons",
+      "albumId": "album_quartier_mattons"
     },
     {
       "id": 1770199482972.5515,
@@ -185,7 +159,8 @@
       "thumbnail": "images/articles/art_3_1.jpg",
       "categorie": "Réunion de quartier",
       "date": "2026-01-23",
-      "description": "Réunion de quartier - Les Mattons"
+      "description": "Réunion de quartier - Les Mattons",
+      "albumId": "album_quartier_mattons"
     },
     {
       "id": 1770199482972.77,
@@ -194,7 +169,8 @@
       "thumbnail": "images/articles/art_4_0.jpg",
       "categorie": "Événement",
       "date": "2026-01-30",
-      "description": "Réunion publique #1 — Bilan du mandat"
+      "description": "Réunion publique #1 — Bilan du mandat",
+      "albumId": "album_reunion_bilan"
     },
     {
       "id": 1770199482972.7898,
@@ -203,7 +179,8 @@
       "thumbnail": "images/articles/art_4_1.jpg",
       "categorie": "Événement",
       "date": "2026-01-30",
-      "description": "Réunion publique #1 — Bilan du mandat"
+      "description": "Réunion publique #1 — Bilan du mandat",
+      "albumId": "album_reunion_bilan"
     },
     {
       "id": 1770199482972.5332,
@@ -212,7 +189,8 @@
       "thumbnail": "images/articles/art_4_2.jpg",
       "categorie": "Événement",
       "date": "2026-01-30",
-      "description": "Réunion publique #1 — Bilan du mandat"
+      "description": "Réunion publique #1 — Bilan du mandat",
+      "albumId": "album_reunion_bilan"
     },
     {
       "id": 1770199482972.788,
@@ -221,7 +199,8 @@
       "thumbnail": "images/articles/art_5_0.jpg",
       "categorie": "Événement",
       "date": "2026-02-27",
-      "description": "Réunion publique #2 — Projets pour Vizille"
+      "description": "Réunion publique #2 — Projets pour Vizille",
+      "albumId": "album_reunion_projets"
     },
     {
       "id": 1770199482972.9185,
@@ -230,7 +209,8 @@
       "thumbnail": "images/articles/art_8_0.jpg",
       "categorie": "Réunion de quartier",
       "date": "2026-02-04",
-      "description": "Réunion de quartier - Centre-ville"
+      "description": "Réunion de quartier - Centre-ville",
+      "albumId": "album_quartiers"
     },
     {
       "id": 1770199482972.9792,
@@ -239,25 +219,28 @@
       "thumbnail": "images/articles/art_9_0.jpg",
       "categorie": "Réunion de quartier",
       "date": "2026-02-04",
-      "description": "Réunion de quartier - Le Péage"
+      "description": "Réunion de quartier - Le Péage",
+      "albumId": "album_quartiers"
     },
     {
       "id": 1770199482972.4424,
-      "titre": "Réunion de quartier -Chez l'habitant",
+      "titre": "Réunion de quartier - Chez l'habitant",
       "src": "images/articles/art_10_0.jpg",
       "thumbnail": "images/articles/art_10_0.jpg",
       "categorie": "Réunion de quartier",
       "date": "2026-02-02",
-      "description": "Réunion de quartier -Chez l'habitant"
+      "description": "Réunion de quartier - Chez l'habitant",
+      "albumId": "album_quartiers"
     },
     {
       "id": 1770199482972.848,
-      "titre": "Réunion de quartier -Chez l'habitant",
+      "titre": "Réunion de quartier - Chez l'habitant",
       "src": "images/articles/art_10_1.jpg",
       "thumbnail": "images/articles/art_10_1.jpg",
       "categorie": "Réunion de quartier",
       "date": "2026-02-02",
-      "description": "Réunion de quartier -Chez l'habitant"
+      "description": "Réunion de quartier - Chez l'habitant",
+      "albumId": "album_quartiers"
     },
     {
       "id": 1770199482972.231,
@@ -266,7 +249,8 @@
       "thumbnail": "images/articles/article_12_0.png",
       "categorie": "Événement",
       "date": "2026-02-07",
-      "description": "Rencontre devant l'école Jean-Jaurès"
+      "description": "Rencontre devant l'école Jean-Jaurès",
+      "albumId": "album_rencontres"
     }
   ],
   "presse": [

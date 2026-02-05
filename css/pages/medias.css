@@ -85,6 +85,147 @@
     margin: 0;
 }
 
+/* ===== GRILLE ALBUMS ===== */
+.albums-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.album-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.album-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+}
+
+.album-cover {
+    position: relative;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+}
+
+.album-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.album-card:hover .album-cover img {
+    transform: scale(1.08);
+}
+
+.album-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    display: flex;
+    justify-content: flex-end;
+}
+
+.photo-count {
+    background: rgba(255,255,255,0.95);
+    color: #333;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.album-info {
+    padding: 1rem 1.25rem 1.25rem;
+}
+
+.album-title {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a3a5c;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.3;
+}
+
+.album-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/* ===== VUE DÉTAIL ALBUM ===== */
+.album-detail {
+    animation: fadeIn 0.3s ease;
+}
+
+.back-to-albums {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: #f0f4f8;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1a3a5c;
+    margin-bottom: 1.5rem;
+    transition: all 0.2s;
+}
+
+.back-to-albums:hover {
+    background: #e0e8f0;
+}
+
+.album-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.album-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: #1a3a5c;
+    margin: 0 0 0.5rem 0;
+}
+
+.album-description {
+    color: #666;
+    font-size: 1.05rem;
+    margin: 0 0 1rem 0;
+    line-height: 1.6;
+}
+
+.album-meta-detail {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    font-size: 0.95rem;
+    color: #888;
+}
+
+.album-meta-detail span {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
 /* ===== GRILLE PHOTOS/MÉDIAS ===== */
 .media-grid {
     display: grid;
@@ -714,6 +855,32 @@
         margin-bottom: 3rem;
     }
 
+    .albums-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .album-info {
+        padding: 0.75rem;
+    }
+
+    .album-title {
+        font-size: 0.95rem;
+    }
+
+    .album-meta {
+        font-size: 0.75rem;
+    }
+
+    .album-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .album-meta-detail {
+        gap: 0.75rem;
+        font-size: 0.85rem;
+    }
+
     .media-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 0.75rem;
@@ -772,6 +939,11 @@
 
     .media-nav-icon {
         font-size: 1rem;
+    }
+
+    .albums-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
     .media-grid {
