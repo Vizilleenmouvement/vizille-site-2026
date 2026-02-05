@@ -31,7 +31,7 @@
       "lieu": "Vizille",
       "description": "Au contact des Vizillois au quotidien",
       "cover": "images/articles/article_12_0.png",
-      "photos": [1770199482972.231, 1770137790420]
+      "photos": [1770199482972.231, 1770137790420, 9301]
     },
     {
       "id": "album_culture",
@@ -42,7 +42,7 @@
       "lieu": "Vizille",
       "description": "Vie culturelle et festivités à Vizille",
       "cover": "images/actions/culture/fete-musique-2023.jpg",
-      "photos": [9001, 9002, 9003, 9004, 9005, 9006]
+      "photos": [9001, 9002, 9003, 9004, 9005, 9006, 9007]
     },
     {
       "id": "album_patrimoine",
@@ -53,7 +53,7 @@
       "lieu": "Vizille",
       "description": "Architecture et patrimoine historique de Vizille",
       "cover": "images/actions/patrimoine/place-chateau.jpg",
-      "photos": [9101, 9102, 9103, 9104, 9105, 9106]
+      "photos": [9101, 9102, 9103, 9104, 9105, 9106, 9107]
     },
     {
       "id": "album_sport",
@@ -64,7 +64,7 @@
       "lieu": "Vizille",
       "description": "Vie sportive et événements à Vizille",
       "cover": "images/actions/sport/rugby-champion-alpes.jpg",
-      "photos": [9201, 9202, 9203, 9204]
+      "photos": [9201, 9202, 9203, 9204, 9205, 9206, 9207]
     }
   ],
   "categoriesAlbums": {
@@ -411,6 +411,66 @@
       "date": "2024-01-01",
       "description": "Viziclette — événement vélo et smoothie",
       "albumId": "album_sport"
+    },
+    {
+      "id": 9007,
+      "titre": "Bilan culturel — Vizille en Mouvement",
+      "src": "images/facebook/bilan-culture.png",
+      "thumbnail": "images/facebook/bilan-culture.png",
+      "categorie": "Culture",
+      "date": "2026-01-19",
+      "description": "Culture à Vizille : bilan des actions — 44 actions sur 45 réalisées",
+      "albumId": "album_culture"
+    },
+    {
+      "id": 9107,
+      "titre": "Bilan patrimoine — Vizille en Mouvement",
+      "src": "images/facebook/bilan-patrimoine.png",
+      "thumbnail": "images/facebook/bilan-patrimoine.png",
+      "categorie": "Patrimoine",
+      "date": "2026-01-19",
+      "description": "Le patrimoine de Vizille : bilan des actions — 31 actions, 24 réalisées",
+      "albumId": "album_patrimoine"
+    },
+    {
+      "id": 9205,
+      "titre": "Bilan sportif — Vizille en Mouvement",
+      "src": "images/facebook/bilan-sport.jpg",
+      "thumbnail": "images/facebook/bilan-sport.jpg",
+      "categorie": "Sport",
+      "date": "2026-02-05",
+      "description": "Bilan sportif : modernisation, vitalité et perspectives sportives",
+      "albumId": "album_sport"
+    },
+    {
+      "id": 9206,
+      "titre": "Journée olympique au Domaine de Vizille",
+      "src": "images/facebook/journee-olympique-vizille.jpg",
+      "thumbnail": "images/facebook/journee-olympique-vizille.jpg",
+      "categorie": "Sport",
+      "date": "2024-07-26",
+      "description": "Journée olympique organisée par le Département de l'Isère au Domaine de Vizille",
+      "albumId": "album_sport"
+    },
+    {
+      "id": 9207,
+      "titre": "Piscine municipale de Vizille",
+      "src": "images/facebook/piscine-municipale.png",
+      "thumbnail": "images/facebook/piscine-municipale.png",
+      "categorie": "Sport",
+      "date": "2024-07-01",
+      "description": "La piscine municipale de Vizille, réouverte en 2021",
+      "albumId": "album_sport"
+    },
+    {
+      "id": 9301,
+      "titre": "Affiche — Rencontre école Jean-Jaurès",
+      "src": "images/facebook/affiche-jean-jaures.png",
+      "thumbnail": "images/facebook/affiche-jean-jaures.png",
+      "categorie": "Événement",
+      "date": "2026-02-06",
+      "description": "Venez nous rencontrer devant l'école Jean-Jaurès le 6 février 2026",
+      "albumId": "album_rencontres"
     }
   ],
   "presse": [
