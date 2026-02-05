@@ -64,7 +64,7 @@
       "lieu": "Vizille",
       "description": "Vie sportive et événements à Vizille",
       "cover": "images/actions/sport/rugby-champion-alpes.jpg",
-      "photos": [9201, 9202, 9203, 9204, 9205, 9206, 9207]
+      "photos": [9201, 9202, 9203, 9204, 9205, 9206, 9207, 9208]
     }
   ],
   "categoriesAlbums": {
@@ -471,6 +471,16 @@
       "date": "2026-02-06",
       "description": "Venez nous rencontrer devant l'école Jean-Jaurès le 6 février 2026",
       "albumId": "album_rencontres"
+    },
+    {
+      "id": 9208,
+      "titre": "Tour Auvergne Rhône-Alpes — Départ Vizille",
+      "src": "images/facebook/tour-auvergne-vizille.jpg",
+      "thumbnail": "images/facebook/tour-auvergne-vizille.jpg",
+      "categorie": "Sport",
+      "date": "2026-02-05",
+      "description": "78e édition du Tour Auvergne Rhône-Alpes — Étape 1 au départ de Vizille, 7 juin 2026",
+      "albumId": "album_sport"
     }
   ],
   "presse": [
