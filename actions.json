@@ -5112,7 +5112,14 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Événements"
+    "sous_categorie": "Événements",
+    "image": "images/actions/sport/rugby-entente-vizille.jpg",
+    "images": [
+      {
+        "url": "images/actions/sport/rugby-entente-vizille.jpg",
+        "legende": "Entente Vaulnaveys-Vizille Rugby"
+      }
+    ]
   },
   {
     "id": 122,
@@ -8856,7 +8863,14 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Équipements"
+    "sous_categorie": "Équipements",
+    "image": "images/actions/sport/rugby-entente-vizille.jpg",
+    "images": [
+      {
+        "url": "images/actions/sport/rugby-entente-vizille.jpg",
+        "legende": "Stade Municipal de Vizille"
+      }
+    ]
   },
   {
     "id": 213,
@@ -9957,7 +9971,14 @@
         "url": "https://www.ville-vizille.fr/12631-associations-sportives.htm"
       }
     ],
-    "sous_categorie": "Équipements"
+    "sous_categorie": "Équipements",
+    "image": "images/actions/sport/rugby-entente-vizille.jpg",
+    "images": [
+      {
+        "url": "images/actions/sport/rugby-entente-vizille.jpg",
+        "legende": "Entente Vaulnaveys-Vizille au Stade Municipal"
+      }
+    ]
   },
   {
     "id": 255,
