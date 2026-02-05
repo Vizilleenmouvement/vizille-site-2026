@@ -254,7 +254,7 @@ function getImageUrl(path) {
 function formatDate(dateStr) {
     if (!dateStr) return '';
     try {
-        const date = new Date(dateStr);
+        const date = new Date(dateStr + 'T12:00:00');
         return date.toLocaleDateString('fr-FR', {
             day: 'numeric',
             month: 'long',

@@ -1129,7 +1129,7 @@
                 const categoryClass = (a.categorie || '').toLowerCase()
                     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
                     .replace(/\s+/g, '-');
-                const dateFormatted = a.date ? new Date(a.date).toLocaleDateString('fr-FR', {
+                const dateFormatted = a.date ? new Date(a.date + 'T12:00:00').toLocaleDateString('fr-FR', {
                     day: 'numeric',
                     month: 'long',
                     year: 'numeric'
@@ -1145,7 +1145,7 @@
                             ? `<img src="${coverImage}" alt="" class="article-card-image">`
                             : `<div class="article-card-placeholder">${a.youtube ? '▶' : '✦'}</div>`
                         }
-                        ${isProchain ? `<span class="badge-prochain">📍 Rendez-vous ${new Date(a.date).toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric', month: 'short'})}</span>` : ''}
+                        ${isProchain ? `<span class="badge-prochain">📍 Rendez-vous ${new Date(a.date + 'T12:00:00').toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric', month: 'short'})}</span>` : ''}
                         ${a.youtube && coverImage ? '<span class="video-badge">▶</span>' : ''}
                         ${hasMultipleImages ? '<span class="badge-gallery">📷 ' + a.images.length + '</span>' : ''}
                         ${a.a_preciser ? '<span class="badge-preciser">Date à préciser</span>' : ''}
@@ -1237,7 +1237,7 @@
                 const themeIcon = themeData ? themeData.icon : '🎬';
                 const themeColor = themeData ? themeData.color : '#1a3a5c';
                 const thumbnail = b.thumbnail || `https://img.youtube.com/vi/${b.videoId}/maxresdefault.jpg`;
-                const dateFormatted = b.date ? new Date(b.date).toLocaleDateString('fr-FR', {
+                const dateFormatted = b.date ? new Date(b.date + 'T12:00:00').toLocaleDateString('fr-FR', {
                     day: 'numeric',
                     month: 'long',
                     year: 'numeric'
@@ -1383,7 +1383,7 @@
         }
 
         function formatDate(d) {
-            return new Date(d).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+            return new Date(d + 'T12:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
         }
 
         function getYoutubeEmbed(url) {
