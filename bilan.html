@@ -749,14 +749,29 @@ function renderSelectedThemeBar() {
     bar.innerHTML = `Thème actuel : <strong>${themeInfo ? themeInfo.icon : ''} ${currentTheme}</strong> (${count} actions)`;
 }
 
-// Ouvre/ferme un dropdown
+// Ouvre/ferme un dropdown et sélectionne le 1er thème
 function toggleDropdown(categoryId) {
     const btn = document.querySelector(`[data-category="${categoryId}"]`);
     if (!btn) return;
 
+    const cat = CATEGORIES.find(c => c.id === categoryId);
+    if (!cat) return;
+
     // Ferme l'autre dropdown si ouvert
     if (openDropdown && openDropdown !== btn) {
         openDropdown.classList.remove('open');
+    }
+
+    // Si on clique sur un onglet différent du thème actuel, sélectionner le 1er sous-thème
+    const currentCat = getCurrentCategory();
+    if (!currentCat || currentCat.id !== categoryId) {
+        // Trouver le 1er thème non vide de cette catégorie
+        const firstTheme = cat.themes.find(theme => {
+            return allData.filter(a => a.theme === theme && !a.suspendu).length > 0;
+        });
+        if (firstTheme) {
+            selectTheme(firstTheme);
+        }
     }
 
     btn.classList.toggle('open');
