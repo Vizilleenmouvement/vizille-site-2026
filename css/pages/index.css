@@ -1385,6 +1385,12 @@
         margin-right: auto;
     }
 
+    .scroll-indicator {
+        left: 50%;
+        transform: translateX(-50%);
+        right: auto;
+    }
+
     .stats-grid {
         grid-template-columns: 1fr 1fr;
     }
