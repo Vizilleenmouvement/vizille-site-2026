@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initCounters();
 
     // Charger les données dynamiques
+    loadCarousel();
     loadActualites();
     loadGalerie();
     loadEquipePreview();
@@ -85,6 +86,148 @@ function animateCounter(element) {
             element.textContent = target.toLocaleString('fr-FR');
         }
     }, stepDuration);
+}
+
+/**
+ * Charger le carrousel Bilan & Projet
+ */
+async function loadCarousel() {
+    const track = document.getElementById('carousel-track');
+    if (!track) return;
+
+    try {
+        // Charger les deux fichiers JSON en parallèle
+        const [actionsRes, projetsRes] = await Promise.all([
+            fetch('actions.json'),
+            fetch('projets.json')
+        ]);
+
+        const actions = await actionsRes.json();
+        const projets = await projetsRes.json();
+
+        // Sélectionner des éléments variés
+        const selectedBilan = selectDiverseItems(actions, 8);
+        const selectedProjet = selectDiverseItems(projets, 8);
+
+        // Mélanger les cards
+        const cards = [];
+
+        // Alterner bilan et projet
+        const maxLen = Math.max(selectedBilan.length, selectedProjet.length);
+        for (let i = 0; i < maxLen; i++) {
+            if (selectedBilan[i]) cards.push({ ...selectedBilan[i], type: 'bilan' });
+            if (selectedProjet[i]) cards.push({ ...selectedProjet[i], type: 'projet' });
+        }
+
+        // Mélanger un peu
+        shuffleArray(cards);
+
+        // Générer le HTML des cards
+        const cardsHtml = cards.map(item => createCarouselCard(item)).join('');
+
+        // Dupliquer pour boucle infinie
+        track.innerHTML = cardsHtml + cardsHtml;
+
+    } catch (error) {
+        console.error('Erreur chargement carrousel:', error);
+        track.innerHTML = '<p style="padding: 2rem; color: #888;">Chargement...</p>';
+    }
+}
+
+/**
+ * Sélectionner des éléments variés par thème
+ */
+function selectDiverseItems(items, count) {
+    const byTheme = {};
+
+    // Grouper par thème
+    items.forEach(item => {
+        const theme = item.theme || item.categorie || 'Autre';
+        if (!byTheme[theme]) byTheme[theme] = [];
+        byTheme[theme].push(item);
+    });
+
+    // Prendre un élément de chaque thème
+    const selected = [];
+    const themes = Object.keys(byTheme);
+
+    for (let i = 0; selected.length < count && i < themes.length; i++) {
+        const themeItems = byTheme[themes[i]];
+        if (themeItems.length > 0) {
+            // Prendre un élément aléatoire du thème
+            const randomIndex = Math.floor(Math.random() * themeItems.length);
+            selected.push(themeItems[randomIndex]);
+        }
+    }
+
+    return selected;
+}
+
+/**
+ * Créer une card du carrousel
+ */
+function createCarouselCard(item) {
+    const theme = item.theme || item.categorie || 'Divers';
+    const titre = item.titre || item.nom || 'Action';
+    const icon = getThemeIcon(theme);
+    const typeClass = item.type === 'bilan' ? 'bilan' : 'projet';
+    const typeLabel = item.type === 'bilan' ? 'Bilan' : 'Projet';
+
+    // Nettoyer et raccourcir le titre
+    let shortTitle = titre.replace(/^Objectif \d+ - /, '').replace(/^Objectif - /, '');
+    if (shortTitle.length > 40) {
+        shortTitle = shortTitle.substring(0, 37) + '...';
+    }
+
+    return `
+        <div class="carousel-card ${typeClass}">
+            <div class="carousel-card-icon">${icon}</div>
+            <div class="carousel-card-title">${shortTitle}</div>
+            <div class="carousel-card-divider"></div>
+            <div class="carousel-card-theme">${theme}</div>
+            <span class="carousel-card-badge">${typeLabel}</span>
+        </div>
+    `;
+}
+
+/**
+ * Obtenir l'icône d'un thème
+ */
+function getThemeIcon(theme) {
+    const icons = {
+        'Santé': '🏥',
+        'Environnement': '🌳',
+        'Transition écologique': '🌿',
+        'Tranquillité publique': '🛡️',
+        'Tranquillité': '🛡️',
+        'Enfance': '👶',
+        'Enfance/Jeunesse': '👶',
+        'Jeunesse': '🧒',
+        'Sport': '🎾',
+        'Culture': '🎭',
+        'Économie': '💼',
+        'Urbanisme': '🏗️',
+        'Mobilités': '🚴',
+        'Mobilité': '🚴',
+        'Solidarité': '❤️',
+        'Social': '🤝',
+        'Patrimoine': '🏛️',
+        'Éducation': '📚',
+        'Concertation citoyenne': '🗣️',
+        'Métropole': '🏙️',
+        'Sécurité': '🔒'
+    };
+    return icons[theme] || '📌';
+}
+
+/**
+ * Mélanger un tableau
+ */
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
 }
 
 /**

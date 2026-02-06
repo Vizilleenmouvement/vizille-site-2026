@@ -326,6 +326,172 @@
     animation: pulse 1.5s ease-in-out infinite;
 }
 
+/* ===== CARROUSEL BILAN & PROJET ===== */
+.carousel-section {
+    padding: 4rem 0;
+    background: linear-gradient(180deg, #f8f9fa 0%, white 100%);
+    overflow: hidden;
+}
+
+.carousel-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.carousel-header .section-title {
+    margin-bottom: 0.5rem;
+}
+
+.carousel-header .section-subtitle {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 1.1rem;
+    color: #888;
+    margin: 0;
+}
+
+.carousel-wrapper {
+    width: 100%;
+    overflow: hidden;
+    padding: 1rem 0;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 1.5rem;
+    animation: carousel-scroll 35s linear infinite;
+    width: max-content;
+}
+
+.carousel-wrapper:hover .carousel-track {
+    animation-play-state: paused;
+}
+
+@keyframes carousel-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Card du carrousel */
+.carousel-card {
+    flex-shrink: 0;
+    width: 240px;
+    background: white;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    text-align: center;
+    position: relative;
+    border-top: 4px solid var(--or, #c9a227);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.carousel-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Bilan : vert + fond teinté vert */
+.carousel-card.bilan {
+    border-top-color: #27ae60;
+    background: linear-gradient(180deg, rgba(39, 174, 96, 0.05) 0%, white 100%);
+}
+
+/* Projet : or + fond teinté or */
+.carousel-card.projet {
+    border-top-color: #c9a227;
+    background: linear-gradient(180deg, rgba(201, 162, 39, 0.07) 0%, white 100%);
+}
+
+.carousel-card-icon {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+}
+
+.carousel-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--bleu);
+    line-height: 1.3;
+    margin-bottom: 1rem;
+    min-height: 2.6rem;
+}
+
+.carousel-card-divider {
+    width: 40px;
+    height: 2px;
+    background: #c9a227;
+    margin: 0 auto 0.75rem;
+}
+
+.carousel-card.bilan .carousel-card-divider {
+    background: #27ae60;
+}
+
+.carousel-card-theme {
+    font-size: 0.75rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+}
+
+/* Badge type */
+.carousel-card-badge {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.3rem 0.7rem;
+    border-radius: 12px;
+}
+
+.carousel-card.bilan .carousel-card-badge {
+    background: rgba(39, 174, 96, 0.12);
+    color: #27ae60;
+}
+
+.carousel-card.projet .carousel-card-badge {
+    background: rgba(201, 162, 39, 0.15);
+    color: #a68a1f;
+}
+
+.carousel-hint {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.carousel-hint span {
+    background: rgba(0,0,0,0.05);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+}
+
+@media (max-width: 600px) {
+    .carousel-section {
+        padding: 3rem 0;
+    }
+
+    .carousel-card {
+        width: 200px;
+        padding: 1.5rem 1rem;
+    }
+
+    .carousel-card-icon {
+        font-size: 2.2rem;
+    }
+
+    .carousel-card-title {
+        font-size: 1rem;
+        min-height: auto;
+    }
+}
+
 /* ===== SECTION FACEBOOK ===== */
 .facebook-section {
     padding: 5rem 1.5rem;
