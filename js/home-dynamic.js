@@ -101,8 +101,8 @@ async function loadCarousel() {
     try {
         // Charger les deux fichiers JSON en parallèle
         const [actionsRes, projetsRes] = await Promise.all([
-            fetch('actions.json'),
-            fetch('projets.json')
+            fetch('./actions.json'),
+            fetch('./projets.json')
         ]);
 
         const actions = await actionsRes.json();
