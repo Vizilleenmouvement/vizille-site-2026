@@ -106,13 +106,18 @@ async function loadCarousel() {
         const projets = await projetsRes.json();
 
         // Prendre TOUTES les actions et tous les projets
-        const cards = [
+        let cards = [
             ...actions.map(a => ({ ...a, type: 'bilan' })),
             ...projets.map(p => ({ ...p, type: 'projet' }))
         ];
 
         // Mélanger aléatoirement
         shuffleArray(cards);
+
+        // Sur mobile, limiter à 50 cards pour la performance
+        if (window.innerWidth < 600) {
+            cards = cards.slice(0, 50);
+        }
 
         // Générer le HTML des cards
         const cardsHtml = cards.map(item => createCarouselCard(item)).join('');
