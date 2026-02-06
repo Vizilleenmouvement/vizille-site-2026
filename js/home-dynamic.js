@@ -18,9 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Scroll fluide pour les ancres
     initSmoothScroll();
-
-    // Renouveler le carrousel toutes les heures (3600000 ms)
-    setInterval(loadCarousel, 3600000);
 });
 
 /**
@@ -108,21 +105,13 @@ async function loadCarousel() {
         const actions = await actionsRes.json();
         const projets = await projetsRes.json();
 
-        // Sélectionner des éléments variés (16 de chaque)
-        const selectedBilan = selectDiverseItems(actions, 16);
-        const selectedProjet = selectDiverseItems(projets, 16);
+        // Prendre TOUTES les actions et tous les projets
+        const cards = [
+            ...actions.map(a => ({ ...a, type: 'bilan' })),
+            ...projets.map(p => ({ ...p, type: 'projet' }))
+        ];
 
-        // Mélanger les cards
-        const cards = [];
-
-        // Alterner bilan et projet
-        const maxLen = Math.max(selectedBilan.length, selectedProjet.length);
-        for (let i = 0; i < maxLen; i++) {
-            if (selectedBilan[i]) cards.push({ ...selectedBilan[i], type: 'bilan' });
-            if (selectedProjet[i]) cards.push({ ...selectedProjet[i], type: 'projet' });
-        }
-
-        // Mélanger un peu
+        // Mélanger aléatoirement
         shuffleArray(cards);
 
         // Générer le HTML des cards
@@ -135,35 +124,6 @@ async function loadCarousel() {
         console.error('Erreur chargement carrousel:', error);
         track.innerHTML = '<p style="padding: 2rem; color: #888;">Chargement...</p>';
     }
-}
-
-/**
- * Sélectionner des éléments variés par thème
- */
-function selectDiverseItems(items, count) {
-    const byTheme = {};
-
-    // Grouper par thème
-    items.forEach(item => {
-        const theme = item.theme || item.categorie || 'Autre';
-        if (!byTheme[theme]) byTheme[theme] = [];
-        byTheme[theme].push(item);
-    });
-
-    // Prendre un élément de chaque thème
-    const selected = [];
-    const themes = Object.keys(byTheme);
-
-    for (let i = 0; selected.length < count && i < themes.length; i++) {
-        const themeItems = byTheme[themes[i]];
-        if (themeItems.length > 0) {
-            // Prendre un élément aléatoire du thème
-            const randomIndex = Math.floor(Math.random() * themeItems.length);
-            selected.push(themeItems[randomIndex]);
-        }
-    }
-
-    return selected;
 }
 
 /**
