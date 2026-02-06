@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Scroll fluide pour les ancres
     initSmoothScroll();
+
+    // Renouveler le carrousel toutes les heures (3600000 ms)
+    setInterval(loadCarousel, 3600000);
 });
 
 /**
@@ -105,9 +108,9 @@ async function loadCarousel() {
         const actions = await actionsRes.json();
         const projets = await projetsRes.json();
 
-        // Sélectionner des éléments variés
-        const selectedBilan = selectDiverseItems(actions, 8);
-        const selectedProjet = selectDiverseItems(projets, 8);
+        // Sélectionner des éléments variés (16 de chaque)
+        const selectedBilan = selectDiverseItems(actions, 16);
+        const selectedProjet = selectDiverseItems(projets, 16);
 
         // Mélanger les cards
         const cards = [];

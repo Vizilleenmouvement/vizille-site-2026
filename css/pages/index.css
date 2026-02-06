@@ -358,7 +358,7 @@
 .carousel-track {
     display: flex;
     gap: 1.5rem;
-    animation: carousel-scroll 35s linear infinite;
+    animation: carousel-scroll 70s linear infinite;
     width: max-content;
 }
 
