@@ -1338,6 +1338,33 @@
     .hero-cta {
         flex-direction: column;
         align-items: center;
+        width: 100%;
+    }
+
+    .hero-cta .btn-hero,
+    .hero-cta .btn-hero-outline {
+        width: 80%;
+        max-width: 280px;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .hero-content {
+        text-align: center;
+        align-items: center;
+        padding: 1rem;
+    }
+
+    .hero-invitation {
+        text-align: center;
+    }
+
+    .hero-quote {
+        text-align: center;
+    }
+
+    .hero-slogan {
+        text-align: center;
     }
 
     .stats-grid {

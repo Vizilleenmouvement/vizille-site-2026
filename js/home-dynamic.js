@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Scroll fluide pour les ancres
     initSmoothScroll();
+
+    // Renouveler le carrousel toutes les 4 heures (14400000 ms)
+    setInterval(loadCarousel, 14400000);
 });
 
 /**
