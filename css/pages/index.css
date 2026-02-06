@@ -477,6 +477,10 @@
         padding: 3rem 0;
     }
 
+    .carousel-track {
+        animation-duration: 900s;
+    }
+
     .carousel-card {
         width: 200px;
         padding: 1.5rem 1rem;
