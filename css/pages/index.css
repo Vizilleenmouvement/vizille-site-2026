@@ -65,7 +65,8 @@
 /* ===== HERO DYNAMIQUE ===== */
 .hero-dynamic {
     position: relative;
-    min-height: 100vh;
+    min-height: calc(100vh - 120px);
+    padding-top: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1352,19 +1353,36 @@
     .hero-content {
         text-align: center;
         align-items: center;
+        justify-content: center;
         padding: 1rem;
+        width: 100%;
     }
 
     .hero-invitation {
         text-align: center;
+        width: 100%;
     }
 
     .hero-quote {
         text-align: center;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .hero-slogan {
         text-align: center;
+        width: 100%;
+    }
+
+    .hero-candidate {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .hero-logo-small {
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .stats-grid {
