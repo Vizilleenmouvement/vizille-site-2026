@@ -791,7 +791,7 @@
 
         <div class="header-main">
             <a href="index.html">
-                <img src="images/logo.png" alt="Vizille en Mouvement" class="nav-header-logo">
+                <img src="images/logo.png" alt="Vizille en Mouvement" class="nav-header-logo" loading="lazy">
             </a>
             <button class="menu-toggle" aria-label="Menu">☰</button>
             <nav>
@@ -811,7 +811,7 @@
     <script src="js/menu-mobile.js" defer></script>
 
     <section class="hero-unified">
-        <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo">
+        <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo" loading="lazy">
         <div class="hero-text">
             <h1>Actualités</h1>
             <p class="slogan">Ensemble pour une ville dynamique et solidaire</p>
@@ -865,7 +865,7 @@
     <footer>
         <div class="footer-grid">
             <div class="footer-brand">
-                <img src="images/logo.png" alt="" style="height: 40px; filter: brightness(0) invert(1);">
+                <img src="images/logo.png" alt="" style="height: 40px; filter: brightness(0) invert(1);" loading="lazy">
                 <p>Liste citoyenne pour les élections municipales 2026.</p>
             </div>
             <div>
@@ -1142,7 +1142,7 @@
                 <div class="article-card" onclick="showArticle(${a.id})">
                     <div class="article-card-media">
                         ${coverImage
-                            ? `<img src="${coverImage}" alt="" class="article-card-image">`
+                            ? `<img src="${coverImage}" alt="" class="article-card-image" loading="lazy">`
                             : `<div class="article-card-placeholder">${a.youtube ? '▶' : '✦'}</div>`
                         }
                         ${isProchain ? `<span class="badge-prochain">📍 Rendez-vous ${new Date(a.date + 'T12:00:00').toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric', month: 'short'})}</span>` : ''}
@@ -1246,7 +1246,7 @@
                 return `
                 <div class="article-card bobine-card" onclick="showBobine('${b.videoId}', '${b.titre.replace(/'/g, "\\'")}')">
                     <div class="article-card-media">
-                        <img src="${thumbnail}" alt="" class="article-card-image" onerror="this.src='https://img.youtube.com/vi/${b.videoId}/hqdefault.jpg'">
+                        <img src="${thumbnail}" alt="" class="article-card-image" onerror="this.src='https://img.youtube.com/vi/${b.videoId}/hqdefault.jpg'" loading="lazy">
                         <span class="video-badge bobine-play">▶</span>
                         <span class="badge-theme" style="background: ${themeColor}">${themeIcon} ${b.theme}</span>
                     </div>
@@ -1301,20 +1301,20 @@
                 galleryHtml = `
                     <div class="article-gallery">
                         <div class="article-gallery-main">
-                            <img id="gallery-main-img" src="${images[0]}" alt="">
+                            <img id="gallery-main-img" src="${images[0]}" alt="" loading="lazy">
                             <button class="gallery-nav prev" onclick="prevGalleryImage()">‹</button>
                             <button class="gallery-nav next" onclick="nextGalleryImage()">›</button>
                             <span class="gallery-counter"><span id="gallery-index">1</span>/${images.length}</span>
                         </div>
                         <div class="article-gallery-thumbs">
                             ${images.map((img, i) => `
-                                <img src="${img}" class="gallery-thumb ${i === 0 ? 'active' : ''}" onclick="goToGalleryImage(${i})" alt="">
+                                <img src="${img}" class="gallery-thumb ${i === 0 ? 'active' : ''}" onclick="goToGalleryImage(${i})" alt="" loading="lazy">
                             `).join('')}
                         </div>
                     </div>
                 `;
             } else if (images.length === 1) {
-                galleryHtml = `<img src="${images[0]}" alt="" class="article-hero-image">`;
+                galleryHtml = `<img src="${images[0]}" alt="" class="article-hero-image" loading="lazy">`;
             }
 
             document.getElementById('article-content').innerHTML = `

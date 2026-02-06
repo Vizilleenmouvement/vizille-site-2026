@@ -39,7 +39,7 @@
 
         <div class="header-main">
             <a href="index.html">
-                <img src="images/logo.png" alt="Vizille en Mouvement" class="nav-header-logo">
+                <img src="images/logo.png" alt="Vizille en Mouvement" class="nav-header-logo" loading="lazy">
             </a>
             <button class="menu-toggle" aria-label="Menu">☰</button>
             <nav>
@@ -59,7 +59,7 @@
     <script src="js/menu-mobile.js" defer></script>
 
     <section class="hero-unified">
-        <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo">
+        <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo" loading="lazy">
         <div class="hero-text">
             <h1>👥 L'Équipe</h1>
             <p class="slogan">Ensemble pour une ville dynamique et solidaire</p>
@@ -259,7 +259,7 @@
                         <tr style="${style}" onclick="openCandidatModal(${index})" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='${isCatherine ? '#fffbeb' : 'white'}'">
                             <td style="padding: 0.5rem;">
                                 ${candidat.photo 
-                                    ? `<img src="${candidat.photo}" alt="${candidat.nom}" style="${photoStyle}">`
+                                    ? `<img src="${candidat.photo}" alt="${candidat.nom}" style="${photoStyle}" loading="lazy">`
                                     : `<div style="width: ${photoSize}; height: ${photoSize}; border-radius: 50%; background: #e0e0e0; display: flex; align-items: center; justify-content: center;">👤</div>`
                                 }
                             </td>
@@ -294,7 +294,7 @@
                     const centerStyle = isCatherine ? 'grid-column: 1 / -1; justify-self: center; max-width: 350px;' : '';
                     const nom = isCatherine ? `⭐ ${candidat.nom}` : candidat.nom;
                     const photoHtml = candidat.photo
-                        ? `<img src="${candidat.photo}" alt="${candidat.nom}" class="team-photo">`
+                        ? `<img src="${candidat.photo}" alt="${candidat.nom}" class="team-photo" loading="lazy">`
                         : `<div style="width:100%;height:250px;display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:4rem;">👤</div>`;
 
                     return `
@@ -324,7 +324,7 @@
             // Photo
             const photoContainer = document.getElementById('modal-photo-container');
             if (candidat.photo) {
-                photoContainer.innerHTML = `<img src="${candidat.photo}" alt="${candidat.nom}" class="modal-photo">`;
+                photoContainer.innerHTML = `<img src="${candidat.photo}" alt="${candidat.nom}" class="modal-photo" loading="lazy">`;
             } else {
                 photoContainer.innerHTML = `<div class="modal-photo-placeholder">👤</div>`;
             }

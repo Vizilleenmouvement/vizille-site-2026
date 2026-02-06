@@ -411,7 +411,7 @@
     <header class="header">
         <div class="header-top"><p>Vizille en Mouvement - Municipales 2026</p></div>
         <div class="header-main">
-            <a href="index.html"><img src="images/logo.png" alt="Vizille en Mouvement" class="nav-header-logo"></a>
+            <a href="index.html"><img src="images/logo.png" alt="Vizille en Mouvement" class="nav-header-logo" loading="lazy"></a>
             <button class="menu-toggle" aria-label="Menu">☰</button>
             <nav>
                 <ul>
@@ -430,7 +430,7 @@
     <script src="js/menu-mobile.js" defer></script>
 
     <section class="hero-unified" id="main-content">
-        <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo">
+        <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo" loading="lazy">
         <div class="hero-text">
             <h1>Bilan 2020-2026</h1>
             <p class="slogan">Ce que nous avons accompli ensemble</p>
@@ -961,19 +961,19 @@ function openModal(id) {
             html += `
                 <div class="modal-gallery">
                     <div class="modal-gallery-main">
-                        <img id="modal-gallery-img" src="${images[0]}" alt="${legends[0]}">
+                        <img id="modal-gallery-img" src="${images[0]}" alt="${legends[0]}" loading="lazy">
                         <button class="modal-gallery-nav prev" onclick="prevModalImage(event)">‹</button>
                         <button class="modal-gallery-nav next" onclick="nextModalImage(event)">›</button>
                         <span class="modal-gallery-counter"><span id="modal-gallery-index">1</span>/${images.length}</span>
                     </div>
                     <div class="modal-gallery-thumbs">
                         ${images.map((img, i) => `
-                            <img src="${img}" class="modal-thumb ${i === 0 ? 'active' : ''}" onclick="goToModalImage(${i}, event)" alt="">
+                            <img src="${img}" class="modal-thumb ${i === 0 ? 'active' : ''}" onclick="goToModalImage(${i}, event)" alt="" loading="lazy">
                         `).join('')}
                     </div>
                 </div>`;
         } else {
-            html += `<div class="modal-single-image"><img src="${images[0]}" alt="${legends[0] || ''}"></div>`;
+            html += `<div class="modal-single-image"><img src="${images[0]}" alt="${legends[0] || ''}" loading="lazy"></div>`;
         }
     }
 
@@ -1075,7 +1075,7 @@ init();
     <footer>
         <div class="footer-grid">
             <div class="footer-brand">
-                <img src="images/logo.png" alt="" role="presentation" style="height: 40px; filter: brightness(0) invert(1);">
+                <img src="images/logo.png" alt="" role="presentation" style="height: 40px; filter: brightness(0) invert(1);" loading="lazy">
                 <p>Liste citoyenne pour les élections municipales 2026.<br>Ensemble pour une ville dynamique et solidaire.</p>
                 <div class="social-links">
                     <a href="https://www.facebook.com/Vizilleenmouvement" target="_blank" aria-label="Facebook"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
