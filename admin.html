@@ -5072,12 +5072,14 @@
         function openAddCandidat() {
             currentEdit = { type: 'candidat', index: -1 };
             pendingPhoto = null;
+            pendingVideo = null;
             showCandidatModal({});
         }
 
         function openEditCandidat(index) {
             currentEdit = { type: 'candidat', index };
             pendingPhoto = null;
+            pendingVideo = null;
             showCandidatModal(data.candidats[index]);
         }
 
@@ -5141,25 +5143,92 @@
                         <input type="url" id="edit-twitter" value="${c.twitter || ''}" placeholder="https://twitter.com/...">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Photo</label>
-                    <div class="photo-upload" onclick="document.getElementById('photo-input').click()" 
-                         ondragover="event.preventDefault(); this.classList.add('dragover')"
-                         ondragleave="this.classList.remove('dragover')"
-                         ondrop="handlePhotoDrop(event)">
-                        <input type="file" id="photo-input" accept="image/*" onchange="handlePhotoSelect(event)">
-                        <div class="icon">📷</div>
-                        <p>Cliquez ou glissez une photo</p>
-                        <p style="font-size: 0.8rem; opacity: 0.7;">Max 1 Mo • JPG, PNG</p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Photo</label>
+                        <div class="photo-upload" onclick="document.getElementById('photo-input').click()"
+                             ondragover="event.preventDefault(); this.classList.add('dragover')"
+                             ondragleave="this.classList.remove('dragover')"
+                             ondrop="handlePhotoDrop(event)">
+                            <input type="file" id="photo-input" accept="image/*" onchange="handlePhotoSelect(event)">
+                            <div class="icon">📷</div>
+                            <p>Cliquez ou glissez une photo</p>
+                            <p style="font-size: 0.8rem; opacity: 0.7;">Max 1 Mo • JPG, PNG</p>
+                        </div>
+                        <div class="photo-preview ${photoUrl ? 'active' : ''}" id="photo-preview">
+                            <img src="${photoUrl || ''}" id="photo-preview-img" onerror="this.parentElement.classList.remove('active');">
+                            <button class="btn btn-sm btn-danger" style="margin-top: 0.5rem;" onclick="removePhoto()">🗑️ Supprimer</button>
+                        </div>
                     </div>
-                    <div class="photo-preview ${photoUrl ? 'active' : ''}" id="photo-preview">
-                        <img src="${photoUrl || ''}" id="photo-preview-img" onerror="this.parentElement.classList.remove('active');">
-                        <button class="btn btn-sm btn-danger" style="margin-top: 0.5rem;" onclick="removePhoto()">🗑️ Supprimer</button>
+                    <div class="form-group">
+                        <label>🎬 Portrait vidéo (optionnel)</label>
+                        <div class="photo-upload" onclick="document.getElementById('video-input').click()"
+                             ondragover="event.preventDefault(); this.classList.add('dragover')"
+                             ondragleave="this.classList.remove('dragover')"
+                             ondrop="handleVideoDrop(event)">
+                            <input type="file" id="video-input" accept="video/mp4" onchange="handleVideoSelect(event)">
+                            <div class="icon">🎬</div>
+                            <p>Vidéo portrait (sans son)</p>
+                            <p style="font-size: 0.8rem; opacity: 0.7;">Max 2 Mo • MP4 • 3-7 sec</p>
+                        </div>
+                        <div class="photo-preview ${c.video ? 'active' : ''}" id="video-preview">
+                            ${c.video ? `<video src="${c.video}" style="max-width:200px;border-radius:8px;" autoplay muted loop playsinline></video>` : ''}
+                            <button class="btn btn-sm btn-danger" style="margin-top: 0.5rem;" onclick="removeVideo()">🗑️ Supprimer</button>
+                        </div>
                     </div>
                 </div>
             `;
             document.getElementById('modal-save').onclick = saveCandidat;
             document.getElementById('modal-edit').classList.add('active');
+        }
+
+        let pendingVideo = null;
+
+        function handleVideoSelect(event) {
+            const file = event.target.files[0];
+            if (file) processVideo(file);
+        }
+
+        function handleVideoDrop(event) {
+            event.preventDefault();
+            event.target.classList.remove('dragover');
+            const file = event.dataTransfer.files[0];
+            if (file) processVideo(file);
+        }
+
+        function processVideo(file) {
+            if (file.size > 2 * 1024 * 1024) {
+                showToast('⚠️ Vidéo trop grande (max 2 Mo). Compressez avec HandBrake.', 'warning');
+                return;
+            }
+            if (!file.type.startsWith('video/')) {
+                showToast('⚠️ Format non valide (MP4 requis)', 'warning');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                pendingVideo = {
+                    data: e.target.result,
+                    name: file.name,
+                    type: 'video/mp4'
+                };
+                const preview = document.getElementById('video-preview');
+                preview.innerHTML = `
+                    <video src="${e.target.result}" style="max-width:200px;border-radius:8px;" autoplay muted loop playsinline></video>
+                    <button class="btn btn-sm btn-danger" style="margin-top: 0.5rem;" onclick="removeVideo()">🗑️ Supprimer</button>
+                `;
+                preview.classList.add('active');
+                showToast(`🎬 Vidéo prête (${(file.size/1024).toFixed(0)} Ko)`, 'success');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeVideo() {
+            pendingVideo = { remove: true };
+            const preview = document.getElementById('video-preview');
+            preview.innerHTML = '';
+            preview.classList.remove('active');
+            showToast('🗑️ Vidéo supprimée', 'info');
         }
 
         async function handlePhotoSelect(event) {
@@ -5234,6 +5303,7 @@
             }
 
             let photo = currentEdit.index >= 0 ? data.candidats[currentEdit.index].photo : null;
+            let video = currentEdit.index >= 0 ? data.candidats[currentEdit.index].video : null;
 
             // Upload photo si nouvelle
             if (pendingPhoto && !pendingPhoto.remove) {
@@ -5246,9 +5316,20 @@
                 photo = null;
             }
 
-            const candidatData = { 
+            // Upload vidéo si nouvelle
+            if (pendingVideo && !pendingVideo.remove) {
+                showToast('⏳ Upload de la vidéo...', 'info');
+                const videoUrl = await uploadVideo(pendingVideo, nom);
+                if (videoUrl) {
+                    video = videoUrl;
+                }
+            } else if (pendingVideo && pendingVideo.remove) {
+                video = null;
+            }
+
+            const candidatData = {
                 id: currentEdit.index >= 0 ? data.candidats[currentEdit.index].id : Date.now(),
-                nom, role, delegation, bio, pedigree, objectifs, citation, email, facebook, linkedin, twitter, ordre, photo, actif: true 
+                nom, role, delegation, bio, pedigree, objectifs, citation, email, facebook, linkedin, twitter, ordre, photo, video, actif: true
             };
 
             if (currentEdit.index === -1) {
@@ -5325,6 +5406,67 @@
                 }
             } catch (err) {
                 showToast('❌ Erreur upload: ' + err.message, 'error');
+                return null;
+            }
+        }
+
+        async function uploadVideo(videoData, nom, retryCount = 0) {
+            const token = getToken();
+            if (!token) {
+                showToast('⚠️ Token requis pour l\'upload', 'warning');
+                return null;
+            }
+
+            const cleanName = nom.toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z0-9]/g, '-')
+                .replace(/-+/g, '-');
+            const filename = `images/candidats/${cleanName}.mp4`;
+
+            const base64Content = videoData.data.split(',')[1];
+
+            try {
+                let sha = null;
+                const getResponse = await fetch(
+                    `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${filename}?ref=${GITHUB_CONFIG.branch}`,
+                    { headers: { 'Authorization': `token ${token}` } }
+                );
+                if (getResponse.ok) {
+                    sha = (await getResponse.json()).sha;
+                }
+
+                const body = {
+                    message: `Upload vidéo portrait ${nom}`,
+                    content: base64Content,
+                    branch: GITHUB_CONFIG.branch
+                };
+                if (sha) body.sha = sha;
+
+                const response = await fetch(
+                    `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${filename}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `token ${token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(body)
+                    }
+                );
+
+                if (response.ok) {
+                    showToast('✅ Vidéo uploadée', 'success');
+                    return filename;
+                } else if (response.status === 409 && retryCount < 3) {
+                    showToast('🔄 Conflit, nouvelle tentative...', 'warning');
+                    await new Promise(r => setTimeout(r, 1000));
+                    return uploadVideo(videoData, nom, retryCount + 1);
+                } else {
+                    const error = await response.json();
+                    throw new Error(error.message || 'Upload failed');
+                }
+            } catch (err) {
+                showToast('❌ Erreur upload vidéo: ' + err.message, 'error');
                 return null;
             }
         }

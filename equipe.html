@@ -293,7 +293,9 @@
                     // Style spécial pour centrer Catherine
                     const centerStyle = isCatherine ? 'grid-column: 1 / -1; justify-self: center; max-width: 350px;' : '';
                     const nom = isCatherine ? `⭐ ${candidat.nom}` : candidat.nom;
-                    const photoHtml = candidat.photo
+                    const photoHtml = candidat.video
+                        ? `<video src="${candidat.video}" class="team-photo" autoplay muted loop playsinline style="object-fit:cover;"></video>`
+                        : candidat.photo
                         ? `<img src="${candidat.photo}" alt="${candidat.nom}" class="team-photo" loading="lazy">`
                         : `<div style="width:100%;height:250px;display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:4rem;">👤</div>`;
 
@@ -323,7 +325,9 @@
 
             // Photo
             const photoContainer = document.getElementById('modal-photo-container');
-            if (candidat.photo) {
+            if (candidat.video) {
+                photoContainer.innerHTML = `<video src="${candidat.video}" class="modal-photo" autoplay muted loop playsinline style="object-fit:cover;border-radius:12px;"></video>`;
+            } else if (candidat.photo) {
                 photoContainer.innerHTML = `<img src="${candidat.photo}" alt="${candidat.nom}" class="modal-photo" loading="lazy">`;
             } else {
                 photoContainer.innerHTML = `<div class="modal-photo-placeholder">👤</div>`;

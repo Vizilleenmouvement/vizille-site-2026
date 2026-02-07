@@ -15,5 +15,22 @@
     "facebook": "",
     "linkedin": "",
     "twitter": ""
+  },
+  {
+    "id": 2,
+    "nom": "Angélique Hermitte",
+    "role": "Conseillère déléguée",
+    "delegation": "Petite enfance",
+    "video": "images/candidats/angelique-hermitte.mp4",
+    "ordre": 2,
+    "actif": true,
+    "bio": "Aide-soignante en Maison d'Accueil Spécialisée, j'accompagne au quotidien des adultes en situation de handicap moteur et mental. Cette expérience de terrain nourrit mon engagement pour une commune inclusive, accessible et attentive aux plus fragiles.",
+    "pedigree": "Conseillère municipale depuis 2020, aujourd'hui conseillère déléguée à la petite enfance. Investie avec conviction pour les enjeux liés à l'enfance, à la jeunesse et au soutien des familles.",
+    "objectifs": "Poursuivre cet engagement au sein de l'équipe municipale, convaincue que l'action locale se construit avec et pour les habitants.",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": ""
   }
 ]
