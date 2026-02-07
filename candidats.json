@@ -51,5 +51,23 @@
     "photo": "images/bernard-ughetto-monfrin-.jpg",
     "video": "images/candidats/bernard-ughetto-monfrin-.mp4",
     "actif": true
+  },
+  {
+    "id": 1770483518354,
+    "nom": "Saïda Berriche",
+    "role": "Adjointe",
+    "delegation": "à la Tranquillité, le bien vivre ensemble, les commerces",
+    "bio": "",
+    "pedigree": "",
+    "objectifs": "",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": "",
+    "ordre": 10,
+    "photo": null,
+    "video": null,
+    "actif": true
   }
 ]
