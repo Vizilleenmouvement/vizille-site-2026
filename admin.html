@@ -3370,6 +3370,7 @@
                         <div class="admin-card-footer">
                             <span class="admin-card-meta">${p.annee || ''}</span>
                             <div class="admin-card-actions">
+                                <button class="btn btn-sm" style="background: #1877f2; color: white;" onclick="shareOnFBAdmin('projet', ${data.projets.indexOf(p)})" title="Partager sur Facebook">📘</button>
                                 <button class="btn btn-sm btn-primary" onclick="openEditProjet(${data.projets.indexOf(p)})">✏️ Modifier</button>
                                 <button class="btn btn-sm btn-danger" onclick="deleteProjet(${data.projets.indexOf(p)})">🗑️</button>
                             </div>
@@ -4663,6 +4664,7 @@
                         <div class="admin-card-footer">
                             <span class="admin-card-meta">${a.annee || ''}</span>
                             <div class="admin-card-actions">
+                                <button class="btn btn-sm" style="background: #1877f2; color: white;" onclick="shareOnFBAdmin('action', ${data.actions.indexOf(a)})" title="Partager sur Facebook">📘</button>
                                 <button class="btn btn-sm btn-primary" onclick="openEditAction(${data.actions.indexOf(a)})">✏️ Modifier</button>
                                 <button class="btn btn-sm btn-danger" onclick="deleteAction(${data.actions.indexOf(a)})">🗑️</button>
                             </div>
@@ -5573,6 +5575,7 @@
                             </div>
                         </div>
                         <div class="item-actions">
+                            <button class="btn btn-sm" style="background: #1877f2; color: white;" onclick="shareOnFBAdmin('faq', ${i})" title="Partager sur Facebook">📘</button>
                             <button class="btn btn-sm" style="background: #25D366; color: white;" onclick="copyForWhatsApp('faq', ${i})" title="Copier pour WhatsApp">💬</button>
                             <button class="btn btn-sm btn-primary" onclick="openEditFaq(${i})">✏️</button>
                             <button class="btn btn-sm btn-danger" onclick="deleteFaq(${i})">🗑️</button>
@@ -5908,10 +5911,39 @@
         }
 
         function copyForFacebook(index) {
-            const a = data.articles[index];
-            const text = `📰 ${a.titre}\n\n${a.extrait || a.contenu?.substring(0, 200) || ''}\n\n👉 Lire la suite sur notre site\n\n#Vizille #Municipales2026 #VizilleEnMouvement`;
-            navigator.clipboard.writeText(text).then(() => {
-                showToast('📋 Texte copié pour Facebook !', 'success');
+            shareOnFBAdmin('article', index);
+        }
+
+        // ====== PARTAGE FACEBOOK UNIVERSEL ======
+        function shareOnFBAdmin(type, index) {
+            const SITE = 'https://vizilleenmouvement.fr';
+            let text = '';
+            let url = SITE;
+
+            if (type === 'article') {
+                const a = data.articles[index];
+                url = SITE + '/blog.html?article=' + a.id;
+                text = '📰 ' + a.titre + '\n\n' + (a.extrait || (a.contenu || '').substring(0, 200)) + '\n\n👉 ' + url + '\n\n#Vizille #Municipales2026 #VizilleEnMouvement';
+            } else if (type === 'projet') {
+                const p = data.projets[index];
+                url = SITE + '/projet.html';
+                text = '🎯 ' + p.titre + '\n\n' + (p.resume || p.description || '').substring(0, 200) + '\n\n👉 Découvrez notre projet : ' + url + '\n\n#Vizille #Municipales2026 #VizilleEnMouvement';
+            } else if (type === 'action') {
+                const a = data.actions[index];
+                url = SITE + '/bilan.html';
+                text = '✅ ' + a.titre + '\n\n' + (a.description || '').substring(0, 200) + '\n\n👉 Voir notre bilan : ' + url + '\n\n#Vizille #Municipales2026 #VizilleEnMouvement';
+            } else if (type === 'faq') {
+                const f = data.faq[index];
+                url = SITE + '/faq.html';
+                text = '❓ ' + f.question + '\n\n💬 ' + (f.reponse || '').substring(0, 200) + '\n\n👉 ' + url + '\n\n#Vizille #Municipales2026 #VizilleEnMouvement';
+            }
+
+            navigator.clipboard.writeText(text).then(function() {
+                window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), 'fb-share', 'width=600,height=500');
+                showToast('📋 Texte copié + Facebook ouvert !', 'success');
+            }).catch(function() {
+                window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), 'fb-share', 'width=600,height=500');
+                showToast('Facebook ouvert !', 'success');
             });
         }
 
