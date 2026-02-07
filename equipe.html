@@ -235,7 +235,6 @@
                 catherineHtml = `
                     <div class="catherine-row">
                         <div class="team-card team-card-catherine" onclick="openCandidatModal(0)" tabindex="0" role="button" aria-label="${catherine.nom}">
-                            <div class="team-position">1</div>
                             ${photoHtml}
                             <div class="team-info">
                                 <h3 class="team-name">⭐ ${catherine.nom}</h3>
@@ -256,7 +255,6 @@
 
                 return `
                     <div class="team-card" onclick="openCandidatModal(${index + 1})" tabindex="0" role="button" aria-label="${candidat.nom}">
-                        <div class="team-position">${candidat.ordre}</div>
                         ${photoHtml}
                         <div class="team-info">
                             <h3 class="team-name">${candidat.nom}</h3>
