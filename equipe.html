@@ -270,6 +270,15 @@
                 ${catherineHtml}
                 <div class="team-grid">${autresCards}</div>
             `;
+
+            // Pause les vidéos après 10 secondes
+            setTimeout(() => {
+                document.querySelectorAll('.team-photo').forEach(video => {
+                    if (video.tagName === 'VIDEO') {
+                        video.pause();
+                    }
+                });
+            }, 10000);
         }
 
         document.addEventListener('DOMContentLoaded', loadCandidats);
