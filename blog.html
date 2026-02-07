@@ -355,6 +355,12 @@
 
             let html = '';
 
+            // 📰 Communiqués EN PREMIER (actualités importantes)
+            if (communiques.length > 0) {
+                html += `<div class="section-separator" style="background: linear-gradient(135deg, #fff3cd 0%, #ffeeba 100%); border-left-color: #c9a227;"><h3>📰 Communiqués</h3></div>`;
+                html += communiques.map(article => renderArticleCard(article, false)).join('');
+            }
+
             // 📅 Prochains rendez-vous
             if (aVenir.length > 0) {
                 html += `<div class="section-separator"><h3>📅 Prochains rendez-vous</h3></div>`;
@@ -367,13 +373,7 @@
                 html += aPreciser.map(article => renderArticleCard(article, true)).join('');
             }
 
-            // 📰 Communiqués
-            if (communiques.length > 0) {
-                html += `<div class="section-separator"><h3>📰 Communiqués</h3></div>`;
-                html += communiques.map(article => renderArticleCard(article, false)).join('');
-            }
-
-            // ✅ Retour sur nos événements
+            // ✅ Retour sur nos événements (en bas, atténués)
             if (effectues.length > 0) {
                 html += `<div class="section-separator" style="border-top: 2px solid #e0e0e0; padding-top: 1.5rem; margin-top: 2rem;"><h3 style="color: #888;">✅ Retour sur nos événements</h3></div>`;
                 html += effectues.map(article => renderArticleCard(article, false, true)).join('');
