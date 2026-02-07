@@ -1150,7 +1150,6 @@
         <button class="nav-tab" data-tab="faq">🤝 Construisons ensemble</button>
         <button class="nav-tab" data-tab="articles">📰 Articles</button>
         <button class="nav-tab" data-tab="medias">🖼️ Médias</button>
-        <button class="nav-tab" data-tab="news">📣 News</button>
         <button class="nav-tab" data-tab="communication">📢 Communication</button>
         <button class="nav-tab" data-tab="config">⚙️ Paramètres</button>
     </nav>
@@ -1517,10 +1516,21 @@
                 </div>
                 <div class="card-body">
                     <button class="btn btn-primary" onclick="openAddFaq()">+ Ajouter une question / message</button>
-                    
+
+                    <!-- FILTRES PAR CATÉGORIE -->
+                    <div style="margin: 1.5rem 0;">
+                        <h4 style="color: var(--bleu); margin-bottom: 0.75rem;">Filtrer par catégorie :</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" id="faq-category-filters">
+                            <button class="theme-btn active" data-faq-category="" onclick="filterFaq('')">
+                                📋 Tous (<span id="fcount-all">0</span>)
+                            </button>
+                        </div>
+                    </div>
+
                     <div class="items-list">
                         <div class="items-header">
                             <h3>Questions & Messages (<span id="faq-count">0</span>)</h3>
+                            <input type="text" id="search-faq" placeholder="🔍 Rechercher..." style="padding: 0.5rem 1rem; border: 2px solid var(--gris-border); border-radius: 8px; width: 200px;" oninput="renderFaq()">
                         </div>
                         <div id="faq-list"></div>
                     </div>
@@ -1702,37 +1712,6 @@
 
         <!-- TAB: COMMUNICATION -->
         <section class="tab-content" id="tab-communication">
-            <!-- BANDEAU DÉFILANT -->
-            <div class="card">
-                <div class="card-header" style="background: linear-gradient(135deg, #1a3a5c 0%, #E91E63 100%);">
-                    <h2>📢 Bandeau d'actualités</h2>
-                    <div class="publish-bar">
-                        <span class="status saved" id="status-news">✓ À jour</span>
-                        <button class="btn-publish" onclick="publish('news')">🚀 Publier</button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
-                        <strong>💡 Info :</strong> Ces messages s'affichent en bandeau animé sous le header de toutes les pages.
-                        <br><small>Les visiteurs peuvent fermer le bandeau (il réapparaît après 24h).</small>
-                    </div>
-
-                    <div style="margin-bottom: 1rem;">
-                        <button class="btn btn-primary" onclick="addTickerMessage()">+ Ajouter un message</button>
-                    </div>
-
-                    <div id="ticker-messages-list"></div>
-
-                    <div style="background: #e8f4fc; padding: 1rem; border-radius: 8px; margin-top: 1.5rem;">
-                        <strong style="color: var(--bleu);">🎨 Emojis suggérés :</strong>
-                        <div style="font-size: 1.3rem; margin-top: 0.5rem; cursor: pointer;" onclick="copyEmoji(event)">
-                            📢 📅 ✨ 🗳️ 🎉 📍 🏛️ 🤝 💬 📰 🎬 📷 ⚡ 🔔 ➡️
-                        </div>
-                        <small style="color: #666;">Cliquez sur un emoji pour le copier</small>
-                    </div>
-                </div>
-            </div>
-
             <!-- ABONNÉS NEWSLETTER -->
             <div class="card">
                 <div class="card-header">
@@ -2618,8 +2597,7 @@
                 articles: 'articles.json',
                 abonnes: 'abonnes.json',
                 config: 'config.json',
-                medias: 'medias.json',
-                news: 'news.json'
+                medias: 'medias.json'
             };
 
             for (const [key, file] of Object.entries(files)) {
@@ -2630,8 +2608,6 @@
                         const loaded = await response.json();
                         if (key === 'config') {
                             data.config = { ...data.config, ...loaded };
-                        } else if (key === 'news') {
-                            data.news = loaded;
                         } else if (key === 'themes') {
                             data.themes = loaded;
                             THEMES_CONFIG = [...loaded];
@@ -2842,13 +2818,6 @@
                     ]
                 }
             };
-            data.ticker = [
-                "📢 Nouveau : Consultez notre galerie Médias avec photos et vidéos de la campagne !",
-                "📅 Prochaine réunion publique : consultez les Actualités",
-                "✨ Site mis à jour le 3 février 2026 - Bilan enrichi avec photos",
-                "🗳️ Élections municipales 2026 - Ensemble pour Vizille !"
-            ];
-            data.tickerActive = [true, true, true, true];
 
             const files = {
                 projets: 'projets.json',
@@ -2859,8 +2828,7 @@
                 articles: 'articles.json',
                 abonnes: 'abonnes.json',
                 config: 'config.json',
-                medias: 'medias.json',
-                news: 'news.json'
+                medias: 'medias.json'
             };
 
             for (const [key, file] of Object.entries(files)) {
@@ -2927,8 +2895,6 @@
             renderFaq();
             renderArticles();
             renderAbonnes();
-            migrateTickerToNews();
-            renderTickerMessages();
             renderMedias();
             renderFacebookSelect();
             renderConfig();
@@ -5373,30 +5339,82 @@
         }
 
         // ===== FAQ =====
+        let currentFaqCategoryFilter = '';
+
+        function filterFaq(category) {
+            currentFaqCategoryFilter = category;
+            document.querySelectorAll('#faq-category-filters .theme-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.faqCategory === category);
+            });
+            renderFaq();
+        }
+
         function renderFaq() {
+            const origineIcons = {
+                'Site web': '🌐',
+                'Facebook': '📘',
+                'WhatsApp': '💬',
+                'Permanence': '🏛️',
+                'Email': '📧',
+                'Porte-à-porte': '🚪',
+                'Réunion publique': '🎤',
+                'Marché': '🛒',
+                'Terrain': '👣',
+                'Autre': '📝'
+            };
+
+            // Compteurs par catégorie
+            const catCounts = {};
+            data.faq.forEach(f => {
+                const cat = f.categorie || '';
+                if (cat) catCounts[cat] = (catCounts[cat] || 0) + 1;
+            });
+
+            // Générer les boutons de filtre
+            const filtersContainer = document.getElementById('faq-category-filters');
+            document.getElementById('fcount-all').textContent = data.faq.length;
+            const existingDynamic = filtersContainer.querySelectorAll('.dynamic-filter');
+            existingDynamic.forEach(el => el.remove());
+
+            Object.keys(catCounts).sort().forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'theme-btn dynamic-filter' + (currentFaqCategoryFilter === cat ? ' active' : '');
+                btn.dataset.faqCategory = cat;
+                btn.onclick = () => filterFaq(cat);
+                btn.textContent = `${cat} (${catCounts[cat]})`;
+                filtersContainer.appendChild(btn);
+            });
+
+            // Recherche texte
+            const searchQuery = (document.getElementById('search-faq')?.value || '').toLowerCase();
+
+            // Filtrer et trier
+            let filtered = [...data.faq].map((f, originalIndex) => ({...f, originalIndex}));
+
+            if (currentFaqCategoryFilter) {
+                filtered = filtered.filter(f => f.categorie === currentFaqCategoryFilter);
+            }
+            if (searchQuery) {
+                filtered = filtered.filter(f =>
+                    (f.question || '').toLowerCase().includes(searchQuery) ||
+                    (f.reponse || '').toLowerCase().includes(searchQuery) ||
+                    (f.pseudo || '').toLowerCase().includes(searchQuery)
+                );
+            }
+
+            filtered.sort((a, b) => {
+                if (!a.date && !b.date) return 0;
+                if (!a.date) return 1;
+                if (!b.date) return -1;
+                return new Date(b.date) - new Date(a.date);
+            });
+
             document.getElementById('faq-count').textContent = data.faq.length;
-            
-            // Trier par date décroissante (plus récente en premier)
-            const sortedFaq = [...data.faq].map((f, originalIndex) => ({...f, originalIndex}))
-                .sort((a, b) => {
-                    if (!a.date && !b.date) return 0;
-                    if (!a.date) return 1;
-                    if (!b.date) return -1;
-                    return new Date(b.date) - new Date(a.date);
-                });
-            
-            document.getElementById('faq-list').innerHTML = sortedFaq.length === 0
+
+            document.getElementById('faq-list').innerHTML = filtered.length === 0
                 ? '<div class="empty-state"><div class="icon">❓</div><p>Aucune question</p></div>'
-                : sortedFaq.map((f) => {
+                : filtered.map((f) => {
                     const i = f.originalIndex;
-                    const origineIcons = {
-                        'Site web': '🌐',
-                        'Facebook': '📘',
-                        'WhatsApp': '💬',
-                        'Permanence': '🏛️',
-                        'Email': '📧',
-                        'Autre': '📝'
-                    };
                     const origineIcon = origineIcons[f.origine] || '❓';
                     return `
                     <div class="item-card">
@@ -5408,7 +5426,7 @@
                                     ${f.pseudo ? `<span class="item-badge" style="background: #f0f0f0; color: #666;">👤 ${f.pseudo}</span>` : ''}
                                 </div>
                                 <div class="item-title">${f.question}</div>
-                                <div class="item-desc">${(f.reponse || '').substring(0, 100)}...</div>
+                                <div class="item-desc">${(f.reponse || '').substring(0, 100)}${f.reponse && f.reponse.length > 100 ? '...' : ''}</div>
                                 ${f.date ? `<div class="item-desc" style="font-size: 0.8rem; opacity: 0.6;">📅 ${f.date}</div>` : ''}
                             </div>
                         </div>
@@ -5483,6 +5501,10 @@
                             <option value="WhatsApp" ${f.origine === 'WhatsApp' ? 'selected' : ''}>💬 WhatsApp</option>
                             <option value="Permanence" ${f.origine === 'Permanence' ? 'selected' : ''}>🏛️ Permanence</option>
                             <option value="Email" ${f.origine === 'Email' ? 'selected' : ''}>📧 Email</option>
+                            <option value="Porte-à-porte" ${f.origine === 'Porte-à-porte' ? 'selected' : ''}>🚪 Porte-à-porte</option>
+                            <option value="Réunion publique" ${f.origine === 'Réunion publique' ? 'selected' : ''}>🎤 Réunion publique</option>
+                            <option value="Marché" ${f.origine === 'Marché' ? 'selected' : ''}>🛒 Marché</option>
+                            <option value="Terrain" ${f.origine === 'Terrain' ? 'selected' : ''}>👣 Terrain</option>
                             <option value="Autre" ${f.origine === 'Autre' ? 'selected' : ''}>📝 Autre</option>
                         </select>
                     </div>
@@ -5505,7 +5527,20 @@
                 </div>
                 <div class="form-group">
                     <label>Catégorie / Thème</label>
-                    <input type="text" id="edit-categorie" value="${f.categorie || ''}" placeholder="Ex: Urbanisme, Tranquillité, Vie municipale...">
+                    <select id="edit-categorie">
+                        <option value="">-- Choisir un thème --</option>
+                        <option value="Urbanisme" ${f.categorie === 'Urbanisme' ? 'selected' : ''}>🏗️ Urbanisme</option>
+                        <option value="Vie quotidienne" ${f.categorie === 'Vie quotidienne' ? 'selected' : ''}>🏡 Vie quotidienne</option>
+                        <option value="Culture & Sport" ${f.categorie === 'Culture & Sport' ? 'selected' : ''}>🎭 Culture & Sport</option>
+                        <option value="Social & Solidarité" ${f.categorie === 'Social & Solidarité' ? 'selected' : ''}>🤝 Social & Solidarité</option>
+                        <option value="Environnement" ${f.categorie === 'Environnement' ? 'selected' : ''}>🌿 Environnement</option>
+                        <option value="Sécurité" ${f.categorie === 'Sécurité' ? 'selected' : ''}>🛡️ Sécurité</option>
+                        <option value="Finances" ${f.categorie === 'Finances' ? 'selected' : ''}>💰 Finances</option>
+                        <option value="Éducation" ${f.categorie === 'Éducation' ? 'selected' : ''}>📚 Éducation</option>
+                        <option value="Élections" ${f.categorie === 'Élections' ? 'selected' : ''}>🗳️ Élections</option>
+                        <option value="Participation" ${f.categorie === 'Participation' ? 'selected' : ''}>💬 Participation</option>
+                        <option value="Transports" ${f.categorie === 'Transports' ? 'selected' : ''}>🚌 Transports</option>
+                    </select>
                 </div>
             `;
             document.getElementById('modal-save').onclick = saveFaq;
@@ -6110,132 +6145,6 @@
             }
         }
 
-        // ===== BANDEAU DÉFILANT =====
-        function renderTickerMessages() {
-            const news = data.news || [];
-            const container = document.getElementById('ticker-messages-list');
-            const today = new Date().toISOString().split('T')[0];
-
-            if (news.length === 0) {
-                container.innerHTML = `
-                    <div style="text-align: center; padding: 2rem; color: #888; background: #f8f9fa; border-radius: 8px;">
-                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📢</div>
-                        <p>Aucun message dans le bandeau</p>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = news.map((item, index) => {
-                const isExpired = item.dateFin && item.dateFin < today;
-                const isNotStarted = item.dateDebut && item.dateDebut > today;
-                const statusStyle = isExpired ? 'opacity: 0.5; background: #fee;' : (isNotStarted ? 'background: #fff3cd;' : '');
-                const statusBadge = isExpired ? '<span style="background:#c00;color:white;padding:2px 6px;border-radius:4px;font-size:0.7rem;margin-left:8px;">Expiré</span>' :
-                                   (isNotStarted ? '<span style="background:#f90;color:white;padding:2px 6px;border-radius:4px;font-size:0.7rem;margin-left:8px;">Programmé</span>' : '');
-                return `
-                <div style="padding: 1rem; background: white; border: 1px solid var(--gris-border); border-radius: 8px; margin-bottom: 0.75rem; ${statusStyle}">
-                    <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 0.75rem;">
-                        <select onchange="updateNewsField(${index}, 'icon', this.value)" style="font-size: 1.3rem; padding: 0.3rem; border: 1px solid #ddd; border-radius: 4px;">
-                            ${['📢', '📅', '🆕', '🎉', '📍', '⚡', '🔔', '📰', '🗳️', '✨', '🏛️', '🤝'].map(e =>
-                                `<option ${item.icon === e ? 'selected' : ''}>${e}</option>`
-                            ).join('')}
-                        </select>
-                        <input type="text" value="${(item.texte || '').replace(/"/g, '&quot;')}"
-                               onchange="updateNewsField(${index}, 'texte', this.value)"
-                               placeholder="Texte du message..."
-                               style="flex: 1; padding: 0.6rem; border: 1px solid var(--gris-border); border-radius: 6px;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; white-space: nowrap;">
-                            <input type="checkbox" ${item.actif !== false ? 'checked' : ''}
-                                   onchange="updateNewsField(${index}, 'actif', this.checked)">
-                            Actif
-                        </label>
-                        ${statusBadge}
-                    </div>
-                    <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <label style="font-size: 0.85rem; color: #666;">🔗 Lien:</label>
-                            <input type="text" value="${(item.lien || '').replace(/"/g, '&quot;')}"
-                                   onchange="updateNewsField(${index}, 'lien', this.value)"
-                                   placeholder="bilan.html ou URL..."
-                                   style="width: 180px; padding: 0.4rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <label style="font-size: 0.85rem; color: #666;">📅 Du:</label>
-                            <input type="date" value="${item.dateDebut || ''}"
-                                   onchange="updateNewsField(${index}, 'dateDebut', this.value)"
-                                   style="padding: 0.4rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem;">
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <label style="font-size: 0.85rem; color: #666;">au:</label>
-                            <input type="date" value="${item.dateFin || ''}"
-                                   onchange="updateNewsField(${index}, 'dateFin', this.value)"
-                                   style="padding: 0.4rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.85rem;">
-                        </div>
-                        <button class="btn btn-sm" style="background: #e74c3c; color: white; margin-left: auto;" onclick="deleteNewsItem(${index})">🗑️</button>
-                    </div>
-                </div>
-            `}).join('');
-        }
-
-        function addTickerMessage() {
-            if (!data.news) data.news = [];
-            const today = new Date().toISOString().split('T')[0];
-            const nextMonth = new Date(Date.now() + 30*24*60*60*1000).toISOString().split('T')[0];
-            data.news.push({
-                id: Date.now(),
-                texte: 'Nouveau message - cliquez pour modifier',
-                icon: '📢',
-                lien: '',
-                actif: true,
-                dateDebut: today,
-                dateFin: nextMonth
-            });
-            renderTickerMessages();
-            markModified('news');
-        }
-
-        function updateNewsField(index, field, value) {
-            if (!data.news) data.news = [];
-            if (!data.news[index]) return;
-            data.news[index][field] = value;
-            if (field === 'actif' || field === 'dateDebut' || field === 'dateFin') {
-                renderTickerMessages(); // Re-render pour mettre à jour les badges
-            }
-            markModified('news');
-        }
-
-        function deleteNewsItem(index) {
-            if (confirm('Supprimer ce message ?')) {
-                data.news.splice(index, 1);
-                renderTickerMessages();
-                markModified('news');
-            }
-        }
-
-        // Migration ancien format ticker -> nouveau format news
-        function migrateTickerToNews() {
-            if (data.ticker && data.ticker.length > 0 && (!data.news || data.news.length === 0)) {
-                const today = new Date().toISOString().split('T')[0];
-                data.news = data.ticker.map((msg, i) => ({
-                    id: Date.now() + i,
-                    texte: msg.replace(/^[📢📅🆕🎉📍⚡🔔📰🗳️✨🏛️🤝]\s*/, ''),
-                    icon: msg.match(/^([📢📅🆕🎉📍⚡🔔📰🗳️✨🏛️🤝])/)?.[1] || '📢',
-                    lien: '',
-                    actif: data.tickerActive?.[i] !== false,
-                    dateDebut: today,
-                    dateFin: ''
-                }));
-                console.log('Migration ticker -> news effectuée');
-            }
-        }
-
-        function copyEmoji(event) {
-            const emoji = event.target.textContent.trim().split(' ')[0];
-            if (emoji.length <= 2) {
-                navigator.clipboard.writeText(emoji);
-                showToast('📋 Emoji ' + emoji + ' copié !', 'success');
-            }
-        }
 
         // ===== ABONNÉS NEWSLETTER =====
         function renderAbonnes() {
@@ -6608,8 +6517,7 @@ Pour vous désabonner, répondez à cet email.
                     articles: 'articles.json',
                     abonnes: 'abonnes.json',
                     config: 'config.json',
-                    medias: 'medias.json',
-                    news: 'news.json'
+                    medias: 'medias.json'
                 };
                 downloadSingleFile(files[section], section);
                 return;
@@ -6630,8 +6538,7 @@ Pour vous désabonner, répondez à cet email.
                 articles: 'articles.json',
                 abonnes: 'abonnes.json',
                 config: 'config.json',
-                medias: 'medias.json',
-                news: 'news.json'
+                medias: 'medias.json'
             };
 
             const filename = files[section];

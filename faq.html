@@ -27,53 +27,6 @@
 
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/pages/faq.css">
-    <style>
-        /* CSS pour l'accordéon FAQ - FORCÉ */
-        .faq-answer {
-            max-height: 0 !important;
-            overflow: hidden !important;
-            transition: max-height 0.3s ease !important;
-            opacity: 0 !important;
-        }
-        
-        .faq-answer.open {
-            max-height: 2000px !important;
-            opacity: 1 !important;
-            transition: max-height 0.5s ease, opacity 0.3s ease !important;
-        }
-        
-        .faq-question {
-            cursor: pointer !important;
-            width: 100% !important;
-            text-align: left !important;
-            background: transparent !important;
-            border: none !important;
-            padding: 1rem !important;
-            display: flex !important;
-            justify-content: space-between !important;
-            align-items: center !important;
-            font-size: 1.1rem !important;
-            font-weight: 600 !important;
-        }
-        
-        .faq-question:hover {
-            background: rgba(0,0,0,0.02) !important;
-        }
-        
-        .faq-question .faq-icon {
-            font-size: 1.5rem !important;
-            transition: transform 0.3s ease !important;
-            display: inline-block !important;
-        }
-        
-        .faq-question.active .faq-icon {
-            transform: rotate(45deg) !important;
-        }
-        
-        .faq-answer-content {
-            padding: 0 1rem 1rem 1rem !important;
-        }
-    </style>
 </head>
 <body>
     <header class="header">
@@ -83,7 +36,7 @@
 
         <div class="header-main">
             <a href="index.html">
-                <img src="images/logo.png" alt="Vizille en Mouvement" class="nav-header-logo" loading="lazy">
+                <img src="images/logo.png" alt="Vizille en Mouvement" class="nav-header-logo">
             </a>
             <button class="menu-toggle" aria-label="Menu">☰</button>
             <nav>
@@ -100,21 +53,64 @@
             </nav>
         </div>
     </header>
-    <script src="js/menu-mobile.js" defer></script>
+    <script src="js/menu-mobile.js"></script>
 
     <section class="hero-unified">
-        <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo" loading="lazy">
+        <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo">
         <div class="hero-text">
-            <h1>🤝 Construisons ensemble</h1>
+            <h1>Construisons ensemble</h1>
             <p class="slogan">Ensemble pour une ville dynamique et solidaire</p>
-            <p class="hero-subtitle">Vos questions, vos idées, vos suggestions – participez à la vie de votre ville</p>
+            <p class="hero-subtitle">Vos questions, vos idées, vos suggestions — participez à la vie de votre ville</p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-value" id="stat-total">0</div>
+                    <div class="hero-stat-label">échanges</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value" id="stat-reponses">0</div>
+                    <div class="hero-stat-label">réponses publiées</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value" id="stat-themes">0</div>
+                    <div class="hero-stat-label">thèmes abordés</div>
+                </div>
+            </div>
         </div>
     </section>
 
     <main class="content">
+
+        <!-- Barre de filtres -->
+        <div class="filters-bar">
+            <div class="filters-container">
+                <div class="filter-buttons" id="filter-buttons">
+                    <!-- Généré dynamiquement -->
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="search-faq" placeholder="Rechercher..." oninput="applyFilters()">
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Questions & Réponses -->
+        <div class="questions-header">
+            <h2>Vos questions, nos réponses</h2>
+            <p>Les échanges avec les Vizillois — en permanence, sur le terrain, sur les réseaux</p>
+        </div>
+
+        <div class="faq-list" id="faq-list">
+            <div class="loading">
+                <span style="font-size: 2rem;">⏳</span>
+                <p>Chargement...</p>
+            </div>
+        </div>
+
+        <!-- Section Paroles de Vizillois (messages de soutien) -->
+        <div id="paroles-section"></div>
+
         <!-- Formulaire pour participer -->
         <div class="ask-question-box" id="ask-box">
-            <h2>💡 Participez !</h2>
+            <h2>Participez au dialogue !</h2>
             <p>Une question ? Une idée ? Une suggestion ? Partagez avec nous, nous vous répondrons !</p>
 
             <div class="success-message" id="question-success" style="display: none;">
@@ -136,16 +132,33 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="q-subject">Sujet</label>
-                    <select id="q-subject" name="subject">
-                        <option value="Et vous, quelle ville voulez-vous pour l'avenir ?">Et vous, quelle ville voulez-vous pour l'avenir ?</option>
-                        <option value="Question générale">Question générale</option>
-                        <option value="Proposition / Idée">Proposition / Idée</option>
-                        <option value="Rejoindre l'équipe">Rejoindre l'équipe</option>
-                        <option value="Demande de rencontre">Demande de rencontre</option>
-                        <option value="Autre">Autre</option>
-                    </select>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="q-subject">Sujet</label>
+                        <select id="q-subject" name="subject">
+                            <option value="Question générale">Question générale</option>
+                            <option value="Proposition / Idée">Proposition / Idée</option>
+                            <option value="Et vous, quelle ville voulez-vous pour l'avenir ?">Et vous, quelle ville voulez-vous ?</option>
+                            <option value="Rejoindre l'équipe">Rejoindre l'équipe</option>
+                            <option value="Demande de rencontre">Demande de rencontre</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="q-theme">Thème</label>
+                        <select id="q-theme" name="theme">
+                            <option value="">-- Choisir un thème --</option>
+                            <option value="Urbanisme">Urbanisme</option>
+                            <option value="Vie quotidienne">Vie quotidienne</option>
+                            <option value="Culture & Sport">Culture & Sport</option>
+                            <option value="Social & Solidarité">Social & Solidarité</option>
+                            <option value="Environnement">Environnement</option>
+                            <option value="Sécurité">Sécurité</option>
+                            <option value="Finances">Finances</option>
+                            <option value="Éducation">Éducation</option>
+                            <option value="Transports">Transports</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -153,30 +166,17 @@
                     <textarea id="q-question" name="message" required placeholder="Quelle est votre question ou suggestion ?"></textarea>
                 </div>
 
-                <button type="submit" class="btn-submit">📤 Envoyer mon message</button>
+                <button type="submit" class="btn-submit">Envoyer mon message</button>
             </form>
-        </div>
-
-        <!-- Section Vos Questions -->
-        <div class="questions-header">
-            <h2>💬 Vos questions & messages</h2>
-            <p>Les échanges avec les Vizillois</p>
-        </div>
-
-        <div class="faq-list" id="faq-list">
-            <div class="loading">
-                <span style="font-size: 2rem;">⏳</span>
-                <p>Chargement...</p>
-            </div>
         </div>
 
         <!-- Section Contact -->
         <section class="contact-section">
-            <h2 class="section-title">📍 Nous contacter</h2>
+            <h2 class="section-title">Nous contacter</h2>
 
             <div class="contact-grid">
                 <div class="contact-card">
-                    <h3>🏛️ Infos pratiques</h3>
+                    <h3>Infos pratiques</h3>
                     <p><strong>Vizille en Mouvement</strong></p>
                     <p id="contact-adresse">Vizille, Isère, France</p>
                     <p id="contact-telephone"></p>
@@ -184,13 +184,13 @@
                 </div>
 
                 <div class="contact-card">
-                    <h3>🕐 Permanences</h3>
+                    <h3>Permanences</h3>
                     <p id="contact-permanences">Nous organisons des permanences régulières pour vous rencontrer.</p>
                     <p style="margin-top: 0.75rem;"><a href="blog.html">→ Voir les actualités</a></p>
                 </div>
 
                 <div class="contact-card">
-                    <h3>📱 Suivez-nous</h3>
+                    <h3>Suivez-nous</h3>
                     <p>Retrouvez notre actualité sur les réseaux sociaux.</p>
                     <div class="social-links" id="social-links">
                         <a href="#" target="_blank" title="Facebook">📘</a>
@@ -200,16 +200,16 @@
             </div>
 
             <div class="special-requests">
-                <h3>🚀 Envie de vous engager ?</h3>
+                <h3>Envie de vous engager ?</h3>
                 <div class="request-buttons">
                     <a href="#ask-box" class="btn-request highlight" onclick="setSubject('Rejoindre l\'équipe')">
-                        🤝 Rejoindre l'équipe
+                        Rejoindre l'équipe
                     </a>
                     <a href="#ask-box" class="btn-request" onclick="setSubject('Demande de rencontre')">
-                        📅 Demander une rencontre
+                        Demander une rencontre
                     </a>
                     <a href="#ask-box" class="btn-request" onclick="setSubject('Proposition / Idée')">
-                        💡 Proposer une idée
+                        Proposer une idée
                     </a>
                 </div>
             </div>
@@ -222,21 +222,54 @@
     </footer>
 
     <script>
-        let faqData = [];
+        // ===== CONSTANTES =====
+        const CATEGORIES = {
+            'Urbanisme': { icon: '🏗️', color: '#e3f2fd' },
+            'Vie quotidienne': { icon: '🏡', color: '#fff3e0' },
+            'Culture & Sport': { icon: '🎭', color: '#f3e5f5' },
+            'Social & Solidarité': { icon: '🤝', color: '#fce4ec' },
+            'Environnement': { icon: '🌿', color: '#e8f5e9' },
+            'Sécurité': { icon: '🛡️', color: '#e0f2f1' },
+            'Finances': { icon: '💰', color: '#fff8e1' },
+            'Éducation': { icon: '📚', color: '#e8eaf6' },
+            'Élections': { icon: '🗳️', color: '#e1f5fe' },
+            'Participation': { icon: '💬', color: '#fce4ec' },
+            'Transports': { icon: '🚌', color: '#f1f8e9' }
+        };
 
+        const ORIGINES = {
+            'Site web': { icon: '🌐', cssClass: 'site' },
+            'Facebook': { icon: '📘', cssClass: 'facebook' },
+            'WhatsApp': { icon: '💬', cssClass: 'whatsapp' },
+            'Permanence': { icon: '🏛️', cssClass: 'permanence' },
+            'Email': { icon: '📧', cssClass: 'email' },
+            'Porte-à-porte': { icon: '🚪', cssClass: 'porte-a-porte' },
+            'Réunion publique': { icon: '🎤', cssClass: 'reunion' },
+            'Marché': { icon: '🛒', cssClass: 'marche' },
+            'Terrain': { icon: '👣', cssClass: 'terrain' },
+            'Autre': { icon: '📝', cssClass: 'autre' }
+        };
+
+        let faqData = [];
+        let currentFilter = '';
+
+        // ===== CHARGEMENT =====
         async function loadFaq() {
             try {
                 const response = await fetch('faq.json?v=' + Date.now());
                 if (!response.ok) throw new Error('Erreur');
 
                 faqData = await response.json();
-                // Trier par date décroissante (plus récent en premier)
+                // Trier par date décroissante
                 faqData.sort((a, b) => {
                     if (!a.date && !b.date) return 0;
                     if (!a.date) return 1;
                     if (!b.date) return -1;
                     return new Date(b.date) - new Date(a.date);
                 });
+
+                updateStats();
+                renderFilters();
                 renderFaq();
             } catch (err) {
                 document.getElementById('faq-list').innerHTML = `
@@ -249,10 +282,80 @@
             }
         }
 
+        // ===== STATISTIQUES =====
+        function updateStats() {
+            const total = faqData.length;
+            const reponses = faqData.filter(f => f.reponse && f.reponse.trim()).length;
+            const themes = new Set(faqData.map(f => f.categorie).filter(c => c && c.trim())).size;
+
+            document.getElementById('stat-total').textContent = total;
+            document.getElementById('stat-reponses').textContent = reponses;
+            document.getElementById('stat-themes').textContent = themes;
+        }
+
+        // ===== FILTRES =====
+        function renderFilters() {
+            const container = document.getElementById('filter-buttons');
+            const categories = {};
+
+            faqData.forEach(f => {
+                const cat = f.categorie;
+                if (cat && cat.trim()) {
+                    categories[cat] = (categories[cat] || 0) + 1;
+                }
+            });
+
+            let html = `<button class="filter-btn active" onclick="setFilter('')">Tous <span class="filter-count">(${faqData.length})</span></button>`;
+
+            Object.keys(categories).sort().forEach(cat => {
+                const info = CATEGORIES[cat] || { icon: '📋' };
+                html += `<button class="filter-btn" onclick="setFilter('${cat}')">${info.icon} ${cat} <span class="filter-count">(${categories[cat]})</span></button>`;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function setFilter(category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                const btnText = btn.textContent;
+                btn.classList.toggle('active',
+                    (category === '' && btnText.startsWith('Tous')) ||
+                    (category && btnText.includes(category))
+                );
+            });
+            renderFaq();
+        }
+
+        function applyFilters() {
+            renderFaq();
+        }
+
+        // ===== RENDU PRINCIPAL =====
         function renderFaq() {
             const container = document.getElementById('faq-list');
+            const searchQuery = (document.getElementById('search-faq')?.value || '').toLowerCase();
 
-            if (faqData.length === 0) {
+            // Séparer Q&R avec réponse vs messages de soutien
+            const withAnswer = faqData.filter(f => f.reponse && f.reponse.trim());
+            const withoutAnswer = faqData.filter(f => !f.reponse || !f.reponse.trim());
+
+            // Filtrer les Q&R
+            let filtered = withAnswer;
+
+            if (currentFilter) {
+                filtered = filtered.filter(f => f.categorie === currentFilter);
+            }
+            if (searchQuery) {
+                filtered = filtered.filter(f =>
+                    (f.question || '').toLowerCase().includes(searchQuery) ||
+                    (f.reponse || '').toLowerCase().includes(searchQuery) ||
+                    (f.pseudo || '').toLowerCase().includes(searchQuery) ||
+                    (f.categorie || '').toLowerCase().includes(searchQuery)
+                );
+            }
+
+            if (filtered.length === 0 && !searchQuery && !currentFilter) {
                 container.innerHTML = `
                     <div class="empty-state">
                         <div class="icon">❓</div>
@@ -260,160 +363,219 @@
                         <p>Soyez le premier à nous écrire !</p>
                     </div>
                 `;
+                renderParoles(withoutAnswer);
                 return;
             }
 
-            // Compteur séparé pour les FAQs cliquables (avec réponse)
-            let clickableIndex = 0;
-
-            container.innerHTML = faqData.map((faq, index) => {
-                const isFacebook = faq.source === 'facebook';
-                const hasReponse = faq.reponse && faq.reponse.trim();
-                const borderStyle = isFacebook ? 'border-left: 4px solid #1877F2;' : '';
-                
-                // Source label
-                let sourceLabel = '';
-                if (isFacebook) {
-                    sourceLabel = `<div style="font-size: 0.85rem; color: #1877F2; margin-bottom: 0.5rem;">
-                         📘 Message de <strong>${faq.auteur || faq.pseudo || 'un internaute'}</strong> sur Facebook
-                       </div>`;
-                } else if (faq.origine) {
-                    const origineIcons = {
-                        'Site web': '🌐',
-                        'Facebook': '📘',
-                        'WhatsApp': '💬',
-                        'Permanence': '🏛️',
-                        'Email': '📧',
-                        'Autre': '📝'
-                    };
-                    const icon = origineIcons[faq.origine] || '📝';
-                    sourceLabel = `<div style="font-size: 0.85rem; color: #666; margin-bottom: 0.5rem;">
-                         ${icon} ${faq.pseudo ? `<strong>${faq.pseudo}</strong>` : 'Un Vizillois'}${faq.date ? ` • ${new Date(faq.date).toLocaleDateString('fr-FR')}` : ''}
-                       </div>`;
-                }
-
-                // Si pas de réponse, afficher comme message de soutien
-                if (!hasReponse) {
-                    return `
-                    <div class="faq-item message-soutien" style="${borderStyle} background: linear-gradient(135deg, #f0f9ff 0%, #e8f4fc 100%);">
-                        <div style="padding: 1rem;">
-                            ${sourceLabel}
-                            <p style="margin: 0; font-style: italic; color: #333;">" ${faq.question} "</p>
-                            ${faq.categorie ? `<span class="faq-category" style="margin-top: 0.5rem; display: inline-block;">${faq.categorie}</span>` : ''}
-                        </div>
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">🔍</div>
+                        <h3>Aucun résultat</h3>
+                        <p>Essayez un autre filtre ou une autre recherche.</p>
                     </div>
                 `;
+                renderParoles(withoutAnswer);
+                return;
+            }
+
+            // Grouper par catégorie
+            const grouped = {};
+            const uncategorized = [];
+
+            filtered.forEach(f => {
+                const cat = f.categorie && f.categorie.trim() ? f.categorie : null;
+                if (cat) {
+                    if (!grouped[cat]) grouped[cat] = [];
+                    grouped[cat].push(f);
+                } else {
+                    uncategorized.push(f);
                 }
+            });
 
-                // Pour les FAQs avec réponse, utiliser clickableIndex puis l'incrémenter
-                const myIndex = clickableIndex;
-                clickableIndex++;
+            let clickableIndex = 0;
+            let html = '';
 
-                return `
-                <div class="faq-item" style="${borderStyle}">
-                    <button class="faq-question" onclick="toggleFaq(${myIndex})">
-                        <div>
-                            ${sourceLabel}
-                            <span>${faq.question}</span>
+            // Rendre les groupes par catégorie
+            Object.keys(grouped).sort().forEach(cat => {
+                const catInfo = CATEGORIES[cat] || { icon: '📋', color: '#f5f5f5' };
+                const items = grouped[cat];
+
+                html += `<div class="category-group">`;
+                html += `<div class="category-group-header">
+                    <span class="cat-icon">${catInfo.icon}</span>
+                    ${cat}
+                    <span class="cat-count">${items.length} question${items.length > 1 ? 's' : ''}</span>
+                </div>`;
+
+                items.forEach(faq => {
+                    html += renderFaqItem(faq, clickableIndex);
+                    clickableIndex++;
+                });
+
+                html += `</div>`;
+            });
+
+            // Rendre les questions sans catégorie
+            if (uncategorized.length > 0) {
+                html += `<div class="category-group">`;
+                html += `<div class="category-group-header">
+                    <span class="cat-icon">📋</span>
+                    Divers
+                    <span class="cat-count">${uncategorized.length} question${uncategorized.length > 1 ? 's' : ''}</span>
+                </div>`;
+
+                uncategorized.forEach(faq => {
+                    html += renderFaqItem(faq, clickableIndex);
+                    clickableIndex++;
+                });
+
+                html += `</div>`;
+            }
+
+            container.innerHTML = html;
+
+            // Rendre les paroles de Vizillois
+            renderParoles(withoutAnswer);
+
+            // Activer les animations au scroll pour les nouveaux éléments
+            setTimeout(observeNewElements, 100);
+        }
+
+        function renderFaqItem(faq, index) {
+            const origineInfo = ORIGINES[faq.origine] || ORIGINES['Autre'];
+            const dateStr = faq.date ? new Date(faq.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+
+            return `
+                <div class="faq-item animate-on-scroll">
+                    <button class="faq-question" onclick="toggleFaq(${index})">
+                        <div class="question-content">
+                            <div class="question-meta">
+                                ${faq.origine ? `<span class="badge-origin ${origineInfo.cssClass}">${origineInfo.icon} ${faq.origine}</span>` : ''}
+                                ${faq.pseudo ? `<span class="badge-author">👤 ${faq.pseudo}</span>` : ''}
+                                ${dateStr ? `<span class="badge-date">${dateStr}</span>` : ''}
+                            </div>
+                            <div class="question-text">${faq.question}</div>
                         </div>
                         <span class="faq-icon">+</span>
                     </button>
-                    <div class="faq-answer" id="faq-answer-${myIndex}">
+                    <div class="faq-answer" id="faq-answer-${index}">
                         <div class="faq-answer-content">
                             ${faq.categorie ? `<span class="faq-category">${faq.categorie}</span>` : ''}
                             <p>${faq.reponse.replace(/\n/g, '<br>')}</p>
                         </div>
                     </div>
                 </div>
-            `}).join('');
+            `;
         }
 
-        function toggleFaq(index) {
-            console.log('🔵 toggleFaq appelé, index:', index);
-            
-            const question = document.querySelectorAll('.faq-question')[index];
-            const answer = document.getElementById(`faq-answer-${index}`);
-            
-            console.log('🔵 Question trouvée:', question);
-            console.log('🔵 Answer trouvée:', answer);
-            
-            // Vérifier que les éléments existent
-            if (!question || !answer) {
-                console.error('❌ Élément FAQ introuvable pour index:', index);
+        // ===== PAROLES DE VIZILLOIS =====
+        function renderParoles(messages) {
+            const container = document.getElementById('paroles-section');
+
+            if (!messages || messages.length === 0) {
+                container.innerHTML = '';
                 return;
             }
 
-            // Fermer toutes les autres FAQs
-            document.querySelectorAll('.faq-question').forEach((q, i) => {
+            let html = `
+                <div class="paroles-section">
+                    <div class="paroles-header">
+                        <h2>Paroles de Vizillois</h2>
+                        <p>Messages de soutien et encouragements</p>
+                    </div>
+                    <div class="paroles-grid">
+            `;
+
+            messages.forEach(msg => {
+                const origineInfo = ORIGINES[msg.origine] || ORIGINES['Autre'];
+                const dateStr = msg.date ? new Date(msg.date).toLocaleDateString('fr-FR') : '';
+
+                html += `
+                    <div class="parole-card animate-on-scroll">
+                        <p class="parole-text">" ${msg.question} "</p>
+                        <div class="parole-meta">
+                            <span>${msg.pseudo || 'Un Vizillois'}</span>
+                            <span>${msg.origine ? origineInfo.icon + ' ' + msg.origine : ''}${dateStr ? ' • ' + dateStr : ''}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `</div></div>`;
+            container.innerHTML = html;
+        }
+
+        // ===== ACCORDÉON =====
+        function toggleFaq(index) {
+            const questions = document.querySelectorAll('.faq-question');
+            const answer = document.getElementById(`faq-answer-${index}`);
+
+            if (!answer) return;
+
+            // Trouver le bon bouton (en comptant seulement les faq-question)
+            let question = null;
+            let count = 0;
+            questions.forEach(q => {
+                if (count === index) question = q;
+                count++;
+            });
+
+            if (!question) return;
+
+            // Fermer les autres
+            questions.forEach((q, i) => {
                 if (i !== index) {
                     q.classList.remove('active');
                     const otherAnswer = document.getElementById(`faq-answer-${i}`);
-                    if (otherAnswer) {
-                        otherAnswer.classList.remove('open');
-                    }
+                    if (otherAnswer) otherAnswer.classList.remove('open');
                 }
             });
 
-            // Toggle la FAQ cliquée
-            const wasOpen = answer.classList.contains('open');
+            // Toggle
             question.classList.toggle('active');
             answer.classList.toggle('open');
-            
-            console.log('✅ Après toggle - Question active:', question.classList.contains('active'));
-            console.log('✅ Après toggle - Answer open:', answer.classList.contains('open'));
-            console.log('✅ État: ' + (wasOpen ? 'FERMÉE' : 'OUVERTE'));
         }
 
+        // ===== FORMULAIRE =====
         function setSubject(subject) {
             const select = document.getElementById('q-subject');
-            if (select) {
-                select.value = subject;
-            }
+            if (select) select.value = subject;
             setTimeout(() => {
                 document.getElementById('q-question').focus();
             }, 100);
         }
 
+        // ===== CONFIG =====
         async function loadConfig() {
             try {
                 const response = await fetch('config.json?v=' + Date.now());
                 if (response.ok) {
                     const config = await response.json();
 
-                    if (config.adresse) {
-                        document.getElementById('contact-adresse').textContent = config.adresse;
-                    }
-                    if (config.telephone) {
-                        document.getElementById('contact-telephone').innerHTML = `📞 <a href="tel:${config.telephone}">${config.telephone}</a>`;
-                    }
-                    if (config.email) {
-                        document.getElementById('contact-email').innerHTML = `📧 <a href="mailto:${config.email}">${config.email}</a>`;
-                    }
-                    if (config.permanences) {
-                        document.getElementById('contact-permanences').textContent = config.permanences;
-                    }
+                    if (config.adresse) document.getElementById('contact-adresse').textContent = config.adresse;
+                    if (config.telephone) document.getElementById('contact-telephone').innerHTML = `📞 <a href="tel:${config.telephone}">${config.telephone}</a>`;
+                    if (config.email) document.getElementById('contact-email').innerHTML = `📧 <a href="mailto:${config.email}">${config.email}</a>`;
+                    if (config.permanences) document.getElementById('contact-permanences').textContent = config.permanences;
 
                     let socialHtml = '';
                     if (config.facebook) socialHtml += `<a href="${config.facebook}" target="_blank" title="Facebook">📘</a>`;
                     if (config.instagram) socialHtml += `<a href="${config.instagram}" target="_blank" title="Instagram">📸</a>`;
                     if (config.twitter) socialHtml += `<a href="${config.twitter}" target="_blank" title="Twitter">🐦</a>`;
-
-                    if (socialHtml) {
-                        document.getElementById('social-links').innerHTML = socialHtml;
-                    }
+                    if (socialHtml) document.getElementById('social-links').innerHTML = socialHtml;
                 }
             } catch (err) {
                 console.log('Config non trouvée, valeurs par défaut utilisées');
             }
         }
 
+        // ===== SOUMISSION FORMULAIRE =====
         const questionForm = document.getElementById('question-form');
         const questionSuccess = document.getElementById('question-success');
 
         if (questionForm) {
             questionForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
-
                 const formData = new FormData(questionForm);
 
                 try {
@@ -436,6 +598,23 @@
             });
         }
 
+        // ===== ANIMATIONS AU SCROLL =====
+        function observeNewElements() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            document.querySelectorAll('.animate-on-scroll:not(.animated)').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // ===== INITIALISATION =====
         document.addEventListener('DOMContentLoaded', () => {
             loadFaq();
             loadConfig();
@@ -443,12 +622,7 @@
     </script>
 
     <!-- Site Features JS -->
-    <script src="js/site-features.js" defer></script>
+    <script src="js/site-features.js"></script>
 
-<!-- Bandeau news désactivé temporairement -->
-<!-- <script src="js/news-banner.js"></script> -->
 </body>
 </html>
-
-
-
