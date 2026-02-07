@@ -18,12 +18,30 @@
     "twitter": ""
   },
   {
+    "id": 1770474062239,
+    "nom": "Bernard UGHETTO-MONFRIN",
+    "role": "Adjoint",
+    "delegation": "Mobilités",
+    "photo": "images/bernard-ughetto-monfrin-.jpg",
+    "video": "images/candidats/bernard-ughetto-monfrin-.mp4",
+    "ordre": 2,
+    "actif": true,
+    "bio": "Bernard UGHETTO-MONFRIN. 67 ans. Retraité de la chimie. Impliqué depuis toujours dans la vie associative, syndicale et politique de Vizille. Bernard est actuellement adjoint au développement des mobilités. Il sera présent à la 2ème place sur la liste \"Vizille en mouvement \"",
+    "pedigree": "",
+    "objectifs": "Poursuivre son action sur les mobilités en consacrant toute son énergie à la résolution du drame quotidien de la RN 85",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": ""
+  },
+  {
     "id": 2,
     "nom": "Angélique Hermitte",
     "role": "Conseillère déléguée",
     "delegation": "Petite enfance",
     "video": "images/candidats/angelique-hermitte.mp4",
-    "ordre": 2,
+    "ordre": 3,
     "actif": true,
     "bio": "Aide-soignante en Maison d'Accueil Spécialisée, j'accompagne au quotidien des adultes en situation de handicap moteur et mental. Cette expérience de terrain nourrit mon engagement pour une commune inclusive, accessible et attentive aux plus fragiles.",
     "pedigree": "Conseillère municipale depuis 2020, aujourd'hui conseillère déléguée à la petite enfance. Investie avec conviction pour les enjeux liés à l'enfance, à la jeunesse et au soutien des familles.",
@@ -33,23 +51,5 @@
     "facebook": "",
     "linkedin": "",
     "twitter": ""
-  },
-  {
-    "id": 1770474062239,
-    "nom": "Bernard UGHETTO-MONFRIN.",
-    "role": "Adjoint",
-    "delegation": "Mobilités",
-    "bio": "Bernard UGHETTO-MONFRIN. 67 ans. Retraité de la chimie. Impliqué depuis toujours dans la vie associative, syndicale et politique de Vizille. Bernard est actuellement adjoint au développement des mobilités. Il sera présent à la 2ème place sur la liste \"Vizille en mouvement \"",
-    "pedigree": "",
-    "objectifs": "Poursuivre son action sur les mobilités en consacrant toute son énergie à la résolution du drame quotidien de la RN 85",
-    "citation": "",
-    "email": "",
-    "facebook": "",
-    "linkedin": "",
-    "twitter": "",
-    "ordre": 2,
-    "photo": "images/bernard-ughetto-monfrin-.jpg",
-    "video": "images/candidats/bernard-ughetto-monfrin-.mp4",
-    "actif": true
   }
 ]
