@@ -70,13 +70,13 @@
     "titre": "Réunion publique #2 — Projets pour Vizille",
     "date": "2026-02-27",
     "categorie": "Événement",
-    "extrait": "Vendredi 27 février à 18h30, Salle de la République — Échanges sur les projets 2026-2032.",
+    "extrait": "L Vendredi 27 février à 18h30, Salle de la République — Échanges sur les projets 2026-2032.",
     "contenu": "Réunion publique #2\n\nDate : Vendredi 27 février 2026\nHeure : 18h30\nLieu : Salle de la République\n\nPour échanger sur les projets pour Vizille\n\nVenez échanger avec nous et construisons ensemble l'avenir de notre ville !\n\nAu programme :\n• Présentation du programme 2026-2032\n• Bilan des réunions de quartiers\n• Vos questions et propositions\n\nVenez nombreux !",
     "images": [
       "images/articles/art_5_0.jpg"
     ],
-    "image": "images/articles/art_5_main.jpg",
-    "modifie_le": "2026-02-02T18:20:27.681Z"
+    "image": "images/articles/art_5_0.jpg",
+    "modifie_le": "2026-02-07T10:11:42.202Z"
   },
   {
     "id": 6,
@@ -120,8 +120,7 @@
       "images/articles/article_1770458281599_img_0400.jpg"
     ],
     "image": "images/articles/article_1770458281599_img_0400.jpg",
-    "a_preciser": true,
-    "modifie_le": "2026-02-07T09:58:07.531Z"
+    "modifie_le": "2026-02-07T10:09:11.091Z"
   },
   {
     "id": 10,
@@ -152,7 +151,7 @@
   },
   {
     "id": 1770455918640,
-    "titre": "Rencontre de quartier Jean Jaurès",
+    "titre": "Rencontre devant l'école Jean-Jaurès",
     "date": "2026-02-06",
     "categorie": "Événement",
     "extrait": "",
@@ -164,6 +163,6 @@
     "youtube": "https://youtu.be/FDASyL3nPBY?t=2",
     "source": "Comm Viezille en mouvement",
     "auteur": "MT/JC",
-    "modifie_le": "2026-02-07T09:47:18.987Z"
+    "modifie_le": "2026-02-07T10:13:15.152Z"
   }
 ]
