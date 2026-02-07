@@ -586,6 +586,13 @@
 
 .team-card {
     position: relative;
+    will-change: transform;
+}
+
+/* Stabiliser les vidéos dans les cartes */
+.team-card video {
+    backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 /* Carte vide */
