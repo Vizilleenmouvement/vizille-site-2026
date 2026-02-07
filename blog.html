@@ -1003,15 +1003,7 @@
                     return dateA - dateB;
                 });
 
-                // Mettre le PROCHAIN événement en tête des Actualités
-                if (futureArticles.length > 0) {
-                    const prochainEvent = futureArticles[0];
-                    pastArticles.unshift(prochainEvent);
-                    // Retirer des futurs pour éviter doublon
-                    futureArticles = futureArticles.slice(1);
-                }
-
-                // Afficher le compteur des événements à venir (sans le prochain qui est dans Actualités)
+                // Afficher le compteur des événements à venir
                 const futureCount = document.getElementById('future-count');
                 if (futureArticles.length > 0) {
                     futureCount.textContent = futureArticles.length;
