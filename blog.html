@@ -779,6 +779,39 @@
                 padding-right: 1.25rem;
             }
         }
+
+        /* Séparateur Accompli */
+        .accompli-separator {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .accompli-line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #c9a227, transparent);
+        }
+
+        .accompli-label {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a3a5c;
+            white-space: nowrap;
+            padding: 0.5rem 1rem;
+            background: #f8f8f8;
+            border-radius: 20px;
+        }
+
+        #accompli-grid .article-card {
+            opacity: 0.85;
+        }
+
+        #accompli-grid .article-card:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -821,21 +854,17 @@
     <main class="content" id="main-content">
         <!-- Liste des articles -->
         <div id="blog-list-view">
-            <!-- Onglets Actualités / Prochainement / À préciser -->
+            <!-- Onglets Actualités / Bobines -->
             <div class="blog-tabs">
-                <button class="blog-tab active" id="tab-past" onclick="switchTab('past')">
+                <button class="blog-tab active" id="tab-actu" onclick="switchTab('actu')">
                     📰 Actualités
-                </button>
-                <button class="blog-tab" id="tab-future" onclick="switchTab('future')">
-                    📅 Prochainement <span class="tab-count" id="future-count"></span>
-                </button>
-                <button class="blog-tab" id="tab-tbd" onclick="switchTab('tbd')">
-                    🕐 À préciser <span class="tab-count" id="tbd-count"></span>
                 </button>
                 <button class="blog-tab" id="tab-bobines" onclick="switchTab('bobines')">
                     🎬 Bobines <span class="tab-count" id="bobines-count"></span>
                 </button>
             </div>
+            <span class="tab-count" id="future-count" style="display:none;"></span>
+            <span class="tab-count" id="tbd-count" style="display:none;"></span>
 
             <div class="blog-toolbar">
                 <div class="search-box">
@@ -853,6 +882,16 @@
             </div>
 
             <div class="pagination" id="pagination"></div>
+
+            <!-- Séparateur et événements accomplis -->
+            <div id="accompli-section" style="display:none;">
+                <div class="accompli-separator">
+                    <span class="accompli-line"></span>
+                    <span class="accompli-label">✅ Accompli</span>
+                    <span class="accompli-line"></span>
+                </div>
+                <div class="articles-grid" id="accompli-grid"></div>
+            </div>
         </div>
 
         <!-- Article complet -->
@@ -906,7 +945,7 @@
         let tbdArticles = []; // Articles avec date à préciser
         let bobines = []; // Vidéos courtes thématiques
         let themes = []; // Thèmes pour les bobines
-        let currentTab = 'past'; // 'past', 'future', 'tbd' ou 'bobines'
+        let currentTab = 'actu'; // 'actu' ou 'bobines'
         let currentFilter = '';
         let searchQuery = '';
         let currentPage = 1;
@@ -1018,10 +1057,11 @@
             currentFilter = '';
 
             // Mettre à jour les onglets visuellement
-            document.getElementById('tab-past').classList.toggle('active', tab === 'past');
-            document.getElementById('tab-future').classList.toggle('active', tab === 'future');
-            document.getElementById('tab-tbd').classList.toggle('active', tab === 'tbd');
+            document.getElementById('tab-actu').classList.toggle('active', tab === 'actu');
             document.getElementById('tab-bobines').classList.toggle('active', tab === 'bobines');
+
+            // Masquer/afficher la section accompli selon l'onglet
+            document.getElementById('accompli-section').style.display = (tab === 'actu') ? 'block' : 'none';
 
             renderFilters();
             renderList();
@@ -1042,9 +1082,9 @@
                 return;
             }
 
-            // Pour les articles
-            const source = currentTab === 'past' ? pastArticles : (currentTab === 'future' ? futureArticles : tbdArticles);
-            const cats = [...new Set(source.map(a => a.categorie).filter(c => c))];
+            // Pour les articles (combiner toutes les sources)
+            const allArticles = [...futureArticles, ...tbdArticles, ...pastArticles];
+            const cats = [...new Set(allArticles.map(a => a.categorie).filter(c => c))];
             document.getElementById('filters').innerHTML = `
                 <button class="filter-btn ${currentFilter === '' ? 'active' : ''}" onclick="filter('')">Tous</button>
                 ${cats.map(c => `<button class="filter-btn ${currentFilter === c ? 'active' : ''}" onclick="filter('${c}')">${c}</button>`).join('')}
@@ -1068,100 +1108,92 @@
             // Onglet Bobines : afficher les vidéos thématiques
             if (currentTab === 'bobines') {
                 renderBobines();
+                document.getElementById('accompli-section').style.display = 'none';
                 return;
             }
 
-            // Utiliser la source selon l'onglet actif
-            let filtered;
-            if (currentTab === 'past') {
-                filtered = [...pastArticles];
-            } else if (currentTab === 'future') {
-                filtered = [...futureArticles];
-            } else {
-                filtered = [...tbdArticles];
-            }
+            // Onglet Actualités : afficher à venir en haut + accomplis en bas
+            // Combiner futurs et à préciser pour les événements à venir
+            let upcomingArticles = [...futureArticles, ...tbdArticles];
+            let accomplisArticles = [...pastArticles];
 
+            // Appliquer le filtre de catégorie
             if (currentFilter) {
-                filtered = filtered.filter(a => a.categorie === currentFilter);
+                upcomingArticles = upcomingArticles.filter(a => a.categorie === currentFilter);
+                accomplisArticles = accomplisArticles.filter(a => a.categorie === currentFilter);
             }
 
+            // Appliquer la recherche
             if (searchQuery) {
-                filtered = filtered.filter(a =>
+                const filterBySearch = a =>
                     a.titre.toLowerCase().includes(searchQuery) ||
-                    (a.extrait && a.extrait.toLowerCase().includes(searchQuery))
-                );
+                    (a.extrait && a.extrait.toLowerCase().includes(searchQuery));
+                upcomingArticles = upcomingArticles.filter(filterBySearch);
+                accomplisArticles = accomplisArticles.filter(filterBySearch);
             }
 
-            if (filtered.length === 0) {
-                let emptyMessage, emptyIcon;
-                if (currentTab === 'future') {
-                    emptyMessage = 'Aucun événement à venir pour le moment.';
-                    emptyIcon = '📅';
-                } else if (currentTab === 'tbd') {
-                    emptyMessage = 'Aucun événement avec date à préciser.';
-                    emptyIcon = '🕐';
-                } else {
-                    emptyMessage = 'Aucun article trouvé.';
-                    emptyIcon = '🔍';
-                }
+            // Afficher les événements à venir
+            if (upcomingArticles.length === 0) {
                 document.getElementById('articles-grid').innerHTML = `
                     <div class="empty-state">
-                        <div class="icon">${emptyIcon}</div>
-                        <p>${emptyMessage}</p>
+                        <div class="icon">📅</div>
+                        <p>Aucun événement à venir pour le moment.</p>
                     </div>
                 `;
-                document.getElementById('pagination').innerHTML = '';
-                return;
+            } else {
+                document.getElementById('articles-grid').innerHTML = upcomingArticles.map(a => renderArticleCard(a, true)).join('');
             }
 
-            // Pagination
-            const totalPages = Math.ceil(filtered.length / articlesPerPage);
-            const startIndex = (currentPage - 1) * articlesPerPage;
-            const paged = filtered.slice(startIndex, startIndex + articlesPerPage);
+            // Afficher les événements accomplis
+            const accompliSection = document.getElementById('accompli-section');
+            if (accomplisArticles.length > 0) {
+                accompliSection.style.display = 'block';
+                document.getElementById('accompli-grid').innerHTML = accomplisArticles.map(a => renderArticleCard(a, false)).join('');
+            } else {
+                accompliSection.style.display = 'none';
+            }
 
-            // ID du prochain événement (le premier dans futureArticles)
+            document.getElementById('pagination').innerHTML = '';
+        }
+
+        // Fonction pour générer le HTML d'une carte article
+        function renderArticleCard(a, showProchainBadge) {
+            const coverImage = (a.images && a.images.length > 0) ? a.images[0] : a.image;
+            const hasMultipleImages = a.images && a.images.length > 1;
+            const categoryClass = (a.categorie || '').toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/\s+/g, '-');
+            const dateFormatted = a.date ? new Date(a.date + 'T12:00:00').toLocaleDateString('fr-FR', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            }) : '';
+
+            // Badge "PROCHAIN" uniquement pour le premier événement à venir
             const prochainId = futureArticles.length > 0 ? futureArticles[0].id : null;
+            const isProchain = showProchainBadge && a.id === prochainId;
 
-            document.getElementById('articles-grid').innerHTML = paged.map(a => {
-                // Utiliser la première image du tableau images, ou l'ancien champ image
-                const coverImage = (a.images && a.images.length > 0) ? a.images[0] : a.image;
-                const hasMultipleImages = a.images && a.images.length > 1;
-                const categoryClass = (a.categorie || '').toLowerCase()
-                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-                    .replace(/\s+/g, '-');
-                const dateFormatted = a.date ? new Date(a.date + 'T12:00:00').toLocaleDateString('fr-FR', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                }) : '';
-
-                // Badge "PROCHAIN" pour le premier événement à venir (maintenant en tête des Actualités)
-                const isProchain = a.id === prochainId;
-
-                return `
-                <div class="article-card" onclick="showArticle(${a.id})">
-                    <div class="article-card-media">
-                        ${coverImage
-                            ? `<img src="${coverImage}" alt="" class="article-card-image" loading="lazy">`
-                            : `<div class="article-card-placeholder">${a.youtube ? '▶' : '✦'}</div>`
-                        }
-                        ${isProchain ? `<span class="badge-prochain">📍 Rendez-vous ${new Date(a.date + 'T12:00:00').toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric', month: 'short'})}</span>` : ''}
-                        ${a.youtube && coverImage ? '<span class="video-badge">▶</span>' : ''}
-                        ${hasMultipleImages ? '<span class="badge-gallery">📷 ' + a.images.length + '</span>' : ''}
-                        ${a.a_preciser ? '<span class="badge-preciser">Date à préciser</span>' : ''}
+            return `
+            <div class="article-card" onclick="showArticle(${a.id})">
+                <div class="article-card-media">
+                    ${coverImage
+                        ? `<img src="${coverImage}" alt="" class="article-card-image" loading="lazy">`
+                        : `<div class="article-card-placeholder">${a.youtube ? '▶' : '✦'}</div>`
+                    }
+                    ${isProchain ? `<span class="badge-prochain">📍 Rendez-vous ${new Date(a.date + 'T12:00:00').toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric', month: 'short'})}</span>` : ''}
+                    ${a.youtube && coverImage ? '<span class="video-badge">▶</span>' : ''}
+                    ${hasMultipleImages ? '<span class="badge-gallery">📷 ' + a.images.length + '</span>' : ''}
+                    ${a.a_preciser ? '<span class="badge-preciser">Date à préciser</span>' : ''}
+                </div>
+                <div class="article-card-content">
+                    <div class="article-meta">
+                        ${dateFormatted ? `<span class="article-date">${dateFormatted}</span>` : ''}
+                        ${a.categorie ? `<span class="article-category ${categoryClass}">${a.categorie}</span>` : ''}
                     </div>
-                    <div class="article-card-content">
-                        <div class="article-meta">
-                            ${dateFormatted ? `<span class="article-date">${dateFormatted}</span>` : ''}
-                            ${a.categorie ? `<span class="article-category ${categoryClass}">${a.categorie}</span>` : ''}
-                        </div>
-                        <h2 class="article-card-title">${a.titre.replace(/^[📰📅📣🎯✊🤝📊🚀📝ℹ️🎬]\s*/, '')}</h2>
-                        ${a.extrait ? `<p class="article-card-excerpt">${a.extrait}</p>` : ''}
+                    <h2 class="article-card-title">${a.titre.replace(/^[📰📅📣🎯✊🤝📊🚀📝ℹ️🎬]\s*/, '')}</h2>
                     </div>
                 </div>
-            `}).join('');
-
-            renderPagination(totalPages, filtered.length);
+            `;
         }
 
         function renderPagination(totalPages, totalItems) {
