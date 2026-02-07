@@ -156,7 +156,12 @@
     "categorie": "Événement",
     "extrait": "",
     "contenu": "Nous étions à votre rencontre à côté de l ‘école Jean Jaurès. \nDes échanges très constructifs autour d’un chocolat chaud et de crêpes appréciées par les petits et grands.",
+    "images": [
+      "images/articles/article_1770457182233_img_1036.jpg",
+      "images/articles/article_1770457197521_img_1036.jpg"
+    ],
+    "image": "images/articles/article_1770457182233_img_1036.jpg",
     "youtube": "https://youtu.be/FDASyL3nPBY?t=2",
-    "modifie_le": "2026-02-07T09:18:38.640Z"
+    "modifie_le": "2026-02-07T09:40:09.935Z"
   }
 ]
