@@ -579,23 +579,9 @@
 
 /* ===== GRILLE 29 PLACES ===== */
 
-/* Numéro de position */
+/* Numéro de position - masqué */
 .team-position {
-    position: absolute;
-    top: 0.5rem;
-    left: 0.5rem;
-    width: 28px;
-    height: 28px;
-    background: var(--bleu-vizille);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 0.85rem;
-    z-index: 10;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    display: none;
 }
 
 .team-card {
