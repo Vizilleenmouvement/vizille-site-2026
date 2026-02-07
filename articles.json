@@ -111,16 +111,13 @@
   },
   {
     "id": 9,
-    "titre": "Réunion de quartier - Le Péage",
+    "titre": "A votre rencontre le 10 mars au  Péage, école Langevin",
+    "date": "2026-03-10",
     "categorie": "Réunion de quartier",
     "extrait": "Date à préciser - Votre référent : Bernard.",
-    "contenu": "Réunion de quartier pour Le Péage\n\nDate : À préciser\nLieu : À préciser\n\nVotre référent : Bernard\n\nThèmes abordés :\n• Questions de mobilités\n• Transports et déplacements\n\nVotre voix compte ! Venez nombreux partager vos idées et préoccupations pour votre quartier.",
-    "images": [
-      "images/articles/art_9_0.jpg"
-    ],
-    "image": "images/articles/art_9_main.jpg",
+    "contenu": "Réunion de quartier pour Le Péage\n\nDate : le 10 mars2026\nLieu : À 16 heures\n\nVotre référent : Bernard\n\nThèmes abordés :\n• Questions de mobilités\n• Transports et déplacements\nEt tous les sujets que vous souhaitez aborder avec nous.  \n\nVotre voix compte ! Venez nombreux partager vos idées et préoccupations pour votre quartier.",
     "a_preciser": true,
-    "modifie_le": "2026-02-02T18:20:47.355Z"
+    "modifie_le": "2026-02-07T09:44:54.019Z"
   },
   {
     "id": 10,
