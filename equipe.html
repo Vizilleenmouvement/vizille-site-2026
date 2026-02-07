@@ -218,61 +218,58 @@
 
         function renderTeam() {
             const grid = document.getElementById('team-grid');
-            const TOTAL_PLACES = 29;
 
-            // Créer un tableau de 29 places
-            const grille = new Array(TOTAL_PLACES).fill(null);
+            // Séparer Catherine (ordre 1) des autres
+            const catherine = candidatsData.find(c => c.ordre === 1);
+            const autres = candidatsData.filter(c => c.ordre !== 1).sort((a, b) => a.ordre - b.ordre);
 
-            // Placer les candidats selon leur ordre
-            candidatsData.forEach(candidat => {
-                const position = candidat.ordre - 1; // ordre 1 = index 0
-                if (position >= 0 && position < TOTAL_PLACES) {
-                    grille[position] = candidat;
-                }
-            });
+            // Carte Catherine (seule en haut, centrée)
+            let catherineHtml = '';
+            if (catherine) {
+                const photoHtml = catherine.video
+                    ? `<video src="${catherine.video}" class="team-photo" autoplay muted loop playsinline style="object-fit:cover;height:280px;"></video>`
+                    : catherine.photo
+                    ? `<img src="${catherine.photo}" alt="${catherine.nom}" class="team-photo" style="height:280px;" loading="lazy">`
+                    : `<div style="width:100%;height:280px;display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:4rem;">👤</div>`;
 
-            // VUE GRILLE (29 places)
-            grid.style.display = 'block';
-
-            const cards = grille.map((candidat, index) => {
-                const position = index + 1;
-
-                if (candidat) {
-                    // Place occupée
-                    const isCatherine = candidat.ordre === 1;
-                    const borderStyle = isCatherine ? 'border: 3px solid var(--or);' : '';
-                    const nom = isCatherine ? `⭐ ${candidat.nom}` : candidat.nom;
-                    const photoHtml = candidat.video
-                        ? `<video src="${candidat.video}" class="team-photo" autoplay muted loop playsinline style="object-fit:cover;"></video>`
-                        : candidat.photo
-                        ? `<img src="${candidat.photo}" alt="${candidat.nom}" class="team-photo" loading="lazy">`
-                        : `<div style="width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:3rem;">👤</div>`;
-
-                    return `
-                        <div class="team-card" style="${borderStyle}" onclick="openCandidatModal(${index})" tabindex="0" role="button" aria-label="${candidat.nom}">
-                            <div class="team-position">${position}</div>
+                catherineHtml = `
+                    <div class="catherine-row">
+                        <div class="team-card team-card-catherine" onclick="openCandidatModal(0)" tabindex="0" role="button" aria-label="${catherine.nom}">
+                            <div class="team-position">1</div>
                             ${photoHtml}
                             <div class="team-info">
-                                <h3 class="team-name">${nom}</h3>
-                                ${candidat.role ? `<p class="team-role">${candidat.role}</p>` : ''}
+                                <h3 class="team-name">⭐ ${catherine.nom}</h3>
+                                ${catherine.role ? `<p class="team-role">${catherine.role}</p>` : ''}
                             </div>
                         </div>
-                    `;
-                } else {
-                    // Place vide
-                    return `
-                        <div class="team-card team-card-empty">
-                            <div class="team-position">${position}</div>
-                            <div style="width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f0f0f0,#e8e8e8);font-size:3rem;color:#ccc;">?</div>
-                            <div class="team-info">
-                                <h3 class="team-name" style="color:#aaa;">À venir...</h3>
-                            </div>
+                    </div>
+                `;
+            }
+
+            // Cartes des autres candidats (masquer les vides)
+            const autresCards = autres.map((candidat, index) => {
+                const photoHtml = candidat.video
+                    ? `<video src="${candidat.video}" class="team-photo" autoplay muted loop playsinline style="object-fit:cover;"></video>`
+                    : candidat.photo
+                    ? `<img src="${candidat.photo}" alt="${candidat.nom}" class="team-photo" loading="lazy">`
+                    : `<div style="width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:3rem;">👤</div>`;
+
+                return `
+                    <div class="team-card" onclick="openCandidatModal(${index + 1})" tabindex="0" role="button" aria-label="${candidat.nom}">
+                        <div class="team-position">${candidat.ordre}</div>
+                        ${photoHtml}
+                        <div class="team-info">
+                            <h3 class="team-name">${candidat.nom}</h3>
+                            ${candidat.role ? `<p class="team-role">${candidat.role}</p>` : ''}
                         </div>
-                    `;
-                }
+                    </div>
+                `;
             }).join('');
 
-            grid.innerHTML = `<div class="team-grid">${cards}</div>`;
+            grid.innerHTML = `
+                ${catherineHtml}
+                <div class="team-grid">${autresCards}</div>
+            `;
         }
 
         document.addEventListener('DOMContentLoaded', loadCandidats);
