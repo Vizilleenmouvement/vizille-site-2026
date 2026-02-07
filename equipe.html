@@ -218,90 +218,39 @@
 
         function renderTeam() {
             const grid = document.getElementById('team-grid');
+            const TOTAL_PLACES = 29;
 
-            if (candidatsData.length === 0) {
-                grid.innerHTML = `
-                    <div class="loading">
-                        <span style="font-size: 2rem;">👥</span>
-                        <p>L'équipe sera bientôt dévoilée !</p>
-                    </div>
-                `;
-                return;
-            }
+            // Créer un tableau de 29 places
+            const grille = new Array(TOTAL_PLACES).fill(null);
 
-            // Séparer Catherine (ordre=1) des autres
-            const catherine = candidatsData.find(c => c.ordre === 1);
-            const autresCandidats = candidatsData.filter(c => c.ordre !== 1);
-            
-            // Diviser les autres candidats pour mettre Catherine au milieu
-            const middleIndex = Math.floor(autresCandidats.length / 2);
-            const firstHalf = autresCandidats.slice(0, middleIndex);
-            const secondHalf = autresCandidats.slice(middleIndex);
-            
-            // Reconstituer l'ordre : première moitié + Catherine + deuxième moitié
-            const orderedCandidats = [...firstHalf, catherine, ...secondHalf].filter(Boolean);
+            // Placer les candidats selon leur ordre
+            candidatsData.forEach(candidat => {
+                const position = candidat.ordre - 1; // ordre 1 = index 0
+                if (position >= 0 && position < TOTAL_PLACES) {
+                    grille[position] = candidat;
+                }
+            });
 
-            if (currentView === 'list') {
-                // VUE LISTE
-                grid.style.display = 'block';
-                
-                const rows = orderedCandidats.map((candidat, index) => {
-                    const isCatherine = candidat.ordre === 1;
-                    const style = isCatherine 
-                        ? 'border-bottom: 1px solid #eee; background: #fffbeb; cursor: pointer;'
-                        : 'border-bottom: 1px solid #eee; cursor: pointer;';
-                    const photoStyle = isCatherine
-                        ? 'width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid var(--or);'
-                        : 'width: 40px; height: 40px; border-radius: 50%; object-fit: cover;';
-                    const photoSize = isCatherine ? '60px' : '40px';
-                    const nom = isCatherine ? `⭐ ${candidat.nom}` : candidat.nom;
-                    
-                    return `
-                        <tr style="${style}" onclick="openCandidatModal(${index})" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='${isCatherine ? '#fffbeb' : 'white'}'">
-                            <td style="padding: 0.5rem;">
-                                ${candidat.photo 
-                                    ? `<img src="${candidat.photo}" alt="${candidat.nom}" style="${photoStyle}" loading="lazy">`
-                                    : `<div style="width: ${photoSize}; height: ${photoSize}; border-radius: 50%; background: #e0e0e0; display: flex; align-items: center; justify-content: center;">👤</div>`
-                                }
-                            </td>
-                            <td style="padding: 0.5rem; font-weight: 600;">${nom}</td>
-                            <td style="padding: 0.5rem; color: #666;">${candidat.role || candidat.delegation || '—'}</td>
-                        </tr>
-                    `;
-                }).join('');
-                
-                grid.innerHTML = `
-                    <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                        <thead>
-                            <tr style="background: var(--bleu-vizille); color: white;">
-                                <th style="padding: 0.75rem; text-align: left;">Photo</th>
-                                <th style="padding: 0.75rem; text-align: left;">Nom</th>
-                                <th style="padding: 0.75rem; text-align: left;">Fonction</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${rows}
-                        </tbody>
-                    </table>
-                `;
-            } else {
-                // VUE CARTES
-                grid.style.display = 'block';
-                
-                const cards = orderedCandidats.map((candidat, index) => {
+            // VUE GRILLE (29 places)
+            grid.style.display = 'block';
+
+            const cards = grille.map((candidat, index) => {
+                const position = index + 1;
+
+                if (candidat) {
+                    // Place occupée
                     const isCatherine = candidat.ordre === 1;
                     const borderStyle = isCatherine ? 'border: 3px solid var(--or);' : '';
-                    // Style spécial pour centrer Catherine
-                    const centerStyle = isCatherine ? 'grid-column: 1 / -1; justify-self: center; max-width: 350px;' : '';
                     const nom = isCatherine ? `⭐ ${candidat.nom}` : candidat.nom;
                     const photoHtml = candidat.video
                         ? `<video src="${candidat.video}" class="team-photo" autoplay muted loop playsinline style="object-fit:cover;"></video>`
                         : candidat.photo
                         ? `<img src="${candidat.photo}" alt="${candidat.nom}" class="team-photo" loading="lazy">`
-                        : `<div style="width:100%;height:250px;display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:4rem;">👤</div>`;
+                        : `<div style="width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:3rem;">👤</div>`;
 
                     return `
-                        <div class="team-card" style="${borderStyle} ${centerStyle}" onclick="openCandidatModal(${index})" tabindex="0" role="button" aria-label="${candidat.nom}">
+                        <div class="team-card" style="${borderStyle}" onclick="openCandidatModal(${index})" tabindex="0" role="button" aria-label="${candidat.nom}">
+                            <div class="team-position">${position}</div>
                             ${photoHtml}
                             <div class="team-info">
                                 <h3 class="team-name">${nom}</h3>
@@ -309,10 +258,21 @@
                             </div>
                         </div>
                     `;
-                }).join('');
-                
-                grid.innerHTML = `<div class="team-grid">${cards}</div>`;
-            }
+                } else {
+                    // Place vide
+                    return `
+                        <div class="team-card team-card-empty">
+                            <div class="team-position">${position}</div>
+                            <div style="width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f0f0f0,#e8e8e8);font-size:3rem;color:#ccc;">?</div>
+                            <div class="team-info">
+                                <h3 class="team-name" style="color:#aaa;">À venir...</h3>
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
+
+            grid.innerHTML = `<div class="team-grid">${cards}</div>`;
         }
 
         document.addEventListener('DOMContentLoaded', loadCandidats);
