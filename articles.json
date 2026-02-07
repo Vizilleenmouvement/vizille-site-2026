@@ -120,7 +120,7 @@
       "images/articles/article_1770458281599_img_0400.jpg"
     ],
     "image": "images/articles/article_1770458281599_img_0400.jpg",
-    "modifie_le": "2026-02-07T10:09:11.091Z"
+    "modifie_le": "2026-02-07T16:12:54.434Z"
   },
   {
     "id": 10,
@@ -177,5 +177,19 @@
     ],
     "image": "images/articles/article_1770459477243_img_0402.jpg",
     "modifie_le": "2026-02-07T10:22:13.021Z"
+  },
+  {
+    "id": 1770480990392,
+    "titre": "Vizille en Mouvement : Bilan & Vision 2026 avec Catherine Troton",
+    "date": "2026-02-07",
+    "categorie": "Communiqué",
+    "extrait": "",
+    "contenu": "",
+    "images": [
+      "images/articles/article_1770480896470.jpg",
+      "<iframe src=\"https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid0TZFMasuNX6eBY1hsAXQWTq4bDcgUsmPBZG6hoLakhHViJUML7ts4bMUfVcgT6fM3l%26id%3D61585097998743&show_text=true&width=500\" width=\"500\" height=\"370\" style=\"border:none;overflow:hidden\" scrolling=\"no\" frameborder=\"0\" allowfullscreen=\"true\" allow=\"autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share\"></iframe>"
+    ],
+    "image": "images/articles/article_1770480896470.jpg",
+    "modifie_le": "2026-02-07T16:16:30.392Z"
   }
 ]
