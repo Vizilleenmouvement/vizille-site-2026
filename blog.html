@@ -164,15 +164,6 @@
         .mini-card.past:hover { opacity: 0.85; }
         .past-badge { font-size: 0.6rem; background: #e8f5e9; color: #388e3c; padding: 0.1rem 0.4rem; border-radius: 8px; font-weight: 600; }
 
-        /* BOUTON FACEBOOK */
-        .fb-share-mini {
-            display: inline-flex; align-items: center; gap: 0.3rem;
-            background: #1877F2; color: white; border: none; border-radius: 6px;
-            padding: 0.3rem 0.6rem; font-size: 0.7rem; font-weight: 600;
-            cursor: pointer; transition: all 0.2s; margin-top: auto; align-self: flex-start;
-        }
-        .fb-share-mini:hover { background: #0d65d9; transform: scale(1.05); }
-        .fb-share-mini svg { width: 12px; height: 12px; }
 
         /* Séparateur section */
         .section-label {
@@ -198,22 +189,6 @@
         .article-full-content { line-height: 1.8; font-size: 1.05rem; }
         .article-full-content p { margin-bottom: 1rem; }
 
-        /* Partage article complet */
-        .share-bar { display: flex; align-items: center; gap: 0.75rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid #eee; flex-wrap: wrap; }
-        .share-bar-label { font-size: 0.85rem; color: #999; }
-        .fb-share-big {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            background: #1877F2; color: white; border: none; border-radius: 8px;
-            padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: 600;
-            cursor: pointer; transition: all 0.2s;
-        }
-        .fb-share-big:hover { background: #0d65d9; }
-        .copy-link-btn {
-            display: inline-flex; align-items: center; gap: 0.3rem;
-            background: #eee; color: #555; border: none; border-radius: 8px;
-            padding: 0.6rem 1rem; font-size: 0.85rem; cursor: pointer; transition: all 0.2s;
-        }
-        .copy-link-btn:hover { background: #ddd; }
 
         /* Lightbox */
         .lightbox-overlay {
@@ -228,13 +203,6 @@
             cursor: pointer; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;
         }
 
-        /* Toast */
-        .toast {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px);
-            background: #1a3a5c; color: white; padding: 0.75rem 1.5rem;
-            border-radius: 8px; transition: transform 0.3s; z-index: 2000; font-size: 0.9rem;
-        }
-        .toast.show { transform: translateX(-50%) translateY(0); }
 
         .empty-state { text-align: center; padding: 3rem; color: #888; }
         .empty-state .icon { font-size: 3rem; margin-bottom: 0.75rem; }
@@ -319,11 +287,8 @@
         <img src="" alt="" class="lightbox-image" id="lightbox-image">
     </div>
 
-    <div class="toast" id="toast"></div>
 
     <script>
-        const SITE_URL = 'https://vizilleenmouvement.fr';
-        const FB_PAGE = 'https://www.facebook.com/profile.php?id=61574517498498';
         let articlesData = [];
         let currentCategory = '';
 
@@ -350,21 +315,6 @@
         function cleanTitle(t) { return t.replace(/^[📰📅📣🎯✊🤝📊🚀📝ℹ️🎬]\s*/, ''); }
         function fmtDate(d) { return d ? new Date(d).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : ''; }
         function catClass(cat) { return (cat || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-').replace(/[^a-z-]/g, ''); }
-        function fbSvg() { return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>'; }
-
-        function shareOnFB(id, e) {
-            if (e) e.stopPropagation();
-            const a = articlesData.find(x => x.id === id);
-            if (!a) return;
-            const url = SITE_URL + '/blog.html?article=' + id;
-            const text = cleanTitle(a.titre) + '\n\n' + (a.extrait || a.contenu.substring(0, 200)).replace(/<[^>]*>/g, '') + '...\n\n👉 ' + url;
-            navigator.clipboard.writeText(text).then(() => {
-                window.open(FB_PAGE, '_blank');
-                showToast('📋 Texte copié ! Collez-le dans votre post Facebook');
-            }).catch(() => {
-                window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), '_blank', 'width=600,height=400');
-            });
-        }
 
         function renderMagazine() {
             const container = document.getElementById('magazine-layout');
@@ -416,8 +366,7 @@
                 '<h2>' + cleanTitle(a.titre) + '</h2>' +
                 '<div class="date">' + (a.a_preciser ? 'Date à préciser' : fmtDate(a.date)) + '</div>' +
                 '<div class="excerpt">' + (a.extrait || a.contenu.substring(0, 250) + '...') + '</div>' +
-                '<div class="actions"><span class="read-btn">Lire la suite →</span>' +
-                '<button class="fb-share-mini" onclick="shareOnFB(' + a.id + ', event)">' + fbSvg() + ' Partager</button></div>' +
+                '<div class="actions"><span class="read-btn">Lire la suite →</span></div>' +
                 '</div></div>';
         }
 
@@ -426,7 +375,6 @@
                 '<div class="upcoming-date">' + (a.a_preciser ? '📌 Date à préciser' : fmtDate(a.date)) + '</div>' +
                 '<div class="upcoming-title">' + cleanTitle(a.titre) + '</div>' +
                 '<div class="upcoming-cat">' + (a.categorie || '') + '</div>' +
-                '<button class="fb-share-mini" onclick="shareOnFB(' + a.id + ', event)">' + fbSvg() + ' FB</button>' +
                 '</div></div>';
         }
 
@@ -440,7 +388,6 @@
                 (isPast ? '<span class="past-badge">✓ fait</span>' : '') +
                 '</div><h3 class="mini-card-title">' + cleanTitle(a.titre) + '</h3>' +
                 '<p class="mini-card-excerpt">' + (a.extrait || '') + '</p>' +
-                '<button class="fb-share-mini" onclick="shareOnFB(' + a.id + ', event)">' + fbSvg() + ' FB</button>' +
                 '</div></div>';
         }
 
@@ -457,10 +404,7 @@
                 '<h1 style="font-family:\'Playfair Display\',serif;font-size:1.8rem;color:#1a3a5c;margin:0.5rem 0 1rem;line-height:1.3;">' + cleanTitle(a.titre) + '</h1>' +
                 (a.auteur ? '<p style="color:#888;font-size:0.9rem;">Par ' + a.auteur + '</p>' : '') +
                 (a.source ? '<p style="color:#888;font-size:0.9rem;">Source : ' + a.source + '</p>' : '') +
-                '<div class="article-full-content">' + a.contenu.split('\n').map(function(p) { return p.trim() ? '<p>' + p + '</p>' : ''; }).join('') + '</div>' +
-                '<div class="share-bar"><span class="share-bar-label">Partager :</span>' +
-                '<button class="fb-share-big" onclick="shareOnFB(' + a.id + ')">' + fbSvg() + ' Publier sur Facebook</button>' +
-                '<button class="copy-link-btn" onclick="copyLink(' + a.id + ')">📋 Copier le lien</button></div>';
+                '<div class="article-full-content">' + a.contenu.split('\n').map(function(p) { return p.trim() ? '<p>' + p + '</p>' : ''; }).join('') + '</div>';
 
             document.getElementById('articles-view').style.display = 'none';
             document.getElementById('article-full').classList.add('active');
@@ -474,16 +418,6 @@
             history.pushState({}, '', location.pathname);
         }
 
-        function copyLink(id) {
-            navigator.clipboard.writeText(SITE_URL + '/blog.html?article=' + id);
-            showToast('🔗 Lien copié !');
-        }
-
-        function showToast(msg) {
-            var t = document.getElementById('toast');
-            t.textContent = msg; t.classList.add('show');
-            setTimeout(function() { t.classList.remove('show'); }, 3000);
-        }
 
         function openLightbox(src) {
             document.getElementById('lightbox-image').src = src;
