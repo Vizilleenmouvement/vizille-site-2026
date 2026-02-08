@@ -248,7 +248,7 @@
                             ${photoHtml}
                             <div class="team-info">
                                 <h3 class="team-name">⭐ ${catherine.nom}</h3>
-                                ${catherine.role ? `<p class="team-role">${catherine.role}</p>` : ''}
+                                ${catherine.role ? `<span class="team-statut sortant">${catherine.role}</span>` : ''}
                             </div>
                         </div>
                     </div>
@@ -263,12 +263,16 @@
                     ? `<img src="${candidat.photo}" alt="${candidat.nom}" class="team-photo" loading="lazy">`
                     : `<div style="width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:3rem;">👤</div>`;
 
+                const statutHtml = candidat.nouveau
+                    ? `<span class="team-statut nouveau">Nouveau${candidat.nom.match(/^[A-ZÀÂÉÈÊËÏÎÔÙÛÜÇ][a-zàâéèêëïîôùûüçæœ]+e\b/) || ['Adjointe','Conseillère','Conseillère déléguée'].some(r => (candidat.role||'').startsWith(r)) ? ' candidate' : ' candidat'}</span>`
+                    : candidat.role ? `<span class="team-statut sortant">${candidat.role}</span>` : '';
+
                 return `
                     <div class="team-card" onclick="openCandidatModal(${index + 1})" tabindex="0" role="button" aria-label="${candidat.nom}">
                         ${photoHtml}
                         <div class="team-info">
                             <h3 class="team-name">${candidat.nom}</h3>
-                            ${candidat.role ? `<p class="team-role">${candidat.role}</p>` : ''}
+                            ${statutHtml}
                         </div>
                     </div>
                 `;
@@ -310,7 +314,14 @@
 
             // Infos de base
             document.getElementById('modal-name').textContent = candidat.nom || 'Nom non renseigné';
-            document.getElementById('modal-role').textContent = candidat.role || '';
+
+            const roleEl = document.getElementById('modal-role');
+            if (candidat.nouveau) {
+                const feminin = ['Adjointe','Conseillère','Conseillère déléguée'].some(r => (candidat.role||'').startsWith(r));
+                roleEl.textContent = feminin ? 'Nouvelle candidate' : 'Nouveau candidat';
+            } else {
+                roleEl.textContent = candidat.role || '';
+            }
 
             // Délégation
             const delegationEl = document.getElementById('modal-delegation');

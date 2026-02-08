@@ -66,6 +66,25 @@
     opacity: 0.8;
 }
 
+.team-statut {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.15rem 0.6rem;
+    border-radius: 12px;
+    margin-top: 0.3rem;
+}
+
+.team-statut.sortant {
+    background: var(--bleu-vizille);
+    color: white;
+}
+
+.team-statut.nouveau {
+    background: var(--or);
+    color: white;
+}
+
 .team-bio {
     margin-top: 1rem;
     color: var(--gris-texte);

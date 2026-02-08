@@ -5060,7 +5060,7 @@
                                 ${c.ordre != null ? `<span class="candidat-card-ordre">${c.ordre}</span>` : ''}
                             </div>
                             <div class="candidat-card-body">
-                                <div class="candidat-card-name">${c.nom || 'Sans nom'}</div>
+                                <div class="candidat-card-name">${c.nom || 'Sans nom'} ${c.nouveau ? '<span style="background:var(--or);color:white;font-size:0.7rem;padding:0.1rem 0.4rem;border-radius:8px;margin-left:0.3rem;">Nouveau</span>' : ''}</div>
                                 ${c.role ? `<div class="candidat-card-role">${c.role}</div>` : ''}
                                 ${c.delegation ? `<div class="candidat-card-delegation">${c.delegation}</div>` : ''}
                                 ${c.bio ? `<div class="candidat-card-bio">${c.bio}</div>` : ''}
@@ -5115,6 +5115,12 @@
                         <label>Délégation / Domaine</label>
                         <input type="text" id="edit-delegation" value="${c.delegation || ''}" placeholder="Ex: Urbanisme, Environnement">
                     </div>
+                </div>
+                <div class="form-group" style="margin-bottom:0.5rem;">
+                    <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;">
+                        <input type="checkbox" id="edit-nouveau" ${c.nouveau ? 'checked' : ''} style="width:auto;">
+                        <span>Nouveau candidat <small style="color:#888;">(ne fait pas partie de l'équipe municipale actuelle)</small></span>
+                    </label>
                 </div>
                 <div class="form-group">
                     <label>Biographie</label>
@@ -5306,6 +5312,7 @@
             const twitter = document.getElementById('edit-twitter').value.trim();
             const ordreVal = document.getElementById('edit-ordre').value.trim();
             const ordre = ordreVal !== '' ? parseInt(ordreVal) : null;
+            const nouveau = document.getElementById('edit-nouveau').checked;
             
             if (!nom) {
                 showToast('⚠️ Nom obligatoire', 'warning');
@@ -5339,7 +5346,7 @@
 
             const candidatData = {
                 id: currentEdit.index >= 0 ? data.candidats[currentEdit.index].id : Date.now(),
-                nom, role, delegation, bio, pedigree, objectifs, citation, email, facebook, linkedin, twitter, ordre, photo, video, actif: true
+                nom, role, delegation, bio, pedigree, objectifs, citation, email, facebook, linkedin, twitter, ordre, nouveau, photo, video, actif: true
             };
 
             if (currentEdit.index === -1) {
