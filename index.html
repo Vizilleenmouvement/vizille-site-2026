@@ -65,7 +65,7 @@
                     <span class="hero-candidate-title">Maire de Vizille</span>
                 </div>
             </div>
-            <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo-small animate-fade-in delay-1" loading="lazy">
+            <img src="images/logo-header.png" alt="Vizille en Mouvement" class="hero-logo-small animate-fade-in delay-1" loading="lazy">
             <p class="hero-slogan animate-slide-up delay-1">« Ensemble pour une ville dynamique et solidaire »</p>
             <blockquote class="hero-quote animate-slide-up delay-2">
                 Je crois en une action municipale proche des citoyens, fondée sur le dialogue, la construction collective et la confiance.
@@ -91,6 +91,39 @@
             <span class="election-icon">🗳️</span>
         </div>
     </div>
+
+    <!-- COMPTE À REBOURS -->
+    <div class="countdown-section" id="countdown-section">
+        <div class="countdown-container">
+            <div class="countdown-label">1er tour dans</div>
+            <div class="countdown-boxes" id="countdown-boxes">
+                <div class="countdown-box"><span id="cd-days">--</span><small>jours</small></div>
+                <div class="countdown-box"><span id="cd-hours">--</span><small>heures</small></div>
+                <div class="countdown-box"><span id="cd-minutes">--</span><small>minutes</small></div>
+            </div>
+        </div>
+    </div>
+    <script>
+    (function() {
+        const election = new Date('2026-03-15T08:00:00+01:00');
+        function update() {
+            const now = new Date();
+            const diff = election - now;
+            if (diff <= 0) {
+                document.getElementById('countdown-section').innerHTML = '<div class="countdown-container"><div class="countdown-label" style="font-size:1.2rem;font-weight:700;">🗳️ C\'est le jour du vote !</div></div>';
+                return;
+            }
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            document.getElementById('cd-days').textContent = d;
+            document.getElementById('cd-hours').textContent = h;
+            document.getElementById('cd-minutes').textContent = m;
+        }
+        update();
+        setInterval(update, 60000);
+    })();
+    </script>
 
     <!-- CARROUSEL BILAN & PROJET -->
     <section class="carousel-section">
@@ -120,46 +153,6 @@
                     <div class="loading-card"></div>
                     <div class="loading-card"></div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION FACEBOOK - Dernières actualités -->
-    <section class="facebook-section">
-        <div class="facebook-container">
-            <h2 class="section-title animate-on-scroll">
-                <span class="facebook-icon">📘</span>
-                Suivez-nous sur Facebook
-            </h2>
-            <p class="section-intro animate-on-scroll">Retrouvez toutes nos actualités en temps réel</p>
-
-            <div class="facebook-widget-wrapper animate-on-scroll">
-                <div id="fb-root"></div>
-                <script async defer crossorigin="anonymous"
-                    src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v18.0"
-                    nonce="randomNonce"></script>
-
-                <div class="fb-page"
-                    data-href="https://www.facebook.com/profile.php?id=61585097998743"
-                    data-tabs="timeline"
-                    data-width="500"
-                    data-height="500"
-                    data-small-header="true"
-                    data-adapt-container-width="true"
-                    data-hide-cover="false"
-                    data-show-facepile="false">
-                    <blockquote cite="https://www.facebook.com/profile.php?id=61585097998743" class="fb-xfbml-parse-ignore">
-                        <a href="https://www.facebook.com/profile.php?id=61585097998743">Vizille en Mouvement</a>
-                    </blockquote>
-                </div>
-            </div>
-
-            <div class="facebook-cta animate-on-scroll">
-                <a href="https://www.facebook.com/profile.php?id=61585097998743" target="_blank" class="btn-facebook">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                    Suivre notre page
-                </a>
-                <a href="bilan.html" class="btn-primary">Découvrir notre bilan complet →</a>
             </div>
         </div>
     </section>
@@ -202,22 +195,9 @@
                 <a href="projet.html#securite" class="theme-card animate-on-scroll delay-5">
                     <div class="theme-icon">🛡️</div>
                     <h3>Tranquillité</h3>
-                    <p>Sécurité, vidéoprotection, prévention</p>
+                    <p>Tranquillité publique, prévention, médiation</p>
                     <span class="theme-arrow">→</span>
                 </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION GALERIE PHOTOS -->
-    <section class="galerie-section">
-        <div class="galerie-container">
-            <h2 class="section-title animate-on-scroll">
-                <span>En images</span>
-                <a href="medias.html" class="see-all">Voir la galerie →</a>
-            </h2>
-            <div class="galerie-mosaic" id="galerie-mosaic">
-                <!-- Chargé dynamiquement -->
             </div>
         </div>
     </section>
@@ -270,7 +250,7 @@
     <footer>
         <div class="footer-grid">
             <div class="footer-brand">
-                <img src="images/logo.png" alt="" role="presentation" style="height: 40px; filter: brightness(0) invert(1);" loading="lazy">
+                <img src="images/logo-header.png" alt="" role="presentation" style="height: 40px; filter: brightness(0) invert(1);" loading="lazy">
                 <p>Liste citoyenne pour les élections municipales 2026.<br>Ensemble pour une ville dynamique et solidaire.</p>
                 <div class="social-links">
                     <a href="https://www.facebook.com/profile.php?id=61585097998743" target="_blank" aria-label="Facebook"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>

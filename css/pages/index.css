@@ -1426,3 +1426,70 @@
         height: 70px;
     }
 }
+
+/* ===== COMPTE À REBOURS ===== */
+.countdown-section {
+    background: linear-gradient(135deg, #1a3a5c 0%, #2d5f8a 100%);
+    padding: 1rem 2rem;
+    text-align: center;
+}
+
+.countdown-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.countdown-label {
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.countdown-boxes {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.countdown-box {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    min-width: 65px;
+}
+
+.countdown-box span {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--or-clair, #f0c36d);
+    line-height: 1;
+}
+
+.countdown-box small {
+    display: block;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+}
+
+@media (max-width: 600px) {
+    .countdown-container {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .countdown-box {
+        min-width: 55px;
+        padding: 0.4rem 0.75rem;
+    }
+    .countdown-box span {
+        font-size: 1.4rem;
+    }
+}
