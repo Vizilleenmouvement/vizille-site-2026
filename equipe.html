@@ -248,7 +248,7 @@
                             ${photoHtml}
                             <div class="team-info">
                                 <h3 class="team-name">⭐ ${catherine.prenom}<br>${catherine.nom}</h3>
-                                ${catherine.role ? `<span class="team-statut sortant">${catherine.role}</span>` : ''}
+                                ${catherine.role ? `<span class="team-statut sortant">${['Adjointe','Conseillère','Conseillère déléguée','Tête de Liste'].some(r => catherine.role.startsWith(r)) ? 'Actuelle' : 'Actuel'} ${catherine.role}</span>` : ''}
                             </div>
                         </div>
                     </div>
@@ -263,9 +263,10 @@
                     ? `<img src="${candidat.photo}" alt="${candidat.prenom} ${candidat.nom}" class="team-photo" loading="lazy">`
                     : `<div style="width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:3rem;">👤</div>`;
 
+                const feminin = ['Adjointe','Conseillère','Conseillère déléguée'].some(r => (candidat.role||'').startsWith(r));
                 const statutHtml = candidat.nouveau
-                    ? `<span class="team-statut nouveau">Nouveau${['Adjointe','Conseillère','Conseillère déléguée'].some(r => (candidat.role||'').startsWith(r)) ? ' candidate' : ' candidat'}</span>`
-                    : candidat.role ? `<span class="team-statut sortant">${candidat.role}</span>` : '';
+                    ? `<span class="team-statut nouveau">${feminin ? 'Nouvelle candidate' : 'Nouveau candidat'}</span>`
+                    : candidat.role ? `<span class="team-statut sortant">${feminin ? 'Actuelle' : 'Actuel'} ${candidat.role}</span>` : '';
 
                 return `
                     <div class="team-card" onclick="openCandidatModal(${index + 1})" tabindex="0" role="button" aria-label="${candidat.prenom} ${candidat.nom}">
