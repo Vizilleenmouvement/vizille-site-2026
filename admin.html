@@ -5017,7 +5017,12 @@
 
         function renderCandidats() {
             const search = (document.getElementById('search-candidats')?.value || '').toLowerCase();
-            const sorted = [...data.candidats].sort((a, b) => (a.ordre || 99) - (b.ordre || 99));
+            const sorted = [...data.candidats].sort((a, b) => {
+                const aOrdre = a.ordre != null ? a.ordre : Infinity;
+                const bOrdre = b.ordre != null ? b.ordre : Infinity;
+                if (aOrdre !== bOrdre) return aOrdre - bOrdre;
+                return (a.nom || '').localeCompare(b.nom || '', 'fr');
+            });
 
             const filtered = sorted.filter(c => {
                 if (!search) return true;
@@ -5052,7 +5057,7 @@
                                     ? `<img src="${photoUrl}" alt="${c.nom}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                        <span class="no-photo" style="display:none;">👤</span>`
                                     : '<span class="no-photo">👤</span>'}
-                                <span class="candidat-card-ordre">${c.ordre || i + 1}</span>
+                                ${c.ordre != null ? `<span class="candidat-card-ordre">${c.ordre}</span>` : ''}
                             </div>
                             <div class="candidat-card-body">
                                 <div class="candidat-card-name">${c.nom || 'Sans nom'}</div>
@@ -5097,8 +5102,8 @@
                         <input type="text" id="edit-nom" value="${c.nom || ''}">
                     </div>
                     <div class="form-group">
-                        <label>Ordre d'affichage</label>
-                        <input type="number" id="edit-ordre" value="${c.ordre || 10}" min="1">
+                        <label>N° sur la liste <small style="color:#888;">(vide = ordre alphabétique)</small></label>
+                        <input type="number" id="edit-ordre" value="${c.ordre != null ? c.ordre : ''}" min="1" placeholder="Auto (alphabétique)">
                     </div>
                 </div>
                 <div class="form-row">
@@ -5299,7 +5304,8 @@
             const facebook = document.getElementById('edit-facebook').value.trim();
             const linkedin = document.getElementById('edit-linkedin').value.trim();
             const twitter = document.getElementById('edit-twitter').value.trim();
-            const ordre = parseInt(document.getElementById('edit-ordre').value) || 10;
+            const ordreVal = document.getElementById('edit-ordre').value.trim();
+            const ordre = ordreVal !== '' ? parseInt(ordreVal) : null;
             
             if (!nom) {
                 showToast('⚠️ Nom obligatoire', 'warning');

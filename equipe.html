@@ -199,10 +199,15 @@
 
                 candidatsData = await response.json();
 
-                // Filtrer les actifs et trier par ordre (Catherine incluse)
+                // Filtrer les actifs, trier : numérotés d'abord (par ordre), puis les autres par ordre alphabétique
                 candidatsData = candidatsData
                     .filter(c => c.actif !== false)
-                    .sort((a, b) => (a.ordre || 99) - (b.ordre || 99));
+                    .sort((a, b) => {
+                        const aOrdre = a.ordre != null ? a.ordre : Infinity;
+                        const bOrdre = b.ordre != null ? b.ordre : Infinity;
+                        if (aOrdre !== bOrdre) return aOrdre - bOrdre;
+                        return (a.nom || '').localeCompare(b.nom || '', 'fr');
+                    });
 
                 // Afficher toute l'équipe
                 renderTeam();
@@ -221,7 +226,12 @@
 
             // Séparer Catherine (ordre 1) des autres
             const catherine = candidatsData.find(c => c.ordre === 1);
-            const autres = candidatsData.filter(c => c.ordre !== 1).sort((a, b) => a.ordre - b.ordre);
+            const autres = candidatsData.filter(c => c.ordre !== 1).sort((a, b) => {
+                const aOrdre = a.ordre != null ? a.ordre : Infinity;
+                const bOrdre = b.ordre != null ? b.ordre : Infinity;
+                if (aOrdre !== bOrdre) return aOrdre - bOrdre;
+                return (a.nom || '').localeCompare(b.nom || '', 'fr');
+            });
 
             // Carte Catherine (seule en haut, centrée)
             let catherineHtml = '';
