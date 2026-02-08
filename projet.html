@@ -787,8 +787,19 @@ function renderCurrentView() {
     document.getElementById('view-concertation').classList.add('hidden');
     document.getElementById('empty-state').classList.add('hidden');
 
+    // Supprimer les flip cards existantes
+    const existingFlip = document.getElementById('view-flip');
+    if (existingFlip) existingFlip.remove();
+
     if (filteredData.length === 0) {
         document.getElementById('empty-state').classList.remove('hidden');
+        return;
+    }
+
+    // Vue flip cards pour Transition écologique
+    const selectedTheme = document.getElementById('filter-theme')?.value;
+    if (currentView === 'cards' && selectedTheme === 'Transition écologique') {
+        renderFlipCardsView();
         return;
     }
 
@@ -803,6 +814,115 @@ function renderCurrentView() {
             renderTableView();
             break;
     }
+}
+
+// ===== CARTES FLIP (RECTO/VERSO) =====
+function renderFlipCardsView() {
+    const ecoData = filteredData.filter(p => projectHasTheme(p, 'Transition écologique'));
+    const objectifs = ecoData.filter(p => p.type === 'objectif').sort((a, b) => a.id - b.id);
+    const engagements = ecoData.filter(p => p.type === 'engagement').sort((a, b) => a.id - b.id);
+
+    // Couleurs pour chaque engagement
+    const colors = [
+        '#e74c3c', '#e67e22', '#f1c40f', '#2ecc71', '#1abc9c',
+        '#3498db', '#9b59b6', '#34495e', '#16a085', '#c0392b', '#8e44ad'
+    ];
+
+    let html = '<div class="flip-grid" id="view-flip">';
+
+    // Titre section
+    html += '<div class="flip-grid-title"><h2>🌱 Transition écologique</h2><p>9 engagements + 2 projets structurants — Cliquez pour retourner les cartes</p></div>';
+
+    // Projets d'abord
+    objectifs.forEach((p, i) => {
+        const color = '#8e44ad'; // Violet pour projets
+        html += buildFlipCard(p, color, 'PROJET ' + (i + 1));
+    });
+
+    // Puis engagements
+    engagements.forEach((p, i) => {
+        const color = colors[i % colors.length];
+        html += buildFlipCard(p, color, 'ENGAGEMENT ' + (i + 1));
+    });
+
+    html += '</div>';
+
+    // Insérer après le bouton retour
+    const resultsSection = document.getElementById('results-section');
+    resultsSection.insertAdjacentHTML('beforeend', html);
+
+    // Gérer les clics
+    document.querySelectorAll('.flip-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            // Ne pas flipper si on clique sur "Voir la fiche complète"
+            if (e.target.closest('.flip-back-footer')) {
+                const id = parseInt(card.dataset.id);
+                openProjectModal(id);
+                return;
+            }
+            card.classList.toggle('flipped');
+        });
+    });
+}
+
+function buildFlipCard(projet, color, badge) {
+    const pourquoi = projet.pourquoi || projet.description || projet.resume || '';
+    const actions = projet.ce_quon_fait || projet.axes_action || [];
+    const benefices = projet.benefices || [];
+    const indicateurs = projet.indicateurs ?
+        (typeof projet.indicateurs === 'string' ? projet.indicateurs.split(' • ') : projet.indicateurs) : [];
+    const darkerColor = adjustColor(color, -25);
+
+    return `
+        <div class="flip-card" data-id="${projet.id}">
+            <div class="flip-card-inner">
+                <!-- RECTO -->
+                <div class="flip-card-front">
+                    <div class="flip-front-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
+                        <span class="flip-front-badge">${badge}</span>
+                        <h3 class="flip-front-title">${projet.titre.replace(/^(Objectif \d+ - |Engagement \d+ - )/, '')}</h3>
+                        <div class="flip-front-subtitle">${projet.resume || ''}</div>
+                    </div>
+                    <div class="flip-front-body">
+                        <div class="flip-front-pourquoi">
+                            <strong>🎯 Pourquoi ?</strong><br>
+                            ${pourquoi.length > 180 ? pourquoi.substring(0, 180) + '...' : pourquoi}
+                        </div>
+                        <div class="flip-front-hint">
+                            <span class="flip-icon">🔄</span> Retourner pour voir les détails
+                        </div>
+                    </div>
+                </div>
+                <!-- VERSO -->
+                <div class="flip-card-back">
+                    <div class="flip-back-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
+                        <span class="flip-back-title">${projet.titre.replace(/^(Objectif \d+ - |Engagement \d+ - )/, '')}</span>
+                        <span class="flip-back-close">↩ Retour</span>
+                    </div>
+                    <div class="flip-back-body">
+                        ${actions.length > 0 ? `
+                        <div class="flip-back-section">
+                            <h4 class="section-actions">🔧 Ce qu'on fait</h4>
+                            <ul>${actions.map(a => `<li>${a}</li>`).join('')}</ul>
+                        </div>` : ''}
+                        ${benefices.length > 0 ? `
+                        <div class="flip-back-section">
+                            <h4 class="section-benefices">💎 Bénéfices</h4>
+                            <ul>${benefices.map(b => `<li>${b}</li>`).join('')}</ul>
+                        </div>` : ''}
+                        ${indicateurs.length > 0 ? `
+                        <div class="flip-back-section">
+                            <h4 class="section-indicateurs">📊 Indicateurs</h4>
+                            <ul>${indicateurs.map(ind => `<li>${ind}</li>`).join('')}</ul>
+                        </div>` : ''}
+                    </div>
+                    <div class="flip-back-footer" onclick="event.stopPropagation(); openProjectModal(${projet.id});">
+                        📋 Voir la fiche complète
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 function renderConcertationView() {

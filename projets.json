@@ -1053,8 +1053,18 @@
     "resume": "Dans chaque projet municipal, dès la conception.",
     "description": "Pour que chaque décision (travaux, achats, urbanisme, services) réduise l'empreinte écologique et améliore la qualité de vie, aujourd'hui et demain.",
     "details": "Ce qu'on fait : Évaluer l'impact environnemental et énergétique des projets. Favoriser des solutions sobres, réparables et durables. Structurer une démarche commune : transition numérique responsable & responsabilité sociétale.",
-    "benefices": "Moins de dépenses d'énergie et de ressources. Des projets cohérents, lisibles et mesurables. Une commune plus résiliente et exemplaire.",
-    "indicateurs": "% de projets avec bilan d'impact • kWh économisés/an • Part d'achats responsables"
+    "benefices": [
+      "Moins de dépenses d'énergie et de ressources.",
+      "Des projets cohérents, lisibles et mesurables.",
+      "Une commune plus résiliente et exemplaire."
+    ],
+    "indicateurs": "% de projets avec bilan d'impact • kWh économisés/an • Part d'achats responsables",
+    "pourquoi": "Pour que chaque décision (travaux, achats, urbanisme, services) réduise l'empreinte écologique et améliore la qualité de vie, aujourd'hui et demain.",
+    "ce_quon_fait": [
+      "Évaluer l'impact environnemental et énergétique des projets.",
+      "Favoriser des solutions sobres, réparables et durables.",
+      "Structurer une démarche commune : transition numérique responsable & responsabilité sociétale."
+    ]
   },
   {
     "id": 626,
@@ -1064,8 +1074,21 @@
     "resume": "Un projet collectif, compris et maîtrisé localement.",
     "description": "Parce que la transition réussit quand elle est partagée : pédagogie, participation, santé publique et actions concrètes au plus près des habitants.",
     "details": "Ce qu'on fait : S'appuyer sur le Plan Climat du territoire pour amplifier les actions. Renforcer la santé publique (pollution, risques, expositions). Former et informer sur les enjeux climatiques. Lancer des expérimentations (potagers, déchets). Soutenir les projets scolaires. Cultiver les savoirs : cafés-débats, ciné-débat.",
-    "benefices": "Des habitants acteurs, mieux informés. Des choix collectifs plus acceptés. Des initiatives locales qui essaiment.",
-    "indicateurs": "Nb d'actions pédagogiques/an • Nb de participants • Nb de projets écoles/assos"
+    "benefices": [
+      "Des habitants acteurs, mieux informés.",
+      "Une transition comprise et partagée.",
+      "Des actions concrètes au plus près du quotidien."
+    ],
+    "indicateurs": "Nb d'actions pédagogiques/an • Nb de participants • Nb de projets écoles/assos",
+    "pourquoi": "Parce que la transition réussit quand elle est partagée : pédagogie, participation, santé publique et actions concrètes au plus près des habitants.",
+    "ce_quon_fait": [
+      "S'appuyer sur le Plan Climat du territoire pour amplifier les actions.",
+      "Renforcer la santé publique (pollution, risques, expositions).",
+      "Former et informer : enjeux climatiques et transitions.",
+      "Lancer des expérimentations (potagers, déchets).",
+      "Soutenir les projets scolaires.",
+      "Cultiver les savoirs : cafés-débats, ciné-débat."
+    ]
   },
   {
     "id": 627,
@@ -1171,9 +1194,19 @@
     "resume": "Réseau de chaleur & accompagnement des copropriétés.",
     "description": "Décarboner l'énergie locale et réduire la facture, en priorisant un réseau de chaleur urbain (quartier nord / centre-ville).",
     "details": "Ce qu'on fait : Déployer des ENR sur la commune (projets communaux). Accompagner habitants et copropriétés pour le raccordement. Informer sur les gains et les modalités.",
-    "benefices": "Moins de CO₂. Une énergie plus stable et locale. Des logements mieux valorisés.",
+    "benefices": [
+      "Moins de CO₂.",
+      "Une énergie plus stable et locale.",
+      "Des logements mieux valorisés."
+    ],
     "indicateurs": "Taux de raccordement • tCO₂ évitées/an • Nb de copropriétés accompagnées",
-    "perimetre": "Quartier nord / centre-ville"
+    "perimetre": "Quartier nord / centre-ville",
+    "pourquoi": "Décarboner l'énergie locale et réduire la facture, en priorisant un réseau de chaleur urbain (quartier nord / centre-ville).",
+    "ce_quon_fait": [
+      "Déployer des ENR sur la commune (projets communaux).",
+      "Accompagner habitants et copropriétés pour le raccordement.",
+      "Informer sur les gains et les modalités."
+    ]
   },
   {
     "id": 640,
@@ -1183,9 +1216,19 @@
     "resume": "Cours d'écoles prioritaires.",
     "description": "Limiter les ruissellements et rafraîchir les cours, au bénéfice des enfants et du voisinage.",
     "details": "Ce qu'on fait : Sols perméables + végétalisation. Priorité : Joliot-Curie, maternelle centre, école du château. Co-conception avec équipes éducatives & parents.",
-    "benefices": "Moins d'îlots de chaleur. Meilleure gestion des eaux pluviales. Cours plus agréables et sûres.",
+    "benefices": [
+      "Moins d'îlots de chaleur.",
+      "Meilleure gestion des eaux pluviales.",
+      "Cours plus agréables et sûres."
+    ],
     "indicateurs": "m² désimperméabilisés • Nb d'écoles concernées • Suivi température / confort",
-    "perimetre": "Joliot-Curie, maternelle centre, école du château"
+    "perimetre": "Joliot-Curie, maternelle centre, école du château",
+    "pourquoi": "Limiter les ruissellements et rafraîchir les cours, au bénéfice des enfants et du voisinage.",
+    "ce_quon_fait": [
+      "Sols perméables + végétalisation.",
+      "Priorité : Joliot-Curie, maternelle centre, école du château.",
+      "Co-conception avec équipes éducatives & parents."
+    ]
   },
   {
     "id": 641,
@@ -1195,9 +1238,19 @@
     "resume": "Place Henri Barbusse (marché).",
     "description": "Créer un cœur de ville plus ombragé, plus convivial et mieux adapté aux usages du marché.",
     "details": "Ce qu'on fait : Repenser circulations & usages. Ajouter ombrage, végétation, sols perméables. Co-concevoir avec commerçants & habitants.",
-    "benefices": "Marché plus attractif. Confort été/hiver. Espace public apaisé.",
+    "benefices": [
+      "Marché plus attractif.",
+      "Confort été/hiver.",
+      "Espace public apaisé."
+    ],
     "indicateurs": "% surface ombragée • Nb d'événements/usages • Satisfaction usagers",
-    "perimetre": "Place Henri Barbusse"
+    "perimetre": "Place Henri Barbusse",
+    "pourquoi": "Créer un cœur de ville plus ombragé, plus convivial et mieux adapté aux usages du marché.",
+    "ce_quon_fait": [
+      "Repenser circulations & usages.",
+      "Ajouter ombrage, végétation, sols perméables.",
+      "Co-concevoir avec commerçants & habitants."
+    ]
   },
   {
     "id": 642,
@@ -1207,8 +1260,18 @@
     "resume": "Développer les zones d'ombrage.",
     "description": "Accélérer la création d'ombre naturelle et de corridors de biodiversité.",
     "details": "Ce qu'on fait : Plan de plantation pluriannuel. Essences adaptées au climat. Suivi : arrosage, protection, remplacement.",
-    "benefices": "Plus de fraîcheur. Biodiversité renforcée. Cadre de vie amélioré.",
-    "indicateurs": "Nb d'arbres plantés/an • Taux de reprise • m² d'ombre créée"
+    "benefices": [
+      "Plus d'ombre et de fraîcheur.",
+      "Biodiversité renforcée.",
+      "Cadre de vie embelli."
+    ],
+    "indicateurs": "Nb d'arbres plantés/an • Taux de reprise • m² d'ombre créée",
+    "pourquoi": "Accélérer la création d'ombre naturelle et de corridors de biodiversité dans tous les quartiers.",
+    "ce_quon_fait": [
+      "Plan Canopée communal.",
+      "Planter dans les rues, parcs et abords d'équipements.",
+      "Associer les habitants aux choix d'essences."
+    ]
   },
   {
     "id": 643,
@@ -1218,8 +1281,18 @@
     "resume": "Canaux, espaces de fraîcheur, piscine.",
     "description": "Offrir des refuges de fraîcheur lors des épisodes chauds et valoriser les canaux comme atout local.",
     "details": "Ce qu'on fait : Valoriser les canaux. Identifier et aménager des espaces de fraîcheur. Maintenir la piscine municipale en fonctionnement.",
-    "benefices": "Meilleure adaptation aux canicules. Bien-être pour tous. Attractivité estivale.",
-    "indicateurs": "Nb d'espaces de fraîcheur • Fréquentation • Jours d'ouverture piscine"
+    "benefices": [
+      "Meilleure adaptation aux canicules.",
+      "Bien-être pour tous.",
+      "Attractivité estivale."
+    ],
+    "indicateurs": "Nb d'espaces de fraîcheur • Fréquentation • Jours d'ouverture piscine",
+    "pourquoi": "Offrir des refuges de fraîcheur lors des épisodes chauds et valoriser les canaux comme atout local.",
+    "ce_quon_fait": [
+      "Valoriser les canaux.",
+      "Identifier et aménager des espaces de fraîcheur.",
+      "Maintenir la piscine municipale en fonctionnement."
+    ]
   },
   {
     "id": 644,
@@ -1229,8 +1302,18 @@
     "resume": "LED + pilotage intelligent.",
     "description": "Réduire la consommation tout en gardant un éclairage adapté aux usages et à la sécurité.",
     "details": "Ce qu'on fait : Généraliser les LED. Déployer pilotage (détection présence, scénarios). Ajuster selon lieux et horaires.",
-    "benefices": "Baisse des factures. Moins de pollution lumineuse. Confort & sécurité.",
-    "indicateurs": "% points lumineux en LED • kWh économisés/an • Nb de zones pilotées"
+    "benefices": [
+      "Baisse des factures.",
+      "Moins de pollution lumineuse.",
+      "Confort & sécurité."
+    ],
+    "indicateurs": "% points lumineux en LED • kWh économisés/an • Nb de zones pilotées",
+    "pourquoi": "Réduire la consommation tout en gardant un éclairage adapté aux usages et à la sécurité.",
+    "ce_quon_fait": [
+      "Généraliser les LED.",
+      "Déployer pilotage (détection présence, scénarios).",
+      "Ajuster selon lieux et horaires."
+    ]
   },
   {
     "id": 645,
@@ -1240,8 +1323,19 @@
     "resume": "Bâtiments communaux, priorité écoles.",
     "description": "Rationaliser le patrimoine bâti, réduire les charges et améliorer les conditions d'apprentissage et de travail.",
     "details": "Ce qu'on fait : Stratégie de rénovation + conformité. Études pour prioriser. Priorité groupes scolaires. Intégrer qualité de l'air intérieur.",
-    "benefices": "Économies durables. Confort thermique. Santé & performance à l'école.",
-    "indicateurs": "kWh/m²/an • € charges réduites • Nb de bâtiments rénovés"
+    "benefices": [
+      "Économies durables.",
+      "Confort thermique.",
+      "Santé & performance à l'école."
+    ],
+    "indicateurs": "kWh/m²/an • € charges réduites • Nb de bâtiments rénovés",
+    "pourquoi": "Rationaliser le patrimoine bâti, réduire les charges et améliorer les conditions d'apprentissage et de travail.",
+    "ce_quon_fait": [
+      "Stratégie de rénovation + conformité.",
+      "Études pour prioriser.",
+      "Priorité groupes scolaires.",
+      "Intégrer qualité de l'air intérieur."
+    ]
   },
   {
     "id": 646,
@@ -1251,8 +1345,21 @@
     "resume": "Inclusion, réparation, accessibilité, vigilance IA.",
     "description": "Mettre le numérique au service de tous, en limitant l'empreinte et en protégeant les données.",
     "details": "Ce qu'on fait : Lutter contre la fracture numérique. Former les personnes en difficulté. Réparer/donner/recycler plutôt que remplacer. Créer un repair café ou Fablab. Accessibilité des sites. Cadre d'usage IA + frugalité + données.",
-    "benefices": "Plus d'autonomie. Moins de déchets électroniques. Services publics plus accessibles.",
-    "indicateurs": "Nb d'ateliers/an • Nb d'appareils réparés • Taux d'accessibilité des sites"
+    "benefices": [
+      "Plus d'autonomie.",
+      "Moins de déchets électroniques.",
+      "Services publics plus accessibles."
+    ],
+    "indicateurs": "Nb d'ateliers/an • Nb d'appareils réparés • Taux d'accessibilité des sites",
+    "pourquoi": "Mettre le numérique au service de tous, en limitant l'empreinte et en protégeant les données.",
+    "ce_quon_fait": [
+      "Lutter contre la fracture numérique.",
+      "Former les personnes en difficulté.",
+      "Réparer/donner/recycler plutôt que remplacer.",
+      "Créer un repair café ou Fablab.",
+      "Accessibilité des sites.",
+      "Cadre d'usage IA + frugalité + données."
+    ]
   },
   {
     "id": 647,
@@ -1262,10 +1369,21 @@
     "resume": "Gestion durable & résilience (125 ha).",
     "description": "Protéger un patrimoine naturel majeur et accompagner sa résilience face au climat avec l'ONF et les partenaires.",
     "details": "Ce qu'on fait : Biodiversité, sols, paysages. Production de bois encadrée. Accueil du public : promenade, rando, découverte. Actions avec Département pour l'entretien.",
-    "benefices": "Forêt plus résiliente. Espace nature accessible. Atout écologique et récréatif.",
+    "benefices": [
+      "Forêt plus résiliente.",
+      "Espace nature accessible.",
+      "Atout écologique et récréatif."
+    ],
     "indicateurs": "Actions ONF/partenaires • Indicateurs biodiversité • Entretien & fréquentation",
     "partenaires": "ONF, Département",
-    "perimetre": "125 ha de forêt communale"
+    "perimetre": "125 ha de forêt communale",
+    "pourquoi": "Protéger un patrimoine naturel majeur et accompagner sa résilience face au climat avec l'ONF et les partenaires.",
+    "ce_quon_fait": [
+      "Biodiversité, sols, paysages.",
+      "Production de bois encadrée.",
+      "Accueil du public : promenade, rando, découverte.",
+      "Actions avec Département pour l'entretien."
+    ]
   },
   {
     "id": 700,
