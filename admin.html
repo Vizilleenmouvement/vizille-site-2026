@@ -5062,6 +5062,8 @@
                                 ${c.citation ? `<div class="candidat-card-citation">« ${c.citation} »</div>` : ''}
                                 ${socialsHtml}
                                 <div class="candidat-card-footer">
+                                    <button class="btn btn-sm" style="background: #25D366; color: white;" onclick="copyForWhatsApp('candidat', ${realIndex})" title="WhatsApp">💬</button>
+                                    <button class="btn btn-sm" style="background: #1877f2; color: white;" onclick="shareOnFBAdmin('candidat', ${realIndex})" title="Partager sur Facebook">📘</button>
                                     <button class="btn btn-sm btn-primary" onclick="openEditCandidat(${realIndex})">✏️ Modifier</button>
                                     <button class="btn btn-sm btn-danger" onclick="deleteCandidat(${realIndex})">🗑️</button>
                                 </div>
@@ -5608,6 +5610,18 @@
                 text += `🗳️ *Vizille en Mouvement*\n`;
                 text += `🌐 https://Vizilleenmouvement.github.io/Vizille-en-mouvement/blog.html`;
             }
+            else if (type === 'candidat') {
+                const c = data.candidats[index];
+                text = `👤 *${c.nom}*\n`;
+                if (c.role) text += `_${c.role}_`;
+                if (c.delegation) text += ` — _${c.delegation}_`;
+                text += `\n\n`;
+                if (c.bio) text += `${c.bio}\n\n`;
+                if (c.objectifs) text += `🎯 *Objectifs :* ${c.objectifs}\n\n`;
+                text += `━━━━━━━━━━━━━━━\n`;
+                text += `🗳️ *Vizille en Mouvement*\n`;
+                text += `🌐 https://vizilleenmouvement.fr/equipe.html`;
+            }
             
             navigator.clipboard.writeText(text).then(() => {
                 showToast('✅ Copié ! Collez dans WhatsApp', 'success');
@@ -5919,11 +5933,13 @@
             const SITE = 'https://vizilleenmouvement.fr';
             let text = '';
             let url = SITE;
+            let photoInfo = '';
 
             if (type === 'article') {
                 const a = data.articles[index];
                 url = SITE + '/blog.html?article=' + a.id;
                 text = '📰 ' + a.titre + '\n\n' + (a.extrait || (a.contenu || '').substring(0, 200)) + '\n\n👉 ' + url + '\n\n#Vizille #Municipales2026 #VizilleEnMouvement';
+                if (a.image) photoInfo = '\n\n📷 Image à joindre : ' + SITE + '/' + a.image;
             } else if (type === 'projet') {
                 const p = data.projets[index];
                 url = SITE + '/projet.html';
@@ -5936,13 +5952,29 @@
                 const f = data.faq[index];
                 url = SITE + '/faq.html';
                 text = '❓ ' + f.question + '\n\n💬 ' + (f.reponse || '').substring(0, 200) + '\n\n👉 ' + url + '\n\n#Vizille #Municipales2026 #VizilleEnMouvement';
+            } else if (type === 'candidat') {
+                const c = data.candidats[index];
+                url = SITE + '/equipe.html';
+                text = '👤 Découvrez ' + c.nom;
+                if (c.role) text += ' — ' + c.role;
+                if (c.delegation) text += ' (' + c.delegation + ')';
+                text += '\n\n';
+                if (c.bio) text += c.bio.substring(0, 250) + '\n\n';
+                if (c.objectifs) text += '🎯 ' + c.objectifs.substring(0, 200) + '\n\n';
+                text += '👉 Découvrez toute l\'équipe : ' + url + '\n\n#Vizille #Municipales2026 #VizilleEnMouvement';
+                if (c.photo) photoInfo = '\n\n📷 Photo à joindre : ' + SITE + '/' + c.photo;
+                if (c.video) photoInfo += '\n🎬 Vidéo portrait : ' + SITE + '/' + c.video;
             }
 
             navigator.clipboard.writeText(text).then(function() {
-                window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), 'fb-share', 'width=600,height=500');
-                showToast('📋 Texte copié + Facebook ouvert !', 'success');
+                window.open('https://www.facebook.com/', '_blank');
+                if (photoInfo) {
+                    showToast('📋 Texte copié ! Collez dans Facebook + ajoutez la photo/vidéo', 'success');
+                } else {
+                    showToast('📋 Texte copié ! Collez dans Facebook', 'success');
+                }
             }).catch(function() {
-                window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), 'fb-share', 'width=600,height=500');
+                window.open('https://www.facebook.com/', '_blank');
                 showToast('Facebook ouvert !', 'success');
             });
         }
