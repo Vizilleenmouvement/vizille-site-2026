@@ -48,7 +48,8 @@
     "linkedin": "",
     "twitter": "",
     "ordre": 2,
-    "photo": null,
+    "nouveau": false,
+    "photo": "images/bernard-ughetto-monfrin-.jpg",
     "video": "images/candidats/bernard-ughetto-monfrin-.mp4",
     "actif": true
   },
