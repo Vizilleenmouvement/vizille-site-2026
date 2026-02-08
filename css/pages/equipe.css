@@ -51,6 +51,7 @@
     font-size: 1.1rem;
     color: var(--bleu-vizille);
     margin-bottom: 0.25rem;
+    white-space: nowrap;
 }
 
 .team-role {
