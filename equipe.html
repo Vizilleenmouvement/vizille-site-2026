@@ -299,10 +299,24 @@
                 <div class="team-grid">${autresCards}</div>
             `;
 
-            // Forcer la lecture sur mobile (autoplay parfois bloqué)
-            document.querySelectorAll('video.team-photo').forEach(video => {
-                video.play().catch(() => {});
-            });
+            // Forcer la lecture sur mobile
+            function playAllVideos() {
+                document.querySelectorAll('video.team-photo').forEach(video => {
+                    video.muted = true;
+                    video.setAttribute('playsinline', '');
+                    video.play().catch(() => {});
+                });
+            }
+            playAllVideos();
+
+            // iOS : relancer au premier touch si autoplay bloqué
+            const startVideos = () => {
+                playAllVideos();
+                document.removeEventListener('touchstart', startVideos);
+                document.removeEventListener('scroll', startVideos);
+            };
+            document.addEventListener('touchstart', startVideos, { once: true });
+            document.addEventListener('scroll', startVideos, { once: true });
         }
 
         document.addEventListener('DOMContentLoaded', loadCandidats);
