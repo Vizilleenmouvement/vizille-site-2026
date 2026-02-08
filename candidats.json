@@ -1,13 +1,10 @@
 [
   {
     "id": 1,
-    "nom": "Catherine Troton",
+    "prenom": "Catherine",
+    "nom": "Troton",
     "role": "Tête de Liste",
     "delegation": "Maire de Vizille",
-    "photo": "images/catherine-troton.jpg",
-    "video": "images/candidats/catherine-troton.mp4",
-    "ordre": 1,
-    "actif": true,
     "bio": "Engagée depuis plus de 20 ans pour Vizille. Porte les valeurs de solidarité, d'écoute et de proximité au cœur de son action municipale.",
     "pedigree": "Maire de Vizille depuis 2020. Expérience en gestion publique et développement local.",
     "objectifs": "Poursuivre la transformation de Vizille avec des projets ambitieux pour tous les habitants.",
@@ -15,7 +12,12 @@
     "email": "",
     "facebook": "",
     "linkedin": "",
-    "twitter": ""
+    "twitter": "",
+    "ordre": 1,
+    "nouveau": false,
+    "photo": "images/catherine-troton.jpg",
+    "video": "images/candidats/catherine-troton.mp4",
+    "actif": true
   },
   {
     "id": 2,
