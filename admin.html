@@ -3012,7 +3012,8 @@
 
             // Recherche dans les candidats
             data.candidats.forEach((c, i) => {
-                if ((c.nom || '').toLowerCase().includes(q) ||
+                if ((c.prenom || '').toLowerCase().includes(q) ||
+                    (c.nom || '').toLowerCase().includes(q) ||
                     (c.role || '').toLowerCase().includes(q) ||
                     (c.bio || '').toLowerCase().includes(q)) {
                     results.candidats.push({ ...c, index: i });
@@ -3080,7 +3081,7 @@
                             <div class="search-result-item" onclick="goToResult('candidats', ${c.index})">
                                 <span class="icon">👤</span>
                                 <div>
-                                    <div class="title">${c.nom || 'Sans nom'}</div>
+                                    <div class="title">${c.prenom || ''} ${c.nom || 'Sans nom'}</div>
                                     <div class="subtitle">${c.role || ''}</div>
                                 </div>
                             </div>
@@ -5026,7 +5027,8 @@
 
             const filtered = sorted.filter(c => {
                 if (!search) return true;
-                return (c.nom || '').toLowerCase().includes(search) ||
+                return (c.prenom || '').toLowerCase().includes(search) ||
+                       (c.nom || '').toLowerCase().includes(search) ||
                        (c.role || '').toLowerCase().includes(search) ||
                        (c.delegation || '').toLowerCase().includes(search) ||
                        (c.bio || '').toLowerCase().includes(search);
@@ -5054,13 +5056,13 @@
                         <div class="candidat-card">
                             <div class="candidat-card-photo">
                                 ${photoUrl
-                                    ? `<img src="${photoUrl}" alt="${c.nom}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    ? `<img src="${photoUrl}" alt="${c.prenom} ${c.nom}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                        <span class="no-photo" style="display:none;">👤</span>`
                                     : '<span class="no-photo">👤</span>'}
                                 ${c.ordre != null ? `<span class="candidat-card-ordre">${c.ordre}</span>` : ''}
                             </div>
                             <div class="candidat-card-body">
-                                <div class="candidat-card-name">${c.nom || 'Sans nom'} ${c.nouveau ? '<span style="background:var(--or);color:white;font-size:0.7rem;padding:0.1rem 0.4rem;border-radius:8px;margin-left:0.3rem;">Nouveau</span>' : ''}</div>
+                                <div class="candidat-card-name">${c.prenom || ''} ${c.nom || 'Sans nom'} ${c.nouveau ? '<span style="background:var(--or);color:white;font-size:0.7rem;padding:0.1rem 0.4rem;border-radius:8px;margin-left:0.3rem;">Nouveau</span>' : ''}</div>
                                 ${c.role ? `<div class="candidat-card-role">${c.role}</div>` : ''}
                                 ${c.delegation ? `<div class="candidat-card-delegation">${c.delegation}</div>` : ''}
                                 ${c.bio ? `<div class="candidat-card-bio">${c.bio}</div>` : ''}
@@ -5098,12 +5100,16 @@
             document.getElementById('modal-body').innerHTML = `
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Nom complet *</label>
+                        <label>Prénom *</label>
+                        <input type="text" id="edit-prenom" value="${c.prenom || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>Nom *</label>
                         <input type="text" id="edit-nom" value="${c.nom || ''}">
                     </div>
                     <div class="form-group">
-                        <label>N° sur la liste <small style="color:#888;">(vide = ordre alphabétique)</small></label>
-                        <input type="number" id="edit-ordre" value="${c.ordre != null ? c.ordre : ''}" min="1" placeholder="Auto (alphabétique)">
+                        <label>N° liste <small style="color:#888;">(vide = alpha)</small></label>
+                        <input type="number" id="edit-ordre" value="${c.ordre != null ? c.ordre : ''}" min="1" placeholder="Auto">
                     </div>
                 </div>
                 <div class="form-row">
@@ -5299,6 +5305,7 @@
         }
 
         async function saveCandidat() {
+            const prenom = document.getElementById('edit-prenom').value.trim();
             const nom = document.getElementById('edit-nom').value.trim();
             const role = document.getElementById('edit-role').value.trim();
             const delegation = document.getElementById('edit-delegation').value.trim();
@@ -5314,8 +5321,8 @@
             const ordre = ordreVal !== '' ? parseInt(ordreVal) : null;
             const nouveau = document.getElementById('edit-nouveau').checked;
             
-            if (!nom) {
-                showToast('⚠️ Nom obligatoire', 'warning');
+            if (!prenom || !nom) {
+                showToast('⚠️ Prénom et nom obligatoires', 'warning');
                 return;
             }
 
@@ -5325,7 +5332,7 @@
             // Upload photo si nouvelle
             if (pendingPhoto && !pendingPhoto.remove) {
                 showToast('⏳ Upload de la photo...', 'info');
-                const photoUrl = await uploadPhoto(pendingPhoto, nom);
+                const photoUrl = await uploadPhoto(pendingPhoto, prenom + ' ' + nom);
                 if (photoUrl) {
                     photo = photoUrl;
                 }
@@ -5336,7 +5343,7 @@
             // Upload vidéo si nouvelle
             if (pendingVideo && !pendingVideo.remove) {
                 showToast('⏳ Upload de la vidéo...', 'info');
-                const videoUrl = await uploadVideo(pendingVideo, nom);
+                const videoUrl = await uploadVideo(pendingVideo, prenom + ' ' + nom);
                 if (videoUrl) {
                     video = videoUrl;
                 }
@@ -5346,7 +5353,7 @@
 
             const candidatData = {
                 id: currentEdit.index >= 0 ? data.candidats[currentEdit.index].id : Date.now(),
-                nom, role, delegation, bio, pedigree, objectifs, citation, email, facebook, linkedin, twitter, ordre, nouveau, photo, video, actif: true
+                prenom, nom, role, delegation, bio, pedigree, objectifs, citation, email, facebook, linkedin, twitter, ordre, nouveau, photo, video, actif: true
             };
 
             if (currentEdit.index === -1) {
@@ -5625,7 +5632,7 @@
             }
             else if (type === 'candidat') {
                 const c = data.candidats[index];
-                text = `👤 *${c.nom}*\n`;
+                text = `👤 *${c.prenom} ${c.nom}*\n`;
                 if (c.role) text += `_${c.role}_`;
                 if (c.delegation) text += ` — _${c.delegation}_`;
                 text += `\n\n`;
@@ -5968,7 +5975,7 @@
             } else if (type === 'candidat') {
                 const c = data.candidats[index];
                 url = SITE + '/equipe.html';
-                text = '👤 Découvrez ' + c.nom;
+                text = '👤 Découvrez ' + (c.prenom || '') + ' ' + c.nom;
                 if (c.role) text += ' — ' + c.role;
                 if (c.delegation) text += ' (' + c.delegation + ')';
                 text += '\n\n';

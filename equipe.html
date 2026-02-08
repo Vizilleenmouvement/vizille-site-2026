@@ -239,15 +239,15 @@
                 const photoHtml = catherine.video
                     ? `<video src="${catherine.video}" class="team-photo" autoplay muted loop playsinline></video>`
                     : catherine.photo
-                    ? `<img src="${catherine.photo}" alt="${catherine.nom}" class="team-photo" loading="lazy">`
+                    ? `<img src="${catherine.photo}" alt="${catherine.prenom} ${catherine.nom}" class="team-photo" loading="lazy">`
                     : `<div class="team-photo" style="display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:4rem;">👤</div>`;
 
                 catherineHtml = `
                     <div class="catherine-row">
-                        <div class="team-card team-card-catherine" onclick="openCandidatModal(0)" tabindex="0" role="button" aria-label="${catherine.nom}">
+                        <div class="team-card team-card-catherine" onclick="openCandidatModal(0)" tabindex="0" role="button" aria-label="${catherine.prenom} ${catherine.nom}">
                             ${photoHtml}
                             <div class="team-info">
-                                <h3 class="team-name">⭐ ${catherine.nom}</h3>
+                                <h3 class="team-name">⭐ ${catherine.prenom}<br>${catherine.nom}</h3>
                                 ${catherine.role ? `<span class="team-statut sortant">${catherine.role}</span>` : ''}
                             </div>
                         </div>
@@ -260,18 +260,18 @@
                 const photoHtml = candidat.video
                     ? `<video src="${candidat.video}" class="team-photo" autoplay muted loop playsinline style="object-fit:cover;"></video>`
                     : candidat.photo
-                    ? `<img src="${candidat.photo}" alt="${candidat.nom}" class="team-photo" loading="lazy">`
+                    ? `<img src="${candidat.photo}" alt="${candidat.prenom} ${candidat.nom}" class="team-photo" loading="lazy">`
                     : `<div style="width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:3rem;">👤</div>`;
 
                 const statutHtml = candidat.nouveau
-                    ? `<span class="team-statut nouveau">Nouveau${candidat.nom.match(/^[A-ZÀÂÉÈÊËÏÎÔÙÛÜÇ][a-zàâéèêëïîôùûüçæœ]+e\b/) || ['Adjointe','Conseillère','Conseillère déléguée'].some(r => (candidat.role||'').startsWith(r)) ? ' candidate' : ' candidat'}</span>`
+                    ? `<span class="team-statut nouveau">Nouveau${['Adjointe','Conseillère','Conseillère déléguée'].some(r => (candidat.role||'').startsWith(r)) ? ' candidate' : ' candidat'}</span>`
                     : candidat.role ? `<span class="team-statut sortant">${candidat.role}</span>` : '';
 
                 return `
-                    <div class="team-card" onclick="openCandidatModal(${index + 1})" tabindex="0" role="button" aria-label="${candidat.nom}">
+                    <div class="team-card" onclick="openCandidatModal(${index + 1})" tabindex="0" role="button" aria-label="${candidat.prenom} ${candidat.nom}">
                         ${photoHtml}
                         <div class="team-info">
-                            <h3 class="team-name">${candidat.nom}</h3>
+                            <h3 class="team-name">${candidat.prenom}<br>${candidat.nom}</h3>
                             ${statutHtml}
                         </div>
                     </div>
@@ -307,13 +307,13 @@
             if (candidat.video) {
                 photoContainer.innerHTML = `<video src="${candidat.video}" class="modal-photo" autoplay muted loop playsinline style="object-fit:cover;border-radius:12px;"></video>`;
             } else if (candidat.photo) {
-                photoContainer.innerHTML = `<img src="${candidat.photo}" alt="${candidat.nom}" class="modal-photo" loading="lazy">`;
+                photoContainer.innerHTML = `<img src="${candidat.photo}" alt="${candidat.prenom} ${candidat.nom}" class="modal-photo" loading="lazy">`;
             } else {
                 photoContainer.innerHTML = `<div class="modal-photo-placeholder">👤</div>`;
             }
 
             // Infos de base
-            document.getElementById('modal-name').textContent = candidat.nom || 'Nom non renseigné';
+            document.getElementById('modal-name').textContent = (candidat.prenom || '') + ' ' + (candidat.nom || 'Nom non renseigné');
 
             const roleEl = document.getElementById('modal-role');
             if (candidat.nouveau) {

@@ -1,7 +1,8 @@
 [
   {
     "id": 1,
-    "nom": "Catherine Troton",
+    "prenom": "Catherine",
+    "nom": "Troton",
     "role": "Tête de Liste",
     "delegation": "Maire de Vizille",
     "photo": "images/catherine-troton.jpg",
@@ -19,7 +20,8 @@
   },
   {
     "id": 2,
-    "nom": "Angélique Hermitte",
+    "prenom": "Angélique",
+    "nom": "Hermitte",
     "role": "Conseillère déléguée",
     "delegation": "Petite enfance",
     "bio": "Aide-soignante en Maison d'Accueil Spécialisée, j'accompagne au quotidien des adultes en situation de handicap moteur et mental. Cette expérience de terrain nourrit mon engagement pour une commune inclusive, accessible et attentive aux plus fragiles.",
@@ -36,10 +38,11 @@
   },
   {
     "id": 1770474062239,
-    "nom": "Bernard UGHETTO-MONFRIN.",
+    "prenom": "Bernard",
+    "nom": "Ughetto-Monfrin",
     "role": "Adjoint",
     "delegation": "Mobilités",
-    "bio": "Bernard UGHETTO-MONFRIN. 67 ans. Retraité de la chimie. Impliqué depuis toujours dans la vie associative, syndicale et politique de Vizille. Bernard est actuellement adjoint au développement des mobilités. Il sera présent à la 2ème place sur la liste \"Vizille en mouvement \"",
+    "bio": "67 ans. Retraité de la chimie. Impliqué depuis toujours dans la vie associative, syndicale et politique de Vizille. Bernard est actuellement adjoint au développement des mobilités. Il sera présent à la 2ème place sur la liste \"Vizille en mouvement\".",
     "pedigree": "",
     "objectifs": "Poursuivre son action sur les mobilités en consacrant toute son énergie à la résolution du drame quotidien de la RN 85",
     "citation": "",
@@ -55,7 +58,8 @@
   },
   {
     "id": 1770483518354,
-    "nom": "Saïda Berriche",
+    "prenom": "Saïda",
+    "nom": "Berriche",
     "role": "Adjointe",
     "delegation": "à la Tranquillité, le bien vivre ensemble, les commerces",
     "bio": "Vizilloise de naissance,  j'aime ma ville pour son cadre de vie et la diversité de ces habitants qui est une richesse.",
