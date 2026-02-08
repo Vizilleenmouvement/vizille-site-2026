@@ -20,7 +20,7 @@ const themeConfig = {
     "Sport": { icon: "⚽", color: "#2ecc71" },
     "Économie": { icon: "💼", color: "#f39c12" },
     "Mobilités": { icon: "🚴", color: "#1abc9c" },
-    "Sécurité": { icon: "🛡️", color: "#2c3e50" },
+    "Tranquillité": { icon: "🛡️", color: "#2c3e50" },
     "Travaux": { icon: "🏗️", color: "#e67e22" },
     "Intercommunalité": { icon: "🤝", color: "#607d8b" },
     "Finance": { icon: "💰", color: "#795548" },

@@ -186,7 +186,7 @@ function getThemeIcon(theme) {
         'Éducation': '📚',
         'Concertation citoyenne': '🗣️',
         'Métropole': '🏙️',
-        'Sécurité': '🔒'
+        'Tranquillité': '🔒'
     };
     return icons[theme] || '📌';
 }
@@ -396,7 +396,7 @@ function getCategoryIcon(category) {
         'Social': '🤝',
         'Économie': '💼',
         'Éducation': '📚',
-        'Sécurité': '🛡️',
+        'Tranquillité': '🛡️',
         'Urbanisme': '🏗️',
         'Actualité': '📰'
     };

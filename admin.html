@@ -2089,7 +2089,7 @@
             { id: 'social', name: 'Social', icon: '🤝', themes: ['Solidarité', 'Enfance', 'Santé', 'Personnel'] },
             { id: 'culture', name: 'Culture', icon: '🎭', themes: ['Culture', 'Sport', 'Patrimoine', 'Jumelages'] },
             { id: 'municipal', name: 'Municipal', icon: '🏛️', themes: ['Administration', 'Finance', 'Intercommunalité', 'Concertation Citoyenne'] },
-            { id: 'securite', name: 'Sécurité', icon: '🛡️', themes: ['Tranquillité publique', 'Économie'] }
+            { id: 'securite', name: 'Tranquillité', icon: '🛡️', themes: ['Tranquillité publique', 'Économie'] }
         ];
 
         let currentCategoryFilter = null;
@@ -2217,7 +2217,7 @@
                         { id: "urbanisme", label: "Urbanisme", icon: "🏘️" },
                         { id: "mobilites", label: "Mobilités", icon: "🚲" },
                         { id: "patrimoine", label: "Patrimoine", icon: "🏛️" },
-                        { id: "securite", label: "Sécurité", icon: "🛡️" },
+                        { id: "securite", label: "Tranquillité", icon: "🛡️" },
                         { id: "economie", label: "Économie", icon: "💼" }
                     ],
                     objectifs: [
@@ -2577,7 +2577,7 @@
                         { id: "urbanisme", label: "Urbanisme", icon: "🏘️" },
                         { id: "mobilites", label: "Mobilités", icon: "🚲" },
                         { id: "patrimoine", label: "Patrimoine", icon: "🏛️" },
-                        { id: "securite", label: "Sécurité", icon: "🛡️" },
+                        { id: "securite", label: "Tranquillité", icon: "🛡️" },
                         { id: "economie", label: "Économie", icon: "💼" }
                     ],
                     objectifs: [
@@ -2808,7 +2808,7 @@
                         { id: "urbanisme", label: "Urbanisme", icon: "🏘️" },
                         { id: "mobilites", label: "Mobilités", icon: "🚲" },
                         { id: "patrimoine", label: "Patrimoine", icon: "🏛️" },
-                        { id: "securite", label: "Sécurité", icon: "🛡️" },
+                        { id: "securite", label: "Tranquillité", icon: "🛡️" },
                         { id: "economie", label: "Économie", icon: "💼" }
                     ],
                     objectifs: [
@@ -3801,7 +3801,7 @@
 
                 <div class="form-group">
                     <label>Tags <small style="color: #888;">(séparés par des virgules)</small></label>
-                    <input type="text" id="edit-tags" value="${(p.tags || []).join(', ')}" placeholder="Ex: Sécurité, Accessibilité, Confort">
+                    <input type="text" id="edit-tags" value="${(p.tags || []).join(', ')}" placeholder="Ex: Tranquillité, Accessibilité, Confort">
                 </div>
 
                 <div class="form-group">
@@ -5693,7 +5693,7 @@
                         <option value="Culture & Sport" ${f.categorie === 'Culture & Sport' ? 'selected' : ''}>🎭 Culture & Sport</option>
                         <option value="Social & Solidarité" ${f.categorie === 'Social & Solidarité' ? 'selected' : ''}>🤝 Social & Solidarité</option>
                         <option value="Environnement" ${f.categorie === 'Environnement' ? 'selected' : ''}>🌿 Environnement</option>
-                        <option value="Sécurité" ${f.categorie === 'Sécurité' ? 'selected' : ''}>🛡️ Sécurité</option>
+                        <option value="Tranquillité" ${f.categorie === 'Tranquillité' ? 'selected' : ''}>🛡️ Tranquillité</option>
                         <option value="Finances" ${f.categorie === 'Finances' ? 'selected' : ''}>💰 Finances</option>
                         <option value="Éducation" ${f.categorie === 'Éducation' ? 'selected' : ''}>📚 Éducation</option>
                         <option value="Élections" ${f.categorie === 'Élections' ? 'selected' : ''}>🗳️ Élections</option>

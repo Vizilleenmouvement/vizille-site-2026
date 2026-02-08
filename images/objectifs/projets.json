@@ -214,7 +214,7 @@
     "description": "Liaisons vers Grenoble, Oisans, Uriage et Matheysine. Réseau continu, lisible et sécurisé.",
     "importance": 3,
     "chiffres": [],
-    "tags": ["Tranquillité", "Sécurité", "Mobilités"],
+    "tags": ["Tranquillité", "Mobilités"],
     "slogan": "Relier • Sécuriser • Rendre lisible",
     "enjeux": [
       "Sécuriser les trajets du quotidien",
@@ -243,7 +243,7 @@
     "description": "Traversées sûres, abords d'écoles protégés, accessibilité renforcée pour tous.",
     "importance": 3,
     "chiffres": [],
-    "tags": ["Sécurité", "Accessibilité", "Confort"],
+    "tags": ["Tranquillité", "Accessibilité", "Confort"],
     "slogan": "Protéger • Faciliter • Rassurer",
     "enjeux": [
       "Réduire les situations à risque",
@@ -273,7 +273,7 @@
     "description": "Réduire les nuisances du transit : bruit, vitesses excessives, à-coups de circulation.",
     "importance": 2,
     "chiffres": [],
-    "tags": ["Tranquillité", "Cadre de vie", "Sécurité"],
+    "tags": ["Tranquillité", "Cadre de vie"],
     "slogan": "Ralentir • Protéger • Fluidifier",
     "enjeux": [
       "Réduire vitesses et nuisances sonores",
@@ -534,7 +534,7 @@
     "description": "La vidéoprotection permet de dissuader certains comportements, de faciliter l'identification des auteurs d'infractions et de rassurer les habitants. L'objectif est d'achever le maillage prévu.",
     "importance": 2,
     "chiffres": [],
-    "tags": ["Vidéoprotection", "Sécurité", "Transparence"],
+    "tags": ["Vidéoprotection", "Tranquillité", "Transparence"],
     "slogan": "Couvrir • Exploiter • Respecter",
     "enjeux": [
       "Compléter la couverture des zones sensibles",
