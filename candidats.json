@@ -30,7 +30,7 @@
     "facebook": "",
     "linkedin": "",
     "twitter": "",
-    "ordre": null,
+    "ordre": 10,
     "video": "images/candidats/angelique-hermitte.mp4",
     "actif": true
   },
@@ -65,7 +65,7 @@
     "facebook": "",
     "linkedin": "",
     "twitter": "",
-    "ordre": null,
+    "ordre": 10,
     "photo": null,
     "video": "images/candidats/saida-berriche.mp4",
     "actif": true
