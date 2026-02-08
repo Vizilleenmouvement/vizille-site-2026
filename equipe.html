@@ -192,6 +192,21 @@
             renderTeam();
         }
 
+        // Helper : extraire prénom et nom (compatible ancien et nouveau format)
+        function getPrenom(c) {
+            if (c.prenom) return c.prenom;
+            const parts = (c.nom || '').split(' ');
+            return parts[0] || '';
+        }
+        function getNom(c) {
+            if (c.prenom) return c.nom || '';
+            const parts = (c.nom || '').split(' ');
+            return parts.slice(1).join(' ') || '';
+        }
+        function getFullName(c) {
+            return c.prenom ? (c.prenom + ' ' + (c.nom || '')) : (c.nom || '');
+        }
+
         async function loadCandidats() {
             try {
                 const response = await fetch('candidats.json?v=' + Date.now());
@@ -206,7 +221,7 @@
                         const aOrdre = a.ordre != null ? a.ordre : Infinity;
                         const bOrdre = b.ordre != null ? b.ordre : Infinity;
                         if (aOrdre !== bOrdre) return aOrdre - bOrdre;
-                        return (a.nom || '').localeCompare(b.nom || '', 'fr');
+                        return getNom(a).localeCompare(getNom(b), 'fr');
                     });
 
                 // Afficher toute l'équipe
@@ -230,7 +245,7 @@
                 const aOrdre = a.ordre != null ? a.ordre : Infinity;
                 const bOrdre = b.ordre != null ? b.ordre : Infinity;
                 if (aOrdre !== bOrdre) return aOrdre - bOrdre;
-                return (a.nom || '').localeCompare(b.nom || '', 'fr');
+                return getNom(a).localeCompare(getNom(b), 'fr');
             });
 
             // Carte Catherine (seule en haut, centrée)
@@ -239,15 +254,15 @@
                 const photoHtml = catherine.video
                     ? `<video src="${catherine.video}" class="team-photo" autoplay muted loop playsinline></video>`
                     : catherine.photo
-                    ? `<img src="${catherine.photo}" alt="${catherine.prenom} ${catherine.nom}" class="team-photo" loading="lazy">`
+                    ? `<img src="${catherine.photo}" alt="${getFullName(catherine)}" class="team-photo" loading="lazy">`
                     : `<div class="team-photo" style="display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:4rem;">👤</div>`;
 
                 catherineHtml = `
                     <div class="catherine-row">
-                        <div class="team-card team-card-catherine" onclick="openCandidatModal(0)" tabindex="0" role="button" aria-label="${catherine.prenom} ${catherine.nom}">
+                        <div class="team-card team-card-catherine" onclick="openCandidatModal(0)" tabindex="0" role="button" aria-label="${getFullName(catherine)}">
                             ${photoHtml}
                             <div class="team-info">
-                                <h3 class="team-name">⭐ ${catherine.prenom}<br>${catherine.nom}</h3>
+                                <h3 class="team-name">⭐ ${getPrenom(catherine)}<br>${getNom(catherine)}</h3>
                                 <span class="team-statut sortant">Maire de Vizille</span>
                             </div>
                         </div>
@@ -260,7 +275,7 @@
                 const photoHtml = candidat.video
                     ? `<video src="${candidat.video}" class="team-photo" autoplay muted loop playsinline style="object-fit:cover;"></video>`
                     : candidat.photo
-                    ? `<img src="${candidat.photo}" alt="${candidat.prenom} ${candidat.nom}" class="team-photo" loading="lazy">`
+                    ? `<img src="${candidat.photo}" alt="${getFullName(candidat)}" class="team-photo" loading="lazy">`
                     : `<div style="width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:3rem;">👤</div>`;
 
                 const feminin = ['Adjointe','Conseillère','Conseillère déléguée'].some(r => (candidat.role||'').startsWith(r));
@@ -269,10 +284,10 @@
                     : candidat.role ? `<span class="team-statut sortant">${feminin ? 'Actuelle' : 'Actuel'} ${candidat.role}</span>` : '';
 
                 return `
-                    <div class="team-card" onclick="openCandidatModal(${index + 1})" tabindex="0" role="button" aria-label="${candidat.prenom} ${candidat.nom}">
+                    <div class="team-card" onclick="openCandidatModal(${index + 1})" tabindex="0" role="button" aria-label="${getFullName(candidat)}">
                         ${photoHtml}
                         <div class="team-info">
-                            <h3 class="team-name">${candidat.prenom}<br>${candidat.nom}</h3>
+                            <h3 class="team-name">${getPrenom(candidat)}<br>${getNom(candidat)}</h3>
                             ${statutHtml}
                         </div>
                     </div>
@@ -308,13 +323,13 @@
             if (candidat.video) {
                 photoContainer.innerHTML = `<video src="${candidat.video}" class="modal-photo" autoplay muted loop playsinline style="object-fit:cover;border-radius:12px;"></video>`;
             } else if (candidat.photo) {
-                photoContainer.innerHTML = `<img src="${candidat.photo}" alt="${candidat.prenom} ${candidat.nom}" class="modal-photo" loading="lazy">`;
+                photoContainer.innerHTML = `<img src="${candidat.photo}" alt="${getFullName(candidat)}" class="modal-photo" loading="lazy">`;
             } else {
                 photoContainer.innerHTML = `<div class="modal-photo-placeholder">👤</div>`;
             }
 
             // Infos de base
-            document.getElementById('modal-name').textContent = (candidat.prenom || '') + ' ' + (candidat.nom || 'Nom non renseigné');
+            document.getElementById('modal-name').textContent = getFullName(candidat) || 'Nom non renseigné';
 
             const roleEl = document.getElementById('modal-role');
             if (candidat.nouveau) {
