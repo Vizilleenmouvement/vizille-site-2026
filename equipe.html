@@ -312,11 +312,18 @@
             // iOS : relancer au premier touch si autoplay bloqué
             const startVideos = () => {
                 playAllVideos();
-                document.removeEventListener('touchstart', startVideos);
-                document.removeEventListener('scroll', startVideos);
+                // Pause après 10 secondes
+                setTimeout(() => {
+                    document.querySelectorAll('video.team-photo').forEach(v => v.pause());
+                }, 10000);
             };
             document.addEventListener('touchstart', startVideos, { once: true });
             document.addEventListener('scroll', startVideos, { once: true });
+
+            // Desktop : pause après 10 secondes aussi
+            setTimeout(() => {
+                document.querySelectorAll('video.team-photo').forEach(v => v.pause());
+            }, 10000);
         }
 
         document.addEventListener('DOMContentLoaded', loadCandidats);
