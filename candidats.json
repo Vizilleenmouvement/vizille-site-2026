@@ -1,8 +1,7 @@
 [
   {
     "id": 1,
-    "prenom": "Catherine",
-    "nom": "Troton",
+    "nom": "Catherine Troton",
     "role": "Tête de Liste",
     "delegation": "Maire de Vizille",
     "photo": "images/catherine-troton.jpg",
@@ -20,8 +19,7 @@
   },
   {
     "id": 2,
-    "prenom": "Angélique",
-    "nom": "Hermitte",
+    "nom": "Angélique Hermitte",
     "role": "Conseillère déléguée",
     "delegation": "Petite enfance",
     "bio": "Aide-soignante en Maison d'Accueil Spécialisée, j'accompagne au quotidien des adultes en situation de handicap moteur et mental. Cette expérience de terrain nourrit mon engagement pour une commune inclusive, accessible et attentive aux plus fragiles.",
@@ -38,11 +36,10 @@
   },
   {
     "id": 1770474062239,
-    "prenom": "Bernard",
-    "nom": "Ughetto-Monfrin",
+    "nom": "Bernard UGHETTO-MONFRIN.",
     "role": "Adjoint",
     "delegation": "Mobilités",
-    "bio": "67 ans. Retraité de la chimie. Impliqué depuis toujours dans la vie associative, syndicale et politique de Vizille. Bernard est actuellement adjoint au développement des mobilités. Il sera présent à la 2ème place sur la liste \"Vizille en mouvement\".",
+    "bio": "Bernard UGHETTO-MONFRIN. 67 ans. Retraité de la chimie. Impliqué depuis toujours dans la vie associative, syndicale et politique de Vizille. Bernard est actuellement adjoint au développement des mobilités. Il sera présent à la 2ème place sur la liste \"Vizille en mouvement \"",
     "pedigree": "",
     "objectifs": "Poursuivre son action sur les mobilités en consacrant toute son énergie à la résolution du drame quotidien de la RN 85",
     "citation": "",
@@ -52,17 +49,16 @@
     "twitter": "",
     "ordre": 2,
     "nouveau": false,
-    "photo": "images/bernard-ughetto-monfrin-.jpg",
+    "photo": null,
     "video": "images/candidats/bernard-ughetto-monfrin-.mp4",
     "actif": true
   },
   {
     "id": 1770483518354,
-    "prenom": "Saïda",
-    "nom": "Berriche",
+    "nom": "Saïda Berriche",
     "role": "Adjointe",
     "delegation": "à la Tranquillité, le bien vivre ensemble, les commerces",
-    "bio": "Vizilloise de naissance,  j'aime ma ville pour son cadre de vie et la diversité de ces habitants qui est une richesse.",
+    "bio": "Vizilloise de naissance,  j'aime ma ville pour son cadre de vie et la diversité de ses habitants qui est une richesse.",
     "pedigree": "Des études dans le secrétariat mais le besoin du contact humain m'ont vite dirigé dans le commerce.",
     "objectifs": "Œuvrer pour une ville où il fait bon vivre ensemble.",
     "citation": "Nous sommes tous acteurs de notre ville.",
@@ -71,6 +67,7 @@
     "linkedin": "",
     "twitter": "",
     "ordre": 10,
+    "nouveau": false,
     "photo": null,
     "video": "images/candidats/saida-berriche.mp4",
     "actif": true
