@@ -157,6 +157,46 @@
         </div>
     </section>
 
+    <!-- SECTION FACEBOOK - Dernières actualités -->
+    <section class="facebook-section">
+        <div class="facebook-container">
+            <h2 class="section-title animate-on-scroll">
+                <span class="facebook-icon">📘</span>
+                Suivez-nous sur Facebook
+            </h2>
+            <p class="section-intro animate-on-scroll">Retrouvez toutes nos actualités en temps réel</p>
+
+            <div class="facebook-widget-wrapper animate-on-scroll">
+                <div id="fb-root"></div>
+                <script async defer crossorigin="anonymous"
+                    src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v18.0"
+                    nonce="randomNonce"></script>
+
+                <div class="fb-page"
+                    data-href="https://www.facebook.com/profile.php?id=61585097998743"
+                    data-tabs="timeline"
+                    data-width="500"
+                    data-height="500"
+                    data-small-header="true"
+                    data-adapt-container-width="true"
+                    data-hide-cover="false"
+                    data-show-facepile="false">
+                    <blockquote cite="https://www.facebook.com/profile.php?id=61585097998743" class="fb-xfbml-parse-ignore">
+                        <a href="https://www.facebook.com/profile.php?id=61585097998743">Vizille en Mouvement</a>
+                    </blockquote>
+                </div>
+            </div>
+
+            <div class="facebook-cta animate-on-scroll">
+                <a href="https://www.facebook.com/profile.php?id=61585097998743" target="_blank" class="btn-facebook">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    Suivre notre page
+                </a>
+                <a href="bilan.html" class="btn-primary">Découvrir notre bilan complet →</a>
+            </div>
+        </div>
+    </section>
+
     <!-- SECTION THÈMES avec icônes animées -->
     <section class="themes-section" id="decouvrir">
         <div class="themes-container">
@@ -198,6 +238,19 @@
                     <p>Tranquillité publique, prévention, médiation</p>
                     <span class="theme-arrow">→</span>
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION GALERIE PHOTOS -->
+    <section class="galerie-section">
+        <div class="galerie-container">
+            <h2 class="section-title animate-on-scroll">
+                <span>En images</span>
+                <a href="medias.html" class="see-all">Voir la galerie →</a>
+            </h2>
+            <div class="galerie-mosaic" id="galerie-mosaic">
+                <!-- Chargé dynamiquement -->
             </div>
         </div>
     </section>
