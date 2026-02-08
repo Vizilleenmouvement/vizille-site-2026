@@ -21,7 +21,8 @@
   },
   {
     "id": 2,
-    "nom": "Angélique Hermitte",
+    "prenom": "Angélique",
+    "nom": "Hermitte",
     "role": "Conseillère déléguée",
     "delegation": "Petite enfance",
     "bio": "Aide-soignante en Maison d'Accueil Spécialisée, j'accompagne au quotidien des adultes en situation de handicap moteur et mental. Cette expérience de terrain nourrit mon engagement pour une commune inclusive, accessible et attentive aux plus fragiles.",
@@ -33,12 +34,14 @@
     "linkedin": "",
     "twitter": "",
     "ordre": 10,
+    "nouveau": false,
     "video": "images/candidats/angelique-hermitte.mp4",
     "actif": true
   },
   {
     "id": 1770474062239,
-    "nom": "Bernard UGHETTO-MONFRIN.",
+    "prenom": "Bernard",
+    "nom": "UGHETTO-MONFRIN.",
     "role": "Adjoint",
     "delegation": "Mobilités",
     "bio": "Bernard UGHETTO-MONFRIN. 67 ans. Retraité de la chimie. Impliqué depuis toujours dans la vie associative, syndicale et politique de Vizille. Bernard est actuellement adjoint au développement des mobilités. Il sera présent à la 2ème place sur la liste \"Vizille en mouvement \"",
@@ -57,7 +60,8 @@
   },
   {
     "id": 1770483518354,
-    "nom": "Saïda Berriche",
+    "prenom": "Saïda",
+    "nom": "Berriche",
     "role": "Adjointe",
     "delegation": "à la Tranquillité, le bien vivre ensemble, les commerces",
     "bio": "Vizilloise de naissance,  j'aime ma ville pour son cadre de vie et la diversité de ses habitants qui est une richesse.",
