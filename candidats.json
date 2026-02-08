@@ -83,7 +83,7 @@
     "id": 1770569050769,
     "prenom": "Jean-Christophe",
     "nom": "Garcia",
-    "role": "Conseiller municipal",
+    "role": "",
     "delegation": "",
     "bio": "À 56 ans, après une carrière dans l'assurance où j'ai appris l'écoute et l'accompagnement, je souhaite poursuivre mon engagement au service de ma ville.\n\nCandidat sur la liste de la CatherineTroton, je souhaite continuer à œuvrer pour ma ville.",
     "pedigree": "Depuis 10 ans, je m'investis dans le tissu associatif vizillois :\n→ Président de l'association des quartiers du Péage de Vizille \n→ Membre de l'USV Ski \n→ Actif  il y a quelques années au sein de l'O.M.S et de l'USV Rugby\nMon engagement dépasse nos frontières : assistant sportif d'un athlète handisport de l'équipe de France de boccia, j'ai également contribué au développement d'une école auprès d'une communauté Peuhl au Sénégal.\nCes expériences m'ont appris que la solidarité et la proximité sont les fondements d'une commune qui fonctionne.",
@@ -94,7 +94,7 @@
     "linkedin": "",
     "twitter": "",
     "ordre": null,
-    "nouveau": false,
+    "nouveau": true,
     "photo": "images/jean-christophe-garcia.jpg",
     "video": "images/candidats/jean-christophe-garcia.mp4",
     "actif": true
