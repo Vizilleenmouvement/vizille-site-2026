@@ -13,7 +13,7 @@
 }
 
 .hero-unified .hero-logo {
-    width: 180px;
+    width: 280px;
     height: auto;
     flex-shrink: 0;
     animation: pulse 2s ease-in-out infinite;
