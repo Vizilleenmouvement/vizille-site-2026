@@ -16,6 +16,17 @@
         body { padding-top: 110px; }
         
         /* Hero utilise .hero-unified de page-header.css */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            background: linear-gradient(135deg, #1a3a5c, #2d5f8a);
+            padding: 0.75rem 2rem;
+            flex-wrap: wrap;
+        }
+        .stats-bar .stat { text-align: center; }
+        .stats-bar .stat-val { font-size: 1.6rem; font-weight: 700; color: var(--or-clair); }
+        .stats-bar .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.85); }
         
         
         /* Sous-onglets (catégories) */
@@ -434,9 +445,9 @@
         <div class="hero-text">
             <h1>Bilan 2020-2026</h1>
             <p class="slogan">Ensemble pour une ville dynamique et solidaire</p>
-            <div class="stats" id="hero-stats"></div>
         </div>
     </section>
+    <div class="stats-bar" id="hero-stats"></div>
     
     <div class="categories-container">
         <div class="categories" id="categories"></div>
