@@ -454,7 +454,7 @@ async function loadEquipePreview() {
         const displayCandidats = candidats
             .filter(c => c.actif !== false && (c.photo || c.video))
             .sort((a, b) => (a.ordre || 999) - (b.ordre || 999))
-            .slice(0, 8);
+;
 
         if (displayCandidats.length === 0) {
             grid.innerHTML = Array(6).fill(`

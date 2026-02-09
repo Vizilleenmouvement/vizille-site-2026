@@ -184,6 +184,7 @@
     "ordre": null,
     "nouveau": true,
     "photo": "images/mohamed-cherigui.jpg",
+    "photoPosition": "center 25%",
     "video": "images/candidats/mohamed-cherigui.mp4",
     "actif": true
   }
