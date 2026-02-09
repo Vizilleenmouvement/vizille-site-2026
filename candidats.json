@@ -73,10 +73,9 @@
     "facebook": "",
     "linkedin": "",
     "twitter": "",
-    "ordre": 10,
+    "ordre": null,
     "nouveau": false,
     "photo": "images/saida-berriche.jpg",
-    "photoPosition": "center 45%",
     "video": "images/candidats/saida-berriche.mp4",
     "actif": true
   },
