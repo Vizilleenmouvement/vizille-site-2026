@@ -117,6 +117,7 @@
     "nouveau": true,
     "photo": "images/isabelle-nifenecker.jpg",
     "video": "images/candidats/isabelle-nifenecker.mp4",
+    "photoPosition": "center 35%",
     "actif": true
   }
 ]

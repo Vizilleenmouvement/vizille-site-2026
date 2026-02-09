@@ -251,10 +251,11 @@
             // Carte Catherine (seule en haut, centrée)
             let catherineHtml = '';
             if (catherine) {
+                const cPos = catherine.photoPosition || 'center 20%';
                 const photoHtml = catherine.video
-                    ? `<video src="${catherine.video}" class="team-photo" autoplay muted loop playsinline></video>`
+                    ? `<video src="${catherine.video}" class="team-photo" autoplay muted loop playsinline style="object-fit:cover;object-position:${cPos};"></video>`
                     : catherine.photo
-                    ? `<img src="${catherine.photo}" alt="${getFullName(catherine)}" class="team-photo" loading="lazy">`
+                    ? `<img src="${catherine.photo}" alt="${getFullName(catherine)}" class="team-photo" loading="lazy" style="object-position:${cPos};">`
                     : `<div class="team-photo" style="display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:4rem;">👤</div>`;
 
                 catherineHtml = `
@@ -272,10 +273,11 @@
 
             // Cartes des autres candidats (masquer les vides)
             const autresCards = autres.map((candidat, index) => {
+                const pos = candidat.photoPosition || 'center 20%';
                 const photoHtml = candidat.video
-                    ? `<video src="${candidat.video}" class="team-photo" autoplay muted loop playsinline style="object-fit:cover;object-position:center 20%;"></video>`
+                    ? `<video src="${candidat.video}" class="team-photo" autoplay muted loop playsinline style="object-fit:cover;object-position:${pos};"></video>`
                     : candidat.photo
-                    ? `<img src="${candidat.photo}" alt="${getFullName(candidat)}" class="team-photo" loading="lazy">`
+                    ? `<img src="${candidat.photo}" alt="${getFullName(candidat)}" class="team-photo" loading="lazy" style="object-position:${pos};">`
                     : `<div style="width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:3rem;">👤</div>`;
 
                 const feminin = ['Adjointe','Conseillère','Conseillère déléguée'].some(r => (candidat.role||'').startsWith(r));
