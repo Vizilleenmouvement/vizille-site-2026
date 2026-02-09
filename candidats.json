@@ -139,5 +139,25 @@
     "photo": "images/gerard-forestier.jpg",
     "video": "images/candidats/gerard-forestier.mp4",
     "actif": true
+  },
+  {
+    "id": 1770634506181,
+    "prenom": "Laurent",
+    "nom": "Pichon",
+    "role": "",
+    "delegation": "",
+    "bio": "Directeur administratif et financier d'un syndicat intercommunal",
+    "pedigree": "",
+    "objectifs": "",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "https://fr.linkedin.com/in/laurent-pichon-27662a19?trk=public_post_comment_actor-name",
+    "twitter": "",
+    "ordre": null,
+    "nouveau": true,
+    "photo": "images/laurent-pichon.jpg",
+    "video": "images/candidats/laurent-pichon.mp4",
+    "actif": true
   }
 ]
