@@ -354,7 +354,7 @@
             if (catherine) {
                 catherineHtml = `
                     <div class="catherine-row">
-                        <div class="flip-grid" style="max-width:320px;margin:0 auto;">
+                        <div class="flip-grid" style="max-width:260px;margin:0 auto;">
                             ${buildEquipeFlipCard(catherine, 0, true)}
                         </div>
                     </div>
@@ -362,7 +362,7 @@
             }
 
             // Grille des autres candidats
-            const autresHtml = `<div class="flip-grid">${
+            const autresHtml = `<div class="flip-grid flip-grid--equipe">${
                 autres.map((c, i) => buildEquipeFlipCard(c, i + 1, false)).join('')
             }</div>`;
 

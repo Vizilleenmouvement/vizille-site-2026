@@ -437,7 +437,7 @@ function buildEquipePreviewFlipCard(candidat, index, isLeader) {
 }
 
 /**
- * Charger l'aperçu de l'équipe (flip cards)
+ * Charger l'aperçu de l'équipe (miniatures rondes)
  */
 async function loadEquipePreview() {
     const grid = document.getElementById('equipe-preview');
@@ -453,7 +453,7 @@ async function loadEquipePreview() {
         const displayCandidats = candidats
             .filter(c => c.actif !== false && (c.photo || c.video))
             .sort((a, b) => (a.ordre || 999) - (b.ordre || 999))
-            .slice(0, 6);
+            .slice(0, 8);
 
         if (displayCandidats.length === 0) {
             grid.innerHTML = Array(6).fill(`
@@ -462,41 +462,16 @@ async function loadEquipePreview() {
             return;
         }
 
-        grid.className = 'flip-grid';
-        grid.style.maxWidth = '1000px';
-        grid.style.margin = '0 auto 3rem';
-        grid.innerHTML = displayCandidats.map((candidat, i) => {
-            const isLeader = candidat.ordre === 1;
-            return buildEquipePreviewFlipCard(candidat, i, isLeader);
+        grid.className = 'equipe-preview-grid';
+        grid.innerHTML = displayCandidats.map(candidat => {
+            const fullName = candidat.prenom ? (candidat.prenom + ' ' + (candidat.nom || '')) : (candidat.nom || '');
+            const photoSrc = candidat.photo ? getImageUrl(candidat.photo) : '';
+            const pos = candidat.photoPosition || 'center 20%';
+            if (!photoSrc) return '';
+            return `<a href="equipe.html" title="${fullName}">
+                <img src="${photoSrc}" alt="${fullName}" class="equipe-avatar" loading="lazy" style="object-position:${pos};">
+            </a>`;
         }).join('');
-
-        // Attacher les événements flip
-        grid.querySelectorAll('.flip-card').forEach(card => {
-            card.addEventListener('click', (e) => {
-                if (e.target.closest('.flip-back-footer')) return;
-                card.classList.toggle('flipped');
-            });
-        });
-
-        // Vidéos : lecture puis transition vers la photo après 10s
-        grid.querySelectorAll('.flip-front-media video').forEach(video => {
-            video.muted = true;
-            video.setAttribute('playsinline', '');
-            video.play().catch(() => {});
-        });
-        setTimeout(() => {
-            grid.querySelectorAll('.flip-front-media video').forEach(video => {
-                const photo = video.parentElement.querySelector('.video-fallback-photo');
-                if (photo) {
-                    video.style.transition = 'opacity 1s ease';
-                    video.style.opacity = '0';
-                    photo.classList.add('visible');
-                    setTimeout(() => { video.pause(); }, 1000);
-                } else {
-                    video.pause();
-                }
-            });
-        }, 10000);
 
     } catch (error) {
         console.error('Erreur chargement équipe:', error);
