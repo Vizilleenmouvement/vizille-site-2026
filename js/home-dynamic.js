@@ -379,7 +379,7 @@ function buildEquipePreviewFlipCard(candidat, index, isLeader) {
     // Media
     let mediaHtml = '';
     if (candidat.video) {
-        mediaHtml = `<video src="${candidat.video}" autoplay muted loop playsinline style="object-position:${pos};"></video>`;
+        mediaHtml = `<video src="${candidat.video}" autoplay muted loop playsinline style="object-position:center center;"></video>`;
         if (candidat.photo) {
             mediaHtml += `<img src="${getImageUrl(candidat.photo)}" alt="${fullName}" loading="lazy" style="object-position:${pos};" class="video-fallback-photo">`;
         }
