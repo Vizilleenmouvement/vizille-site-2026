@@ -119,5 +119,25 @@
     "video": "images/candidats/isabelle-nifenecker.mp4",
     "photoPosition": "center 35%",
     "actif": true
+  },
+  {
+    "id": 1770632806087,
+    "prenom": "Gérard",
+    "nom": "Forestier",
+    "role": "Adjoint",
+    "delegation": "Transition environnementale",
+    "bio": "61 ans\nChargé de la transition environnementale pour le mandat avec Catherine Troton (2020-2026)",
+    "pedigree": "Profession : ingénieur de recherche à l’Université Grenoble Alpes",
+    "objectifs": "",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": "",
+    "ordre": null,
+    "nouveau": false,
+    "photo": "images/gerard-forestier.jpg",
+    "video": "images/candidats/gerard-forestier.mp4",
+    "actif": true
   }
 ]
