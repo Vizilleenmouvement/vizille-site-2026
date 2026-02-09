@@ -407,16 +407,7 @@ const defaultThemeConfig = {
 // Configuration des thèmes (sera mise à jour depuis themes.json)
 let themeConfig = { ...defaultThemeConfig };
 
-// Configuration des 5 catégories principales
-const CATEGORIES_PROJET = [
-    { id: 'cadre-vie', name: 'Cadre de vie', icon: '🌿', themes: ['Environnement', 'Plan Climat', 'Urbanisme', 'Travaux', 'Mobilités'] },
-    { id: 'social', name: 'Social', icon: '🤝', themes: ['Solidarité', 'Enfance', 'Santé', 'Personnel', 'Seniors', 'Enfance/Jeunesse', 'Jeunesse'] },
-    { id: 'culture', name: 'Culture', icon: '🎭', themes: ['Culture', 'Sport', 'Patrimoine', 'Jumelages', 'Éducation'] },
-    { id: 'municipal', name: 'Municipal', icon: '🏛️', themes: ['Administration', 'Finance', 'Intercommunalité', 'Concertation citoyenne', 'Démocratie', 'Démocratie locale', 'Métropole'] },
-    { id: 'securite', name: 'Tranquillité', icon: '🛡️', themes: ['Tranquillité publique', 'Tranquillité', 'Économie'] }
-];
-
-let currentCategoryFilter = null;
+// Les thèmes sont chargés directement depuis les données (plus de catégories)
 
 // Charger les thèmes depuis themes.json
 async function loadThemeConfig() {
@@ -514,99 +505,54 @@ window.addEventListener('popstate', (event) => {
 function initializeFilters() {
     const themesGrid = document.getElementById('theme-filters-grid');
 
-    // Collecter les thèmes utilisés
-    const usedThemes = new Set();
+    // Collecter les thèmes utilisés et compter les projets
+    const themeCounts = {};
     allData.forEach(p => {
-        getProjectThemes(p).forEach(t => usedThemes.add(t));
+        getProjectThemes(p).forEach(t => {
+            themeCounts[t] = (themeCounts[t] || 0) + 1;
+        });
     });
 
-    // Compter les projets par catégorie
-    function getCategoryCount(cat) {
-        return allData.filter(p => {
-            const themes = getProjectThemes(p);
-            return themes.some(t => cat.themes.includes(t));
-        }).length;
-    }
+    // Trier les thèmes par nombre de projets (décroissant)
+    const sortedThemes = Object.keys(themeCounts).sort((a, b) => themeCounts[b] - themeCounts[a]);
 
     let html = '';
 
     // Bouton "Tous" en premier
     html += `
-        <button class="theme-filter-btn category-btn active" data-category="" data-theme="">
+        <button class="theme-filter-btn active" data-theme="">
             <span class="icon">🌐</span>
             <span class="label">Tous (${allData.length})</span>
         </button>
     `;
 
-    // Boutons catégories
-    CATEGORIES_PROJET.forEach(cat => {
-        const count = getCategoryCount(cat);
-        if (count === 0) return;
+    // Un bouton par thème
+    sortedThemes.forEach(theme => {
+        const config = themeConfig[theme] || { icon: '📌', color: '#1a3a5c' };
         html += `
-            <button class="theme-filter-btn category-btn" data-category="${cat.id}">
-                <span class="icon">${cat.icon}</span>
-                <span class="label">${cat.name} (${count})</span>
+            <button class="theme-filter-btn" data-theme="${theme}">
+                <span class="icon">${config.icon}</span>
+                <span class="label">${theme} (${themeCounts[theme]})</span>
             </button>
         `;
     });
 
     themesGrid.innerHTML = html;
 
-    // Conteneur pour les sous-thèmes
-    const subContainer = document.createElement('div');
-    subContainer.id = 'theme-sub-filters';
-    subContainer.style.cssText = 'margin-top: 0.75rem; display: none;';
-    themesGrid.parentNode.appendChild(subContainer);
-
+    // Événements sur les boutons thèmes
     document.querySelectorAll('.theme-filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            const catId = btn.dataset.category;
+            document.querySelectorAll('.theme-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
             const theme = btn.dataset.theme;
+            document.getElementById('filter-theme').value = theme;
 
-            // Si c'est une catégorie
-            if (catId !== undefined) {
-                document.querySelectorAll('.theme-filter-btn.category-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                currentCategoryFilter = catId || null;
-
-                // Afficher les sous-thèmes de cette catégorie
-                renderSubThemes(catId);
-
-                // Sélectionner automatiquement le premier sous-thème
-                if (catId) {
-                    const cat = CATEGORIES_PROJET.find(c => c.id === catId);
-                    if (cat && cat.themes.length > 0) {
-                        // Trouver le premier thème qui a des projets
-                        const firstThemeWithData = cat.themes.find(t =>
-                            allData.filter(p => getProjectThemes(p).includes(t)).length > 0
-                        );
-                        if (firstThemeWithData) {
-                            document.getElementById('filter-theme').value = firstThemeWithData;
-                            // Marquer le premier sous-thème comme actif
-                            setTimeout(() => {
-                                const firstSubBtn = document.querySelector(`.sub-theme-btn[data-theme="${firstThemeWithData}"]`);
-                                if (firstSubBtn) firstSubBtn.classList.add('active');
-                            }, 10);
-                        } else {
-                            document.getElementById('filter-theme').value = '';
-                        }
-                    } else {
-                        document.getElementById('filter-theme').value = '';
-                    }
-
-                    currentView = 'cards';
-                    document.querySelectorAll('.view-btn').forEach(b => {
-                        b.classList.toggle('active', b.dataset.view === 'cards');
-                    });
-                } else {
-                    document.getElementById('filter-theme').value = '';
-                }
-            } else if (theme !== undefined) {
-                // C'est un sous-thème
-                document.querySelectorAll('.sub-theme-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById('filter-theme').value = theme;
+            if (theme) {
+                currentView = 'cards';
+                document.querySelectorAll('.view-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.view === 'cards');
+                });
             }
 
             applyFilters();
@@ -623,53 +569,8 @@ function initializeFilters() {
         });
     });
 
-    function renderSubThemes(catId) {
-        const subContainer = document.getElementById('theme-sub-filters');
-        if (!catId) {
-            subContainer.style.display = 'none';
-            return;
-        }
-
-        const cat = CATEGORIES_PROJET.find(c => c.id === catId);
-        if (!cat) return;
-
-        let html = '<small style="color: var(--gris-texte); margin-right: 0.5rem;">Thèmes :</small>';
-        cat.themes.forEach(theme => {
-            const count = allData.filter(p => getProjectThemes(p).includes(theme)).length;
-            if (count === 0) return;
-            const config = themeConfig[theme] || { icon: '📌', color: '#1a3a5c' };
-            html += `
-                <button class="theme-filter-btn sub-theme-btn" data-theme="${theme}" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">
-                    <span class="icon">${config.icon}</span>
-                    <span class="label">${theme} (${count})</span>
-                </button>
-            `;
-        });
-
-        subContainer.innerHTML = html;
-        subContainer.style.display = 'flex';
-        subContainer.style.flexWrap = 'wrap';
-        subContainer.style.gap = '0.5rem';
-        subContainer.style.alignItems = 'center';
-
-        // Ajouter les événements pour les sous-thèmes
-        subContainer.querySelectorAll('.sub-theme-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                subContainer.querySelectorAll('.sub-theme-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById('filter-theme').value = btn.dataset.theme;
-                applyFilters();
-            });
-        });
-    }
-
     const themeSelect = document.getElementById('filter-theme');
-    // Construire la liste des thèmes depuis les catégories
-    const allThemesFromCategories = new Set();
-    CATEGORIES_PROJET.forEach(cat => cat.themes.forEach(t => allThemesFromCategories.add(t)));
-    // Ajouter aussi les thèmes utilisés dans les données
-    allData.forEach(p => getProjectThemes(p).forEach(t => allThemesFromCategories.add(t)));
-    [...allThemesFromCategories].sort().forEach(theme => {
+    sortedThemes.forEach(theme => {
         themeSelect.innerHTML += `<option value="${theme}">${theme}</option>`;
     });
 
@@ -710,19 +611,9 @@ function applyFilters() {
             (projet.resume && projet.resume.toLowerCase().includes(search)) ||
             (projet.description && projet.description.toLowerCase().includes(search));
 
-        // Filtre par catégorie (si pas de thème spécifique)
-        let matchCategory = true;
-        if (currentCategoryFilter && !theme) {
-            const cat = CATEGORIES_PROJET.find(c => c.id === currentCategoryFilter);
-            if (cat) {
-                const projectThemes = getProjectThemes(projet);
-                matchCategory = projectThemes.some(t => cat.themes.includes(t));
-            }
-        }
-
         const matchTheme = !theme || projectHasTheme(projet, theme);
 
-        return matchSearch && matchCategory && matchTheme;
+        return matchSearch && matchTheme;
     });
 
     filteredData.sort((a, b) => {
