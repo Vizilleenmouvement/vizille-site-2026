@@ -166,5 +166,25 @@
     "photoPosition": "center 35%",
     "video": "images/candidats/laurent-pichon.mp4",
     "actif": true
+  },
+  {
+    "id": 1770658063790,
+    "prenom": "Mohamed",
+    "nom": "CHERIGUI",
+    "role": "",
+    "delegation": "",
+    "bio": "Investi dans des associations sportives et solidaires, attaché à l’écoute et à l’action collective.",
+    "pedigree": "Engagé au service des autres, en tant que pompier professionnel et volontaire.",
+    "objectifs": "Convaincu que la tranquillité publique et la participation citoyenne se construisent ensemble.\n•⁠  ⁠Aujourd’hui, je souhaite mettre cette expérience et ces valeurs au service de Vizille, pour construire, avec les habitants, des réponses concrètes et durables aux enjeux du quotidien.",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": "",
+    "ordre": null,
+    "nouveau": true,
+    "photo": "images/mohamed-cherigui.jpg",
+    "video": "images/candidats/mohamed-cherigui.mp4",
+    "actif": true
   }
 ]
