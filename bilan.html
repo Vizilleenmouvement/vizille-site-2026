@@ -10,7 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
-    
+    <link rel="stylesheet" href="css/components/flip-cards.css">
+
     <style>
         /* ===== PAGE BILAN CARTES ===== */
         body { padding-top: 0; }
@@ -878,54 +879,130 @@ function renderBanner() {
     `;
 }
 
+// Utilitaire couleur pour les dégradés
+function adjustColor(hex, amount) {
+    hex = hex.replace('#', '');
+    const r = Math.max(0, Math.min(255, parseInt(hex.substring(0, 2), 16) + amount));
+    const g = Math.max(0, Math.min(255, parseInt(hex.substring(2, 4), 16) + amount));
+    const b = Math.max(0, Math.min(255, parseInt(hex.substring(4, 6), 16) + amount));
+    return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+}
+
+function buildBilanFlipCard(p, color) {
+    const darkerColor = adjustColor(color, -25);
+    const firstImg = p.images && p.images.length > 0 ? p.images[0] : null;
+    const coverImage = firstImg ? (typeof firstImg === 'string' ? firstImg : firstImg.url || '') : (p.image || '');
+    const hasImage = !!coverImage;
+    const desc = (p.resume || p.description || '');
+    const truncDesc = desc.length > 150 ? desc.substring(0, 150) + '...' : desc;
+
+    // Statut
+    const isObjectif = p.statut === 'Objectif';
+    const statutClass = isObjectif ? 'objectif' : (p.statut === 'Réalisé' ? 'realise' : 'encours');
+
+    // VERSO : chiffres clés
+    let chiffresHtml = '';
+    if (p.chiffres && p.chiffres.length) {
+        chiffresHtml = `<div class="flip-back-section">
+            <h4 class="section-indicateurs">📊 Chiffres clés</h4>
+            <div class="flip-back-chiffres">${p.chiffres.slice(0, 3).map(c =>
+                `<div class="flip-back-chiffre"><div class="val">${c.valeur}</div><div class="label">${c.label}</div></div>`
+            ).join('')}</div>
+        </div>`;
+    }
+
+    // VERSO : chronologie
+    let chronoHtml = '';
+    if (p.chronologie && p.chronologie.length) {
+        chronoHtml = `<div class="flip-back-section">
+            <h4 class="section-chronologie">📅 Chronologie</h4>
+            <ul>${p.chronologie.slice(0, 4).map(c =>
+                `<li><strong>${c.date}</strong> — ${c.evenement}</li>`
+            ).join('')}</ul>
+        </div>`;
+    }
+
+    // VERSO : description si pas de chiffres ni chronologie
+    let descHtml = '';
+    if (!chiffresHtml && !chronoHtml && desc) {
+        descHtml = `<div class="flip-back-section">
+            <h4 class="section-contenu">📝 Détail</h4>
+            <p style="font-size:0.85rem;line-height:1.6;color:#555;">${desc.length > 300 ? desc.substring(0, 300) + '...' : desc}</p>
+        </div>`;
+    }
+
+    return `
+        <div class="flip-card ${hasImage ? 'has-image' : ''}" data-id="${p.id}">
+            <div class="flip-card-inner">
+                <!-- RECTO -->
+                <div class="flip-card-front">
+                    ${hasImage ? `<div class="flip-front-image-container"><img src="${coverImage}" alt="" loading="lazy"></div>` : ''}
+                    <div class="flip-front-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
+                        <h3 class="flip-front-title">${p.titre}</h3>
+                        <div class="flip-front-meta">
+                            ${p.statut ? `<span class="flip-front-statut ${statutClass}">${p.statut}</span>` : ''}
+                            ${p.annee ? `<span class="flip-front-annee">📅 ${p.annee}</span>` : ''}
+                        </div>
+                    </div>
+                    <div class="flip-front-body">
+                        <div class="flip-front-pourquoi">${truncDesc}</div>
+                        <div class="flip-front-hint">
+                            <span class="flip-icon">🔄</span> Retourner pour découvrir
+                        </div>
+                    </div>
+                </div>
+                <!-- VERSO -->
+                <div class="flip-card-back">
+                    <div class="flip-back-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
+                        <span class="flip-back-title">${p.titre.length > 40 ? p.titre.substring(0, 40) + '...' : p.titre}</span>
+                        <span class="flip-back-close">↩ Retour</span>
+                    </div>
+                    <div class="flip-back-body">
+                        ${chiffresHtml}
+                        ${chronoHtml}
+                        ${descHtml}
+                    </div>
+                    <div class="flip-back-footer" onclick="event.stopPropagation(); openModal(${p.id});">
+                        📋 Voir le détail complet
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 function renderCards() {
     const container = document.getElementById('cards-grid');
     let filtered = allData.filter(p => p.theme === currentTheme && !p.suspendu);
-    
+
     if (currentSubcat !== 'all') {
         filtered = filtered.filter(p => p.sous_categorie === currentSubcat);
     }
-    
+
     filtered.sort((a, b) => (a.importance || 5) - (b.importance || 5) || (b.annee || '').localeCompare(a.annee || ''));
-    
+
     const isPlanClimat = currentTheme === 'Plan Climat';
     const entityLabel = isPlanClimat ? 'objectif' : 'action';
     document.getElementById('results-count').textContent = `${filtered.length} ${entityLabel}${filtered.length > 1 ? 's' : ''} affiché${filtered.length > 1 ? 's' : ''}`;
-    
-    container.innerHTML = filtered.map((p, i) => {
-        const isObjectif = p.statut === 'Objectif';
-        const statutClass = isObjectif ? 'objectif' : (p.statut === 'Réalisé' ? 'realise' : 'encours');
-        let chiffresHtml = '';
-        if (p.chiffres && p.chiffres.length) {
-            chiffresHtml = `<div class="card-chiffres">${p.chiffres.slice(0,3).map(c => 
-                `<div class="chiffre"><div class="chiffre-val">${c.valeur}</div><div class="chiffre-label">${c.label}</div></div>`
-            ).join('')}</div>`;
-        }
-        
-        const firstImg = p.images && p.images.length > 0 ? p.images[0] : null;
-        const coverImage = firstImg ? (typeof firstImg === 'string' ? firstImg : firstImg.url || '') : (p.image || '');
-        const hasMultipleImages = p.images && p.images.length > 1;
 
-        return `<div class="card ${isObjectif ? 'objectif' : ''}" onclick="openModal(${p.id})">
-            ${coverImage ? `
-                <div class="card-image">
-                    <img src="${coverImage}" alt="" loading="lazy">
-                    ${hasMultipleImages ? `<span class="card-gallery-badge">📷 ${p.images.length}</span>` : ''}
-                </div>
-            ` : ''}
-            <div class="card-header">
-                <h3>${p.titre}</h3>
-                <div class="card-meta">
-                    ${p.statut ? `<span class="statut ${statutClass}">${p.statut}</span>` : ''}
-                    ${p.annee ? `<span>📅 ${p.annee}</span>` : ''}
-                </div>
-            </div>
-            <div class="card-body">
-                <p>${(p.resume || p.description || '').slice(0, 150)}${(p.resume || p.description || '').length > 150 ? '...' : ''}</p>
-                ${chiffresHtml}
-            </div>
-        </div>`;
+    // Couleurs alternées pour les flip cards
+    const themeInfo = THEMES.find(t => t.id === currentTheme);
+    const baseColor = (themeInfo && allData.find(p => p.theme === currentTheme)?.color) || '#1a3a5c';
+    const colors = ['#e74c3c', '#e67e22', '#27ae60', '#3498db', '#9b59b6', '#1abc9c', '#34495e', '#2c3e50'];
+
+    container.className = 'flip-grid';
+    container.innerHTML = filtered.map((p, i) => {
+        const color = p.color || colors[i % colors.length];
+        return buildBilanFlipCard(p, color);
     }).join('');
+
+    // Attacher les événements flip
+    container.querySelectorAll('.flip-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+            if (e.target.closest('.flip-back-footer')) return;
+            card.classList.toggle('flipped');
+        });
+    });
 }
 
 function selectTheme(theme) {

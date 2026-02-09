@@ -26,6 +26,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components/flip-cards.css">
     <link rel="stylesheet" href="css/pages/equipe.css">
 </head>
 <body>
@@ -236,6 +237,102 @@
             }
         }
 
+        // Utilitaire couleur pour les dégradés
+        function adjustColor(hex, amount) {
+            hex = hex.replace('#', '');
+            const r = Math.max(0, Math.min(255, parseInt(hex.substring(0, 2), 16) + amount));
+            const g = Math.max(0, Math.min(255, parseInt(hex.substring(2, 4), 16) + amount));
+            const b = Math.max(0, Math.min(255, parseInt(hex.substring(4, 6), 16) + amount));
+            return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+        }
+
+        function buildEquipeFlipCard(candidat, index, isLeader) {
+            const color = isLeader ? '#c9a227' : '#1a3a5c';
+            const darkerColor = adjustColor(color, -25);
+            const pos = candidat.photoPosition || 'center 20%';
+
+            // Media (photo ou vidéo)
+            let mediaHtml = '';
+            if (candidat.video) {
+                mediaHtml = `<video src="${candidat.video}" autoplay muted loop playsinline style="object-position:${pos};"></video>`;
+            } else if (candidat.photo) {
+                mediaHtml = `<img src="${candidat.photo}" alt="${getFullName(candidat)}" loading="lazy" style="object-position:${pos};">`;
+            } else {
+                mediaHtml = `<div class="placeholder">👤</div>`;
+            }
+
+            // Statut
+            const feminin = ['Adjointe','Conseillère','Conseillère déléguée'].some(r => (candidat.role||'').startsWith(r));
+            let statutText = '';
+            if (candidat.nouveau) {
+                statutText = feminin ? 'Nouvelle candidate' : 'Nouveau candidat';
+            } else if (candidat.role) {
+                statutText = (feminin ? 'Actuelle ' : 'Actuel ') + candidat.role;
+            }
+
+            // Bio tronquée
+            const bio = candidat.bio || '';
+            const truncBio = bio.length > 200 ? bio.substring(0, 200) + '...' : bio;
+
+            // Objectifs tronqués
+            const objectifs = candidat.objectifs || '';
+            const truncObj = objectifs.length > 150 ? objectifs.substring(0, 150) + '...' : objectifs;
+
+            // VERSO sections
+            let backSections = '';
+            if (candidat.delegation) {
+                backSections += `<span class="flip-back-delegation">${candidat.delegation}</span>`;
+            }
+            if (bio) {
+                backSections += `<div class="flip-back-section">
+                    <h4 class="section-bio">👤 Présentation</h4>
+                    <p style="font-size:0.85rem;line-height:1.6;color:#555;">${truncBio}</p>
+                </div>`;
+            }
+            if (objectifs) {
+                backSections += `<div class="flip-back-section">
+                    <h4 class="section-objectifs">🎯 Objectifs</h4>
+                    <p style="font-size:0.85rem;line-height:1.6;color:#555;">${truncObj}</p>
+                </div>`;
+            }
+            if (candidat.citation) {
+                backSections += `<div class="flip-back-citation">« ${candidat.citation} »</div>`;
+            }
+
+            return `
+                <div class="flip-card flip-card--equipe ${isLeader ? 'flip-card--leader' : ''}" data-index="${index}">
+                    <div class="flip-card-inner">
+                        <!-- RECTO -->
+                        <div class="flip-card-front">
+                            <div class="flip-front-media">${mediaHtml}</div>
+                            <div class="flip-front-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
+                                <h3 class="flip-front-title">${isLeader ? '⭐ ' : ''}${getPrenom(candidat)} ${getNom(candidat)}</h3>
+                                ${statutText ? `<div class="flip-front-subtitle">${statutText}</div>` : ''}
+                            </div>
+                            <div class="flip-front-body" style="padding:0.75rem 1.25rem;">
+                                <div class="flip-front-hint">
+                                    <span class="flip-icon">🔄</span> Retourner pour découvrir
+                                </div>
+                            </div>
+                        </div>
+                        <!-- VERSO -->
+                        <div class="flip-card-back">
+                            <div class="flip-back-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
+                                <span class="flip-back-title">${getPrenom(candidat)} ${getNom(candidat)}</span>
+                                <span class="flip-back-close">↩ Retour</span>
+                            </div>
+                            <div class="flip-back-body">
+                                ${backSections}
+                            </div>
+                            <div class="flip-back-footer" onclick="event.stopPropagation(); openCandidatModal(${index});">
+                                👤 Voir le profil complet
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
         function renderTeam() {
             const grid = document.getElementById('team-grid');
 
@@ -248,62 +345,36 @@
                 return getNom(a).localeCompare(getNom(b), 'fr');
             });
 
-            // Carte Catherine (seule en haut, centrée)
+            // Catherine seule en haut (flip card leader)
             let catherineHtml = '';
             if (catherine) {
-                const cPos = catherine.photoPosition || 'center 20%';
-                const photoHtml = catherine.video
-                    ? `<video src="${catherine.video}" class="team-photo" autoplay muted loop playsinline style="object-fit:cover;object-position:${cPos};"></video>`
-                    : catherine.photo
-                    ? `<img src="${catherine.photo}" alt="${getFullName(catherine)}" class="team-photo" loading="lazy" style="object-position:${cPos};">`
-                    : `<div class="team-photo" style="display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:4rem;">👤</div>`;
-
                 catherineHtml = `
                     <div class="catherine-row">
-                        <div class="team-card team-card-catherine" onclick="openCandidatModal(0)" tabindex="0" role="button" aria-label="${getFullName(catherine)}">
-                            ${photoHtml}
-                            <div class="team-info">
-                                <h3 class="team-name">⭐ ${getPrenom(catherine)}<br>${getNom(catherine)}</h3>
-                                <span class="team-statut sortant">Maire de Vizille</span>
-                            </div>
+                        <div class="flip-grid" style="max-width:320px;margin:0 auto;">
+                            ${buildEquipeFlipCard(catherine, 0, true)}
                         </div>
                     </div>
                 `;
             }
 
-            // Cartes des autres candidats (masquer les vides)
-            const autresCards = autres.map((candidat, index) => {
-                const pos = candidat.photoPosition || 'center 20%';
-                const photoHtml = candidat.video
-                    ? `<video src="${candidat.video}" class="team-photo" autoplay muted loop playsinline style="object-fit:cover;object-position:${pos};"></video>`
-                    : candidat.photo
-                    ? `<img src="${candidat.photo}" alt="${getFullName(candidat)}" class="team-photo" loading="lazy" style="object-position:${pos};">`
-                    : `<div style="width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:3rem;">👤</div>`;
+            // Grille des autres candidats
+            const autresHtml = `<div class="flip-grid">${
+                autres.map((c, i) => buildEquipeFlipCard(c, i + 1, false)).join('')
+            }</div>`;
 
-                const feminin = ['Adjointe','Conseillère','Conseillère déléguée'].some(r => (candidat.role||'').startsWith(r));
-                const statutHtml = candidat.nouveau
-                    ? `<span class="team-statut nouveau">${feminin ? 'Nouvelle candidate' : 'Nouveau candidat'}</span>`
-                    : candidat.role ? `<span class="team-statut sortant">${feminin ? 'Actuelle' : 'Actuel'} ${candidat.role}</span>` : '';
+            grid.innerHTML = catherineHtml + autresHtml;
 
-                return `
-                    <div class="team-card" onclick="openCandidatModal(${index + 1})" tabindex="0" role="button" aria-label="${getFullName(candidat)}">
-                        ${photoHtml}
-                        <div class="team-info">
-                            <h3 class="team-name">${getPrenom(candidat)}<br>${getNom(candidat)}</h3>
-                            ${statutHtml}
-                        </div>
-                    </div>
-                `;
-            }).join('');
+            // Attacher les événements flip
+            grid.querySelectorAll('.flip-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('.flip-back-footer')) return;
+                    card.classList.toggle('flipped');
+                });
+            });
 
-            grid.innerHTML = `
-                ${catherineHtml}
-                <div class="team-grid">${autresCards}</div>
-            `;
-
-            // Forcer la lecture sur mobile
+            // Forcer la lecture des vidéos
             function playAllVideos() {
-                document.querySelectorAll('video.team-photo').forEach(video => {
+                document.querySelectorAll('.flip-front-media video').forEach(video => {
                     video.muted = true;
                     video.setAttribute('playsinline', '');
                     video.play().catch(() => {});
@@ -314,17 +385,16 @@
             // iOS : relancer au premier touch si autoplay bloqué
             const startVideos = () => {
                 playAllVideos();
-                // Pause après 10 secondes
                 setTimeout(() => {
-                    document.querySelectorAll('video.team-photo').forEach(v => v.pause());
+                    document.querySelectorAll('.flip-front-media video').forEach(v => v.pause());
                 }, 10000);
             };
             document.addEventListener('touchstart', startVideos, { once: true });
             document.addEventListener('scroll', startVideos, { once: true });
 
-            // Desktop : pause après 10 secondes aussi
+            // Desktop : pause après 10 secondes
             setTimeout(() => {
-                document.querySelectorAll('video.team-photo').forEach(v => v.pause());
+                document.querySelectorAll('.flip-front-media video').forEach(v => v.pause());
             }, 10000);
         }
 

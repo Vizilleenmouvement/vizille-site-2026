@@ -27,7 +27,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/pages/index.css">
+    <link rel="stylesheet" href="css/components/flip-cards.css">
+    <link rel="stylesheet" href="css/pages/index.css?v=2">
 </head>
 <body>
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
@@ -56,25 +57,31 @@
     <!-- HERO avec Catherine Troton -->
     <section class="hero-dynamic">
         <div class="hero-bg"></div>
-        <div class="hero-content">
-            <div class="hero-candidate animate-fade-in">
-                <img src="images/catherine-troton.jpg" alt="Catherine Troton" class="hero-candidate-photo" loading="lazy">
-                <div class="hero-candidate-info">
-                    <span class="hero-candidate-role">Candidate aux élections municipales 2026</span>
-                    <h1 class="hero-candidate-name">Catherine Troton</h1>
-                    <span class="hero-candidate-title">Maire de Vizille</span>
+        <div class="hero-layout">
+            <!-- Colonne gauche : portrait -->
+            <div class="hero-left animate-fade-in">
+                <div class="hero-portrait">
+                    <img src="images/catherine-troton.jpg" alt="Catherine Troton" class="hero-candidate-photo" loading="lazy">
+                    <div class="hero-portrait-ring"></div>
                 </div>
+                <h1 class="hero-candidate-name">Catherine Troton</h1>
+                <span class="hero-candidate-title">Maire de Vizille</span>
+                <span class="hero-candidate-role">Candidate aux élections municipales 2026</span>
             </div>
-            <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo-small animate-fade-in delay-1" loading="lazy">
-            <p class="hero-slogan animate-slide-up delay-1">« Ensemble pour une ville dynamique et solidaire »</p>
-            <blockquote class="hero-quote animate-slide-up delay-2">
-                Je crois en une action municipale proche des citoyens,<br>fondée sur le dialogue, la construction collective et la confiance.
-            </blockquote>
-            <p class="hero-invitation animate-slide-up delay-3">Notre projet a vocation à devenir <strong>votre</strong> projet.</p>
-            <div class="hero-cta animate-slide-up delay-3">
-                <a href="projet.html" class="btn-hero">Découvrir notre projet</a>
-                <a href="bilan.html" class="btn-hero-outline">Notre bilan</a>
-                <a href="documents/lettre-candidature-2026.pdf" target="_blank" class="btn-hero-outline">📄 Ma lettre</a>
+            <!-- Colonne droite : message -->
+            <div class="hero-right">
+                <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo-small animate-fade-in delay-1" loading="lazy">
+                <p class="hero-slogan animate-slide-up delay-1">« Ensemble pour une ville<br>dynamique et solidaire »</p>
+                <blockquote class="hero-quote animate-slide-up delay-2">
+                    Je crois en une action municipale proche des citoyens,
+                    fondée sur le dialogue, la construction collective et la confiance.
+                </blockquote>
+                <p class="hero-invitation animate-slide-up delay-3">Notre projet a vocation à devenir <strong>votre</strong> projet.</p>
+                <div class="hero-cta animate-slide-up delay-3">
+                    <a href="projet.html" class="btn-hero">Découvrir notre projet</a>
+                    <a href="bilan.html" class="btn-hero-outline">Notre bilan</a>
+                    <a href="documents/lettre-candidature-2026.pdf" target="_blank" class="btn-hero-outline">📄 Ma lettre</a>
+                </div>
             </div>
         </div>
         <div class="scroll-indicator">

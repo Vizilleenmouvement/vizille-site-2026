@@ -26,6 +26,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components/flip-cards.css">
 
     <style>
         .content {
@@ -331,6 +332,15 @@
         function catClass(cat) { return (cat || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-').replace(/[^a-z-]/g, ''); }
         var SITE = 'https://vizilleenmouvement.fr';
 
+        // Utilitaire couleur pour les dégradés
+        function adjustColor(hex, amount) {
+            hex = hex.replace('#', '');
+            const r = Math.max(0, Math.min(255, parseInt(hex.substring(0, 2), 16) + amount));
+            const g = Math.max(0, Math.min(255, parseInt(hex.substring(2, 4), 16) + amount));
+            const b = Math.max(0, Math.min(255, parseInt(hex.substring(4, 6), 16) + amount));
+            return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+        }
+
         function updateOG(title, desc, image, url) {
             var setMeta = function(prop, val) {
                 var el = document.querySelector('meta[property="' + prop + '"]');
@@ -347,79 +357,97 @@
             window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), 'fb-share', 'width=600,height=500');
         }
 
+        // Couleurs par catégorie d'article
+        const CAT_COLORS = {
+            'Communiqué': '#e67e22',
+            'Événement': '#3498db',
+            'Réunion de quartier': '#9b59b6',
+            'Presse': '#27ae60'
+        };
+
+        function buildBlogFlipCard(a, color) {
+            const darkerColor = adjustColor(color, -25);
+            const hasImage = !!a.image;
+            const title = cleanTitle(a.titre);
+            const dateStr = a.a_preciser ? 'Date à préciser' : fmtDate(a.date);
+            const extrait = a.extrait || (a.contenu ? a.contenu.substring(0, 150) + '...' : '');
+            const truncExtrait = extrait.length > 150 ? extrait.substring(0, 150) + '...' : extrait;
+
+            // Contenu pour le verso (premiers ~300 chars du contenu)
+            const contenu = a.contenu || '';
+            const truncContenu = contenu.length > 300 ? contenu.substring(0, 300) + '...' : contenu;
+            const contenuHtml = truncContenu.split('\n').filter(p => p.trim()).slice(0, 6).map(p => '<p style="margin:0.3rem 0;">' + p + '</p>').join('');
+
+            // Catégorie badge
+            const catBadge = a.categorie ? `<span class="flip-front-category" style="background:${color};">${a.categorie}</span>` : '';
+
+            return `
+                <div class="flip-card flip-card--blog ${hasImage ? 'has-image' : ''}" data-id="${a.id}">
+                    <div class="flip-card-inner">
+                        <!-- RECTO -->
+                        <div class="flip-card-front">
+                            ${hasImage ? `<div class="flip-front-image-container"><img src="${a.image}" alt="" loading="lazy"></div>` : ''}
+                            <div class="flip-front-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
+                                <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;margin-bottom:0.3rem;">
+                                    ${catBadge}
+                                    <span class="flip-front-date">${dateStr}</span>
+                                </div>
+                                <h3 class="flip-front-title">${title}</h3>
+                            </div>
+                            <div class="flip-front-body">
+                                <div class="flip-front-pourquoi">${truncExtrait}</div>
+                                <div class="flip-front-hint">
+                                    <span class="flip-icon">🔄</span> Retourner pour lire
+                                </div>
+                            </div>
+                        </div>
+                        <!-- VERSO -->
+                        <div class="flip-card-back">
+                            <div class="flip-back-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
+                                <span class="flip-back-title">${title.length > 35 ? title.substring(0, 35) + '...' : title}</span>
+                                <span class="flip-back-close">↩ Retour</span>
+                            </div>
+                            <div class="flip-back-body">
+                                <div class="flip-back-section">
+                                    <h4 class="section-contenu">📝 Aperçu</h4>
+                                    <div style="font-size:0.85rem;line-height:1.6;color:#555;">${contenuHtml}</div>
+                                </div>
+                                ${a.auteur ? `<div class="flip-back-auteur">✍️ Par ${a.auteur}</div>` : ''}
+                                ${a.source ? `<div class="flip-back-auteur">📰 Source : ${a.source}</div>` : ''}
+                            </div>
+                            <div class="flip-back-footer" onclick="event.stopPropagation(); showArticle(${a.id});">
+                                📰 Lire la suite
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
         function renderMagazine() {
             const container = document.getElementById('magazine-layout');
-            const today = new Date(); today.setHours(0, 0, 0, 0);
             let all = [...articlesData];
             if (currentCategory) all = all.filter(a => a.categorie === currentCategory);
             if (all.length === 0) { container.innerHTML = '<div class="empty-state"><div class="icon">🔍</div><p>Aucun article trouvé.</p></div>'; return; }
 
+            // Trier par date décroissante
             all.sort((a, b) => (b.date ? new Date(b.date).getTime() : 0) - (a.date ? new Date(a.date).getTime() : 0));
 
-            const isEvent = a => ['Événement', 'Réunion de quartier'].includes(a.categorie);
-            const upcoming = all.filter(a => isEvent(a) && !a.a_preciser && a.date && new Date(a.date) >= today).sort((a, b) => new Date(a.date) - new Date(b.date));
-            const tbd = all.filter(a => a.a_preciser);
-            const past = all.filter(a => isEvent(a) && !a.a_preciser && a.date && new Date(a.date) < today).sort((a, b) => new Date(b.date) - new Date(a.date));
-            const articles = all.filter(a => !isEvent(a) && !a.a_preciser).sort((a, b) => new Date(b.date) - new Date(a.date));
+            const colors = ['#e74c3c', '#e67e22', '#27ae60', '#3498db', '#9b59b6', '#1abc9c', '#34495e'];
 
-            let html = '';
-            const vedette = articles.length > 0 ? articles[0] : (upcoming.length > 0 ? upcoming[0] : all[0]);
-            html += renderHero(vedette);
-            const skip = id => arr => arr.filter(a => a.id !== id);
-            const filterOut = skip(vedette.id);
+            container.innerHTML = '<div class="flip-grid">' +
+                all.map((a, i) => {
+                    const color = CAT_COLORS[a.categorie] || colors[i % colors.length];
+                    return buildBlogFlipCard(a, color);
+                }).join('') + '</div>';
 
-            const allUpcoming = [...filterOut(upcoming), ...filterOut(tbd)];
-            if (allUpcoming.length > 0) {
-                html += '<div class="upcoming-strip"><h3>📅 Prochains rendez-vous</h3><div class="upcoming-scroll">' +
-                    allUpcoming.map(renderUpcomingCard).join('') + '</div></div>';
-            }
-
-            const remaining = filterOut(articles);
-            if (remaining.length > 0) {
-                html += '<div class="section-label">📰 Actualités</div><div class="cards-grid">' +
-                    remaining.map(a => renderMiniCard(a, false)).join('') + '</div>';
-            }
-
-            const pastFiltered = filterOut(past);
-            if (pastFiltered.length > 0) {
-                html += '<div class="section-label" style="color:#bbb;">✅ Retour sur nos événements</div><div class="cards-grid">' +
-                    pastFiltered.map(a => renderMiniCard(a, true)).join('') + '</div>';
-            }
-
-            container.innerHTML = html;
-        }
-
-        function renderHero(a) {
-            const img = a.image ? '<img src="' + a.image + '" alt="" class="hero-article-img">' : '<div class="hero-article-img-placeholder">✦</div>';
-            return '<div class="hero-article" onclick="showArticle(' + a.id + ')">' + img +
-                '<div class="hero-article-body">' +
-                (a.categorie ? '<span class="tag">' + a.categorie + '</span>' : '') +
-                '<h2>' + cleanTitle(a.titre) + '</h2>' +
-                '<div class="date">' + (a.a_preciser ? 'Date à préciser' : fmtDate(a.date)) + '</div>' +
-                '<div class="excerpt">' + (a.extrait || a.contenu.substring(0, 250) + '...') + '</div>' +
-                '<div class="actions"><span class="read-btn">Lire la suite →</span></div>' +
-                '</div></div>';
-        }
-
-        function renderUpcomingCard(a) {
-            return '<div class="upcoming-card" onclick="showArticle(' + a.id + ')"><div class="upcoming-card-body">' +
-                '<div class="upcoming-date">' + (a.a_preciser ? '📌 Date à préciser' : fmtDate(a.date)) + '</div>' +
-                '<div class="upcoming-title">' + cleanTitle(a.titre) + '</div>' +
-                '<div class="upcoming-cat">' + (a.categorie || '') + '</div>' +
-                '</div></div>';
-        }
-
-        function renderMiniCard(a, isPast) {
-            const cc = catClass(a.categorie);
-            const img = a.image ? '<img src="' + a.image + '" alt="" class="mini-card-img">' : '<div class="mini-card-noimg"></div>';
-            return '<div class="mini-card ' + (isPast ? 'past' : '') + '" onclick="showArticle(' + a.id + ')">' + img +
-                '<div class="mini-card-body"><div class="mini-card-meta">' +
-                '<span class="mini-card-date">' + (a.a_preciser ? 'À préciser' : fmtDate(a.date)) + '</span>' +
-                (a.categorie ? '<span class="mini-card-cat ' + cc + '">' + a.categorie + '</span>' : '') +
-                (isPast ? '<span class="past-badge">✓ fait</span>' : '') +
-                '</div><h3 class="mini-card-title">' + cleanTitle(a.titre) + '</h3>' +
-                '<p class="mini-card-excerpt">' + (a.extrait || '') + '</p>' +
-                '</div></div>';
+            // Attacher les événements flip
+            container.querySelectorAll('.flip-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('.flip-back-footer')) return;
+                    card.classList.toggle('flipped');
+                });
+            });
         }
 
         function showArticle(id) {

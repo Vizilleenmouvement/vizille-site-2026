@@ -202,7 +202,87 @@ function shuffleArray(array) {
 }
 
 /**
- * Charger les dernières actualités
+ * Utilitaire couleur pour les dégradés flip cards
+ */
+function adjustColor(hex, amount) {
+    hex = hex.replace('#', '');
+    const r = Math.max(0, Math.min(255, parseInt(hex.substring(0, 2), 16) + amount));
+    const g = Math.max(0, Math.min(255, parseInt(hex.substring(2, 4), 16) + amount));
+    const b = Math.max(0, Math.min(255, parseInt(hex.substring(4, 6), 16) + amount));
+    return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+}
+
+/**
+ * Couleurs par catégorie d'article
+ */
+const CAT_COLORS = {
+    'Communiqué': '#e67e22',
+    'Événement': '#3498db',
+    'Réunion de quartier': '#9b59b6',
+    'Presse': '#27ae60'
+};
+
+/**
+ * Construire une flip card article pour l'accueil
+ */
+function buildActuFlipCard(article, color) {
+    const darkerColor = adjustColor(color, -25);
+    const imageUrl = getImageUrl(article.image || article.images?.[0]);
+    const hasImage = !!imageUrl;
+    const title = (article.titre || '').replace(/^[📰📅📣🎯✊🤝📊🚀📝ℹ️🎬]\s*/, '');
+    const date = formatDate(article.date);
+    const category = article.categorie || 'Actualité';
+    const extrait = truncate(article.extrait || article.contenu, 150);
+
+    // Contenu verso
+    const contenu = article.contenu || '';
+    const truncContenu = contenu.length > 300 ? contenu.substring(0, 300) + '...' : contenu;
+    const contenuHtml = truncContenu.split('\n').filter(p => p.trim()).slice(0, 5).map(p => '<p style="margin:0.3rem 0;">' + p + '</p>').join('');
+
+    const catBadge = `<span class="flip-front-category" style="background:${color};">${category}</span>`;
+
+    return `
+        <div class="flip-card flip-card--blog ${hasImage ? 'has-image' : ''}" data-id="${article.id}">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    ${hasImage ? `<div class="flip-front-image-container"><img src="${imageUrl}" alt="" loading="lazy"></div>` : ''}
+                    <div class="flip-front-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
+                        <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;margin-bottom:0.3rem;">
+                            ${catBadge}
+                            <span class="flip-front-date">${date}</span>
+                        </div>
+                        <h3 class="flip-front-title">${title}</h3>
+                    </div>
+                    <div class="flip-front-body">
+                        <div class="flip-front-pourquoi">${extrait}</div>
+                        <div class="flip-front-hint">
+                            <span class="flip-icon">🔄</span> Retourner pour lire
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card-back">
+                    <div class="flip-back-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
+                        <span class="flip-back-title">${title.length > 35 ? title.substring(0, 35) + '...' : title}</span>
+                        <span class="flip-back-close">↩ Retour</span>
+                    </div>
+                    <div class="flip-back-body">
+                        <div class="flip-back-section">
+                            <h4 class="section-contenu">📝 Aperçu</h4>
+                            <div style="font-size:0.85rem;line-height:1.6;color:#555;">${contenuHtml}</div>
+                        </div>
+                        ${article.auteur ? `<div class="flip-back-auteur">✍️ Par ${article.auteur}</div>` : ''}
+                    </div>
+                    <div class="flip-back-footer" onclick="event.stopPropagation(); window.location.href='blog.html?article=${article.id}';">
+                        📰 Lire la suite
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+/**
+ * Charger les dernières actualités (flip cards)
  */
 async function loadActualites() {
     const grid = document.getElementById('actualites-grid');
@@ -224,25 +304,19 @@ async function loadActualites() {
             return;
         }
 
-        grid.innerHTML = recentArticles.map(article => {
-            const imageUrl = getImageUrl(article.image || article.images?.[0]);
-            const date = formatDate(article.date);
-            const category = article.categorie || 'Actualité';
-
-            return `
-                <a href="blog.html#article-${article.id}" class="actu-card animate-on-scroll">
-                    <div class="actu-image">
-                        ${imageUrl ? `<img src="${imageUrl}" alt="${article.titre}" loading="lazy">` : ''}
-                        <span class="actu-category">${getCategoryIcon(category)} ${category}</span>
-                    </div>
-                    <div class="actu-content">
-                        <div class="actu-date">${date}</div>
-                        <h3 class="actu-title">${article.titre}</h3>
-                        <p class="actu-excerpt">${truncate(article.extrait || article.contenu, 100)}</p>
-                    </div>
-                </a>
-            `;
+        grid.className = 'flip-grid';
+        grid.innerHTML = recentArticles.map((article, i) => {
+            const color = CAT_COLORS[article.categorie] || ['#e74c3c', '#3498db', '#27ae60'][i % 3];
+            return buildActuFlipCard(article, color);
         }).join('');
+
+        // Attacher les événements flip
+        grid.querySelectorAll('.flip-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.closest('.flip-back-footer')) return;
+                card.classList.toggle('flipped');
+            });
+        });
 
         // Réinitialiser les animations pour les nouveaux éléments
         initScrollAnimations();
@@ -292,7 +366,75 @@ async function loadGalerie() {
 }
 
 /**
- * Charger l'aperçu de l'équipe
+ * Construire une flip card candidat pour l'accueil
+ */
+function buildEquipePreviewFlipCard(candidat, index, isLeader) {
+    const color = isLeader ? '#c9a227' : '#1a3a5c';
+    const darkerColor = adjustColor(color, -25);
+    const pos = candidat.photoPosition || 'center 20%';
+    const fullName = candidat.prenom ? (candidat.prenom + ' ' + (candidat.nom || '')) : (candidat.nom || '');
+    const prenom = candidat.prenom || (candidat.nom || '').split(' ')[0] || '';
+    const nom = candidat.prenom ? (candidat.nom || '') : (candidat.nom || '').split(' ').slice(1).join(' ') || '';
+
+    // Media
+    let mediaHtml = '';
+    if (candidat.video) {
+        mediaHtml = `<video src="${candidat.video}" autoplay muted loop playsinline style="object-position:${pos};"></video>`;
+    } else if (candidat.photo) {
+        mediaHtml = `<img src="${getImageUrl(candidat.photo)}" alt="${fullName}" loading="lazy" style="object-position:${pos};">`;
+    } else {
+        mediaHtml = `<div class="placeholder">👤</div>`;
+    }
+
+    // Statut
+    const feminin = ['Adjointe','Conseillère','Conseillère déléguée'].some(r => (candidat.role||'').startsWith(r));
+    let statutText = '';
+    if (candidat.nouveau) {
+        statutText = feminin ? 'Nouvelle candidate' : 'Nouveau candidat';
+    } else if (candidat.role) {
+        statutText = candidat.role;
+    }
+
+    // Bio courte pour le verso
+    const bio = candidat.bio || '';
+    const truncBio = bio.length > 150 ? bio.substring(0, 150) + '...' : bio;
+
+    return `
+        <div class="flip-card flip-card--equipe ${isLeader ? 'flip-card--leader' : ''}" data-index="${index}">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="flip-front-media">${mediaHtml}</div>
+                    <div class="flip-front-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
+                        <h3 class="flip-front-title">${isLeader ? '⭐ ' : ''}${prenom} ${nom}</h3>
+                        ${statutText ? `<div class="flip-front-subtitle">${statutText}</div>` : ''}
+                    </div>
+                    <div class="flip-front-body" style="padding:0.75rem 1.25rem;">
+                        <div class="flip-front-hint">
+                            <span class="flip-icon">🔄</span> Retourner pour découvrir
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card-back">
+                    <div class="flip-back-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
+                        <span class="flip-back-title">${prenom} ${nom}</span>
+                        <span class="flip-back-close">↩ Retour</span>
+                    </div>
+                    <div class="flip-back-body">
+                        ${candidat.delegation ? `<span class="flip-back-delegation">${candidat.delegation}</span>` : ''}
+                        ${bio ? `<div class="flip-back-section"><h4 class="section-bio">👤 Présentation</h4><p style="font-size:0.85rem;line-height:1.6;color:#555;">${truncBio}</p></div>` : ''}
+                        ${candidat.citation ? `<div class="flip-back-citation">« ${candidat.citation} »</div>` : ''}
+                    </div>
+                    <div class="flip-back-footer" onclick="event.stopPropagation(); window.location.href='equipe.html';">
+                        👤 Voir le profil complet
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+/**
+ * Charger l'aperçu de l'équipe (flip cards)
  */
 async function loadEquipePreview() {
     const grid = document.getElementById('equipe-preview');
@@ -304,29 +446,47 @@ async function loadEquipePreview() {
 
         const candidats = await response.json();
 
-        // Prendre les 6 premiers candidats avec photo
+        // Prendre les candidats actifs avec photo, triés par ordre
         const displayCandidats = candidats
-            .filter(c => c.photo)
+            .filter(c => c.actif !== false && (c.photo || c.video))
+            .sort((a, b) => (a.ordre || 999) - (b.ordre || 999))
             .slice(0, 6);
 
         if (displayCandidats.length === 0) {
-            // Afficher des placeholders
             grid.innerHTML = Array(6).fill(`
                 <div style="width: 100px; height: 100px; border-radius: 50%; background: rgba(255,255,255,0.2);"></div>
             `).join('');
             return;
         }
 
-        grid.innerHTML = displayCandidats.map(candidat => {
-            const photoUrl = getImageUrl(candidat.photo);
-            return `
-                <img src="${photoUrl}" alt="${candidat.nom}" class="equipe-avatar" title="${candidat.nom}">
-            `;
+        grid.className = 'flip-grid';
+        grid.style.maxWidth = '1000px';
+        grid.style.margin = '0 auto 3rem';
+        grid.innerHTML = displayCandidats.map((candidat, i) => {
+            const isLeader = candidat.ordre === 1;
+            return buildEquipePreviewFlipCard(candidat, i, isLeader);
         }).join('');
+
+        // Attacher les événements flip
+        grid.querySelectorAll('.flip-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.closest('.flip-back-footer')) return;
+                card.classList.toggle('flipped');
+            });
+        });
+
+        // Vidéos
+        grid.querySelectorAll('.flip-front-media video').forEach(video => {
+            video.muted = true;
+            video.setAttribute('playsinline', '');
+            video.play().catch(() => {});
+        });
+        setTimeout(() => {
+            grid.querySelectorAll('.flip-front-media video').forEach(v => v.pause());
+        }, 10000);
 
     } catch (error) {
         console.error('Erreur chargement équipe:', error);
-        // Afficher des placeholders en cas d'erreur
         grid.innerHTML = Array(6).fill(`
             <div style="width: 100px; height: 100px; border-radius: 50%; background: rgba(255,255,255,0.2);"></div>
         `).join('');
