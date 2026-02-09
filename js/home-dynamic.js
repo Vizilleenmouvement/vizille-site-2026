@@ -372,6 +372,7 @@ function buildEquipePreviewFlipCard(candidat, index, isLeader) {
     const color = isLeader ? '#c9a227' : '#1a3a5c';
     const darkerColor = adjustColor(color, -25);
     const pos = candidat.photoPosition || 'center 30%';
+    const vidPos = candidat.videoPosition || 'center 25%';
     const fullName = candidat.prenom ? (candidat.prenom + ' ' + (candidat.nom || '')) : (candidat.nom || '');
     const prenom = candidat.prenom || (candidat.nom || '').split(' ')[0] || '';
     const nom = candidat.prenom ? (candidat.nom || '') : (candidat.nom || '').split(' ').slice(1).join(' ') || '';
@@ -379,7 +380,7 @@ function buildEquipePreviewFlipCard(candidat, index, isLeader) {
     // Media
     let mediaHtml = '';
     if (candidat.video) {
-        mediaHtml = `<video src="${candidat.video}" autoplay muted loop playsinline style="object-position:center center;"></video>`;
+        mediaHtml = `<video src="${candidat.video}" autoplay muted loop playsinline style="object-position:${vidPos};"></video>`;
         if (candidat.photo) {
             mediaHtml += `<img src="${getImageUrl(candidat.photo)}" alt="${fullName}" loading="lazy" style="object-position:${pos};" class="video-fallback-photo">`;
         }

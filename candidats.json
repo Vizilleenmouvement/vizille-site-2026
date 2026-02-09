@@ -16,6 +16,7 @@
     "ordre": 1,
     "nouveau": false,
     "photo": "images/catherine-troton.jpg",
+    "photoPosition": "center 25%",
     "video": "images/candidats/catherine-troton.mp4",
     "actif": true
   },
@@ -36,6 +37,7 @@
     "ordre": 10,
     "nouveau": false,
     "photo": "images/angelique-hermitte.jpg",
+    "photoPosition": "center 25%",
     "video": "images/candidats/angelique-hermitte.mp4",
     "actif": true
   },
@@ -56,6 +58,7 @@
     "ordre": 2,
     "nouveau": false,
     "photo": "images/bernard-ughetto-monfrin.jpg",
+    "photoPosition": "center 30%",
     "video": "images/candidats/bernard-ughetto-monfrin-.mp4",
     "actif": true
   },
@@ -76,6 +79,7 @@
     "ordre": null,
     "nouveau": false,
     "photo": "images/saida-berriche.jpg",
+    "photoPosition": "center 25%",
     "video": "images/candidats/saida-berriche.mp4",
     "actif": true
   },
@@ -96,6 +100,7 @@
     "ordre": null,
     "nouveau": true,
     "photo": "images/jean-christophe-garcia.jpg",
+    "photoPosition": "center 30%",
     "video": "images/candidats/jean-christophe-garcia.mp4",
     "actif": true
   },
@@ -105,10 +110,10 @@
     "nom": "Nifenecker",
     "role": "",
     "delegation": "",
-    "bio": "Je suis arrivée à Vizille en 1977 avec ma famille. J’y ai passé mon baccalauréat.",
-    "pedigree": "Après avoir fait des études de lettres à Grenoble et y avoir commencé ma vie professionnelle, j’ai quitté la région pour la Côte d’Azur en 1991. Je suis revenue à Vizille en 2010 pour soutenir mes parents dans leur vieillesse. Tous les deux ont toujours été très engagés dans la vie municipale et mon engagement sur la liste de Catherine Troton leur doit certainement beaucoup…\nJ’ai terminé ma carrière professionnelle en 2023 à l’école maternelle de Champ sur Drac.",
-    "objectifs": "Aujourd’hui enseignante retraitée, j’ai adoré mon métier qui m’a permis d’aller à la rencontre d’ étudiants étrangers, français, de collégiens, de lycéens et d’élèves de l’école primaire. Leur diversité et leur énergie ne cessent de me convaincre de leur besoin de s’ouvrir au monde et de la nécessité de les accompagner dans la réalisation de leurs projets en les aidant à créer des liens avec tous les partenaires de la vie sociale, les différentes instances municipales, les associations.",
-    "citation": "La vie, c’est le mouvement.",
+    "bio": "Je suis arrivée à Vizille en 1977 avec ma famille. J'y ai passé mon baccalauréat.",
+    "pedigree": "Après avoir fait des études de lettres à Grenoble et y avoir commencé ma vie professionnelle, j'ai quitté la région pour la Côte d'Azur en 1991. Je suis revenue à Vizille en 2010 pour soutenir mes parents dans leur vieillesse. Tous les deux ont toujours été très engagés dans la vie municipale et mon engagement sur la liste de Catherine Troton leur doit certainement beaucoup…\nJ'ai terminé ma carrière professionnelle en 2023 à l'école maternelle de Champ sur Drac.",
+    "objectifs": "Aujourd'hui enseignante retraitée, j'ai adoré mon métier qui m'a permis d'aller à la rencontre d' étudiants étrangers, français, de collégiens, de lycéens et d'élèves de l'école primaire. Leur diversité et leur énergie ne cessent de me convaincre de leur besoin de s'ouvrir au monde et de la nécessité de les accompagner dans la réalisation de leurs projets en les aidant à créer des liens avec tous les partenaires de la vie sociale, les différentes instances municipales, les associations.",
+    "citation": "La vie, c'est le mouvement.",
     "email": "",
     "facebook": "",
     "linkedin": "",
@@ -116,8 +121,8 @@
     "ordre": null,
     "nouveau": true,
     "photo": "images/isabelle-nifenecker.jpg",
+    "photoPosition": "center 25%",
     "video": "images/candidats/isabelle-nifenecker.mp4",
-    "photoPosition": "center 35%",
     "actif": true
   },
   {
@@ -127,7 +132,7 @@
     "role": "Adjoint",
     "delegation": "Transition environnementale",
     "bio": "61 ans\nChargé de la transition environnementale pour le mandat avec Catherine Troton (2020-2026)",
-    "pedigree": "Profession : ingénieur de recherche à l’Université Grenoble Alpes",
+    "pedigree": "Profession : ingénieur de recherche à l'Université Grenoble Alpes",
     "objectifs": "",
     "citation": "",
     "email": "",
@@ -137,6 +142,7 @@
     "ordre": null,
     "nouveau": false,
     "photo": "images/gerard-forestier.jpg",
+    "photoPosition": "center 35%",
     "video": "images/candidats/gerard-forestier.mp4",
     "actif": true
   },

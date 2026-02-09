@@ -250,11 +250,12 @@
             const color = isLeader ? '#c9a227' : '#1a3a5c';
             const darkerColor = adjustColor(color, -25);
             const pos = candidat.photoPosition || 'center 30%';
+            const vidPos = candidat.videoPosition || 'center 25%';
 
             // Media (photo ou vidéo)
             let mediaHtml = '';
             if (candidat.video) {
-                mediaHtml = `<video src="${candidat.video}" autoplay muted loop playsinline style="object-position:center center;"></video>`;
+                mediaHtml = `<video src="${candidat.video}" autoplay muted loop playsinline style="object-position:${vidPos};"></video>`;
                 // Ajouter la photo en dessous pour la transition vidéo → photo
                 if (candidat.photo) {
                     mediaHtml += `<img src="${candidat.photo}" alt="${getFullName(candidat)}" loading="lazy" style="object-position:${pos};" class="video-fallback-photo">`;
