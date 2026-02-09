@@ -380,6 +380,9 @@ function buildEquipePreviewFlipCard(candidat, index, isLeader) {
     let mediaHtml = '';
     if (candidat.video) {
         mediaHtml = `<video src="${candidat.video}" autoplay muted loop playsinline style="object-position:${pos};"></video>`;
+        if (candidat.photo) {
+            mediaHtml += `<img src="${getImageUrl(candidat.photo)}" alt="${fullName}" loading="lazy" style="object-position:${pos};" class="video-fallback-photo">`;
+        }
     } else if (candidat.photo) {
         mediaHtml = `<img src="${getImageUrl(candidat.photo)}" alt="${fullName}" loading="lazy" style="object-position:${pos};">`;
     } else {
@@ -475,14 +478,24 @@ async function loadEquipePreview() {
             });
         });
 
-        // Vidéos
+        // Vidéos : lecture puis transition vers la photo après 10s
         grid.querySelectorAll('.flip-front-media video').forEach(video => {
             video.muted = true;
             video.setAttribute('playsinline', '');
             video.play().catch(() => {});
         });
         setTimeout(() => {
-            grid.querySelectorAll('.flip-front-media video').forEach(v => v.pause());
+            grid.querySelectorAll('.flip-front-media video').forEach(video => {
+                const photo = video.parentElement.querySelector('.video-fallback-photo');
+                if (photo) {
+                    video.style.transition = 'opacity 1s ease';
+                    video.style.opacity = '0';
+                    photo.classList.add('visible');
+                    setTimeout(() => { video.pause(); }, 1000);
+                } else {
+                    video.pause();
+                }
+            });
         }, 10000);
 
     } catch (error) {

@@ -255,6 +255,10 @@
             let mediaHtml = '';
             if (candidat.video) {
                 mediaHtml = `<video src="${candidat.video}" autoplay muted loop playsinline style="object-position:${pos};"></video>`;
+                // Ajouter la photo en dessous pour la transition vidéo → photo
+                if (candidat.photo) {
+                    mediaHtml += `<img src="${candidat.photo}" alt="${getFullName(candidat)}" loading="lazy" style="object-position:${pos};" class="video-fallback-photo">`;
+                }
             } else if (candidat.photo) {
                 mediaHtml = `<img src="${candidat.photo}" alt="${getFullName(candidat)}" loading="lazy" style="object-position:${pos};">`;
             } else {
@@ -380,22 +384,34 @@
                     video.play().catch(() => {});
                 });
             }
+
+            // Transition vidéo → photo après 10 secondes
+            function transitionToPhoto() {
+                document.querySelectorAll('.flip-front-media video').forEach(video => {
+                    const photo = video.parentElement.querySelector('.video-fallback-photo');
+                    if (photo) {
+                        video.style.transition = 'opacity 1s ease';
+                        video.style.opacity = '0';
+                        photo.classList.add('visible');
+                        setTimeout(() => { video.pause(); }, 1000);
+                    } else {
+                        video.pause();
+                    }
+                });
+            }
+
             playAllVideos();
 
             // iOS : relancer au premier touch si autoplay bloqué
             const startVideos = () => {
                 playAllVideos();
-                setTimeout(() => {
-                    document.querySelectorAll('.flip-front-media video').forEach(v => v.pause());
-                }, 10000);
+                setTimeout(transitionToPhoto, 10000);
             };
             document.addEventListener('touchstart', startVideos, { once: true });
             document.addEventListener('scroll', startVideos, { once: true });
 
-            // Desktop : pause après 10 secondes
-            setTimeout(() => {
-                document.querySelectorAll('.flip-front-media video').forEach(v => v.pause());
-            }, 10000);
+            // Desktop : transition après 10 secondes
+            setTimeout(transitionToPhoto, 10000);
         }
 
         document.addEventListener('DOMContentLoaded', loadCandidats);
