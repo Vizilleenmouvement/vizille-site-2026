@@ -409,7 +409,7 @@ let themeConfig = { ...defaultThemeConfig };
 
 // Configuration des 5 catégories principales
 const CATEGORIES_PROJET = [
-    { id: 'cadre-vie', name: 'Cadre de vie', icon: '🌿', themes: ['Environnement', 'Plan Climat', 'Urbanisme', 'Travaux', 'Mobilités'] },
+    { id: 'cadre-vie', name: 'Cadre de vie', icon: '🌿', themes: ['Environnement', 'Plan Climat', 'Urbanisme', 'Travaux', 'Mobilités', 'Transition écologique'] },
     { id: 'social', name: 'Social', icon: '🤝', themes: ['Solidarité', 'Enfance', 'Santé', 'Personnel', 'Seniors', 'Enfance/Jeunesse', 'Jeunesse'] },
     { id: 'culture', name: 'Culture', icon: '🎭', themes: ['Culture', 'Sport', 'Patrimoine', 'Jumelages', 'Éducation'] },
     { id: 'municipal', name: 'Municipal', icon: '🏛️', themes: ['Administration', 'Finance', 'Intercommunalité', 'Concertation citoyenne', 'Démocratie', 'Démocratie locale', 'Métropole'] },
@@ -796,10 +796,10 @@ function renderCurrentView() {
         return;
     }
 
-    // Vue flip cards pour Transition écologique
+    // Vue flip cards pour tout thème sélectionné
     const selectedTheme = document.getElementById('filter-theme')?.value;
-    if (currentView === 'cards' && selectedTheme === 'Transition écologique') {
-        renderFlipCardsView();
+    if (currentView === 'cards' && selectedTheme) {
+        renderFlipCardsView(selectedTheme);
         return;
     }
 
@@ -817,12 +817,16 @@ function renderCurrentView() {
 }
 
 // ===== CARTES FLIP (RECTO/VERSO) =====
-function renderFlipCardsView() {
-    const ecoData = filteredData.filter(p => projectHasTheme(p, 'Transition écologique'));
-    const objectifs = ecoData.filter(p => p.type === 'objectif').sort((a, b) => a.id - b.id);
-    const engagements = ecoData.filter(p => p.type === 'engagement').sort((a, b) => a.id - b.id);
+function renderFlipCardsView(themeName) {
+    const tc = themeConfig[themeName] || { icon: '📋', color: '#34495e' };
+    const themeData = filteredData.filter(p => projectHasTheme(p, themeName));
 
-    // Couleurs pour chaque engagement
+    // Séparer objectifs et engagements (si le champ type existe)
+    const objectifs = themeData.filter(p => p.type === 'objectif').sort((a, b) => a.id - b.id);
+    const engagements = themeData.filter(p => p.type === 'engagement').sort((a, b) => a.id - b.id);
+    const autres = themeData.filter(p => !p.type || (p.type !== 'objectif' && p.type !== 'engagement')).sort((a, b) => a.id - b.id);
+
+    // Palette de couleurs variées pour les cartes
     const colors = [
         '#e74c3c', '#e67e22', '#f1c40f', '#2ecc71', '#1abc9c',
         '#3498db', '#9b59b6', '#34495e', '#16a085', '#c0392b', '#8e44ad'
@@ -830,19 +834,29 @@ function renderFlipCardsView() {
 
     let html = '<div class="flip-grid" id="view-flip">';
 
-    // Titre section
-    html += '<div class="flip-grid-title"><h2>🌱 Transition écologique</h2><p>9 engagements + 2 projets structurants — Cliquez pour retourner les cartes</p></div>';
+    // Titre section dynamique
+    const parts = [];
+    if (objectifs.length > 0) parts.push(`${objectifs.length} projet${objectifs.length > 1 ? 's' : ''}`);
+    if (engagements.length > 0) parts.push(`${engagements.length} engagement${engagements.length > 1 ? 's' : ''}`);
+    if (autres.length > 0) parts.push(`${autres.length} objectif${autres.length > 1 ? 's' : ''}`);
+    const subtitle = parts.length > 0 ? parts.join(' + ') + ' — Cliquez pour retourner les cartes' : 'Cliquez pour retourner les cartes';
+    html += `<div class="flip-grid-title"><h2>${tc.icon} ${themeName}</h2><p>${subtitle}</p></div>`;
 
-    // Projets d'abord
+    // Projets/objectifs d'abord (violet)
     objectifs.forEach((p, i) => {
-        const color = '#8e44ad'; // Violet pour projets
-        html += buildFlipCard(p, color, 'PROJET ' + (i + 1));
+        html += buildFlipCard(p, '#8e44ad', 'PROJET ' + (i + 1));
     });
 
-    // Puis engagements
+    // Puis engagements (palette tournante)
     engagements.forEach((p, i) => {
-        const color = colors[i % colors.length];
-        html += buildFlipCard(p, color, 'ENGAGEMENT ' + (i + 1));
+        html += buildFlipCard(p, colors[i % colors.length], 'ENGAGEMENT ' + (i + 1));
+    });
+
+    // Puis les fiches sans type (utiliser la couleur du thème + palette)
+    autres.forEach((p, i) => {
+        const numero = p.numero ? `OBJECTIF ${p.numero}` : `FICHE ${i + 1}`;
+        const color = colors[(objectifs.length + engagements.length + i) % colors.length];
+        html += buildFlipCard(p, color, numero);
     });
 
     html += '</div>';
@@ -866,12 +880,77 @@ function renderFlipCardsView() {
 }
 
 function buildFlipCard(projet, color, badge) {
-    const pourquoi = projet.pourquoi || projet.description || projet.resume || '';
-    const actions = projet.ce_quon_fait || projet.axes_action || [];
+    // Fallbacks intelligents pour tous les formats de données
+    const pourquoi = projet.pourquoi || projet.vision || projet.idee_force || projet.description || projet.resume || '';
+    const actions = projet.ce_quon_fait || projet.axes_action || projet.actions || [];
     const benefices = projet.benefices || [];
+    const enjeux = projet.enjeux || [];
     const indicateurs = projet.indicateurs ?
         (typeof projet.indicateurs === 'string' ? projet.indicateurs.split(' • ') : projet.indicateurs) : [];
     const darkerColor = adjustColor(color, -25);
+
+    // Nettoyer le titre (retirer les préfixes numérotés)
+    const cleanTitle = projet.titre.replace(/^(Objectif \d+ - |Engagement \d+ - )/, '');
+
+    // Sous-titre : résumé, soustitre ou slogan
+    const subtitle = projet.resume || projet.soustitre || projet.slogan || '';
+
+    // Construire le contenu du recto : priorité au "pourquoi", sinon enjeux
+    let frontContent = '';
+    if (pourquoi) {
+        frontContent = `<div class="flip-front-pourquoi">
+            <strong>🎯 Pourquoi ?</strong><br>
+            ${pourquoi.length > 180 ? pourquoi.substring(0, 180) + '...' : pourquoi}
+        </div>`;
+    } else if (enjeux.length > 0) {
+        frontContent = `<div class="flip-front-pourquoi">
+            <strong>🎯 Enjeux</strong><br>
+            ${enjeux.slice(0, 3).map(e => '• ' + e).join('<br>')}
+        </div>`;
+    }
+
+    // Construire les sections du verso
+    let backSections = '';
+
+    // Section actions/ce qu'on fait
+    if (actions.length > 0) {
+        backSections += `<div class="flip-back-section">
+            <h4 class="section-actions">🔧 Ce qu'on fait</h4>
+            <ul>${actions.slice(0, 5).map(a => `<li>${a}</li>`).join('')}</ul>
+        </div>`;
+    }
+
+    // Section enjeux (si pas déjà affichés en recto et pas d'actions)
+    if (enjeux.length > 0 && actions.length === 0) {
+        backSections += `<div class="flip-back-section">
+            <h4 class="section-actions">🎯 Enjeux</h4>
+            <ul>${enjeux.slice(0, 5).map(e => `<li>${e}</li>`).join('')}</ul>
+        </div>`;
+    }
+
+    // Section bénéfices
+    if (benefices.length > 0) {
+        backSections += `<div class="flip-back-section">
+            <h4 class="section-benefices">💎 Bénéfices</h4>
+            <ul>${benefices.map(b => `<li>${b}</li>`).join('')}</ul>
+        </div>`;
+    }
+
+    // Section indicateurs
+    if (indicateurs.length > 0) {
+        backSections += `<div class="flip-back-section">
+            <h4 class="section-indicateurs">📊 Indicateurs</h4>
+            <ul>${indicateurs.slice(0, 5).map(ind => `<li>${ind}</li>`).join('')}</ul>
+        </div>`;
+    }
+
+    // Si le verso serait vide, afficher la description complète
+    if (!backSections && projet.description) {
+        backSections = `<div class="flip-back-section">
+            <h4 class="section-actions">📝 En détail</h4>
+            <p style="font-size: 0.9rem; line-height: 1.6; color: #555;">${projet.description}</p>
+        </div>`;
+    }
 
     return `
         <div class="flip-card" data-id="${projet.id}">
@@ -880,14 +959,11 @@ function buildFlipCard(projet, color, badge) {
                 <div class="flip-card-front">
                     <div class="flip-front-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
                         <span class="flip-front-badge">${badge}</span>
-                        <h3 class="flip-front-title">${projet.titre.replace(/^(Objectif \d+ - |Engagement \d+ - )/, '')}</h3>
-                        <div class="flip-front-subtitle">${projet.resume || ''}</div>
+                        <h3 class="flip-front-title">${cleanTitle}</h3>
+                        <div class="flip-front-subtitle">${subtitle}</div>
                     </div>
                     <div class="flip-front-body">
-                        <div class="flip-front-pourquoi">
-                            <strong>🎯 Pourquoi ?</strong><br>
-                            ${pourquoi.length > 180 ? pourquoi.substring(0, 180) + '...' : pourquoi}
-                        </div>
+                        ${frontContent}
                         <div class="flip-front-hint">
                             <span class="flip-icon">🔄</span> Retourner pour voir les détails
                         </div>
@@ -896,25 +972,11 @@ function buildFlipCard(projet, color, badge) {
                 <!-- VERSO -->
                 <div class="flip-card-back">
                     <div class="flip-back-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
-                        <span class="flip-back-title">${projet.titre.replace(/^(Objectif \d+ - |Engagement \d+ - )/, '')}</span>
+                        <span class="flip-back-title">${cleanTitle}</span>
                         <span class="flip-back-close">↩ Retour</span>
                     </div>
                     <div class="flip-back-body">
-                        ${actions.length > 0 ? `
-                        <div class="flip-back-section">
-                            <h4 class="section-actions">🔧 Ce qu'on fait</h4>
-                            <ul>${actions.map(a => `<li>${a}</li>`).join('')}</ul>
-                        </div>` : ''}
-                        ${benefices.length > 0 ? `
-                        <div class="flip-back-section">
-                            <h4 class="section-benefices">💎 Bénéfices</h4>
-                            <ul>${benefices.map(b => `<li>${b}</li>`).join('')}</ul>
-                        </div>` : ''}
-                        ${indicateurs.length > 0 ? `
-                        <div class="flip-back-section">
-                            <h4 class="section-indicateurs">📊 Indicateurs</h4>
-                            <ul>${indicateurs.map(ind => `<li>${ind}</li>`).join('')}</ul>
-                        </div>` : ''}
+                        ${backSections}
                     </div>
                     <div class="flip-back-footer" onclick="event.stopPropagation(); openProjectModal(${projet.id});">
                         📋 Voir la fiche complète

@@ -65,9 +65,24 @@
     "color": "#2ecc71"
   },
   {
+    "theme": "Travaux",
+    "icon": "🏗️",
+    "color": "#e67e22"
+  },
+  {
     "theme": "Urbanisme",
     "icon": "🏘️",
     "color": "#34495e"
+  },
+  {
+    "theme": "Enfance/Jeunesse",
+    "icon": "👶",
+    "color": "#3498db"
+  },
+  {
+    "theme": "Action sociale",
+    "icon": "🤝",
+    "color": "#e74c3c"
   },
   {
     "theme": "Économie",
