@@ -157,6 +157,7 @@
     "ordre": null,
     "nouveau": true,
     "photo": "images/laurent-pichon.jpg",
+    "photoPosition": "center 35%",
     "video": "images/candidats/laurent-pichon.mp4",
     "actif": true
   }

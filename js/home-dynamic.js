@@ -371,7 +371,7 @@ async function loadGalerie() {
 function buildEquipePreviewFlipCard(candidat, index, isLeader) {
     const color = isLeader ? '#c9a227' : '#1a3a5c';
     const darkerColor = adjustColor(color, -25);
-    const pos = candidat.photoPosition || 'center 20%';
+    const pos = candidat.photoPosition || 'center 30%';
     const fullName = candidat.prenom ? (candidat.prenom + ' ' + (candidat.nom || '')) : (candidat.nom || '');
     const prenom = candidat.prenom || (candidat.nom || '').split(' ')[0] || '';
     const nom = candidat.prenom ? (candidat.nom || '') : (candidat.nom || '').split(' ').slice(1).join(' ') || '';
@@ -466,7 +466,7 @@ async function loadEquipePreview() {
         grid.innerHTML = displayCandidats.map(candidat => {
             const fullName = candidat.prenom ? (candidat.prenom + ' ' + (candidat.nom || '')) : (candidat.nom || '');
             const photoSrc = candidat.photo ? getImageUrl(candidat.photo) : '';
-            const pos = candidat.photoPosition || 'center 20%';
+            const pos = candidat.photoPosition || 'center 30%';
             if (!photoSrc) return '';
             return `<a href="equipe.html" title="${fullName}">
                 <img src="${photoSrc}" alt="${fullName}" class="equipe-avatar" loading="lazy" style="object-position:${pos};">
