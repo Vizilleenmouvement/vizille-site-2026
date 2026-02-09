@@ -34,7 +34,7 @@
     width: 100%;
     height: 250px;
     object-fit: cover;
-    object-position: top;
+    object-position: center 20%;
 }
 
 .team-card.tete-de-liste .team-photo {
@@ -236,7 +236,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top;
+    object-position: center 20%;
 }
 
 .leader-info {
@@ -625,9 +625,10 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-/* Photo plus petite pour la grille */
+/* Photo pour la grille — assez haute pour voir le visage */
 .team-photo {
-    height: 140px;
+    height: 200px;
+    object-position: center 20%;
 }
 
 /* Grille plus serrée */
@@ -644,7 +645,7 @@
     }
     
     .team-photo {
-        height: 105px;
+        height: 150px;
     }
     
     .team-name {
@@ -675,9 +676,9 @@
 
 .team-card-catherine .team-photo {
     width: 100%;
-    height: 196px;
+    height: 220px;
     object-fit: cover;
-    object-position: top;
+    object-position: center 20%;
 }
 
 .team-card-catherine .team-name {

@@ -273,7 +273,7 @@
             // Cartes des autres candidats (masquer les vides)
             const autresCards = autres.map((candidat, index) => {
                 const photoHtml = candidat.video
-                    ? `<video src="${candidat.video}" class="team-photo" autoplay muted loop playsinline style="object-fit:cover;"></video>`
+                    ? `<video src="${candidat.video}" class="team-photo" autoplay muted loop playsinline style="object-fit:cover;object-position:center 20%;"></video>`
                     : candidat.photo
                     ? `<img src="${candidat.photo}" alt="${getFullName(candidat)}" class="team-photo" loading="lazy">`
                     : `<div style="width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:#e0e0e0;font-size:3rem;">👤</div>`;
