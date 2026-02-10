@@ -207,5 +207,25 @@
     "photo": "images/louis-lamarca.jpg",
     "video": "images/candidats/louis-lamarca.mp4",
     "actif": true
+  },
+  {
+    "id": 1770717433857,
+    "prenom": "Sakina",
+    "nom": "YAHIAOUI",
+    "role": "conseillère",
+    "delegation": "transition environnementale",
+    "bio": "je me suis installée à Vizille il y a 24 ans et je suis chimiste dans un centre de recherche et développement.",
+    "pedigree": "Actuellement, conseillère municipale au sein de l’équipe de Catherine Troton, je m’investis plus particulièrement sur les sujets liés à la transition environnementale.",
+    "objectifs": "’ai choisi de m’engager pour contribuer activement au développement de la commune en portant une attention particulière aux principes d’égalité, de solidarité et de partage des  savoirs.",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": "",
+    "ordre": null,
+    "nouveau": false,
+    "photo": null,
+    "video": "images/candidats/sakina-yahiaoui.mp4",
+    "actif": true
   }
 ]
