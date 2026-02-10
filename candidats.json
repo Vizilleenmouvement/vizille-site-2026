@@ -187,5 +187,25 @@
     "photoPosition": "center 25%",
     "video": "images/candidats/mohamed-cherigui.mp4",
     "actif": true
+  },
+  {
+    "id": 1770716005580,
+    "prenom": "Louis",
+    "nom": "Lamarca",
+    "role": "Adjoint",
+    "delegation": "à l'urbanisme et aux travaux",
+    "bio": "67 ans, membre de l’association « Pour et avec les Vizillois » depuis 1994.",
+    "pedigree": "Durant ce mandat, j’ai mis mon expérience professionnelle au service de la commune afin d’accompagner les services techniques dans leur modernisation et de les soutenir dans leur travail quotidien.",
+    "objectifs": "Mon objectif\n\nConstruire, avec les Vizillois, des habitations modernes répondant à leurs attentes, respectueuses de l’environnement, tout en garantissant un cadre de vie agréable et de qualité",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": "",
+    "ordre": null,
+    "nouveau": false,
+    "photo": "images/louis-lamarca.jpg",
+    "video": "images/candidats/louis-lamarca.mp4",
+    "actif": true
   }
 ]
