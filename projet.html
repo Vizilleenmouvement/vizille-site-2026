@@ -850,11 +850,11 @@ function buildFlipCard(projet, color, badge) {
                 <!-- RECTO -->
                 <div class="flip-card-front">
                     <div class="flip-front-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
-                        <span class="flip-front-badge">${badge}</span>
                         <h3 class="flip-front-title">${cleanTitle}</h3>
-                        <div class="flip-front-subtitle">${subtitle}</div>
                     </div>
                     <div class="flip-front-body">
+                        <span class="flip-front-badge" style="background:${color};">${badge}</span>
+                        ${subtitle ? `<div class="flip-front-subtitle">${subtitle}</div>` : ''}
                         ${frontContent}
                         <div class="flip-front-hint">
                             <span class="flip-icon">🔄</span> Retourner pour voir les détails

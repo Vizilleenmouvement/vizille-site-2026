@@ -72,7 +72,6 @@
     color: white;
     position: relative;
     overflow: hidden;
-    min-height: 120px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -91,36 +90,58 @@
 
 .flip-front-badge {
     display: inline-block;
+    align-self: flex-start;
     font-size: 0.65rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    background: rgba(255,255,255,0.2);
+    color: white;
     padding: 0.2rem 0.6rem;
     border-radius: 20px;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.4rem;
+}
+
+/* Badge dans le header (ancien style) */
+.flip-front-header .flip-front-badge {
+    background: rgba(255,255,255,0.2);
+}
+
+/* Badge dans le body (nouveau style) */
+.flip-front-body .flip-front-badge {
+    margin-bottom: 0.5rem;
 }
 
 .flip-front-title {
     font-family: var(--font-heading);
     font-size: 1.15rem;
     font-weight: 700;
-    line-height: 1.25;
+    line-height: 1.3;
     margin: 0;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
 .flip-front-subtitle {
     font-size: 0.8rem;
-    opacity: 0.85;
     margin-top: 0.25rem;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+/* Sous-titre dans le header (blanc) */
+.flip-front-header .flip-front-subtitle {
+    opacity: 0.85;
+}
+
+/* Sous-titre dans le body (gris) */
+.flip-front-body .flip-front-subtitle {
+    color: var(--gris-texte);
+    font-style: italic;
+    margin-bottom: 0.5rem;
 }
 
 .flip-front-body {
@@ -547,10 +568,6 @@
     .flip-card--blog,
     .flip-card--equipe {
         height: 380px;
-    }
-
-    .flip-front-header {
-        min-height: 100px;
     }
 
     .flip-front-title {
