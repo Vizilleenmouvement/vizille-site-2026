@@ -1135,6 +1135,43 @@
     border-color: var(--rose);
 }
 
+/* Conteneur pour superposer vidéo et photo fallback */
+.equipe-avatar-container {
+    position: relative;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.equipe-avatar-container .equipe-avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.equipe-avatar-container .equipe-avatar-fallback {
+    opacity: 0;
+    transition: opacity 1s ease;
+    z-index: 1;
+}
+
+.equipe-avatar-container video.equipe-avatar {
+    z-index: 0;
+}
+
+.equipe-avatar-container:hover .equipe-avatar {
+    transform: none;
+}
+
+.equipe-avatar-container:hover {
+    transform: scale(1.1);
+    border: 3px solid var(--rose);
+}
+
 .equipe-preview-section .btn-primary {
     background: var(--rose);
 }
@@ -1428,6 +1465,11 @@
     }
 
     .equipe-avatar {
+        width: 70px;
+        height: 70px;
+    }
+
+    .equipe-avatar-container {
         width: 70px;
         height: 70px;
     }

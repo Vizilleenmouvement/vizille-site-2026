@@ -468,11 +468,57 @@ async function loadEquipePreview() {
             const fullName = candidat.prenom ? (candidat.prenom + ' ' + (candidat.nom || '')) : (candidat.nom || '');
             const photoSrc = candidat.photo ? getImageUrl(candidat.photo) : '';
             const pos = candidat.photoPosition || 'center 30%';
-            if (!photoSrc) return '';
-            return `<a href="equipe.html" title="${fullName}">
-                <img src="${photoSrc}" alt="${fullName}" class="equipe-avatar" loading="lazy" style="object-position:${pos};">
-            </a>`;
+            const vidPos = candidat.videoPosition || 'center 25%';
+
+            if (candidat.video && photoSrc) {
+                // Vidéo + photo fallback (transition après 10s)
+                return `<a href="equipe.html" title="${fullName}" class="equipe-avatar-container">
+                    <video src="${candidat.video}" class="equipe-avatar" autoplay muted loop playsinline style="object-position:${vidPos};"></video>
+                    <img src="${photoSrc}" alt="${fullName}" class="equipe-avatar equipe-avatar-fallback" loading="lazy" style="object-position:${pos};">
+                </a>`;
+            } else if (photoSrc) {
+                return `<a href="equipe.html" title="${fullName}" class="equipe-avatar-container">
+                    <img src="${photoSrc}" alt="${fullName}" class="equipe-avatar" loading="lazy" style="object-position:${pos};">
+                </a>`;
+            }
+            return '';
         }).join('');
+
+        // Transition vidéo → photo après 10 secondes
+        function transitionToPhoto() {
+            grid.querySelectorAll('.equipe-avatar-container video').forEach(video => {
+                const photo = video.parentElement.querySelector('.equipe-avatar-fallback');
+                if (photo) {
+                    video.style.transition = 'opacity 1s ease';
+                    video.style.opacity = '0';
+                    photo.style.opacity = '1';
+                    setTimeout(() => { video.pause(); }, 1000);
+                } else {
+                    video.pause();
+                }
+            });
+        }
+
+        // Forcer lecture vidéos
+        function playAllVideos() {
+            grid.querySelectorAll('video').forEach(v => {
+                v.muted = true;
+                v.play().catch(() => {});
+            });
+        }
+
+        playAllVideos();
+
+        // iOS : relancer au premier touch
+        const startVideos = () => {
+            playAllVideos();
+            setTimeout(transitionToPhoto, 10000);
+        };
+        document.addEventListener('touchstart', startVideos, { once: true });
+        document.addEventListener('scroll', startVideos, { once: true });
+
+        // Desktop : transition après 10 secondes
+        setTimeout(transitionToPhoto, 10000);
 
     } catch (error) {
         console.error('Erreur chargement équipe:', error);

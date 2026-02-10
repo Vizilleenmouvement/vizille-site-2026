@@ -250,16 +250,10 @@
             const color = isLeader ? '#c9a227' : '#1a3a5c';
             const darkerColor = adjustColor(color, -25);
             const pos = candidat.photoPosition || 'center 30%';
-            const vidPos = candidat.videoPosition || 'center 25%';
 
-            // Media (photo ou vidéo)
+            // Media (photo uniquement sur les cartes, vidéo dans la modale)
             let mediaHtml = '';
-            if (candidat.video) {
-                mediaHtml = `<video src="${candidat.video}" autoplay muted loop playsinline style="object-position:${vidPos};"></video>`;
-                if (candidat.photo) {
-                    mediaHtml += `<img src="${candidat.photo}" alt="${getFullName(candidat)}" loading="lazy" style="object-position:${pos};" class="video-fallback-photo">`;
-                }
-            } else if (candidat.photo) {
+            if (candidat.photo) {
                 mediaHtml = `<img src="${candidat.photo}" alt="${getFullName(candidat)}" loading="lazy" style="object-position:${pos};">`;
             } else {
                 mediaHtml = `<div class="equipe-card-placeholder">👤</div>`;
@@ -320,43 +314,6 @@
             }</div>`;
 
             grid.innerHTML = catherineHtml + autresHtml;
-
-            // Forcer la lecture des vidéos
-            function playAllVideos() {
-                document.querySelectorAll('.equipe-card-media video').forEach(video => {
-                    video.muted = true;
-                    video.setAttribute('playsinline', '');
-                    video.play().catch(() => {});
-                });
-            }
-
-            // Transition vidéo → photo après 10 secondes
-            function transitionToPhoto() {
-                document.querySelectorAll('.equipe-card-media video').forEach(video => {
-                    const photo = video.parentElement.querySelector('.video-fallback-photo');
-                    if (photo) {
-                        video.style.transition = 'opacity 1s ease';
-                        video.style.opacity = '0';
-                        photo.classList.add('visible');
-                        setTimeout(() => { video.pause(); }, 1000);
-                    } else {
-                        video.pause();
-                    }
-                });
-            }
-
-            playAllVideos();
-
-            // iOS : relancer au premier touch si autoplay bloqué
-            const startVideos = () => {
-                playAllVideos();
-                setTimeout(transitionToPhoto, 10000);
-            };
-            document.addEventListener('touchstart', startVideos, { once: true });
-            document.addEventListener('scroll', startVideos, { once: true });
-
-            // Desktop : transition après 10 secondes
-            setTimeout(transitionToPhoto, 10000);
         }
 
         document.addEventListener('DOMContentLoaded', loadCandidats);
