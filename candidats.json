@@ -34,9 +34,10 @@
     "facebook": "",
     "linkedin": "",
     "twitter": "",
-    "ordre": null,
+    "ordre": 10,
     "nouveau": false,
     "photo": "images/angelique-hermitte.jpg",
+    "photoPosition": "center 25%",
     "video": "images/candidats/angelique-hermitte.mp4",
     "actif": true
   },
@@ -203,7 +204,6 @@
     "ordre": null,
     "nouveau": false,
     "photo": "images/louis-lamarca.jpg",
-    "photoPosition": "center 25%",
     "video": "images/candidats/louis-lamarca.mp4",
     "actif": true
   },
@@ -211,7 +211,7 @@
     "id": 1770717433857,
     "prenom": "Sakina",
     "nom": "YAHIAOUI",
-    "role": "conseillère déléguée",
+    "role": "conseillère",
     "delegation": "transition environnementale",
     "bio": "je me suis installée à Vizille il y a 24 ans et je suis chimiste dans un centre de recherche et développement.",
     "pedigree": "Actuellement, conseillère municipale au sein de l’équipe de Catherine Troton, je m’investis plus particulièrement sur les sujets liés à la transition environnementale.",
@@ -224,7 +224,6 @@
     "ordre": null,
     "nouveau": false,
     "photo": "images/sakina-yahiaoui.jpg",
-    "photoPosition": "center 30%",
     "video": "images/candidats/sakina-yahiaoui.mp4",
     "actif": true
   }
