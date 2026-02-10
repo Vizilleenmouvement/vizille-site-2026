@@ -554,6 +554,135 @@
     border-top: 1px solid #eee;
 }
 
+/* ===== CARTES ÉQUIPE À FACE UNIQUE (avec animation flip reveal) ===== */
+
+.equipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 2rem;
+    perspective: 1200px;
+}
+
+.equipe-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Animation flip reveal au chargement */
+    opacity: 0;
+    transform: perspective(800px) rotateY(-90deg);
+    animation: equipeCardReveal 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+.equipe-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+}
+
+@keyframes equipeCardReveal {
+    0% {
+        opacity: 0;
+        transform: perspective(800px) rotateY(-90deg);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+        transform: perspective(800px) rotateY(0deg);
+    }
+}
+
+/* Media : photo ou vidéo */
+.equipe-card-media {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.equipe-card-media img,
+.equipe-card-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.equipe-card-media .video-fallback-photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s ease;
+    z-index: 1;
+}
+
+.equipe-card-media .video-fallback-photo.visible {
+    opacity: 1;
+}
+
+.equipe-card-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e0e0e0;
+    font-size: 3rem;
+}
+
+/* Header coloré */
+.equipe-card-header {
+    padding: 0.75rem 1.25rem;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.equipe-card-header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.equipe-card-header h3 {
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0;
+}
+
+.equipe-card-statut {
+    font-size: 0.78rem;
+    opacity: 0.9;
+    margin-top: 0.15rem;
+}
+
+/* Carte cliquable */
+.equipe-card {
+    cursor: pointer;
+}
+
+/* Leader (Catherine) */
+.equipe-card--leader {
+    border: 3px solid var(--or, #c9a227);
+}
+
 /* ===== Responsive cartes flip ===== */
 @media (max-width: 768px) {
     .flip-grid {
@@ -593,10 +722,62 @@
         padding: 0 1rem;
         gap: 0.8rem;
     }
+
+    /* Cartes équipe face unique - mobile */
+    .equipe-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+        padding: 0 1rem;
+    }
+
+    .equipe-card-media {
+        height: 130px;
+    }
+
+    .equipe-card-header h3 {
+        font-size: 0.9rem;
+    }
+
+    .equipe-card-statut {
+        font-size: 0.7rem;
+    }
+
+    .equipe-card-section p {
+        font-size: 0.75rem;
+        -webkit-line-clamp: 2;
+    }
+
+    .equipe-card-section h4 {
+        font-size: 0.7rem;
+    }
+
+    .equipe-card-delegation {
+        font-size: 0.6rem;
+    }
+
+    .equipe-card-citation {
+        font-size: 0.72rem;
+    }
+
+    .equipe-card-footer {
+        font-size: 0.72rem;
+        padding: 0.5rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .equipe-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
     .flip-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .equipe-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }

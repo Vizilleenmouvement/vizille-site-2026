@@ -86,7 +86,7 @@
         <h2 class="section-title">👥 L'équipe</h2>
         <div id="team-grid"></div>
         
-        <p id="click-hint" style="text-align: center; color: #666; font-style: italic; margin-top: 1rem; font-size: 0.9rem;">👆 Cliquez pour mieux connaître le candidat ou la candidate</p>
+        <p id="click-hint" style="text-align: center; color: #666; font-style: italic; margin-top: 1rem; font-size: 0.9rem;">👆 Cliquez sur une carte pour découvrir le profil complet</p>
         <p style="text-align: center; color: var(--bleu-vizille); font-weight: 500; margin-top: 1.5rem; font-size: 1rem; padding: 1rem 2rem; background: #f0f7ff; border-radius: 12px; max-width: 600px; margin-left: auto; margin-right: auto;">Nous continuerons à vous présenter progressivement les candidates et candidats dans les prochains jours.</p>
 
         <!-- CHARTE D'ENGAGEMENT -->
@@ -246,7 +246,7 @@
             return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
         }
 
-        function buildEquipeFlipCard(candidat, index, isLeader) {
+        function buildEquipeCard(candidat, index, isLeader) {
             const color = isLeader ? '#c9a227' : '#1a3a5c';
             const darkerColor = adjustColor(color, -25);
             const pos = candidat.photoPosition || 'center 30%';
@@ -256,83 +256,35 @@
             let mediaHtml = '';
             if (candidat.video) {
                 mediaHtml = `<video src="${candidat.video}" autoplay muted loop playsinline style="object-position:${vidPos};"></video>`;
-                // Ajouter la photo en dessous pour la transition vidéo → photo
                 if (candidat.photo) {
                     mediaHtml += `<img src="${candidat.photo}" alt="${getFullName(candidat)}" loading="lazy" style="object-position:${pos};" class="video-fallback-photo">`;
                 }
             } else if (candidat.photo) {
                 mediaHtml = `<img src="${candidat.photo}" alt="${getFullName(candidat)}" loading="lazy" style="object-position:${pos};">`;
             } else {
-                mediaHtml = `<div class="placeholder">👤</div>`;
+                mediaHtml = `<div class="equipe-card-placeholder">👤</div>`;
             }
 
             // Statut
-            const feminin = ['Adjointe','Conseillère','Conseillère déléguée'].some(r => (candidat.role||'').startsWith(r));
+            const prenomsFeminins = ['Catherine','Angélique','Saïda','Isabelle','Sakina'];
+            const feminin = ['Adjointe','Conseillère','Conseillère déléguée'].some(r => (candidat.role||'').startsWith(r))
+                || prenomsFeminins.includes(getPrenom(candidat));
             let statutText = '';
             if (candidat.nouveau) {
-                statutText = feminin ? 'Nouvelle candidate' : 'Nouveau candidat';
+                statutText = feminin ? 'Nouvelle' : 'Nouveau';
             } else if (candidat.role) {
                 statutText = candidat.role;
             }
 
-            // Bio tronquée
-            const bio = candidat.bio || '';
-            const truncBio = bio.length > 200 ? bio.substring(0, 200) + '...' : bio;
-
-            // Objectifs tronqués
-            const objectifs = candidat.objectifs || '';
-            const truncObj = objectifs.length > 150 ? objectifs.substring(0, 150) + '...' : objectifs;
-
-            // VERSO sections
-            let backSections = '';
-            if (candidat.delegation) {
-                backSections += `<span class="flip-back-delegation">${candidat.delegation}</span>`;
-            }
-            if (bio) {
-                backSections += `<div class="flip-back-section">
-                    <h4 class="section-bio">👤 Présentation</h4>
-                    <p style="font-size:0.85rem;line-height:1.6;color:#555;">${truncBio}</p>
-                </div>`;
-            }
-            if (objectifs) {
-                backSections += `<div class="flip-back-section">
-                    <h4 class="section-objectifs">🎯 Objectifs</h4>
-                    <p style="font-size:0.85rem;line-height:1.6;color:#555;">${truncObj}</p>
-                </div>`;
-            }
-            if (candidat.citation) {
-                backSections += `<div class="flip-back-citation">« ${candidat.citation} »</div>`;
-            }
+            // Délai d'animation en cascade
+            const delay = index * 0.1;
 
             return `
-                <div class="flip-card flip-card--equipe ${isLeader ? 'flip-card--leader' : ''}" data-index="${index}">
-                    <div class="flip-card-inner">
-                        <!-- RECTO -->
-                        <div class="flip-card-front">
-                            <div class="flip-front-media">${mediaHtml}</div>
-                            <div class="flip-front-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
-                                <h3 class="flip-front-title">${isLeader ? '⭐ ' : ''}${getPrenom(candidat)} ${getNom(candidat)}</h3>
-                                ${statutText ? `<div class="flip-front-subtitle">${statutText}</div>` : ''}
-                            </div>
-                            <div class="flip-front-body" style="padding:0.75rem 1.25rem;">
-                                <div class="flip-front-hint">
-                                    <span class="flip-icon">🔄</span> Retourner pour découvrir
-                                </div>
-                            </div>
-                        </div>
-                        <!-- VERSO -->
-                        <div class="flip-card-back">
-                            <div class="flip-back-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
-                                <span class="flip-back-title">${getPrenom(candidat)} ${getNom(candidat)}</span>
-                                <span class="flip-back-close">↩ Retour</span>
-                            </div>
-                            <div class="flip-back-body">
-                                ${backSections}
-                            </div>
-                            <div class="flip-back-footer" onclick="event.stopPropagation(); openCandidatModal(${index});">
-                                👤 Voir le profil complet
-                            </div>
-                        </div>
+                <div class="equipe-card ${isLeader ? 'equipe-card--leader' : ''}" data-index="${index}" style="animation-delay: ${delay}s;" onclick="openCandidatModal(${index});">
+                    <div class="equipe-card-media">${mediaHtml}</div>
+                    <div class="equipe-card-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
+                        <h3>${isLeader ? '⭐ ' : ''}${getPrenom(candidat)} ${getNom(candidat)}</h3>
+                        ${statutText ? `<div class="equipe-card-statut">${statutText}</div>` : ''}
                     </div>
                 </div>
             `;
@@ -350,36 +302,28 @@
                 return getNom(a).localeCompare(getNom(b), 'fr');
             });
 
-            // Catherine seule en haut (flip card leader)
+            // Catherine seule en haut
             let catherineHtml = '';
             if (catherine) {
                 catherineHtml = `
                     <div class="catherine-row">
-                        <div class="flip-grid" style="max-width:260px;margin:0 auto;">
-                            ${buildEquipeFlipCard(catherine, 0, true)}
+                        <div class="equipe-grid" style="max-width:280px;margin:0 auto;">
+                            ${buildEquipeCard(catherine, 0, true)}
                         </div>
                     </div>
                 `;
             }
 
             // Grille des autres candidats
-            const autresHtml = `<div class="flip-grid flip-grid--equipe">${
-                autres.map((c, i) => buildEquipeFlipCard(c, i + 1, false)).join('')
+            const autresHtml = `<div class="equipe-grid">${
+                autres.map((c, i) => buildEquipeCard(c, i + 1, false)).join('')
             }</div>`;
 
             grid.innerHTML = catherineHtml + autresHtml;
 
-            // Attacher les événements flip
-            grid.querySelectorAll('.flip-card').forEach(card => {
-                card.addEventListener('click', (e) => {
-                    if (e.target.closest('.flip-back-footer')) return;
-                    card.classList.toggle('flipped');
-                });
-            });
-
             // Forcer la lecture des vidéos
             function playAllVideos() {
-                document.querySelectorAll('.flip-front-media video').forEach(video => {
+                document.querySelectorAll('.equipe-card-media video').forEach(video => {
                     video.muted = true;
                     video.setAttribute('playsinline', '');
                     video.play().catch(() => {});
@@ -388,7 +332,7 @@
 
             // Transition vidéo → photo après 10 secondes
             function transitionToPhoto() {
-                document.querySelectorAll('.flip-front-media video').forEach(video => {
+                document.querySelectorAll('.equipe-card-media video').forEach(video => {
                     const photo = video.parentElement.querySelector('.video-fallback-photo');
                     if (photo) {
                         video.style.transition = 'opacity 1s ease';
@@ -439,8 +383,10 @@
 
             const roleEl = document.getElementById('modal-role');
             if (candidat.nouveau) {
-                const feminin = ['Adjointe','Conseillère','Conseillère déléguée'].some(r => (candidat.role||'').startsWith(r));
-                roleEl.textContent = feminin ? 'Nouvelle candidate' : 'Nouveau candidat';
+                const prenomsFem = ['Catherine','Angélique','Saïda','Isabelle','Sakina'];
+                const feminin = ['Adjointe','Conseillère','Conseillère déléguée'].some(r => (candidat.role||'').startsWith(r))
+                    || prenomsFem.includes(getPrenom(candidat));
+                roleEl.textContent = feminin ? 'Nouvelle' : 'Nouveau';
             } else {
                 roleEl.textContent = candidat.role || '';
             }
