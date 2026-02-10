@@ -79,6 +79,7 @@
     "ordre": null,
     "nouveau": false,
     "photo": "images/saida-berriche.jpg",
+    "photoPosition": "center 20%",
     "video": "images/candidats/saida-berriche.mp4",
     "actif": true
   },
@@ -141,7 +142,7 @@
     "ordre": null,
     "nouveau": false,
     "photo": "images/gerard-forestier.jpg",
-    "photoPosition": "center 35%",
+    "photoPosition": "center 20%",
     "video": "images/candidats/gerard-forestier.mp4",
     "actif": true
   },
@@ -162,7 +163,7 @@
     "ordre": null,
     "nouveau": true,
     "photo": "images/laurent-pichon.jpg",
-    "photoPosition": "center 35%",
+    "photoPosition": "center 20%",
     "video": "images/candidats/laurent-pichon.mp4",
     "actif": true
   },
@@ -204,6 +205,7 @@
     "ordre": null,
     "nouveau": false,
     "photo": "images/louis-lamarca.jpg",
+    "photoPosition": "center 25%",
     "video": "images/candidats/louis-lamarca.mp4",
     "actif": true
   },
@@ -224,6 +226,7 @@
     "ordre": null,
     "nouveau": false,
     "photo": "images/sakina-yahiaoui.jpg",
+    "photoPosition": "center 18%",
     "video": "images/candidats/sakina-yahiaoui.mp4",
     "actif": true
   },
