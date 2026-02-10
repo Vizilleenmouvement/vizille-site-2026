@@ -247,8 +247,6 @@
     "ordre": null,
     "nouveau": true,
     "photo": "images/michel-thuillier.jpg",
-    "photoPosition": "center 40%",
-    "videoPosition": "center 20%",
     "video": "images/candidats/michel-thuillier.mp4",
     "actif": true
   }
