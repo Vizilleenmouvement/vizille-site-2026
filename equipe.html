@@ -272,7 +272,7 @@
             if (candidat.nouveau) {
                 statutText = feminin ? 'Nouvelle candidate' : 'Nouveau candidat';
             } else if (candidat.role) {
-                statutText = (feminin ? 'Actuelle ' : 'Actuel ') + candidat.role;
+                statutText = candidat.role;
             }
 
             // Bio tronquée
