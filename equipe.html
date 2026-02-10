@@ -332,10 +332,9 @@
                 grid.querySelectorAll('.equipe-card-media video').forEach(video => {
                     const photo = video.parentElement.querySelector('.equipe-photo-fallback');
                     if (photo) {
-                        video.style.transition = 'opacity 0.5s ease';
                         video.style.opacity = '0';
                         photo.style.opacity = '1';
-                        setTimeout(() => { video.pause(); }, 500);
+                        setTimeout(() => { video.pause(); }, 1000);
                     } else {
                         video.pause();
                     }
@@ -347,13 +346,13 @@
             // iOS : relancer au premier touch/scroll
             const startVideos = () => {
                 playAllVideos();
-                setTimeout(transitionToPhoto, 4000);
+                setTimeout(transitionToPhoto, 10000);
             };
             document.addEventListener('touchstart', startVideos, { once: true });
             document.addEventListener('scroll', startVideos, { once: true });
 
             // Desktop : transition après 10 secondes
-            setTimeout(transitionToPhoto, 4000);
+            setTimeout(transitionToPhoto, 10000);
         }
 
         document.addEventListener('DOMContentLoaded', loadCandidats);
