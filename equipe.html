@@ -325,11 +325,9 @@
 
             const modal = document.getElementById('candidat-modal');
 
-            // Photo
+            // Photo (toujours la photo sur la fiche, vidéo uniquement sur l'accueil)
             const photoContainer = document.getElementById('modal-photo-container');
-            if (candidat.video) {
-                photoContainer.innerHTML = `<video src="${candidat.video}" class="modal-photo" autoplay muted loop playsinline style="object-fit:cover;border-radius:12px;"></video>`;
-            } else if (candidat.photo) {
+            if (candidat.photo) {
                 photoContainer.innerHTML = `<img src="${candidat.photo}" alt="${getFullName(candidat)}" class="modal-photo" loading="lazy">`;
             } else {
                 photoContainer.innerHTML = `<div class="modal-photo-placeholder">👤</div>`;

@@ -604,7 +604,7 @@
 .equipe-card-media {
     position: relative;
     width: 100%;
-    height: 180px;
+    height: 240px;
     overflow: hidden;
     flex-shrink: 0;
 }
@@ -719,7 +719,7 @@
     }
 
     .equipe-card-media {
-        height: 130px;
+        height: 180px;
     }
 
     .equipe-card-header h3 {

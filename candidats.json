@@ -16,7 +16,7 @@
     "ordre": 1,
     "nouveau": false,
     "photo": "images/catherine-troton.jpg",
-    "photoPosition": "center 25%",
+    "photoPosition": "center 40%",
     "video": "images/candidats/catherine-troton.mp4",
     "actif": true
   },
@@ -37,7 +37,7 @@
     "ordre": 10,
     "nouveau": false,
     "photo": "images/angelique-hermitte.jpg",
-    "photoPosition": "center 25%",
+    "photoPosition": "center 40%",
     "video": "images/candidats/angelique-hermitte.mp4",
     "actif": true
   },
@@ -58,7 +58,7 @@
     "ordre": 2,
     "nouveau": false,
     "photo": "images/bernard-ughetto-monfrin.jpg",
-    "photoPosition": "center 30%",
+    "photoPosition": "center 40%",
     "video": "images/candidats/bernard-ughetto-monfrin-.mp4",
     "actif": true
   },
@@ -79,7 +79,7 @@
     "ordre": null,
     "nouveau": false,
     "photo": "images/saida-berriche.jpg",
-    "photoPosition": "center 20%",
+    "photoPosition": "center 40%",
     "video": "images/candidats/saida-berriche.mp4",
     "actif": true
   },
@@ -100,7 +100,7 @@
     "ordre": null,
     "nouveau": true,
     "photo": "images/jean-christophe-garcia.jpg",
-    "photoPosition": "center 30%",
+    "photoPosition": "center 40%",
     "video": "images/candidats/jean-christophe-garcia.mp4",
     "actif": true
   },
@@ -121,7 +121,7 @@
     "ordre": null,
     "nouveau": true,
     "photo": "images/isabelle-nifenecker.jpg",
-    "photoPosition": "center 25%",
+    "photoPosition": "center 40%",
     "video": "images/candidats/isabelle-nifenecker.mp4",
     "actif": true
   },
@@ -142,7 +142,7 @@
     "ordre": null,
     "nouveau": false,
     "photo": "images/gerard-forestier.jpg",
-    "photoPosition": "center 20%",
+    "photoPosition": "center 40%",
     "video": "images/candidats/gerard-forestier.mp4",
     "actif": true
   },
@@ -163,7 +163,7 @@
     "ordre": null,
     "nouveau": true,
     "photo": "images/laurent-pichon.jpg",
-    "photoPosition": "center 20%",
+    "photoPosition": "center 40%",
     "video": "images/candidats/laurent-pichon.mp4",
     "actif": true
   },
@@ -184,7 +184,7 @@
     "ordre": null,
     "nouveau": true,
     "photo": "images/mohamed-cherigui.jpg",
-    "photoPosition": "center 25%",
+    "photoPosition": "center 40%",
     "video": "images/candidats/mohamed-cherigui.mp4",
     "actif": true
   },
@@ -205,7 +205,7 @@
     "ordre": null,
     "nouveau": false,
     "photo": "images/louis-lamarca.jpg",
-    "photoPosition": "center 25%",
+    "photoPosition": "center 40%",
     "video": "images/candidats/louis-lamarca.mp4",
     "actif": true
   },
@@ -226,7 +226,7 @@
     "ordre": null,
     "nouveau": false,
     "photo": "images/sakina-yahiaoui.jpg",
-    "photoPosition": "center 18%",
+    "photoPosition": "center 40%",
     "video": "images/candidats/sakina-yahiaoui.mp4",
     "actif": true
   },
@@ -247,7 +247,7 @@
     "ordre": null,
     "nouveau": true,
     "photo": "images/michel-thuillier.jpg",
-    "photoPosition": "center 20%",
+    "photoPosition": "center 40%",
     "videoPosition": "center 20%",
     "video": "images/candidats/michel-thuillier.mp4",
     "actif": true
