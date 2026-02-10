@@ -69,6 +69,7 @@
 
 .flip-front-header {
     padding: 1rem 1.25rem;
+    min-height: 80px;
     color: white;
     position: relative;
     overflow: hidden;

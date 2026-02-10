@@ -203,6 +203,7 @@
     "ordre": null,
     "nouveau": false,
     "photo": "images/louis-lamarca.jpg",
+    "photoPosition": "center 25%",
     "video": "images/candidats/louis-lamarca.mp4",
     "actif": true
   },
@@ -223,6 +224,7 @@
     "ordre": null,
     "nouveau": false,
     "photo": "images/sakina-yahiaoui.jpg",
+    "photoPosition": "center 30%",
     "video": "images/candidats/sakina-yahiaoui.mp4",
     "actif": true
   }
