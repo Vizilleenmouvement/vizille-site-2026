@@ -2692,13 +2692,13 @@
     "color": "#9b59b6",
     "statut": "Réalisé",
     "titre": "Partenariat AHPV",
-    "description": "Partenariat étroit avec les Amis de l'Histoire du Pays Vizillois (AHPV). Publication revue 'Mémoire', organisation 'Grands RDV de l'Histoire', mise en place parcours patrimoniaux, animations Journées du Patrimoine, Histoires de Livres.",
+    "description": "Partenariat étroit avec les Amis de l'Histoire du Pays Vizillois (AHPV) : prêts de locaux, aide à la publication de la revue « Mémoire », partenariat pour les « Grands RDV de l'Histoire », mise en place de parcours patrimoniaux, animations découverte du patrimoine (Printemps des cimetières, Journées du Patrimoine, Histoires de Livres, projets de classes).",
     "annee": "2020",
     "annee_fin": "",
     "budget": 0,
     "source": "Magazine",
     "importance": 1,
-    "resume": "Revue Mémoire, conférences, parcours patrimoniaux",
+    "resume": "Prêts de locaux, revue Mémoire, Grands RDV de l'Histoire, parcours patrimoniaux, animations patrimoine.",
     "chiffres": [],
     "chronologie": [
       {
@@ -2897,7 +2897,7 @@
     "color": "#8e44ad",
     "statut": "Réalisé",
     "titre": "Adhésion Fédération Sites Clunisiens",
-    "description": "Adhésion à la Fédération Européenne des Sites Clunisiens ( + 1 /an) pour mieux faire connaître l'histoire du Prieuré. Soutien à la candidature UNESCO. Création d'un comité local et scientifique.",
+    "description": "Adhésion à la Fédération Européenne des Sites Clunisiens pour mieux faire connaître l'histoire du Prieuré. Soutien à la candidature UNESCO. Création d'un comité local et scientifique. Participation à l'association « Sur les Pas des Huguenots ».",
     "annee": "2023",
     "annee_fin": "2023",
     "budget": 0,
@@ -13558,13 +13558,13 @@
     "color": "#9b59b6",
     "statut": "Réalisé",
     "titre": "Fête de la Science",
-    "description": "Fête de la Science organisée chaque année pour les écoles et le grand public, dans le cadre d'un parcours scientifique intercommunal au fil de la Romanche. Ateliers interactifs, expériences ludiques, conférences, expositions en partenariat avec des laboratoires de recherche et des associations scientifiques. Un événement éducatif et festif qui éveille la curiosité et démocratise l'accès aux savoirs scientifiques.",
+    "description": "Fête de la Science organisée chaque année : un village des sciences à la Locomotive pour découvrir des animations scientifiques et rencontrer des chercheurs et animateurs. À destination des établissements scolaires de la ville lors d'une journée dédiée et pour le grand public dans le cadre d'un parcours scientifique intercommunal « au fil de la Romanche ».",
     "annee": "2021",
     "annee_fin": "",
     "budget": 0,
     "source": "Bilan MC",
     "importance": 1,
-    "resume": "Organisation dans le cadre d'un parcours scientifique du territoire de la Romanche.",
+    "resume": "Village des sciences à la Locomotive, parcours intercommunal « au fil de la Romanche ».",
     "chiffres": [],
     "chronologie": [
       {
@@ -13592,14 +13592,14 @@
     "icon": "🎭",
     "color": "#9b59b6",
     "statut": "Réalisé",
-    "titre": "Festival du film pour enfants - Village cinéma",
-    "description": "Festival du film pour enfants Village Cinéma organisé au Jeu de Paume avec une programmation spéciale jeune public. Films d'animation, courts-métrages, rencontres avec des réalisateurs, ateliers de création. Un rendez-vous annuel qui initie les enfants au 7ème art et développe leur regard critique.",
+    "titre": "Festival du film pour enfants",
+    "description": "Festival du film pour enfants organisé au Jeu de Paume en partenariat avec LCA, avec une programmation spéciale jeune public. Films d'animation, courts-métrages, rencontres avec des réalisateurs, ateliers de création. Un rendez-vous annuel qui initie les enfants au 7ème art et développe leur regard critique.",
     "annee": "2021",
     "annee_fin": "",
     "budget": 0,
     "source": "Bilan MC",
     "importance": 1,
-    "resume": "Événement cinématographique dédié au jeune public.",
+    "resume": "Festival cinématographique dédié au jeune public, en partenariat avec LCA.",
     "chiffres": [],
     "chronologie": [
       {
@@ -14024,7 +14024,7 @@
     "color": "#9b59b6",
     "statut": "Réalisé",
     "titre": "Aide à la création et résidences de compagnies locales",
-    "description": "Aide à la création artistique et accueil de résidences pour des compagnies locales de théâtre, danse, musique. Mise à disposition de salles de répétition, soutien financier aux projets, diffusion des créations au Jeu de Paume. Ce dispositif accompagne les artistes du territoire et permet aux Vizillois de découvrir des œuvres en cours de création.",
+    "description": "Aide à la création artistique et accueil de résidences pour des compagnies locales de théâtre, danse, musique au Jeu de Paume et à la Petite Salle. Mise à disposition de salles de répétition, soutien financier aux projets, diffusion des créations. Ce dispositif accompagne les artistes du territoire et permet aux Vizillois de découvrir des œuvres en cours de création.",
     "annee": "2020",
     "annee_fin": "",
     "budget": 0,
@@ -14053,13 +14053,13 @@
     "color": "#9b59b6",
     "statut": "Réalisé",
     "titre": "Expositions dans les lieux culturels municipaux",
-    "description": "Organisation d'expositions régulières au Jeu de Paume, à la médiathèque, dans le hall de la mairie, ainsi qu'à La Romanche et à L'Escale. Artistes locaux, photographes, plasticiens présentent leurs œuvres dans ces lieux de passage pour toucher un large public. Un accès gratuit à l'art contemporain et aux créations locales.",
+    "description": "Organisation d'expositions et d'animations culturelles dans différentes structures de la ville : au Jeu de Paume, à la médiathèque, dans le hall de la mairie, à la Résidence La Romanche et à L'Escale. Artistes locaux, photographes, plasticiens présentent leurs œuvres dans ces lieux pour toucher un large public.",
     "annee": "2020",
     "annee_fin": "",
     "budget": 0,
     "source": "Bilan MC",
     "importance": 1,
-    "resume": "Programmation d'expositions au Jeu de Paume, à la médiathèque, à la mairie, à La Romanche et à L'Escale.",
+    "resume": "Expositions et animations culturelles au Jeu de Paume, médiathèque, mairie, Résidence La Romanche et L'Escale.",
     "chiffres": [
       {
         "valeur": "3",
@@ -14235,7 +14235,7 @@
     "color": "#9b59b6",
     "statut": "Réalisé",
     "titre": "Partenariat renforcé avec la MPA",
-    "description": "Partenariat renforcé avec la Maison Pour Tous/Alpes (MPA) de Vizille pour coordonner les programmations culturelles, mutualiser les moyens et toucher des publics complémentaires. Conventions annuelles, soutien financier, actions communes. Une coopération au service du dynamisme culturel vizillois.",
+    "description": "Partenariat et conventionnement d'objectifs avec la Maison Pour Tous/Alpes (MPA) de Vizille pour coordonner les programmations culturelles, mutualiser les moyens et toucher des publics complémentaires. Conventions annuelles, soutien financier, actions communes. Une coopération au service du dynamisme culturel vizillois.",
     "annee": "2021",
     "annee_fin": "",
     "budget": 0,
@@ -14266,7 +14266,7 @@
     "color": "#9b59b6",
     "statut": "Réalisé",
     "titre": "Partenariat renforcé avec LCA",
-    "description": "Partenariat renforcé avec La Coopérative d'Activités Culturelles (LCA), cinéma art et essai itinérant qui complète la programmation du Jeu de Paume. Projections régulières, séances scolaires, actions d'éducation à l'image. Une collaboration qui enrichit l'offre cinématographique vizilloise notamment pour le jeune public.",
+    "description": "Partenariat et conventionnement d'objectifs avec La Coopérative d'Activités Culturelles (LCA), cinéma art et essai itinérant qui complète la programmation du Jeu de Paume. Projections régulières, séances scolaires, actions d'éducation à l'image. Une collaboration qui enrichit l'offre cinématographique vizilloise notamment pour le jeune public.",
     "annee": "2021",
     "annee_fin": "",
     "budget": 0,
@@ -14297,13 +14297,13 @@
     "color": "#9b59b6",
     "statut": "Réalisé",
     "titre": "Coopérations métropolitaines culture",
-    "description": "Ateliers patrimoine.\nCoopérations culturelles métropolitaines avec Grenoble et les communes de l'agglomération: mutualisation de programmations, circulations de spectacles, tarification unique Pass Culture Métropole. Ces partenariats élargissent l'offre culturelle accessible aux Vizillois et facilitent les mobilités culturelles.",
+    "description": "Coopérations métropolitaines suite aux Assises de la Culture de Grenoble Alpes Métropole. Mise en place d'ateliers thématiques dont le Patrimoine. Cette action a abouti à la création de l'application « Archistoire » en collaboration avec le CAUE, le Département et les Amis de l'Histoire du Pays Vizillois, et à la mise en place d'un parcours de découverte du Vizille ancien nommé « Vizille, la rebelle ».",
     "annee": "2022",
     "annee_fin": "",
     "budget": 0,
     "source": "Bilan MC",
     "importance": 1,
-    "resume": "Assises de la culture, 10 jours de la Culture, partenariats Casemate et Territoire de Sciences.",
+    "resume": "Assises de la Culture GAM, ateliers Patrimoine, application Archistoire, parcours « Vizille, la rebelle ».",
     "chiffres": [],
     "chronologie": [
       {
@@ -14909,13 +14909,13 @@
     "color": "#8e44ad",
     "statut": "Réalisé",
     "titre": "Label tourisme équestre et Route Napoléon à cheval",
-    "description": "Obtention du label tourisme équestre et développement de la Route Napoléon à cheval qui permet aux cavaliers de suivre l'itinéraire historique de Napoléon. Vizille propose des infrastructures d'accueil pour les chevaux et les cavaliers (hébergement, restauration, soins). Ce label valorise le patrimoine naturel et paysager de Vizille tout en offrant une nouvelle forme de tourisme culturel et sportif respectueuse de l'environnement.",
+    "description": "Obtention du label tourisme équestre avec signature de la charte Label Tourisme équestre, dans le cadre du camp de base. Développement de la Route Napoléon à cheval qui permet aux cavaliers de suivre l'itinéraire historique de Napoléon. Vizille propose des infrastructures d'accueil pour les chevaux et les cavaliers. Ce label valorise le patrimoine naturel et paysager de Vizille tout en offrant une nouvelle forme de tourisme culturel et sportif respectueuse de l'environnement.",
     "annee": "2023",
     "annee_fin": "",
     "budget": 0,
     "source": "Bilan MC",
     "importance": 1,
-    "resume": "Obtention du label pour le développement du tourisme équestre.",
+    "resume": "Label tourisme équestre, charte signée dans le cadre du camp de base.",
     "chiffres": [
       {
         "valeur": "Label",
@@ -15123,7 +15123,7 @@
         "label": "Label Numérique Libre"
       }
     ],
-    "details": "Actions culturelles ponctuelles et distinctions :\n\n• **Street Art Fest** - 3 fresques murales réalisées\n• **Exposition BD Vizille** - Mise en valeur du 9ème art\n• **Tournage Cuisine ouverte France 3** - Vizille à la télévision\n• **Borne musicale Mélo** - Résidence Romanche\n• **Label Territoire Numérique Libre** - Grade 3/5\n\n**COVID-19 :**\n• Motion de soutien à la culture pendant la crise sanitaire",
+    "details": "Actions culturelles ponctuelles et distinctions :\n\n• **Street Art Fest** - 3 fresques murales réalisées\n• **Label Territoire Numérique Libre** - Grade 3/5\n• **Prix de l'art Roman** pour le Prieuré",
     "chronologie": [
       {
         "date": "2020-2025",
@@ -16313,6 +16313,29 @@
         "url": "images/actions/patrimoine/portail-prieure.jpg",
         "legende": "Patrimoine historique de Vizille"
       }
-    ]
+    ],
+    "suspendu": true
+  },
+  {
+    "id": 975,
+    "theme": "Culture",
+    "icon": "🎭",
+    "color": "#9b59b6",
+    "statut": "Réalisé",
+    "titre": "Village Cinéma",
+    "description": "Village Cinéma organisé en partenariat avec LCA. Les enfants comme les adultes peuvent découvrir en situation les différents métiers du cinéma : les costumes, le son, le montage, le jeu des acteurs, les cascades, les bruitages, le dessin animé... Un événement distinct du Festival du film pour enfants.",
+    "annee": "2023",
+    "annee_fin": "",
+    "budget": 0,
+    "source": "Bilan MC",
+    "importance": 2,
+    "resume": "Découverte des métiers du cinéma en partenariat avec LCA.",
+    "chiffres": [],
+    "chronologie": [],
+    "details": "",
+    "sources": [],
+    "lien_source": [],
+    "sous_categorie": "Festivals",
+    "images": []
   }
 ]
