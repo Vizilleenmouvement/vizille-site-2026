@@ -4589,7 +4589,7 @@
 
             // Filtrer les actions de ce thème et trier comme dans bilan.html
             const actions = data.actions.filter(a => a.theme === themeName)
-                .sort((a, b) => (a.importance || 5) - (b.importance || 5) || (b.annee || '').toString().localeCompare((a.annee || '').toString()));
+                .sort((a, b) => (a.titre || '').localeCompare(b.titre || '', 'fr'));
 
             document.getElementById('actions-count').textContent = actions.length;
 
@@ -4646,7 +4646,7 @@
             }
 
             // Trier comme dans bilan.html (importance croissante, année décroissante)
-            filtered.sort((a, b) => (a.importance || 5) - (b.importance || 5) || (b.annee || '').toString().localeCompare((a.annee || '').toString()));
+            filtered.sort((a, b) => (a.titre || '').localeCompare(b.titre || '', 'fr'));
 
             document.getElementById('actions-count').textContent = filtered.length;
 
