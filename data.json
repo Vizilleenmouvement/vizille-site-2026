@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "theme": "Santé",
+    "theme": "Solidarité",
     "icon": "🏥",
     "color": "#e91e63",
     "statut": "Réalisé",
@@ -68,7 +68,8 @@
     "sous_categorie": "Accès aux soins",
     "images": [
       "images/actions-extracted/action_1_0.jpg"
-    ]
+    ],
+    "image": "images/actions-extracted/action_1_0.jpg"
   },
   {
     "id": 2,
