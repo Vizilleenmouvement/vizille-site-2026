@@ -2602,7 +2602,7 @@
     "color": "#9b59b6",
     "statut": "Réalisé",
     "titre": "Festival Ouverture Exceptionnelle",
-    "description": "Festival Ouverture Exceptionnelle organisé annuellement au Jeu de Paume pour célébrer la rentrée culturelle vizilloise. Concerts, spectacles, projections et animations variées pour tous les publics. Un moment convivial de retrouvailles après l'été qui lance la nouvelle saison culturelle avec une programmation éclectique mêlant musique, théâtre, cinéma et arts plastiques.",
+    "description": "Festival Ouverture Exceptionnelle organisé annuellement dans les commerces et l'espace public de Vizille pour célébrer la rentrée culturelle. Concerts, spectacles, projections et animations variées pour tous les publics. Un moment convivial de retrouvailles après l'été qui lance la nouvelle saison culturelle avec une programmation éclectique mêlant musique, théâtre, cinéma et arts plastiques. Festival ayant lieu aussi à Grenoble.",
     "annee": "2022",
     "annee_fin": "",
     "budget": 0,
@@ -2728,6 +2728,78 @@
     "sous_categorie": "Associations & Partenariats"
   },
   {
+    "id": 65,
+    "theme": "Culture",
+    "icon": "🎭",
+    "color": "#9b59b6",
+    "statut": "Réalisé",
+    "titre": "Partenariat Amis de l'Orgue",
+    "description": "Restauration de l'orgue historique Callinet (1846) classé MH. Concerts mensuels de collecte par les Amis de l'Orgue de Vizille.",
+    "annee": "2015",
+    "annee_fin": "",
+    "budget": 0,
+    "source": "Magazine",
+    "importance": 2,
+    "resume": "Restauration de l'orgue historique Callinet (1846) classé MH. Concerts mensuels de collecte par les Amis de l'Orgue de Vizille.",
+    "chiffres": [],
+    "chronologie": [
+      {
+        "date": "11/07/2023",
+        "evenement": "CM: Buffet déjà restauré, instrument en cours fabrication"
+      },
+      {
+        "date": "2023",
+        "evenement": "Études complémentaires structure et sols église"
+      },
+      {
+        "date": "2024",
+        "evenement": "Concerts mensuels pour financement"
+      },
+      {
+        "date": "Juillet 2024",
+        "evenement": "Concerts à St-Pierre de Mésage (travaux tribune)"
+      }
+    ],
+    "details": "Le buffet de l'orgue a été restauré. L'instrument est en cours de fabrication. Des études complémentaires sur la structure et les sols de l'église ont été nécessaires.",
+    "sources": [
+      {
+        "type": "magazine",
+        "ref": "VàV n°154-160",
+        "desc": "Concerts 2024"
+      }
+    ],
+    "lien_source": [
+      {
+        "type": "Magazine PDF",
+        "label": "Vivre à Vizille n°160 (Juillet 2024)",
+        "url": "https://www.ville-vizille.fr/epublications/12919-publication.htm?download=3599"
+      },
+      {
+        "type": "Magazine PDF",
+        "label": "Vivre à Vizille n°154 (Janvier 2024)",
+        "url": "https://www.ville-vizille.fr/epublications/12919-publication.htm?download=2777"
+      },
+      {
+        "type": "Page thématique",
+        "label": "Culture sur ville-vizille.fr",
+        "url": "https://www.ville-vizille.fr/12624-culture.htm"
+      },
+      {
+        "type": "Page",
+        "label": "Service culturel",
+        "url": "https://www.ville-vizille.fr/12625-service-culturel.htm"
+      }
+    ],
+    "sous_categorie": "Associations & Partenariats",
+    "suspendu": true,
+    "images": [
+      {
+        "url": "images/actions/patrimoine/prieure.jpg",
+        "legende": "Prieuré Sainte-Marie"
+      }
+    ]
+  },
+  {
     "id": 66,
     "theme": "Culture",
     "icon": "🎭",
@@ -2834,7 +2906,7 @@
     "budget": 0,
     "source": "Délib 2023-03-14-24",
     "importance": 1,
-    "resume": "Demande AHPV, total",
+    "resume": "Adhésion à la Fédération Européenne des Sites Clunisiens",
     "chiffres": [],
     "chronologie": [
       {
@@ -2843,7 +2915,7 @@
       },
       {
         "date": "26/02/2024",
-        "evenement": "Renouvellement adhésion Fédération Sites Clunisiens (130€)"
+        "evenement": "Renouvellement adhésion Fédération Sites Clunisiens"
       }
     ],
     "details": "",
@@ -2885,8 +2957,8 @@
     "icon": "🏛️",
     "color": "#8e44ad",
     "statut": "En cours",
-    "titre": "Restauration de l'orgue",
-    "description": "Restauration complète de l'orgue  Projet porté avec l'association des Amis de l'Orgue: restauration du buffet, renforcement de la tribune, reconstruction de l'instrument.",
+    "titre": "Restauration de l'orgue Callinet (1846)",
+    "description": "Restauration complète de l'orgue historique Callinet (1846) classé Monument Historique. Projet porté avec l'association des Amis de l'Orgue: restauration du buffet, renforcement de la tribune, reconstruction de l'instrument.",
     "annee": "2020",
     "annee_fin": "2025",
     "budget": 0,
@@ -2954,6 +3026,80 @@
     "sous_categorie": "Monuments"
   },
   {
+    "id": 76,
+    "theme": "Patrimoine",
+    "icon": "🏛️",
+    "color": "#8e44ad",
+    "statut": "En cours",
+    "titre": "Travaux sauvegarde Prieuré Sainte-Marie",
+    "description": "Travaux de sauvegarde de l'église prieurale Sainte-Marie, monument historique. Souscription Fondation du Patrimoine. Intégration au réseau des sites clunisiens et candidature UNESCO.",
+    "annee": "2023",
+    "annee_fin": "",
+    "budget": 0,
+    "source": "Délib 2023-12-13-17/18/19",
+    "importance": 3,
+    "resume": "Monument Historique, HT",
+    "chiffres": [],
+    "chronologie": [
+      {
+        "date": "12/12/2022",
+        "evenement": "Renouvellement demande subventions DRAC/Région/Département"
+      },
+      {
+        "date": "13/12/2023",
+        "evenement": "CM: Nouvel architecte Pierrick de Vaujany - demandes subventions renouvelées"
+      },
+      {
+        "date": "2020-07-15",
+        "evenement": "Demandes subventions DRAC, Département, Région pour études restauration (29 pour)"
+      },
+      {
+        "date": "2023",
+        "evenement": "Réalisation"
+      },
+      {
+        "date": "2023",
+        "evenement": "Marché appel offres non lancé (retard architectes)"
+      },
+      {
+        "date": "2025-09-30",
+        "evenement": "Autorisation de programme travaux fouilles et sécurisation Prieuré (28 pour)"
+      }
+    ],
+    "details": "Classement Monument Historique. Démission successive de deux architectes du patrimoine a causé retards importants. Nouvel architecte: Pierrick de Vaujany. Financement sollicité: DRAC, Région AURA, Département Isère.",
+    "sources": [
+      {
+        "type": "doc",
+        "ref": "Délib 2023-12-13-17/18/19",
+        "desc": ""
+      }
+    ],
+    "lien_source": [
+      {
+        "type": "Délibération",
+        "label": "Délibérations du Conseil Municipal",
+        "url": "https://www.ville-vizille.fr/12600-deliberations.htm"
+      },
+      {
+        "type": "Page",
+        "label": "Histoire de Vizille",
+        "url": "https://www.ville-vizille.fr/12596-une-histoire-exceptionnelle.htm"
+      },
+      {
+        "type": "Page",
+        "label": "Domaine de Vizille",
+        "url": "https://www.ville-vizille.fr/12621-le-domaine-de-vizille.htm"
+      }
+    ],
+    "sous_categorie": "Monuments",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/portail-prieure.jpg",
+        "legende": "Portail roman du Prieuré Sainte-Marie"
+      }
+    ]
+  },
+  {
     "id": 78,
     "theme": "Patrimoine",
     "icon": "🏛️",
@@ -3011,13 +3157,13 @@
     "color": "#8e44ad",
     "statut": "Réalisé",
     "titre": "Porte Poterne Château du Roi",
-    "description": "Opération de Revitalisation du Territoire pilotée avec la Métropole. 4 secteurs prioritaires: Tannerie, Tissages, Centre historique, Place du Château.",
+    "description": "Restauration de la Porte Poterne du Château du Roi, élément patrimonial majeur de Vizille. Cette porte médiévale constitue un vestige historique remarquable. Les travaux de restauration sont menés en coordination avec les services de l'État (DRAC) dans le cadre de la politique de préservation du patrimoine historique communal.",
     "annee": "2024",
     "annee_fin": "2024",
     "budget": 0,
     "source": "Délib 2024-02-15-26",
     "importance": 3,
-    "resume": "Opération de Revitalisation du Territoire pilotée avec la Métropole. 4 secteurs prioritaires: Tannerie, Tissages, Centre historique, Place du Château.",
+    "resume": "Restauration de la Porte Poterne, vestige médiéval du Château du Roi.",
     "chiffres": [
       {
         "valeur": "5 ha",
@@ -3160,6 +3306,61 @@
       {
         "url": "images/actions/patrimoine/prieure.jpg",
         "legende": "Prieuré Sainte-Marie"
+      }
+    ]
+  },
+  {
+    "id": 81,
+    "theme": "Patrimoine",
+    "icon": "🏛️",
+    "color": "#8e44ad",
+    "statut": "Réalisé",
+    "titre": "Travaux église prieurale Notre-Dame",
+    "description": "Consolidation urgence MH",
+    "annee": "2020",
+    "annee_fin": "2021",
+    "budget": 0,
+    "source": "Délib 2020-12-15-07/08/09",
+    "importance": 1,
+    "resume": "Consolidation urgence MH",
+    "chiffres": [],
+    "chronologie": [
+      {
+        "date": "2020",
+        "evenement": "Réalisation"
+      }
+    ],
+    "details": "",
+    "sources": [
+      {
+        "type": "doc",
+        "ref": "Délib 2020-12-15-07/08/09",
+        "desc": ""
+      }
+    ],
+    "lien_source": [
+      {
+        "type": "Délibération",
+        "label": "Délibérations du Conseil Municipal",
+        "url": "https://www.ville-vizille.fr/12600-deliberations.htm"
+      },
+      {
+        "type": "Page",
+        "label": "Histoire de Vizille",
+        "url": "https://www.ville-vizille.fr/12596-une-histoire-exceptionnelle.htm"
+      },
+      {
+        "type": "Page",
+        "label": "Domaine de Vizille",
+        "url": "https://www.ville-vizille.fr/12621-le-domaine-de-vizille.htm"
+      }
+    ],
+    "sous_categorie": "Monuments",
+    "suspendu": true,
+    "images": [
+      {
+        "url": "images/actions/patrimoine/portail-prieure.jpg",
+        "legende": "Portail roman du Prieuré Sainte-Marie"
       }
     ]
   },
@@ -13380,7 +13581,7 @@
     "color": "#9b59b6",
     "statut": "Réalisé",
     "titre": "Fête de la Science gratuite",
-    "description": "Fête de la Science organisée gratuitement chaque année pour sensibiliser petits et grands aux sciences et techniques. Ateliers interactifs, expériences ludiques, conférences, expositions en partenariat avec des laboratoires de recherche et des associations scientifiques. Un événement éducatif et festif qui éveille la curiosité et démocratise l'accès aux savoirs scientifiques.",
+    "description": "Fête de la Science organisée gratuitement chaque année pour les écoles et le grand public, dans le cadre d'un parcours scientifique intercommunal au fil de la Romanche. Ateliers interactifs, expériences ludiques, conférences, expositions en partenariat avec des laboratoires de recherche et des associations scientifiques. Un événement éducatif et festif qui éveille la curiosité et démocratise l'accès aux savoirs scientifiques.",
     "annee": "2021",
     "annee_fin": "",
     "budget": 0,
@@ -13446,13 +13647,13 @@
     "color": "#9b59b6",
     "statut": "Réalisé",
     "titre": "Festival Petits Mots Petits Mômes",
-    "description": "Festival Petits Mots Petits Mômes dédié à la littérature jeunesse avec rencontres d'auteurs et d'illustrateurs, lectures, ateliers d'écriture, spectacles. Un événement qui célèbre le livre et transmet le plaisir de lire aux enfants dans une ambiance ludique et créative.",
+    "description": "Festival Petits Mots Petits Mômes, dédié à la culture pour les plus jeunes. Ce festival offre principalement des spectacles présentés aux enfants dans une ambiance ludique et créative, avec des rencontres artistiques et un lien avec la littérature. Partenariats avec toutes les structures de petite enfance et jusqu'à 6 ans.",
     "annee": "2022",
     "annee_fin": "",
     "budget": 0,
     "source": "Bilan MC",
     "importance": 1,
-    "resume": "Festival littéraire et artistique pour les enfants.",
+    "resume": "Festival dédié à la culture jeune : spectacles, rencontres artistiques, ambiance ludique et créative.",
     "chiffres": [],
     "chronologie": [
       {
@@ -14567,7 +14768,7 @@
     "color": "#8e44ad",
     "statut": "Réalisé",
     "titre": "Convention avec les Amis de l'Histoire du Pays Vizillois",
-    "description": "Partenariat avec les Amis de l'Histoire du Pays Vizillois (AHPV). prêts de locaux ; Aide à la publication revue 'Mémoire', organisation 'Grands RDV de l'Histoire', mise en place parcours patrimoniaux, animations couvertes du patrimoine : printemps des cimetières, Journées du Patrimoine, Histoires de Livres",
+    "description": "Convention renouvelée avec l'association des Amis de l'Histoire du Pays Vizillois (AHPV) pour soutenir leurs actions de recherche, publication et valorisation de l'histoire locale. L'AHPV organise conférences, visites guidées, expositions et publie régulièrement des ouvrages de référence sur l'histoire de Vizille et de sa région. Ce partenariat permet de faire vivre la mémoire vizilloise et de la transmettre au plus grand nombre.",
     "annee": "2021",
     "annee_fin": "",
     "budget": 0,
@@ -14822,7 +15023,7 @@
         "label": "Accès majoritaire"
       }
     ],
-    "details": "Chaque année, Vizille propose un programme riche d'événements culturels gratuits ou à tarif accessible :\n\n• **Festival P'tits Mots P'tits Mômes** - Spectacles jeune public (12 000€/an)\n• **Festival Film pour Enfants** - Cinéma jeunesse (partenariat LCA)\n• **Festival Rock'n Road** - Concerts rock\n• **Estivales** - Spectacles + 5 concerts gratuits en plein air (7 500€)\n• **Fête de la Musique** - Animations musicales dans la ville\n• **Fête de la Science** - Parcours scientifique intercommunal avec la Casemate et Territoire de Sciences : village sciences, animations scolaires, médiathèque\n• **10 Jours de la Culture** - Événement métropolitain, spectacles gratuits\n• **Cinéma plein air estival** - Projections gratuites\n• **Veillées de Belledonne** - Soirées d'échanges intergénérationnelles (partenariat Espace Belledonne)\n• **Patinoire éphémère de Noël** - Animation hivernale\n• **Animations Marché de Noël** - Spectacles et ambiance festive\n\n**Partenariats métropolitains :**\n• Participation aux assises de la culture métropolitaine\n• Lien avec la Casemate et Territoire de Sciences\n• Participation au COST",
+    "details": "Chaque année, Vizille propose un programme riche d'événements culturels gratuits ou à tarif accessible :\n\n• **Festival P'tits Mots P'tits Mômes** - Spectacles jeune public\n• **Festival Film pour Enfants** - Cinéma jeunesse (partenariat LCA)\n• **Festival Rock'n Road** - Concerts rock\n• **Estivales** - Spectacles + 5 concerts gratuits en plein air\n• **Fête de la Musique** - Animations musicales dans la ville\n• **Fête de la Science** - Parcours scientifique intercommunal avec la Casemate et Territoire de Sciences : village sciences, animations scolaires, médiathèque\n• **10 Jours de la Culture** - Événement métropolitain, spectacles gratuits\n• **Cinéma plein air estival** - Projections gratuites\n• **Veillées de Belledonne** - Soirées d'échanges intergénérationnelles (partenariat Espace Belledonne)\n• **Patinoire éphémère de Noël** - Animation hivernale\n• **Animations Marché de Noël** - Spectacles et ambiance festive\n\n**Partenariats métropolitains :**\n• Participation aux assises de la culture métropolitaine\n• Lien avec la Casemate et Territoire de Sciences\n• Participation au COST",
     "chronologie": [
       {
         "date": "Printemps",
@@ -14879,10 +15080,10 @@
     "annee_fin": "2026",
     "budget": 0,
     "importance": 2,
-    "resume": "Saison de 13 spectacles variés + 5 concerts Estivales chaque année.",
+    "resume": "Saison de 14 à 15 spectacles variés + 5 concerts Estivales chaque année.",
     "chiffres": [
       {
-        "valeur": "13",
+        "valeur": "14-15",
         "label": "Spectacles/saison"
       },
       {
@@ -14890,7 +15091,7 @@
         "label": "Concerts Estivales"
       }
     ],
-    "details": "Le théâtre du Jeu de Paume propose chaque saison une programmation diversifiée de spectacles vivants :\n\n**Saison 2024-2025 (13 spectacles) :**\n• 'Le Voisin' - Benoît Turjman (1 429€)\n• 'Les Swingirls - Révolutions' (1 794€)\n• 'Les Sœurs K - Ni Fleurs Ni Couronne' (2 300€)\n• 'Le Dékoncert' - Solfasirc (2 356€)\n• 'Alice Guy' - Black Dogg (8 400€)\n\n**P'tits Mots P'tits Mômes 2025 :**\n• Lou(hou)p - Cie NAJICO (1 195€)\n• Ça Cartonne - Green Piste Records (2 637€)\n• Jeux d'Enfants - Cie Commun Accord (2 004€)\n• Direction artistique Hélène Jusselme (2 840€)\n\n**Estivales** : 5 concerts gratuits en plein air chaque été\n\nLa billetterie en ligne facilite l'accès aux spectacles.",
+    "details": "Le théâtre du Jeu de Paume propose chaque saison une programmation diversifiée de spectacles vivants :\n\n**Saison 2024-2025 (14 à 15 spectacles) :**\n• 'Le Voisin' - Benoît Turjman\n• 'Les Swingirls - Révolutions'\n• 'Les Sœurs K - Ni Fleurs Ni Couronne'\n• 'Le Dékoncert' - Solfasirc\n• 'Alice Guy' - Black Dogg\n\n**P'tits Mots P'tits Mômes 2025 :**\n• Lou(hou)p - Cie NAJICO\n• Ça Cartonne - Green Piste Records\n• Jeux d'Enfants - Cie Commun Accord\n• Direction artistique Hélène Jusselme\n\n**Estivales** : 5 concerts gratuits en plein air chaque été\n\nLa billetterie en ligne facilite l'accès aux spectacles.\n\n**Partenariats** : La saison compte 14 à 15 spectacles grâce au partenariat avec la Métropole dans le cadre des Dix jours de la culture, ainsi que des troupes locales qui présentent leur spectacle.",
     "chronologie": [
       {
         "date": "2020-2025",
@@ -14910,8 +15111,8 @@
     "sous_categorie": "Festivals",
     "images": [
       {
-        "url": "images/actions/culture/fete-musique-2023.jpg",
-        "legende": "Fête de la Musique 2023 à Vizille"
+        "url": "images/actions/culture/swingirls-2025.jpg",
+        "legende": "Concert des Swingirls - Saison Jeu de Paume 2025, photo MCA"
       }
     ]
   },
@@ -14934,7 +15135,7 @@
         "label": "Médiathèque Vizillois"
       }
     ],
-    "details": "Réseau de partenariats avec les acteurs culturels locaux :\n\n**Médiathèque Jules Vallès :**\n• **Gratuité totale pour tous les Vizillois**\n• Très nombreuses animations autour du livre et de l'écriture\n• Actions avec les écoles et structures petite enfance\n• Programme Lire et Faire Lire dans les classes\n• Partenariat avec la librairie locale\n• Lieu d'exposition\n\n**Cinéma :**\n• Convention Cinémas Associés / LCA (29 500€/an)\n• Village Cinéma, Festival du film pour enfants\n• Billetterie en ligne\n\n**Musique :**\n• Convention MPA - Musiques en Pays d'Allevard (28 000€/an)\n• Partenariat en augmentation (prise en charge solidaire élèves)\n\n**Jeu de Paume :**\n• Mise à disposition pour associations\n• Mise à disposition Médiane santé Prévention\n• Partenariat Éducation nationale (collège, lycée, écoles)\n• Expositions Jeu de Paume et Mairie\n\n**Actions intergénérationnelles :**\n• Animations culturelles Résidence La Romanche, Escale\n• Lien avec le Secours Populaire",
+    "details": "Réseau de partenariats avec les acteurs culturels locaux :\n\n**Médiathèque Jules Vallès :**\n• **Gratuité totale pour tous les Vizillois**\n• Très nombreuses animations autour du livre et de l'écriture\n• Actions avec les écoles et structures petite enfance\n• Programme Lire et Faire Lire dans les classes\n• Partenariat avec la librairie locale\n• Lieu d'exposition\n\n**Cinéma :**\n• Convention Cinémas Associés / LCA\n• Village Cinéma, Festival du film pour enfants\n• Billetterie en ligne\n\n**Musique :**\n• Convention MPA - Musiques en Pays d'Allevard\n• Partenariat en augmentation (prise en charge solidaire élèves)\n\n**Jeu de Paume :**\n• Mise à disposition pour associations\n• Mise à disposition Médiane santé Prévention\n• Partenariat Éducation nationale (collège, lycée, écoles)\n• Expositions Jeu de Paume et Mairie\n\n**Actions intergénérationnelles :**\n• Animations culturelles Résidence La Romanche, Escale\n• Lien avec le Secours Populaire",
     "chronologie": [
       {
         "date": "2020-2025",
@@ -14977,7 +15178,7 @@
         "label": "Label Numérique Libre"
       }
     ],
-    "details": "Actions culturelles ponctuelles et distinctions :\n\n• **Street Art Fest** - 3 fresques murales réalisées (5 000€)\n• **Exposition BD Vizille** - Mise en valeur du 9ème art\n• **Tournage Cuisine ouverte France 3** - Vizille à la télévision\n• **Borne musicale Mélo** - Résidence Romanche (5 800€)\n• **Label Territoire Numérique Libre** - Grade 3/5\n\n**COVID-19 :**\n• Motion de soutien à la culture pendant la crise sanitaire",
+    "details": "Actions culturelles ponctuelles et distinctions :\n\n• **Street Art Fest** - 3 fresques murales réalisées\n• **Exposition BD Vizille** - Mise en valeur du 9ème art\n• **Tournage Cuisine ouverte France 3** - Vizille à la télévision\n• **Borne musicale Mélo** - Résidence Romanche\n• **Label Territoire Numérique Libre** - Grade 3/5\n\n**COVID-19 :**\n• Motion de soutien à la culture pendant la crise sanitaire",
     "chronologie": [
       {
         "date": "2020-2025",

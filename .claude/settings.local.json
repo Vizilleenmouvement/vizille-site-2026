@@ -16,7 +16,12 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(pdfimages:*)"
+      "Bash(pdfimages:*)",
+      "Bash(git pull:*)",
+      "Bash(git stash:*)",
+      "mcp__Control_Chrome__execute_javascript",
+      "mcp__Control_Chrome__reload_tab",
+      "Bash(python3:*)"
     ]
   }
 }
