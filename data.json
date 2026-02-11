@@ -2734,19 +2734,15 @@
     "color": "#9b59b6",
     "statut": "Réalisé",
     "titre": "Partenariat Amis de l'Orgue",
-    "description": "Restauration de l'orgue historique Callinet (1846) classé MH. Concerts mensuels de collecte par les Amis de l'Orgue de Vizille.",
+    "description": "Soutien à la restauration de l'orgue historique de l'église Notre-Dame. Concerts mensuels de collecte par les Amis de l'Orgue de Vizille.",
     "annee": "2015",
     "annee_fin": "",
     "budget": 0,
     "source": "Magazine",
     "importance": 2,
-    "resume": "Restauration de l'orgue historique Callinet (1846) classé MH. Concerts mensuels de collecte par les Amis de l'Orgue de Vizille.",
+    "resume": "Soutien à la restauration de l'orgue historique. Concerts mensuels de collecte par les Amis de l'Orgue de Vizille.",
     "chiffres": [],
     "chronologie": [
-      {
-        "date": "11/07/2023",
-        "evenement": "CM: Buffet déjà restauré, instrument en cours fabrication"
-      },
       {
         "date": "2023",
         "evenement": "Études complémentaires structure et sols église"
@@ -2957,20 +2953,16 @@
     "icon": "🏛️",
     "color": "#8e44ad",
     "statut": "En cours",
-    "titre": "Restauration de l'orgue Callinet (1846)",
-    "description": "Restauration complète de l'orgue historique Callinet (1846) classé Monument Historique. Projet porté avec l'association des Amis de l'Orgue: restauration du buffet, renforcement de la tribune, reconstruction de l'instrument.",
+    "titre": "Restauration de l'orgue historique",
+    "description": "Restauration complète de l'orgue historique de l'église Notre-Dame de Vizille. Projet porté avec l'association des Amis de l'Orgue : restauration du buffet, renforcement de la tribune, reconstruction de l'instrument.",
     "annee": "2020",
     "annee_fin": "2025",
     "budget": 0,
     "source": "Délib+Bilan travaux",
     "importance": 2,
-    "resume": "Restauration de l'orgue historique Callinet (1846) classé MH. Concerts mensuels de collecte par les Amis de l'Orgue de Vizille.",
+    "resume": "Restauration de l'orgue historique de l'église Notre-Dame. Concerts mensuels de collecte par les Amis de l'Orgue de Vizille.",
     "chiffres": [],
     "chronologie": [
-      {
-        "date": "11/07/2023",
-        "evenement": "CM: Buffet déjà restauré, instrument en cours fabrication"
-      },
       {
         "date": "2023",
         "evenement": "Études complémentaires structure et sols église"
@@ -2988,7 +2980,7 @@
         "evenement": "Concerts à St-Pierre de Mésage (travaux tribune)"
       }
     ],
-    "details": "L'orgue Callinet de 1846 est un instrument remarquable classé MH. Le projet de restauration comprend 3 phases : 1) Restauration du buffet (achevée), 2) Renforcement structurel de la tribune pour supporter le poids de l'instrument, 3) Reconstruction de la partie instrumentale par un facteur d'orgue. Des concerts mensuels de collecte sont organisés par les Amis de l'Orgue pour financer ce projet d'envergure estimé à plusieurs centaines de milliers d'euros.",
+    "details": "L'orgue de l'église Notre-Dame est un instrument remarquable. Le projet de restauration comprend 3 phases : 1) Restauration du buffet (achevée), 2) Renforcement structurel de la tribune pour supporter le poids de l'instrument, 3) Reconstruction de la partie instrumentale par un facteur d'orgue. Des concerts mensuels de collecte sont organisés par les Amis de l'Orgue pour financer ce projet d'envergure.",
     "sources": [
       {
         "type": "magazine",
@@ -3031,14 +3023,14 @@
     "icon": "🏛️",
     "color": "#8e44ad",
     "statut": "En cours",
-    "titre": "Travaux sauvegarde Prieuré Sainte-Marie",
-    "description": "Travaux de sauvegarde de l'église prieurale Sainte-Marie, monument historique. Souscription Fondation du Patrimoine. Intégration au réseau des sites clunisiens et candidature UNESCO.",
-    "annee": "2023",
+    "titre": "Sauvegarde et restauration du Prieuré",
+    "description": "Programme de sauvegarde et de restauration de l'église prieurale Sainte-Marie et de l'église prieurale Notre-Dame, monuments historiques classés. Les travaux comprennent des interventions d'urgence (consolidation, mise hors d'eau) et un projet de restauration échelonné. Après la démission successive de deux architectes du patrimoine, le projet est confié à Pierrick de Vaujany. Financement sollicité auprès de la DRAC, de la Région Auvergne-Rhône-Alpes et du Département de l'Isère. Souscription ouverte via la Fondation du Patrimoine.",
+    "annee": "2020",
     "annee_fin": "",
     "budget": 0,
     "source": "Délib 2023-12-13-17/18/19",
     "importance": 3,
-    "resume": "Monument Historique, HT",
+    "resume": "Sauvegarde et restauration des églises prieurales (MH), avec soutien DRAC, Région et Département",
     "chiffres": [],
     "chronologie": [
       {
@@ -3064,9 +3056,17 @@
       {
         "date": "2025-09-30",
         "evenement": "Autorisation de programme travaux fouilles et sécurisation Prieuré (28 pour)"
+      },
+      {
+        "date": "2020",
+        "evenement": "Travaux d'urgence consolidation Prieuré Notre-Dame (réalisés)"
+      },
+      {
+        "date": "2024",
+        "evenement": "Travaux urgence Prieuré Notre-Dame"
       }
     ],
-    "details": "Classement Monument Historique. Démission successive de deux architectes du patrimoine a causé retards importants. Nouvel architecte: Pierrick de Vaujany. Financement sollicité: DRAC, Région AURA, Département Isère.",
+    "details": "Monuments Historiques classés. Le programme comprend :\n- Travaux d'urgence sur le Prieuré Notre-Dame : consolidation et mise hors d'eau (réalisés en 2020-2021)\n- Sauvegarde de l'église prieurale Sainte-Marie : études de restauration, fouilles et sécurisation\n- Démission successive de deux architectes du patrimoine a causé des retards importants\n- Nouvel architecte : Pierrick de Vaujany\n- Financement sollicité : DRAC, Région AURA, Département Isère\n- Souscription Fondation du Patrimoine",
     "sources": [
       {
         "type": "doc",
@@ -10831,7 +10831,8 @@
         "url": "images/actions/patrimoine/portail-prieure.jpg",
         "legende": "Portail roman du Prieuré Sainte-Marie"
       }
-    ]
+    ],
+    "suspendu": true
   },
   {
     "id": 273,
@@ -13235,20 +13236,22 @@
     "icon": "🇪🇺",
     "color": "#8e44ad",
     "statut": "En cours",
-    "titre": "Candidature UNESCO - Sites Clunisiens",
-    "description": "Soutien à la candidature du réseau des sites clunisiens européens au patrimoine mondial UNESCO. Création d'un comité local et scientifique pour le Prieuré.",
-    "annee": "2023",
+    "titre": "Sites Clunisiens : candidature UNESCO et comités",
+    "description": "Intégration du Prieuré de Vizille au réseau européen des sites clunisiens. Soutien à la candidature du réseau au patrimoine mondial UNESCO. Création d'un comité local et d'un comité scientifique réunissant des universitaires pour étudier et valoriser l'histoire et les origines du Prieuré.",
+    "annee": "2022",
     "annee_fin": "2025",
     "budget": 0,
     "source": "Bilan adjoint culture",
     "sous_categorie": "Monuments",
-    "suspendu": true,
+    "suspendu": false,
     "images": [
       {
         "url": "images/actions/patrimoine/portail-prieure.jpg",
         "legende": "Portail roman du Prieuré Sainte-Marie"
       }
-    ]
+    ],
+    "resume": "Adhésion au réseau clunisien, candidature UNESCO, comité local et scientifique",
+    "details": "- Adhésion au réseau européen des sites clunisiens (2022)\n- Création d'un comité local et scientifique avec universitaires (2023)\n- Soutien à la candidature UNESCO du réseau des sites clunisiens"
   },
   {
     "id": 345,
@@ -14622,7 +14625,7 @@
     "color": "#8e44ad",
     "statut": "En cours",
     "titre": "Restauration du buffet d'orgue et reconstruction",
-    "description": "Restauration complète avec soutien Région (plan orgues et carillons) et Département.",
+    "description": "Restauration complète de l'orgue de l'église Notre-Dame avec soutien Région (plan orgues et carillons) et Département.",
     "annee": "2024",
     "annee_fin": "",
     "budget": 0,
@@ -16532,6 +16535,62 @@
     "sources": [
       "École Paul Langevin",
       "Atelier des Cairns"
+    ]
+  },
+  {
+    "id": 974,
+    "theme": "Patrimoine",
+    "icon": "🥾",
+    "color": "#8e44ad",
+    "statut": "Réalisé",
+    "titre": "Sur les Pas des Huguenots et des Vaudois",
+    "description": "Participation de Vizille à l'itinéraire culturel européen « Sur les Pas des Huguenots et des Vaudois » (GR 965), certifié par le Conseil de l'Europe en 2013. Ce chemin de grande randonnée de 1 800 km retrace l'exil des Huguenots après la révocation de l'Édit de Nantes (1685), de la Drôme provençale jusqu'à Bad Karlshafen en Allemagne en passant par Genève. Vizille est une étape officielle du parcours (étapes 14-15, Laffrey-Vizille-Échirolles), en cohérence avec son histoire liée à la liberté et aux droits de l'Homme.",
+    "annee": "2023",
+    "annee_fin": "",
+    "budget": 0,
+    "source": "Site officiel Sur les Pas des Huguenots",
+    "importance": 2,
+    "resume": "Vizille, étape officielle de l'itinéraire culturel européen GR 965 « Sur les Pas des Huguenots »",
+    "chiffres": [
+      "1 800 km de parcours",
+      "Itinéraire culturel européen certifié Conseil de l'Europe (2013)"
+    ],
+    "chronologie": [
+      {
+        "date": "2013",
+        "evenement": "Certification par le Conseil de l'Europe comme Itinéraire culturel européen"
+      },
+      {
+        "date": "2023",
+        "evenement": "Participation de Vizille au réseau"
+      }
+    ],
+    "details": "L'itinéraire « Sur les Pas des Huguenots et des Vaudois » est un chemin de grande randonnée (GR 965) qui retrace le chemin d'exil emprunté par les Huguenots après la révocation de l'Édit de Nantes en 1685. Il traverse 4 pays (France, Suisse, Allemagne, Italie). Vizille, ville historiquement liée à la Révolution française et aux libertés, est une étape naturelle de ce parcours. L'itinéraire passe par Laffrey, Vizille puis Échirolles (étapes 14-15 du parcours français).",
+    "sources": [
+      {
+        "type": "web",
+        "ref": "surlespassdeshuguenots.eu",
+        "desc": "Site officiel de l'itinéraire"
+      }
+    ],
+    "lien_source": [
+      {
+        "type": "Site web",
+        "label": "Sur les Pas des Huguenots - Site officiel",
+        "url": "https://www.surlespassdeshuguenots.eu/"
+      },
+      {
+        "type": "Page",
+        "label": "Histoire de Vizille",
+        "url": "https://www.ville-vizille.fr/12596-une-histoire-exceptionnelle.htm"
+      }
+    ],
+    "sous_categorie": "Circuits & Tourisme",
+    "images": [
+      {
+        "url": "images/actions/patrimoine/portail-prieure.jpg",
+        "legende": "Patrimoine historique de Vizille"
+      }
     ]
   }
 ]
