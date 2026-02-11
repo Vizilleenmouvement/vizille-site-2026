@@ -13556,8 +13556,8 @@
     "icon": "🎭",
     "color": "#9b59b6",
     "statut": "Réalisé",
-    "titre": "Fête de la Science gratuite",
-    "description": "Fête de la Science organisée gratuitement chaque année pour les écoles et le grand public, dans le cadre d'un parcours scientifique intercommunal au fil de la Romanche. Ateliers interactifs, expériences ludiques, conférences, expositions en partenariat avec des laboratoires de recherche et des associations scientifiques. Un événement éducatif et festif qui éveille la curiosité et démocratise l'accès aux savoirs scientifiques.",
+    "titre": "Fête de la Science",
+    "description": "Fête de la Science organisée chaque année pour les écoles et le grand public, dans le cadre d'un parcours scientifique intercommunal au fil de la Romanche. Ateliers interactifs, expériences ludiques, conférences, expositions en partenariat avec des laboratoires de recherche et des associations scientifiques. Un événement éducatif et festif qui éveille la curiosité et démocratise l'accès aux savoirs scientifiques.",
     "annee": "2021",
     "annee_fin": "",
     "budget": 0,
@@ -13568,7 +13568,7 @@
     "chronologie": [
       {
         "date": "2020-2025",
-        "evenement": "Fête Science annuelle gratuite"
+        "evenement": "Fête de la Science annuelle"
       }
     ],
     "details": "",
