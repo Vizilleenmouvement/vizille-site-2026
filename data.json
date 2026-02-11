@@ -13150,7 +13150,7 @@
     "color": "#9b59b6",
     "statut": "Réalisé",
     "titre": "Tarification solidaire Jeu de Paume",
-    "description": "Mise en place d'une tarification solidaire au cinéma Le Jeu de Paume pour garantir l'accès à la culture pour tous. Tarifs réduits selon le quotient familial, gratuité pour les bénéficiaires de minima sociaux, Pass Culture accepté. Cette politique tarifaire inclusive permet aux familles modestes de profiter pleinement de la programmation culturelle vizilloise sans que le coût soit un frein.",
+    "description": "Mise en place d'une tarification solidaire au cinéma Le Jeu de Paume pour garantir l'accès à la culture pour tous. Tarifs modulés selon les publics : réduit pour les étudiants, chômeurs et seniors, gratuit pour les moins de 12 ans et bénéficiaires RSA. Pass Culture accepté. Pack Tribu pour les familles. Cette politique tarifaire inclusive permet aux familles modestes de profiter pleinement de la programmation culturelle.",
     "annee": "2020",
     "annee_fin": "2025",
     "budget": 0,
@@ -13164,7 +13164,8 @@
     ],
     "sources": [
       "Jeu de Paume"
-    ]
+    ],
+    "resume": "Tarifs accessibles et solidaires, Pack Tribu pour les familles"
   },
   {
     "id": 338,
@@ -13478,34 +13479,6 @@
     ]
   },
   {
-    "id": 360,
-    "theme": "Culture",
-    "icon": "🎭",
-    "color": "#9b59b6",
-    "statut": "Réalisé",
-    "titre": "Tarification adaptée au Jeu de Paume",
-    "description": "Tarification adaptée au Jeu de Paume avec des tarifs modulés selon les publics: réduit pour les étudiants, chômeurs et seniors, gratuit pour les moins de 12 ans et bénéficiaires RSA. Cette politique tarifaire inclusive facilite l'accès au cinéma et au spectacle vivant pour tous les Vizillois indépendamment de leur situation économique.",
-    "annee": "2020",
-    "annee_fin": "",
-    "budget": 0,
-    "source": "Bilan MC",
-    "importance": 1,
-    "resume": "Tarifs accessibles, Pack Tribu pour les familles.",
-    "chiffres": [],
-    "chronologie": [
-      {
-        "date": "2020-2025",
-        "evenement": "Tarification adaptée"
-      }
-    ],
-    "details": "",
-    "sources": [
-      "Jeu de Paume"
-    ],
-    "lien_source": [],
-    "sous_categorie": "Jeu de Paume"
-  },
-  {
     "id": 361,
     "theme": "Culture",
     "icon": "🎭",
@@ -13742,38 +13715,6 @@
     ],
     "lien_source": [],
     "sous_categorie": "Festivals"
-  },
-  {
-    "id": 368,
-    "theme": "Culture",
-    "icon": "🎭",
-    "color": "#9b59b6",
-    "statut": "Réalisé",
-    "titre": "Festival Ouverture Exceptionnelle",
-    "description": "Festival Ouverture Exceptionnelle marquant la rentrée culturelle vizilloise avec une programmation festive et éclectique au Jeu de Paume. Concerts, spectacles, projections, expositions pour tous les publics. Ce festival lance la nouvelle saison culturelle dans une ambiance de retrouvailles après la trêve estivale.",
-    "annee": "2023",
-    "annee_fin": "",
-    "budget": 0,
-    "source": "Bilan MC",
-    "importance": 1,
-    "resume": "Événement culturel d'envergure.",
-    "chiffres": [],
-    "chronologie": [
-      {
-        "date": "2020-2025",
-        "evenement": "Festival Ouverture Exceptionnelle"
-      }
-    ],
-    "details": "",
-    "sources": [
-      "Jeu de Paume"
-    ],
-    "lien_source": [],
-    "sous_categorie": "Festivals",
-    "images": [
-      "images/actions/action_368_main.png"
-    ],
-    "image": "images/actions/action_368_main.png"
   },
   {
     "id": 369,
@@ -15982,48 +15923,6 @@
     ]
   },
   {
-    "id": 959,
-    "theme": "Concertation Citoyenne",
-    "icon": "🗳️",
-    "color": "#8e24aa",
-    "statut": "Réalisé",
-    "titre": "Concertation désimperméabilisation école Jean-Jaurès",
-    "description": "Concertation citoyenne menée avec l'Atelier des Cairns pour le réaménagement participatif de la cour de l'école Jean-Jaurès. Les enfants, les enseignants et les parents ont été associés dès la conception pour imaginer ensemble une cour végétalisée, désimperméabilisée et adaptée aux nouveaux usages. Ateliers de co-conception, maquettes participatives, votes des élèves: une démarche exemplaire qui place les utilisateurs au cœur du projet. Le résultat: une cour d'école transformée en îlot de fraîcheur avec des espaces de jeu diversifiés, de la végétation et une meilleure gestion des eaux pluviales.",
-    "annee": 2022,
-    "budget": 0,
-    "importance": 3,
-    "sous_categorie": "Écoles participatives",
-    "chiffres": [
-      {
-        "valeur": "~200",
-        "label": "élèves impliqués dans la concertation"
-      }
-    ],
-    "chronologie": [
-      {
-        "date": "2022",
-        "evenement": "Lancement concertation avec Atelier des Cairns"
-      },
-      {
-        "date": "2022",
-        "evenement": "Ateliers co-conception avec les enfants"
-      },
-      {
-        "date": "2023",
-        "evenement": "Travaux de réaménagement"
-      },
-      {
-        "date": "2023",
-        "evenement": "Inauguration nouvelle cour"
-      }
-    ],
-    "sources": [
-      "Atelier des Cairns",
-      "École Jean-Jaurès",
-      "Conseil d'école"
-    ]
-  },
-  {
     "id": 960,
     "theme": "Concertation Citoyenne",
     "icon": "🗳️",
@@ -16062,66 +15961,6 @@
     "sources": [
       "Enquête citoyenne",
       "Délibérations du Conseil Municipal"
-    ]
-  },
-  {
-    "id": 961,
-    "theme": "Concertation Citoyenne",
-    "icon": "🗳️",
-    "color": "#8e24aa",
-    "statut": "Réalisé",
-    "titre": "Concertation Zone Faible Émission (ZFE)",
-    "description": "Participation de Vizille à la grande concertation métropolitaine sur la Zone à Faibles Émissions (ZFE). Cette concertation a permis aux Vizillois d'exprimer leurs préoccupations concernant l'impact de la ZFE sur leur quotidien, notamment pour les déplacements vers Grenoble. La municipalité a porté la voix des habitants auprès de Grenoble Alpes Métropole pour défendre des délais d'application adaptés et des aides à la transition.",
-    "annee": 2023,
-    "budget": 0,
-    "importance": 2,
-    "sous_categorie": "Concertations publiques",
-    "chiffres": [
-      {
-        "valeur": "49 communes",
-        "label": "de la Métropole concernées"
-      }
-    ],
-    "chronologie": [
-      {
-        "date": "2023",
-        "evenement": "Lancement concertation métropolitaine ZFE"
-      },
-      {
-        "date": "2023",
-        "evenement": "Participation citoyens vizillois"
-      }
-    ],
-    "sources": [
-      "Grenoble Alpes Métropole",
-      "Délibérations du Conseil Municipal"
-    ]
-  },
-  {
-    "id": 962,
-    "theme": "Concertation Citoyenne",
-    "icon": "🗳️",
-    "color": "#8e24aa",
-    "statut": "Réalisé",
-    "titre": "Plateforme numérique participative",
-    "description": "Mise en place d'une plateforme numérique participative en 2023 pour faciliter la participation citoyenne à distance et toucher de nouveaux publics. Cet outil en ligne permet aux Vizillois de donner leur avis sur les projets municipaux, de proposer des idées, de voter sur certaines orientations et de suivre l'avancement des actions. Complémentaire des réunions publiques physiques, la plateforme numérique démocratise l'accès à la participation en s'affranchissant des contraintes horaires et de déplacement. Un levier pour renforcer la démocratie locale et impliquer davantage les habitants dans les décisions qui les concernent.",
-    "annee": 2023,
-    "budget": 0,
-    "importance": 2,
-    "sous_categorie": "Participation citoyenne",
-    "chronologie": [
-      {
-        "date": "2023",
-        "evenement": "Lancement plateforme participative"
-      },
-      {
-        "date": "2023-2025",
-        "evenement": "Consultations en ligne régulières"
-      }
-    ],
-    "sources": [
-      "Plateforme participative",
-      "Service démocratie locale"
     ]
   },
   {
@@ -16203,87 +16042,6 @@
     "sources": [
       "Gendarmerie",
       "Délibérations du Conseil Municipal"
-    ]
-  },
-  {
-    "id": 965,
-    "theme": "Concertation Citoyenne",
-    "icon": "🗳️",
-    "color": "#8e24aa",
-    "statut": "Réalisé",
-    "titre": "Concertation centre-ville",
-    "description": "Concertation citoyenne sur la revitalisation du centre-ville de Vizille menée dans le cadre de l'Opération de Revitalisation du Territoire (ORT). Les habitants ont été invités à partager leur vision pour l'avenir du cœur de ville: commerces, espaces publics, circulation, habitat. Cette démarche participative a nourri les réflexions sur les aménagements futurs et les priorités d'investissement dans le centre ancien.",
-    "annee": 2024,
-    "budget": 0,
-    "importance": 2,
-    "sous_categorie": "Concertations publiques",
-    "chiffres": [
-      {
-        "valeur": "5 ha",
-        "label": "de centre-ville concerné"
-      }
-    ],
-    "chronologie": [
-      {
-        "date": "2024",
-        "evenement": "Lancement concertation centre-ville"
-      },
-      {
-        "date": "2024-2025",
-        "evenement": "Ateliers participatifs"
-      }
-    ],
-    "sources": [
-      "ORT Vizille",
-      "Ateliers citoyens"
-    ],
-    "images": [
-      {
-        "url": "images/actions/patrimoine/roue-moulin.jpg",
-        "legende": "Roue du moulin - Patrimoine bâti vizillois"
-      }
-    ]
-  },
-  {
-    "id": 966,
-    "theme": "Concertation Citoyenne",
-    "icon": "🗳️",
-    "color": "#8e24aa",
-    "statut": "Réalisé",
-    "titre": "Concertation désimperméabilisation école Paul Langevin",
-    "description": "Concertation citoyenne exemplaire pour le réaménagement participatif de la cour de l'école Paul Langevin en 2024. Inspirée par la réussite de Jean-Jaurès, cette démarche a associé étroitement les enfants, les enseignants et les parents à toutes les étapes du projet: diagnostic partagé, ateliers de co-conception, choix des aménagements. L'Atelier des Cairns a accompagné la démarche avec des outils ludiques et créatifs. Résultat: une cour végétalisée, désimperméabilisée, avec des espaces de jeu variés et adaptés aux besoins des enfants. Inauguration festive en janvier 2026 avec les élèves fiers de présenter leur nouvelle cour.",
-    "annee": 2024,
-    "budget": 0,
-    "importance": 3,
-    "sous_categorie": "Écoles participatives",
-    "chiffres": [
-      {
-        "valeur": "~180",
-        "label": "élèves impliqués"
-      }
-    ],
-    "chronologie": [
-      {
-        "date": "2024",
-        "evenement": "Concertation avec enfants et parents"
-      },
-      {
-        "date": "2024",
-        "evenement": "Ateliers co-conception Atelier des Cairns"
-      },
-      {
-        "date": "2025",
-        "evenement": "Travaux réaménagement cour"
-      },
-      {
-        "date": "2026-01",
-        "evenement": "Inauguration participative"
-      }
-    ],
-    "sources": [
-      "Atelier des Cairns",
-      "École Paul Langevin",
-      "Conseil d'école"
     ]
   },
   {
@@ -16440,43 +16198,6 @@
     "sources": [
       "Grenoble Alpes Métropole",
       "Réunions publiques"
-    ]
-  },
-  {
-    "id": 971,
-    "theme": "Concertation Citoyenne",
-    "icon": "🗳️",
-    "color": "#8e24aa",
-    "statut": "En cours",
-    "titre": "Campagne mesure îlots de chaleur",
-    "description": "Campagne participative de mesure des îlots de chaleur urbains avec la contribution des citoyens vizillois. Équipés de capteurs, les habitants volontaires ont collecté des données de température dans différents secteurs de la ville pour identifier les zones les plus exposées aux fortes chaleurs estivales. Ces données scientifiques citoyennes alimentent la réflexion sur la végétalisation prioritaire et les aménagements climatiques à réaliser.",
-    "annee": 2025,
-    "budget": 0,
-    "importance": 2,
-    "sous_categorie": "Enquêtes citoyennes",
-    "chiffres": [
-      {
-        "valeur": "~20",
-        "label": "citoyens contributeurs"
-      }
-    ],
-    "chronologie": [
-      {
-        "date": "2025-06",
-        "evenement": "Lancement campagne mesures"
-      },
-      {
-        "date": "2025-07",
-        "evenement": "Collecte données citoyennes"
-      },
-      {
-        "date": "2025-09",
-        "evenement": "Restitution résultats"
-      }
-    ],
-    "sources": [
-      "Espace Belledonne",
-      "Données citoyennes"
     ]
   },
   {
