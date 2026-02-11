@@ -249,5 +249,25 @@
     "photo": "images/michel-thuillier.jpg",
     "video": "images/candidats/michel-thuillier.mp4",
     "actif": true
+  },
+  {
+    "id": 1770810721778,
+    "prenom": "Marie-Claude",
+    "nom": "ARGOUD",
+    "role": "Première Adjointe",
+    "delegation": "en charge de la  Culture, du Patrimoine et de la Communication.",
+    "bio": "Vizilloise de cœur, je suis attachée à notre ville par mes racines familiales et par tout ce qu’elle m’a transmis. Depuis juillet 2023, j’ai l’honneur d’en être la 1ère adjointe, en charge de la Culture, du Patrimoine et de la Communication.",
+    "pedigree": "Toute ma vie professionnelle a été guidée par une même conviction : accompagner, transmettre, faire grandir. Professeure des écoles puis directrice d’école maternelle, j’ai majoritairement travaillé au sein de Réseaux d’Éducation Prioritaire, où j’ai partagé la force du collectif et de l’engagement éducatif pour des actions menées en faveur de l’égalité des chances. En 2015, j’ai rejoint les Amis de l’Histoire du Pays Vizillois, une association qui m’a permis de renouer avec l’histoire locale, de la comprendre, de la partager, et d’y contribuer en tant que secrétaire puis trésorière jusqu’en 2020.",
+    "objectifs": "En 2020, j’ai choisi de m’engager aux côtés de Catherine Troton, avec le désir profond de travailler et d’être utile pour Vizille et ses habitants, de contribuer à son dynamisme, de valoriser et rendre accessible les richesses multiples de la ville, qu’elles soient humaines, culturelles, patrimoniales \nCes directions et les valeurs de : travail, respect, proximité, écoute et partage, une culture accessible pour tous constituent le fil conducteur de mon action menée au quotidien. \nVizille se renforce lorsque la culture ouvre les chemins, lorsque l’engagement citoyen les fait avancer et nourrit la cohésion. Le patrimoine contribue à notre identité et nous permet de comprendre d’où nous venons pour savoir où nous allons.\nC’est dans cet esprit que je m’engage à nouveau aux côtés de Catherine Troton en 2026 pour une ville unie, créative, solidaire, une ville qui s’épanouit en offrant à chacun sa place pour pouvoir agir, créer, partager et construire l’avenir ensemble.",
+    "citation": "«Le patrimoine culturel et naturel constitue un patrimoine universel pour l’humanité tout entière. » Convention de l’UNESCO.",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": "",
+    "ordre": 2,
+    "nouveau": false,
+    "photo": "images/marie-claude-argoud.jpg",
+    "video": "images/candidats/marie-claude-argoud.mp4",
+    "actif": true
   }
 ]
