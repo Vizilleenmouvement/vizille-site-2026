@@ -14051,14 +14051,14 @@
     "icon": "🎭",
     "color": "#9b59b6",
     "statut": "Réalisé",
-    "titre": "Expositions Jeu de Paume, Médiathèque et Mairie",
-    "description": "Organisation d'expositions régulières au Jeu de Paume, à la médiathèque et dans le hall de la mairie. Artistes locaux, photographes, plasticiens présentent leurs œuvres dans ces lieux de passage pour toucher un large public. Un accès gratuit à l'art contemporain et aux créations locales.",
+    "titre": "Expositions dans les lieux culturels municipaux",
+    "description": "Organisation d'expositions régulières au Jeu de Paume, à la médiathèque, dans le hall de la mairie, ainsi qu'à La Romanche et à L'Escale. Artistes locaux, photographes, plasticiens présentent leurs œuvres dans ces lieux de passage pour toucher un large public. Un accès gratuit à l'art contemporain et aux créations locales.",
     "annee": "2020",
     "annee_fin": "",
     "budget": 0,
     "source": "Bilan MC",
     "importance": 1,
-    "resume": "Programmation d'expositions dans les lieux culturels municipaux.",
+    "resume": "Programmation d'expositions au Jeu de Paume, à la médiathèque, à la mairie, à La Romanche et à L'Escale.",
     "chiffres": [
       {
         "valeur": "3",
