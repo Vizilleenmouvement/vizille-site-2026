@@ -2728,78 +2728,6 @@
     "sous_categorie": "Associations & Partenariats"
   },
   {
-    "id": 65,
-    "theme": "Culture",
-    "icon": "🎭",
-    "color": "#9b59b6",
-    "statut": "Réalisé",
-    "titre": "Partenariat Amis de l'Orgue",
-    "description": "Restauration de l'orgue historique Callinet (1846) classé MH. Concerts mensuels de collecte par les Amis de l'Orgue de Vizille.",
-    "annee": "2015",
-    "annee_fin": "",
-    "budget": 0,
-    "source": "Magazine",
-    "importance": 2,
-    "resume": "Restauration de l'orgue historique Callinet (1846) classé MH. Concerts mensuels de collecte par les Amis de l'Orgue de Vizille.",
-    "chiffres": [],
-    "chronologie": [
-      {
-        "date": "11/07/2023",
-        "evenement": "CM: Buffet déjà restauré, instrument en cours fabrication"
-      },
-      {
-        "date": "2023",
-        "evenement": "Études complémentaires structure et sols église"
-      },
-      {
-        "date": "2024",
-        "evenement": "Concerts mensuels pour financement"
-      },
-      {
-        "date": "Juillet 2024",
-        "evenement": "Concerts à St-Pierre de Mésage (travaux tribune)"
-      }
-    ],
-    "details": "Le buffet de l'orgue a été restauré. L'instrument est en cours de fabrication. Des études complémentaires sur la structure et les sols de l'église ont été nécessaires.",
-    "sources": [
-      {
-        "type": "magazine",
-        "ref": "VàV n°154-160",
-        "desc": "Concerts 2024"
-      }
-    ],
-    "lien_source": [
-      {
-        "type": "Magazine PDF",
-        "label": "Vivre à Vizille n°160 (Juillet 2024)",
-        "url": "https://www.ville-vizille.fr/epublications/12919-publication.htm?download=3599"
-      },
-      {
-        "type": "Magazine PDF",
-        "label": "Vivre à Vizille n°154 (Janvier 2024)",
-        "url": "https://www.ville-vizille.fr/epublications/12919-publication.htm?download=2777"
-      },
-      {
-        "type": "Page thématique",
-        "label": "Culture sur ville-vizille.fr",
-        "url": "https://www.ville-vizille.fr/12624-culture.htm"
-      },
-      {
-        "type": "Page",
-        "label": "Service culturel",
-        "url": "https://www.ville-vizille.fr/12625-service-culturel.htm"
-      }
-    ],
-    "sous_categorie": "Associations & Partenariats",
-    "suspendu": true,
-    "images": [
-      {
-        "url": "images/actions/patrimoine/prieure.jpg",
-        "legende": "Prieuré Sainte-Marie"
-      }
-    ]
-  },
-  {
     "id": 66,
     "theme": "Culture",
     "icon": "🎭",
@@ -2958,7 +2886,7 @@
     "color": "#8e44ad",
     "statut": "En cours",
     "titre": "Restauration de l'orgue Callinet (1846)",
-    "description": "Restauration complète de l'orgue historique Callinet (1846) classé Monument Historique. Projet porté avec l'association des Amis de l'Orgue: restauration du buffet, renforcement de la tribune, reconstruction de l'instrument.",
+    "description": "Restauration complète de l'orgue  Projet porté avec l'association des Amis de l'Orgue: restauration du buffet, renforcement de la tribune, reconstruction de l'instrument.",
     "annee": "2020",
     "annee_fin": "2025",
     "budget": 0,
