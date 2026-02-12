@@ -289,7 +289,7 @@ async function loadActualites() {
     if (!grid) return;
 
     try {
-        const response = await fetch('articles.json');
+        const response = await fetch('articles.json?v=' + Date.now());
         if (!response.ok) throw new Error('Erreur chargement articles');
 
         const articles = await response.json();
