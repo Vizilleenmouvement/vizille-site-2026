@@ -554,6 +554,35 @@
     border-top: 1px solid #eee;
 }
 
+/* ===== ARTICLES PRIORITAIRES (mise en avant) ===== */
+
+.flip-card--priority {
+    border: 2px solid #c9a227 !important;
+    box-shadow: 0 8px 32px rgba(201, 162, 39, 0.3) !important;
+}
+
+.flip-card--priority:hover {
+    box-shadow: 0 12px 48px rgba(201, 162, 39, 0.4) !important;
+}
+
+.flip-front-priority {
+    display: inline-block;
+    background: #c9a227;
+    color: white;
+    padding: 0.15rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    animation: priorityPulse 2s ease-in-out infinite;
+}
+
+@keyframes priorityPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
 /* ===== CARTES ÉQUIPE À FACE UNIQUE (avec animation flip reveal) ===== */
 
 .equipe-grid {

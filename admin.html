@@ -6164,6 +6164,13 @@
                             <option value="true" ${a.a_preciser ? 'selected' : ''}>Oui - Masqué (date à préciser)</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label>⭐ Mise en avant</label>
+                        <select id="edit-priorite">
+                            <option value="false" ${!a.priorite ? 'selected' : ''}>Normal</option>
+                            <option value="true" ${a.priorite ? 'selected' : ''}>⭐ Prioritaire — mis en avant</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
@@ -6427,6 +6434,7 @@
             const extrait = document.getElementById('edit-extrait').value.trim();
             const contenu = document.getElementById('edit-contenu').value.trim();
             const aPreciser = document.getElementById('edit-a-preciser').value === 'true';
+            const priorite = document.getElementById('edit-priorite').value === 'true';
             const documentId = document.getElementById('edit-document').value;
 
             if (!titre) {
@@ -6461,6 +6469,7 @@
             if (source) articleData.source = source;
             if (auteur) articleData.auteur = auteur;
             if (aPreciser) articleData.a_preciser = true;
+            if (priorite) articleData.priorite = true;
             if (documentId) articleData.document_id = parseInt(documentId);
 
             // Ajouter la date de modification (pour le mettre en tête de gondole)

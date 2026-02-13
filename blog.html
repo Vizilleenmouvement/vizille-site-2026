@@ -380,15 +380,19 @@
 
             // Catégorie badge
             const catBadge = a.categorie ? `<span class="flip-front-category" style="background:${color};">${a.categorie}</span>` : '';
+            const isPriority = a.priorite;
+            const priorityBadge = isPriority ? '<span class="flip-front-priority">⭐ À la une</span>' : '';
+            const priorityClass = isPriority ? ' flip-card--priority' : '';
 
             return `
-                <div class="flip-card flip-card--blog ${hasImage ? 'has-image' : ''}" data-id="${a.id}">
+                <div class="flip-card flip-card--blog${priorityClass} ${hasImage ? 'has-image' : ''}" data-id="${a.id}">
                     <div class="flip-card-inner">
                         <!-- RECTO -->
                         <div class="flip-card-front">
                             ${hasImage ? `<div class="flip-front-image-container"><img src="${a.image}" alt="" loading="lazy"></div>` : ''}
-                            <div class="flip-front-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
+                            <div class="flip-front-header" style="background: linear-gradient(135deg, ${isPriority ? '#c9a227' : color} 0%, ${isPriority ? '#a68520' : darkerColor} 100%);">
                                 <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;margin-bottom:0.3rem;">
+                                    ${priorityBadge}
                                     ${catBadge}
                                     <span class="flip-front-date">${dateStr}</span>
                                 </div>
@@ -430,8 +434,12 @@
             if (currentCategory) all = all.filter(a => a.categorie === currentCategory);
             if (all.length === 0) { container.innerHTML = '<div class="empty-state"><div class="icon">🔍</div><p>Aucun article trouvé.</p></div>'; return; }
 
-            // Trier par date de modification (style blog : le plus récemment modifié en premier)
-            all.sort((a, b) => new Date(b.modifie_le || b.date || 0) - new Date(a.modifie_le || a.date || 0));
+            // Trier : prioritaires d'abord, puis par date de modification (style blog)
+            all.sort((a, b) => {
+                if (a.priorite && !b.priorite) return -1;
+                if (!a.priorite && b.priorite) return 1;
+                return new Date(b.modifie_le || b.date || 0) - new Date(a.modifie_le || a.date || 0);
+            });
 
             const colors = ['#e74c3c', '#e67e22', '#27ae60', '#3498db', '#9b59b6', '#1abc9c', '#34495e'];
 

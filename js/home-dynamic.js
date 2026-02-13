@@ -240,14 +240,18 @@ function buildActuFlipCard(article, color) {
     const contenuHtml = truncContenu.split('\n').filter(p => p.trim()).slice(0, 5).map(p => '<p style="margin:0.3rem 0;">' + p + '</p>').join('');
 
     const catBadge = `<span class="flip-front-category" style="background:${color};">${category}</span>`;
+    const isPriority = article.priorite;
+    const priorityBadge = isPriority ? '<span class="flip-front-priority">⭐ À la une</span>' : '';
+    const priorityClass = isPriority ? ' flip-card--priority' : '';
 
     return `
-        <div class="flip-card flip-card--blog ${hasImage ? 'has-image' : ''}" data-id="${article.id}">
+        <div class="flip-card flip-card--blog${priorityClass} ${hasImage ? 'has-image' : ''}" data-id="${article.id}">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
                     ${hasImage ? `<div class="flip-front-image-container"><img src="${imageUrl}" alt="" loading="lazy"></div>` : ''}
-                    <div class="flip-front-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
+                    <div class="flip-front-header" style="background: linear-gradient(135deg, ${isPriority ? '#c9a227' : color} 0%, ${isPriority ? '#a68520' : darkerColor} 100%);">
                         <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;margin-bottom:0.3rem;">
+                            ${priorityBadge}
                             ${catBadge}
                             <span class="flip-front-date">${date}</span>
                         </div>
@@ -294,9 +298,13 @@ async function loadActualites() {
 
         const articles = await response.json();
 
-        // Trier par date de modification (style blog : le plus récemment modifié en premier)
+        // Trier : prioritaires d'abord, puis par date de modification (style blog)
         const recentArticles = articles
-            .sort((a, b) => new Date(b.modifie_le || b.date || 0) - new Date(a.modifie_le || a.date || 0))
+            .sort((a, b) => {
+                if (a.priorite && !b.priorite) return -1;
+                if (!a.priorite && b.priorite) return 1;
+                return new Date(b.modifie_le || b.date || 0) - new Date(a.modifie_le || a.date || 0);
+            })
             .slice(0, 3);
 
         if (recentArticles.length === 0) {
