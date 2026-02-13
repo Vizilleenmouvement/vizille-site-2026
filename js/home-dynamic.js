@@ -294,9 +294,9 @@ async function loadActualites() {
 
         const articles = await response.json();
 
-        // Trier par date et prendre les 3 plus récents
+        // Trier par date de modification (style blog : le plus récemment modifié en premier)
         const recentArticles = articles
-            .sort((a, b) => new Date(b.date || b.modifie_le) - new Date(a.date || a.modifie_le))
+            .sort((a, b) => new Date(b.modifie_le || b.date || 0) - new Date(a.modifie_le || a.date || 0))
             .slice(0, 3);
 
         if (recentArticles.length === 0) {

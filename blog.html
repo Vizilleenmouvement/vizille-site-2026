@@ -430,8 +430,8 @@
             if (currentCategory) all = all.filter(a => a.categorie === currentCategory);
             if (all.length === 0) { container.innerHTML = '<div class="empty-state"><div class="icon">🔍</div><p>Aucun article trouvé.</p></div>'; return; }
 
-            // Trier par date décroissante
-            all.sort((a, b) => (b.date ? new Date(b.date).getTime() : 0) - (a.date ? new Date(a.date).getTime() : 0));
+            // Trier par date de modification (style blog : le plus récemment modifié en premier)
+            all.sort((a, b) => new Date(b.modifie_le || b.date || 0) - new Date(a.modifie_le || a.date || 0));
 
             const colors = ['#e74c3c', '#e67e22', '#27ae60', '#3498db', '#9b59b6', '#1abc9c', '#34495e'];
 
