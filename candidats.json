@@ -268,5 +268,25 @@
     "photo": "images/marie-claude-argoud.jpg",
     "video": "images/candidats/marie-claude-argoud.mp4",
     "actif": true
+  },
+  {
+    "id": 1771082188180,
+    "prenom": "Christelle",
+    "nom": "REIJASSE. . Si jamais tu penses que c'est trop long dis-le-moi.",
+    "role": "",
+    "delegation": "",
+    "bio": "J'habite Vizille depuis 2009 et j'y suis très attachée. Je préside l'association la Petite Ressourcerie, un lieu de solidarité et de projets collectifs.",
+    "pedigree": "Je suis aussi bénévole à la SPA du Dauphiné. Au quotidien, je m'investis dans la vie locale pour créer du lien et agir concrètement.",
+    "objectifs": "Si je m'engage aujourd'hui, c'est parce que Vizille compte pour moi. Je crois en cette ville, en ses habitants, ses commerçants et ses associations. Je crois en ce qu'on peut construire ensemble.\nToujours à l'écoute, j'aime rassembler les gens et transformer les idées en actions concrètes.",
+    "citation": "Je préfère agir plutôt que rester spectatrice, et contribuer à redonner de l'élan à notre belle ville.",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": "",
+    "ordre": null,
+    "nouveau": true,
+    "photo": "images/christelle-reijasse-si-jamais-tu-penses-que-c-est-trop-long-dis-le-moi-.jpg",
+    "video": "images/candidats/christelle-reijasse-si-jamais-tu-penses-que-c-est-trop-long-dis-le-moi-.mp4",
+    "actif": true
   }
 ]
