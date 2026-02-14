@@ -287,5 +287,25 @@
     "photo": "images/christelle-reijasse.jpg",
     "video": "images/candidats/christelle-reijasse.mp4",
     "actif": true
+  },
+  {
+    "id": 1771086588907,
+    "prenom": "Muriel",
+    "nom": "Pasquiou",
+    "role": "",
+    "delegation": "",
+    "bio": "Aide opératoire en chirurgie digestive, retraitée depuis un an,Je souhaite m'engager pour notre ville, particulièrement dans le secteur social.",
+    "pedigree": "",
+    "objectifs": "",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": "",
+    "ordre": null,
+    "nouveau": true,
+    "photo": "images/muriel-pasquiou.jpg",
+    "video": "images/candidats/muriel-pasquiou.mp4",
+    "actif": true
   }
 ]
