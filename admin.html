@@ -5972,9 +5972,17 @@
 
             const aPreciser = filtered.filter(a => a.a_preciser);
             const aVenir = filtered.filter(a => !a.a_preciser && a.date && new Date(a.date) >= today)
-                .sort((a, b) => new Date(a.date) - new Date(b.date)); // Plus proche en premier
+                .sort((a, b) => {
+                    if (a.priorite && !b.priorite) return -1;
+                    if (!a.priorite && b.priorite) return 1;
+                    return new Date(a.date) - new Date(b.date);
+                }); // Prioritaires d'abord, puis plus proche en premier
             const passes = filtered.filter(a => !a.a_preciser && (!a.date || new Date(a.date) < today))
-                .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0)); // Plus récent en premier
+                .sort((a, b) => {
+                    if (a.priorite && !b.priorite) return -1;
+                    if (!a.priorite && b.priorite) return 1;
+                    return new Date(b.date || 0) - new Date(a.date || 0);
+                }); // Prioritaires d'abord, puis plus récent en premier
 
             function renderArticleCard(a) {
                 const realIndex = data.articles.indexOf(a);
@@ -5982,17 +5990,19 @@
                 const categoryIcon = getCategoryIcon(a.categorie);
                 const isUpcoming = !a.a_preciser && a.date && new Date(a.date) >= today;
                 const isPreciser = a.a_preciser;
+                const isPriority = a.priorite;
 
                 return `
-                    <div class="article-card" style="${isPreciser ? 'opacity: 0.7; border: 2px dashed #f39c12;' : isUpcoming ? 'border: 2px solid #27ae60;' : ''}">
+                    <div class="article-card" style="${isPriority ? 'border: 2px solid #c9a227; box-shadow: 0 4px 16px rgba(201,162,39,0.3);' : isPreciser ? 'opacity: 0.7; border: 2px dashed #f39c12;' : isUpcoming ? 'border: 2px solid #27ae60;' : ''}">
                         <div class="article-card-image">
                             ${a.image
                                 ? `<img src="${a.image}" alt="${a.titre}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                    <span class="no-image" style="display:none;">📰</span>`
                                 : '<span class="no-image">📰</span>'}
                             ${a.categorie ? `<span class="article-card-category ${categoryClass}">${categoryIcon} ${a.categorie}</span>` : ''}
-                            ${isPreciser ? '<span style="position:absolute;top:8px;right:8px;background:#f39c12;color:white;padding:2px 8px;border-radius:4px;font-size:0.75rem;">⏳ À préciser</span>' : ''}
-                            ${isUpcoming ? '<span style="position:absolute;top:8px;right:8px;background:#27ae60;color:white;padding:2px 8px;border-radius:4px;font-size:0.75rem;">📅 À venir</span>' : ''}
+                            ${isPriority ? '<span style="position:absolute;top:8px;right:8px;background:#c9a227;color:white;padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:bold;">⭐ Prioritaire</span>' : ''}
+                            ${isPreciser && !isPriority ? '<span style="position:absolute;top:8px;right:8px;background:#f39c12;color:white;padding:2px 8px;border-radius:4px;font-size:0.75rem;">⏳ À préciser</span>' : ''}
+                            ${isUpcoming && !isPriority ? '<span style="position:absolute;top:8px;right:8px;background:#27ae60;color:white;padding:2px 8px;border-radius:4px;font-size:0.75rem;">📅 À venir</span>' : ''}
                         </div>
                         <div class="article-card-body">
                             <div class="article-card-date">📅 ${formatDate(a.date)}</div>
@@ -6469,7 +6479,7 @@
             if (source) articleData.source = source;
             if (auteur) articleData.auteur = auteur;
             if (aPreciser) articleData.a_preciser = true;
-            if (priorite) articleData.priorite = true;
+            articleData.priorite = priorite;
             if (documentId) articleData.document_id = parseInt(documentId);
 
             // Ajouter la date de modification (pour le mettre en tête de gondole)
