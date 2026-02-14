@@ -307,5 +307,25 @@
     "photo": "images/muriel-pasquiou.jpg",
     "video": "images/candidats/muriel-pasquiou.mp4",
     "actif": true
+  },
+  {
+    "id": 1771087801220,
+    "prenom": "Ignazio",
+    "nom": "Consentino",
+    "role": "",
+    "delegation": "",
+    "bio": "Depuis plusieurs années, je suis engagé dans la vie associative, tant au sein de notre commune qu’au-delà. Bénévole au club de ski depuis 2017, j’ai pu constater l’importance du tissu associatif pour créer du lien et faire vivre notre territoire. Président d’un club de marche et membre du conseil d’administration du comité départemental handisport depuis 2018, j’ai développé une expérience concrète de la gestion associative et une sensibilité particulière aux questions de sport pour tous et d’inclusion.",
+    "pedigree": "Mon parcours professionnel m’a permis d’acquérir des compétences complémentaires que je souhaite mettre au service de notre commune. J’ai exercé des responsabilités de chef de projet et de manager, développant ainsi une capacité d’organisation, de pilotage et de travail en équipe.",
+    "objectifs": "Cette double expérience – professionnelle et associative – me donne une connaissance du terrain, des attentes de nos concitoyens et de la conduite de projets. L’équipe municipale sortante a réalisé un travail sérieux et de nombreux projets structurants. Je souhaite contribuer à poursuivre cette dynamique positive et à enrichir l’action municipale.\nEnsemble, nous devons continuer à faire de Vizille une ville attractive, solidaire et dynamique, où il fait bon vivre pour tous, où la vie associative est soutenue et où chacun trouve sa place.",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": "",
+    "ordre": null,
+    "nouveau": true,
+    "photo": "images/ignazio-consentino.jpg",
+    "video": null,
+    "actif": true
   }
 ]
