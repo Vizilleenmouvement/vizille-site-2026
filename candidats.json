@@ -34,10 +34,9 @@
     "facebook": "",
     "linkedin": "",
     "twitter": "",
-    "ordre": 10,
+    "ordre": null,
     "nouveau": false,
     "photo": "images/angelique-hermitte.jpg",
-    "photoPosition": "center 40%",
     "video": "images/candidats/angelique-hermitte.mp4",
     "actif": true
   },
