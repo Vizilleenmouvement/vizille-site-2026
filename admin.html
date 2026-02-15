@@ -2630,30 +2630,36 @@
                 medias: 'medias.json'
             };
 
-            for (const [key, file] of Object.entries(files)) {
-                setStatus(key, 'loading', '⏳...');
-                try {
+            // Charger TOUS les fichiers en parallèle
+            const entries = Object.entries(files);
+            entries.forEach(([key]) => setStatus(key, 'loading', '⏳...'));
+
+            const results = await Promise.allSettled(
+                entries.map(async ([key, file]) => {
                     const response = await fetch(file + '?t=' + Date.now());
-                    if (response.ok) {
-                        const loaded = await response.json();
-                        if (key === 'config') {
-                            data.config = { ...data.config, ...loaded };
-                        } else if (key === 'themes') {
-                            data.themes = loaded;
-                            THEMES_CONFIG = [...loaded];
-                        } else {
-                            data[key] = loaded;
-                        }
-                        setStatus(key, 'saved', '✓ Local');
+                    if (!response.ok) throw new Error(`${response.status}`);
+                    return { key, file, loaded: await response.json() };
+                })
+            );
+
+            results.forEach((result, i) => {
+                const [key, file] = entries[i];
+                if (result.status === 'fulfilled') {
+                    const { loaded } = result.value;
+                    if (key === 'config') {
+                        data.config = { ...data.config, ...loaded };
+                    } else if (key === 'themes') {
+                        data.themes = loaded;
+                        THEMES_CONFIG = [...loaded];
                     } else {
-                        console.warn(`Fichier ${file} non trouvé localement`);
-                        setStatus(key, 'saved', '⚠️ Absent');
+                        data[key] = loaded;
                     }
-                } catch (e) {
-                    console.warn(`Erreur chargement ${file}:`, e);
-                    setStatus(key, 'saved', '⚠️ Erreur');
+                    setStatus(key, 'saved', '✓ Local');
+                } else {
+                    console.warn(`Fichier ${file} non trouvé localement`);
+                    setStatus(key, 'saved', '⚠️ Absent');
                 }
-            }
+            });
 
             renderAll();
             showToast('✅ Données locales chargées !', 'success');
@@ -2861,43 +2867,47 @@
                 medias: 'medias.json'
             };
 
-            for (const [key, file] of Object.entries(files)) {
-                setStatus(key, 'loading', '⏳...');
-                try {
-                    // Utiliser l'API GitHub au lieu de raw.githubusercontent pour éviter le cache
-                    const token = getToken();
+            // Charger TOUS les fichiers en parallèle (au lieu de séquentiellement)
+            const entries = Object.entries(files);
+            const token = getToken();
+            entries.forEach(([key]) => setStatus(key, 'loading', '⏳...'));
+
+            const results = await Promise.allSettled(
+                entries.map(async ([key, file]) => {
                     const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${file}?ref=${GITHUB_CONFIG.branch}&t=${Date.now()}`;
                     console.log(`Chargement de ${file}...`);
                     const response = await fetch(url, {
                         headers: token ? { 'Authorization': `token ${token}` } : {}
                     });
-                    if (response.ok) {
-                        const apiResponse = await response.json();
-                        // Décoder le contenu base64 de l'API GitHub avec support UTF-8
-                        const base64 = apiResponse.content.replace(/\n/g, '');
-                        const bytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
-                        const content = new TextDecoder('utf-8').decode(bytes);
-                        const loaded = JSON.parse(content);
-                        if (key === 'config') {
-                            data.config = { ...data.config, ...loaded };
-                        } else if (key === 'themes') {
-                            data.themes = loaded;
-                            // Mettre à jour THEMES_CONFIG depuis les données chargées
-                            THEMES_CONFIG = [...loaded];
-                        } else {
-                            data[key] = loaded;
-                        }
-                        console.log(`✅ ${file} chargé:`, loaded.length !== undefined ? `${loaded.length} éléments` : 'OK');
-                        setStatus(key, 'saved', '✓ À jour');
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const apiResponse = await response.json();
+                    const base64 = apiResponse.content.replace(/\n/g, '');
+                    const bytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+                    const content = new TextDecoder('utf-8').decode(bytes);
+                    return { key, file, loaded: JSON.parse(content) };
+                })
+            );
+
+            // Traiter les résultats
+            results.forEach((result, i) => {
+                const [key, file] = entries[i];
+                if (result.status === 'fulfilled') {
+                    const { loaded } = result.value;
+                    if (key === 'config') {
+                        data.config = { ...data.config, ...loaded };
+                    } else if (key === 'themes') {
+                        data.themes = loaded;
+                        THEMES_CONFIG = [...loaded];
                     } else {
-                        console.warn(`⚠️ ${file} - Erreur HTTP ${response.status}`);
-                        setStatus(key, 'modified', `⚠️ Erreur ${response.status}`);
+                        data[key] = loaded;
                     }
-                } catch (err) {
-                    console.error(`❌ ${file} - Erreur:`, err.message);
+                    console.log(`✅ ${file} chargé:`, loaded.length !== undefined ? `${loaded.length} éléments` : 'OK');
+                    setStatus(key, 'saved', '✓ À jour');
+                } else {
+                    console.error(`❌ ${file} - Erreur:`, result.reason?.message);
                     setStatus(key, 'modified', '❌ Erreur');
                 }
-            }
+            });
 
             renderAll();
             showToast('✅ Données chargées depuis GitHub !', 'success');
