@@ -242,7 +242,7 @@
     "facebook": "",
     "linkedin": "",
     "twitter": "",
-    "ordre": 24,
+    "ordre": null,
     "nouveau": true,
     "photo": "images/michel-thuillier.jpg",
     "video": "images/candidats/michel-thuillier.mp4",
@@ -386,6 +386,26 @@
     "nouveau": false,
     "photo": "images/fabrice-pasquiou.jpg",
     "video": "images/candidats/fabrice-pasquiou.mp4",
+    "actif": true
+  },
+  {
+    "id": 1771156609893,
+    "prenom": "Maryline",
+    "nom": "Desnoulet",
+    "role": "",
+    "delegation": "",
+    "bio": "Retraitée, Je suis native du Nord et  ai vécu 14ans dans le Tarn, je réside depuis 5 ans à Vizille.",
+    "pedigree": "secrétaire des CPE en prépa \nsecrétaire dans une école régionale de déficient visuel\nbénévole au secours populaire en tant que responsable de l’alimentaire",
+    "objectifs": "J’ai choisi de rejoindre la liste sortante de Mme TROTON pour son équipe de personnes dynamique et compétente Je suis prête à m’investir et m’intégrer et donner de mon temps à toutes les vizilloises et vizillois",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": "",
+    "ordre": null,
+    "nouveau": true,
+    "photo": null,
+    "video": "images/candidats/maryline-desnoulet.mp4",
     "actif": true
   }
 ]
