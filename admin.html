@@ -2867,16 +2867,25 @@
                 medias: 'medias.json'
             };
 
-            // Charger TOUS les fichiers en parallèle depuis le site (fetch direct)
+            // Charger TOUS les fichiers en parallèle via l'API GitHub
             const entries = Object.entries(files);
+            const token = getToken();
             entries.forEach(([key]) => setStatus(key, 'loading', '⏳...'));
 
             const results = await Promise.allSettled(
                 entries.map(async ([key, file]) => {
+                    const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${file}?ref=${GITHUB_CONFIG.branch}&t=${Date.now()}`;
                     console.log(`Chargement de ${file}...`);
-                    const response = await fetch(file + '?t=' + Date.now());
+                    const response = await fetch(url, {
+                        headers: token ? { 'Authorization': `token ${token}` } : {}
+                    });
                     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                    return { key, file, loaded: await response.json() };
+                    const apiResponse = await response.json();
+                    // Décoder le contenu base64 de l'API GitHub avec support UTF-8
+                    const base64 = apiResponse.content.replace(/\n/g, '');
+                    const bytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+                    const content = new TextDecoder('utf-8').decode(bytes);
+                    return { key, file, loaded: JSON.parse(content) };
                 })
             );
 
@@ -2902,7 +2911,7 @@
             });
 
             renderAll();
-            showToast('✅ Données chargées depuis le site !', 'success');
+            showToast('✅ Données chargées depuis GitHub !', 'success');
         }
 
         // ===== STATUS =====
