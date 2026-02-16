@@ -454,10 +454,10 @@
     "nom": "Faure",
     "role": "Adjoint",
     "delegation": "Accès aux droits, santé publique, action sociale et solidarité",
-    "bio": "",
-    "pedigree": "",
-    "objectifs": "",
-    "citation": "",
+    "bio": "49 ans, cadre technique dans l'industrie. Je suis actuellement adjoint à l'action sociale et président du groupe Vizille au Coeur au sein du conseil municipal.",
+    "pedigree": "Heureux d'avoir vécu à Vizille et profité de ses écoles, associations, infrastructures et cadre de vie.",
+    "objectifs": "Continuer le travail auprès de Catherine Troton. Essayer très modestement de rendre à Vizille et ses habitant(e)s tout le bonheur et la bienveillance que j'ai reçu.",
+    "citation": "Seul on va plus vite, ensemble on va plus loin.",
     "email": "",
     "facebook": "",
     "linkedin": "",
@@ -465,7 +465,7 @@
     "ordre": null,
     "nouveau": false,
     "photo": "images/gilles-faure.jpg",
-    "video": null,
+    "video": "images/candidats/gilles-faure.mp4",
     "actif": true
   }
 ]
