@@ -447,5 +447,25 @@
     "photo": "images/stephane-lasserre.jpg",
     "video": null,
     "actif": true
+  },
+  {
+    "id": 1771229320591,
+    "prenom": "Gilles",
+    "nom": "Faure",
+    "role": "Adjoint",
+    "delegation": "Accès aux droits, santé publique, action sociale et solidarité",
+    "bio": "",
+    "pedigree": "",
+    "objectifs": "",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": "",
+    "ordre": null,
+    "nouveau": false,
+    "photo": "images/gilles-faure.jpg",
+    "video": null,
+    "actif": true
   }
 ]
