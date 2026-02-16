@@ -10,6 +10,16 @@
     "color": "#9b59b6"
   },
   {
+    "theme": "Patrimoine",
+    "icon": "🏛️",
+    "color": "#8d6e63"
+  },
+  {
+    "theme": "Animations de proximité",
+    "icon": "🎪",
+    "color": "#e74c3c"
+  },
+  {
     "theme": "Démocratie locale",
     "icon": "🗣️",
     "color": "#607d8b"
