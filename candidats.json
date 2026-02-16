@@ -427,5 +427,25 @@
     "photo": "images/nathalie-germain-vey.jpg",
     "video": null,
     "actif": true
+  },
+  {
+    "id": 1771225896127,
+    "prenom": "Stéphane",
+    "nom": "Lasserre",
+    "role": "Conseiller",
+    "delegation": "",
+    "bio": "ans, technicien dans le privé, je suis conseiller municipal au sein de l’équipe actuelle.",
+    "pedigree": "",
+    "objectifs": "Je me joins à la nouvelle campagne afin d’espérer poursuivre la dynamique engagée par Catherine depuis son premier mandat.",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": "",
+    "ordre": null,
+    "nouveau": false,
+    "photo": "images/stephane-lasserre.jpg",
+    "video": null,
+    "actif": true
   }
 ]
