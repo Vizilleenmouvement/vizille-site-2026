@@ -415,7 +415,7 @@
     "role": "conseillère déléguée",
     "delegation": "",
     "bio": "Vizilloise depuis 25 ans, mère de trois enfants et comptable dans un EHPAD associatif, j’ai la conviction qu’ensemble et collectivement, chacun selon ses compétences, nous pouvons réaliser de belles choses.",
-    "pedigree": "e me suis tout d’abord investie dans la vie associative : parents d’élèves à l’école, au collège et au lycée puis Amis de l’Histoire du Pays Vizillois. J’ai aussi été membre du Conseil de Développement de la Métropole avant de devenir conseillère municipale en 2023 et aujourd’hui conseillère déléguée culture et patrimoine.",
+    "pedigree": "Je me suis tout d’abord investie dans la vie associative : parents d’élèves à l’école, au collège et au lycée puis Amis de l’Histoire du Pays Vizillois. J’ai aussi été membre du Conseil de Développement de la Métropole avant de devenir conseillère municipale en 2023 et aujourd’hui conseillère déléguée culture et patrimoine.",
     "objectifs": "Poursuivre les actions engagées depuis 2020 par l’équipe de Catherine TROTON  pour notre petite ville de caractère, mieux valorisée, plus accueillante et plus conviviale.",
     "citation": "« Le patrimoine fédère les énergies et rassemble les gens. Autour d’un monument, qu’il soit petit ou grand, les gens sont fiers, ils ont un sentiment d’appartenance. » Stéphane Bern.",
     "email": "",
@@ -454,10 +454,10 @@
     "nom": "Faure",
     "role": "Adjoint",
     "delegation": "Accès aux droits, santé publique, action sociale et solidarité",
-    "bio": "49 ans, cadre technique dans l'industrie. Je suis actuellement adjoint à l'action sociale et président du groupe Vizille au Coeur au sein du conseil municipal.",
-    "pedigree": "Heureux d'avoir vécu à Vizille et profité de ses écoles, associations, infrastructures et cadre de vie.",
-    "objectifs": "Continuer le travail auprès de Catherine Troton. Essayer très modestement de rendre à Vizille et ses habitant(e)s tout le bonheur et la bienveillance que j'ai reçu.",
-    "citation": "Seul on va plus vite, ensemble on va plus loin.",
+    "bio": "",
+    "pedigree": "",
+    "objectifs": "",
+    "citation": "",
     "email": "",
     "facebook": "",
     "linkedin": "",
@@ -465,7 +465,7 @@
     "ordre": null,
     "nouveau": false,
     "photo": "images/gilles-faure.jpg",
-    "video": "images/candidats/gilles-faure.mp4",
+    "video": null,
     "actif": true
   }
 ]
