@@ -436,12 +436,16 @@
 }
 
 .modal-photo {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    aspect-ratio: 3 / 4;
+    border-radius: 16px;
     object-fit: cover;
+    object-position: center 20%;
     border: 4px solid var(--or);
-    margin-bottom: 1rem;
+    margin: 0 auto 1rem;
+    display: block;
 }
 
 .modal-photo-placeholder {
@@ -555,6 +559,10 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+    .modal-photo {
+        max-width: 200px;
+    }
+
     .team-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;

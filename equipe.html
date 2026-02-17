@@ -249,7 +249,7 @@
         function buildEquipeCard(candidat, index, isLeader) {
             const color = isLeader ? '#c9a227' : '#1a3a5c';
             const darkerColor = adjustColor(color, -25);
-            const pos = candidat.photoPosition || 'center 30%';
+            const pos = candidat.photoPosition || 'center 20%';
 
             const vidPos = candidat.videoPosition || 'center 25%';
 
@@ -366,8 +366,9 @@
 
             // Photo (toujours la photo sur la fiche, vidéo uniquement sur l'accueil)
             const photoContainer = document.getElementById('modal-photo-container');
+            const modalPos = candidat.photoPosition || 'center 20%';
             if (candidat.photo) {
-                photoContainer.innerHTML = `<img src="${candidat.photo}" alt="${getFullName(candidat)}" class="modal-photo" loading="lazy">`;
+                photoContainer.innerHTML = `<img src="${candidat.photo}" alt="${getFullName(candidat)}" class="modal-photo" loading="lazy" style="object-position:${modalPos};">`;
             } else {
                 photoContainer.innerHTML = `<div class="modal-photo-placeholder">👤</div>`;
             }
