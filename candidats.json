@@ -488,14 +488,14 @@
     "actif": true
   },
   {
-    "id": 1771341681126,
-    "prenom": "Christine",
-    "nom": "Sanchez",
+    "id": 1771342431588,
+    "prenom": "Nathalie",
+    "nom": "Jacolin",
     "role": "",
     "delegation": "",
-    "bio": "Née à Vizille, je suis retraitée depuis peu",
-    "pedigree": "",
-    "objectifs": "Ayant plus de disponibilité je m engage avec la liste de Catherine car je crois que son équipe dynamique et motivée fera de son mieux pour Vizille",
+    "bio": "Vizilloise d'adoption. Habituée aux responsabilités et au contact humain, je souhaite mettre mon expérience et mon sens du service au profit de notre commune.",
+    "pedigree": "56 ans, secrétaire commerciale dans une auto-école",
+    "objectifs": "Contribuer au développement harmonieux et solidaire de la commune",
     "citation": "",
     "email": "",
     "facebook": "",
@@ -503,7 +503,7 @@
     "twitter": "",
     "ordre": null,
     "nouveau": true,
-    "photo": "images/christine-sanchez.jpg",
+    "photo": "images/nathalie-jacolin.jpg",
     "video": null,
     "actif": true
   }
