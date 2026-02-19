@@ -1631,5 +1631,73 @@
       {"valeur": "2027 + 2030", "label": "Fêtes de l'Amitié"},
       {"valeur": "1-2/an", "label": "Courrier du jumelage"}
     ]
+  },
+
+  {
+    "id": 700,
+    "theme": "Action sociale",
+    "type": "engagement",
+    "titre": "Maison des Solidarités",
+    "resume": "Un lieu unique pour centraliser l'accueil, l'accompagnement et l'orientation des habitants en difficulté.",
+    "description": "Regrouper les services du CCAS, les permanences sociales, juridiques et d'accès aux droits en un lieu identifié. En lien avec La Source (France Services), l'Escale et le foyer résidence La Romanche. Créer un espace d'éducation populaire avec des ateliers juridiques, économiques et sociaux ouverts à tous.",
+    "statut": "Programmé",
+    "annee": 2027,
+    "importance": 3,
+    "tags": ["CCAS", "Solidarité", "Accès aux droits", "Éducation populaire"],
+    "chiffres": [
+      {"valeur": "1", "label": "Maison des Solidarités"},
+      {"valeur": "CCAS", "label": "Pilotage"}
+    ]
+  },
+
+  {
+    "id": 701,
+    "theme": "Action sociale",
+    "type": "engagement",
+    "titre": "Mutuelle communale",
+    "resume": "Négocier une complémentaire santé à tarifs réduits pour tous les Vizillois, via le CCAS.",
+    "description": "Sur le modèle de Grenoble (mutuelle Entrenous, -15 à -25 % sur les cotisations). Adhésion volontaire, sans condition d'âge ni de ressources. Publics prioritaires : retraités, demandeurs d'emploi, indépendants, jeunes. Coût estimé pour la commune : 20 à 25 000 €. Le CCAS pilote le dispositif avec des permanences d'information.",
+    "statut": "Programmé",
+    "annee": 2027,
+    "importance": 3,
+    "tags": ["Santé", "Mutuelle", "CCAS", "Pouvoir d'achat"],
+    "chiffres": [
+      {"valeur": "-15 à -25%", "label": "Réduction cotisations"},
+      {"valeur": "20-25 k€", "label": "Coût estimé"}
+    ]
+  },
+
+  {
+    "id": 702,
+    "theme": "Action sociale",
+    "type": "engagement",
+    "titre": "Réseaux d'entraide dans les quartiers",
+    "resume": "Structurer la solidarité de proximité par des réseaux de voisins solidaires dans chaque quartier.",
+    "description": "Aide aux courses, accompagnement aux rendez-vous médicaux, veille auprès des personnes isolées, partage de savoir-faire. Coordination assurée par le CCAS et les associations locales (Secours Populaire, La Fourmi, PIMMS).",
+    "statut": "Programmé",
+    "annee": 2027,
+    "importance": 2,
+    "tags": ["Entraide", "Quartiers", "Voisins solidaires", "CCAS"],
+    "chiffres": [
+      {"valeur": "Tous", "label": "Quartiers couverts"},
+      {"valeur": "3+", "label": "Associations partenaires"}
+    ]
+  },
+
+  {
+    "id": 703,
+    "theme": "Action sociale",
+    "type": "engagement",
+    "titre": "CLSM à l'échelle du bassin de vie",
+    "resume": "Impliquer les communes voisines dans le Conseil Local de Santé Mentale.",
+    "description": "Étendre le CLSM (créé en 2025) aux communes du bassin du Pays Vizillois. Outil de démocratie en santé associant élus, professionnels, usagers et familles. Objectifs : prévention, repérage précoce, lutte contre la stigmatisation des troubles psychiques.",
+    "statut": "Programmé",
+    "annee": 2026,
+    "importance": 2,
+    "tags": ["Santé mentale", "CLSM", "Intercommunal", "Prévention"],
+    "chiffres": [
+      {"valeur": "2025", "label": "CLSM créé"},
+      {"valeur": "Bassin", "label": "Échelle visée"}
+    ]
   }
 ]
