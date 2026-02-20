@@ -88,6 +88,153 @@
         }
         .engagement-item h5 { margin: 0 0 0.3rem 0; color: var(--bleu-vizille); font-size: 1rem; }
         .engagement-item p { margin: 0; color: var(--gris-texte); line-height: 1.5; font-size: 0.95rem; }
+
+        /* === VUE TRANQUILLITÉ PUBLIQUE — 4 AXES === */
+        .tranq-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        .tranq-banner {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+            color: white;
+            padding: 2rem 2.5rem;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 6px 24px rgba(44, 62, 80, 0.3);
+        }
+        .tranq-banner h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            margin: 0 0 0.5rem;
+        }
+        .tranq-banner .tranq-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin: 0 0 1rem;
+        }
+        .tranq-banner .tranq-intro {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .tranq-axes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .tranq-axe-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .tranq-axe-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+        .tranq-axe-header {
+            padding: 1.25rem 1.5rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .tranq-axe-header::after {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 100%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .tranq-axe-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            margin: 0 0 0.3rem;
+            line-height: 1.3;
+        }
+        .tranq-axe-header .axe-accroche {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            line-height: 1.4;
+            margin: 0;
+        }
+        .tranq-axe-body {
+            padding: 1.25rem 1.5rem;
+        }
+        .tranq-objectif-btn {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            width: 100%;
+            padding: 0.85rem 1rem;
+            margin-bottom: 0.6rem;
+            background: #f8f9fa;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+        .tranq-objectif-btn:hover {
+            border-color: var(--or, #c9a227);
+            background: #fffdf5;
+            transform: translateX(4px);
+        }
+        .tranq-objectif-btn .obj-numero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            color: white;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+        .tranq-objectif-btn .obj-content {
+            flex: 1;
+        }
+        .tranq-objectif-btn .obj-titre {
+            font-weight: 600;
+            color: #2c3e50;
+            line-height: 1.3;
+            margin-bottom: 0.2rem;
+        }
+        .tranq-objectif-btn .obj-resume {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            line-height: 1.3;
+        }
+        .tranq-objectif-btn .obj-arrow {
+            color: var(--or, #c9a227);
+            font-size: 1.1rem;
+            align-self: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .tranq-objectif-btn:hover .obj-arrow {
+            opacity: 1;
+        }
+        @media (max-width: 768px) {
+            .tranq-axes-grid {
+                grid-template-columns: 1fr;
+            }
+            .tranq-banner {
+                padding: 1.5rem;
+            }
+            .tranq-banner h2 {
+                font-size: 1.3rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -514,8 +661,8 @@ function initializeFilters() {
         });
     });
 
-    // Trier les thèmes par nombre de projets (décroissant)
-    const sortedThemes = Object.keys(themeCounts).sort((a, b) => themeCounts[b] - themeCounts[a]);
+    // Trier les thèmes par ordre alphabétique
+    const sortedThemes = Object.keys(themeCounts).sort((a, b) => a.localeCompare(b, 'fr'));
 
     let html = '';
 
@@ -688,8 +835,14 @@ function renderCurrentView() {
         return;
     }
 
-    // Vue flip cards pour tout thème sélectionné
+    // Vue spéciale Tranquillité publique en 4 axes
     const selectedTheme = document.getElementById('filter-theme')?.value;
+    if (currentView === 'cards' && selectedTheme === 'Tranquillité publique') {
+        renderTranquilliteView();
+        return;
+    }
+
+    // Vue flip cards pour tout autre thème sélectionné
     if (currentView === 'cards' && selectedTheme) {
         renderFlipCardsView(selectedTheme);
         return;
@@ -881,6 +1034,111 @@ function buildFlipCard(projet, color, badge) {
     `;
 }
 
+// ===== VUE TRANQUILLITÉ PUBLIQUE — 4 AXES =====
+function renderTranquilliteView() {
+    const axesConfig = [
+        {
+            num: 1,
+            titre: "Être présent et visible",
+            icon: "👁️",
+            color: "#2c3e50",
+            accroche: "Présence humaine, aménagement, vidéoprotection — trois dimensions qui se renforcent mutuellement."
+        },
+        {
+            num: 2,
+            titre: "Prévenir et apaiser",
+            icon: "🤝",
+            color: "#e67e22",
+            accroche: "Agir sur les causes des tensions, pas seulement sur leurs manifestations. Intervenir avant la crise."
+        },
+        {
+            num: 3,
+            titre: "Faire ensemble et informer",
+            icon: "🏘️",
+            color: "#27ae60",
+            accroche: "La tranquillité se construit avec les habitants et les partenaires, dans la transparence."
+        },
+        {
+            num: 4,
+            titre: "Anticiper et protéger les plus vulnérables",
+            icon: "🛡️",
+            color: "#c0392b",
+            accroche: "Préparer la commune aux crises, former les jeunes aux risques, protéger les victimes de violences, accompagner nos aînés — personne n'est oublié."
+        }
+    ];
+
+    // Récupérer les projets Tranquillité
+    const projets = filteredData.filter(p => projectHasTheme(p, 'Tranquillité publique'));
+
+    let html = '<div class="tranq-container" id="view-flip">';
+
+    // Bandeau titre
+    html += `
+        <div class="tranq-banner">
+            <h2>🛡️ Tranquillité publique</h2>
+            <p class="tranq-subtitle">Bien vivre ensemble, en confiance</p>
+            <p class="tranq-subtitle" style="font-size: 0.95rem; font-weight: 600; opacity: 1;">
+                4 axes structurants • ${projets.length} objectifs opérationnels
+            </p>
+            <p class="tranq-intro">
+                La tranquillité publique n'est pas l'affaire d'un seul service ou d'un seul élu.
+                Elle fédère toutes les énergies : élus, services municipaux, partenaires institutionnels et citoyens.
+                Éclairage public et transition écologique, aménagements de circulation et mobilités,
+                action sociale et protection des aînés, prévention en milieu scolaire —
+                chaque objectif est transversal et mobilise plusieurs thématiques du projet communal.
+                C'est cette approche globale qui fait notre force.
+            </p>
+            <p class="tranq-passerelles" style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.75; letter-spacing: 0.5px;">
+                🌿 Transition écologique • 🚲 Mobilités • 🏗️ Travaux & urbanisme • 🤝 Action sociale • 👶 Enfance/Jeunesse
+            </p>
+        </div>
+    `;
+
+    // Grille des 4 axes
+    html += '<div class="tranq-axes-grid">';
+
+    axesConfig.forEach(axe => {
+        const axeProjets = projets.filter(p => p.axe === axe.num).sort((a, b) => (a.id || 0) - (b.id || 0));
+        const darkerColor = adjustColor(axe.color, -25);
+
+        html += `
+            <div class="tranq-axe-card">
+                <div class="tranq-axe-header" style="background: linear-gradient(135deg, ${axe.color} 0%, ${darkerColor} 100%);">
+                    <h3>${axe.icon} Axe ${axe.num} — ${axe.titre}</h3>
+                    <p class="axe-accroche">${axe.accroche}</p>
+                </div>
+                <div class="tranq-axe-body">
+        `;
+
+        axeProjets.forEach(p => {
+            const cleanTitle = p.titre.replace(/^Objectif \d+ - /, '');
+            const numero = p.numero ? p.numero.split('/')[0] : p.id;
+            html += `
+                <button class="tranq-objectif-btn" onclick="openProjectModal(${p.id})">
+                    <span class="obj-numero" style="background: ${axe.color};">${numero}</span>
+                    <div class="obj-content">
+                        <div class="obj-titre">${cleanTitle}</div>
+                        <div class="obj-resume">${p.resume || ''}</div>
+                    </div>
+                    <span class="obj-arrow">→</span>
+                </button>
+            `;
+        });
+
+        html += `
+                </div>
+            </div>
+        `;
+    });
+
+    html += '</div>'; // fin tranq-axes-grid
+    html += '</div>'; // fin tranq-container
+
+    // Insérer dans la section résultats
+    const resultsSection = document.getElementById('results-section');
+    resultsSection.insertAdjacentHTML('beforeend', html);
+}
+
 function renderConcertationView() {
     const container = document.getElementById('view-concertation');
     container.classList.remove('hidden');
@@ -977,13 +1235,28 @@ function renderThemesView() {
         }).join('');
         const plusCount = projets.length > 3 ? `<li class="plus-count">+ ${projets.length - 3} autre${projets.length - 3 > 1 ? 's' : ''}...</li>` : '';
 
+        // Compteur intelligent par thème
+        let countLabel;
+        if (theme === 'Tranquillité publique') {
+            const nbAxes = new Set(projets.map(p => p.axe).filter(Boolean)).size;
+            countLabel = `${nbAxes} axes • ${count} objectifs`;
+        } else {
+            const nbObj = projets.filter(p => p.type === 'objectif').length;
+            const nbEng = projets.filter(p => p.type === 'engagement').length;
+            if (nbObj > 0 && nbEng > 0) {
+                countLabel = `${nbObj} objectif${nbObj > 1 ? 's' : ''} • ${nbEng} engagement${nbEng > 1 ? 's' : ''}`;
+            } else {
+                countLabel = `${count} engagement${count > 1 ? 's' : ''}`;
+            }
+        }
+
         html += `
             <div class="theme-card" onclick="filterByTheme('${theme}')" style="border-left: 5px solid ${config.color}">
                 <div class="theme-header" style="background: linear-gradient(135deg, ${config.color} 0%, ${adjustColor(config.color, -20)} 100%)">
                     <span class="theme-icon">${config.icon}</span>
                     <div class="theme-info">
                         <h3>${theme}</h3>
-                        <span class="count">${count} engagement${count > 1 ? 's' : ''}</span>
+                        <span class="count">${countLabel}</span>
                     </div>
                 </div>
                 <div class="theme-preview">
