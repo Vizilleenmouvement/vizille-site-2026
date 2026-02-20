@@ -775,7 +775,9 @@ function buildFlipCard(projet, color, badge) {
     // Fallbacks intelligents pour tous les formats de données
     const pourquoi = projet.pourquoi || projet.vision || projet.idee_force || projet.description || projet.resume || '';
     const actions = projet.ce_quon_fait || projet.axes_action || projet.actions || [];
-    const benefices = projet.benefices || [];
+    const benefices = projet.benefices
+        ? (typeof projet.benefices === 'string' ? projet.benefices.split('. ').filter(s => s.trim()) : projet.benefices)
+        : [];
     const enjeux = projet.enjeux || [];
     const indicateurs = projet.indicateurs ?
         (typeof projet.indicateurs === 'string' ? projet.indicateurs.split(' • ') : projet.indicateurs) : [];
