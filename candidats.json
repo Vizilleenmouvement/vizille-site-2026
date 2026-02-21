@@ -507,5 +507,25 @@
     "photo": "images/nathalie-jacolin.jpg",
     "video": null,
     "actif": true
+  },
+  {
+    "id": 1771653649078,
+    "prenom": "Meriem",
+    "nom": "El-Kebir",
+    "role": "",
+    "delegation": "",
+    "bio": "Arrivée en 1972 , j’ai grandi avec le sport et les valeurs qu’il transmet. Après l’école primaire, j’ai poursuivi ma scolarité à Vizille, où je me suis investie dans le tissu associatif, notamment à l’OMS. J’y ai découvert et pratiqué de nombreux sports et activités culturelles, créant des souvenirs qui ont profondément nourri mon attachement à notre ville.",
+    "pedigree": "En 2020, j’ai rejoint l’équipe « Vizille au Cœur » pour contribuer activement à faire évoluer notre commune et à offrir à nos enfants des couleurs et des souvenirs inoubliables. En tant qu’adjointe à l’éducation et à la jeunesse, j’ai exercé ma mission avec engagement et conviction.",
+    "objectifs": "Aujourd’hui, je laisse cette responsabilité à d’autres, tout en restant pleinement investie au sein de la nouvelle équipe. Mon objectif demeure le même : continuer à agir pour les enfants vizillois, qui sont l’avenir de notre commune.",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": "",
+    "ordre": null,
+    "nouveau": false,
+    "photo": "images/meriem-el-kebir.jpg",
+    "video": null,
+    "actif": true
   }
 ]
