@@ -3879,7 +3879,7 @@
     "icon": "👶",
     "color": "#3498db",
     "statut": "Réalisé",
-    "titre": "Convention Territoriale Globale CAF/SICCE",
+    "titre": "Convention Territoriale Globale Caisse d'Allocations Familiales/Syndicat Intercommunal de Coopération et des Compétences Enfance",
     "description": "15 communes, petite enfance/jeunesse",
     "annee": "2022",
     "annee_fin": "",
@@ -4008,7 +4008,7 @@
         "evenement": "Réalisation"
       }
     ],
-    "details": "Un conseiller numérique est présent à l'Espace France Services pour accompagner les Vizillois dans leurs démarches numériques : création d'adresse email, utilisation des services en ligne (impôts, CAF, Pôle Emploi), apprentissage des outils informatiques. Service gratuit sur rendez-vous.",
+    "details": "Un conseiller numérique est présent à l'Espace France Services pour accompagner les Vizillois dans leurs démarches numériques : création d'adresse email, utilisation des services en ligne (impôts, Caisse d'Allocations Familiales, Pôle Emploi), apprentissage des outils informatiques. Service gratuit sur rendez-vous.",
     "sources": [
       {
         "type": "magazine",
@@ -4964,13 +4964,13 @@
     "color": "#e74c3c",
     "statut": "Réalisé",
     "titre": "Rencontres intergénérationnelles",
-    "description": "SICCE + EHPAD Les Écrins + Résidence Romanche",
+    "description": "Syndicat Intercommunal de Coopération et des Compétences Enfance + EHPAD Les Écrins + Résidence Romanche",
     "annee": "2024",
     "annee_fin": "",
     "budget": 0,
     "source": "Magazine n°162",
     "importance": 1,
-    "resume": "SICCE + EHPAD Les Écrins + Résidence Romanche",
+    "resume": "Syndicat Intercommunal de Coopération et des Compétences Enfance + EHPAD Les Écrins + Résidence Romanche",
     "chiffres": [],
     "chronologie": [
       {
@@ -7319,7 +7319,7 @@
         "evenement": "Aménagement locaux EFS"
       }
     ],
-    "details": "L'Espace France Services de Vizille regroupe en un lieu unique l'accès à de nombreux services publics : CPAM, CAF, CARSAT, Pôle Emploi, préfecture, impôts. Des conseillers accompagnent les usagers dans leurs démarches administratives avec ou sans rendez-vous.",
+    "details": "L'Espace France Services de Vizille regroupe en un lieu unique l'accès à de nombreux services publics : CPAM, Caisse d'Allocations Familiales, CARSAT, Pôle Emploi, préfecture, impôts. Des conseillers accompagnent les usagers dans leurs démarches administratives avec ou sans rendez-vous.",
     "sources": [
       "Ville de Vizille"
     ],
@@ -7427,7 +7427,7 @@
     "budget": 0,
     "source": "Délib 2024-02-15-28",
     "importance": 1,
-    "resume": "TTC, subv LCA",
+    "resume": "TTC, subv Les Cinémas Associés",
     "chiffres": [],
     "chronologie": [
       {
@@ -8437,7 +8437,7 @@
       },
       {
         "date": "20/03/2024",
-        "evenement": "CM: Convention 2024 MPA + 1er versement 16 000€"
+        "evenement": "CM: Convention 2024 Maison des Pratiques Artistiques + 1er versement 16 000€"
       },
       {
         "date": "2025",
@@ -13593,13 +13593,13 @@
     "color": "#9b59b6",
     "statut": "Réalisé",
     "titre": "Festival du film pour enfants",
-    "description": "Festival du film pour enfants organisé au Jeu de Paume en partenariat avec LCA, avec une programmation spéciale jeune public. Films d'animation, courts-métrages, rencontres avec des réalisateurs, ateliers de création. Un rendez-vous annuel qui initie les enfants au 7ème art et développe leur regard critique.",
+    "description": "Festival du film pour enfants organisé au Jeu de Paume en partenariat avec Les Cinémas Associés, avec une programmation spéciale jeune public. Films d'animation, courts-métrages, rencontres avec des réalisateurs, ateliers de création. Un rendez-vous annuel qui initie les enfants au 7ème art et développe leur regard critique.",
     "annee": "2021",
     "annee_fin": "",
     "budget": 0,
     "source": "Bilan MC",
     "importance": 1,
-    "resume": "Festival cinématographique dédié au jeune public, en partenariat avec LCA.",
+    "resume": "Festival cinématographique dédié au jeune public, en partenariat avec Les Cinémas Associés.",
     "chiffres": [],
     "chronologie": [
       {
@@ -14234,8 +14234,8 @@
     "icon": "🎭",
     "color": "#9b59b6",
     "statut": "Réalisé",
-    "titre": "Partenariat renforcé avec la MPA",
-    "description": "Partenariat et conventionnement d'objectifs avec la Maison Pour Tous/Alpes (MPA) de Vizille pour coordonner les programmations culturelles, mutualiser les moyens et toucher des publics complémentaires. Conventions annuelles, soutien financier, actions communes. Une coopération au service du dynamisme culturel vizillois.",
+    "titre": "Partenariat renforcé avec la Maison des Pratiques Artistiques",
+    "description": "Partenariat et conventionnement d'objectifs avec la Maison Pour Tous/Alpes (Maison des Pratiques Artistiques) de Vizille pour coordonner les programmations culturelles, mutualiser les moyens et toucher des publics complémentaires. Conventions annuelles, soutien financier, actions communes. Une coopération au service du dynamisme culturel vizillois.",
     "annee": "2021",
     "annee_fin": "",
     "budget": 0,
@@ -14246,12 +14246,12 @@
     "chronologie": [
       {
         "date": "2020-2025",
-        "evenement": "Partenariat MPA"
+        "evenement": "Partenariat Maison des Pratiques Artistiques"
       }
     ],
     "details": "",
     "sources": [
-      "MPA Vizille"
+      "Maison des Pratiques Artistiques Vizille"
     ],
     "lien_source": [],
     "sous_categorie": "Festivals",
@@ -14265,8 +14265,8 @@
     "icon": "🎭",
     "color": "#9b59b6",
     "statut": "Réalisé",
-    "titre": "Partenariat renforcé avec LCA",
-    "description": "Partenariat et conventionnement d'objectifs avec La Coopérative d'Activités Culturelles (LCA), cinéma art et essai itinérant qui complète la programmation du Jeu de Paume. Projections régulières, séances scolaires, actions d'éducation à l'image. Une collaboration qui enrichit l'offre cinématographique vizilloise notamment pour le jeune public.",
+    "titre": "Partenariat renforcé avec Les Cinémas Associés",
+    "description": "Partenariat et conventionnement d'objectifs avec La Coopérative d'Activités Culturelles (Les Cinémas Associés), cinéma art et essai itinérant qui complète la programmation du Jeu de Paume. Projections régulières, séances scolaires, actions d'éducation à l'image. Une collaboration qui enrichit l'offre cinématographique vizilloise notamment pour le jeune public.",
     "annee": "2021",
     "annee_fin": "",
     "budget": 0,
@@ -14277,12 +14277,12 @@
     "chronologie": [
       {
         "date": "2020-2025",
-        "evenement": "Partenariat LCA"
+        "evenement": "Partenariat Les Cinémas Associés"
       }
     ],
     "details": "",
     "sources": [
-      "LCA"
+      "Les Cinémas Associés"
     ],
     "lien_source": [],
     "sous_categorie": "Festivals",
@@ -14372,7 +14372,7 @@
     "icon": "🎭",
     "color": "#9b59b6",
     "statut": "Réalisé",
-    "titre": "Délégations aux jumelages avec associations et jeunes MPA",
+    "titre": "Délégations aux jumelages avec associations et jeunes Maison des Pratiques Artistiques",
     "description": "Présence de représentants associatifs et jeunes lors des déplacements à Venaria et Vöhringen.",
     "annee": "2023",
     "annee_fin": "",
@@ -14968,7 +14968,7 @@
         "label": "Accès majoritaire"
       }
     ],
-    "details": "Chaque année, Vizille propose un programme riche d'événements culturels gratuits ou à tarif accessible :\n\n• **Festival P'tits Mots P'tits Mômes** - Spectacles jeune public\n• **Festival Film pour Enfants** - Cinéma jeunesse (partenariat LCA)\n• **Festival Rock'n Road** - Concerts rock\n• **Estivales** - Spectacles + 5 concerts gratuits en plein air\n• **Fête de la Musique** - Animations musicales dans la ville\n• **Fête de la Science** - Parcours scientifique intercommunal avec la Casemate et Territoire de Sciences : village sciences, animations scolaires, médiathèque\n• **10 Jours de la Culture** - Événement métropolitain, spectacles gratuits\n• **Cinéma plein air estival** - Projections gratuites\n• **Veillées de Belledonne** - Soirées d'échanges intergénérationnelles (partenariat Espace Belledonne)\n• **Patinoire éphémère de Noël** - Animation hivernale\n• **Animations Marché de Noël** - Spectacles et ambiance festive\n\n**Partenariats métropolitains :**\n• Participation aux assises de la culture métropolitaine\n• Lien avec la Casemate et Territoire de Sciences\n• Participation au COST",
+    "details": "Chaque année, Vizille propose un programme riche d'événements culturels gratuits ou à tarif accessible :\n\n• **Festival P'tits Mots P'tits Mômes** - Spectacles jeune public\n• **Festival Film pour Enfants** - Cinéma jeunesse (partenariat Les Cinémas Associés)\n• **Festival Rock'n Road** - Concerts rock\n• **Estivales** - Spectacles + 5 concerts gratuits en plein air\n• **Fête de la Musique** - Animations musicales dans la ville\n• **Fête de la Science** - Parcours scientifique intercommunal avec la Casemate et Territoire de Sciences : village sciences, animations scolaires, médiathèque\n• **10 Jours de la Culture** - Événement métropolitain, spectacles gratuits\n• **Cinéma plein air estival** - Projections gratuites\n• **Veillées de Belledonne** - Soirées d'échanges intergénérationnelles (partenariat Espace Belledonne)\n• **Patinoire éphémère de Noël** - Animation hivernale\n• **Animations Marché de Noël** - Spectacles et ambiance festive\n\n**Partenariats métropolitains :**\n• Participation aux assises de la culture métropolitaine\n• Lien avec la Casemate et Territoire de Sciences\n• Participation au COST",
     "chronologie": [
       {
         "date": "Printemps",
@@ -15068,7 +15068,7 @@
     "color": "#9c27b0",
     "statut": "Réalisé",
     "titre": "Partenariats et équipements culturels",
-    "description": "Partenariats culturels avec le cinéma indépendant LCA et la Maison Pour Tous/Alpes (MPA) pour enrichir l'offre culturelle vizilloise. Conventions de partenariat, soutien financier, coordination des programmations. Ces équipements complémentaires constituent un maillage culturel de proximité.",
+    "description": "Partenariats culturels avec le cinéma indépendant Les Cinémas Associés et la Maison Pour Tous/Alpes (Maison des Pratiques Artistiques) pour enrichir l'offre culturelle vizilloise. Conventions de partenariat, soutien financier, coordination des programmations. Ces équipements complémentaires constituent un maillage culturel de proximité.",
     "annee": "2020",
     "annee_fin": "2026",
     "budget": 0,
@@ -15080,16 +15080,16 @@
         "label": "Médiathèque Vizillois"
       }
     ],
-    "details": "Réseau de partenariats avec les acteurs culturels locaux :\n\n**Médiathèque Jules Vallès :**\n• **Gratuité totale pour tous les Vizillois**\n• Très nombreuses animations autour du livre et de l'écriture\n• Actions avec les écoles et structures petite enfance\n• Programme Lire et Faire Lire dans les classes\n• Partenariat avec la librairie locale\n• Lieu d'exposition\n\n**Cinéma :**\n• Convention Cinémas Associés / LCA\n• Village Cinéma, Festival du film pour enfants\n• Billetterie en ligne\n\n**Musique :**\n• Convention MPA - Musiques en Pays d'Allevard\n• Partenariat en augmentation (prise en charge solidaire élèves)\n\n**Jeu de Paume :**\n• Mise à disposition pour associations\n• Mise à disposition Médiane santé Prévention\n• Partenariat Éducation nationale (collège, lycée, écoles)\n• Expositions Jeu de Paume et Mairie\n\n**Actions intergénérationnelles :**\n• Animations culturelles Résidence La Romanche, Escale\n• Lien avec le Secours Populaire",
+    "details": "Réseau de partenariats avec les acteurs culturels locaux :\n\n**Médiathèque Jules Vallès :**\n• **Gratuité totale pour tous les Vizillois**\n• Très nombreuses animations autour du livre et de l'écriture\n• Actions avec les écoles et structures petite enfance\n• Programme Lire et Faire Lire dans les classes\n• Partenariat avec la librairie locale\n• Lieu d'exposition\n\n**Cinéma :**\n• Convention Cinémas Associés / Les Cinémas Associés\n• Village Cinéma, Festival du film pour enfants\n• Billetterie en ligne\n\n**Musique :**\n• Convention Maison des Pratiques Artistiques - Musiques en Pays d'Allevard\n• Partenariat en augmentation (prise en charge solidaire élèves)\n\n**Jeu de Paume :**\n• Mise à disposition pour associations\n• Mise à disposition Médiane santé Prévention\n• Partenariat Éducation nationale (collège, lycée, écoles)\n• Expositions Jeu de Paume et Mairie\n\n**Actions intergénérationnelles :**\n• Animations culturelles Résidence La Romanche, Escale\n• Lien avec le Secours Populaire",
     "chronologie": [
       {
         "date": "2020-2025",
-        "evenement": "Partenariats LCA et MPA"
+        "evenement": "Partenariats Les Cinémas Associés et Maison des Pratiques Artistiques"
       }
     ],
     "sources": [
-      "LCA",
-      "MPA"
+      "Les Cinémas Associés",
+      "Maison des Pratiques Artistiques"
     ],
     "lien_source": [
       {
@@ -16323,13 +16323,13 @@
     "color": "#9b59b6",
     "statut": "Réalisé",
     "titre": "Village Cinéma",
-    "description": "Village Cinéma organisé en partenariat avec LCA. Les enfants comme les adultes peuvent découvrir en situation les différents métiers du cinéma : les costumes, le son, le montage, le jeu des acteurs, les cascades, les bruitages, le dessin animé... Un événement distinct du Festival du film pour enfants.",
+    "description": "Village Cinéma organisé en partenariat avec Les Cinémas Associés. Les enfants comme les adultes peuvent découvrir en situation les différents métiers du cinéma : les costumes, le son, le montage, le jeu des acteurs, les cascades, les bruitages, le dessin animé... Un événement distinct du Festival du film pour enfants.",
     "annee": "2023",
     "annee_fin": "",
     "budget": 0,
     "source": "Bilan MC",
     "importance": 2,
-    "resume": "Découverte des métiers du cinéma en partenariat avec LCA.",
+    "resume": "Découverte des métiers du cinéma en partenariat avec Les Cinémas Associés.",
     "chiffres": [],
     "chronologie": [],
     "details": "",

@@ -712,11 +712,11 @@
     "id": 507,
     "theme": "Enfance/Jeunesse",
     "titre": "Petite enfance",
-    "soustitre": "Accompagner le SICCE",
-    "idee_force": "Renforcer notre implication au sein du SICCE pour sécuriser le fonctionnement et l'accessibilité de la crèche Les Petits Drôles, dans un contexte de circulation contraint.",
+    "soustitre": "Accompagner le Syndicat Intercommunal de Coopération et des Compétences Enfance",
+    "idee_force": "Renforcer notre implication au sein du Syndicat Intercommunal de Coopération et des Compétences Enfance pour sécuriser le fonctionnement et l'accessibilité de la crèche Les Petits Drôles, dans un contexte de circulation contraint.",
     "actions": [
-      "Participation active à la gouvernance du SICCE",
-      "Dialogue renforcé avec la CAF et le Département",
+      "Participation active à la gouvernance du Syndicat Intercommunal de Coopération et des Compétences Enfance",
+      "Dialogue renforcé avec la Caisse d'Allocations Familiales et le Département",
       "Amélioration de l'accessibilité (stationnement, accès)",
       "Étude des besoins complémentaires"
     ],
@@ -726,23 +726,23 @@
       "Satisfaction familles"
     ],
     "image": "images/objectifs/enfance_1.png",
-    "description": "Renforcer notre implication au sein du SICCE pour sécuriser le fonctionnement et l'accessibilité de la crèche Les Petits Drôles, dans un contexte de circulation contraint.",
+    "description": "Renforcer notre implication au sein du Syndicat Intercommunal de Coopération et des Compétences Enfance pour sécuriser le fonctionnement et l'accessibilité de la crèche Les Petits Drôles, dans un contexte de circulation contraint.",
     "slogan": "Accompagner • Sécuriser • Faciliter",
     "enjeux": [
       "Garantir l'accès à la crèche pour les familles vizilloises",
-      "Peser sur les orientations stratégiques du SICCE",
-      "Coordonner avec le LAEP Bleu Citron et le Relais PE"
+      "Peser sur les orientations stratégiques du Syndicat Intercommunal de Coopération et des Compétences Enfance",
+      "Coordonner avec le Lieu d'Accueil Enfants Parents Bleu Citron et le Relais Petite Enfance"
     ],
     "axes_action": [
-      "Participation active à la gouvernance du SICCE",
-      "Dialogue renforcé avec la CAF et le Département",
+      "Participation active à la gouvernance du Syndicat Intercommunal de Coopération et des Compétences Enfance",
+      "Dialogue renforcé avec la Caisse d'Allocations Familiales et le Département",
       "Amélioration de l'accessibilité (stationnement, accès)",
       "Étude des besoins complémentaires"
     ],
     "vision": "Une offre petite enfance accessible et de qualité pour toutes les familles vizilloises.",
     "tags": [
       "Crèche",
-      "SICCE",
+      "Syndicat Intercommunal de Coopération et des Compétences Enfance",
       "Petite enfance"
     ]
   },
@@ -954,7 +954,7 @@
       "Personnels formés"
     ],
     "image": "images/objectifs/enfance_7.png",
-    "description": "État des lieux nécessaire de ce qui existe déjà dans les écoles et l'accueil petite enfance. Coordination avec le Pôle Ressources Handicap du SICCE.",
+    "description": "État des lieux nécessaire de ce qui existe déjà dans les écoles et l'accueil petite enfance. Coordination avec le Pôle Ressources Handicap du Syndicat Intercommunal de Coopération et des Compétences Enfance.",
     "slogan": "Diagnostiquer • Accompagner • Inclure",
     "enjeux": [
       "Garantir l'accessibilité des structures",
@@ -964,7 +964,7 @@
     "axes_action": [
       "Diagnostic accessibilité des écoles",
       "Accompagnement des parents",
-      "Coordination avec le Pôle Ressources Handicap du SICCE",
+      "Coordination avec le Pôle Ressources Handicap du Syndicat Intercommunal de Coopération et des Compétences Enfance",
       "Formation des personnels"
     ],
     "vision": "Une école et des structures ouvertes à tous.",
@@ -1421,7 +1421,7 @@
     "type": "engagement",
     "titre": "Accompagner les forces vives — Aller à la rencontre des associations",
     "resume": "COMPLÉMENT — Écouter, accompagner, faciliter les projets citoyens.",
-    "description": "Nous irons à la rencontre des associations et institutions qui animent Vizille : écoles, associations culturelles, OMS, MPA, collège, lycée, l'Escale… L'objectif : écouter leurs projets, attentes et besoins, les accompagner techniquement pour plus d'efficacité, encourager les habitants à être acteurs de l'animation locale. On passe d'une logique d'accueil (les associations viennent demander) à une démarche d'aller-vers (on va les rencontrer pour faire émerger des projets).",
+    "description": "Nous irons à la rencontre des associations et institutions qui animent Vizille : écoles, associations culturelles, OMS, Maison des Pratiques Artistiques, collège, lycée, l'Escale… L'objectif : écouter leurs projets, attentes et besoins, les accompagner techniquement pour plus d'efficacité, encourager les habitants à être acteurs de l'animation locale. On passe d'une logique d'accueil (les associations viennent demander) à une démarche d'aller-vers (on va les rencontrer pour faire émerger des projets).",
     "importance": 3,
     "tags": ["Complément", "Associations", "Participation", "Aller-vers"],
     "enjeux": [
@@ -1469,12 +1469,12 @@
     "theme": "Culture",
     "type": "engagement",
     "titre": "Éducation artistique et culturelle pour tous",
-    "resume": "PEAC communal, festivals jeunesse, pass'culture, orchestre à l'école.",
-    "description": "Mettre en place un Projet d'Éducation Artistique et Culturel communal (PEAC) pour valoriser les actions culturelles et les savoir-faire du territoire. Poursuivre les festivals jeunesse (festival du film pour enfants, P'tits Mots P'tits Mômes) en lien avec les structures culturelles, associatives, les commerçants et les structures petite enfance et jeunesse. Favoriser l'accès à la musique dès le plus jeune âge : pass'culture communal, orchestre à l'école, stages vacances, en lien avec les écoles, les associations et la MPA.",
+    "resume": "Projet d'Éducation Artistique et Culturel communal, festivals jeunesse, pass'culture, orchestre à l'école.",
+    "description": "Mettre en place un Projet d'Éducation Artistique et Culturel communal (Projet d'Éducation Artistique et Culturel) pour valoriser les actions culturelles et les savoir-faire du territoire. Poursuivre les festivals jeunesse (festival du film pour enfants, P'tits Mots P'tits Mômes) en lien avec les structures culturelles, associatives, les commerçants et les structures petite enfance et jeunesse. Favoriser l'accès à la musique dès le plus jeune âge : pass'culture communal, orchestre à l'école, stages vacances, en lien avec les écoles, les associations et la Maison des Pratiques Artistiques.",
     "importance": 3,
-    "tags": ["Culture", "Éducation", "Jeunesse", "PEAC"],
+    "tags": ["Culture", "Éducation", "Jeunesse", "Projet d'Éducation Artistique et Culturel"],
     "chiffres": [
-      {"valeur": "PEAC", "label": "Projet communal"},
+      {"valeur": "Projet d'Éducation Artistique et Culturel", "label": "Projet communal"},
       {"valeur": "Tous âges", "label": "Accès dès le plus jeune âge"}
     ]
   },
@@ -1522,9 +1522,9 @@
     "type": "engagement",
     "titre": "Projets culturels avec les jeunes de 11 à 20 ans",
     "resume": "Fresques, spectacles, jardin musical, projets intergénérationnels.",
-    "description": "Construire des projets culturels avec les jeunes de 11 à 20 ans : fresques, spectacles théâtraux ou musicaux en lien avec des artistes. Créer un « jardin musical » par les jeunes pour les plus jeunes, avec confection d'instruments en matériaux de récupération en lien avec la MPA — un projet intergénérationnel. Intégrer l'orgue de Vizille dans le festival des orgues de l'Oisans.",
+    "description": "Construire des projets culturels avec les jeunes de 11 à 20 ans : fresques, spectacles théâtraux ou musicaux en lien avec des artistes. Créer un « jardin musical » par les jeunes pour les plus jeunes, avec confection d'instruments en matériaux de récupération en lien avec la Maison des Pratiques Artistiques — un projet intergénérationnel. Intégrer l'orgue de Vizille dans le festival des orgues de l'Oisans.",
     "importance": 2,
-    "tags": ["Jeunesse", "Création", "Intergénérationnel", "MPA"]
+    "tags": ["Jeunesse", "Création", "Intergénérationnel", "Maison des Pratiques Artistiques"]
   },
 
   {
@@ -1626,12 +1626,12 @@
     "theme": "Culture",
     "type": "engagement",
     "titre": "Soutenir et accompagner la vie associative",
-    "resume": "Soutien financier, partenariats LCA/MPA, maison des associations.",
-    "description": "Poursuivre le dialogue et maintenir le soutien financier, matériel et logistique aux associations — nous serons facilitateurs pour leurs projets. Poursuivre les partenariats avec LCA, MPA et les acteurs institutionnels (10 jours de la culture, territoire de science, musées, structures culturelles métropolitaines). Créer une maison des associations ou un « Point associations » et reloger certaines associations mal logées.",
+    "resume": "Soutien financier, partenariats Les Cinémas Associés/Maison des Pratiques Artistiques, maison des associations.",
+    "description": "Poursuivre le dialogue et maintenir le soutien financier, matériel et logistique aux associations — nous serons facilitateurs pour leurs projets. Poursuivre les partenariats avec Les Cinémas Associés, Maison des Pratiques Artistiques et les acteurs institutionnels (10 jours de la culture, territoire de science, musées, structures culturelles métropolitaines). Créer une maison des associations ou un « Point associations » et reloger certaines associations mal logées.",
     "importance": 3,
-    "tags": ["Associations", "LCA", "MPA", "Soutien"],
+    "tags": ["Associations", "Les Cinémas Associés", "Maison des Pratiques Artistiques", "Soutien"],
     "chiffres": [
-      {"valeur": "LCA + MPA", "label": "Partenariats maintenus"},
+      {"valeur": "Les Cinémas Associés + Maison des Pratiques Artistiques", "label": "Partenariats maintenus"},
       {"valeur": "1", "label": "Maison des associations"}
     ]
   },
