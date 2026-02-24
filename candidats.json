@@ -526,5 +526,25 @@
     "photo": "images/meriem-el-kebir.jpg",
     "video": null,
     "actif": true
+  },
+  {
+    "id": 1771913484342,
+    "prenom": "Muriel",
+    "nom": "PICCA",
+    "role": "",
+    "delegation": "",
+    "bio": "",
+    "pedigree": "",
+    "objectifs": "",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": "",
+    "ordre": null,
+    "nouveau": true,
+    "photo": "images/muriel-picca.jpg",
+    "video": null,
+    "actif": true
   }
 ]
