@@ -607,7 +607,8 @@
     "nouveau": true,
     "photo": "images/alfred-vivancos.jpg",
     "video": null,
-    "actif": true
+    "actif": true,
+    "photoPosition": "center center"
   },
   {
     "id": 1771914405329,
