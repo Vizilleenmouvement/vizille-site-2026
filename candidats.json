@@ -566,5 +566,25 @@
     "photo": "images/valerie-foucher.jpg",
     "video": null,
     "actif": true
+  },
+  {
+    "id": 1771913601407,
+    "prenom": "Didier",
+    "nom": "Leriche",
+    "role": "",
+    "delegation": "",
+    "bio": "",
+    "pedigree": "",
+    "objectifs": "",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": "",
+    "ordre": null,
+    "nouveau": false,
+    "photo": "images/didier-leriche.jpg",
+    "video": null,
+    "actif": true
   }
 ]
