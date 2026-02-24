@@ -586,5 +586,25 @@
     "photo": "images/didier-leriche.jpg",
     "video": null,
     "actif": true
+  },
+  {
+    "id": 1771913840176,
+    "prenom": "Alfred",
+    "nom": "Vivancos",
+    "role": "",
+    "delegation": "",
+    "bio": "",
+    "pedigree": "",
+    "objectifs": "",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": "",
+    "ordre": null,
+    "nouveau": true,
+    "photo": "images/alfred-vivancos.jpg",
+    "video": null,
+    "actif": true
   }
 ]
