@@ -1673,15 +1673,35 @@
     "theme": "Action sociale",
     "type": "engagement",
     "titre": "Mutuelle communale",
-    "resume": "Négocier une complémentaire santé à tarifs réduits pour tous les Vizillois, via le CCAS.",
-    "description": "Sur le modèle de Grenoble (mutuelle Entrenous, -15 à -25 % sur les cotisations). Adhésion volontaire, sans condition d'âge ni de ressources. Publics prioritaires : retraités, demandeurs d'emploi, indépendants, jeunes. Coût estimé pour la commune : 20 à 25 000 €. Le CCAS pilote le dispositif avec des permanences d'information.",
+    "resume": "Beaucoup de Vizillois n'ont pas de mutuelle. D'autres sont obligés de résilier face aux augmentations de tarifs. La commune négocie une complémentaire santé collective à tarifs réduits, ouverte à tous, sans condition de revenus ni d'âge.",
+    "description": "Chaque année, les tarifs des mutuelles augmentent — parfois de 8 à 10 % — et de plus en plus d'habitants n'ont pas d'autre choix que de résilier. D'autres n'ont tout simplement jamais eu de mutuelle, faute de moyens. Résultat : des soins repoussés, des lunettes qu'on ne renouvelle pas, des dents qu'on ne soigne pas. À Vizille, avec 31 % de la population de plus de 60 ans et de nombreux retraités aux pensions modestes, le problème est concret et quotidien. La mutuelle communale repose sur un principe simple : la commune négocie collectivement avec un organisme complémentaire. L'effet de volume permet d'obtenir des tarifs réduits de 15 à 25 % par rapport au marché individuel. L'adhésion est volontaire, ouverte à tous les Vizillois — actifs, retraités, demandeurs d'emploi, indépendants, jeunes — sans condition d'âge ni de ressources. Des communes comme Grenoble (mutuelle Entrenous), Caumont-sur-Durance ou Grande-Synthe ont déjà mis en place ce dispositif avec succès. Le CCAS accompagne chaque habitant dans ses démarches, avec des permanences dédiées. Le coût pour la commune est modeste (20 à 25 000 € par an) au regard du bénéfice pour la santé et le pouvoir d'achat des habitants.",
     "statut": "Programmé",
     "annee": 2027,
     "importance": 3,
     "tags": ["Santé", "Mutuelle", "CCAS", "Pouvoir d'achat"],
+    "slogan": "Se soigner ne doit pas être un luxe.",
+    "enjeux": [
+      "Beaucoup de Vizillois n'ont pas de mutuelle ou sont contraints de résilier face aux hausses de tarifs",
+      "Le renoncement aux soins touche en priorité les retraités, les demandeurs d'emploi et les indépendants",
+      "Sans complémentaire, des soins essentiels (dentaire, optique, audioprothèses) restent inaccessibles",
+      "La santé ne doit pas dépendre du niveau de revenus"
+    ],
+    "axes_action": [
+      "Négociation groupée avec un organisme complémentaire santé (appel d'offres)",
+      "Permanences d'information et d'accompagnement au CCAS",
+      "Communication ciblée vers les publics prioritaires (retraités, jeunes, demandeurs d'emploi)",
+      "Suivi annuel : taux d'adhésion, satisfaction, économies réalisées"
+    ],
+    "indicateurs": [
+      "Nombre de Vizillois adhérents à la mutuelle communale",
+      "Économie moyenne réalisée par adhérent",
+      "Taux de satisfaction des adhérents",
+      "Évolution du renoncement aux soins sur la commune"
+    ],
     "chiffres": [
-      {"valeur": "-15 à -25%", "label": "Réduction cotisations"},
-      {"valeur": "20-25 k€", "label": "Coût estimé"}
+      {"valeur": "-15 à -25%", "label": "Réduction sur les cotisations"},
+      {"valeur": "20-25 k€/an", "label": "Coût pour la commune"},
+      {"valeur": "+8 à 10%", "label": "Hausse annuelle des mutuelles"}
     ]
   },
 

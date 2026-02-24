@@ -57,6 +57,7 @@
     "ordre": 2,
     "nouveau": false,
     "photo": "images/bernard-ughetto-monfrin.jpg",
+    "photoPosition": "center 30%",
     "video": "images/candidats/bernard-ughetto-monfrin-.mp4",
     "actif": true
   },
@@ -77,7 +78,7 @@
     "ordre": null,
     "nouveau": false,
     "photo": "images/saida-berriche.jpg",
-    "photoPosition": "center 40%",
+    "photoPosition": "center 25%",
     "video": "images/candidats/saida-berriche.mp4",
     "actif": true
   },
@@ -180,7 +181,7 @@
     "ordre": null,
     "nouveau": true,
     "photo": "images/mohamed-cherigui.jpg",
-    "photoPosition": "center 40%",
+    "photoPosition": "center 25%",
     "video": "images/candidats/mohamed-cherigui.mp4",
     "actif": true
   },
@@ -390,6 +391,7 @@
     "id": 1771156609893,
     "prenom": "Maryline",
     "nom": "Desnoulet",
+    "photoPosition": "center 30%",
     "role": "",
     "delegation": "",
     "bio": "Retraitée, Je suis native du Nord et  ai vécu 14ans dans le Tarn, je réside depuis 5 ans à Vizille.",
