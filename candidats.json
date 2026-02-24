@@ -606,5 +606,25 @@
     "photo": "images/alfred-vivancos.jpg",
     "video": null,
     "actif": true
+  },
+  {
+    "id": 1771914405329,
+    "prenom": "Marie-Laure",
+    "nom": "Aymoz",
+    "role": "",
+    "delegation": "",
+    "bio": "",
+    "pedigree": "",
+    "objectifs": "",
+    "citation": "",
+    "email": "",
+    "facebook": "",
+    "linkedin": "",
+    "twitter": "",
+    "ordre": null,
+    "nouveau": false,
+    "photo": "images/marie-laure-aymoz.jpg",
+    "video": null,
+    "actif": true
   }
 ]
