@@ -1586,7 +1586,8 @@
       "Culture",
       "Accessibilité",
       "Tarifs"
-    ]
+    ],
+    "image": "culture-patrimoine/fete_science.jpg"
   },
   {
     "id": 753,
@@ -1611,7 +1612,8 @@
         "valeur": "Parcours",
         "label": "Des arts dans la ville"
       }
-    ]
+    ],
+    "image": "culture-patrimoine/fresque_peage.jpg"
   },
   {
     "id": 754,
@@ -1655,7 +1657,8 @@
       "Fêtes",
       "Toute l'année",
       "Quartiers"
-    ]
+    ],
+    "image": "culture-patrimoine/bollywood_estivales_2025.jpg"
   },
   {
     "id": 758,
@@ -1747,7 +1750,8 @@
         "valeur": "1",
         "label": "Mandat pour agir"
       }
-    ]
+    ],
+    "image": "culture-patrimoine/roue_moulin_petillon.jpg"
   },
   {
     "id": 762,
@@ -1762,7 +1766,8 @@
       "Parcours",
       "Résistance",
       "Découverte"
-    ]
+    ],
+    "image": "culture-patrimoine/porte_1733.jpg"
   },
   {
     "id": 770,
