@@ -205,7 +205,7 @@
       "Vitesses constatées",
       "Retours d'usage"
     ],
-    "vision": "Un plan lisible pour des déplacements simples et cohérents.",
+    "vision": "Des déplacements simples, cohérents et sans détours inutiles.",
     "numero": "5/7",
     "image": "images/objectifs/objectif_5.png"
   },
@@ -1274,7 +1274,6 @@
     "partenaires": "ONF, Département",
     "perimetre": "125 ha de forêt communale"
   },
-
   {
     "id": 701,
     "theme": "Animations de proximité",
@@ -1304,23 +1303,35 @@
     "vision": "Une ville où la culture ne se limite pas aux murs d'une salle, mais vit dans les rues, sur les places et dans les quartiers.",
     "image": "images/objectifs/objectif_animations.png"
   },
-
   {
     "id": 720,
     "theme": "Animations de proximité",
     "type": "engagement",
     "titre": "Spectacles « Chapeau l'artiste » — Rue et place, tout l'été",
     "resume": "NOUVEAU — Spectacles de rue gratuits en centre-ville, juin à août.",
-    "description": "De juin à août, la rue De Gaulle et la place de Stalingrad accueillent des spectacles de rue pluridisciplinaires : musique, danse, clown, acrobates, jongleurs, théâtre. Sélection de troupes amateurs et professionnelles. Le public paie au chapeau — un format convivial, gratuit et sans coût de programmation. Année test 2026 : 1 soirée. Objectif 2028 : 5 soirées par été.",
+    "description": "De juin à août, le centre-ville accueille des spectacles de rue pluridisciplinaires : musique, danse, clown, acrobates, jongleurs, théâtre. Sélection de troupes amateurs et professionnelles. Le public paie au chapeau — un format convivial, gratuit et sans coût de programmation. Année test 2026 : 1 soirée. Objectif 2028 : 5 soirées par été.",
     "importance": 3,
-    "tags": ["Nouveau", "Animations de proximité", "Centre-ville", "Été"],
+    "tags": [
+      "Nouveau",
+      "Animations de proximité",
+      "Centre-ville",
+      "Été"
+    ],
     "chiffres": [
-      {"valeur": "1→5", "label": "Soirées / été (2026→2028)"},
-      {"valeur": "400 €", "label": "Coût unitaire"},
-      {"valeur": "Gratuit", "label": "Accès public"}
+      {
+        "valeur": "1→5",
+        "label": "Soirées / été (2026→2028)"
+      },
+      {
+        "valeur": "400 €",
+        "label": "Coût unitaire"
+      },
+      {
+        "valeur": "Gratuit",
+        "label": "Accès public"
+      }
     ]
   },
-
   {
     "id": 721,
     "theme": "Animations de proximité",
@@ -1329,30 +1340,55 @@
     "resume": "NOUVEAU — Bals gratuits avec orchestre, au printemps et en été.",
     "description": "Au printemps et en été, Vizille retrouve ses bals populaires ! Sur la place de Stalingrad ou au Parc Vöhringen, avec orchestre (si budget) ou DJ, un rendez-vous intergénérationnel gratuit pour danser et se retrouver. Ce format n'existe pas aujourd'hui à Vizille — c'est un manque de convivialité festive que nous voulons combler. Année test 2026 : 1 bal. Objectif 2028 : 3 bals.",
     "importance": 3,
-    "tags": ["Nouveau", "Animations de proximité", "Convivialité"],
+    "tags": [
+      "Nouveau",
+      "Animations de proximité",
+      "Convivialité"
+    ],
     "chiffres": [
-      {"valeur": "1→3", "label": "Bals / an (2026→2028)"},
-      {"valeur": "500 €", "label": "Coût unitaire"},
-      {"valeur": "Gratuit", "label": "Accès public"}
+      {
+        "valeur": "1→3",
+        "label": "Bals / an (2026→2028)"
+      },
+      {
+        "valeur": "500 €",
+        "label": "Coût unitaire"
+      },
+      {
+        "valeur": "Gratuit",
+        "label": "Accès public"
+      }
     ]
   },
-
   {
     "id": 722,
     "theme": "Animations de proximité",
     "type": "engagement",
     "titre": "Nocturnes gourmandes et musicales — Produits locaux en centre-ville",
     "resume": "NOUVEAU — Soirées produits locaux + musique live, place de Stalingrad.",
-    "description": "De juin à août, la place de Stalingrad et la rue De Gaulle accueillent des nocturnes associant produits locaux à consommer sur place et orchestre d'ambiance. Un concept de marché nocturne festif qui n'existe pas encore à Vizille, en synergie avec l'Union Commerçante Vizilloise et les producteurs du territoire. Année test 2026 : 1 soirée. Objectif 2028 : 5 soirées.",
+    "description": "De juin à août, le centre-ville accueille des nocturnes associant produits locaux à consommer sur place et orchestre d'ambiance. Un concept de marché nocturne festif qui n'existe pas encore à Vizille, en synergie avec l'Union Commerçante Vizilloise et les producteurs du territoire. Année test 2026 : 1 soirée. Objectif 2028 : 5 soirées.",
     "importance": 3,
-    "tags": ["Nouveau", "Animations de proximité", "Produits locaux", "Centre-ville"],
+    "tags": [
+      "Nouveau",
+      "Animations de proximité",
+      "Produits locaux",
+      "Centre-ville"
+    ],
     "chiffres": [
-      {"valeur": "1→5", "label": "Soirées / été (2026→2028)"},
-      {"valeur": "400 €", "label": "Coût unitaire"},
-      {"valeur": "Gratuit", "label": "Accès public"}
+      {
+        "valeur": "1→5",
+        "label": "Soirées / été (2026→2028)"
+      },
+      {
+        "valeur": "400 €",
+        "label": "Coût unitaire"
+      },
+      {
+        "valeur": "Gratuit",
+        "label": "Accès public"
+      }
     ]
   },
-
   {
     "id": 723,
     "theme": "Animations de proximité",
@@ -1361,14 +1397,27 @@
     "resume": "NOUVEAU — Le 31 octobre, spectacle d'improvisation pour les familles.",
     "description": "Le 31 octobre, une troupe de théâtre d'improvisation amateur met en scène un conte d'Halloween en parcourant les quartiers de Vizille. Gratuit, festif, familial. Ce spectacle itinérant comble le vide entre la rentrée et Noël dans le calendrier des animations. Année test 2026 : 1 représentation. Objectif 2028 : 2 quartiers couverts.",
     "importance": 2,
-    "tags": ["Nouveau", "Animations de proximité", "Familles", "Quartiers"],
+    "tags": [
+      "Nouveau",
+      "Animations de proximité",
+      "Familles",
+      "Quartiers"
+    ],
     "chiffres": [
-      {"valeur": "1→2", "label": "Quartiers (2026→2028)"},
-      {"valeur": "200 €", "label": "Coût unitaire"},
-      {"valeur": "Gratuit", "label": "Accès public"}
+      {
+        "valeur": "1→2",
+        "label": "Quartiers (2026→2028)"
+      },
+      {
+        "valeur": "200 €",
+        "label": "Coût unitaire"
+      },
+      {
+        "valeur": "Gratuit",
+        "label": "Accès public"
+      }
     ]
   },
-
   {
     "id": 730,
     "theme": "Animations de proximité",
@@ -1377,14 +1426,27 @@
     "resume": "NOUVEAU — Programmation départementale intimiste, 10 €, toute l'année.",
     "description": "Chaque premier samedi du mois, « La p'tite salle » programme un spectacle isérois : musique ou théâtre, amateurs et professionnels. Une vitrine des troupes et lieux culturels de notre département dans un cadre intimiste, chaleureux, proche du public. Complémentaire du Jeu de Paume (grande jauge), cette programmation offre une expérience différente. Lancement prévu rentrée 2027, après une année de prospection.",
     "importance": 3,
-    "tags": ["Nouveau", "P'tite salle", "Isère", "Spectacles"],
+    "tags": [
+      "Nouveau",
+      "P'tite salle",
+      "Isère",
+      "Spectacles"
+    ],
     "chiffres": [
-      {"valeur": "4→8", "label": "Samedis / an (2027→2028)"},
-      {"valeur": "10 €", "label": "Tarif"},
-      {"valeur": "500 €", "label": "Coût / spectacle"}
+      {
+        "valeur": "4→8",
+        "label": "Samedis / an (2027→2028)"
+      },
+      {
+        "valeur": "10 €",
+        "label": "Tarif"
+      },
+      {
+        "valeur": "500 €",
+        "label": "Coût / spectacle"
+      }
     ]
   },
-
   {
     "id": 731,
     "theme": "Animations de proximité",
@@ -1393,13 +1455,22 @@
     "resume": "NOUVEAU — Scène dédiée aux artistes locaux, à la demande, 2 € ou gratuit.",
     "description": "« La p'tite salle » ouvre ses portes au monde culturel vizillois : musiciens, danseurs, comédiens amateurs disposent d'une scène identifiée avec un nom propre et une programmation. On passe du simple « prêt de salle » à un vrai label de diffusion locale. Musique, danse, théâtre — programmation ponctuelle, à la demande. Lancement 2027.",
     "importance": 2,
-    "tags": ["Nouveau", "P'tite salle", "Artistes locaux"],
+    "tags": [
+      "Nouveau",
+      "P'tite salle",
+      "Artistes locaux"
+    ],
     "chiffres": [
-      {"valeur": "3→5", "label": "Soirées / an (2027→2028)"},
-      {"valeur": "2 € / gratuit", "label": "Tarif"}
+      {
+        "valeur": "3→5",
+        "label": "Soirées / an (2027→2028)"
+      },
+      {
+        "valeur": "2 € / gratuit",
+        "label": "Tarif"
+      }
     ]
   },
-
   {
     "id": 732,
     "theme": "Animations de proximité",
@@ -1408,13 +1479,23 @@
     "resume": "NOUVEAU — Juillet-août, troupes amateurs isèroises, 5 € / tarif libre.",
     "description": "En juillet et août, les troupes théâtrales amateurs de l'Isère rejouent leurs spectacles de fin d'année dans notre p'tite salle. 100 % amateur, 100 % convivial. Ce format comble le creux de programmation estival du Jeu de Paume et offre une seconde vie aux créations des compagnies du département. Tarif accessible : 5 € ou tarif libre. Lancement été 2027.",
     "importance": 2,
-    "tags": ["Nouveau", "P'tite salle", "Théâtre amateur", "Été"],
+    "tags": [
+      "Nouveau",
+      "P'tite salle",
+      "Théâtre amateur",
+      "Été"
+    ],
     "chiffres": [
-      {"valeur": "4→6", "label": "Représentations / été (2027→2028)"},
-      {"valeur": "5 € / libre", "label": "Tarif"}
+      {
+        "valeur": "4→6",
+        "label": "Représentations / été (2027→2028)"
+      },
+      {
+        "valeur": "5 € / libre",
+        "label": "Tarif"
+      }
     ]
   },
-
   {
     "id": 740,
     "theme": "Animations de proximité",
@@ -1423,7 +1504,12 @@
     "resume": "COMPLÉMENT — Écouter, accompagner, faciliter les projets citoyens.",
     "description": "Nous irons à la rencontre des associations et institutions qui animent Vizille : écoles, associations culturelles, OMS, Maison des Pratiques Artistiques, collège, lycée, l'Escale… L'objectif : écouter leurs projets, attentes et besoins, les accompagner techniquement pour plus d'efficacité, encourager les habitants à être acteurs de l'animation locale. On passe d'une logique d'accueil (les associations viennent demander) à une démarche d'aller-vers (on va les rencontrer pour faire émerger des projets).",
     "importance": 3,
-    "tags": ["Complément", "Associations", "Participation", "Aller-vers"],
+    "tags": [
+      "Complément",
+      "Associations",
+      "Participation",
+      "Aller-vers"
+    ],
     "enjeux": [
       "Écouter, connaître les projets, attentes et besoins",
       "Accompagner, faciliter, aider techniquement",
@@ -1432,7 +1518,6 @@
       "Dynamiser la vie locale"
     ]
   },
-
   {
     "id": 750,
     "theme": "Culture",
@@ -1463,22 +1548,32 @@
     "vision": "Un projet culturel pour une ville où l'on crée, où l'on partage, où l'on vit ensemble.",
     "image": "images/objectifs/objectif_culture.png"
   },
-
   {
     "id": 751,
     "theme": "Culture",
     "type": "engagement",
-    "titre": "Éducation artistique et culturelle pour tous",
-    "resume": "Projet d'Éducation Artistique et Culturel communal, festivals jeunesse, pass'culture, orchestre à l'école.",
-    "description": "Mettre en place un Projet d'Éducation Artistique et Culturel communal (Projet d'Éducation Artistique et Culturel) pour valoriser les actions culturelles et les savoir-faire du territoire. Poursuivre les festivals jeunesse (festival du film pour enfants, P'tits Mots P'tits Mômes) en lien avec les structures culturelles, associatives, les commerçants et les structures petite enfance et jeunesse. Favoriser l'accès à la musique dès le plus jeune âge : pass'culture communal, orchestre à l'école, stages vacances, en lien avec les écoles, les associations et la Maison des Pratiques Artistiques.",
+    "titre": "Faciliter l'accès à la culture pour tous",
+    "resume": "Pass'culture communal, parcours artistique pour tous les Vizillois et toutes les générations, éducation artistique, orchestre à l'école.",
+    "description": "Instaurer un véritable parcours artistique pour tous les Vizillois et toutes les générations. Mettre en place un pass'culture communal offrant un accès facilité aux spectacles, ateliers et événements culturels de la commune. Déployer un Projet d'Éducation Artistique et Culturel communal pour valoriser les actions culturelles et les savoir-faire du territoire. Poursuivre les festivals jeunesse (festival du film pour enfants, P'tits Mots P'tits Mômes) en lien avec les structures culturelles, associatives, les commerçants et les structures petite enfance et jeunesse. Favoriser l'accès à la musique dès le plus jeune âge : orchestre à l'école, stages vacances, en lien avec les écoles, les associations et la Maison des Pratiques Artistiques.",
     "importance": 3,
-    "tags": ["Culture", "Éducation", "Jeunesse", "Projet d'Éducation Artistique et Culturel"],
+    "tags": [
+      "Culture",
+      "Accès",
+      "Pass'culture",
+      "Éducation",
+      "Toutes générations"
+    ],
     "chiffres": [
-      {"valeur": "Projet d'Éducation Artistique et Culturel", "label": "Projet communal"},
-      {"valeur": "Tous âges", "label": "Accès dès le plus jeune âge"}
+      {
+        "valeur": "Projet d'Éducation Artistique et Culturel",
+        "label": "Projet communal"
+      },
+      {
+        "valeur": "Tous âges",
+        "label": "Accès dès le plus jeune âge"
+      }
     ]
   },
-
   {
     "id": 752,
     "theme": "Culture",
@@ -1487,9 +1582,12 @@
     "resume": "Maintien de tarifs abordables pour la saison culturelle et les festivals.",
     "description": "Poursuivre l'effort pour maintenir des tarifs abordables pour la saison culturelle du Jeu de Paume, les festivals et les événements culturels. Maintenir des spectacles de qualité tout en garantissant l'accès au plus grand nombre grâce au soutien au quotient familial déjà existant.",
     "importance": 2,
-    "tags": ["Culture", "Accessibilité", "Tarifs"]
+    "tags": [
+      "Culture",
+      "Accessibilité",
+      "Tarifs"
+    ]
   },
-
   {
     "id": 753,
     "theme": "Culture",
@@ -1498,13 +1596,23 @@
     "resume": "Résidences, lieu de création, street art, appels à projets artistiques.",
     "description": "Développer des résidences d'artistes et un lieu dédié à la création. Poursuivre le projet street art « De la vie et des couleurs » sur différents lieux et supports. Lancer des appels à projets artistiques et créer un parcours des arts dans la ville. Favoriser les rencontres entre habitants, artistes, créateurs et artisans d'art.",
     "importance": 3,
-    "tags": ["Création", "Résidences", "Street art", "Artistes"],
+    "tags": [
+      "Création",
+      "Résidences",
+      "Street art",
+      "Artistes"
+    ],
     "chiffres": [
-      {"valeur": "Street art", "label": "De la vie et des couleurs"},
-      {"valeur": "Parcours", "label": "Des arts dans la ville"}
+      {
+        "valeur": "Street art",
+        "label": "De la vie et des couleurs"
+      },
+      {
+        "valeur": "Parcours",
+        "label": "Des arts dans la ville"
+      }
     ]
   },
-
   {
     "id": 754,
     "theme": "Culture",
@@ -1513,9 +1621,12 @@
     "resume": "Création d'un espace dédié aux expositions artistiques.",
     "description": "Création d'une salle d'exposition accessible et spacieuse pour accueillir des expositions de qualité. Un équipement culturel qui manque aujourd'hui à Vizille pour valoriser les artistes locaux et accueillir des expositions itinérantes.",
     "importance": 2,
-    "tags": ["Équipement", "Exposition", "Art"]
+    "tags": [
+      "Équipement",
+      "Exposition",
+      "Art"
+    ]
   },
-
   {
     "id": 755,
     "theme": "Culture",
@@ -1524,9 +1635,13 @@
     "resume": "Fresques, spectacles, jardin musical, projets intergénérationnels.",
     "description": "Construire des projets culturels avec les jeunes de 11 à 20 ans : fresques, spectacles théâtraux ou musicaux en lien avec des artistes. Créer un « jardin musical » par les jeunes pour les plus jeunes, avec confection d'instruments en matériaux de récupération en lien avec la Maison des Pratiques Artistiques — un projet intergénérationnel. Intégrer l'orgue de Vizille dans le festival des orgues de l'Oisans.",
     "importance": 2,
-    "tags": ["Jeunesse", "Création", "Intergénérationnel", "Maison des Pratiques Artistiques"]
+    "tags": [
+      "Jeunesse",
+      "Création",
+      "Intergénérationnel",
+      "Maison des Pratiques Artistiques"
+    ]
   },
-
   {
     "id": 756,
     "theme": "Culture",
@@ -1535,9 +1650,13 @@
     "resume": "Fête du printemps, fête de la soupe, repas de rue, fête des jeux, marché de Noël.",
     "description": "Organisation d'événements conviviaux de partage et de rassemblement tout au long de l'année : fête du printemps, fête de la soupe, repas de rue, fête des jeux, marché de Noël, veillée de Belledonne. La culture dans tous les quartiers et dans la rue avec des animations culturelles régulières hors les murs, grâce aux ressources locales.",
     "importance": 3,
-    "tags": ["Convivialité", "Fêtes", "Toute l'année", "Quartiers"]
+    "tags": [
+      "Convivialité",
+      "Fêtes",
+      "Toute l'année",
+      "Quartiers"
+    ]
   },
-
   {
     "id": 758,
     "theme": "Patrimoine",
@@ -1568,7 +1687,6 @@
     "vision": "Une ville qui connaît son histoire, la préserve et la partage avec fierté.",
     "image": "images/objectifs/objectif_patrimoine.png"
   },
-
   {
     "id": 760,
     "theme": "Patrimoine",
@@ -1577,9 +1695,14 @@
     "resume": "Projets participatifs pour le petit patrimoine et la chapelle du Péage.",
     "description": "Lancer un projet participatif pour la restauration des lavoirs de Vizille. Organiser une concertation citoyenne pour le devenir de la chapelle du Péage. Mettre en valeur le secteur des Tanneries (canaux, séchoir, moulin) à travers une résidence architecturale et artistique pour penser son devenir avec les habitants.",
     "importance": 2,
-    "tags": ["Patrimoine", "Participatif", "Lavoirs", "Chapelle", "Tanneries"]
+    "tags": [
+      "Patrimoine",
+      "Participatif",
+      "Lavoirs",
+      "Chapelle",
+      "Tanneries"
+    ]
   },
-
   {
     "id": 761,
     "theme": "Patrimoine",
@@ -1588,13 +1711,44 @@
     "resume": "Valorisation du prieuré en partenariat avec l'AHPV, la Fondation du patrimoine et les sites clunisiens.",
     "description": "Sauvegarde du prieuré de Vizille : valorisation du monument et mise en projet pour le faire revivre, en partenariat avec les Amis de l'Histoire du Pays Vizillois (AHPV), la Fondation du patrimoine et la fédération des sites clunisiens. Organisation d'une fête des métiers du patrimoine, de la restauration et de l'archéologie. Actions culturelles sur les lieux patrimoniaux.",
     "importance": 3,
-    "tags": ["Patrimoine", "Prieuré", "AHPV", "Clunisiens"],
+    "tags": [
+      "Patrimoine",
+      "Prieuré",
+      "AHPV",
+      "Clunisiens"
+    ],
     "chiffres": [
-      {"valeur": "3", "label": "Partenaires patrimoniaux"},
-      {"valeur": "AHPV", "label": "Partenaire clé"}
+      {
+        "valeur": "3",
+        "label": "Partenaires patrimoniaux"
+      },
+      {
+        "valeur": "AHPV",
+        "label": "Partenaire clé"
+      }
     ]
   },
-
+  {
+    "id": 782,
+    "theme": "Patrimoine",
+    "type": "engagement",
+    "titre": "Protéger et valoriser le moulin du Pétillon et les battoirs",
+    "resume": "Protection urgente et valorisation du moulin du Pétillon et des battoirs, témoins de l'histoire artisanale de Vizille.",
+    "description": "Le moulin du Pétillon et les battoirs constituent des éléments patrimoniaux remarquables, longtemps restés à l'abri mais aujourd'hui menacés par le temps. Leur protection sera engagée dès ce mandat pour éviter toute dégradation irréversible. Cette démarche comprend la sécurisation et la conservation des mécanismes du moulin du Pétillon (roue, engrenages, battoirs), un diagnostic patrimonial pour évaluer l'état des structures et les travaux prioritaires, ainsi qu'un projet de valorisation pour faire connaître ce patrimoine artisanal aux Vizillois et aux visiteurs.",
+    "importance": 3,
+    "tags": [
+      "Patrimoine",
+      "Moulin du Pétillon",
+      "Battoirs",
+      "Protection"
+    ],
+    "chiffres": [
+      {
+        "valeur": "1",
+        "label": "Mandat pour agir"
+      }
+    ]
+  },
   {
     "id": 762,
     "theme": "Patrimoine",
@@ -1603,9 +1757,13 @@
     "resume": "Mémoire de la Résistance, petit patrimoine, parcours des fresques.",
     "description": "Mettre en place un parcours « Mémoire de la Résistance », un parcours au cimetière et un parcours du petit patrimoine. Créer un circuit « Ouvrons les yeux » pour découvrir le petit patrimoine vizillois (passages, lavoirs, statues, plaques de cochers, portes anciennes) à l'aide de supports ludiques. Développer le parcours des fresques street art dans la ville.",
     "importance": 2,
-    "tags": ["Patrimoine", "Parcours", "Résistance", "Découverte"]
+    "tags": [
+      "Patrimoine",
+      "Parcours",
+      "Résistance",
+      "Découverte"
+    ]
   },
-
   {
     "id": 770,
     "theme": "Patrimoine",
@@ -1614,13 +1772,23 @@
     "resume": "Office du tourisme renforcé, grands itinéraires, halte camping-cars.",
     "description": "Travailler avec la Métropole pour rendre plus visible l'office du tourisme et en faire une Maison de pays, lieu dédié aux artistes et artisans locaux avec vente de leurs créations. Développer les animations en lien avec les grands itinéraires : Sur les pas des Huguenots, la Route Napoléon, itinéraires à cheval, circuits de cyclotourisme. Créer une halte de camping-cars pour accueillir les visiteurs.",
     "importance": 2,
-    "tags": ["Tourisme", "Itinéraires", "Napoléon", "Cyclotourisme"],
+    "tags": [
+      "Tourisme",
+      "Itinéraires",
+      "Napoléon",
+      "Cyclotourisme"
+    ],
     "chiffres": [
-      {"valeur": "4", "label": "Grands itinéraires"},
-      {"valeur": "1", "label": "Halte camping-cars"}
+      {
+        "valeur": "4",
+        "label": "Grands itinéraires"
+      },
+      {
+        "valeur": "1",
+        "label": "Halte camping-cars"
+      }
     ]
   },
-
   {
     "id": 780,
     "theme": "Culture",
@@ -1629,13 +1797,23 @@
     "resume": "Soutien financier, partenariats Les Cinémas Associés/Maison des Pratiques Artistiques, maison des associations.",
     "description": "Poursuivre le dialogue et maintenir le soutien financier, matériel et logistique aux associations — nous serons facilitateurs pour leurs projets. Poursuivre les partenariats avec Les Cinémas Associés, Maison des Pratiques Artistiques et les acteurs institutionnels (10 jours de la culture, territoire de science, musées, structures culturelles métropolitaines). Créer une maison des associations ou un « Point associations » et reloger certaines associations mal logées.",
     "importance": 3,
-    "tags": ["Associations", "Les Cinémas Associés", "Maison des Pratiques Artistiques", "Soutien"],
+    "tags": [
+      "Associations",
+      "Les Cinémas Associés",
+      "Maison des Pratiques Artistiques",
+      "Soutien"
+    ],
     "chiffres": [
-      {"valeur": "Les Cinémas Associés + Maison des Pratiques Artistiques", "label": "Partenariats maintenus"},
-      {"valeur": "1", "label": "Maison des associations"}
+      {
+        "valeur": "Les Cinémas Associés + Maison des Pratiques Artistiques",
+        "label": "Partenariats maintenus"
+      },
+      {
+        "valeur": "1",
+        "label": "Maison des associations"
+      }
     ]
   },
-
   {
     "id": 781,
     "theme": "Culture",
@@ -1644,13 +1822,23 @@
     "resume": "Échanges culturels, fêtes de l'Amitié 2027 et 2030, courrier du jumelage.",
     "description": "Impliquer les habitants dans le comité de jumelage. Développer les échanges culturels entre artistes, structures culturelles, associatives, sportives et citoyens avec les villes jumelées, notamment pour les jeunes. Les fêtes de l'Amitié de 2027 et 2030 seront des temps forts fédérateurs et participatifs. Mise en place du « courrier du jumelage » une ou deux fois par an.",
     "importance": 2,
-    "tags": ["Jumelage", "Échanges", "International", "Jeunesse"],
+    "tags": [
+      "Jumelage",
+      "Échanges",
+      "International",
+      "Jeunesse"
+    ],
     "chiffres": [
-      {"valeur": "2027 + 2030", "label": "Fêtes de l'Amitié"},
-      {"valeur": "1-2/an", "label": "Courrier du jumelage"}
+      {
+        "valeur": "2027 + 2030",
+        "label": "Fêtes de l'Amitié"
+      },
+      {
+        "valeur": "1-2/an",
+        "label": "Courrier du jumelage"
+      }
     ]
   },
-
   {
     "id": 700,
     "theme": "Action sociale",
@@ -1661,13 +1849,23 @@
     "statut": "Programmé",
     "annee": 2027,
     "importance": 3,
-    "tags": ["CCAS", "Solidarité", "Accès aux droits", "Éducation populaire"],
+    "tags": [
+      "CCAS",
+      "Solidarité",
+      "Accès aux droits",
+      "Éducation populaire"
+    ],
     "chiffres": [
-      {"valeur": "1", "label": "Maison des Solidarités"},
-      {"valeur": "CCAS", "label": "Pilotage"}
+      {
+        "valeur": "1",
+        "label": "Maison des Solidarités"
+      },
+      {
+        "valeur": "CCAS",
+        "label": "Pilotage"
+      }
     ]
   },
-
   {
     "id": 704,
     "theme": "Action sociale",
@@ -1678,7 +1876,12 @@
     "statut": "Programmé",
     "annee": 2027,
     "importance": 3,
-    "tags": ["Santé", "Mutuelle", "CCAS", "Pouvoir d'achat"],
+    "tags": [
+      "Santé",
+      "Mutuelle",
+      "CCAS",
+      "Pouvoir d'achat"
+    ],
     "slogan": "Se soigner ne doit pas être un luxe.",
     "enjeux": [
       "Beaucoup de Vizillois n'ont pas de mutuelle ou sont contraints de résilier face aux hausses de tarifs",
@@ -1699,12 +1902,20 @@
       "Évolution du renoncement aux soins sur la commune"
     ],
     "chiffres": [
-      {"valeur": "-15 à -25%", "label": "Réduction sur les cotisations"},
-      {"valeur": "20-25 k€/an", "label": "Coût pour la commune"},
-      {"valeur": "+8 à 10%", "label": "Hausse annuelle des mutuelles"}
+      {
+        "valeur": "-15 à -25%",
+        "label": "Réduction sur les cotisations"
+      },
+      {
+        "valeur": "20-25 k€/an",
+        "label": "Coût pour la commune"
+      },
+      {
+        "valeur": "+8 à 10%",
+        "label": "Hausse annuelle des mutuelles"
+      }
     ]
   },
-
   {
     "id": 702,
     "theme": "Action sociale",
@@ -1715,13 +1926,23 @@
     "statut": "Programmé",
     "annee": 2027,
     "importance": 2,
-    "tags": ["Entraide", "Quartiers", "Voisins solidaires", "CCAS"],
+    "tags": [
+      "Entraide",
+      "Quartiers",
+      "Voisins solidaires",
+      "CCAS"
+    ],
     "chiffres": [
-      {"valeur": "Tous", "label": "Quartiers couverts"},
-      {"valeur": "3+", "label": "Associations partenaires"}
+      {
+        "valeur": "Tous",
+        "label": "Quartiers couverts"
+      },
+      {
+        "valeur": "3+",
+        "label": "Associations partenaires"
+      }
     ]
   },
-
   {
     "id": 703,
     "theme": "Action sociale",
@@ -1732,10 +1953,21 @@
     "statut": "Programmé",
     "annee": 2026,
     "importance": 2,
-    "tags": ["Santé mentale", "CLSM", "Intercommunal", "Prévention"],
+    "tags": [
+      "Santé mentale",
+      "CLSM",
+      "Intercommunal",
+      "Prévention"
+    ],
     "chiffres": [
-      {"valeur": "2025", "label": "CLSM créé"},
-      {"valeur": "Bassin", "label": "Échelle visée"}
+      {
+        "valeur": "2025",
+        "label": "CLSM créé"
+      },
+      {
+        "valeur": "Bassin",
+        "label": "Échelle visée"
+      }
     ]
   }
 ]

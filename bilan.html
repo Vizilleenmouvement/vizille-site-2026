@@ -388,6 +388,42 @@
             border-bottom: 1px solid var(--gris-doux);
         }
         .selected-theme-bar strong { color: var(--bleu-vizille); }
+        /* Barre de sous-thèmes horizontale */
+        .subthemes-bar {
+            background: var(--blanc-casse);
+            padding: 0.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--gris-doux);
+            display: none;
+        }
+        .subthemes-bar.visible { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+        .subtheme-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+            color: var(--gris-texte);
+            border: 1.5px solid var(--gris-doux);
+        }
+        .subtheme-pill:hover { border-color: var(--bleu-vizille); color: var(--bleu-vizille); }
+        .subtheme-pill.active {
+            background: var(--bleu-vizille);
+            color: white;
+            border-color: var(--bleu-vizille);
+        }
+        .subtheme-pill .pill-count {
+            font-size: 0.7rem;
+            background: rgba(0,0,0,0.1);
+            padding: 0.1rem 0.35rem;
+            border-radius: 8px;
+        }
+        .subtheme-pill.active .pill-count { background: rgba(255,255,255,0.3); }
         
         
         @media (max-width: 768px) {
@@ -454,6 +490,7 @@
         <div class="categories" id="categories"></div>
     </div>
 
+    <div class="subthemes-bar" id="subthemes-bar"></div>
     <div class="selected-theme-bar" id="selected-theme-bar"></div>
     
     <div class="theme-banner-container">
@@ -694,8 +731,8 @@ const SUBCATEGORIES = {
 };
 
 let allData = [];
-let currentTheme = 'Culture';
-let currentSubcat = 'Festivals';
+let currentTheme = 'Environnement';
+let currentSubcat = 'all';
 let openDropdown = null;
 
 async function init() {
@@ -704,6 +741,7 @@ async function init() {
     renderHeroStats();
     renderCategories();
     renderSelectedThemeBar();
+    renderSubthemesBar();
     renderBanner();
     renderSubtabs();
     renderCards();
@@ -761,6 +799,29 @@ function renderSelectedThemeBar() {
     bar.innerHTML = `Thème actuel : <strong>${themeInfo ? themeInfo.icon : ''} ${currentTheme}</strong> (${count} actions)`;
 }
 
+
+// Barre de sous-themes horizontale
+function renderSubthemesBar() {
+    const bar = document.getElementById('subthemes-bar');
+    const cat = getCurrentCategory();
+    if (!cat || cat.themes.length <= 1) {
+        bar.classList.remove('visible');
+        bar.innerHTML = '';
+        return;
+    }
+    bar.innerHTML = cat.themes.map(theme => {
+        const count = allData.filter(a => a.theme === theme && !a.suspendu).length;
+        if (count === 0) return '';
+        const themeData = THEMES.find(t => t.id === theme) || {};
+        const isActive = theme === currentTheme;
+        return '<div class="subtheme-pill ' + (isActive ? 'active' : '') + '" onclick="selectTheme(\'' + theme + '\')">' +
+            '<span>' + (themeData.icon || '') + '</span>' +
+            '<span>' + theme + '</span>' +
+            '<span class="pill-count">' + count + '</span>' +
+        '</div>';
+    }).join('');
+    bar.classList.add('visible');
+}
 // Ouvre/ferme un dropdown et sélectionne le 1er thème
 function toggleDropdown(categoryId) {
     const btn = document.querySelector(`[data-category="${categoryId}"]`);
@@ -1015,6 +1076,7 @@ function selectTheme(theme) {
     }
     renderCategories();
     renderSelectedThemeBar();
+    renderSubthemesBar();
     renderBanner();
     renderSubtabs();
     renderCards();
