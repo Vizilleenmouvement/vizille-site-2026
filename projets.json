@@ -937,7 +937,7 @@
     "resume": "À chaque âge, la commune accompagne, écoute et soutient, sans laisser personne au bord du chemin.",
     "description": "Quatre fils conducteurs guident l'ensemble du programme :\n\n• Inclusion (handicap, précarité, isolement) — chaque enfant a sa place à Vizille, quelles que soient ses difficultés\n• Continuité des parcours 0–18 ans — une logique de progression et de suivi, de la petite enfance à l'entrée dans l'âge adulte\n• Parole des enfants et des jeunes — les associer aux décisions qui les concernent\n• Travail en réseau — écoles, associations, médico-social, tous coordonnés au service des familles",
     "idee_force": "Grandir à Vizille, c'est être accompagné à chaque étape.",
-    "details": "8 engagements structurés par tranches d'âge :\n1. Petite enfance (0–3 ans) — Bien grandir dès le début\n2. 3–10 ans — Grandir et devenir citoyen\n3. Confort thermique des écoles\n4. 10–14 ans — Accompagner la transition\n5. 14–18 ans — Aller vers et accompagner\n6. Accompagner les associations jeunesse\n7. Inclusion — Aucun enfant laissé au bord du chemin\n8. Numérique et aide aux devoirs",
+    "details": "6 engagements structurés par tranches d'âge :\n1. 0–3 ans — Bien grandir dès la petite enfance\n2. 3–10 ans — Grandir et devenir citoyen\n3. 10–14 ans — Accompagner la transition (numérique, prévention, espaces de parole)\n4. 14–18 ans — Aller vers et accompagner\n5. Inclusion — Aucun enfant laissé au bord du chemin\n6. Accompagner les associations et les forces vives jeunesse",
     "image": "images/objectifs/enfance_jeunesse.png"
   },
   {
@@ -979,7 +979,7 @@
       "Jeunes"
     ],
     "resume": "Sécuriser les premiers parcours de vie et soutenir les familles dans l'accès aux modes de garde et aux espaces d'éveil.",
-    "numero": "1/8",
+    "numero": "1/6",
     "objectif_parent": 500
   },
   {
@@ -1021,7 +1021,7 @@
       "Jeunes"
     ],
     "resume": "Donner la parole aux enfants et les initier à la démocratie locale, au vivre-ensemble et à la solidarité.",
-    "numero": "2/8",
+    "numero": "2/6",
     "objectif_parent": 500
   },
   {
@@ -1061,9 +1061,7 @@
       "Canicule",
       "Confort",
       "Jeunes"
-    ],
-    "numero": "3/8",
-    "objectif_parent": 500
+    ]
   },
   {
     "id": 510,
@@ -1104,7 +1102,7 @@
       "Jeunes"
     ],
     "resume": "Aller à la rencontre des jeunes, en particulier ceux qui décrochent, pour leur proposer un accompagnement et des perspectives concrètes.",
-    "numero": "5/8",
+    "numero": "4/6",
     "objectif_parent": 500
   },
   {
@@ -1125,7 +1123,7 @@
       "Orientation vers structures"
     ],
     "image": "images/objectifs/enfance_5.png",
-    "description": "Garantir un accès au numérique pour tous, avec un accompagnement aux usages responsables.\n\nProposer des espaces et des activités adaptés aux pré-adolescents, pour s'exprimer et se retrouver en dehors du cadre scolaire.\n\nMener des actions de prévention autour des écrans, du harcèlement et du bien-être, avec des espaces de parole dédiés.\n\nMieux accompagner les 10–14 ans, c'est prévenir les difficultés de l'adolescence.",
+    "description": "Garantir un accès au numérique pour tous, avec un accompagnement aux usages responsables. Développer l'aide aux devoirs comme levier de réussite scolaire, en lien avec les associations et les établissements. Tous les enfants n'ont pas les mêmes conditions de travail à la maison — la commune agira pour réduire ces inégalités.\n\nProposer des espaces et des activités adaptés aux pré-adolescents, pour s'exprimer et se retrouver en dehors du cadre scolaire.\n\nMener des actions de prévention autour des écrans, du harcèlement et du bien-être, avec des espaces de parole dédiés.\n\nMieux accompagner les 10–14 ans, c'est prévenir les difficultés de l'adolescence avant qu'elles ne s'installent.",
     "slogan": "Écouter • Comprendre • Accompagner",
     "enjeux": [
       "Aller à la rencontre des jeunes",
@@ -1146,7 +1144,7 @@
       "Jeunes"
     ],
     "resume": "Prévenir les ruptures et accompagner les jeunes dans une période clé de leur développement, avec des espaces adaptés et des actions de prévention.",
-    "numero": "4/8",
+    "numero": "3/6",
     "objectif_parent": 500
   },
   {
@@ -1188,7 +1186,7 @@
       "Jeunes"
     ],
     "resume": "Soutenir les associations qui œuvrent pour les enfants et les jeunes, en allant à leur rencontre et en facilitant leurs projets.",
-    "numero": "6/8",
+    "numero": "6/6",
     "objectif_parent": 500
   },
   {
@@ -1230,7 +1228,7 @@
       "Jeunes"
     ],
     "resume": "Améliorer l'inclusion des enfants en situation de handicap dans tous les temps de vie : école, périscolaire, loisirs.",
-    "numero": "7/8",
+    "numero": "5/6",
     "objectif_parent": 500
   },
   {
@@ -1271,9 +1269,7 @@
       "Égalité",
       "Jeunes"
     ],
-    "resume": "Garantir un accès équitable au numérique et à l'aide aux devoirs pour tous les enfants et jeunes de Vizille.",
-    "numero": "8/8",
-    "objectif_parent": 500
+    "resume": "Garantir un accès équitable au numérique et à l'aide aux devoirs pour tous les enfants et jeunes de Vizille."
   },
   {
     "id": 620,
