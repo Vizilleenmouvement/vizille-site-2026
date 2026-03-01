@@ -85,7 +85,7 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    padding: 0 5vw;
+    padding: 70px 5vw 0;
     background: linear-gradient(135deg, var(--bleu) 0%, #1e4a6e 40%, #2c5282 70%, var(--cyan) 100%);
 }
 
