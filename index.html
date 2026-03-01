@@ -231,10 +231,7 @@
 
                 const grid = document.getElementById('fb-posts-grid');
                 grid.innerHTML = sorted.map(a => {
-                    const titre = a.titre.replace(/[\u{1D400}-\u{1D7FF}]/gu, c => {
-                        // Normaliser les caractères bold unicode utilisés dans les titres Facebook
-                        return c.normalize('NFKD').replace(/\p{M}/gu, '');
-                    });
+                    const titre = a.titre;
                     const date = a.date ? new Date(a.date).toLocaleDateString('fr-FR', {day:'numeric', month:'long', year:'numeric'}) : '';
                     const img = a.image ? `<div class="fb-post-img" style="background-image:url('${a.image}')"></div>` : '';
                     const cat = a.categorie ? `<span class="fb-post-cat">${a.categorie}</span>` : '';
