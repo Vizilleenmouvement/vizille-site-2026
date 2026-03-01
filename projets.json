@@ -937,7 +937,7 @@
     "resume": "À chaque âge, la commune accompagne, écoute et soutient, sans laisser personne au bord du chemin.",
     "description": "Quatre fils conducteurs guident l'ensemble du programme :\n\n• Inclusion (handicap, précarité, isolement) — chaque enfant a sa place à Vizille, quelles que soient ses difficultés\n• Continuité des parcours 0–18 ans — une logique de progression et de suivi, de la petite enfance à l'entrée dans l'âge adulte\n• Parole des enfants et des jeunes — les associer aux décisions qui les concernent\n• Travail en réseau — écoles, associations, médico-social, tous coordonnés au service des familles",
     "idee_force": "Grandir à Vizille, c'est être accompagné à chaque étape.",
-    "details": "6 engagements structurés par tranches d'âge :\n1. 0–3 ans — Bien grandir dès la petite enfance\n2. 3–10 ans — Grandir et devenir citoyen\n3. 10–14 ans — Accompagner la transition (numérique, prévention, espaces de parole)\n4. 14–18 ans — Aller vers et accompagner\n5. Inclusion — Aucun enfant laissé au bord du chemin\n6. Accompagner les associations et les forces vives jeunesse",
+    "details": "4 engagements par tranche d'âge :\n1. 0–3 ans — Bien grandir dès la petite enfance\n2. 3–10 ans — Grandir et devenir citoyen\n3. 10–14 ans — Accompagner la transition\n4. 14–18 ans — Aller vers et accompagner",
     "image": "images/objectifs/enfance_jeunesse.png"
   },
   {
@@ -979,7 +979,7 @@
       "Jeunes"
     ],
     "resume": "Sécuriser les premiers parcours de vie et soutenir les familles dans l'accès aux modes de garde et aux espaces d'éveil.",
-    "numero": "1/6",
+    "numero": "1/4",
     "objectif_parent": 500
   },
   {
@@ -1021,12 +1021,12 @@
       "Jeunes"
     ],
     "resume": "Donner la parole aux enfants et les initier à la démocratie locale, au vivre-ensemble et à la solidarité.",
-    "numero": "2/6",
+    "numero": "2/4",
     "objectif_parent": 500
   },
   {
     "id": 509,
-    "theme": "Enfance/Jeunesse",
+    "theme": "Travaux",
     "titre": "Confort thermique des écoles",
     "soustitre": "Lutter contre les fortes chaleurs",
     "idee_force": "Les épisodes de canicule rendent les conditions d'apprentissage difficiles. Des températures jusqu'à 44°C ont été relevées. Il est urgent d'agir pour protéger les enfants.",
@@ -1102,7 +1102,7 @@
       "Jeunes"
     ],
     "resume": "Aller à la rencontre des jeunes, en particulier ceux qui décrochent, pour leur proposer un accompagnement et des perspectives concrètes.",
-    "numero": "4/6",
+    "numero": "4/4",
     "objectif_parent": 500
   },
   {
@@ -1144,7 +1144,7 @@
       "Jeunes"
     ],
     "resume": "Prévenir les ruptures et accompagner les jeunes dans une période clé de leur développement, avec des espaces adaptés et des actions de prévention.",
-    "numero": "3/6",
+    "numero": "3/4",
     "objectif_parent": 500
   },
   {
@@ -1186,8 +1186,7 @@
       "Jeunes"
     ],
     "resume": "Soutenir les associations qui œuvrent pour les enfants et les jeunes, en allant à leur rencontre et en facilitant leurs projets.",
-    "numero": "6/6",
-    "objectif_parent": 500
+    "visible": false
   },
   {
     "id": 513,
@@ -1228,8 +1227,7 @@
       "Jeunes"
     ],
     "resume": "Améliorer l'inclusion des enfants en situation de handicap dans tous les temps de vie : école, périscolaire, loisirs.",
-    "numero": "5/6",
-    "objectif_parent": 500
+    "visible": false
   },
   {
     "id": 514,
@@ -1269,7 +1267,8 @@
       "Égalité",
       "Jeunes"
     ],
-    "resume": "Garantir un accès équitable au numérique et à l'aide aux devoirs pour tous les enfants et jeunes de Vizille."
+    "resume": "Garantir un accès équitable au numérique et à l'aide aux devoirs pour tous les enfants et jeunes de Vizille.",
+    "visible": false
   },
   {
     "id": 620,
