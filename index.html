@@ -102,11 +102,20 @@
     <!-- COMPTE À REBOURS -->
     <div class="countdown-section" id="countdown-section">
         <div class="countdown-container">
-            <div class="countdown-label">1er tour dans</div>
-            <div class="countdown-boxes" id="countdown-boxes">
-                <div class="countdown-box"><span id="cd-days">--</span><small>jours</small></div>
-                <div class="countdown-box"><span id="cd-hours">--</span><small>heures</small></div>
-                <div class="countdown-box"><span id="cd-minutes">--</span><small>minutes</small></div>
+            <div class="countdown-date-bloc">
+                <div class="countdown-date-label">🗳️ 1<sup>er</sup> tour</div>
+                <div class="countdown-date-big">15 MARS 2026</div>
+                <div class="countdown-date-label">2<sup>e</sup> tour · 22 mars</div>
+            </div>
+            <div class="countdown-separator"></div>
+            <div class="countdown-right">
+                <div class="countdown-label">Il reste</div>
+                <div class="countdown-boxes" id="countdown-boxes">
+                    <div class="countdown-box"><span id="cd-days">--</span><small>jours</small></div>
+                    <div class="countdown-box"><span id="cd-hours">--</span><small>heures</small></div>
+                    <div class="countdown-box"><span id="cd-minutes">--</span><small>min</small></div>
+                    <div class="countdown-box"><span id="cd-secs">--</span><small>sec</small></div>
+                </div>
             </div>
         </div>
     </div>
@@ -117,18 +126,20 @@
             const now = new Date();
             const diff = election - now;
             if (diff <= 0) {
-                document.getElementById('countdown-section').innerHTML = '<div class="countdown-container"><div class="countdown-label" style="font-size:1.2rem;font-weight:700;">🗳️ C\'est le jour du vote !</div></div>';
+                document.getElementById('countdown-section').innerHTML = '<div class="countdown-container"><div class="countdown-date-big" style="font-size:2rem;">🗳️ C\'est le jour du vote !</div></div>';
                 return;
             }
             const d = Math.floor(diff / 86400000);
             const h = Math.floor((diff % 86400000) / 3600000);
             const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
             document.getElementById('cd-days').textContent = d;
-            document.getElementById('cd-hours').textContent = h;
-            document.getElementById('cd-minutes').textContent = m;
+            document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+            document.getElementById('cd-minutes').textContent = String(m).padStart(2,'0');
+            document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
         }
         update();
-        setInterval(update, 60000);
+        setInterval(update, 1000);
     })();
     </script>
 
@@ -136,8 +147,29 @@
     <section class="carousel-section">
         <div class="carousel-header">
             <h2 class="section-title">Bilan & Projet</h2>
-            <p class="section-subtitle">Ce que nous avons fait, ce que nous ferons</p>
+            <p class="section-subtitle" id="carousel-subtitle">Ce que nous avons fait, ce que nous ferons</p>
         </div>
+    <script>
+    (function() {
+        const phrases = [
+            "Ce que nous avons fait, ce que nous ferons",
+            "397 actions réalisées · 56 projets pour 2026–2032",
+            "6 ans de mandat, une vision pour demain",
+            "Chaque action compte, chaque projet a un nom",
+            "Le bilan en chiffres, le projet en actes"
+        ];
+        let i = 0;
+        const el = document.getElementById('carousel-subtitle');
+        setInterval(() => {
+            el.style.opacity = 0;
+            setTimeout(() => {
+                i = (i + 1) % phrases.length;
+                el.textContent = phrases[i];
+                el.style.opacity = 1;
+            }, 400);
+        }, 4000);
+    })();
+    </script>
         <div class="carousel-wrapper">
             <div class="carousel-track" id="carousel-track">
                 <!-- Chargé dynamiquement -->
@@ -164,45 +196,63 @@
         </div>
     </section>
 
-    <!-- SECTION FACEBOOK - Dernières actualités -->
+    <!-- SECTION DERNIERS POSTS -->
     <section class="facebook-section">
         <div class="facebook-container">
             <h2 class="section-title animate-on-scroll">
                 <span class="facebook-icon">📘</span>
-                Suivez-nous sur Facebook
+                Nos dernières publications
             </h2>
-            <p class="section-intro animate-on-scroll">Retrouvez toutes nos actualités en temps réel</p>
+            <p class="section-intro animate-on-scroll">Retrouvez toutes nos actualités en temps réel sur Facebook</p>
 
-            <div class="facebook-widget-wrapper animate-on-scroll">
-                <div id="fb-root"></div>
-                <script async defer crossorigin="anonymous"
-                    src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v18.0"
-                    nonce="randomNonce"></script>
-
-                <div class="fb-page"
-                    data-href="https://www.facebook.com/profile.php?id=61585097998743"
-                    data-tabs="timeline"
-                    data-width="500"
-                    data-height="500"
-                    data-small-header="true"
-                    data-adapt-container-width="true"
-                    data-hide-cover="false"
-                    data-show-facepile="false">
-                    <blockquote cite="https://www.facebook.com/profile.php?id=61585097998743" class="fb-xfbml-parse-ignore">
-                        <a href="https://www.facebook.com/profile.php?id=61585097998743">Vizille en Mouvement</a>
-                    </blockquote>
-                </div>
+            <div class="fb-posts-grid" id="fb-posts-grid">
+                <!-- Chargé dynamiquement -->
             </div>
 
             <div class="facebook-cta animate-on-scroll">
                 <a href="https://www.facebook.com/profile.php?id=61585097998743" target="_blank" class="btn-facebook">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                    Suivre notre page
+                    Suivre notre page Facebook
                 </a>
-                <a href="bilan.html" class="btn-primary">Découvrir notre bilan complet →</a>
+                <a href="blog.html" class="btn-primary">Toutes nos actualités →</a>
             </div>
         </div>
     </section>
+    <script>
+    (function() {
+        fetch('articles.json?v=' + Date.now())
+            .then(r => r.json())
+            .then(articles => {
+                // Trier par date desc, prendre les 3 derniers
+                const sorted = articles
+                    .filter(a => a.titre)
+                    .sort((a, b) => new Date(b.date || b.modifie_le) - new Date(a.date || a.modifie_le))
+                    .slice(0, 3);
+
+                const grid = document.getElementById('fb-posts-grid');
+                grid.innerHTML = sorted.map(a => {
+                    const titre = a.titre.replace(/[\u{1D400}-\u{1D7FF}]/gu, c => {
+                        // Normaliser les caractères bold unicode utilisés dans les titres Facebook
+                        return c.normalize('NFKD').replace(/\p{M}/gu, '');
+                    });
+                    const date = a.date ? new Date(a.date).toLocaleDateString('fr-FR', {day:'numeric', month:'long', year:'numeric'}) : '';
+                    const img = a.image ? `<div class="fb-post-img" style="background-image:url('${a.image}')"></div>` : '';
+                    const cat = a.categorie ? `<span class="fb-post-cat">${a.categorie}</span>` : '';
+                    return `<a href="blog.html#${a.id}" class="fb-post-card">
+                        ${img}
+                        <div class="fb-post-body">
+                            ${cat}
+                            <h3 class="fb-post-titre">${titre}</h3>
+                            <span class="fb-post-date">${date}</span>
+                        </div>
+                    </a>`;
+                }).join('');
+            })
+            .catch(() => {
+                document.getElementById('fb-posts-grid').innerHTML = '<p style="text-align:center;color:#888;">Actualités disponibles sur notre page Facebook</p>';
+            });
+    })();
+    </script>
 
     <!-- SECTION THÈMES avec icônes animées -->
     <section class="themes-section" id="decouvrir">
