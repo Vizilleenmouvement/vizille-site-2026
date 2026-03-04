@@ -94,7 +94,7 @@
     <div class="election-banner">
         <div class="election-banner-content">
             <span class="election-icon">🗳️</span>
-            <p>ÉLECTIONS MUNICIPALES - <strong>15 & 22 MARS 2026</strong></p>
+            <p>ÉLECTIONS MUNICIPALES - <strong>15 MARS 2026</strong></p>
             <span class="election-icon">🗳️</span>
         </div>
     </div>
@@ -102,11 +102,19 @@
     <!-- COMPTE À REBOURS -->
     <div class="countdown-section" id="countdown-section">
         <div class="countdown-container">
-            <div class="countdown-label">1er tour dans</div>
-            <div class="countdown-boxes" id="countdown-boxes">
-                <div class="countdown-box"><span id="cd-days">--</span><small>jours</small></div>
-                <div class="countdown-box"><span id="cd-hours">--</span><small>heures</small></div>
-                <div class="countdown-box"><span id="cd-minutes">--</span><small>minutes</small></div>
+            <div class="countdown-date-bloc">
+                <div class="countdown-date-label">🗳️ Tour unique</div>
+                <div class="countdown-date-big">15 MARS 2026</div>
+            </div>
+            <div class="countdown-separator"></div>
+            <div class="countdown-right">
+                <div class="countdown-label">Il reste</div>
+                <div class="countdown-boxes" id="countdown-boxes">
+                    <div class="countdown-box"><span id="cd-days">--</span><small>jours</small></div>
+                    <div class="countdown-box"><span id="cd-hours">--</span><small>heures</small></div>
+                    <div class="countdown-box"><span id="cd-minutes">--</span><small>min</small></div>
+                    <div class="countdown-box"><span id="cd-secs">--</span><small>sec</small></div>
+                </div>
             </div>
         </div>
     </div>
@@ -117,18 +125,20 @@
             const now = new Date();
             const diff = election - now;
             if (diff <= 0) {
-                document.getElementById('countdown-section').innerHTML = '<div class="countdown-container"><div class="countdown-label" style="font-size:1.2rem;font-weight:700;">🗳️ C\'est le jour du vote !</div></div>';
+                document.getElementById('countdown-section').innerHTML = '<div class="countdown-container"><div class="countdown-date-big" style="font-size:2rem;">🗳️ C\'est le jour du vote !</div></div>';
                 return;
             }
             const d = Math.floor(diff / 86400000);
             const h = Math.floor((diff % 86400000) / 3600000);
             const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
             document.getElementById('cd-days').textContent = d;
-            document.getElementById('cd-hours').textContent = h;
-            document.getElementById('cd-minutes').textContent = m;
+            document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+            document.getElementById('cd-minutes').textContent = String(m).padStart(2,'0');
+            document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
         }
         update();
-        setInterval(update, 60000);
+        setInterval(update, 1000);
     })();
     </script>
 
@@ -136,8 +146,29 @@
     <section class="carousel-section">
         <div class="carousel-header">
             <h2 class="section-title">Bilan & Projet</h2>
-            <p class="section-subtitle">Ce que nous avons fait, ce que nous ferons</p>
+            <p class="section-subtitle" id="carousel-subtitle">Ce que nous avons fait, ce que nous ferons</p>
         </div>
+    <script>
+    (function() {
+        const phrases = [
+            "Ce que nous avons fait, ce que nous ferons",
+            "397 actions réalisées · 56 projets pour 2026–2032",
+            "6 ans de mandat, une vision pour demain",
+            "Chaque action compte, chaque projet a un nom",
+            "Le bilan en chiffres, le projet en actes"
+        ];
+        let i = 0;
+        const el = document.getElementById('carousel-subtitle');
+        setInterval(() => {
+            el.style.opacity = 0;
+            setTimeout(() => {
+                i = (i + 1) % phrases.length;
+                el.textContent = phrases[i];
+                el.style.opacity = 1;
+            }, 400);
+        }, 4000);
+    })();
+    </script>
         <div class="carousel-wrapper">
             <div class="carousel-track" id="carousel-track">
                 <!-- Chargé dynamiquement -->
@@ -164,7 +195,7 @@
         </div>
     </section>
 
-    <!-- SECTION FACEBOOK - Dernières actualités -->
+    <!-- SECTION FACEBOOK -->
     <section class="facebook-section">
         <div class="facebook-container">
             <h2 class="section-title animate-on-scroll">
