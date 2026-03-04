@@ -1974,5 +1974,153 @@
         "label": "Échelle visée"
       }
     ]
+  },
+  {
+    "id": 800,
+    "theme": "Solidarités",
+    "type": "objectif",
+    "titre": "Objectif — Bien vieillir à Vizille",
+    "resume": "S'appuyer sur ce qui existe, combler ce qui manque.",
+    "description": "Vizille compte 31 % d'habitants de plus de 60 ans. Le Centre Communal d'Action Sociale gère déjà une palette de services reconnus : portage de repas, téléalarme, résidence autonomie La Romanche, Établissement d'Hébergement pour Personnes Âgées Dépendantes Les Écrins, club Les Têtes blanches, instruction des dossiers d'Allocation Personnalisée d'Autonomie. Ce socle est solide. Mais trois lacunes restent à combler : le logement ancien inadapté, la mobilité des seniors sans voiture, et l'isolement des personnes qui ne franchissent plus la porte du Centre Communal d'Action Sociale. Notre engagement : renforcer ce qui fonctionne, et construire ce qui manque.",
+    "importance": 3,
+    "slogan": "S'appuyer • Renforcer • Aller vers",
+    "enjeux": [
+      "Permettre à chacun de vieillir chez soi, dans de bonnes conditions et en sécurité",
+      "Adapter le logement ancien aux contraintes du vieillissement",
+      "Garantir la mobilité des seniors isolés ou sans voiture",
+      "Lutter contre l'isolement par une démarche active d'aller-vers"
+    ],
+    "axes_action": [
+      "Axe 1 — Adaptation du logement : guichet unique Centre Communal d'Action Sociale / Opération Programmée d'Amélioration de l'Habitat / MaPrimeAdapt'",
+      "Axe 2 — Mobilité et transport à la demande",
+      "Axe 3 — Aller-vers les personnes isolées"
+    ],
+    "indicateurs": [
+      "Dossiers d'adaptation du logement instruits par an",
+      "Personnes bénéficiaires d'un accompagnement mobilité",
+      "Visites à domicile réalisées"
+    ],
+    "vision": "Vieillir à Vizille, c'est rester chez soi, dans sa ville, entouré.",
+    "image": "images/objectifs/objectif_seniors.png",
+    "tags": [
+      "Seniors",
+      "Bien vieillir",
+      "Centre Communal d'Action Sociale",
+      "Autonomie"
+    ]
+  },
+  {
+    "id": 801,
+    "theme": "Solidarités",
+    "type": "engagement",
+    "titre": "Adapter les logements anciens au vieillissement",
+    "resume": "Un guichet unique pour transformer le bâti ancien en logement qui protège.",
+    "description": "Le centre-ville de Vizille est constitué en grande partie de logements anciens : escaliers raides, salles de bains inadaptées, seuils, absence d'ascenseur. Ces obstacles rendent le maintien à domicile difficile, voire dangereux, à mesure que l'autonomie diminue. Or les dispositifs d'aide existent et sont méconnus. MaPrimeAdapt' (Agence Nationale de l'Habitat, depuis 2024) finance jusqu'à 70 % des travaux d'adaptation pour les ménages modestes : douche de plain-pied, barres d'appui, main courante, monte-escalier, rehausseur de toilettes. L'Opération Programmée d'Amélioration de l'Habitat Réno'Vizille en cours peut intégrer explicitement volet seniors. Notre engagement : créer un guichet unique Centre Communal d'Action Sociale / Opération Programmée d'Amélioration de l'Habitat pour repérer les situations, informer les habitants, et accompagner chaque dossier de bout en bout.",
+    "statut": "Programmé",
+    "annee": 2027,
+    "importance": 3,
+    "slogan": "Repérer • Informer • Accompagner",
+    "enjeux": [
+      "Le bâti ancien du centre-ville crée des obstacles au maintien à domicile",
+      "Les dispositifs d'aide (MaPrimeAdapt', Agence Nationale de l'Habitat) sont méconnus et sous-utilisés",
+      "Le risque de chute est la première cause d'hospitalisation des personnes âgées"
+    ],
+    "axes_action": [
+      "Permanences dédiées au Centre Communal d'Action Sociale : diagnostic logement, information sur les aides",
+      "Articulation avec l'opérateur de l'Opération Programmée d'Amélioration de l'Habitat pour intégrer le volet adaptation seniors",
+      "Mobilisation de MaPrimeAdapt' (Agence Nationale de l'Habitat) pour les ménages modestes",
+      "Partenariat avec les services du Département (Allocation Personnalisée d'Autonomie volet logement)"
+    ],
+    "indicateurs": [
+      "Nombre de diagnostics logement réalisés par an",
+      "Dossiers MaPrimeAdapt' instruits avec accompagnement Centre Communal d'Action Sociale",
+      "Travaux réalisés dans le cadre de l'Opération Programmée d'Amélioration de l'Habitat volet seniors"
+    ],
+    "chiffres": [
+      {
+        "valeur": "Jusqu'à 70 %",
+        "label": "Financement MaPrimeAdapt' (ménages modestes)"
+      },
+      {
+        "valeur": "1",
+        "label": "Guichet unique Centre Communal d'Action Sociale / Opération Programmée d'Amélioration de l'Habitat"
+      }
+    ],
+    "tags": [
+      "Logement",
+      "Adaptation",
+      "MaPrimeAdapt",
+      "Opération Programmée d'Amélioration de l'Habitat",
+      "Maintien à domicile"
+    ]
+  },
+  {
+    "id": 802,
+    "theme": "Solidarités",
+    "type": "engagement",
+    "titre": "Garantir la mobilité des seniors",
+    "resume": "Se déplacer à Grenoble, chez le médecin, au marché — sans voiture.",
+    "description": "Pour un senior sans permis, sans voiture ou ayant renoncé à conduire, se rendre à un rendez-vous médical à Grenoble, faire ses courses ou simplement sortir de chez soi peut devenir un problème quotidien. Vizille n'est pas desservie en soirée ni le week-end. Le Centre Communal d'Action Sociale informe sur la tarification solidaire du réseau de transport en commun de l'agglomération grenobloise, mais il n'existe pas de dispositif de transport à la demande ni d'accompagnement structuré aux rendez-vous médicaux. Notre engagement : étudier un service de transport à la demande pour les seniors en lien avec les communes voisines et la Métropole, structurer un réseau de bénévoles conducteurs, et renforcer l'information sur les aides existantes.",
+    "statut": "Étude",
+    "annee": 2027,
+    "importance": 3,
+    "slogan": "Bouger • Relier • Accompagner",
+    "enjeux": [
+      "L'absence de mobilité accélère l'isolement et le renoncement aux soins",
+      "Les transports en commun sont insuffisants pour les déplacements médicaux",
+      "Le covoiturage solidaire existe mais n'est pas structuré"
+    ],
+    "axes_action": [
+      "Étude d'un service de transport à la demande seniors (Métropole, communes du bassin)",
+      "Réseau de bénévoles conducteurs coordonné par le Centre Communal d'Action Sociale",
+      "Information renforcée sur la tarification solidaire du réseau de transport en commun de l'agglomération grenobloise",
+      "Partenariat avec les associations locales (Croix-Rouge, réseaux d'entraide)"
+    ],
+    "indicateurs": [
+      "Personnes accompagnées à des rendez-vous médicaux",
+      "Bénévoles conducteurs mobilisés",
+      "Étude transport à la demande engagée"
+    ],
+    "tags": [
+      "Mobilité",
+      "Seniors",
+      "Transport à la demande",
+      "Bénévoles"
+    ]
+  },
+  {
+    "id": 803,
+    "theme": "Solidarités",
+    "type": "engagement",
+    "titre": "Aller vers les seniors isolés",
+    "resume": "Ne pas attendre qu'ils poussent la porte — aller les chercher.",
+    "description": "Le Centre Communal d'Action Sociale de Vizille assure déjà un accompagnement des personnes isolées et gère le registre des personnes vulnérables. Mais cet accompagnement reste majoritairement passif : il fonctionne quand la personne vient ou appelle. Or les plus isolés sont précisément ceux qui ne franchissent plus la porte. Notre engagement : structurer une démarche active d'aller-vers, en s'appuyant sur les réseaux d'entraide de quartier, les associations (Les Têtes blanches, Secours Populaire, Croix-Rouge) et les commerçants de proximité comme sentinelles. Signaler, transmettre, accompagner — sans attendre.",
+    "statut": "Programmé",
+    "annee": 2027,
+    "importance": 3,
+    "slogan": "Repérer • Relier • Accompagner",
+    "enjeux": [
+      "L'isolement des personnes âgées est un facteur de dégradation rapide de la santé",
+      "Les plus isolés sont ceux qui ne sollicitent pas d'aide spontanément",
+      "Le réseau associatif vizillois est une ressource insuffisamment mobilisée"
+    ],
+    "axes_action": [
+      "Visites régulières à domicile par des bénévoles formés et coordonnés par le Centre Communal d'Action Sociale",
+      "Réseau de sentinelles : commerçants, voisins, associations informés et outillés pour signaler",
+      "Activation systématique du registre des personnes vulnérables en dehors des seules périodes de crise",
+      "Événements de convivialité réguliers : repas partagés, sorties, animations en lien avec le club Les Têtes blanches"
+    ],
+    "indicateurs": [
+      "Personnes suivies dans le cadre de l'aller-vers",
+      "Bénévoles formés et actifs",
+      "Sentinelles de proximité identifiées"
+    ],
+    "tags": [
+      "Isolement",
+      "Aller-vers",
+      "Seniors",
+      "Bénévoles",
+      "Centre Communal d'Action Sociale"
+    ]
   }
 ]
