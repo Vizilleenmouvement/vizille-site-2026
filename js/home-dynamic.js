@@ -305,7 +305,7 @@ async function loadActualites() {
                 if (!a.priorite && b.priorite) return 1;
                 return new Date(b.modifie_le || b.date || 0) - new Date(a.modifie_le || a.date || 0);
             })
-            .slice(0, 3);
+            .slice(0, 6);
 
         if (recentArticles.length === 0) {
             grid.innerHTML = '<p style="text-align: center; color: #888;">Aucune actualité pour le moment</p>';
