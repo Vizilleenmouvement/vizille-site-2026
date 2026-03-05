@@ -6,7 +6,12 @@
     "categorie": "Événement",
     "extrait": "Samedi 7 mars à partir de 10h — Venez échanger avec les candidats !",
     "contenu": "Rencontre conviviale #1\n\nDate : Samedi 7 mars 2026\nHeure : À partir de 10h\nLieu : Place du Château\n\nPour échanger avec les candidats\n\nUne rencontre conviviale pour discuter ensemble de l'avenir de Vizille.\n\nAnimations, rencontres, convivialité... Venez nombreux en famille !\n\nEnsemble, mettons Vizille en mouvement !",
-    "image": "images/actions/patrimoine/place-chateau.jpg"
+    "images": [
+      "images/actions/patrimoine/place-chateau.jpg"
+    ],
+    "image": "images/actions/patrimoine/place-chateau.jpg",
+    "priorite": true,
+    "modifie_le": "2026-03-05T02:53:42.063Z"
   },
   {
     "id": 1770988442513,
@@ -33,7 +38,8 @@
       "images/articles/article_1770459477243_img_0402.jpg"
     ],
     "image": "images/articles/article_1770459477243_img_0402.jpg",
-    "modifie_le": "2026-02-13T13:11:02.304Z"
+    "priorite": true,
+    "modifie_le": "2026-03-05T02:54:07.774Z"
   },
   {
     "id": 9,
