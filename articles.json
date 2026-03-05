@@ -51,8 +51,8 @@
       "images/articles/article_1771695308949_640300047_122116217907169933_8066348312329664465_n.jpg"
     ],
     "image": "images/articles/article_1771695308949_640300047_122116217907169933_8066348312329664465_n.jpg",
-    "priorite": true,
-    "modifie_le": "2026-02-21T17:35:14.836Z"
+    "priorite": false,
+    "modifie_le": "2026-03-05T03:42:16.080Z"
   },
   {
     "id": 1770916706868,
@@ -190,19 +190,6 @@
     "modifie_le": "2026-02-03T14:14:34.402Z"
   },
   {
-    "id": 8,
-    "titre": "Réunion de quartier - Centre-ville",
-    "categorie": "Réunion de quartier",
-    "extrait": "Date à préciser - Vos référents : Gérard et Gilles.",
-    "contenu": "Réunion de quartier pour le Centre-ville\n\nDate : À préciser\nLieu : À préciser\n\nVos référents : Gérard et Gilles\n\nThèmes abordés :\n• Liaison entre la place du château et celle du marché\n• Dynamisation du commerce\n\nVotre voix compte ! Venez nombreux partager vos idées et préoccupations pour votre quartier.",
-    "images": [
-      "images/articles/art_8_0.jpg"
-    ],
-    "image": "images/articles/art_8_main.jpg",
-    "a_preciser": true,
-    "modifie_le": "2026-02-02T18:22:54.882Z"
-  },
-  {
     "id": 3,
     "titre": "Réunion de quartier - Les Mattons",
     "date": "2026-01-23",
@@ -253,15 +240,6 @@
     "contenu": "Chères Vizilloises, chers Vizillois,\n\nC'est avec beaucoup d'émotion et d'enthousiasme que je sollicite votre confiance pour un deuxième mandat municipal. Depuis le début de notre action en 2020, j'ai eu l'honneur de servir notre ville avec conviction, énergie, attachement sincère et proximité. Vizille est un lieu de vie, de rencontres et de projets partagés.\n\nJ'ai toujours été touchée par la richesse de sa vie locale, associative, culturelle, sportive et par les liens qu'elle crée entre les habitants. J'ai eu la joie d'élever ici mes enfants, j'ai plaisir chaque jour à vivre ici, à entretenir cette proximité avec chacun d'entre vous. Ensemble, nous avons engagé des actions pour dynamiser la commune, améliorer le quotidien et préparer l'avenir.\n\nLes projets, imaginés depuis de longues années pour développer la commune, se concrétisent enfin aujourd'hui. Plus de 330 actions ont été menées pendant notre mandat pour améliorer la vie des Vizillois : création de la Maison France Services, végétalisation de cours d'écoles, réouverture de la piscine, travaux d'assainissement, embellissement de la rue Général de Gaulle, rénovation des logements en centre-ville, déploiement de la vidéoprotection, création d'itinéraires cyclables, soutien au monde associatif...\n\nNous avons la volonté claire, avec une équipe renouvelée, de poursuivre et amplifier la dynamique engagée autour de valeurs fortes :\n• La solidarité pour que le service public apporte des solutions à chacun\n• La transition environnementale, indispensable pour répondre aux défis climatiques tout en améliorant notre cadre de vie\n• La proximité et l'écoute des besoins quotidiens des habitants\n\nJe crois en une action municipale proche des citoyens, fondée sur le dialogue, la construction collective et la confiance. C'est avec vous, avec respect et solidarité, que nous nous engageons à rendre notre ville plus vivante, solidaire et tournée vers l'avenir.\n\nEnsemble, poursuivons ce chemin avec enthousiasme et exigence, et surtout bonheur de vivre ici.\n\nCatherine TROTON\nMaire de Vizille",
     "image": "images/catherine-troton.jpg",
     "prochain": true
-  },
-  {
-    "id": 7,
-    "titre": "Réunion de quartier - Les Allas",
-    "categorie": "Réunion de quartier",
-    "extrait": "Date à préciser - Votre référente : Catherine.",
-    "contenu": "Réunion de quartier pour Les Allas\n\nDate : À préciser\nLieu : À préciser\n\nVotre référente : Catherine\n\nThèmes abordés :\n• Risques piétons (route de Vaulnaveys)\n• Inondations\n\nVotre voix compte ! Venez nombreux partager vos idées et préoccupations pour votre quartier.",
-    "image": "",
-    "a_preciser": true
   },
   {
     "id": 1771315463707,
