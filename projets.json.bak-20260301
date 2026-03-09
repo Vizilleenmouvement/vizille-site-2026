@@ -1,0 +1,1721 @@
+[
+  {
+    "id": 10,
+    "titre": "Rendre la Maison de Santé pleinement opérationnelle",
+    "theme": "Santé",
+    "statut": "Programmé",
+    "annee": 2027,
+    "budget": 0,
+    "resume": "Accès aux soins",
+    "description": "",
+    "importance": 2,
+    "chiffres": []
+  },
+  {
+    "id": 34,
+    "titre": "Le maire siègera personnellement aux conseils métropolitains",
+    "theme": "Métropole",
+    "statut": "Programmé",
+    "annee": 2026,
+    "budget": 0,
+    "resume": "Présence métropolitaine",
+    "description": "",
+    "importance": 2,
+    "chiffres": []
+  },
+  {
+    "id": 101,
+    "titre": "Objectif 1 - Mobilités structurantes",
+    "theme": "Mobilités",
+    "statut": "Étude",
+    "annee": null,
+    "budget": 0,
+    "resume": "Explorer toutes les solutions - long terme",
+    "description": "Améliorer les liaisons vers l'agglomération et la vallée : bus, navettes, covoiturage, parkings relais, câble, rail.",
+    "importance": 3,
+    "chiffres": [],
+    "tags": [
+      "Connexion",
+      "Alternatives",
+      "Long terme"
+    ],
+    "slogan": "Relier • Diversifier • Anticiper",
+    "enjeux": [
+      "Réduire la dépendance à la voiture individuelle",
+      "Offrir des alternatives crédibles aux heures de pointe",
+      "Anticiper les besoins futurs du bassin de vie"
+    ],
+    "axes_action": [
+      "Navettes adaptées aux horaires pendulaires",
+      "Covoiturage et parkings relais identifiés",
+      "Scénarios transport par câble (long terme)",
+      "Réflexion sur la solution ferroviaire"
+    ],
+    "indicateurs": [
+      "Études engagées",
+      "Partenaires mobilisés",
+      "Usage des alternatives"
+    ],
+    "vision": "Aucune hypothèse n'est écartée pour connecter Vizille au territoire.",
+    "numero": "1/7",
+    "image": "images/objectifs/objectif_1.png"
+  },
+  {
+    "id": 102,
+    "titre": "Objectif 2 - Renforcer les mobilités cyclables",
+    "theme": "Mobilités",
+    "statut": "Programmé",
+    "annee": 2027,
+    "budget": 0,
+    "resume": "Vizille, cœur du maillage cycliste",
+    "description": "Liaisons vers Grenoble, Oisans, Uriage et Matheysine. Réseau continu, lisible et sécurisé.",
+    "importance": 3,
+    "chiffres": [],
+    "tags": [
+      "Tranquillité",
+      "Sécurité",
+      "Mobilités"
+    ],
+    "slogan": "Relier • Sécuriser • Rendre lisible",
+    "enjeux": [
+      "Sécuriser les trajets du quotidien",
+      "Relier quartiers et équipements",
+      "Favoriser une pratique familiale et intergénérationnelle"
+    ],
+    "axes_action": [
+      "Consolider l'axe du Chemin des Murs",
+      "Assurer la liaison centre ↔ Péage",
+      "Traiter discontinuités et points de conflit",
+      "Jalonnement cohérent • Cohabitation des usages"
+    ],
+    "indicateurs": [
+      "Continuités renforcées",
+      "Points dangereux traités",
+      "Retours d'usagers"
+    ],
+    "vision": "Un réseau cyclable continu, de quartier à quartier, de vallée à montagne.",
+    "numero": "2/7",
+    "image": "images/objectifs/objectif_2.png"
+  },
+  {
+    "id": 103,
+    "titre": "Objectif 3 - Sécuriser les usagers vulnérables",
+    "theme": "Mobilités",
+    "statut": "Prioritaire",
+    "annee": 2026,
+    "budget": 0,
+    "resume": "Priorité aux piétons, enfants, seniors, PMR",
+    "description": "Traversées sûres, abords d'écoles protégés, accessibilité renforcée pour tous.",
+    "importance": 3,
+    "chiffres": [],
+    "tags": [
+      "Sécurité",
+      "Accessibilité",
+      "Confort"
+    ],
+    "slogan": "Protéger • Faciliter • Rassurer",
+    "enjeux": [
+      "Réduire les situations à risque",
+      "Améliorer l'accessibilité et le confort de marche",
+      "Renforcer le sentiment de sécurité"
+    ],
+    "axes_action": [
+      "Sécuriser les traversées piétonnes",
+      "Protéger les abords d'écoles",
+      "Améliorer les cheminements accessibles",
+      "Rendre les carrefours plus lisibles",
+      "Apaiser les vitesses sur secteurs sensibles"
+    ],
+    "indicateurs": [
+      "Points sensibles traités",
+      "Qualité des cheminements",
+      "Retours usagers"
+    ],
+    "vision": "Des déplacements sûrs et accessibles pour tous, à chaque âge de la vie.",
+    "numero": "3/7",
+    "image": "images/objectifs/objectif_3.png"
+  },
+  {
+    "id": 104,
+    "titre": "Objectif 4 - Apaiser la circulation",
+    "theme": "Mobilités",
+    "statut": "Programmé",
+    "annee": 2026,
+    "budget": 0,
+    "resume": "Protéger les quartiers habités",
+    "description": "Réduire les nuisances du transit : bruit, vitesses excessives, à-coups de circulation.",
+    "importance": 3,
+    "chiffres": [],
+    "tags": [
+      "Tranquillité",
+      "Cadre de vie",
+      "Sécurité"
+    ],
+    "slogan": "Ralentir • Protéger • Fluidifier",
+    "enjeux": [
+      "Réduire vitesses et nuisances sonores",
+      "Limiter les reports en rues résidentielles",
+      "Rendre la circulation plus prévisible"
+    ],
+    "axes_action": [
+      "Identifier les secteurs exposés au transit",
+      "Mettre en œuvre des mesures progressives",
+      "Assurer la cohérence avec le plan de circulation",
+      "Suivre et ajuster selon les retours"
+    ],
+    "indicateurs": [
+      "Vitesses constatées",
+      "Perception des nuisances",
+      "Reports de trafic"
+    ],
+    "vision": "Des quartiers protégés du transit, pour une vie quotidienne apaisée.",
+    "numero": "4/7",
+    "image": "images/objectifs/objectif_4.png"
+  },
+  {
+    "id": 105,
+    "titre": "Objectif 5 - Organiser les flux",
+    "theme": "Mobilités",
+    "statut": "Étude",
+    "annee": 2026,
+    "budget": 0,
+    "resume": "Un plan de circulation lisible",
+    "description": "Clarifier les itinéraires, hiérarchiser les axes, réduire détours et conflits d'usages.",
+    "importance": 3,
+    "chiffres": [],
+    "tags": [
+      "Lisibilité",
+      "Hiérarchie",
+      "Fluidité"
+    ],
+    "slogan": "Clarifier • Hiérarchiser • Simplifier",
+    "enjeux": [
+      "Mieux se déplacer dans la commune",
+      "Réduire le transit inutile en centre-ville",
+      "Limiter les reports dans les quartiers"
+    ],
+    "axes_action": [
+      "Comptages aux points clés",
+      "Hiérarchisation des axes (transit / desserte / apaisé)",
+      "Clarification signalisation et carrefours",
+      "Tester puis déployer progressivement"
+    ],
+    "indicateurs": [
+      "Répartition des flux",
+      "Vitesses constatées",
+      "Retours d'usage"
+    ],
+    "vision": "Un plan lisible pour des déplacements simples et cohérents.",
+    "numero": "5/7",
+    "image": "images/objectifs/objectif_5.png"
+  },
+  {
+    "id": 106,
+    "titre": "Objectif 6 - Centre-ville et espaces partagés",
+    "theme": "Mobilités",
+    "statut": "Étude",
+    "annee": 2027,
+    "budget": 0,
+    "resume": "Apaiser et dynamiser le cœur de ville",
+    "description": "Cheminements piétons confortables, espaces partagés lisibles, connexion marché ↔ château.",
+    "importance": 3,
+    "chiffres": [],
+    "tags": [
+      "Convivialité",
+      "Commerce",
+      "Patrimoine"
+    ],
+    "slogan": "Vivre • Partager • Relier",
+    "enjeux": [
+      "Améliorer la qualité de vie au centre-ville",
+      "Renforcer l'attractivité commerciale",
+      "Réduire les conflits d'usage"
+    ],
+    "axes_action": [
+      "Identifier les secteurs à requalifier",
+      "Déployer des espaces partagés (20 km/h)",
+      "Renforcer les continuités piétonnes",
+      "Améliorer la liaison marché → château"
+    ],
+    "indicateurs": [
+      "Fréquentation",
+      "Retours commerçants/habitants",
+      "Qualité perçue"
+    ],
+    "vision": "Un centre-ville apaisé, vivant et connecté à son patrimoine.",
+    "numero": "6/7",
+    "image": "images/objectifs/objectif_6.png"
+  },
+  {
+    "id": 107,
+    "titre": "Objectif 7 - Feu de Jarrie (PPRT)",
+    "theme": "Mobilités",
+    "statut": "Prioritaire",
+    "annee": 2026,
+    "budget": 0,
+    "resume": "Rétablir un fonctionnement adapté",
+    "description": "Régulation conforme à la vocation du feu : déclenchée uniquement en cas de congestion avérée.",
+    "importance": 3,
+    "chiffres": [],
+    "tags": [
+      "Régulation",
+      "Bouchons",
+      "Fluidité"
+    ],
+    "slogan": "Analyser • Adapter • Fluidifier",
+    "enjeux": [
+      "Réduire les temps de trajet quotidiens",
+      "Éviter les bouchons récurrents aux heures de pointe",
+      "Assurer une régulation dynamique et proportionnée"
+    ],
+    "axes_action": [
+      "Demander les données de fonctionnement à la DREAL",
+      "Réviser le paramétrage du feu",
+      "Porter le sujet avec les partenaires (Département, Métro)",
+      "Mettre en cohérence avec les alternatives de mobilité"
+    ],
+    "indicateurs": [
+      "Temps de parcours",
+      "Durée des phases",
+      "Retours usagers"
+    ],
+    "vision": "Transparence des données, régulation adaptée, bouchons réduits.",
+    "numero": "7/7",
+    "image": "images/objectifs/objectif_7.png"
+  },
+  {
+    "id": 201,
+    "titre": "Objectif 1 - Présence sur le terrain",
+    "theme": "Tranquillité publique",
+    "axe": 1,
+    "statut": "Programmé",
+    "annee": 2026,
+    "budget": 0,
+    "resume": "Renforcer la présence régulière aux bons moments",
+    "description": "La présence visible des agents municipaux dans l'espace public est un facteur essentiel de tranquillité. Elle rassure les habitants, dissuade les comportements inappropriés et permet une détection précoce des problèmes.",
+    "importance": 3,
+    "chiffres": [],
+    "tags": [
+      "Présence",
+      "Proximité",
+      "Prévention"
+    ],
+    "slogan": "Être là • Au bon moment • Au bon endroit",
+    "enjeux": [
+      "Rassurer les habitants par une présence visible",
+      "Dissuader les comportements inappropriés",
+      "Détecter précocement les problèmes"
+    ],
+    "axes_action": [
+      "Créneaux fixes : sorties d'école, fins de journée, secteurs sensibles",
+      "Îlotage de proximité : commerces, équipements publics, espaces de vie",
+      "Coordination avec les services municipaux",
+      "Ajustement continu selon les retours terrain"
+    ],
+    "indicateurs": [
+      "Nombre de patrouilles par semaine",
+      "Temps de réponse moyen",
+      "Signalements traités"
+    ],
+    "vision": "Une présence stratégique : être là où et quand c'est utile.",
+    "numero": "1/11",
+    "image": "images/objectifs/tranquillite_1.png"
+  },
+  {
+    "id": 202,
+    "titre": "Objectif 2 - Médiation & prévention",
+    "theme": "Tranquillité publique",
+    "axe": 2,
+    "statut": "Programmé",
+    "annee": 2026,
+    "budget": 0,
+    "resume": "Désamorcer vite — élus et services mobilisés",
+    "description": "Beaucoup de situations de tension naissent de malentendus ou de voisinages difficiles. La médiation est souvent plus efficace que la sanction : elle permet de restaurer le dialogue.",
+    "importance": 3,
+    "chiffres": [],
+    "tags": [
+      "Médiation",
+      "Dialogue",
+      "Prévention"
+    ],
+    "slogan": "Écouter • Dialoguer • Résoudre",
+    "enjeux": [
+      "Traiter rapidement les tensions avant qu'elles s'enveniment",
+      "Restaurer le dialogue entre les parties",
+      "Trouver des solutions acceptables pour tous"
+    ],
+    "axes_action": [
+      "Élus référents et agents formés à la médiation",
+      "Traitement prioritaire des situations répétées",
+      "Prévention jeunesse sur créneaux sensibles",
+      "Coordination avec bailleurs, écoles, associations"
+    ],
+    "indicateurs": [
+      "Conflits traités et apaisés",
+      "Taux de récidive",
+      "Retours des habitants"
+    ],
+    "vision": "Une implication directe des élus dans la médiation et la prévention.",
+    "numero": "2/11",
+    "image": "images/objectifs/tranquillite_2.png"
+  },
+  {
+    "id": 203,
+    "titre": "Objectif 3 - Bruit, incivilités, nuisances",
+    "theme": "Tranquillité publique",
+    "axe": 2,
+    "statut": "Programmé",
+    "annee": 2026,
+    "budget": 0,
+    "resume": "Protéger le calme du quotidien",
+    "description": "Le bruit est la première nuisance citée par les habitants. Notre approche : des règles connues, des contrôles ciblés, une réactivité quand ça déborde. La pédagogie d'abord, la sanction si récidive.",
+    "importance": 3,
+    "chiffres": [],
+    "tags": [
+      "Bruit",
+      "Nuisances",
+      "Calme"
+    ],
+    "slogan": "Prévenir • Contrôler • Sanctionner si récidive",
+    "enjeux": [
+      "Réduire les nuisances sonores au quotidien",
+      "Faire respecter les règles de vie commune",
+      "Agir rapidement sur les signalements"
+    ],
+    "axes_action": [
+      "Plan anti-bruit : deux-roues, fêtes, chantiers, établissements",
+      "Charte chantiers : horaires, propreté, information riverains",
+      "Lutte contre dépôts et dégradations",
+      "Pédagogie et sanctions graduées"
+    ],
+    "indicateurs": [
+      "Plaintes liées au bruit",
+      "Délai d'intervention",
+      "Actions correctives"
+    ],
+    "vision": "Des règles connues, des contrôles ciblés, une réactivité sans faille.",
+    "numero": "3/11",
+    "image": "images/objectifs/tranquillite_3.png"
+  },
+  {
+    "id": 204,
+    "titre": "Objectif 4 - Circulation, vitesse, rodéos",
+    "theme": "Tranquillité publique",
+    "axe": 2,
+    "statut": "Programmé",
+    "annee": 2026,
+    "budget": 0,
+    "resume": "Apaiser sans bloquer les déplacements",
+    "description": "Les comportements dangereux sur la route – vitesses excessives, rodéos, non-respect des priorités – sont une source majeure d'inquiétude. L'enjeu est d'apaiser la circulation sans la bloquer.",
+    "importance": 3,
+    "chiffres": [],
+    "tags": [
+      "Vitesse",
+      "Sécurité routière",
+      "Rodéos"
+    ],
+    "slogan": "Contrôler • Dissuader • Protéger",
+    "enjeux": [
+      "Protéger les usagers vulnérables",
+      "Réduire le sentiment d'insécurité routière",
+      "Faire respecter les règles sans bloquer la circulation"
+    ],
+    "axes_action": [
+      "Contrôles vitesse avec cinémomètre portatif",
+      "Actions anti-rodéos coordonnées avec gendarmerie",
+      "Sécurisation des abords d'écoles",
+      "Mesures ciblées avec suivi d'efficacité"
+    ],
+    "indicateurs": [
+      "Vitesse moyenne constatée",
+      "Incidents signalés",
+      "Ressenti aux abords des écoles"
+    ],
+    "vision": "Faire respecter des règles qui permettent à chacun de circuler en sécurité.",
+    "numero": "4/11",
+    "image": "images/objectifs/tranquillite_4.png"
+  },
+  {
+    "id": 205,
+    "titre": "Objectif 5 - Éclairage & aménagements",
+    "theme": "Tranquillité publique",
+    "axe": 1,
+    "statut": "Étude",
+    "annee": 2027,
+    "budget": 0,
+    "resume": "Prévenir par le cadre de vie",
+    "description": "L'aménagement de l'espace public influence directement le sentiment de sécurité. Un parking mal éclairé, un passage peu visible génèrent de l'anxiété. La prévention par le cadre de vie est une approche durable.",
+    "importance": 2,
+    "chiffres": [],
+    "tags": [
+      "Éclairage",
+      "Aménagement",
+      "Prévention"
+    ],
+    "slogan": "Éclairer • Dégager • Sécuriser",
+    "enjeux": [
+      "Réduire le sentiment d'insécurité dans l'espace public",
+      "Supprimer les angles morts et zones anxiogènes",
+      "Améliorer la lisibilité des cheminements"
+    ],
+    "axes_action": [
+      "Repérage des zones anxiogènes",
+      "Corrections rapides : angles morts, visibilité, végétation",
+      "Cheminements lisibles et continus",
+      "Projets d'éclairage adaptés secteur par secteur"
+    ],
+    "indicateurs": [
+      "Zones traitées",
+      "Délai de traitement",
+      "Ressenti sur les parcours"
+    ],
+    "vision": "Un espace public où l'on se sent en sécurité, de jour comme de nuit.",
+    "numero": "5/11",
+    "image": "images/objectifs/tranquillite_5.png"
+  },
+  {
+    "id": 206,
+    "titre": "Objectif 6 - Vidéoprotection",
+    "theme": "Tranquillité publique",
+    "axe": 1,
+    "statut": "Programmé",
+    "annee": 2026,
+    "budget": 0,
+    "resume": "Achever le maillage — transparence et efficacité",
+    "description": "La vidéoprotection permet de dissuader certains comportements, de faciliter l'identification des auteurs d'infractions et de rassurer les habitants. L'objectif est d'achever le maillage prévu.",
+    "importance": 2,
+    "chiffres": [],
+    "tags": [
+      "Vidéoprotection",
+      "Sécurité",
+      "Transparence"
+    ],
+    "slogan": "Couvrir • Exploiter • Respecter",
+    "enjeux": [
+      "Compléter la couverture des zones sensibles",
+      "Garantir la qualité et l'exploitation des images",
+      "Respecter le cadre légal et informer les citoyens"
+    ],
+    "axes_action": [
+      "Achèvement du maillage : parkings, entrées/sorties, zones commerciales",
+      "Maintenance et qualité d'image",
+      "Transparence réglementaire et affichage conforme",
+      "Chaîne d'action : signalement → visionnage → intervention"
+    ],
+    "indicateurs": [
+      "Incidents traités grâce à la vidéo",
+      "Délai d'exploitation",
+      "Évolution des incivilités"
+    ],
+    "vision": "Un outil efficace au service de la tranquillité, dans le respect du cadre légal.",
+    "numero": "6/11",
+    "image": "images/objectifs/tranquillite_6.png"
+  },
+  {
+    "id": 207,
+    "titre": "Objectif 7 - Propreté & cadre de vie",
+    "theme": "Tranquillité publique",
+    "axe": 3,
+    "statut": "Programmé",
+    "annee": 2026,
+    "budget": 0,
+    "resume": "Réactivité + prévention",
+    "description": "La propreté de l'espace public est une composante essentielle de la tranquillité. Une ville propre est une ville où l'on se sent respecté. La propreté repose sur deux piliers : réactivité et prévention.",
+    "importance": 2,
+    "chiffres": [],
+    "tags": [
+      "Propreté",
+      "Réactivité",
+      "Cadre de vie"
+    ],
+    "slogan": "Nettoyer vite • Éviter que ce soit sali",
+    "enjeux": [
+      "Maintenir un espace public propre et accueillant",
+      "Réagir rapidement aux signalements",
+      "Prévenir les comportements inciviques"
+    ],
+    "axes_action": [
+      "Équipe propreté réactive : tournées quotidiennes, intervention rapide",
+      "Lutte contre les dépôts sauvages",
+      "Déjections canines : pédagogie et distributeurs de sacs",
+      "Équipements adaptés : corbeilles et cendriers"
+    ],
+    "indicateurs": [
+      "Délai d'intervention",
+      "Points critiques résolus",
+      "Évolution des signalements"
+    ],
+    "vision": "Une ville propre où les règles communes sont respectées.",
+    "numero": "7/11",
+    "image": "images/objectifs/tranquillite_7.png"
+  },
+  {
+    "id": 208,
+    "titre": "Objectif 8 - Lien direct habitants",
+    "theme": "Tranquillité publique",
+    "axe": 3,
+    "statut": "Programmé",
+    "annee": 2026,
+    "budget": 0,
+    "resume": "Référents de quartier + accès pour tous",
+    "description": "Le lien avec les habitants est la clé d'une action efficace. Ce sont eux qui vivent au quotidien dans les quartiers. Ce lien ne peut pas reposer uniquement sur le numérique.",
+    "importance": 3,
+    "chiffres": [],
+    "tags": [
+      "Proximité",
+      "Référents",
+      "Accessibilité"
+    ],
+    "slogan": "Écouter • Relayer • Agir",
+    "enjeux": [
+      "Maintenir un lien direct avec les habitants",
+      "Permettre à chacun de signaler facilement",
+      "Ne laisser personne de côté (non-numérique)"
+    ],
+    "axes_action": [
+      "Référents de quartier : citoyens volontaires pour l'écoute et le relais",
+      "Moyens non numériques : fiches papier, téléphone",
+      "Canal de signalement simple et unique",
+      "Réunions de quartier ponctuelles et utiles"
+    ],
+    "indicateurs": [
+      "Signalements reçus et traités",
+      "Retours des référents",
+      "Participation aux réunions"
+    ],
+    "vision": "Des relais humains identifiés dans chaque quartier.",
+    "numero": "8/11",
+    "image": "images/objectifs/tranquillite_8.png"
+  },
+  {
+    "id": 209,
+    "titre": "Objectif 9 - Travailler ensemble",
+    "theme": "Tranquillité publique",
+    "axe": 3,
+    "statut": "Programmé",
+    "annee": 2026,
+    "budget": 0,
+    "resume": "Chaîne de réponse partagée, sans angle mort",
+    "description": "La tranquillité publique implique de nombreux acteurs : gendarmerie, bailleurs sociaux, établissements scolaires, associations, services de l'État. L'efficacité dépend de la coordination.",
+    "importance": 2,
+    "chiffres": [],
+    "tags": [
+      "Partenariat",
+      "Coordination",
+      "Efficacité"
+    ],
+    "slogan": "Coordonner • Partager • Agir ensemble",
+    "enjeux": [
+      "Coordonner tous les acteurs de la tranquillité",
+      "Éviter les angles morts dans le traitement des situations",
+      "Garantir une réponse rapide et cohérente"
+    ],
+    "axes_action": [
+      "Organisation interne clarifiée : rôles, délais, suivi",
+      "Coordination avec les référents de quartier",
+      "Échanges opérationnels avec gendarmerie, bailleurs, écoles",
+      "Projet de nouvelle gendarmerie"
+    ],
+    "indicateurs": [
+      "Actions conjointes réalisées",
+      "Délais inter-acteurs",
+      "Points noirs suivis en partenariat"
+    ],
+    "vision": "Une chaîne de réponse partagée entre tous les acteurs.",
+    "numero": "9/11",
+    "image": "images/objectifs/tranquillite_9.png"
+  },
+  {
+    "id": 210,
+    "titre": "Objectif 10 - Méthode & transparence",
+    "theme": "Tranquillité publique",
+    "axe": 3,
+    "statut": "Programmé",
+    "annee": 2026,
+    "budget": 0,
+    "resume": "On dit ce qu'on fait, on montre ce qu'on améliore",
+    "description": "La confiance des habitants repose sur la transparence de l'action publique. Il ne suffit pas d'agir, il faut montrer ce qu'on fait et rendre compte des résultats.",
+    "importance": 2,
+    "chiffres": [],
+    "tags": [
+      "Transparence",
+      "Méthode",
+      "Bilan"
+    ],
+    "slogan": "Identifier • Agir • Mesurer • Publier",
+    "enjeux": [
+      "Rendre compte de l'action municipale",
+      "Mesurer l'efficacité des actions",
+      "Maintenir la confiance des habitants"
+    ],
+    "axes_action": [
+      "Cartographie des points noirs actualisée",
+      "Actions visibles et ciblées",
+      "Projets d'éclairage documentés secteur par secteur",
+      "Bilan annuel public des résultats"
+    ],
+    "indicateurs": [
+      "Points noirs recensés et traités",
+      "Délais de traitement",
+      "Publication du bilan annuel"
+    ],
+    "vision": "La méthode : identifier, agir, mesurer, publier.",
+    "numero": "10/11",
+    "image": "images/objectifs/tranquillite_10.png"
+  },
+  {
+    "id": 211,
+    "titre": "Objectif 11 - Anticiper, informer",
+    "theme": "Tranquillité publique",
+    "axe": 4,
+    "statut": "Programmé",
+    "annee": 2026,
+    "budget": 0,
+    "resume": "Préparer la commune aux crises, former les jeunes aux risques, protéger les victimes de violences, accompagner nos aînés — anticiper pour que personne ne soit oublié.",
+    "description": "Le quatrième axe regarde vers l'avenir et protège les plus vulnérables. Il s'articule autour de quatre actions complémentaires : préparer la commune aux crises grâce à un PCS vivant et une réserve communale de sécurité civile ; former dès l'enfance à la culture du risque avec des exercices PPMS réalistes et l'intervention de l'IRMa ; protéger les victimes de violences familiales via le CCAS, la coordination avec la gendarmerie et le dispositif « Demandez Angela » ; et enfin accompagner nos aînés — 31 % de la population a plus de 60 ans — face à l'isolement, aux arnaques, et en améliorant l'accessibilité de l'espace public. Vieillir ne doit pas signifier se sentir oublié ou en danger.",
+    "importance": 3,
+    "chiffres": [],
+    "tags": [
+      "PCS",
+      "Risques scolaires",
+      "Violences familiales",
+      "Demandez Angela",
+      "Aînés"
+    ],
+    "slogan": "Anticiper • Prévenir • Protéger",
+    "enjeux": [
+      "Préparer la commune aux crises : PCS opérationnel, exercices réguliers, réserve communale",
+      "Former dès l'enfance à la culture du risque (PPMS, IRMa, risques locaux)",
+      "Protéger les victimes de violences familiales : signalement, orientation, accompagnement",
+      "Accompagner nos aînés face à l'isolement, aux arnaques et aux difficultés d'accessibilité",
+      "Anticiper les situations d'urgence grâce au registre communal des personnes vulnérables"
+    ],
+    "axes_action": [
+      "PCS vivant : exercices réguliers, mise à jour permanente, information des habitants, réserve communale de sécurité civile",
+      "Écoles : exercices PPMS réalistes, interventions IRMa, supports adaptés à chaque âge, sensibilisation aux risques locaux (Romanche, industrie)",
+      "Violences familiales : formation des agents d'accueil, coordination CCAS-gendarmerie-associations, relais des dispositifs nationaux, déploiement « Demandez Angela » dans les commerces",
+      "Aînés : registre communal tenu à jour et activé à chaque alerte, alertes arnaques ciblées, trottoirs praticables et éclairage adapté, visites de la réserve communale",
+      "Plan canicule et grand froid : lieux rafraîchis, appels systématiques aux inscrits, coordination CCAS"
+    ],
+    "indicateurs": [
+      "Exercices PCS et PPMS réalisés par an",
+      "Commerces refuges « Demandez Angela » déployés",
+      "Personnes inscrites au registre communal des vulnérables",
+      "Points d'accessibilité améliorés (trottoirs, traversées, éclairage)",
+      "Appels de veille effectués en période de crise"
+    ],
+    "vision": "Anticiper les crises, former les jeunes, protéger les victimes, accompagner nos aînés — personne n'est oublié.",
+    "numero": "11/11",
+    "image": "images/objectifs/tranquillite_11.png"
+  },
+  {
+    "id": 507,
+    "theme": "Enfance/Jeunesse",
+    "titre": "Petite enfance",
+    "soustitre": "Accompagner le Syndicat Intercommunal de Coopération et des Compétences Enfance",
+    "idee_force": "Renforcer notre implication au sein du Syndicat Intercommunal de Coopération et des Compétences Enfance pour sécuriser le fonctionnement et l'accessibilité de la crèche Les Petits Drôles, dans un contexte de circulation contraint.",
+    "actions": [
+      "Participation active à la gouvernance du Syndicat Intercommunal de Coopération et des Compétences Enfance",
+      "Dialogue renforcé avec la Caisse d'Allocations Familiales et le Département",
+      "Amélioration de l'accessibilité (stationnement, accès)",
+      "Étude des besoins complémentaires"
+    ],
+    "indicateurs": [
+      "Places disponibles",
+      "Délais d'inscription",
+      "Satisfaction familles"
+    ],
+    "image": "images/objectifs/enfance_1.png",
+    "description": "Renforcer notre implication au sein du Syndicat Intercommunal de Coopération et des Compétences Enfance pour sécuriser le fonctionnement et l'accessibilité de la crèche Les Petits Drôles, dans un contexte de circulation contraint.",
+    "slogan": "Accompagner • Sécuriser • Faciliter",
+    "enjeux": [
+      "Garantir l'accès à la crèche pour les familles vizilloises",
+      "Peser sur les orientations stratégiques du Syndicat Intercommunal de Coopération et des Compétences Enfance",
+      "Coordonner avec le Lieu d'Accueil Enfants Parents Bleu Citron et le Relais Petite Enfance"
+    ],
+    "axes_action": [
+      "Participation active à la gouvernance du Syndicat Intercommunal de Coopération et des Compétences Enfance",
+      "Dialogue renforcé avec la Caisse d'Allocations Familiales et le Département",
+      "Amélioration de l'accessibilité (stationnement, accès)",
+      "Étude des besoins complémentaires"
+    ],
+    "vision": "Une offre petite enfance accessible et de qualité pour toutes les familles vizilloises.",
+    "tags": [
+      "Crèche",
+      "Syndicat Intercommunal de Coopération et des Compétences Enfance",
+      "Petite enfance"
+    ]
+  },
+  {
+    "id": 508,
+    "theme": "Enfance/Jeunesse",
+    "titre": "Conseil des jeunes",
+    "soustitre": "Former les citoyens de demain",
+    "idee_force": "Former les citoyens de demain commence dès l'école. Le conseil des jeunes permet aux élèves de s'initier à la démocratie locale et de participer à la vie de la commune.",
+    "actions": [
+      "Créer un conseil des jeunes (élèves d'élémentaire)",
+      "S'inspirer des dispositifs des communes voisines",
+      "Organiser des séances régulières avec les élus",
+      "Permettre aux jeunes de porter des projets concrets"
+    ],
+    "indicateurs": [
+      "Nombre de participants",
+      "Projets proposés",
+      "Écoles participantes"
+    ],
+    "image": "images/objectifs/enfance_2.png",
+    "description": "Créer un conseil des jeunes ciblant prioritairement les élèves d'élémentaire, public le plus réceptif à cette démarche d'initiation à la démocratie locale.",
+    "slogan": "Écouter • Impliquer • Former",
+    "enjeux": [
+      "Former les futurs citoyens dès l'école",
+      "Donner la parole aux enfants",
+      "Créer du lien entre jeunes et élus"
+    ],
+    "axes_action": [
+      "S'inspirer des dispositifs des communes voisines",
+      "Organiser des séances régulières avec les élus",
+      "Permettre aux jeunes de porter des projets concrets",
+      "Valoriser leurs réalisations"
+    ],
+    "vision": "Les citoyens de demain se forment aujourd'hui.",
+    "tags": [
+      "Démocratie",
+      "Jeunesse",
+      "Participation"
+    ]
+  },
+  {
+    "id": 509,
+    "theme": "Enfance/Jeunesse",
+    "titre": "Confort thermique des écoles",
+    "soustitre": "Lutter contre les fortes chaleurs",
+    "idee_force": "Les épisodes de canicule rendent les conditions d'apprentissage difficiles. Des températures jusqu'à 44°C ont été relevées. Il est urgent d'agir pour protéger les enfants.",
+    "actions": [
+      "Déploiement de protections solaires (lames de bois, stores)",
+      "Étude géothermique des écoles (solutions durables)",
+      "Renforcement du plan canicule",
+      "Végétalisation des cours (ombrage naturel)"
+    ],
+    "indicateurs": [
+      "Températures relevées",
+      "Classes équipées",
+      "Alertes canicule"
+    ],
+    "image": "images/objectifs/enfance_3.png",
+    "description": "Alerte sur les températures excessives dans les salles de classe l'été (jusqu'à 44°C mesurés). Un plan d'action est nécessaire en attendant que les arbres plantés arrivent à maturité.",
+    "slogan": "Protéger • Rafraîchir • Anticiper",
+    "enjeux": [
+      "Protéger la santé des enfants et enseignants",
+      "Maintenir des conditions d'apprentissage correctes",
+      "Anticiper les épisodes caniculaires"
+    ],
+    "axes_action": [
+      "Déploiement de protections solaires (lames de bois, stores)",
+      "Étude géothermique des écoles",
+      "Renforcement du plan canicule",
+      "Végétalisation des cours (ombrage naturel)"
+    ],
+    "vision": "Des écoles où il fait bon apprendre, même en été.",
+    "tags": [
+      "Écoles",
+      "Canicule",
+      "Confort"
+    ]
+  },
+  {
+    "id": 510,
+    "theme": "Enfance/Jeunesse",
+    "titre": "Engagement citoyen des jeunes",
+    "soustitre": "Valoriser l'engagement",
+    "idee_force": "Encourager les jeunes à s'engager dans des actions utiles à la collectivité : premiers secours, pompiers, bénévolat associatif. Un jeune référent peut inspirer ses pairs.",
+    "actions": [
+      "Identifier des jeunes référents (pompiers, associations)",
+      "Formations aux gestes de premiers secours",
+      "Mise en valeur des parcours d'engagement",
+      "Partenariat avec les associations locales"
+    ],
+    "indicateurs": [
+      "Jeunes formés",
+      "Actions de bénévolat",
+      "Référents identifiés"
+    ],
+    "image": "images/objectifs/enfance_4.png",
+    "description": "Valoriser l'engagement des jeunes Vizillois à travers des actions concrètes : premiers secours, pompiers, bénévolat associatif.",
+    "slogan": "S'engager • Apprendre • Transmettre",
+    "enjeux": [
+      "Encourager l'engagement citoyen des jeunes",
+      "Développer des compétences utiles",
+      "Créer des vocations"
+    ],
+    "axes_action": [
+      "Identifier des jeunes référents engagement citoyen",
+      "Formation aux gestes de premiers secours avec les pompiers",
+      "Mise en valeur des parcours d'engagement",
+      "Partenariat avec les associations locales"
+    ],
+    "vision": "Des jeunes acteurs de leur territoire.",
+    "tags": [
+      "Engagement",
+      "Pompiers",
+      "Bénévolat"
+    ]
+  },
+  {
+    "id": 511,
+    "theme": "Enfance/Jeunesse",
+    "titre": "Aller vers les adolescents",
+    "soustitre": "Créer du lien",
+    "idee_force": "Certains adolescents ne fréquentent pas les structures existantes. Il faut aller à leur rencontre, comprendre leurs besoins. L'objectif n'est pas de surveiller mais d'accompagner.",
+    "actions": [
+      "Actions « aller-vers » dans l'espace public",
+      "Écoute des besoins et attentes des adolescents",
+      "Proposition d'activités adaptées à leurs envies",
+      "Accompagnement dans les projets (associations, initiatives)"
+    ],
+    "indicateurs": [
+      "Jeunes rencontrés",
+      "Accompagnements réalisés",
+      "Orientation vers structures"
+    ],
+    "image": "images/objectifs/enfance_5.png",
+    "description": "Constat de jeunes 'dehors' sans activité identifiée. Comment les atteindre et les impliquer ? L'objectif n'est pas de surveiller mais d'accompagner.",
+    "slogan": "Écouter • Comprendre • Accompagner",
+    "enjeux": [
+      "Aller à la rencontre des jeunes",
+      "Comprendre leurs besoins",
+      "Proposer des accompagnements adaptés"
+    ],
+    "axes_action": [
+      "Dispositifs 'aller-vers'",
+      "Accompagnement dans les démarches administratives",
+      "S'appuyer sur l'expérience associative locale",
+      "Créer des espaces de dialogue"
+    ],
+    "vision": "Aucun jeune ne doit rester sans solution.",
+    "tags": [
+      "Adolescents",
+      "Prévention",
+      "Accompagnement"
+    ]
+  },
+  {
+    "id": 512,
+    "theme": "Enfance/Jeunesse",
+    "titre": "Accompagner les associations",
+    "soustitre": "Soutenir la jeunesse associative",
+    "idee_force": "Les jeunes ont des idées mais se heurtent souvent à la complexité administrative. La commune peut les accompagner dans leurs démarches de création et de financement.",
+    "actions": [
+      "Permanence d'aide aux démarches associatives",
+      "Guide pratique « créer son association à Vizille »",
+      "Mise en relation avec les associations existantes",
+      "Soutien aux premiers projets (locaux, communication)"
+    ],
+    "indicateurs": [
+      "Associations créées",
+      "Bénévoles accompagnés",
+      "Projets soutenus"
+    ],
+    "image": "images/objectifs/enfance_6.png",
+    "description": "Les associations sont un levier essentiel pour l'épanouissement des jeunes. Le personnel doit se sentir bien pour porter des projets (attention aux RPS).",
+    "slogan": "Soutenir • Simplifier • Écouter",
+    "enjeux": [
+      "Favoriser la création d'associations jeunesse",
+      "Simplifier les démarches administratives",
+      "Prévenir les risques psychosociaux"
+    ],
+    "axes_action": [
+      "Soutien aux créations d'associations",
+      "Simplification des démarches",
+      "Écoute des attentes et besoins",
+      "Accompagnement des bénévoles"
+    ],
+    "vision": "Des associations dynamiques pour des jeunes épanouis.",
+    "tags": [
+      "Associations",
+      "Bénévolat",
+      "Soutien"
+    ]
+  },
+  {
+    "id": 513,
+    "theme": "Enfance/Jeunesse",
+    "titre": "Handicap & inclusion",
+    "soustitre": "Une place pour chacun",
+    "idee_force": "L'inclusion des enfants en situation de handicap est un enjeu majeur. Nous ferons un état des lieux de l'accessibilité et améliorerons l'accompagnement des familles.",
+    "actions": [
+      "État des lieux accessibilité (écoles, crèche, périscolaire)",
+      "Identification des besoins non couverts",
+      "Renforcement de l'accompagnement des familles",
+      "Formation des personnels à l'accueil du handicap"
+    ],
+    "indicateurs": [
+      "Structures accessibles",
+      "Familles accompagnées",
+      "Personnels formés"
+    ],
+    "image": "images/objectifs/enfance_7.png",
+    "description": "État des lieux nécessaire de ce qui existe déjà dans les écoles et l'accueil petite enfance. Coordination avec le Pôle Ressources Handicap du Syndicat Intercommunal de Coopération et des Compétences Enfance.",
+    "slogan": "Diagnostiquer • Accompagner • Inclure",
+    "enjeux": [
+      "Garantir l'accessibilité des structures",
+      "Accompagner les familles concernées",
+      "Coordonner avec les partenaires spécialisés"
+    ],
+    "axes_action": [
+      "Diagnostic accessibilité des écoles",
+      "Accompagnement des parents",
+      "Coordination avec le Pôle Ressources Handicap du Syndicat Intercommunal de Coopération et des Compétences Enfance",
+      "Formation des personnels"
+    ],
+    "vision": "Une école et des structures ouvertes à tous.",
+    "tags": [
+      "Handicap",
+      "Inclusion",
+      "Accessibilité"
+    ]
+  },
+  {
+    "id": 514,
+    "theme": "Enfance/Jeunesse",
+    "titre": "Numérique & aide aux devoirs",
+    "soustitre": "Réduire la fracture numérique",
+    "idee_force": "Tous les enfants n'ont pas les mêmes chances face au numérique et à l'aide aux devoirs. La commune agira pour réduire ces inégalités et offrir un soutien adapté à tous.",
+    "actions": [
+      "Accès au numérique pour tous (équipements, connexion)",
+      "Renforcement de l'aide aux devoirs",
+      "Partenariats avec associations de soutien scolaire",
+      "Formation des parents aux outils numériques"
+    ],
+    "indicateurs": [
+      "Jeunes accompagnés",
+      "Séances d'aide aux devoirs",
+      "Formations réalisées"
+    ],
+    "image": "images/objectifs/enfance_8.png",
+    "description": "Tous les jeunes ne sont pas égaux face au numérique. L'aide aux devoirs est un besoin identifié pour accompagner la réussite scolaire.",
+    "slogan": "Accompagner • Former • Équiper",
+    "enjeux": [
+      "Réduire la fracture numérique",
+      "Accompagner la réussite scolaire",
+      "Former aux outils numériques"
+    ],
+    "axes_action": [
+      "Créer des espaces numériques accompagnés",
+      "Mettre en place des dispositifs d'aide aux devoirs",
+      "Former les jeunes et les familles au numérique",
+      "Équiper les structures en matériel adapté"
+    ],
+    "vision": "Le numérique au service de la réussite de tous.",
+    "tags": [
+      "Numérique",
+      "Devoirs",
+      "Égalité"
+    ]
+  },
+  {
+    "id": 620,
+    "theme": "Concertation citoyenne",
+    "type": "objectif",
+    "titre": "Axe 1 - Démocratie locale et participation citoyenne",
+    "resume": "L'idée est de faire vivre une démocratie active, inclusive et émancipatrice.",
+    "description": "• Conseil de quartier : jeunes, personnes précaires, seniors\n• Lieu ouvert dédié à l'écoute, ateliers, débats, formations"
+  },
+  {
+    "id": 621,
+    "theme": "Concertation citoyenne",
+    "type": "objectif",
+    "titre": "Axe 2 - Éducation populaire et culture pour tous",
+    "resume": "Garantir l'accès à une culture critique, émancipatrice et accessible.",
+    "description": "• Création d'un centre d'éducation populaire permanent (style maison des jeunes)\n• Café-débats, ciné-débats, théâtre-forums sur les différents sujets (enjeux sociaux, enjeux environnementaux, enjeux politiques)\n• Appuis financiers aux associations locales d'éducation populaire (conventions avec l'Escale par ex)\n• Résidences d'artistes ou de chercheurs dans les écoles ou les quartiers"
+  },
+  {
+    "id": 622,
+    "theme": "Concertation citoyenne",
+    "type": "objectif",
+    "titre": "Axe 3 - Jeunesse et émancipation",
+    "resume": "Donner les moyens aux jeunes de devenir acteurs de leur vie et de leur territoire.",
+    "description": "• Création d'un conseil municipal des jeunes\n• Atelier d'autodéfense intellectuelle (pensée critique, préserver l'intégrité intellectuelle)\n• Chantiers jeunes participatifs (service civique local)"
+  },
+  {
+    "id": 623,
+    "theme": "Concertation citoyenne",
+    "type": "objectif",
+    "titre": "Axe 4 - Lutte contre les inégalités et émancipation sociale",
+    "resume": "Faire de l'éducation populaire un outil d'émancipation pour les personnes les plus éloignées des droits.",
+    "description": "• Soutien à l'apprentissage du français\n• Ateliers juridiques, économiques et sociaux (comprendre ses droits, les institutions, le fonctionnement des aides)\n• Accès gratuit à des lieux de convivialité et d'apprentissage (jardins partagés, médiathèque animée, Escale, associations culturelles)\n• Promotion de la santé : CLSM (Conseil Local à la Santé Mentale), outil de démocratie en santé"
+  },
+  {
+    "id": 624,
+    "theme": "Concertation citoyenne",
+    "type": "objectif",
+    "titre": "Axe 5 - Transition écologique et savoirs partagés",
+    "resume": "Faire de la transition un projet collectif, compris et maîtrisé localement.",
+    "description": "• Sur la base du plan climat, approfondir les actions pédagogiques et sociétales\n• Renforcer les actions autour de la santé publique (la pollution, les dangers professionnels, l'habitat et les peuplements)\n• Formation citoyenne sur les enjeux climatiques et les transitions\n• Expérimentations collectives (potagers urbains par ex, déchets)\n• Soutien pédagogique, projets dans les écoles\n• Café-débats, ciné-débats"
+  },
+  {
+    "id": 625,
+    "theme": "Transition écologique",
+    "type": "objectif",
+    "titre": "Objectif 1 - Intégrer l'environnement dans chaque projet municipal",
+    "resume": "Dans chaque projet municipal, dès la conception.",
+    "description": "Pour que chaque décision (travaux, achats, urbanisme, services) réduise l'empreinte écologique et améliore la qualité de vie, aujourd'hui et demain.",
+    "details": "Ce qu'on fait : Évaluer l'impact environnemental et énergétique des projets. Favoriser des solutions sobres, réparables et durables. Structurer une démarche commune : transition numérique responsable & responsabilité sociétale.",
+    "benefices": "Moins de dépenses d'énergie et de ressources. Des projets cohérents, lisibles et mesurables. Une commune plus résiliente et exemplaire.",
+    "indicateurs": "% de projets avec bilan d'impact • kWh économisés/an • Part d'achats responsables"
+  },
+  {
+    "id": 626,
+    "theme": "Transition écologique",
+    "type": "objectif",
+    "titre": "Objectif 2 - Faire de la transition un projet collectif compris et maîtrisé localement",
+    "resume": "Un projet collectif, compris et maîtrisé localement.",
+    "description": "Parce que la transition réussit quand elle est partagée : pédagogie, participation, santé publique et actions concrètes au plus près des habitants.",
+    "details": "Ce qu'on fait : S'appuyer sur le Plan Climat du territoire pour amplifier les actions. Renforcer la santé publique (pollution, risques, expositions). Former et informer sur les enjeux climatiques. Lancer des expérimentations (potagers, déchets). Soutenir les projets scolaires. Cultiver les savoirs : cafés-débats, ciné-débat.",
+    "benefices": "Des habitants acteurs, mieux informés. Des choix collectifs plus acceptés. Des initiatives locales qui essaiment.",
+    "indicateurs": "Nb d'actions pédagogiques/an • Nb de participants • Nb de projets écoles/assos"
+  },
+  {
+    "id": 627,
+    "theme": "Urbanisme",
+    "type": "objectif",
+    "titre": "Objectif - Revitaliser le centre-ville de Vizille",
+    "resume": "Transformer le centre-ville et positionner Vizille comme centralité du sud métropolitain.",
+    "description": "• Opération de Revitalisation de Territoire (ORT) signée fin 2025 avec la Métropole\n• Projet Centralité Vizilloise piloté conjointement avec Grenoble-Alpes Métropole\n• Requalification urbaine, habitat, commerce, espaces publics\n• Horizon 2030"
+  },
+  {
+    "id": 628,
+    "theme": "Urbanisme",
+    "type": "engagement",
+    "titre": "ORT - Opération de Revitalisation de Territoire",
+    "resume": "Convention cadre nationale pour revitaliser le centre-ville.",
+    "description": "Convention signée décembre 2025, mise en œuvre 2025-2030.\nPartenaires : État (ANCT), Métropole, ANAH, Banque des Territoires, EPF.\nAccès aux aides ANAH, Action Cœur de Ville, fonds de revitalisation, exonérations fiscales.\nPositionne Vizille comme centralité du sud métropolitain. Englobe OPAH-RU, commerces, mobilités."
+  },
+  {
+    "id": 629,
+    "theme": "Urbanisme",
+    "type": "engagement",
+    "titre": "Projet Centralité Vizilloise",
+    "resume": "Programme de requalification urbaine piloté avec la Métropole.",
+    "description": "Requalification urbaine pilotée conjointement par Grenoble-Alpes Métropole et la Ville.\nPoursuite du projet après retour et analyse des concertations."
+  },
+  {
+    "id": 630,
+    "theme": "Urbanisme",
+    "type": "engagement",
+    "titre": "Secteur Tanneries",
+    "resume": "Requalification du dernier grand tènement en centre-ville (~5 ha).",
+    "description": "Logements, équipements, mobilité douce.\nÉtudes, concertation et ateliers effectués pendant le mandat 2020-2026.\nReprise du dossier fin 2026. Cession EPFL-D prévue novembre 2025.\nPartenaires : Métropole, Ville, LPV, EPFL-D, Habitants.\nPérimètre : rue République → rue Jean Jaurès / rue des Forges."
+  },
+  {
+    "id": 631,
+    "theme": "Urbanisme",
+    "type": "engagement",
+    "titre": "Les Terrasses de la Romanche (Alliance Textile)",
+    "resume": "52 logements en accession à la propriété.",
+    "description": "Phase 1 : livraison 2ème semestre 2026 (logements et commerce).\nPhase 2 : chantier en cours, livraison 2028.\nPorté par LPV et Isalis Immo.\nDispositif PSLA, TVA réduite 5,5%, exonération taxe foncière 15 ans."
+  },
+  {
+    "id": 632,
+    "theme": "Urbanisme",
+    "type": "engagement",
+    "titre": "OPAH-RU Réno'Vizille",
+    "resume": "Opération d'Amélioration de l'Habitat sur 5 ans, 250 façades ciblées.",
+    "description": "Accompagnement des propriétaires pour la rénovation des logements vacants, rénovation énergétique et façades.\nPartenaires : État (ANAH), Métropole, Ville, Opérateur OPAH.\nSubventions ANAH (jusqu'à 50%), aides Métropole, accompagnement gratuit."
+  },
+  {
+    "id": 633,
+    "theme": "Travaux",
+    "type": "objectif",
+    "titre": "Objectif - Moderniser les infrastructures communales",
+    "resume": "Travaux d'entretien, rénovation et amélioration du patrimoine communal.",
+    "description": "• Programme pluriannuel 2026-2032\n• Qualité des espaces publics, maintenance des bâtiments\n• VRD, éclairage public, propreté des locaux\n• Transition environnementale\n• Une trentaine d'agents dont 6 en encadrement direct\n• Gestion rigoureuse pour maintenir les services et préparer l'avenir"
+  },
+  {
+    "id": 634,
+    "theme": "Travaux",
+    "type": "engagement",
+    "titre": "Rue Général de Gaulle - Réseaux",
+    "resume": "Réfection complète des réseaux d'assainissement et eau potable.",
+    "description": "Travaux de réseaux réalisés en 2024, piétonisation partielle décembre 2025.\nPhase finale 2ème semestre 2027, achèvement début 2028.\nPartenaires : Grenoble-Alpes Métropole (maître d'ouvrage), Ville de Vizille.\nFinancement Métropole (compétences eau/assainissement)."
+  },
+  {
+    "id": 635,
+    "theme": "Travaux",
+    "type": "engagement",
+    "titre": "Rue Général de Gaulle - Voie partagée",
+    "resume": "Piétonisation partielle pour apaiser les déplacements et dynamiser le commerce.",
+    "description": "Amélioration des espaces publics.\nÉtude, concertation, réunion publique fin 2026, travaux courant 2028.\nPartenaires : Grenoble-Alpes Métropole (maître d'ouvrage), Ville de Vizille.\nFinancement Métropole (Centralité Vizilloise), Ville de Vizille."
+  },
+  {
+    "id": 636,
+    "theme": "Travaux",
+    "type": "engagement",
+    "titre": "Maison de Santé Pluriprofessionnelle",
+    "resume": "Priorité du mandat face à la pénurie médicale.",
+    "description": "La Ville a repris le pilotage. Médecins installés provisoirement dans les locaux de l'Avant-Garde.\nÉtudes et maîtrise d'œuvre en 2026, travaux 2027, livraison début 2028."
+  },
+  {
+    "id": 637,
+    "theme": "Travaux",
+    "type": "engagement",
+    "titre": "Chapelle du Péage de Vizille",
+    "resume": "Préservation et mise en valeur de ce lieu historique.",
+    "description": "Chapelle rachetée par la commune.\nRéunion publique courant 2026 pour débattre du devenir du site."
+  },
+  {
+    "id": 638,
+    "theme": "Travaux",
+    "type": "engagement",
+    "titre": "Gendarmerie",
+    "resume": "Échéance primordiale pour conserver la gendarmerie sur la commune.",
+    "description": "Études et échanges menés tout au long du mandat.\nPropositions discutées avec les services de l'État.\nL'équipe met toutes les forces nécessaires pour conserver la gendarmerie sur la commune."
+  },
+  {
+    "id": 639,
+    "theme": "Transition écologique",
+    "type": "engagement",
+    "titre": "Engagement 1 - Énergies renouvelables",
+    "resume": "Réseau de chaleur & accompagnement des copropriétés.",
+    "description": "Décarboner l'énergie locale et réduire la facture, en priorisant un réseau de chaleur urbain (quartier nord / centre-ville).",
+    "details": "Ce qu'on fait : Déployer des ENR sur la commune (projets communaux). Accompagner habitants et copropriétés pour le raccordement. Informer sur les gains et les modalités.",
+    "benefices": "Moins de CO₂. Une énergie plus stable et locale. Des logements mieux valorisés.",
+    "indicateurs": "Taux de raccordement • tCO₂ évitées/an • Nb de copropriétés accompagnées",
+    "perimetre": "Quartier nord / centre-ville"
+  },
+  {
+    "id": 640,
+    "theme": "Transition écologique",
+    "type": "engagement",
+    "titre": "Engagement 2 - Désimperméabiliser les cours d'écoles",
+    "resume": "Cours d'écoles prioritaires.",
+    "description": "Limiter les ruissellements et rafraîchir les cours, au bénéfice des enfants et du voisinage.",
+    "details": "Ce qu'on fait : Sols perméables + végétalisation. Priorité : Joliot-Curie, maternelle centre, école du château. Co-conception avec équipes éducatives & parents.",
+    "benefices": "Moins d'îlots de chaleur. Meilleure gestion des eaux pluviales. Cours plus agréables et sûres.",
+    "indicateurs": "m² désimperméabilisés • Nb d'écoles concernées • Suivi température / confort",
+    "perimetre": "Joliot-Curie, maternelle centre, école du château"
+  },
+  {
+    "id": 641,
+    "theme": "Transition écologique",
+    "type": "engagement",
+    "titre": "Engagement 3 - Réaménager la Place Henri Barbusse",
+    "resume": "Place Henri Barbusse (marché).",
+    "description": "Créer un cœur de ville plus ombragé, plus convivial et mieux adapté aux usages du marché.",
+    "details": "Ce qu'on fait : Repenser circulations & usages. Ajouter ombrage, végétation, sols perméables. Co-concevoir avec commerçants & habitants.",
+    "benefices": "Marché plus attractif. Confort été/hiver. Espace public apaisé.",
+    "indicateurs": "% surface ombragée • Nb d'événements/usages • Satisfaction usagers",
+    "perimetre": "Place Henri Barbusse"
+  },
+  {
+    "id": 642,
+    "theme": "Transition écologique",
+    "type": "engagement",
+    "titre": "Engagement 4 - Planter des arbres",
+    "resume": "Développer les zones d'ombrage.",
+    "description": "Accélérer la création d'ombre naturelle et de corridors de biodiversité.",
+    "details": "Ce qu'on fait : Plan de plantation pluriannuel. Essences adaptées au climat. Suivi : arrosage, protection, remplacement.",
+    "benefices": "Plus de fraîcheur. Biodiversité renforcée. Cadre de vie amélioré.",
+    "indicateurs": "Nb d'arbres plantés/an • Taux de reprise • m² d'ombre créée"
+  },
+  {
+    "id": 643,
+    "theme": "Transition écologique",
+    "type": "engagement",
+    "titre": "Engagement 5 - Accès à la fraîcheur",
+    "resume": "Canaux, espaces de fraîcheur, piscine.",
+    "description": "Offrir des refuges de fraîcheur lors des épisodes chauds et valoriser les canaux comme atout local.",
+    "details": "Ce qu'on fait : Valoriser les canaux. Identifier et aménager des espaces de fraîcheur. Maintenir la piscine municipale en fonctionnement.",
+    "benefices": "Meilleure adaptation aux canicules. Bien-être pour tous. Attractivité estivale.",
+    "indicateurs": "Nb d'espaces de fraîcheur • Fréquentation • Jours d'ouverture piscine"
+  },
+  {
+    "id": 644,
+    "theme": "Transition écologique",
+    "type": "engagement",
+    "titre": "Engagement 6 - Éclairage public sobre",
+    "resume": "LED + pilotage intelligent.",
+    "description": "Réduire la consommation tout en gardant un éclairage adapté aux usages et à la sécurité.",
+    "details": "Ce qu'on fait : Généraliser les LED. Déployer pilotage (détection présence, scénarios). Ajuster selon lieux et horaires.",
+    "benefices": "Baisse des factures. Moins de pollution lumineuse. Confort & sécurité.",
+    "indicateurs": "% points lumineux en LED • kWh économisés/an • Nb de zones pilotées"
+  },
+  {
+    "id": 645,
+    "theme": "Transition écologique",
+    "type": "engagement",
+    "titre": "Engagement 7 - Rénovation énergétique des bâtiments",
+    "resume": "Bâtiments communaux, priorité écoles.",
+    "description": "Rationaliser le patrimoine bâti, réduire les charges et améliorer les conditions d'apprentissage et de travail.",
+    "details": "Ce qu'on fait : Stratégie de rénovation + conformité. Études pour prioriser. Priorité groupes scolaires. Intégrer qualité de l'air intérieur.",
+    "benefices": "Économies durables. Confort thermique. Santé & performance à l'école.",
+    "indicateurs": "kWh/m²/an • € charges réduites • Nb de bâtiments rénovés"
+  },
+  {
+    "id": 646,
+    "theme": "Transition écologique",
+    "type": "engagement",
+    "titre": "Engagement 8 - Numérique responsable",
+    "resume": "Inclusion, réparation, accessibilité, vigilance IA.",
+    "description": "Mettre le numérique au service de tous, en limitant l'empreinte et en protégeant les données.",
+    "details": "Ce qu'on fait : Lutter contre la fracture numérique. Former les personnes en difficulté. Réparer/donner/recycler plutôt que remplacer. Créer un repair café ou Fablab. Accessibilité des sites. Cadre d'usage IA + frugalité + données.",
+    "benefices": "Plus d'autonomie. Moins de déchets électroniques. Services publics plus accessibles.",
+    "indicateurs": "Nb d'ateliers/an • Nb d'appareils réparés • Taux d'accessibilité des sites"
+  },
+  {
+    "id": 647,
+    "theme": "Transition écologique",
+    "type": "engagement",
+    "titre": "Engagement 9 - Forêt communale",
+    "resume": "Gestion durable & résilience (125 ha).",
+    "description": "Protéger un patrimoine naturel majeur et accompagner sa résilience face au climat avec l'ONF et les partenaires.",
+    "details": "Ce qu'on fait : Biodiversité, sols, paysages. Production de bois encadrée. Accueil du public : promenade, rando, découverte. Actions avec Département pour l'entretien.",
+    "benefices": "Forêt plus résiliente. Espace nature accessible. Atout écologique et récréatif.",
+    "indicateurs": "Actions ONF/partenaires • Indicateurs biodiversité • Entretien & fréquentation",
+    "partenaires": "ONF, Département",
+    "perimetre": "125 ha de forêt communale"
+  },
+
+  {
+    "id": 701,
+    "theme": "Animations de proximité",
+    "type": "objectif",
+    "titre": "Objectif — Animer Vizille au plus près des habitants",
+    "resume": "Des événements festifs, gratuits et réguliers pour faire vivre le centre-ville et les quartiers.",
+    "description": "Trois constats guident ce projet :\n→ Le centre-ville manque d'animation régulière et conviviale\n→ Il n'existe pas de scène intimiste de proximité\n→ Les forces vives associatives ne sont pas assez accompagnées\n\nEn complément de la programmation culturelle existante (Jeu de Paume, médiathèque, festivals), nous créons un volet d'animations de proximité piloté par les élus, ancré dans les rues, les places et les quartiers.\n\nDémarche progressive : 2026 = année test (1 événement par format, 5 000 €), puis montée en charge selon les retours du public.",
+    "importance": 3,
+    "slogan": "Animer • Rassembler • Faire vivre",
+    "enjeux": [
+      "Animer le centre-ville avec des événements festifs gratuits et réguliers",
+      "Créer une scène intimiste complémentaire du Jeu de Paume",
+      "Aller à la rencontre des associations pour les accompagner activement",
+      "Tester en 2026, consolider en 2027, déployer en 2028"
+    ],
+    "axes_action": [
+      "Axe 1 — Animations extérieures en centre-ville (Chapeau l'artiste, bals, nocturnes, Halloween)",
+      "Axe 2 — La p'tite salle, une scène intimiste (Isère en scène, Vizille en scène, Au théâtre ce soir)",
+      "Axe 3 — Accompagner les forces vives associatives"
+    ],
+    "indicateurs": [
+      "Fréquentation des événements de proximité",
+      "Nombre de soirées organisées par an",
+      "Associations rencontrées et projets accompagnés",
+      "Retours habitants et commerçants"
+    ],
+    "vision": "Une ville où la culture ne se limite pas aux murs d'une salle, mais vit dans les rues, sur les places et dans les quartiers.",
+    "image": "images/objectifs/objectif_animations.png"
+  },
+
+  {
+    "id": 720,
+    "theme": "Animations de proximité",
+    "type": "engagement",
+    "titre": "Spectacles « Chapeau l'artiste » — Rue et place, tout l'été",
+    "resume": "NOUVEAU — Spectacles de rue gratuits en centre-ville, juin à août.",
+    "description": "De juin à août, la rue De Gaulle et la place de Stalingrad accueillent des spectacles de rue pluridisciplinaires : musique, danse, clown, acrobates, jongleurs, théâtre. Sélection de troupes amateurs et professionnelles. Le public paie au chapeau — un format convivial, gratuit et sans coût de programmation. Année test 2026 : 1 soirée. Objectif 2028 : 5 soirées par été.",
+    "importance": 3,
+    "tags": ["Nouveau", "Animations de proximité", "Centre-ville", "Été"],
+    "chiffres": [
+      {"valeur": "1→5", "label": "Soirées / été (2026→2028)"},
+      {"valeur": "400 €", "label": "Coût unitaire"},
+      {"valeur": "Gratuit", "label": "Accès public"}
+    ]
+  },
+
+  {
+    "id": 721,
+    "theme": "Animations de proximité",
+    "type": "engagement",
+    "titre": "Bals populaires — Place de Stalingrad ou Parc Vöhringen",
+    "resume": "NOUVEAU — Bals gratuits avec orchestre, au printemps et en été.",
+    "description": "Au printemps et en été, Vizille retrouve ses bals populaires ! Sur la place de Stalingrad ou au Parc Vöhringen, avec orchestre (si budget) ou DJ, un rendez-vous intergénérationnel gratuit pour danser et se retrouver. Ce format n'existe pas aujourd'hui à Vizille — c'est un manque de convivialité festive que nous voulons combler. Année test 2026 : 1 bal. Objectif 2028 : 3 bals.",
+    "importance": 3,
+    "tags": ["Nouveau", "Animations de proximité", "Convivialité"],
+    "chiffres": [
+      {"valeur": "1→3", "label": "Bals / an (2026→2028)"},
+      {"valeur": "500 €", "label": "Coût unitaire"},
+      {"valeur": "Gratuit", "label": "Accès public"}
+    ]
+  },
+
+  {
+    "id": 722,
+    "theme": "Animations de proximité",
+    "type": "engagement",
+    "titre": "Nocturnes gourmandes et musicales — Produits locaux en centre-ville",
+    "resume": "NOUVEAU — Soirées produits locaux + musique live, place de Stalingrad.",
+    "description": "De juin à août, la place de Stalingrad et la rue De Gaulle accueillent des nocturnes associant produits locaux à consommer sur place et orchestre d'ambiance. Un concept de marché nocturne festif qui n'existe pas encore à Vizille, en synergie avec l'Union Commerçante Vizilloise et les producteurs du territoire. Année test 2026 : 1 soirée. Objectif 2028 : 5 soirées.",
+    "importance": 3,
+    "tags": ["Nouveau", "Animations de proximité", "Produits locaux", "Centre-ville"],
+    "chiffres": [
+      {"valeur": "1→5", "label": "Soirées / été (2026→2028)"},
+      {"valeur": "400 €", "label": "Coût unitaire"},
+      {"valeur": "Gratuit", "label": "Accès public"}
+    ]
+  },
+
+  {
+    "id": 723,
+    "theme": "Animations de proximité",
+    "type": "engagement",
+    "titre": "Le petit conte d'Halloween — Théâtre itinérant dans les quartiers",
+    "resume": "NOUVEAU — Le 31 octobre, spectacle d'improvisation pour les familles.",
+    "description": "Le 31 octobre, une troupe de théâtre d'improvisation amateur met en scène un conte d'Halloween en parcourant les quartiers de Vizille. Gratuit, festif, familial. Ce spectacle itinérant comble le vide entre la rentrée et Noël dans le calendrier des animations. Année test 2026 : 1 représentation. Objectif 2028 : 2 quartiers couverts.",
+    "importance": 2,
+    "tags": ["Nouveau", "Animations de proximité", "Familles", "Quartiers"],
+    "chiffres": [
+      {"valeur": "1→2", "label": "Quartiers (2026→2028)"},
+      {"valeur": "200 €", "label": "Coût unitaire"},
+      {"valeur": "Gratuit", "label": "Accès public"}
+    ]
+  },
+
+  {
+    "id": 730,
+    "theme": "Animations de proximité",
+    "type": "engagement",
+    "titre": "Spectacles « Isère en scène » — La p'tite salle, les 1ers samedis du mois",
+    "resume": "NOUVEAU — Programmation départementale intimiste, 10 €, toute l'année.",
+    "description": "Chaque premier samedi du mois, « La p'tite salle » programme un spectacle isérois : musique ou théâtre, amateurs et professionnels. Une vitrine des troupes et lieux culturels de notre département dans un cadre intimiste, chaleureux, proche du public. Complémentaire du Jeu de Paume (grande jauge), cette programmation offre une expérience différente. Lancement prévu rentrée 2027, après une année de prospection.",
+    "importance": 3,
+    "tags": ["Nouveau", "P'tite salle", "Isère", "Spectacles"],
+    "chiffres": [
+      {"valeur": "4→8", "label": "Samedis / an (2027→2028)"},
+      {"valeur": "10 €", "label": "Tarif"},
+      {"valeur": "500 €", "label": "Coût / spectacle"}
+    ]
+  },
+
+  {
+    "id": 731,
+    "theme": "Animations de proximité",
+    "type": "engagement",
+    "titre": "Spectacles « Vizille en scène » — Une scène pour les artistes vizillois",
+    "resume": "NOUVEAU — Scène dédiée aux artistes locaux, à la demande, 2 € ou gratuit.",
+    "description": "« La p'tite salle » ouvre ses portes au monde culturel vizillois : musiciens, danseurs, comédiens amateurs disposent d'une scène identifiée avec un nom propre et une programmation. On passe du simple « prêt de salle » à un vrai label de diffusion locale. Musique, danse, théâtre — programmation ponctuelle, à la demande. Lancement 2027.",
+    "importance": 2,
+    "tags": ["Nouveau", "P'tite salle", "Artistes locaux"],
+    "chiffres": [
+      {"valeur": "3→5", "label": "Soirées / an (2027→2028)"},
+      {"valeur": "2 € / gratuit", "label": "Tarif"}
+    ]
+  },
+
+  {
+    "id": 732,
+    "theme": "Animations de proximité",
+    "type": "engagement",
+    "titre": "Spectacles « Au théâtre ce soir » — L'été amateur à la p'tite salle",
+    "resume": "NOUVEAU — Juillet-août, troupes amateurs isèroises, 5 € / tarif libre.",
+    "description": "En juillet et août, les troupes théâtrales amateurs de l'Isère rejouent leurs spectacles de fin d'année dans notre p'tite salle. 100 % amateur, 100 % convivial. Ce format comble le creux de programmation estival du Jeu de Paume et offre une seconde vie aux créations des compagnies du département. Tarif accessible : 5 € ou tarif libre. Lancement été 2027.",
+    "importance": 2,
+    "tags": ["Nouveau", "P'tite salle", "Théâtre amateur", "Été"],
+    "chiffres": [
+      {"valeur": "4→6", "label": "Représentations / été (2027→2028)"},
+      {"valeur": "5 € / libre", "label": "Tarif"}
+    ]
+  },
+
+  {
+    "id": 740,
+    "theme": "Animations de proximité",
+    "type": "engagement",
+    "titre": "Accompagner les forces vives — Aller à la rencontre des associations",
+    "resume": "COMPLÉMENT — Écouter, accompagner, faciliter les projets citoyens.",
+    "description": "Nous irons à la rencontre des associations et institutions qui animent Vizille : écoles, associations culturelles, OMS, Maison des Pratiques Artistiques, collège, lycée, l'Escale… L'objectif : écouter leurs projets, attentes et besoins, les accompagner techniquement pour plus d'efficacité, encourager les habitants à être acteurs de l'animation locale. On passe d'une logique d'accueil (les associations viennent demander) à une démarche d'aller-vers (on va les rencontrer pour faire émerger des projets).",
+    "importance": 3,
+    "tags": ["Complément", "Associations", "Participation", "Aller-vers"],
+    "enjeux": [
+      "Écouter, connaître les projets, attentes et besoins",
+      "Accompagner, faciliter, aider techniquement",
+      "Encourager les habitants à être acteurs de l'animation locale",
+      "Permettre à des idées nouvelles de se concrétiser",
+      "Dynamiser la vie locale"
+    ]
+  },
+
+  {
+    "id": 750,
+    "theme": "Culture",
+    "type": "objectif",
+    "titre": "Objectif — Culture et vie associative",
+    "resume": "Une ville créative et attractive où la culture et la vie associative renforcent la cohésion et l'identité locale.",
+    "description": "Un projet culturel pour une ville qui se réinvente et prépare son avenir. Une ville où chacun trouve sa place, où l'on crée, où l'on partage, où l'on vit ensemble.\n\nQuatre axes structurent notre ambition :\n→ Éducation artistique et culture accessible pour tous\n→ Soutien aux acteurs culturels et à la création\n→ Événements conviviaux et projets avec les jeunes\n→ Vie associative dynamique et jumelage ouvert",
+    "importance": 3,
+    "slogan": "Créer • Partager • Vivre ensemble",
+    "enjeux": [
+      "Promouvoir l'éducation artistique et culturelle pour tous les âges",
+      "Soutenir la création et les acteurs culturels du territoire",
+      "Fédérer par des événements conviviaux et intergénérationnels",
+      "Accompagner la vie associative et les jumelages"
+    ],
+    "axes_action": [
+      "Axe 1 — Éducation artistique et culture accessible",
+      "Axe 2 — Soutien à la création et aux artistes",
+      "Axe 3 — Événements conviviaux et projets jeunesse",
+      "Axe 4 — Vie associative et jumelage"
+    ],
+    "indicateurs": [
+      "Fréquentation des événements culturels",
+      "Nombre de résidences d'artistes et projets soutenus",
+      "Associations accompagnées",
+      "Échanges jumelage réalisés"
+    ],
+    "vision": "Un projet culturel pour une ville où l'on crée, où l'on partage, où l'on vit ensemble.",
+    "image": "images/objectifs/objectif_culture.png"
+  },
+
+  {
+    "id": 751,
+    "theme": "Culture",
+    "type": "engagement",
+    "titre": "Éducation artistique et culturelle pour tous",
+    "resume": "Projet d'Éducation Artistique et Culturel communal, festivals jeunesse, pass'culture, orchestre à l'école.",
+    "description": "Mettre en place un Projet d'Éducation Artistique et Culturel communal (Projet d'Éducation Artistique et Culturel) pour valoriser les actions culturelles et les savoir-faire du territoire. Poursuivre les festivals jeunesse (festival du film pour enfants, P'tits Mots P'tits Mômes) en lien avec les structures culturelles, associatives, les commerçants et les structures petite enfance et jeunesse. Favoriser l'accès à la musique dès le plus jeune âge : pass'culture communal, orchestre à l'école, stages vacances, en lien avec les écoles, les associations et la Maison des Pratiques Artistiques.",
+    "importance": 3,
+    "tags": ["Culture", "Éducation", "Jeunesse", "Projet d'Éducation Artistique et Culturel"],
+    "chiffres": [
+      {"valeur": "Projet d'Éducation Artistique et Culturel", "label": "Projet communal"},
+      {"valeur": "Tous âges", "label": "Accès dès le plus jeune âge"}
+    ]
+  },
+
+  {
+    "id": 752,
+    "theme": "Culture",
+    "type": "engagement",
+    "titre": "Des tarifs accessibles et des spectacles de qualité",
+    "resume": "Maintien de tarifs abordables pour la saison culturelle et les festivals.",
+    "description": "Poursuivre l'effort pour maintenir des tarifs abordables pour la saison culturelle du Jeu de Paume, les festivals et les événements culturels. Maintenir des spectacles de qualité tout en garantissant l'accès au plus grand nombre grâce au soutien au quotient familial déjà existant.",
+    "importance": 2,
+    "tags": ["Culture", "Accessibilité", "Tarifs"]
+  },
+
+  {
+    "id": 753,
+    "theme": "Culture",
+    "type": "engagement",
+    "titre": "Résidences d'artistes et soutien à la création",
+    "resume": "Résidences, lieu de création, street art, appels à projets artistiques.",
+    "description": "Développer des résidences d'artistes et un lieu dédié à la création. Poursuivre le projet street art « De la vie et des couleurs » sur différents lieux et supports. Lancer des appels à projets artistiques et créer un parcours des arts dans la ville. Favoriser les rencontres entre habitants, artistes, créateurs et artisans d'art.",
+    "importance": 3,
+    "tags": ["Création", "Résidences", "Street art", "Artistes"],
+    "chiffres": [
+      {"valeur": "Street art", "label": "De la vie et des couleurs"},
+      {"valeur": "Parcours", "label": "Des arts dans la ville"}
+    ]
+  },
+
+  {
+    "id": 754,
+    "theme": "Culture",
+    "type": "engagement",
+    "titre": "Une salle d'exposition accessible et spacieuse",
+    "resume": "Création d'un espace dédié aux expositions artistiques.",
+    "description": "Création d'une salle d'exposition accessible et spacieuse pour accueillir des expositions de qualité. Un équipement culturel qui manque aujourd'hui à Vizille pour valoriser les artistes locaux et accueillir des expositions itinérantes.",
+    "importance": 2,
+    "tags": ["Équipement", "Exposition", "Art"]
+  },
+
+  {
+    "id": 755,
+    "theme": "Culture",
+    "type": "engagement",
+    "titre": "Projets culturels avec les jeunes de 11 à 20 ans",
+    "resume": "Fresques, spectacles, jardin musical, projets intergénérationnels.",
+    "description": "Construire des projets culturels avec les jeunes de 11 à 20 ans : fresques, spectacles théâtraux ou musicaux en lien avec des artistes. Créer un « jardin musical » par les jeunes pour les plus jeunes, avec confection d'instruments en matériaux de récupération en lien avec la Maison des Pratiques Artistiques — un projet intergénérationnel. Intégrer l'orgue de Vizille dans le festival des orgues de l'Oisans.",
+    "importance": 2,
+    "tags": ["Jeunesse", "Création", "Intergénérationnel", "Maison des Pratiques Artistiques"]
+  },
+
+  {
+    "id": 756,
+    "theme": "Culture",
+    "type": "engagement",
+    "titre": "Événements conviviaux toute l'année",
+    "resume": "Fête du printemps, fête de la soupe, repas de rue, fête des jeux, marché de Noël.",
+    "description": "Organisation d'événements conviviaux de partage et de rassemblement tout au long de l'année : fête du printemps, fête de la soupe, repas de rue, fête des jeux, marché de Noël, veillée de Belledonne. La culture dans tous les quartiers et dans la rue avec des animations culturelles régulières hors les murs, grâce aux ressources locales.",
+    "importance": 3,
+    "tags": ["Convivialité", "Fêtes", "Toute l'année", "Quartiers"]
+  },
+
+  {
+    "id": 758,
+    "theme": "Patrimoine",
+    "type": "objectif",
+    "titre": "Objectif — Connaître, préserver, transmettre le patrimoine vizillois",
+    "resume": "Valoriser le patrimoine bâti, mémoriel et paysager de Vizille pour renforcer l'identité locale et l'attractivité touristique.",
+    "description": "Vizille possède un patrimoine riche et varié : prieuré clunisien, chapelle du Péage, lavoirs, canaux des Tanneries, mémoire de la Résistance, petit patrimoine vernaculaire… Ce patrimoine mérite d'être mieux connu, mieux préservé et mieux transmis.\n\nNotre approche associe restauration participative, parcours de découverte et attractivité touristique, en lien étroit avec les associations patrimoniales et les habitants.",
+    "importance": 3,
+    "slogan": "Connaître • Préserver • Transmettre",
+    "enjeux": [
+      "Sauvegarder et faire revivre les sites patrimoniaux majeurs",
+      "Impliquer les habitants dans la préservation du patrimoine",
+      "Développer des parcours de découverte accessibles à tous",
+      "Renforcer l'attractivité touristique du territoire"
+    ],
+    "axes_action": [
+      "Axe 1 — Restauration participative (lavoirs, chapelle, Tanneries)",
+      "Axe 2 — Sites majeurs (prieuré, partenariats patrimoniaux)",
+      "Axe 3 — Parcours de découverte dans la ville",
+      "Axe 4 — Attractivité touristique"
+    ],
+    "indicateurs": [
+      "Sites patrimoniaux restaurés ou valorisés",
+      "Parcours créés et fréquentation",
+      "Partenariats actifs (AHPV, Fondation du patrimoine)",
+      "Fréquentation touristique"
+    ],
+    "vision": "Une ville qui connaît son histoire, la préserve et la partage avec fierté.",
+    "image": "images/objectifs/objectif_patrimoine.png"
+  },
+
+  {
+    "id": 760,
+    "theme": "Patrimoine",
+    "type": "engagement",
+    "titre": "Restauration participative des lavoirs et de la chapelle",
+    "resume": "Projets participatifs pour le petit patrimoine et la chapelle du Péage.",
+    "description": "Lancer un projet participatif pour la restauration des lavoirs de Vizille. Organiser une concertation citoyenne pour le devenir de la chapelle du Péage. Mettre en valeur le secteur des Tanneries (canaux, séchoir, moulin) à travers une résidence architecturale et artistique pour penser son devenir avec les habitants.",
+    "importance": 2,
+    "tags": ["Patrimoine", "Participatif", "Lavoirs", "Chapelle", "Tanneries"]
+  },
+
+  {
+    "id": 761,
+    "theme": "Patrimoine",
+    "type": "engagement",
+    "titre": "Sauvegarder et faire revivre le prieuré",
+    "resume": "Valorisation du prieuré en partenariat avec l'AHPV, la Fondation du patrimoine et les sites clunisiens.",
+    "description": "Sauvegarde du prieuré de Vizille : valorisation du monument et mise en projet pour le faire revivre, en partenariat avec les Amis de l'Histoire du Pays Vizillois (AHPV), la Fondation du patrimoine et la fédération des sites clunisiens. Organisation d'une fête des métiers du patrimoine, de la restauration et de l'archéologie. Actions culturelles sur les lieux patrimoniaux.",
+    "importance": 3,
+    "tags": ["Patrimoine", "Prieuré", "AHPV", "Clunisiens"],
+    "chiffres": [
+      {"valeur": "3", "label": "Partenaires patrimoniaux"},
+      {"valeur": "AHPV", "label": "Partenaire clé"}
+    ]
+  },
+
+  {
+    "id": 762,
+    "theme": "Patrimoine",
+    "type": "engagement",
+    "titre": "Parcours patrimoniaux dans la ville",
+    "resume": "Mémoire de la Résistance, petit patrimoine, parcours des fresques.",
+    "description": "Mettre en place un parcours « Mémoire de la Résistance », un parcours au cimetière et un parcours du petit patrimoine. Créer un circuit « Ouvrons les yeux » pour découvrir le petit patrimoine vizillois (passages, lavoirs, statues, plaques de cochers, portes anciennes) à l'aide de supports ludiques. Développer le parcours des fresques street art dans la ville.",
+    "importance": 2,
+    "tags": ["Patrimoine", "Parcours", "Résistance", "Découverte"]
+  },
+
+  {
+    "id": 770,
+    "theme": "Patrimoine",
+    "type": "engagement",
+    "titre": "Renforcer l'attractivité touristique",
+    "resume": "Office du tourisme renforcé, grands itinéraires, halte camping-cars.",
+    "description": "Travailler avec la Métropole pour rendre plus visible l'office du tourisme et en faire une Maison de pays, lieu dédié aux artistes et artisans locaux avec vente de leurs créations. Développer les animations en lien avec les grands itinéraires : Sur les pas des Huguenots, la Route Napoléon, itinéraires à cheval, circuits de cyclotourisme. Créer une halte de camping-cars pour accueillir les visiteurs.",
+    "importance": 2,
+    "tags": ["Tourisme", "Itinéraires", "Napoléon", "Cyclotourisme"],
+    "chiffres": [
+      {"valeur": "4", "label": "Grands itinéraires"},
+      {"valeur": "1", "label": "Halte camping-cars"}
+    ]
+  },
+
+  {
+    "id": 780,
+    "theme": "Culture",
+    "type": "engagement",
+    "titre": "Soutenir et accompagner la vie associative",
+    "resume": "Soutien financier, partenariats Les Cinémas Associés/Maison des Pratiques Artistiques, maison des associations.",
+    "description": "Poursuivre le dialogue et maintenir le soutien financier, matériel et logistique aux associations — nous serons facilitateurs pour leurs projets. Poursuivre les partenariats avec Les Cinémas Associés, Maison des Pratiques Artistiques et les acteurs institutionnels (10 jours de la culture, territoire de science, musées, structures culturelles métropolitaines). Créer une maison des associations ou un « Point associations » et reloger certaines associations mal logées.",
+    "importance": 3,
+    "tags": ["Associations", "Les Cinémas Associés", "Maison des Pratiques Artistiques", "Soutien"],
+    "chiffres": [
+      {"valeur": "Les Cinémas Associés + Maison des Pratiques Artistiques", "label": "Partenariats maintenus"},
+      {"valeur": "1", "label": "Maison des associations"}
+    ]
+  },
+
+  {
+    "id": 781,
+    "theme": "Culture",
+    "type": "engagement",
+    "titre": "Jumelage : ouvrir Vizille sur le monde",
+    "resume": "Échanges culturels, fêtes de l'Amitié 2027 et 2030, courrier du jumelage.",
+    "description": "Impliquer les habitants dans le comité de jumelage. Développer les échanges culturels entre artistes, structures culturelles, associatives, sportives et citoyens avec les villes jumelées, notamment pour les jeunes. Les fêtes de l'Amitié de 2027 et 2030 seront des temps forts fédérateurs et participatifs. Mise en place du « courrier du jumelage » une ou deux fois par an.",
+    "importance": 2,
+    "tags": ["Jumelage", "Échanges", "International", "Jeunesse"],
+    "chiffres": [
+      {"valeur": "2027 + 2030", "label": "Fêtes de l'Amitié"},
+      {"valeur": "1-2/an", "label": "Courrier du jumelage"}
+    ]
+  },
+
+  {
+    "id": 700,
+    "theme": "Action sociale",
+    "type": "engagement",
+    "titre": "Maison des Solidarités",
+    "resume": "Un lieu unique pour centraliser l'accueil, l'accompagnement et l'orientation des habitants en difficulté.",
+    "description": "Regrouper les services du CCAS, les permanences sociales, juridiques et d'accès aux droits en un lieu identifié. En lien avec La Source (France Services), l'Escale et le foyer résidence La Romanche. Créer un espace d'éducation populaire avec des ateliers juridiques, économiques et sociaux ouverts à tous.",
+    "statut": "Programmé",
+    "annee": 2027,
+    "importance": 3,
+    "tags": ["CCAS", "Solidarité", "Accès aux droits", "Éducation populaire"],
+    "chiffres": [
+      {"valeur": "1", "label": "Maison des Solidarités"},
+      {"valeur": "CCAS", "label": "Pilotage"}
+    ]
+  },
+
+  {
+    "id": 701,
+    "theme": "Action sociale",
+    "type": "engagement",
+    "titre": "Mutuelle communale",
+    "resume": "Négocier une complémentaire santé à tarifs réduits pour tous les Vizillois, via le CCAS.",
+    "description": "Sur le modèle de Grenoble (mutuelle Entrenous, -15 à -25 % sur les cotisations). Adhésion volontaire, sans condition d'âge ni de ressources. Publics prioritaires : retraités, demandeurs d'emploi, indépendants, jeunes. Coût estimé pour la commune : 20 à 25 000 €. Le CCAS pilote le dispositif avec des permanences d'information.",
+    "statut": "Programmé",
+    "annee": 2027,
+    "importance": 3,
+    "tags": ["Santé", "Mutuelle", "CCAS", "Pouvoir d'achat"],
+    "chiffres": [
+      {"valeur": "-15 à -25%", "label": "Réduction cotisations"},
+      {"valeur": "20-25 k€", "label": "Coût estimé"}
+    ]
+  },
+
+  {
+    "id": 702,
+    "theme": "Action sociale",
+    "type": "engagement",
+    "titre": "Réseaux d'entraide dans les quartiers",
+    "resume": "Structurer la solidarité de proximité par des réseaux de voisins solidaires dans chaque quartier.",
+    "description": "Aide aux courses, accompagnement aux rendez-vous médicaux, veille auprès des personnes isolées, partage de savoir-faire. Coordination assurée par le CCAS et les associations locales (Secours Populaire, La Fourmi, PIMMS).",
+    "statut": "Programmé",
+    "annee": 2027,
+    "importance": 2,
+    "tags": ["Entraide", "Quartiers", "Voisins solidaires", "CCAS"],
+    "chiffres": [
+      {"valeur": "Tous", "label": "Quartiers couverts"},
+      {"valeur": "3+", "label": "Associations partenaires"}
+    ]
+  },
+
+  {
+    "id": 703,
+    "theme": "Action sociale",
+    "type": "engagement",
+    "titre": "CLSM à l'échelle du bassin de vie",
+    "resume": "Impliquer les communes voisines dans le Conseil Local de Santé Mentale.",
+    "description": "Étendre le CLSM (créé en 2025) aux communes du bassin du Pays Vizillois. Outil de démocratie en santé associant élus, professionnels, usagers et familles. Objectifs : prévention, repérage précoce, lutte contre la stigmatisation des troubles psychiques.",
+    "statut": "Programmé",
+    "annee": 2026,
+    "importance": 2,
+    "tags": ["Santé mentale", "CLSM", "Intercommunal", "Prévention"],
+    "chiffres": [
+      {"valeur": "2025", "label": "CLSM créé"},
+      {"valeur": "Bassin", "label": "Échelle visée"}
+    ]
+  }
+]
