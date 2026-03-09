@@ -288,7 +288,7 @@
       "Retours usagers"
     ],
     "vision": "Transparence des données, régulation adaptée, bouchons réduits.",
-    "numero": "7/7",
+    "numero": "7/8",
     "image": "images/objectifs/objectif_7.png"
   },
   {
@@ -2392,5 +2392,51 @@
       "Bénévoles",
       "Centre Communal d'Action Sociale"
     ]
+  },
+  {
+    "id": 108,
+    "titre": "Objectif 8 - Algorithmes de navigation : reprendre le contrôle",
+    "theme": "Mobilités",
+    "statut": "Planifié",
+    "annee": 2026,
+    "budget": 0,
+    "resume": "S'attaquer aux diktats des GPS qui transforment nos quartiers en autoroutes de délestage",
+    "description": "Lors des retours de stations, les algorithmes de Waze ou Google Maps transforment nos quartiers en autoroutes de délestage. Ce n'est pas une fatalité — mais le corriger demandera de la méthode, des outils réglementaires et une présence numérique que nous sommes maintenant en mesure d'activer.",
+    "importance": 3,
+    "chiffres": [],
+    "tags": [
+      "GPS",
+      "Waze",
+      "DiaLog",
+      "Transit",
+      "Quartiers",
+      "Numérique"
+    ],
+    "slogan": "Informer l'algorithme · Protéger les quartiers · Reprendre le contrôle",
+    "enjeux": [
+      "Réduire le trafic de transit dans les quartiers résidentiels",
+      "Rendre nos arrêtés municipaux visibles des GPS",
+      "Préserver l'âme et la tranquillité du centre historique"
+    ],
+    "axes_action": [
+      "Arrêtés rues → inadaptées au transit",
+      "Macaron riverain : accès garanti, contrôles facilités",
+      "Plateforme DiaLog : certification des arrêtés auprès des GPS",
+      "Intégration au programme Waze for Cities",
+      "Récupération des données trafic temps réel pour le Plan Circulation"
+    ],
+    "indicateurs": [
+      "Arrêtés transmis via DiaLog",
+      "Adhésion au programme Waze for Cities",
+      "Bilan trafic de transit hiver 2026-2027"
+    ],
+    "vision": "Nos rues ne sont pas des autoroutes de délestage. Les outils existent, la volonté est là — nous mettrons tout dans la balance pour y arriver dès le premier hiver.",
+    "phases": [
+      "Phase 1 : Délibération au conseil municipal + préparation technique et réglementaire",
+      "Phase 2 : Arrêtés, validation préfecture, macarons, outils numériques",
+      "Phase 3 : Test grandeur nature — vacances 2026-2027, 1er bilan trafic"
+    ],
+    "numero": "8/8",
+    "image": "images/objectifs/objectif_8_gps.png"
   }
 ]
