@@ -157,7 +157,8 @@ body.retro{background:var(--fond);color:var(--blanc);font-family:var(--font-b);f
     <a href="index.html"><img src="images/logo.png" alt="Vizille en Mouvement" class="nav-header-logo"></a>
     <nav><ul>
       <li><a href="index.html">Accueil</a></li>
-      <li><a href="projet.html">Programme</a></li>
+      <li><a href="bilan.html">Bilan</a></li>
+      <li><a href="projet.html">Projet</a></li>
       <li><a href="nos-ambitions.html" class="active">Bilan &amp; Projet</a></li>
       <li><a href="equipe.html">Équipe</a></li>
       <li><a href="blog.html">Actualités</a></li>
@@ -286,9 +287,13 @@ function progCard(projets, cfg) {
 
 function contCard(cfg) {
   if (!cfg.continuite) return '';
-  return '<div class="tc prog cont">' +
+  var sents = cfg.continuite.replace(/([.!?])\s+/g, '$1|').split('|').filter(function(s){return s.trim().length>8;});
+  var items = sents.map(function(s){return {titre: s.trim().replace(/[.!?]$/, ''), statut: ''};});
+  var _cid = regCard('Continuité & programme 2026\u20132032', cfg.label + ' \u2014 orientations', items, 'titre');
+  return '<div class="tc prog cont" data-cid="' + _cid + '">' +
     '<span class="tc-tag">Continuité & pistes 2026\u20132032</span>' +
-    '<p class="tc-desc">' + cfg.continuite + '</p>' +
+    '<p class="tc-desc">' + cfg.continuite.slice(0,120) + (cfg.continuite.length>120?'\u2026':'') + '</p>' +
+    '<p class="tc-more">\u2192 Voir le d\u00e9tail</p>' +
     '</div>';
 }
 
