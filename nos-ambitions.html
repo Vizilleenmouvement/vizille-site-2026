@@ -87,6 +87,10 @@ body.retro{background:var(--fond);color:var(--blanc);font-family:var(--font-b);f
 .tc-title{font-family:var(--font-t);font-size:.95rem;font-weight:700;line-height:1.3;margin-bottom:.4rem;color:var(--blanc)}
 .tc-desc{font-size:.8rem;color:var(--gris);line-height:1.6}
 .tc-metric{margin-top:.6rem;font-size:.75rem;font-weight:500;color:var(--or)}
+.tc-list{list-style:none;padding:0;margin:.5rem 0 0}
+.tc-list li{font-size:.78rem;color:rgba(245,240,232,.65);line-height:1.45;padding:.2rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.tc-list li:last-child{border-bottom:none}
+.tc-more{margin-top:.5rem;font-size:.72rem;color:var(--or);opacity:.8}
 
 /* EMPTY SIDE */
 .col-empty{height:10px}
@@ -181,180 +185,137 @@ async function loadData() {
     fetch('projets.json?v=' + Date.now())
   ]);
   const actions = await actRes.json();
-  const projets = (await projRes.json()).filter(p => p.statut !== 'En veille');
-  return { actions, projets };
+  const projets = (await projRes.json()).filter(function(p){ return p.statut !== 'En veille'; });
+  return { actions: actions, projets: projets };
 }
 
-const THEME_MAP = {
-  "Culture":              { prog: "Culture",               icon: "🎭", label: "Culture" },
-  "Environnement":        { prog: "Transition écologique", icon: "🌿", label: "Environnement & Écologie" },
-  "Sport":                { prog: null,                    icon: "⚽", label: "Sport" },
-  "Travaux":              { prog: "Travaux",               icon: "🏗️", label: "Travaux & Voirie" },
-  "Patrimoine":           { prog: "Patrimoine",            icon: "🏛️", label: "Patrimoine" },
-  "Solidarité":           { prog: "Solidarités",           icon: "🤝", label: "Solidarités" },
-  "Enfance":              { prog: "Enfance/Jeunesse",      icon: "👶", label: "Enfance & Jeunesse" },
-  "Tranquillité publique":{ prog: "Tranquillité publique", icon: "🛡️", label: "Tranquillité publique" },
-  "Mobilités":            { prog: "Mobilités",             icon: "🚴", label: "Mobilités" },
-  "Concertation Citoyenne":{ prog: "Concertation citoyenne", icon: "🗳️", label: "Concertation citoyenne" },
-  "Urbanisme":            { prog: "Urbanisme",             icon: "🏘️", label: "Urbanisme" },
-  "Santé":                { prog: "Santé",                 icon: "🏥", label: "Santé" },
-  "Économie":             { prog: null,                    icon: "💼", label: "Économie" },
-  "Finance":              { prog: null,                    icon: "💰", label: "Finances communales" },
-  "Administration":       { prog: null,                    icon: "📋", label: "Administration" },
-  "Jumelages":            { prog: "Jumelages",             icon: "🌍", label: "Jumelages" },
-  "Intercommunalité":     { prog: "Métropole",             icon: "🏙️", label: "Intercommunalité & Métropole" },
-  "Plan Climat":          { prog: "Transition écologique", icon: "🌡️", label: "Plan Climat", mergeIntoBilan: "Environnement" },
-  "Solidarité_sociale":   { prog: "Action sociale",         icon: "💛", label: "Action sociale & CCAS", bilanTheme: "Solidarité", bilanFilter: ["L'Escale","portage","CCAS","permanences","domiciliation","gérontologique","Aller-vers","épicerie"] },
-  "Culture_animations":   { prog: "Animations de proximité",icon: "🎪", label: "Animations de proximité", bilanTheme: "Culture", bilanFilter: ["Fête","Estivales","spectacle","animation","Animation","concert"] }
-};
+// Mapping thème bilan → config
+const THEMES = [
+  { key:"Culture",              prog:["Culture","Animations de proximité"], icon:"🎭", label:"Culture & Animations",
+    progLabel: "Culture et animations de proximité" },
+  { key:"Environnement",        prog:["Transition écologique"],             icon:"🌿", label:"Environnement & Transition écologique" },
+  { key:"Sport",                prog:[],                                    icon:"⚽", label:"Sport",
+    continuite: "Soutien constant aux clubs, conventions associatives reconduites. Maintien des équipements (piscine, gymnases, stades). Poursuite des événements sportifs emblématiques : Semi-marathon, Cyclosportive Claveyrolat, La Viziclette." },
+  { key:"Travaux",              prog:["Travaux"],                           icon:"🏗️", label:"Travaux & Infrastructures" },
+  { key:"Patrimoine",           prog:["Patrimoine"],                        icon:"🏛️", label:"Patrimoine" },
+  { key:"Solidarité",           prog:["Solidarités","Action sociale"],      icon:"🤝", label:"Solidarités & Action sociale",
+    progLabel: "Solidarités, seniors, action sociale" },
+  { key:"Enfance",              prog:["Enfance/Jeunesse"],                  icon:"👶", label:"Enfance & Jeunesse" },
+  { key:"Tranquillité publique",prog:["Tranquillité publique"],             icon:"🛡️", label:"Tranquillité publique" },
+  { key:"Mobilités",            prog:["Mobilités"],                         icon:"🚴", label:"Mobilités" },
+  { key:"Concertation Citoyenne",prog:["Concertation citoyenne"],           icon:"🗳️", label:"Concertation citoyenne" },
+  { key:"Urbanisme",            prog:["Urbanisme"],                         icon:"🏘️", label:"Urbanisme & Revitalisation" },
+  { key:"Santé",                prog:["Santé"],                             icon:"🏥", label:"Santé" },
+  { key:"Économie",             prog:[],                                    icon:"💼", label:"Économie & Commerce",
+    continuite: "Union Commerçante Vizilloise accompagnée. ORT comme levier de revitalisation commerciale du centre-bourg. Poursuite de la candidature Territoire Zéro Chômeur Longue Durée." },
+  { key:"Finance",              prog:[],                                    icon:"💰", label:"Finances communales",
+    continuite: "Taux d'imposition stables sur tout le mandat. Poursuite de la renégociation DEXIA. Gestion rigoureuse : CA 2024 excédentaire. Budget voté à l'unanimité en 2025." },
+  { key:"Administration",       prog:[],                                    icon:"📋", label:"Administration & Services",
+    continuite: "Modernisation continue : dématérialisation des procédures, accessibilité numérique, suivi des commissions municipales. Gestion des ressources humaines et des marchés publics." },
+  { key:"Jumelages",            prog:["Jumelages"],                         icon:"🌍", label:"Jumelages" },
+  { key:"Intercommunalité",     prog:["Métropole"],                         icon:"🏙️", label:"Intercommunalité & Métropole" },
+];
 
-const PROG_ONLY = []; // Ces thèmes sont maintenant dans THEME_MAP avec leur bilan réel
+// Thèmes programme sans bilan direct
+const PROG_SEULS = [];
 
-const CONTINUITE = {
-  "Sport":           "Soutien constant aux clubs et équipements sportifs. Conventions avec les associations reconduites et renforcées.",
-  "Finance":         "Stabilité fiscale maintenue : aucune hausse de taux sur le mandat. Poursuite de la renégociation de la dette structurée DEXIA.",
-  "Administration":  "Modernisation continue des services : dématérialisation, accueil du public, accessibilité numérique renforcée.",
-  "Économie":        "Soutien à l'attractivité commerciale en lien avec l'ORT et les partenaires (CCI, Région, Métropole).",
-  "Intercommunalité":"Vizille affirme son rôle actif au sein de Grenoble-Alpes Métropole pour peser sur les décisions du territoire.",
-  "Jumelages":       "Les liens tissés avec nos villes jumelées sont entretenus : échanges culturels, jeunesse, coopération européenne."
-};
-
-const CONT_ICONS = {
-  "Sport":"🔄","Finance":"📈","Administration":"💻","Économie":"🏪","Intercommunalité":"🏙️","Jumelages":"🤝"
-};
-
-function continuiteCard(themeKey) {
-  const msg = CONTINUITE[themeKey];
-  if (!msg) return "";
-  return "<div class=\"tc prog cont\">" +
-    "<span class=\"tc-tag\">Continuité 2026\u20132032</span>" +
-    "<h3 class=\"tc-title\">" + (CONT_ICONS[themeKey]||"🔄") + " Engagement de continuité</h3>" +
-    "<p class=\"tc-desc\">" + msg + "</p>" +
-    "</div>";
+function getTop(list, n) {
+  return list.sort(function(a,b){ return (b.importance||0)-(a.importance||0); }).slice(0, n||4);
 }
 
-function pickTopActions(actions, theme, n) {
-  n = n || 3;
-  return actions
-    .filter(function(a) { return a.theme === theme && (a.statut === "Réalisé" || a.statut === "En cours"); })
-    .sort(function(a, b) { return (b.importance||0)-(a.importance||0); })
-    .slice(0, n);
+function makeList(items, field) {
+  return items.map(function(x) {
+    var t = (x[field]||'').replace(/Objectif \d+ - /,'').replace(/^Objectif — /,'');
+    if (t.length > 55) t = t.slice(0,55)+'\u2026';
+    return '<li>' + t + '</li>';
+  }).join('');
 }
 
-function pickTopProjets(projets, theme, n) {
-  n = n || 3;
-  return projets.filter(function(p) { return p.theme === theme; }).slice(0, n);
+function bilanCard(actions, cfg) {
+  var acts = actions.filter(function(a){ return a.theme === cfg.key; });
+  if (!acts.length) return '';
+  var realise = acts.filter(function(a){ return a.statut === 'Réalisé'; }).length;
+  var encours = acts.filter(function(a){ return a.statut === 'En cours' || a.statut === 'Décidé' || a.statut === 'Programmé'; }).length;
+  var top = getTop(acts.slice(), 4);
+  return '<div class="tc bilan">' +
+    '<span class="tc-tag">Bilan 2020\u20132026</span>' +
+    '<h3 class="tc-title">' + acts.length + ' actions menées</h3>' +
+    '<ul class="tc-list">' + makeList(top, 'titre') + '</ul>' +
+    (acts.length > 4 ? '<p class="tc-more">+ ' + (acts.length-4) + ' autres actions</p>' : '') +
+    '</div>';
 }
 
-function bilanCard(actions, theme, cfg) {
-  var filtered;
-  if (cfg && cfg.mergeIntoBilan) {
-    theme = cfg.mergeIntoBilan; // Plan Climat → utilise le bilan Environnement
-  }
-  if (cfg && cfg.bilanFilter) {
-    var keywords = cfg.bilanFilter;
-    filtered = actions.filter(function(a) {
-      return a.theme === cfg.bilanTheme && keywords.some(function(k) {
-        return a.titre.indexOf(k) >= 0;
-      });
-    });
-  } else {
-    filtered = actions.filter(function(a) { return a.theme === theme; });
-  }
-  var total = filtered.length;
-  if (total === 0) return "";
-  var realise = filtered.filter(function(a) { return a.statut === "Réalisé"; }).length;
-  var encours = filtered.filter(function(a) { return a.statut === "En cours"; }).length;
-  var top = filtered.sort(function(a,b){return (b.importance||0)-(a.importance||0);}).slice(0,3);
-  var items = top.map(function(a) {
-    var t = a.titre.length > 52 ? a.titre.slice(0,52)+"\u2026" : a.titre;
-    return "<li style=\"margin:.35rem 0;font-size:.78rem;color:rgba(245,240,232,.65);line-height:1.4\">" + t + "</li>";
-  }).join("");
-  var allTotal = cfg && cfg.bilanTheme ? actions.filter(function(a){return a.theme===cfg.bilanTheme;}).length : total;
-  var title = total + " action" + (total>1?"s":"") + " menées";
-  return "<div class=\"tc bilan\">" +
-    "<span class=\"tc-tag\">Bilan 2020\u20132026</span>" +
-    "<h3 class=\"tc-title\">" + title + "</h3>" +
-    (top.length ? "<ul style=\"list-style:none;padding:0;margin-top:.5rem\">" + items + "</ul>" : "") +
-    "<p class=\"tc-metric\">\uD83D\uDCCA " + (cfg&&cfg.bilanTheme ? allTotal+" actions "+cfg.bilanTheme : total+" actions documentées") + "</p>" +
-    "</div>";
+function progCard(projets, cfg) {
+  if (!cfg.prog || !cfg.prog.length) return '';
+  var list = [];
+  cfg.prog.forEach(function(t) {
+    projets.filter(function(p){ return p.theme === t; }).forEach(function(p){ list.push(p); });
+  });
+  if (!list.length) return '';
+  var top = list.slice(0,4);
+  return '<div class="tc prog">' +
+    '<span class="tc-tag">Programme 2026\u20132032</span>' +
+    '<h3 class="tc-title">' + list.length + ' engagement' + (list.length>1?'s':'') + ' pour ce mandat</h3>' +
+    '<ul class="tc-list">' + makeList(top, 'titre') + '</ul>' +
+    (list.length > 4 ? '<p class="tc-more">+ ' + (list.length-4) + ' autres engagements</p>' : '') +
+    '</div>';
 }
 
-function progCard(projets, theme) {
-  if (!theme) return "";
-  var list = pickTopProjets(projets, theme);
-  if (list.length === 0) return "";
-  var total = projets.filter(function(p) { return p.theme === theme; }).length;
-  var items = list.map(function(p) {
-    var t = p.titre.length > 52 ? p.titre.slice(0,52)+"…" : p.titre;
-    return "<li style=\"margin:.35rem 0;font-size:.78rem;color:rgba(245,240,232,.65);line-height:1.4\">" + t + "</li>";
-  }).join("");
-  var plus = total > 3 ? "<p class=\"tc-metric\">+ " + (total-3) + " autre" + (total-3>1?"s":"") + " engagement" + (total-3>1?"s":"") + "</p>" : "";
-  return "<div class=\"tc prog\">" +
-    "<span class=\"tc-tag\">Programme 2026\u20132032</span>" +
-    "<h3 class=\"tc-title\">" + total + " engagement" + (total>1?"s":"") + " pour ce mandat</h3>" +
-    "<ul style=\"list-style:none;padding:0;margin-top:.5rem\">" + items + "</ul>" +
-    plus + "</div>";
+function contCard(cfg) {
+  if (!cfg.continuite) return '';
+  return '<div class="tc prog cont">' +
+    '<span class="tc-tag">Continuité & pistes 2026\u20132032</span>' +
+    '<p class="tc-desc">' + cfg.continuite + '</p>' +
+    '</div>';
 }
 
-function makeRow(icon, label, left, right) {
-  return "<div class=\"theme-block\">" +
-    "<div class=\"theme-header\">" +
-      "<div class=\"theme-icon-badge\">" + icon + "</div>" +
-      "<span class=\"theme-label\">" + label + "</span>" +
-    "</div>" +
-    "<div class=\"theme-cols\">" +
-      "<div class=\"col-left\">" + (left || "<div class=\"col-empty\"></div>") + "</div>" +
-      "<div class=\"col-center\"><div class=\"spine-dot\"></div></div>" +
-      "<div class=\"col-right\">" + (right || "<div class=\"col-empty\"></div>") + "</div>" +
-    "</div></div>";
+function makeBlock(icon, label, left, right) {
+  return '<div class="theme-block">' +
+    '<div class="theme-header">' +
+      '<div class="theme-icon-badge">' + icon + '</div>' +
+      '<span class="theme-label">' + label + '</span>' +
+    '</div>' +
+    '<div class="theme-cols">' +
+      '<div class="col-left">' + (left  || '<div class="col-empty"></div>') + '</div>' +
+      '<div class="col-center"><div class="spine-dot"></div></div>' +
+      '<div class="col-right">' + (right || '<div class="col-empty"></div>') + '</div>' +
+    '</div></div>';
 }
 
 async function buildFrise() {
   var data = await loadData();
   var actions = data.actions;
   var projets = data.projets;
-  var root = document.getElementById("frise-root");
-  var html = "<div class=\"frise-spine\"></div>";
+  var root = document.getElementById('frise-root');
+  var html = '<div class="frise-spine"></div>';
 
-  Object.keys(THEME_MAP).forEach(function(themeKey) {
-    var cfg = THEME_MAP[themeKey];
-    var bc = bilanCard(actions, themeKey, cfg);
-    var pc = progCard(projets, cfg.prog);
-    var cc = continuiteCard(themeKey);
-    if (!bc && !pc && !cc) return;
-    html += makeRow(cfg.icon, cfg.label, bc, pc || cc);
-  });
-
-  PROG_ONLY.forEach(function(themeKey) {
-    var pc = progCard(projets, themeKey);
-    if (!pc) return;
-    var icons = { "Animations de proximité":"🎪", "Action sociale":"💛" };
-    html += makeRow(icons[themeKey]||"📌", themeKey, "", pc);
+  THEMES.forEach(function(cfg) {
+    var bc = bilanCard(actions, cfg);
+    var pc = progCard(projets, cfg) || contCard(cfg);
+    if (!bc && !pc) return;
+    html += makeBlock(cfg.icon, cfg.label, bc, pc);
   });
 
   root.innerHTML = html;
 
-  var cards = root.querySelectorAll(".tc");
   var obs = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
-      if (e.isIntersecting) { e.target.classList.add("vis"); obs.unobserve(e.target); }
+      if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }
     });
-  }, { threshold: 0.12 });
-  cards.forEach(function(c) { obs.observe(c); });
+  }, { threshold: 0.1 });
+  root.querySelectorAll('.tc').forEach(function(c){ obs.observe(c); });
 
-  function animCount(el, target) {
-    var n = parseInt(target);
-    if (!el || isNaN(n)) return;
+  function animCount(el, n) {
+    if (!el) return;
     var v = 0; var inc = Math.ceil(n/40);
     var t = setInterval(function() {
       v = Math.min(v+inc, n);
-      el.textContent = v.toLocaleString("fr-FR");
+      el.textContent = v.toLocaleString('fr-FR');
       if (v >= n) clearInterval(t);
     }, 30);
   }
   setTimeout(function() {
-    animCount(document.getElementById("cnt-prog"), 90);
+    animCount(document.getElementById('cnt-prog'), 90);
   }, 800);
 }
 

@@ -9113,55 +9113,6 @@
     "suspendu": true
   },
   {
-    "id": 225,
-    "theme": "Économie",
-    "icon": "💼",
-    "color": "#f39c12",
-    "statut": "En cours",
-    "titre": "Vœu soutien plateforme chimique Sud-Grenoblois (2ème)",
-    "description": "2ème vœu unanime, soutien SCIC Vencorex, 54/450 emplois",
-    "annee": "2025",
-    "annee_fin": "",
-    "budget": 0,
-    "source": "Délib 2025-02-18-01",
-    "importance": 1,
-    "resume": "2ème vœu unanime, soutien SCIC Vencorex, 54/450 emplois",
-    "chiffres": [],
-    "chronologie": [
-      {
-        "date": "2025",
-        "evenement": "Réalisation"
-      }
-    ],
-    "details": "",
-    "sources": [
-      {
-        "type": "doc",
-        "ref": "Délib 2025-02-18-01",
-        "desc": ""
-      }
-    ],
-    "lien_source": [
-      {
-        "type": "Délibération",
-        "label": "Délibérations du Conseil Municipal",
-        "url": "https://www.ville-vizille.fr/12600-deliberations.htm"
-      },
-      {
-        "type": "Page",
-        "label": "Vie économique",
-        "url": "https://www.ville-vizille.fr/12678-vie-economique.htm"
-      },
-      {
-        "type": "Page",
-        "label": "Commerces",
-        "url": "https://www.ville-vizille.fr/12681-les-commerces.htm"
-      }
-    ],
-    "sous_categorie": "Développement",
-    "suspendu": true
-  },
-  {
     "id": 226,
     "theme": "Finance",
     "icon": "💰",
@@ -9805,55 +9756,6 @@
       }
     ],
     "sous_categorie": "Autres"
-  },
-  {
-    "id": 251,
-    "theme": "Économie",
-    "icon": "💼",
-    "color": "#f39c12",
-    "statut": "En cours",
-    "titre": "Lettre d'intention SCIC Vencorex",
-    "description": "Participation 2 000€ prévue, soutien reprise salariés plateforme",
-    "annee": "2025",
-    "annee_fin": "",
-    "budget": 2000,
-    "source": "Lettre intention 08/04/2025",
-    "importance": 1,
-    "resume": "Participation 2 000€ prévue, soutien reprise salariés plateforme",
-    "chiffres": [
-      {
-        "valeur": "2 000 €",
-        "label": "Budget"
-      }
-    ],
-    "chronologie": [
-      {
-        "date": "2025",
-        "evenement": "Réalisation"
-      }
-    ],
-    "details": "",
-    "sources": [
-      {
-        "type": "doc",
-        "ref": "Lettre intention 08/04/2025",
-        "desc": ""
-      }
-    ],
-    "lien_source": [
-      {
-        "type": "Page",
-        "label": "Vie économique",
-        "url": "https://www.ville-vizille.fr/12678-vie-economique.htm"
-      },
-      {
-        "type": "Page",
-        "label": "Commerces",
-        "url": "https://www.ville-vizille.fr/12681-les-commerces.htm"
-      }
-    ],
-    "sous_categorie": "Développement",
-    "suspendu": true
   },
   {
     "id": 252,
