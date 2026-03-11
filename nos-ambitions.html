@@ -232,7 +232,7 @@ function makeList(items, field) {
 }
 
 function bilanCard(actions, cfg) {
-  var acts = actions.filter(function(a){ return a.theme === cfg.key; });
+  var acts = actions.filter(function(a){ return a.theme === cfg.key && !a.titre.match(/^Vœu|^Voeu|^Motion/i); });
   if (!acts.length) return '';
   var realise = acts.filter(function(a){ return a.statut === 'Réalisé'; }).length;
   var encours = acts.filter(function(a){ return a.statut === 'En cours' || a.statut === 'Décidé' || a.statut === 'Programmé'; }).length;
