@@ -127,11 +127,12 @@ body.retro{background:var(--fond);color:var(--blanc);font-family:var(--font-b);f
 /* RESPONSIVE */
 @media(max-width:680px){
   .frise-spine{left:24px}
-  .theme-cols{grid-template-columns:48px 1fr}
-  .theme-cols .col-left{display:none}
-  .theme-cols .col-right{grid-column:2}
-  .theme-cols .col-center{grid-column:1}
+  .theme-cols{display:flex;flex-direction:column;gap:1rem}
+  .theme-cols .col-left{display:block;order:2}
+  .theme-cols .col-right{order:1}
+  .theme-cols .col-center{display:none}
   .tc{text-align:left!important;border-left:3px solid var(--or)!important}
+  .tc.bilan{border-left:3px solid var(--bilan-color)!important}
   .global-stats{flex-direction:column}
   .gs-item{border-right:none;border-bottom:1px solid rgba(201,162,39,.1)}
 }
