@@ -28,7 +28,6 @@
 
     <!-- CSS Modulaires -->
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/components/flip-cards.css">
     <link rel="stylesheet" href="css/pages/projet.css?v=2">
     <style>
         /* Section Concertation citoyenne */
@@ -88,153 +87,6 @@
         }
         .engagement-item h5 { margin: 0 0 0.3rem 0; color: var(--bleu-vizille); font-size: 1rem; }
         .engagement-item p { margin: 0; color: var(--gris-texte); line-height: 1.5; font-size: 0.95rem; }
-
-        /* === VUE TRANQUILLITÉ PUBLIQUE — 4 AXES === */
-        .tranq-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-        .tranq-banner {
-            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
-            color: white;
-            padding: 2rem 2.5rem;
-            border-radius: 16px;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 6px 24px rgba(44, 62, 80, 0.3);
-        }
-        .tranq-banner h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            margin: 0 0 0.5rem;
-        }
-        .tranq-banner .tranq-subtitle {
-            font-size: 1rem;
-            opacity: 0.9;
-            margin: 0 0 1rem;
-        }
-        .tranq-banner .tranq-intro {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .tranq-axes-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        .tranq-axe-card {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .tranq-axe-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-        }
-        .tranq-axe-header {
-            padding: 1.25rem 1.5rem;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        .tranq-axe-header::after {
-            content: '';
-            position: absolute;
-            top: -50%; right: -50%;
-            width: 100%; height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .tranq-axe-header h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.15rem;
-            margin: 0 0 0.3rem;
-            line-height: 1.3;
-        }
-        .tranq-axe-header .axe-accroche {
-            font-size: 0.85rem;
-            opacity: 0.9;
-            line-height: 1.4;
-            margin: 0;
-        }
-        .tranq-axe-body {
-            padding: 1.25rem 1.5rem;
-        }
-        .tranq-objectif-btn {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            width: 100%;
-            padding: 0.85rem 1rem;
-            margin-bottom: 0.6rem;
-            background: #f8f9fa;
-            border: 2px solid #eee;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: left;
-            font-family: inherit;
-            font-size: 0.9rem;
-        }
-        .tranq-objectif-btn:hover {
-            border-color: var(--or, #c9a227);
-            background: #fffdf5;
-            transform: translateX(4px);
-        }
-        .tranq-objectif-btn .obj-numero {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            color: white;
-            font-weight: 700;
-            font-size: 0.85rem;
-            flex-shrink: 0;
-        }
-        .tranq-objectif-btn .obj-content {
-            flex: 1;
-        }
-        .tranq-objectif-btn .obj-titre {
-            font-weight: 600;
-            color: #2c3e50;
-            line-height: 1.3;
-            margin-bottom: 0.2rem;
-        }
-        .tranq-objectif-btn .obj-resume {
-            font-size: 0.8rem;
-            color: #7f8c8d;
-            line-height: 1.3;
-        }
-        .tranq-objectif-btn .obj-arrow {
-            color: var(--or, #c9a227);
-            font-size: 1.1rem;
-            align-self: center;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-        .tranq-objectif-btn:hover .obj-arrow {
-            opacity: 1;
-        }
-        @media (max-width: 768px) {
-            .tranq-axes-grid {
-                grid-template-columns: 1fr;
-            }
-            .tranq-banner {
-                padding: 1.5rem;
-            }
-            .tranq-banner h2 {
-                font-size: 1.3rem;
-            }
-        }
     </style>
 </head>
 <body>
@@ -245,13 +97,12 @@
 
         <div class="header-main">
             <a href="index.html">
-                <img src="images/logo-header.png" alt="Vizille en Mouvement" class="nav-header-logo" loading="lazy">
+                <img src="images/logo.png" alt="Vizille en Mouvement" class="nav-header-logo">
             </a>
             <button class="menu-toggle" aria-label="Menu">☰</button>
             <nav>
                 <ul>
                     <li><a href="index.html">Accueil</a></li>
-                    <li><a href="retrospective.html">Rétrospective</a></li>
                     <li><a href="bilan.html">Bilan</a></li>
                     <li><a href="projet.html" class="active">Projet</a></li>
                     <li><a href="blog.html">Actualités</a></li>
@@ -263,11 +114,11 @@
             </nav>
         </div>
     </header>
-    <script src="js/menu-mobile.js" defer></script>
+    <script src="js/menu-mobile.js"></script>
 
     <!-- Hero -->
     <section class="hero-unified">
-        <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo" loading="lazy">
+        <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo">
         <div class="hero-text">
             <h1>Notre Projet 2026-2032</h1>
             <p class="slogan">Ensemble pour une ville dynamique et solidaire</p>
@@ -374,15 +225,6 @@
         </section>
     </main>
 
-    <!-- Encart questions sur les engagements -->
-    <section style="max-width: 800px; margin: 2rem auto; padding: 0 1.5rem;">
-        <div style="background: linear-gradient(135deg, var(--bleu-vizille) 0%, var(--bleu-clair) 100%); border-radius: 12px; padding: 2rem; text-align: center; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.12);">
-            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 0.75rem;">Vous avez des questions sur nos engagements ?</h3>
-            <p style="opacity: 0.9; margin-bottom: 1.25rem;">Posez vos questions, partagez vos idées — nous vous répondrons !</p>
-            <a href="faq.html#ask-box" style="display: inline-block; background: var(--or); color: white; padding: 0.75rem 2rem; border-radius: 30px; text-decoration: none; font-weight: 600; transition: all 0.2s;">Posez votre question →</a>
-        </div>
-    </section>
-
     <!-- Navigation vers les pages du site (en bas de page) -->
     <section class="site-nav-section">
         <div class="site-nav-container">
@@ -454,8 +296,12 @@
             <div class="modal-body">
                 <!-- Vignette de la fiche (si disponible) -->
                 <section class="modal-section hidden" id="section-image">
-                    <div class="fiche-thumbnail">
-                        <img id="modal-image" src="" alt="" loading="lazy">
+                    <div class="fiche-thumbnail" onclick="openFicheImage()">
+                        <img id="modal-image" src="" alt="Fiche objectif">
+                        <div class="thumbnail-overlay">
+                            <span class="thumbnail-icon">🔍</span>
+                            <span class="thumbnail-text">Voir la fiche complète</span>
+                        </div>
                     </div>
                 </section>
 
@@ -552,7 +398,16 @@ const defaultThemeConfig = {
 // Configuration des thèmes (sera mise à jour depuis themes.json)
 let themeConfig = { ...defaultThemeConfig };
 
-// Les thèmes sont chargés directement depuis les données (plus de catégories)
+// Configuration des 5 catégories principales
+const CATEGORIES_PROJET = [
+    { id: 'cadre-vie', name: 'Cadre de vie', icon: '🌿', themes: ['Environnement', 'Plan Climat', 'Urbanisme', 'Travaux', 'Mobilités', 'Transition écologique'] },
+    { id: 'social', name: 'Social', icon: '🤝', themes: ['Solidarité', 'Solidarités', 'Action sociale', 'Enfance', 'Santé', 'Personnel', 'Seniors', 'Enfance/Jeunesse', 'Jeunesse'] },
+    { id: 'culture', name: 'Culture', icon: '🎭', themes: ['Culture', 'Sport', 'Patrimoine', 'Jumelages', 'Éducation', 'Animations de proximité'] },
+    { id: 'municipal', name: 'Municipal', icon: '🏛️', themes: ['Administration', 'Finance', 'Intercommunalité', 'Concertation citoyenne', 'Démocratie', 'Démocratie locale', 'Métropole'] },
+    { id: 'securite', name: 'Sécurité', icon: '🛡️', themes: ['Tranquillité publique', 'Tranquillité', 'Économie'] }
+];
+
+let currentCategoryFilter = null;
 
 // Charger les thèmes depuis themes.json
 async function loadThemeConfig() {
@@ -592,7 +447,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         allData = await response.json();
         
         // Filtrer les projets "En veille"
-        allData = allData.filter(p => p.statut !== 'En veille' && p.visible !== false);
+        allData = allData.filter(p => p.statut !== 'En veille');
 
         initializeFilters();
         
@@ -650,72 +505,144 @@ window.addEventListener('popstate', (event) => {
 function initializeFilters() {
     const themesGrid = document.getElementById('theme-filters-grid');
 
-    // Collecter les thèmes utilisés et compter les projets
-    const themeCounts = {};
+    // Collecter les thèmes utilisés
+    const usedThemes = new Set();
     allData.forEach(p => {
-        getProjectThemes(p).forEach(t => {
-            themeCounts[t] = (themeCounts[t] || 0) + 1;
-        });
+        getProjectThemes(p).forEach(t => usedThemes.add(t));
     });
 
-    // Trier les thèmes par ordre alphabétique
-    const sortedThemes = Object.keys(themeCounts).sort((a, b) => a.localeCompare(b, 'fr'));
+    // Compter les projets par catégorie
+    function getCategoryCount(cat) {
+        return allData.filter(p => {
+            const themes = getProjectThemes(p);
+            return themes.some(t => cat.themes.includes(t));
+        }).length;
+    }
 
     let html = '';
 
     // Bouton "Tous" en premier
     html += `
-        <button class="theme-filter-btn active" data-theme="">
+        <button class="theme-filter-btn category-btn active" data-category="" data-theme="">
             <span class="icon">🌐</span>
             <span class="label">Tous (${allData.length})</span>
         </button>
     `;
 
-    // Un bouton par thème
-    sortedThemes.forEach(theme => {
-        const config = themeConfig[theme] || { icon: '📌', color: '#1a3a5c' };
+    // Boutons catégories
+    CATEGORIES_PROJET.forEach(cat => {
+        const count = getCategoryCount(cat);
+        if (count === 0) return;
         html += `
-            <button class="theme-filter-btn" data-theme="${theme}">
-                <span class="icon">${config.icon}</span>
-                <span class="label">${theme} (${themeCounts[theme]})</span>
+            <button class="theme-filter-btn category-btn" data-category="${cat.id}">
+                <span class="icon">${cat.icon}</span>
+                <span class="label">${cat.name} (${count})</span>
             </button>
         `;
     });
 
     themesGrid.innerHTML = html;
 
-    // Événements sur les boutons thèmes
+    // Conteneur pour les sous-thèmes
+    const subContainer = document.createElement('div');
+    subContainer.id = 'theme-sub-filters';
+    subContainer.style.cssText = 'margin-top: 0.75rem; display: none;';
+    themesGrid.parentNode.appendChild(subContainer);
+
     document.querySelectorAll('.theme-filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.theme-filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
+            const catId = btn.dataset.category;
             const theme = btn.dataset.theme;
-            document.getElementById('filter-theme').value = theme;
 
-            if (theme) {
-                currentView = 'cards';
-                document.querySelectorAll('.view-btn').forEach(b => {
-                    b.classList.toggle('active', b.dataset.view === 'cards');
-                });
+            // Si c'est une catégorie
+            if (catId !== undefined) {
+                document.querySelectorAll('.theme-filter-btn.category-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                currentCategoryFilter = catId || null;
+                document.getElementById('filter-theme').value = '';
+
+                // Afficher les sous-thèmes de cette catégorie
+                renderSubThemes(catId);
+
+                if (catId) {
+                    currentView = 'cards';
+                    document.querySelectorAll('.view-btn').forEach(b => {
+                        b.classList.toggle('active', b.dataset.view === 'cards');
+                    });
+                }
+            } else if (theme !== undefined) {
+                // C'est un sous-thème
+                document.querySelectorAll('.sub-theme-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('filter-theme').value = theme;
             }
 
             applyFilters();
             updateBackButton();
 
             setTimeout(() => {
-                const target = document.getElementById('view-cards') || document.getElementById('view-themes') || document.getElementById('view-table');
-                if (target && !target.classList.contains('hidden')) {
-                    const offset = 150;
-                    const y = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                    window.scrollTo({ top: y, behavior: 'smooth' });
+                if (catId !== undefined && catId) {
+                    // Clic catégorie → scroller vers la grille des filtres (pour voir les sous-thèmes)
+                    const filtersTarget = document.getElementById('theme-filters-grid');
+                    if (filtersTarget) {
+                        const y = filtersTarget.getBoundingClientRect().top + window.pageYOffset - 120;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                    }
+                } else {
+                    // Clic sous-thème → scroller vers les cartes
+                    const target = document.getElementById('view-cards') || document.getElementById('view-themes') || document.getElementById('view-table');
+                    if (target && !target.classList.contains('hidden')) {
+                        const y = target.getBoundingClientRect().top + window.pageYOffset - 150;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                    }
                 }
             }, 150);
         });
     });
 
+    function renderSubThemes(catId) {
+        const subContainer = document.getElementById('theme-sub-filters');
+        if (!catId) {
+            subContainer.style.display = 'none';
+            return;
+        }
+
+        const cat = CATEGORIES_PROJET.find(c => c.id === catId);
+        if (!cat) return;
+
+        let html = '<small style="color: var(--gris-texte); margin-right: 0.5rem;">Thèmes :</small>';
+        cat.themes.forEach(theme => {
+            const count = allData.filter(p => getProjectThemes(p).includes(theme)).length;
+            if (count === 0) return;
+            const config = themeConfig[theme] || { icon: '📌', color: '#1a3a5c' };
+            html += `
+                <button class="theme-filter-btn sub-theme-btn" data-theme="${theme}" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">
+                    <span class="icon">${config.icon}</span>
+                    <span class="label">${theme} (${count})</span>
+                </button>
+            `;
+        });
+
+        subContainer.innerHTML = html;
+        subContainer.style.display = 'flex';
+        subContainer.style.flexWrap = 'wrap';
+        subContainer.style.gap = '0.5rem';
+        subContainer.style.alignItems = 'center';
+
+        // Ajouter les événements pour les sous-thèmes
+        subContainer.querySelectorAll('.sub-theme-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                subContainer.querySelectorAll('.sub-theme-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('filter-theme').value = btn.dataset.theme;
+                applyFilters();
+            });
+        });
+    }
+
     const themeSelect = document.getElementById('filter-theme');
-    sortedThemes.forEach(theme => {
+    [...usedThemes].sort().forEach(theme => {
         themeSelect.innerHTML += `<option value="${theme}">${theme}</option>`;
     });
 
@@ -756,9 +683,19 @@ function applyFilters() {
             (projet.resume && projet.resume.toLowerCase().includes(search)) ||
             (projet.description && projet.description.toLowerCase().includes(search));
 
+        // Filtre par catégorie (si pas de thème spécifique)
+        let matchCategory = true;
+        if (currentCategoryFilter && !theme) {
+            const cat = CATEGORIES_PROJET.find(c => c.id === currentCategoryFilter);
+            if (cat) {
+                const projectThemes = getProjectThemes(projet);
+                matchCategory = projectThemes.some(t => cat.themes.includes(t));
+            }
+        }
+
         const matchTheme = !theme || projectHasTheme(projet, theme);
 
-        return matchSearch && matchTheme;
+        return matchSearch && matchCategory && matchTheme;
     });
 
     filteredData.sort((a, b) => {
@@ -823,25 +760,8 @@ function renderCurrentView() {
     document.getElementById('view-concertation').classList.add('hidden');
     document.getElementById('empty-state').classList.add('hidden');
 
-    // Supprimer les flip cards existantes
-    const existingFlip = document.getElementById('view-flip');
-    if (existingFlip) existingFlip.remove();
-
     if (filteredData.length === 0) {
         document.getElementById('empty-state').classList.remove('hidden');
-        return;
-    }
-
-    // Vue spéciale Tranquillité publique en 4 axes
-    const selectedTheme = document.getElementById('filter-theme')?.value;
-    if (currentView === 'cards' && selectedTheme === 'Tranquillité publique') {
-        renderTranquilliteView();
-        return;
-    }
-
-    // Vue flip cards pour tout autre thème sélectionné
-    if (currentView === 'cards' && selectedTheme) {
-        renderFlipCardsView(selectedTheme);
         return;
     }
 
@@ -856,284 +776,6 @@ function renderCurrentView() {
             renderTableView();
             break;
     }
-}
-
-// ===== CARTES FLIP (RECTO/VERSO) =====
-function renderFlipCardsView(themeName) {
-    const tc = themeConfig[themeName] || { icon: '📋', color: '#34495e' };
-    const themeData = filteredData.filter(p => projectHasTheme(p, themeName));
-
-    // Séparer objectifs et engagements (si le champ type existe)
-    const objectifs = themeData.filter(p => p.type === 'objectif').sort((a, b) => a.id - b.id);
-    const engagements = themeData.filter(p => p.type === 'engagement').sort((a, b) => a.id - b.id);
-    const autres = themeData.filter(p => !p.type || (p.type !== 'objectif' && p.type !== 'engagement')).sort((a, b) => a.id - b.id);
-
-    // Palette de couleurs variées pour les cartes
-    const colors = [
-        '#e74c3c', '#e67e22', '#f1c40f', '#2ecc71', '#1abc9c',
-        '#3498db', '#9b59b6', '#34495e', '#16a085', '#c0392b', '#8e44ad'
-    ];
-
-    let html = '<div class="flip-grid" id="view-flip">';
-
-    // Titre section dynamique
-    const parts = [];
-    if (objectifs.length > 0) parts.push(`${objectifs.length} projet${objectifs.length > 1 ? 's' : ''}`);
-    if (engagements.length > 0) parts.push(`${engagements.length} engagement${engagements.length > 1 ? 's' : ''}`);
-    if (autres.length > 0) parts.push(`${autres.length} objectif${autres.length > 1 ? 's' : ''}`);
-    const subtitle = parts.length > 0 ? parts.join(' + ') + ' — Cliquez pour retourner les cartes' : 'Cliquez pour retourner les cartes';
-    html += `<div class="flip-grid-title"><h2>${tc.icon} ${themeName}</h2><p>${subtitle}</p></div>`;
-
-    // Projets/objectifs d'abord (violet)
-    objectifs.forEach((p, i) => {
-        html += buildFlipCard(p, '#8e44ad', 'PROJET ' + (i + 1));
-    });
-
-    // Puis engagements (palette tournante)
-    engagements.forEach((p, i) => {
-        html += buildFlipCard(p, colors[i % colors.length], 'ENGAGEMENT ' + (i + 1));
-    });
-
-    // Puis les fiches sans type (utiliser la couleur du thème + palette)
-    autres.forEach((p, i) => {
-        const numero = p.numero ? `OBJECTIF ${p.numero}` : `FICHE ${i + 1}`;
-        const color = colors[(objectifs.length + engagements.length + i) % colors.length];
-        html += buildFlipCard(p, color, numero);
-    });
-
-    html += '</div>';
-
-    // Insérer après le bouton retour
-    const resultsSection = document.getElementById('results-section');
-    resultsSection.insertAdjacentHTML('beforeend', html);
-
-    // Gérer les clics
-    document.querySelectorAll('.flip-card').forEach(card => {
-        card.addEventListener('click', (e) => {
-            // Ne pas flipper si on clique sur "Voir la fiche complète"
-            if (e.target.closest('.flip-back-footer')) {
-                const id = parseInt(card.dataset.id);
-                openProjectModal(id);
-                return;
-            }
-            card.classList.toggle('flipped');
-        });
-    });
-}
-
-function buildFlipCard(projet, color, badge) {
-    // Fallbacks intelligents pour tous les formats de données
-    const pourquoi = projet.pourquoi || projet.vision || projet.idee_force || projet.description || projet.resume || '';
-    const actions = projet.ce_quon_fait || projet.axes_action || projet.actions || [];
-    const benefices = projet.benefices
-        ? (typeof projet.benefices === 'string' ? projet.benefices.split('. ').filter(s => s.trim()) : projet.benefices)
-        : [];
-    const enjeux = projet.enjeux || [];
-    const indicateurs = projet.indicateurs ?
-        (typeof projet.indicateurs === 'string' ? projet.indicateurs.split(' • ') : projet.indicateurs) : [];
-    const darkerColor = adjustColor(color, -25);
-
-    // Nettoyer le titre (retirer les préfixes numérotés)
-    const cleanTitle = projet.titre.replace(/^(Objectif \d+ - |Engagement \d+ - )/, '');
-
-    // Sous-titre : résumé, soustitre ou slogan
-    const subtitle = projet.resume || projet.soustitre || projet.slogan || '';
-
-    // Construire le contenu du recto : priorité au "pourquoi", sinon enjeux
-    let frontContent = '';
-    if (pourquoi) {
-        frontContent = `<div class="flip-front-pourquoi">
-            <strong>🎯 Pourquoi ?</strong><br>
-            ${pourquoi.length > 180 ? pourquoi.substring(0, 180) + '...' : pourquoi}
-        </div>`;
-    } else if (enjeux.length > 0) {
-        frontContent = `<div class="flip-front-pourquoi">
-            <strong>🎯 Enjeux</strong><br>
-            ${enjeux.slice(0, 3).map(e => '• ' + e).join('<br>')}
-        </div>`;
-    }
-
-    // Construire les sections du verso
-    let backSections = '';
-
-    // Section actions/ce qu'on fait
-    if (actions.length > 0) {
-        backSections += `<div class="flip-back-section">
-            <h4 class="section-actions">🔧 Ce qu'on fait</h4>
-            <ul>${actions.slice(0, 5).map(a => `<li>${a}</li>`).join('')}</ul>
-        </div>`;
-    }
-
-    // Section enjeux (si pas déjà affichés en recto et pas d'actions)
-    if (enjeux.length > 0 && actions.length === 0) {
-        backSections += `<div class="flip-back-section">
-            <h4 class="section-actions">🎯 Enjeux</h4>
-            <ul>${enjeux.slice(0, 5).map(e => `<li>${e}</li>`).join('')}</ul>
-        </div>`;
-    }
-
-    // Section bénéfices
-    if (benefices.length > 0) {
-        backSections += `<div class="flip-back-section">
-            <h4 class="section-benefices">💎 Bénéfices</h4>
-            <ul>${benefices.map(b => `<li>${b}</li>`).join('')}</ul>
-        </div>`;
-    }
-
-    // Section indicateurs
-    if (indicateurs.length > 0) {
-        backSections += `<div class="flip-back-section">
-            <h4 class="section-indicateurs">📊 Indicateurs</h4>
-            <ul>${indicateurs.slice(0, 5).map(ind => `<li>${ind}</li>`).join('')}</ul>
-        </div>`;
-    }
-
-    // Si le verso serait vide, afficher la description complète
-    if (!backSections && projet.description) {
-        backSections = `<div class="flip-back-section">
-            <h4 class="section-actions">📝 En détail</h4>
-            <p style="font-size: 0.9rem; line-height: 1.6; color: #555;">${projet.description}</p>
-        </div>`;
-    }
-
-    return `
-        <div class="flip-card" data-id="${projet.id}">
-            <div class="flip-card-inner">
-                <!-- RECTO -->
-                <div class="flip-card-front">
-                    <div class="flip-front-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
-                        <h3 class="flip-front-title">${cleanTitle}</h3>
-                    </div>
-                    <div class="flip-front-body">
-                        <span class="flip-front-badge" style="background:${color};">${badge}</span>
-                        ${subtitle ? `<div class="flip-front-subtitle">${subtitle}</div>` : ''}
-                        ${frontContent}
-                        <div class="flip-front-hint">
-                            <span class="flip-icon">🔄</span> Retourner pour voir les détails
-                        </div>
-                    </div>
-                </div>
-                <!-- VERSO -->
-                <div class="flip-card-back">
-                    <div class="flip-back-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
-                        <span class="flip-back-title">${cleanTitle}</span>
-                        <span class="flip-back-close">↩ Retour</span>
-                    </div>
-                    <div class="flip-back-body">
-                        ${backSections}
-                    </div>
-                    <div class="flip-back-footer" onclick="event.stopPropagation(); openProjectModal(${projet.id});">
-                        📋 Voir la fiche complète
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-// ===== VUE TRANQUILLITÉ PUBLIQUE — 4 AXES =====
-function renderTranquilliteView() {
-    const axesConfig = [
-        {
-            num: 1,
-            titre: "Être présent et visible",
-            icon: "👁️",
-            color: "#2c3e50",
-            accroche: "Présence humaine, aménagement, vidéoprotection — trois dimensions qui se renforcent mutuellement."
-        },
-        {
-            num: 2,
-            titre: "Prévenir et apaiser",
-            icon: "🤝",
-            color: "#e67e22",
-            accroche: "Agir sur les causes des tensions, pas seulement sur leurs manifestations. Intervenir avant la crise."
-        },
-        {
-            num: 3,
-            titre: "Faire ensemble et informer",
-            icon: "🏘️",
-            color: "#27ae60",
-            accroche: "La tranquillité se construit avec les habitants et les partenaires, dans la transparence."
-        },
-        {
-            num: 4,
-            titre: "Anticiper et protéger les plus vulnérables",
-            icon: "🛡️",
-            color: "#c0392b",
-            accroche: "Préparer la commune aux crises, former les jeunes aux risques, protéger les victimes de violences, accompagner nos aînés — personne n'est oublié."
-        }
-    ];
-
-    // Récupérer les projets Tranquillité
-    const projets = filteredData.filter(p => projectHasTheme(p, 'Tranquillité publique'));
-
-    let html = '<div class="tranq-container" id="view-flip">';
-
-    // Bandeau titre
-    html += `
-        <div class="tranq-banner">
-            <h2>🛡️ Tranquillité publique</h2>
-            <p class="tranq-subtitle">Bien vivre ensemble, en confiance</p>
-            <p class="tranq-subtitle" style="font-size: 0.95rem; font-weight: 600; opacity: 1;">
-                4 axes structurants • ${projets.length} objectifs opérationnels
-            </p>
-            <p class="tranq-intro">
-                La tranquillité publique n'est pas l'affaire d'un seul service ou d'un seul élu.
-                Elle fédère toutes les énergies : élus, services municipaux, partenaires institutionnels et citoyens.
-                Éclairage public et transition écologique, aménagements de circulation et mobilités,
-                action sociale et protection des aînés, prévention en milieu scolaire —
-                chaque objectif est transversal et mobilise plusieurs thématiques du projet communal.
-                C'est cette approche globale qui fait notre force.
-            </p>
-            <p class="tranq-passerelles" style="margin-top: 1rem; font-size: 0.85rem; opacity: 0.75; letter-spacing: 0.5px;">
-                🌿 Transition écologique • 🚲 Mobilités • 🏗️ Travaux & urbanisme • 🤝 Action sociale • 👶 Enfance/Jeunesse
-            </p>
-        </div>
-    `;
-
-    // Grille des 4 axes
-    html += '<div class="tranq-axes-grid">';
-
-    axesConfig.forEach(axe => {
-        const axeProjets = projets.filter(p => p.axe === axe.num).sort((a, b) => (a.id || 0) - (b.id || 0));
-        const darkerColor = adjustColor(axe.color, -25);
-
-        html += `
-            <div class="tranq-axe-card">
-                <div class="tranq-axe-header" style="background: linear-gradient(135deg, ${axe.color} 0%, ${darkerColor} 100%);">
-                    <h3>${axe.icon} Axe ${axe.num} — ${axe.titre}</h3>
-                    <p class="axe-accroche">${axe.accroche}</p>
-                </div>
-                <div class="tranq-axe-body">
-        `;
-
-        axeProjets.forEach(p => {
-            const cleanTitle = p.titre.replace(/^Objectif \d+ - /, '');
-            const numero = p.numero ? p.numero.split('/')[0] : p.id;
-            html += `
-                <button class="tranq-objectif-btn" onclick="openProjectModal(${p.id})">
-                    <span class="obj-numero" style="background: ${axe.color};">${numero}</span>
-                    <div class="obj-content">
-                        <div class="obj-titre">${cleanTitle}</div>
-                        <div class="obj-resume">${p.resume || ''}</div>
-                    </div>
-                    <span class="obj-arrow">→</span>
-                </button>
-            `;
-        });
-
-        html += `
-                </div>
-            </div>
-        `;
-    });
-
-    html += '</div>'; // fin tranq-axes-grid
-    html += '</div>'; // fin tranq-container
-
-    // Insérer dans la section résultats
-    const resultsSection = document.getElementById('results-section');
-    resultsSection.insertAdjacentHTML('beforeend', html);
 }
 
 function renderConcertationView() {
@@ -1232,28 +874,13 @@ function renderThemesView() {
         }).join('');
         const plusCount = projets.length > 3 ? `<li class="plus-count">+ ${projets.length - 3} autre${projets.length - 3 > 1 ? 's' : ''}...</li>` : '';
 
-        // Compteur intelligent par thème
-        let countLabel;
-        if (theme === 'Tranquillité publique') {
-            const nbAxes = new Set(projets.map(p => p.axe).filter(Boolean)).size;
-            countLabel = `${nbAxes} axes • ${count} objectifs`;
-        } else {
-            const nbObj = projets.filter(p => p.type === 'objectif').length;
-            const nbEng = projets.filter(p => p.type === 'engagement').length;
-            if (nbObj > 0 && nbEng > 0) {
-                countLabel = `${nbObj} objectif${nbObj > 1 ? 's' : ''} • ${nbEng} engagement${nbEng > 1 ? 's' : ''}`;
-            } else {
-                countLabel = `${count} engagement${count > 1 ? 's' : ''}`;
-            }
-        }
-
         html += `
             <div class="theme-card" onclick="filterByTheme('${theme}')" style="border-left: 5px solid ${config.color}">
                 <div class="theme-header" style="background: linear-gradient(135deg, ${config.color} 0%, ${adjustColor(config.color, -20)} 100%)">
                     <span class="theme-icon">${config.icon}</span>
                     <div class="theme-info">
                         <h3>${theme}</h3>
-                        <span class="count">${countLabel}</span>
+                        <span class="count">${count} engagement${count > 1 ? 's' : ''}</span>
                     </div>
                 </div>
                 <div class="theme-preview">
@@ -1287,7 +914,7 @@ function renderCardsView() {
     const selectedTheme = document.getElementById('filter-theme')?.value;
     if (selectedTheme === 'Concertation citoyenne' || filteredData.some(p => getProjectThemes(p).includes('Concertation citoyenne'))) {
         const hasTheme = filteredData.some(p => getProjectThemes(p).includes('Concertation citoyenne'));
-        if (hasTheme && (selectedTheme === 'Concertation citoyenne' || selectedTheme === '')) {
+        if (hasTheme && selectedTheme === 'Concertation citoyenne') {
             html += `
                 <div class="theme-banner-special" style="
                     grid-column: 1 / -1;
@@ -1692,9 +1319,7 @@ window.navigateProject = navigateProject;
 </script>
 
 <!-- Site Features JS -->
-<script src="js/site-features.js" defer></script>
+<script src="js/site-features.js"></script>
 
-<!-- Bandeau news désactivé temporairement -->
-<!-- <script src="js/news-banner.js"></script> -->
 </body>
 </html>
