@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programme 2026–2032 — Vizille en Mouvement</title>
+<link rel="stylesheet" href="css/main.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --navy:#1a3a5c;--navy2:#2c5f8a;--gold:#c9a227;--goldf:#f0cc6a;
+  --cream:#faf8f2;--warm:#f0ede6;--dark:#111820;--gray:#6b7280;--light:#e8e4dc;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Source Sans 3',sans-serif;background:var(--cream);color:var(--dark);}
+
+.cover{min-height:100vh;background:var(--navy);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:4rem 2rem;
+  position:relative;page-break-after:always;}
+.cover::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 50% at 30% 70%,rgba(201,162,39,.15) 0%,transparent 60%),
+             radial-gradient(ellipse 50% 40% at 70% 20%,rgba(44,95,138,.4) 0%,transparent 60%);}
+.cover-bar{position:absolute;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,transparent,var(--gold),var(--goldf),var(--gold),transparent);}
+.cover-logo{position:relative;margin-bottom:3rem;}
+.cover-logo img{height:80px;filter:brightness(0) invert(1);opacity:.9;}
+.cover-eyebrow{position:relative;font-size:.75rem;letter-spacing:.5em;text-transform:uppercase;
+  color:var(--gold);font-weight:700;margin-bottom:1.5rem;}
+.cover-title{position:relative;font-family:'Playfair Display',serif;font-size:clamp(3.5rem,8vw,7rem);
+  font-weight:900;color:#fff;line-height:.9;margin-bottom:.5rem;}
+.cover-title em{display:block;color:var(--gold);font-style:italic;font-size:.55em;}
+.cover-sub{position:relative;font-family:'Playfair Display',serif;font-size:1.2rem;
+  color:rgba(255,255,255,.6);font-style:italic;margin:2rem 0;}
+.cover-stats{position:relative;display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;margin-top:3rem;}
+.cover-stat .n{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:900;color:var(--gold);line-height:1;}
+.cover-stat .l{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:.3rem;}
+.cover-date{position:relative;margin-top:3rem;border:1px solid rgba(201,162,39,.4);
+  display:inline-block;padding:.6rem 2rem;color:var(--goldf);font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;}
+
+.theme-section{padding:3rem 2rem;page-break-before:always;border-top:6px solid var(--gold);}
+.theme-section:nth-child(even){background:var(--warm);}
+.theme-header{display:flex;align-items:center;gap:1.5rem;margin-bottom:2.5rem;
+  padding-bottom:1.5rem;border-bottom:1px solid rgba(0,0,0,.1);}
+.theme-icon{font-size:3rem;flex-shrink:0;}
+.theme-label{font-size:.65rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:.2rem;}
+.theme-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:900;line-height:1;}
+.theme-count{font-size:.8rem;color:var(--gray);margin-top:.3rem;}
+
+.c-navy{border-top-color:var(--navy);} .c-navy .theme-title{color:var(--navy);}
+.c-blue{border-top-color:#2563eb;} .c-blue .theme-title{color:#1d4ed8;}
+.c-green{border-top-color:#16a34a;} .c-green .theme-title{color:#15803d;}
+.c-red{border-top-color:#dc2626;} .c-red .theme-title{color:#b91c1c;}
+.c-rose{border-top-color:#db2777;} .c-rose .theme-title{color:#be185d;}
+.c-purple{border-top-color:#7c3aed;} .c-purple .theme-title{color:#6d28d9;}
+.c-teal{border-top-color:#0d9488;} .c-teal .theme-title{color:#0f766e;}
+.c-brown{border-top-color:#92400e;} .c-brown .theme-title{color:#78350f;}
+.c-gold{border-top-color:var(--gold);} .c-gold .theme-title{color:#92400e;}
+
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.2rem;}
+.card{background:#fff;border:1px solid var(--light);padding:1.2rem 1.4rem;border-radius:2px;}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.5rem;}
+.card-title{font-weight:700;font-size:1rem;color:var(--navy);line-height:1.3;flex:1;}
+.card-meta{display:flex;flex-direction:column;align-items:flex-end;gap:.3rem;flex-shrink:0;}
+.card-resume{font-size:.85rem;color:var(--gold);font-weight:600;margin-bottom:.6rem;}
+.slogan{font-size:.78rem;color:var(--gray);font-style:italic;margin-bottom:.6rem;
+  padding-bottom:.6rem;border-bottom:1px dashed var(--light);}
+.desc{font-size:.82rem;color:var(--gray);line-height:1.5;margin-bottom:.6rem;}
+.axes{list-style:none;font-size:.82rem;color:#374151;line-height:1.8;margin-bottom:.6rem;}
+.axes li::before{content:"→ ";color:var(--gold);font-weight:700;}
+.card-tags{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.5rem;}
+.tag{font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--warm);color:var(--gray);padding:.2rem .5rem;border-radius:2px;}
+.tag-origin{background:#fef3c7;color:#92400e;font-weight:700;}
+.badge{font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;
+  padding:.2rem .5rem;border-radius:2px;font-weight:700;white-space:nowrap;}
+.badge-prio{background:#fef2f2;color:#dc2626;}
+.badge-prog{background:#f0fdf4;color:#16a34a;}
+.badge-etude{background:#eff6ff;color:#2563eb;}
+.annee{font-size:.75rem;color:var(--gray);font-weight:600;white-space:nowrap;}
+
+.footer-page{background:var(--navy);color:rgba(255,255,255,.5);text-align:center;
+  padding:2rem;font-size:.8rem;letter-spacing:.1em;page-break-before:always;}
+.footer-page strong{color:var(--gold);}
+
+@media print{
+  .cover{min-height:auto;padding:3rem 2rem;}
+  .theme-section{padding:2rem 1.5rem;}
+  .cards-grid{grid-template-columns:repeat(2,1fr);gap:.8rem;}
+  .card{padding:1rem;}
+}
+@media (max-width:640px){.cards-grid{grid-template-columns:1fr;}}
+
+</style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <p>Notre Projet • Mandat 2026-2032</p>
+        </div>
+        <div class="header-main">
+            <a href="index.html">
+                <img src="images/logo.png" alt="Vizille en Mouvement" class="nav-header-logo">
+            </a>
+            <button class="menu-toggle" aria-label="Menu">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="bilan.html">Bilan</a></li>
+                    <li><a href="projet.html">Projet</a></li>
+                    <li><a href="blog.html">Actualités</a></li>
+                    <li><a href="equipe.html">Équipe</a></li>
+                    <li><a href="medias.html">Médias</a></li>
+                    <li><a href="faq.html">Construisons ensemble</a></li>
+                    <li><a href="admin.html" class="admin-link" title="Administration">⚙️</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <script src="js/menu-mobile.js"></script>
+
+<section class="hero-unified">
+    <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo">
+    <div class="hero-text">
+        <h1>Notre Programme 2026-2032</h1>
+        <p class="slogan">Ensemble pour une ville dynamique et solidaire</p>
+    </div>
+</section>
+
+  <section class="theme-section c-green">
+    <div class="theme-header">
+      <span class="theme-icon">🌿</span>
+      <div class="theme-title-block">
+        <div class="theme-label">Programme 2026–2032</div>
+        <h2 class="theme-title">Transition écologique</h2>
+        <div class="theme-count">11 projets</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 1 - Intégrer l'environnement dans chaque projet municipal</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Dans chaque projet municipal, dès la conception.</div>
+<p class="desc">Pour que chaque décision (travaux, achats, urbanisme, services) réduise l'empreinte écologique et améliore la qualité de vie, aujourd'hui et demain.</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 2 - Faire de la transition un projet collectif compris et maîtrisé localement</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Un projet collectif, compris et maîtrisé localement.</div>
+<p class="desc">Parce que la transition réussit quand elle est partagée : pédagogie, participation, santé publique et actions concrètes au plus près des habitants.</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Engagement 1 - Énergies renouvelables</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Réseau de chaleur & accompagnement des copropriétés.</div>
+<p class="desc">Décarboner l'énergie locale et réduire la facture, en priorisant un réseau de chaleur urbain (quartier nord / centre-ville).</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Engagement 2 - Désimperméabiliser les cours d'écoles</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Cours d'écoles prioritaires.</div>
+<p class="desc">Limiter les ruissellements et rafraîchir les cours, au bénéfice des enfants et du voisinage.</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Engagement 3 - Réaménager la Place Henri Barbusse</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Place Henri Barbusse (marché).</div>
+<p class="desc">Créer un cœur de ville plus ombragé, plus convivial et mieux adapté aux usages du marché.</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Engagement 4 - Planter des arbres</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Développer les zones d'ombrage.</div>
+<p class="desc">Accélérer la création d'ombre naturelle et de corridors de biodiversité.</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Engagement 5 - Accès à la fraîcheur</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Canaux, espaces de fraîcheur, piscine.</div>
+<p class="desc">Offrir des refuges de fraîcheur lors des épisodes chauds et valoriser les canaux comme atout local.</p>
+<div class="card-tags"><span class="tag">Seniors</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Engagement 6 - Éclairage public sobre</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">LED + pilotage intelligent.</div>
+<p class="desc">Réduire la consommation tout en gardant un éclairage adapté aux usages et à la sécurité.</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Engagement 7 - Rénovation énergétique des bâtiments</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Bâtiments communaux, priorité écoles.</div>
+<p class="desc">Rationaliser le patrimoine bâti, réduire les charges et améliorer les conditions d'apprentissage et de travail.</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Engagement 8 - Numérique responsable</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Inclusion, réparation, accessibilité, vigilance IA.</div>
+<p class="desc">Mettre le numérique au service de tous, en limitant l'empreinte et en protégeant les données.</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Engagement 9 - Forêt communale</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Gestion durable & résilience (125 ha).</div>
+<p class="desc">Protéger un patrimoine naturel majeur et accompagner sa résilience face au climat avec l'ONF et les partenaires.</p>
+<div class="card-tags"></div>
+    </div>
+    </div>
+  </section>
+  <section class="theme-section c-brown">
+    <div class="theme-header">
+      <span class="theme-icon">🔨</span>
+      <div class="theme-title-block">
+        <div class="theme-label">Programme 2026–2032</div>
+        <h2 class="theme-title">Travaux</h2>
+        <div class="theme-count">7 projets</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Confort thermique des écoles</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume"></div>
+<p class="desc">Alerte sur les températures excessives dans les salles de classe l'été (jusqu'à 44°C mesurés). Un plan d'action est nécessaire en attendant que les arbres plantés arrivent à maturité.</p>
+<div class="card-tags"><span class="tag">Écoles</span><span class="tag">Canicule</span><span class="tag">Confort</span><span class="tag">Jeunes</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif - Moderniser les infrastructures communales</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Travaux d'entretien, rénovation et amélioration du patrimoine communal.</div>
+<p class="desc">• Programme pluriannuel 2026-2032
+• Qualité des espaces publics, maintenance des bâtiments
+• VRD, éclairage public, propreté des locaux
+• Transition environnementale
+• Une trentaine d'agents dont 6 en…</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Rue Général de Gaulle - Réseaux</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Réfection complète des réseaux d'assainissement et eau potable.</div>
+<p class="desc">Travaux de réseaux réalisés en 2024, piétonisation partielle décembre 2025.
+Phase finale 2ème semestre 2027, achèvement début 2028.
+Partenaires : Grenoble-Alpes Métropole (maître d'ouvrage), Ville de …</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Rue Général de Gaulle - Voie partagée</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Piétonisation partielle pour apaiser les déplacements et dynamiser le commerce.</div>
+<p class="desc">Amélioration des espaces publics.
+Étude, concertation, réunion publique fin 2026, travaux courant 2028.
+Partenaires : Grenoble-Alpes Métropole (maître d'ouvrage), Ville de Vizille.
+Financement Métropo…</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Maison de Santé Pluriprofessionnelle</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Priorité du mandat face à la pénurie médicale.</div>
+<p class="desc">La Ville a repris le pilotage. Médecins installés provisoirement dans les locaux de l'Avant-Garde.
+Études et maîtrise d'œuvre en 2026, travaux 2027, livraison début 2028.</p>
+<div class="card-tags"><span class="tag">Seniors</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Chapelle du Péage de Vizille</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Préservation et mise en valeur de ce lieu historique.</div>
+<p class="desc">Chapelle rachetée par la commune.
+Réunion publique courant 2026 pour débattre du devenir du site.</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Gendarmerie</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Échéance primordiale pour conserver la gendarmerie sur la commune.</div>
+<p class="desc">Études et échanges menés tout au long du mandat.
+Propositions discutées avec les services de l'État.
+L'équipe met toutes les forces nécessaires pour conserver la gendarmerie sur la commune.</p>
+<div class="card-tags"></div>
+    </div>
+    </div>
+  </section>
+  <section class="theme-section c-navy">
+    <div class="theme-header">
+      <span class="theme-icon">🏗️</span>
+      <div class="theme-title-block">
+        <div class="theme-label">Programme 2026–2032</div>
+        <h2 class="theme-title">Urbanisme</h2>
+        <div class="theme-count">6 projets</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif - Revitaliser le centre-ville de Vizille</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Transformer le centre-ville et positionner Vizille comme centralité du sud métropolitain.</div>
+<p class="desc">• Opération de Revitalisation de Territoire (ORT) signée fin 2025 avec la Métropole
+• Projet Centralité Vizilloise piloté conjointement avec Grenoble-Alpes Métropole
+• Requalification urbaine, habitat…</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">ORT - Opération de Revitalisation de Territoire</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Convention cadre nationale pour revitaliser le centre-ville.</div>
+<p class="desc">Convention signée décembre 2025, mise en œuvre 2025-2030.
+Partenaires : État (ANCT), Métropole, ANAH, Banque des Territoires, EPF.
+Accès aux aides ANAH, Action Cœur de Ville, fonds de revitalisation, …</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Projet Centralité Vizilloise</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Programme de requalification urbaine piloté avec la Métropole.</div>
+<p class="desc">Requalification urbaine pilotée conjointement par Grenoble-Alpes Métropole et la Ville.
+Poursuite du projet après retour et analyse des concertations.</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Secteur Tanneries</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Requalification du dernier grand tènement en centre-ville (~5 ha).</div>
+<p class="desc">Logements, équipements, mobilité douce.
+Études, concertation et ateliers effectués pendant le mandat 2020-2026.
+Reprise du dossier fin 2026. Cession EPFL-D prévue novembre 2025.
+Partenaires : Métropol…</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Les Terrasses de la Romanche (Alliance Textile)</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">52 logements en accession à la propriété.</div>
+<p class="desc">Phase 1 : livraison 2ème semestre 2026 (logements et commerce).
+Phase 2 : chantier en cours, livraison 2028.
+Porté par LPV et Isalis Immo.
+Dispositif PSLA, TVA réduite 5,5%, exonération taxe foncière …</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">OPAH-RU Réno'Vizille</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Opération d'Amélioration de l'Habitat sur 5 ans, 250 façades ciblées.</div>
+<p class="desc">Accompagnement des propriétaires pour la rénovation des logements vacants, rénovation énergétique et façades.
+Partenaires : État (ANAH), Métropole, Ville, Opérateur OPAH.
+Subventions ANAH (jusqu'à 50%…</p>
+<div class="card-tags"><span class="tag">Seniors</span></div>
+    </div>
+    </div>
+  </section>
+  <section class="theme-section c-blue">
+    <div class="theme-header">
+      <span class="theme-icon">🚲</span>
+      <div class="theme-title-block">
+        <div class="theme-label">Programme 2026–2032</div>
+        <h2 class="theme-title">Mobilités</h2>
+        <div class="theme-count">8 projets</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 1 - Mobilités structurantes</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Explorer toutes les solutions - long terme</div>
+<p class="desc">Améliorer les liaisons vers l'agglomération et la vallée : bus, navettes, covoiturage, parkings relais, câble, rail.</p>
+<div class="card-tags"><span class="tag">Connexion</span><span class="tag">Alternatives</span><span class="tag">Long terme</span><span class="tag">Seniors</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 2 - Renforcer les mobilités cyclables</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2027</span></div>
+      </div>
+      <div class="card-resume">Vizille, cœur du maillage cycliste</div>
+<p class="desc">Liaisons vers Grenoble, Oisans, Uriage et Matheysine. Réseau continu, lisible et sécurisé.</p>
+<div class="card-tags"><span class="tag">Tranquillité</span><span class="tag">Sécurité</span><span class="tag">Mobilités</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 3 - Sécuriser les usagers vulnérables</div>
+        <div class="card-meta"><span class="badge badge-prio">Prioritaire</span><span class="annee">→ 2026</span></div>
+      </div>
+      <div class="card-resume">Priorité aux piétons, enfants, seniors, PMR</div>
+<p class="desc">Traversées sûres, abords d'écoles protégés, accessibilité renforcée pour tous.</p>
+<div class="card-tags"><span class="tag">Sécurité</span><span class="tag">Accessibilité</span><span class="tag">Confort</span><span class="tag">Seniors</span><span class="tag">Jeunes</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 4 - Apaiser la circulation</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2026</span></div>
+      </div>
+      <div class="card-resume">Protéger les quartiers habités</div>
+<p class="desc">Réduire les nuisances du transit : bruit, vitesses excessives, à-coups de circulation.</p>
+<div class="card-tags"><span class="tag">Tranquillité</span><span class="tag">Cadre de vie</span><span class="tag">Sécurité</span><span class="tag">Seniors</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 5 - Organiser les flux</div>
+        <div class="card-meta"><span class="annee">→ 2026</span></div>
+      </div>
+      <div class="card-resume">Un plan de circulation lisible</div>
+<p class="desc">Clarifier les itinéraires, hiérarchiser les axes, réduire détours et conflits d'usages.</p>
+<div class="card-tags"><span class="tag">Lisibilité</span><span class="tag">Hiérarchie</span><span class="tag">Fluidité</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 6 - Centre-ville et espaces partagés</div>
+        <div class="card-meta"><span class="annee">→ 2027</span></div>
+      </div>
+      <div class="card-resume">Apaiser et dynamiser le cœur de ville</div>
+<p class="desc">Cheminements piétons confortables, espaces partagés lisibles, connexion marché ↔ château.</p>
+<div class="card-tags"><span class="tag">Convivialité</span><span class="tag">Commerce</span><span class="tag">Patrimoine</span><span class="tag">Seniors</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 7 - Feu de Jarrie (PPRT)</div>
+        <div class="card-meta"><span class="badge badge-prio">Prioritaire</span><span class="annee">→ 2026</span></div>
+      </div>
+      <div class="card-resume">Rétablir un fonctionnement adapté</div>
+<p class="desc">Régulation conforme à la vocation du feu : déclenchée uniquement en cas de congestion avérée.</p>
+<div class="card-tags"><span class="tag">Régulation</span><span class="tag">Bouchons</span><span class="tag">Fluidité</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 8 - Algorithmes de navigation : reprendre le contrôle</div>
+        <div class="card-meta"><span class="annee">→ 2026</span></div>
+      </div>
+      <div class="card-resume">S'attaquer aux diktats des GPS qui transforment nos quartiers en autoroutes de délestage</div>
+<p class="desc">Lors des retours de stations, les algorithmes de Waze ou Google Maps transforment nos quartiers en autoroutes de délestage. Ce n'est pas une fatalité — mais le corriger demandera de la méthode, des ou…</p>
+<div class="card-tags"><span class="tag">GPS</span><span class="tag">Waze</span><span class="tag">DiaLog</span><span class="tag">Transit</span><span class="tag">Quartiers</span></div>
+    </div>
+    </div>
+  </section>
+  <section class="theme-section c-red">
+    <div class="theme-header">
+      <span class="theme-icon">🛡️</span>
+      <div class="theme-title-block">
+        <div class="theme-label">Programme 2026–2032</div>
+        <h2 class="theme-title">Tranquillité publique</h2>
+        <div class="theme-count">11 projets</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 1 - Présence sur le terrain</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2026</span></div>
+      </div>
+      <div class="card-resume">Renforcer la présence régulière aux bons moments</div>
+<p class="desc">La présence visible des agents municipaux dans l'espace public est un facteur essentiel de tranquillité. Elle rassure les habitants, dissuade les comportements inappropriés et permet une détection pré…</p>
+<div class="card-tags"><span class="tag">Présence</span><span class="tag">Proximité</span><span class="tag">Prévention</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 2 - Médiation & prévention</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2026</span></div>
+      </div>
+      <div class="card-resume">Désamorcer vite — élus et services mobilisés</div>
+<p class="desc">Beaucoup de situations de tension naissent de malentendus ou de voisinages difficiles. La médiation est souvent plus efficace que la sanction : elle permet de restaurer le dialogue.</p>
+<div class="card-tags"><span class="tag">Médiation</span><span class="tag">Dialogue</span><span class="tag">Prévention</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 3 - Bruit, incivilités, nuisances</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2026</span></div>
+      </div>
+      <div class="card-resume">Protéger le calme du quotidien</div>
+<p class="desc">Le bruit est la première nuisance citée par les habitants. Notre approche : des règles connues, des contrôles ciblés, une réactivité quand ça déborde. La pédagogie d'abord, la sanction si récidive.</p>
+<div class="card-tags"><span class="tag">Bruit</span><span class="tag">Nuisances</span><span class="tag">Calme</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 4 - Circulation, vitesse, rodéos</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2026</span></div>
+      </div>
+      <div class="card-resume">Apaiser sans bloquer les déplacements</div>
+<p class="desc">Les comportements dangereux sur la route – vitesses excessives, rodéos, non-respect des priorités – sont une source majeure d'inquiétude. L'enjeu est d'apaiser la circulation sans la bloquer.</p>
+<div class="card-tags"><span class="tag">Vitesse</span><span class="tag">Sécurité routière</span><span class="tag">Rodéos</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 5 - Éclairage & aménagements</div>
+        <div class="card-meta"><span class="annee">→ 2027</span></div>
+      </div>
+      <div class="card-resume">Prévenir par le cadre de vie</div>
+<p class="desc">L'aménagement de l'espace public influence directement le sentiment de sécurité. Un parking mal éclairé, un passage peu visible génèrent de l'anxiété. La prévention par le cadre de vie est une approch…</p>
+<div class="card-tags"><span class="tag">Éclairage</span><span class="tag">Aménagement</span><span class="tag">Prévention</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 6 - Vidéoprotection</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2026</span></div>
+      </div>
+      <div class="card-resume">Achever le maillage — transparence et efficacité</div>
+<p class="desc">La vidéoprotection permet de dissuader certains comportements, de faciliter l'identification des auteurs d'infractions et de rassurer les habitants. L'objectif est d'achever le maillage prévu.</p>
+<div class="card-tags"><span class="tag">Vidéoprotection</span><span class="tag">Sécurité</span><span class="tag">Transparence</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 7 - Propreté & cadre de vie</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2026</span></div>
+      </div>
+      <div class="card-resume">Réactivité + prévention</div>
+<p class="desc">La propreté de l'espace public est une composante essentielle de la tranquillité. Une ville propre est une ville où l'on se sent respecté. La propreté repose sur deux piliers : réactivité et préventio…</p>
+<div class="card-tags"><span class="tag">Propreté</span><span class="tag">Réactivité</span><span class="tag">Cadre de vie</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 8 - Lien direct habitants</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2026</span></div>
+      </div>
+      <div class="card-resume">Référents de quartier + accès pour tous</div>
+<p class="desc">Le lien avec les habitants est la clé d'une action efficace. Ce sont eux qui vivent au quotidien dans les quartiers. Ce lien ne peut pas reposer uniquement sur le numérique.</p>
+<div class="card-tags"><span class="tag">Proximité</span><span class="tag">Référents</span><span class="tag">Accessibilité</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 9 - Travailler ensemble</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2026</span></div>
+      </div>
+      <div class="card-resume">Chaîne de réponse partagée, sans angle mort</div>
+<p class="desc">La tranquillité publique implique de nombreux acteurs : gendarmerie, bailleurs sociaux, établissements scolaires, associations, services de l'État. L'efficacité dépend de la coordination.</p>
+<div class="card-tags"><span class="tag">Partenariat</span><span class="tag">Coordination</span><span class="tag">Efficacité</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 10 - Méthode & transparence</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2026</span></div>
+      </div>
+      <div class="card-resume">On dit ce qu'on fait, on montre ce qu'on améliore</div>
+<p class="desc">La confiance des habitants repose sur la transparence de l'action publique. Il ne suffit pas d'agir, il faut montrer ce qu'on fait et rendre compte des résultats.</p>
+<div class="card-tags"><span class="tag">Transparence</span><span class="tag">Méthode</span><span class="tag">Bilan</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif 11 - PCS & culture du risque</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2026</span></div>
+      </div>
+      <div class="card-resume">Informer sans dramatiser — école d'abord</div>
+<p class="desc">Vizille est exposée à différents risques : inondation, risques industriels, risques naturels. La culture du risque consiste à informer sans dramatiser, à donner les bons réflexes.</p>
+<div class="card-tags"><span class="tag">Risques</span><span class="tag">Prévention</span><span class="tag">Information</span></div>
+    </div>
+    </div>
+  </section>
+  <section class="theme-section c-rose">
+    <div class="theme-header">
+      <span class="theme-icon">👧</span>
+      <div class="theme-title-block">
+        <div class="theme-label">Programme 2026–2032</div>
+        <h2 class="theme-title">Enfance/Jeunesse</h2>
+        <div class="theme-count">8 projets</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Grandir ensemble — Agir pour les enfants et les jeunes (0–18 ans)</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">À chaque âge, la commune accompagne, écoute et soutient, sans laisser personne au bord du chemin.</div>
+<p class="desc">Quatre fils conducteurs guident l'ensemble du programme :
+
+• Inclusion (handicap, précarité, isolement) — chaque enfant a sa place à Vizille, quelles que soient ses difficultés
+• Continuité des parcou…</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Petite enfance (0–3 ans) — Bien grandir dès le début</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Sécuriser les premiers parcours de vie et soutenir les familles dans l'accès aux modes de garde et aux espaces d'éveil.</div>
+<p class="desc">Faciliter l'accès aux modes de garde en accompagnant les familles dans leurs démarches. Organiser des temps d'information pour les parents sur les solutions existantes (crèche Les Petits Drôles, assis…</p>
+<div class="card-tags"><span class="tag">Crèche</span><span class="tag">SICCE</span><span class="tag">Petite enfance</span><span class="tag">Jeunes</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Conseil municipal des enfants (3–10 ans) — Grandir citoyen</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Donner la parole aux enfants et les initier à la démocratie locale, au vivre-ensemble et à la solidarité.</div>
+<p class="desc">Accompagner la mise en place d'un Conseil municipal des enfants ciblant prioritairement les élèves d'élémentaire. Temps de formation dédiés, adultes référents, projets portés par les enfants eux-mêmes…</p>
+<div class="card-tags"><span class="tag">Démocratie</span><span class="tag">Jeunesse</span><span class="tag">Participation</span><span class="tag">Jeunes</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Engagement et accompagnement des jeunes (14–18 ans)</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Aller à la rencontre des jeunes, en particulier ceux qui décrochent, pour leur proposer un accompagnement et des perspectives concrètes.</div>
+<p class="desc">Développer une démarche d'aller vers pour rencontrer les jeunes, notamment ceux en difficulté ou en décrochage. L'objectif n'est pas de surveiller mais d'accompagner.
+
+Travailler en partenariat avec l…</p>
+<div class="card-tags"><span class="tag">Engagement</span><span class="tag">Pompiers</span><span class="tag">Bénévolat</span><span class="tag">Jeunes</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Pré-adolescents (10–14 ans) — Accompagner la transition</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Prévenir les ruptures et accompagner les jeunes dans une période clé de leur développement, avec des espaces adaptés et des actions de prévention.</div>
+<p class="desc">Garantir un accès au numérique pour tous, avec un accompagnement aux usages responsables. Développer l'aide aux devoirs comme levier de réussite scolaire, en lien avec les associations et les établiss…</p>
+<div class="card-tags"><span class="tag">Adolescents</span><span class="tag">Prévention</span><span class="tag">Accompagnement</span><span class="tag">Jeunes</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Accompagner les associations et les forces vives jeunesse</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Soutenir les associations qui œuvrent pour les enfants et les jeunes, en allant à leur rencontre et en facilitant leurs projets.</div>
+<p class="desc">Aller à la rencontre des associations et institutions qui travaillent avec les jeunes Vizillois : écoles, associations culturelles et sportives, Maison des Pratiques Artistiques, collège, lycée, l'Esc…</p>
+<div class="card-tags"><span class="tag">Associations</span><span class="tag">Bénévolat</span><span class="tag">Soutien</span><span class="tag">Jeunes</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Inclusion et handicap — Aucun enfant laissé au bord du chemin</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Améliorer l'inclusion des enfants en situation de handicap dans tous les temps de vie : école, périscolaire, loisirs.</div>
+<p class="desc">Réaliser un état des lieux de ce qui existe déjà dans les écoles et l'accueil petite enfance. Coordination avec le Pôle Ressources Handicap du Syndicat Intercommunal de Coopération et des Compétences …</p>
+<div class="card-tags"><span class="tag">Handicap</span><span class="tag">Inclusion</span><span class="tag">Accessibilité</span><span class="tag">Jeunes</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Numérique et aide aux devoirs — Réduire les inégalités</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Garantir un accès équitable au numérique et à l'aide aux devoirs pour tous les enfants et jeunes de Vizille.</div>
+<p class="desc">Garantir un accès au numérique pour tous, avec un accompagnement aux usages responsables — particulièrement pour les 10–14 ans.
+
+Développer l'aide aux devoirs comme levier de réussite scolaire, en lie…</p>
+<div class="card-tags"><span class="tag">Numérique</span><span class="tag">Devoirs</span><span class="tag">Égalité</span><span class="tag">Jeunes</span></div>
+    </div>
+    </div>
+  </section>
+  <section class="theme-section c-purple">
+    <div class="theme-header">
+      <span class="theme-icon">🤝</span>
+      <div class="theme-title-block">
+        <div class="theme-label">Programme 2026–2032</div>
+        <h2 class="theme-title">Action sociale</h2>
+        <div class="theme-count">4 projets</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Maison des Solidarités</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2027</span></div>
+      </div>
+      <div class="card-resume">Un lieu unique pour centraliser l'accueil, l'accompagnement et l'orientation des habitants en difficulté.</div>
+<p class="desc">Regrouper les services du CCAS, les permanences sociales, juridiques et d'accès aux droits en un lieu identifié. En lien avec La Source (France Services), l'Escale et le foyer résidence La Romanche. C…</p>
+<div class="card-tags"><span class="tag">CCAS</span><span class="tag">Solidarité</span><span class="tag">Accès aux droits</span><span class="tag">Éducation populaire</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Réseaux d'entraide dans les quartiers</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2027</span></div>
+      </div>
+      <div class="card-resume">Structurer la solidarité de proximité par des réseaux de voisins solidaires dans chaque quartier.</div>
+<p class="desc">Aide aux courses, accompagnement aux rendez-vous médicaux, veille auprès des personnes isolées, partage de savoir-faire. Coordination assurée par le CCAS et les associations locales (Secours Populaire…</p>
+<div class="card-tags"><span class="tag">Entraide</span><span class="tag">Quartiers</span><span class="tag">Voisins solidaires</span><span class="tag">CCAS</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">CLSM à l'échelle du bassin de vie</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2026</span></div>
+      </div>
+      <div class="card-resume">Impliquer les communes voisines dans le Conseil Local de Santé Mentale.</div>
+<p class="desc">Étendre le CLSM (créé en 2025) aux communes du bassin du Pays Vizillois. Outil de démocratie en santé associant élus, professionnels, usagers et familles. Objectifs : prévention, repérage précoce, lut…</p>
+<div class="card-tags"><span class="tag">Santé mentale</span><span class="tag">CLSM</span><span class="tag">Intercommunal</span><span class="tag">Prévention</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Mutuelle communale</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2027</span></div>
+      </div>
+      <div class="card-resume">Beaucoup de Vizillois n'ont pas de mutuelle. D'autres sont obligés de résilier face aux augmentations de tarifs. La commune négocie une complémentaire santé collective à tarifs réduits, ouverte à tous, sans condition de revenus ni d'âge.</div>
+<p class="desc">Chaque année, les tarifs des mutuelles augmentent — parfois de 8 à 10 % — et de plus en plus d'habitants n'ont pas d'autre choix que de résilier. D'autres n'ont tout simplement jamais eu de mutuelle, …</p>
+<div class="card-tags"><span class="tag">Santé</span><span class="tag">Mutuelle</span><span class="tag">CCAS</span><span class="tag">Pouvoir d'achat</span></div>
+    </div>
+    </div>
+  </section>
+  <section class="theme-section c-gold">
+    <div class="theme-header">
+      <span class="theme-icon">💛</span>
+      <div class="theme-title-block">
+        <div class="theme-label">Programme 2026–2032</div>
+        <h2 class="theme-title">Solidarités</h2>
+        <div class="theme-count">4 projets</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif — Bien vieillir à Vizille</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">S'appuyer sur ce qui existe, combler ce qui manque.</div>
+<p class="desc">Vizille compte 31 % d'habitants de plus de 60 ans. Le Centre Communal d'Action Sociale gère déjà une palette de services reconnus : portage de repas, téléalarme, résidence autonomie La Romanche, Établ…</p>
+<div class="card-tags"><span class="tag">Seniors</span><span class="tag">Bien vieillir</span><span class="tag">Centre Communal d'Action Sociale</span><span class="tag">Autonomie</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Adapter les logements anciens au vieillissement</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2027</span></div>
+      </div>
+      <div class="card-resume">Un guichet unique pour transformer le bâti ancien en logement qui protège.</div>
+<p class="desc">Le centre-ville de Vizille est constitué en grande partie de logements anciens : escaliers raides, salles de bains inadaptées, seuils, absence d'ascenseur. Ces obstacles rendent le maintien à domicile…</p>
+<div class="card-tags"><span class="tag">Logement</span><span class="tag">Adaptation</span><span class="tag">MaPrimeAdapt</span><span class="tag">Opération Programmée d'Amélioration de l'Habitat</span><span class="tag">Maintien à domicile</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Garantir la mobilité des seniors</div>
+        <div class="card-meta"><span class="annee">→ 2027</span></div>
+      </div>
+      <div class="card-resume">Se déplacer à Grenoble, chez le médecin, au marché — sans voiture.</div>
+<p class="desc">Pour un senior sans permis, sans voiture ou ayant renoncé à conduire, se rendre à un rendez-vous médical à Grenoble, faire ses courses ou simplement sortir de chez soi peut devenir un problème quotidi…</p>
+<div class="card-tags"><span class="tag">Mobilité</span><span class="tag">Seniors</span><span class="tag">Transport à la demande</span><span class="tag">Bénévoles</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Aller vers les seniors isolés</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2027</span></div>
+      </div>
+      <div class="card-resume">Ne pas attendre qu'ils poussent la porte — aller les chercher.</div>
+<p class="desc">Le Centre Communal d'Action Sociale de Vizille assure déjà un accompagnement des personnes isolées et gère le registre des personnes vulnérables. Mais cet accompagnement reste majoritairement passif :…</p>
+<div class="card-tags"><span class="tag">Isolement</span><span class="tag">Aller-vers</span><span class="tag">Seniors</span><span class="tag">Bénévoles</span><span class="tag">Centre Communal d'Action Sociale</span></div>
+    </div>
+    </div>
+  </section>
+  <section class="theme-section c-teal">
+    <div class="theme-header">
+      <span class="theme-icon">🏥</span>
+      <div class="theme-title-block">
+        <div class="theme-label">Programme 2026–2032</div>
+        <h2 class="theme-title">Santé</h2>
+        <div class="theme-count">1 projet</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Rendre la Maison de Santé pleinement opérationnelle</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2027</span></div>
+      </div>
+      <div class="card-resume">Accès aux soins</div>
+
+<div class="card-tags"><span class="tag">Seniors</span></div>
+    </div>
+    </div>
+  </section>
+  <section class="theme-section c-purple">
+    <div class="theme-header">
+      <span class="theme-icon">🎭</span>
+      <div class="theme-title-block">
+        <div class="theme-label">Programme 2026–2032</div>
+        <h2 class="theme-title">Culture</h2>
+        <div class="theme-count">8 projets</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif — Rayonnement culturel, patrimonial et animation</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Une culture forte, c'est une culture qui rassemble, qui émancipe et qui donne à chacun la fierté de participer à la vie de la cité.</div>
+<p class="desc">Nous voulons une ville créative, attractive et unie où la culture, le patrimoine et l'animation renforcent l'identité de Vizille. Nous vous proposons un projet qui valorise les savoir-faire locaux, no…</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Faciliter l'accès à la culture pour tous</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Parcours artistique pour tous les Vizillois et toutes les générations, pass'culture pour les jeunes de moins de 14 ans, aide au quotient familial, éducation artistique.</div>
+<p class="desc">Développer l'éducation artistique et culturelle en mettant en place un Projet d'Éducation Artistique et Culturel communal, afin de coordonner, valoriser et renforcer toutes les actions menées sur le t…</p>
+<div class="card-tags"><span class="tag">Culture</span><span class="tag">Accès</span><span class="tag">Pass'culture</span><span class="tag">Éducation</span><span class="tag">Toutes générations</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Maintenir les événements culturels et des spectacles de qualité</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Saison culturelle, festivals P'tits Mots P'tits Mômes et du film pour enfants, Fête de la science, Estivales, tarifs abordables.</div>
+<p class="desc">Maintenir les événements importants déjà en place : saison culturelle du Jeu de Paume, festivals P'tits Mots P'tits Mômes, Festival du film pour enfants, Fête de la science, Estivales.
+
+Poursuivre l'e…</p>
+<div class="card-tags"><span class="tag">Culture</span><span class="tag">Accessibilité</span><span class="tag">Tarifs</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Soutenir la création et accueillir des artistes</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Résidences d'artistes, street art, parcours des arts, salle d'exposition, rencontres avec les créateurs.</div>
+<p class="desc">Accueillir des résidences d'artistes et poursuivre le projet de street art « De la vie et des couleurs dans la ville ». Créer un parcours des arts dans la ville.
+
+Favoriser les moments de rencontre et…</p>
+<div class="card-tags"><span class="tag">Création</span><span class="tag">Résidences</span><span class="tag">Street art</span><span class="tag">Artistes</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Une salle d'exposition accessible et spacieuse</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Création d'un espace dédié aux expositions artistiques.</div>
+<p class="desc">Création d'une salle d'exposition accessible et spacieuse pour accueillir des expositions de qualité. Un équipement culturel qui manque aujourd'hui à Vizille pour valoriser les artistes locaux et accu…</p>
+<div class="card-tags"><span class="tag">Équipement</span><span class="tag">Exposition</span><span class="tag">Art</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Projets artistiques avec les jeunes et les habitants</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Fresques, spectacles, jardin musical intergénérationnel, projets artistiques participatifs.</div>
+<p class="desc">Mener des projets artistiques avec les jeunes vizillois et les habitants : fresques, spectacles théâtraux ou musicaux en lien avec des artistes.
+
+Proposer l'implantation d'un « jardin musical » dans u…</p>
+<div class="card-tags"><span class="tag">Jeunesse</span><span class="tag">Création</span><span class="tag">Intergénérationnel</span><span class="tag">Maison des Pratiques Artistiques</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Animer la ville toute l'année, dans chaque quartier</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Fête du printemps, repas de rue, fête des jeux, marché de Noël, veillée de Belledonne, spectacles de rue, nocturnes gourmandes.</div>
+<p class="desc">Développer des animations variées au plus près des habitants lors de moments conviviaux de rencontre dans chaque quartier : fête du printemps, repas de rue, fête des jeux, marché de Noël, veillée de B…</p>
+<div class="card-tags"><span class="tag">Convivialité</span><span class="tag">Fêtes</span><span class="tag">Toute l'année</span><span class="tag">Quartiers</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Soutenir et accompagner la vie associative</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Soutien financier, partenariats Les Cinémas Associés/Maison des Pratiques Artistiques, maison des associations.</div>
+<p class="desc">Maintenir un lien fort avec les associations culturelles. Être à l'écoute, facilitateurs pour leurs projets, pour renforcer les forces vives de la ville et construire ensemble une dynamique locale par…</p>
+<div class="card-tags"><span class="tag">Associations</span><span class="tag">Les Cinémas Associés</span><span class="tag">Maison des Pratiques Artistiques</span><span class="tag">Soutien</span></div>
+    </div>
+    </div>
+  </section>
+  <section class="theme-section c-brown">
+    <div class="theme-header">
+      <span class="theme-icon">🏛️</span>
+      <div class="theme-title-block">
+        <div class="theme-label">Programme 2026–2032</div>
+        <h2 class="theme-title">Patrimoine</h2>
+        <div class="theme-count">6 projets</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif — Connaître, préserver, transmettre le patrimoine vizillois</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Valoriser le patrimoine bâti, mémoriel et paysager de Vizille pour renforcer l'identité locale et l'attractivité touristique.</div>
+<p class="desc">Vizille possède un patrimoine riche et varié : prieuré clunisien, chapelle du Péage, lavoirs, canaux des Tanneries, mémoire de la Résistance, petit patrimoine vernaculaire… Ce patrimoine mérite d'être…</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Lavoirs, chapelle du Péage et tannerie : projets participatifs</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Restauration participative des lavoirs, résidence architecturale et artistique pour la chapelle du Péage et la tannerie.</div>
+<p class="desc">Engager des projets participatifs pour embellir deux lavoirs.
+
+Réfléchir ensemble sur le devenir de la chapelle du Péage et de la tannerie à travers une résidence architecturale et artistique, pour pe…</p>
+<div class="card-tags"><span class="tag">Patrimoine</span><span class="tag">Participatif</span><span class="tag">Lavoirs</span><span class="tag">Chapelle</span><span class="tag">Tanneries</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Sauvegarder et faire revivre le prieuré</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Valorisation du prieuré en partenariat avec l'AHPV, la Fondation du patrimoine et les sites clunisiens.</div>
+<p class="desc">Sauvegarde du prieuré de Vizille : valorisation du monument et mise en projet pour le faire revivre, en partenariat avec les Amis de l'Histoire du Pays Vizillois (AHPV), la Fondation du patrimoine et …</p>
+<div class="card-tags"><span class="tag">Patrimoine</span><span class="tag">Prieuré</span><span class="tag">AHPV</span><span class="tag">Clunisiens</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Parcours patrimoniaux dans la ville</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Mémoire de la Résistance, petit patrimoine, parcours des fresques.</div>
+<p class="desc">Mettre en place un parcours « Mémoire de la Résistance », un parcours au cimetière et un parcours du petit patrimoine. Créer un circuit « Ouvrons les yeux » pour découvrir le petit patrimoine vizilloi…</p>
+<div class="card-tags"><span class="tag">Patrimoine</span><span class="tag">Parcours</span><span class="tag">Résistance</span><span class="tag">Découverte</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Renforcer l'attractivité touristique</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Office du tourisme renforcé, grands itinéraires, halte camping-cars.</div>
+<p class="desc">Travailler avec la Métropole pour rendre plus visible l'office du tourisme et en faire une Maison de pays, lieu dédié aux artistes et artisans locaux avec vente de leurs créations. Développer les anim…</p>
+<div class="card-tags"><span class="tag">Tourisme</span><span class="tag">Itinéraires</span><span class="tag">Napoléon</span><span class="tag">Cyclotourisme</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Protéger et valoriser le moulin du Pétillon et les battoirs</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Protection urgente et valorisation du moulin du Pétillon et des battoirs, témoins de l'histoire artisanale de Vizille.</div>
+<p class="desc">Le moulin du Pétillon et les battoirs constituent des éléments patrimoniaux remarquables, longtemps restés à l'abri mais aujourd'hui menacés par le temps. Leur protection sera engagée dès ce mandat po…</p>
+<div class="card-tags"><span class="tag">Patrimoine</span><span class="tag">Moulin du Pétillon</span><span class="tag">Battoirs</span><span class="tag">Protection</span></div>
+    </div>
+    </div>
+  </section>
+  <section class="theme-section c-rose">
+    <div class="theme-header">
+      <span class="theme-icon">🎪</span>
+      <div class="theme-title-block">
+        <div class="theme-label">Programme 2026–2032</div>
+        <h2 class="theme-title">Animations de proximité</h2>
+        <div class="theme-count">9 projets</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Objectif — Animer Vizille au plus près des habitants</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Des événements festifs, gratuits et réguliers pour faire vivre le centre-ville et les quartiers.</div>
+<p class="desc">Trois constats guident ce projet :
+→ Le centre-ville manque d'animation régulière et conviviale
+→ Il n'existe pas de scène intimiste de proximité
+→ Les forces vives associatives ne sont pas assez acco…</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Spectacles « Chapeau l'artiste » — Rue et place, tout l'été</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">NOUVEAU — Spectacles de rue gratuits en centre-ville, juin à août.</div>
+<p class="desc">De juin à août, le centre-ville accueille des spectacles de rue pluridisciplinaires : musique, danse, clown, acrobates, jongleurs, théâtre. Sélection de troupes amateurs et professionnelles. Le public…</p>
+<div class="card-tags"><span class="tag">Nouveau</span><span class="tag">Animations de proximité</span><span class="tag">Centre-ville</span><span class="tag">Été</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Bals populaires — Place de Stalingrad ou Parc Vöhringen</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">NOUVEAU — Bals gratuits avec orchestre, au printemps et en été.</div>
+<p class="desc">Au printemps et en été, Vizille retrouve ses bals populaires ! Sur la place de Stalingrad ou au Parc Vöhringen, avec orchestre (si budget) ou DJ, un rendez-vous intergénérationnel gratuit pour danser …</p>
+<div class="card-tags"><span class="tag">Nouveau</span><span class="tag">Animations de proximité</span><span class="tag">Convivialité</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Nocturnes gourmandes et musicales — Produits locaux en centre-ville</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">NOUVEAU — Soirées produits locaux + musique live, place de Stalingrad.</div>
+<p class="desc">De juin à août, le centre-ville accueille des nocturnes associant produits locaux à consommer sur place et orchestre d'ambiance. Un concept de marché nocturne festif qui n'existe pas encore à Vizille,…</p>
+<div class="card-tags"><span class="tag">Nouveau</span><span class="tag">Animations de proximité</span><span class="tag">Produits locaux</span><span class="tag">Centre-ville</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Le petit conte d'Halloween — Théâtre itinérant dans les quartiers</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">NOUVEAU — Le 31 octobre, spectacle d'improvisation pour les familles.</div>
+<p class="desc">Le 31 octobre, une troupe de théâtre d'improvisation amateur met en scène un conte d'Halloween en parcourant les quartiers de Vizille. Gratuit, festif, familial. Ce spectacle itinérant comble le vide …</p>
+<div class="card-tags"><span class="tag">Nouveau</span><span class="tag">Animations de proximité</span><span class="tag">Familles</span><span class="tag">Quartiers</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Spectacles « Isère en scène » — La p'tite salle, les 1ers samedis du mois</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">NOUVEAU — Programmation départementale intimiste, 10 €, toute l'année.</div>
+<p class="desc">Chaque premier samedi du mois, « La p'tite salle » programme un spectacle isérois : musique ou théâtre, amateurs et professionnels. Une vitrine des troupes et lieux culturels de notre département dans…</p>
+<div class="card-tags"><span class="tag">Nouveau</span><span class="tag">P'tite salle</span><span class="tag">Isère</span><span class="tag">Spectacles</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">« Isère en scène » et « Au théâtre ce soir » — Chaque 1er samedi du mois</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Spectacles de troupes et artistes locaux chaque 1er samedi du mois, dans la P'tite salle ou une structure de quartier.</div>
+<p class="desc">Accueillir des spectacles de troupes ou artistes locaux sous forme « Isère en scène » ou « Au théâtre ce soir » chaque 1er samedi du mois, dans la P'tite salle ou dans une structure de quartier.
+
+Musi…</p>
+<div class="card-tags"><span class="tag">Nouveau</span><span class="tag">P'tite salle</span><span class="tag">Artistes locaux</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Spectacles « Au théâtre ce soir » — L'été amateur à la p'tite salle</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">NOUVEAU — Juillet-août, troupes amateurs isèroises, 5 € / tarif libre.</div>
+<p class="desc">En juillet et août, les troupes théâtrales amateurs de l'Isère rejouent leurs spectacles de fin d'année dans notre p'tite salle. 100 % amateur, 100 % convivial. Ce format comble le creux de programmat…</p>
+<div class="card-tags"><span class="tag">Nouveau</span><span class="tag">P'tite salle</span><span class="tag">Théâtre amateur</span><span class="tag">Été</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Accompagner les forces vives — Aller à la rencontre des associations</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">COMPLÉMENT — Écouter, accompagner, faciliter les projets citoyens.</div>
+<p class="desc">Nous irons à la rencontre des associations et institutions qui animent Vizille : écoles, associations culturelles, OMS, Maison des Pratiques Artistiques, collège, lycée, l'Escale… L'objectif : écouter…</p>
+<div class="card-tags"><span class="tag">Complément</span><span class="tag">Associations</span><span class="tag">Participation</span><span class="tag">Aller-vers</span></div>
+    </div>
+    </div>
+  </section>
+  <section class="theme-section c-teal">
+    <div class="theme-header">
+      <span class="theme-icon">🌍</span>
+      <div class="theme-title-block">
+        <div class="theme-label">Programme 2026–2032</div>
+        <h2 class="theme-title">Jumelages</h2>
+        <div class="theme-count">1 projet</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Conforter le lien avec nos villes jumelées</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Implication des habitants, échanges culturels et citoyens entre les trois cités, Fêtes de l'Amitié 2027 et 2030, Courrier du jumelage.</div>
+<p class="desc">Impliquer des habitants dans le comité de jumelage. Développer les échanges culturels, associatifs et citoyens entre les trois cités.
+
+Faire des Fêtes de l'Amitié de 2027 et 2030 à Vizille un temps fo…</p>
+<div class="card-tags"><span class="tag">Jumelage</span><span class="tag">Échanges</span><span class="tag">International</span><span class="tag">Jeunesse</span></div>
+    </div>
+    </div>
+  </section>
+  <section class="theme-section c-blue">
+    <div class="theme-header">
+      <span class="theme-icon">💬</span>
+      <div class="theme-title-block">
+        <div class="theme-label">Programme 2026–2032</div>
+        <h2 class="theme-title">Concertation citoyenne</h2>
+        <div class="theme-count">5 projets</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Axe 1 - Démocratie locale et participation citoyenne</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">L'idée est de faire vivre une démocratie active, inclusive et émancipatrice.</div>
+<p class="desc">• Conseil de quartier : jeunes, personnes précaires, seniors
+• Lieu ouvert dédié à l'écoute, ateliers, débats, formations</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Axe 2 - Éducation populaire et culture pour tous</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Garantir l'accès à une culture critique, émancipatrice et accessible.</div>
+<p class="desc">• Création d'un centre d'éducation populaire permanent (style maison des jeunes)
+• Café-débats, ciné-débats, théâtre-forums sur les différents sujets (enjeux sociaux, enjeux environnementaux, enjeux p…</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Axe 3 - Jeunesse et émancipation</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Donner les moyens aux jeunes de devenir acteurs de leur vie et de leur territoire.</div>
+<p class="desc">• Création d'un conseil municipal des jeunes
+• Atelier d'autodéfense intellectuelle (pensée critique, préserver l'intégrité intellectuelle)
+• Chantiers jeunes participatifs (service civique local)</p>
+<div class="card-tags"></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Axe 4 - Lutte contre les inégalités et émancipation sociale</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Faire de l'éducation populaire un outil d'émancipation pour les personnes les plus éloignées des droits.</div>
+<p class="desc">• Soutien à l'apprentissage du français
+• Ateliers juridiques, économiques et sociaux (comprendre ses droits, les institutions, le fonctionnement des aides)
+• Accès gratuit à des lieux de convivialité…</p>
+<div class="card-tags"><span class="tag">Seniors</span></div>
+    </div>    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Axe 5 - Transition écologique et savoirs partagés</div>
+        <div class="card-meta"></div>
+      </div>
+      <div class="card-resume">Faire de la transition un projet collectif, compris et maîtrisé localement.</div>
+<p class="desc">• Sur la base du plan climat, approfondir les actions pédagogiques et sociétales
+• Renforcer les actions autour de la santé publique (la pollution, les dangers professionnels, l'habitat et les peuplem…</p>
+<div class="card-tags"></div>
+    </div>
+    </div>
+  </section>
+  <section class="theme-section c-navy">
+    <div class="theme-header">
+      <span class="theme-icon">🏙️</span>
+      <div class="theme-title-block">
+        <div class="theme-label">Programme 2026–2032</div>
+        <h2 class="theme-title">Métropole</h2>
+        <div class="theme-count">1 projet</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-title">Le maire siègera personnellement aux conseils métropolitains</div>
+        <div class="card-meta"><span class="badge badge-prog">Programmé</span><span class="annee">→ 2026</span></div>
+      </div>
+      <div class="card-resume">Présence métropolitaine</div>
+
+<div class="card-tags"></div>
+    </div>
+    </div>
+  </section>
+
+
+<div class="footer-page">
+  <p><strong>Vizille en Mouvement</strong> · Municipales 2026 · Liste conduite par <strong>Catherine Troton</strong></p>
+  <p style="margin-top:.5rem">vizilleenmouvement.fr · 90 projets pour les 6 prochaines années</p>
+</div>
+</body>
+</html>
