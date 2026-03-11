@@ -127,27 +127,25 @@ body.retro{background:var(--fond);color:var(--blanc);font-family:var(--font-b);f
   .gs-item{border-right:none;border-bottom:1px solid rgba(201,162,39,.1)}
 }
 
-/* === MODAL FICHE === */
-#modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,12,20,.85);z-index:9999;align-items:center;justify-content:center;padding:1.5rem}
+.tc{cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+.tc:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.45)}
+#modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,12,20,.88);z-index:9999;align-items:center;justify-content:center;padding:1.5rem}
 #modal-overlay.open{display:flex}
-#modal-box{background:#0e1720;border:1px solid rgba(201,162,39,.35);border-radius:16px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;padding:2rem;position:relative}
-#modal-box::-webkit-scrollbar{width:5px}
-#modal-box::-webkit-scrollbar-thumb{background:rgba(201,162,39,.3);border-radius:3px}
-#modal-close{position:absolute;top:1rem;right:1.2rem;background:none;border:none;color:rgba(245,240,232,.5);font-size:1.4rem;cursor:pointer;line-height:1}
+#modal-box{background:#111e2b;border:1px solid rgba(201,162,39,.4);border-radius:16px;max-width:580px;width:100%;max-height:85vh;overflow-y:auto;padding:2rem;position:relative}
+#modal-close{position:absolute;top:.9rem;right:1.1rem;background:none;border:none;color:rgba(245,240,232,.45);font-size:1.3rem;cursor:pointer;padding:.2rem .4rem}
 #modal-close:hover{color:var(--or)}
-#modal-tag{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--or);opacity:.8;margin-bottom:.5rem}
-#modal-title{font-family:var(--font-t);font-size:1.1rem;font-weight:700;color:var(--blanc);margin-bottom:1.2rem;line-height:1.3}
+#modal-tag{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--or);opacity:.75;margin-bottom:.4rem}
+#modal-title{font-family:var(--font-t);font-size:1.05rem;font-weight:700;color:var(--blanc);margin-bottom:1rem;line-height:1.35;padding-right:1.5rem}
 #modal-list{list-style:none;padding:0;margin:0}
-#modal-list li{padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:.82rem;color:rgba(245,240,232,.78);line-height:1.4;display:flex;gap:.6rem;align-items:flex-start}
+#modal-list li{padding:.45rem 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:.81rem;color:rgba(245,240,232,.75);line-height:1.4;display:flex;gap:.5rem;align-items:flex-start}
 #modal-list li:last-child{border-bottom:none}
-.item-statut{font-size:.63rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.13rem .38rem;border-radius:4px;white-space:nowrap;flex-shrink:0;margin-top:.18rem}
-.s-realise{background:rgba(34,197,94,.15);color:#4ade80}
-.s-encours{background:rgba(251,191,36,.15);color:#fbbf24}
-.s-decide{background:rgba(96,165,250,.15);color:#60a5fa}
-.s-programme{background:rgba(167,139,250,.15);color:#a78bfa}
-.s-objectif{background:rgba(201,162,39,.15);color:var(--or)}
-.tc{cursor:pointer;transition:transform .15s,box-shadow .15s}
-.tc:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.4)}
+.ibadge{font-size:.6rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.12rem .35rem;border-radius:3px;white-space:nowrap;flex-shrink:0;margin-top:.2rem}
+.sr{background:rgba(34,197,94,.18);color:#4ade80}
+.se{background:rgba(251,191,36,.18);color:#fbbf24}
+.sd{background:rgba(96,165,250,.18);color:#60a5fa}
+.sp{background:rgba(167,139,250,.18);color:#a78bfa}
+.so{background:rgba(201,162,39,.18);color:var(--or)}
+.idesc{display:block;font-size:.7rem;color:rgba(245,240,232,.38);margin-top:.1rem}
 </style>
 </head>
 <body class="retro">
@@ -259,12 +257,12 @@ function bilanCard(actions, cfg) {
   var realise = acts.filter(function(a){ return a.statut === 'Réalisé'; }).length;
   var encours = acts.filter(function(a){ return a.statut === 'En cours' || a.statut === 'Décidé' || a.statut === 'Programmé'; }).length;
   var top = getTop(acts.slice(), 4);
-  var _bEnc = encodeItems(acts);
-  return '<div class="tc bilan" onclick="openModal(\u0027Bilan 2020\u20132026\u0027,\u0027' + cfg.label.replace(/'/g,'\u0027') + ' : ' + acts.length + ' actions\u0027,JSON.parse(decodeURIComponent(\u0027' + _bEnc + '\u0027)),\u0027titre\u0027)">' +
+  var _bid = regCard('Bilan 2020\u20132026', cfg.label + ' \u2014 ' + acts.length + ' actions menées', acts, 'titre');
+  return '<div class="tc bilan" data-cid="' + _bid + '">' +
     '<span class="tc-tag">Bilan 2020\u20132026</span>' +
     '<h3 class="tc-title">' + acts.length + ' actions menées</h3>' +
     '<ul class="tc-list">' + makeList(top, 'titre') + '</ul>' +
-    (acts.length > 4 ? '<p class="tc-more">+ ' + (acts.length-4) + ' autres actions</p>' : '') +
+    '<p class="tc-more">' + (acts.length > 4 ? '+ ' + (acts.length-4) + ' autres \u2014 ' : '') + '\u2192 Voir la fiche</p>' +
     '</div>';
 }
 
@@ -276,13 +274,13 @@ function progCard(projets, cfg) {
   });
   if (!list.length) return '';
   var top = list.slice(0,4);
-  var _pEnc = encodeItems(list);
-  var _pLabel = (cfg.progLabel||cfg.label).replace(/'/g,'\u0027');
-  return '<div class="tc prog" onclick="openModal(\u0027Programme 2026\u20132032\u0027,\u0027' + _pLabel + ' : ' + list.length + ' engagement' + (list.length>1?'s':'') + '\u0027,JSON.parse(decodeURIComponent(\u0027' + _pEnc + '\u0027)),\u0027titre\u0027)">' +
+  var _plb = cfg.progLabel||cfg.label;
+  var _pid = regCard('Programme 2026\u20132032', _plb + ' \u2014 ' + list.length + ' engagement' + (list.length>1?'s':''), list, 'titre');
+  return '<div class="tc prog" data-cid="' + _pid + '">' +
     '<span class="tc-tag">Programme 2026\u20132032</span>' +
     '<h3 class="tc-title">' + list.length + ' engagement' + (list.length>1?'s':'') + ' pour ce mandat</h3>' +
     '<ul class="tc-list">' + makeList(top, 'titre') + '</ul>' +
-    '<p class="tc-more">' + (list.length > 4 ? '+ ' + (list.length-4) + ' autres — ' : '') + '→ Voir le détail</p>' +
+    '<p class="tc-more">' + (list.length > 4 ? '+ ' + (list.length-4) + ' autres \u2014 ' : '') + '\u2192 Voir la fiche</p>' +
     '</div>';
 }
 
@@ -307,41 +305,39 @@ function makeBlock(icon, label, left, right) {
     '</div></div>';
 }
 
-
-function encodeItems(items) { return encodeURIComponent(JSON.stringify(items)); }
-function statClass(s) {
-  var m = {'Réalisé':'s-realise','En cours':'s-encours','Décidé':'s-decide','Programmé':'s-programme','Objectif':'s-objectif'};
-  return m[s] || 's-objectif';
+var CARD_DATA = {};
+var _cidx = 0;
+function regCard(tag, title, items, field) {
+  var id = 'c' + (_cidx++);
+  CARD_DATA[id] = {tag:tag, title:title, items:items, field:field};
+  return id;
 }
-window.openModal = function(tag, title, items, field) {
-  document.getElementById('modal-tag').textContent = tag;
-  document.getElementById('modal-title').textContent = title;
+function _scl(s){var m={'R\u00e9alis\u00e9':'sr','En cours':'se','D\u00e9cid\u00e9':'sd','Programm\u00e9':'sp','Objectif':'so'};return m[s]||'so';}
+window.openModal = function(id) {
+  var d = CARD_DATA[id]; if(!d)return;
+  document.getElementById('modal-tag').textContent = d.tag;
+  document.getElementById('modal-title').textContent = d.title;
   var ul = document.getElementById('modal-list');
-  ul.innerHTML = items.map(function(x) {
-    var t = (x[field]||'').replace(/^Objectif \d+ - /,'').replace(/^Objectif — /,'');
-    var s = x.statut || '';
-    var sc = statClass(s);
-    var badge = s ? '<span class="item-statut '+sc+'">'+s+'</span>' : '';
-    var desc = x.resume ? '<span style="display:block;font-size:.71rem;color:rgba(245,240,232,.4);margin-top:.15rem">'+x.resume+'</span>' : '';
+  ul.innerHTML = d.items.map(function(x){
+    var t=(x[d.field]||'')
+      .replace(/^Objectif \d+ - /,'')
+      .replace(/^Objectif \u2014 /,'');
+    var s=x.statut||'';
+    var badge=s?'<span class="ibadge '+_scl(s)+'">'+s+'</span>':''
+    var desc=x.resume?'<span class="idesc">'+x.resume+'</span>':''
     return '<li>'+badge+'<span>'+t+desc+'</span></li>';
   }).join('');
   document.getElementById('modal-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
 };
-document.addEventListener('click', function(e) {
-  var ov = document.getElementById('modal-overlay');
-  if (e.target.id === 'modal-close' || e.target === ov) {
-    ov.classList.remove('open');
-    document.body.style.overflow = '';
-  }
+document.addEventListener('click',function(e){
+  var ov=document.getElementById('modal-overlay');
+  if(!ov)return;
+  if(e.target.id==='modal-close'||e.target===ov){ov.classList.remove('open');document.body.style.overflow='';}
 });
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    document.getElementById('modal-overlay').classList.remove('open');
-    document.body.style.overflow = '';
-  }
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){var ov=document.getElementById('modal-overlay');if(ov){ov.classList.remove('open');document.body.style.overflow='';}}
 });
-
 async function buildFrise() {
   var data = await loadData();
   var actions = data.actions;
@@ -364,6 +360,11 @@ async function buildFrise() {
     });
   }, { threshold: 0.1 });
   root.querySelectorAll('.tc').forEach(function(c){ obs.observe(c); });
+  root.addEventListener('click', function(e) {
+    var card = e.target.closest('[data-cid]');
+    if (card) openModal(card.getAttribute('data-cid'));
+  });
+
 
   function animCount(el, n) {
     if (!el) return;
