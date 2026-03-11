@@ -156,15 +156,17 @@ body.retro{background:var(--fond);color:var(--blanc);font-family:var(--font-b);f
   <div class="header-main">
     <a href="index.html"><img src="images/logo.png" alt="Vizille en Mouvement" class="nav-header-logo"></a>
     <nav><ul>
-      <li><a href="index.html">Accueil</a></li>
-      <li><a href="retrospective.html">Rétrospective</a></li>
-      <li><a href="bilan.html">Bilan</a></li>
-      <li><a href="projet.html">Projet</a></li>
-      <li><a href="nos-ambitions.html" class="active">Nos Ambitions</a></li>
-      <li><a href="equipe.html">Équipe</a></li>
-      <li><a href="blog.html">Actualités</a></li>
-      <li><a href="faq.html">Construisons ensemble</a></li>
-    </ul></nav>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="nos-ambitions.html" class="active">Nos Ambitions</a></li>
+                    <li><a href="retrospective.html">Rétrospective</a></li>
+                    <li><a href="bilan.html">Bilan</a></li>
+                    <li><a href="projet.html">Projet</a></li>
+                    <li><a href="blog.html">Actualités</a></li>
+                    <li><a href="equipe.html">Équipe</a></li>
+                    <li><a href="medias.html">Médias</a></li>
+                    <li><a href="faq.html">Construisons ensemble</a></li>
+                    <li><a href="admin.html" class="admin-link" title="Administration">⚙️</a></li>
+                </ul></nav>
   </div>
 </header>
 <script src="js/menu-mobile.js" defer></script>
@@ -213,9 +215,11 @@ async function loadData() {
 
 // Mapping thème bilan → config
 const THEMES = [
+  { key:"Intercommunalité",     prog:["Métropole"],                         icon:"🏙️", label:"Intercommunalité & Métropole" },
   { key:"Culture",              prog:["Culture","Animations de proximité"], icon:"🎭", label:"Culture & Animations",
     progLabel: "Culture et animations de proximité" },
-  { key:"Environnement",        prog:["Transition écologique"],             icon:"🌿", label:"Environnement & Transition écologique" },
+  { key:"Environnement",        prog:["Transition écologique"],             icon:"🌿", label:"Environnement & Transition écologique",
+    bilansup: ["Plan Climat"] },
   { key:"Sport",                prog:[],                                    icon:"⚽", label:"Sport",
     continuite: "Soutien constant aux clubs, conventions associatives reconduites. Maintien des équipements (piscine, gymnases, stades). Poursuite des événements sportifs emblématiques : Semi-marathon, Cyclosportive Claveyrolat, La Viziclette." },
   { key:"Travaux",              prog:["Travaux"],                           icon:"🏗️", label:"Travaux & Infrastructures" },
@@ -235,7 +239,6 @@ const THEMES = [
   { key:"Administration",       prog:[],                                    icon:"📋", label:"Administration & Services",
     continuite: "Modernisation continue : dématérialisation des procédures, accessibilité numérique, suivi des commissions municipales. Gestion des ressources humaines et des marchés publics." },
   { key:"Jumelages",            prog:["Jumelages"],                         icon:"🌍", label:"Jumelages" },
-  { key:"Intercommunalité",     prog:["Métropole"],                         icon:"🏙️", label:"Intercommunalité & Métropole" },
 ];
 
 // Thèmes programme sans bilan direct
@@ -254,7 +257,8 @@ function makeList(items, field) {
 }
 
 function bilanCard(actions, cfg) {
-  var acts = actions.filter(function(a){ return a.theme === cfg.key && !a.titre.match(/^Vœu|^Voeu|^Motion/i); });
+  var _bkeys = [cfg.key].concat(cfg.bilansup || []);
+  var acts = actions.filter(function(a){ return _bkeys.indexOf(a.theme) !== -1 && !a.titre.match(/^Vœu|^Voeu|^Motion/i); });
   if (!acts.length) return '';
   var realise = acts.filter(function(a){ return a.statut === 'Réalisé'; }).length;
   var encours = acts.filter(function(a){ return a.statut === 'En cours' || a.statut === 'Décidé' || a.statut === 'Programmé'; }).length;
@@ -275,14 +279,20 @@ function progCard(projets, cfg) {
     projets.filter(function(p){ return p.theme === t; }).forEach(function(p){ list.push(p); });
   });
   if (!list.length) return '';
+  var nObj = list.filter(function(p){ return p.type === 'objectif'; }).length;
+  var nEng = list.length - nObj;
+  var subtitle;
+  if (nObj > 0 && nEng > 0) subtitle = nObj + ' objectif' + (nObj>1?'s':'') + ' · ' + nEng + ' engagement' + (nEng>1?'s':'');
+  else if (nObj > 0) subtitle = nObj + ' objectif' + (nObj>1?'s':'');
+  else subtitle = nEng + ' engagement' + (nEng>1?'s':'');
   var top = list.slice(0,4);
   var _plb = cfg.progLabel||cfg.label;
-  var _pid = regCard('Programme 2026\u20132032', _plb + ' \u2014 ' + list.length + ' engagement' + (list.length>1?'s':''), list, 'titre');
+  var _pid = regCard('Programme 2026–2032', _plb + ' — ' + subtitle, list, 'titre');
   return '<div class="tc prog" data-cid="' + _pid + '">' +
-    '<span class="tc-tag">Programme 2026\u20132032</span>' +
-    '<h3 class="tc-title">' + list.length + ' engagement' + (list.length>1?'s':'') + ' pour ce mandat</h3>' +
+    '<span class="tc-tag">Programme 2026–2032</span>' +
+    '<h3 class="tc-title">' + subtitle + ' pour ce mandat</h3>' +
     '<ul class="tc-list">' + makeList(top, 'titre') + '</ul>' +
-    '<p class="tc-more">' + (list.length > 4 ? '+ ' + (list.length-4) + ' autres \u2014 ' : '') + '\u2192 Voir la fiche</p>' +
+    '<p class="tc-more">' + (list.length > 4 ? '+ ' + (list.length-4) + ' autres — ' : '') + '→ Voir la fiche</p>' +
     '</div>';
 }
 
