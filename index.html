@@ -33,8 +33,9 @@
     .vote-banner-section { width: 100%; margin: 0; padding: 0; background: #fff; }
     .vote-banner-img { width: 100%; display: block; max-height: 520px; object-fit: cover; object-position: center 20%; margin-top: 1.5rem; }
     .vote-banner-post { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem 2.5rem; font-family: 'Source Sans 3', sans-serif; font-size: 1.05rem; line-height: 1.75; color: #1a1a2e; }
-    .vbp-titre-wrap { position: relative; text-align: center; padding: 1.5rem 1rem 1.2rem; margin-bottom: 1rem; }
-    .vbp-fireworks-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .vbp-titre-wrap { position: relative; text-align: center; padding: 1.5rem 1rem 1.2rem; margin-bottom: 1rem; min-height: 90px; }
+    .vbp-fireworks-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+    .vbp-titre { position: relative; z-index: 1; }
     .vbp-titre {
         font-family: 'Playfair Display', serif;
         font-size: clamp(1.3rem, 3vw, 1.8rem);
@@ -88,8 +89,14 @@
         (function(){
             const canvas = document.getElementById('vbp-canvas');
             const wrap = canvas.parentElement;
-            function resize(){ canvas.width = wrap.offsetWidth; canvas.height = wrap.offsetHeight; }
-            resize();
+            function resize(){
+                canvas.width = wrap.offsetWidth || window.innerWidth;
+                canvas.height = Math.max(wrap.offsetHeight, 120);
+            }
+            window.addEventListener('resize', resize);
+            window.addEventListener('orientationchange', function(){ setTimeout(resize, 200); });
+            // Attendre le rendu complet avant de dimensionner
+            if(document.readyState === 'complete'){ resize(); } else { window.addEventListener('load', resize); }
             const ctx = canvas.getContext('2d');
             const particles = [];
             const COLORS = ['#f9e04b','#e63c6e','#1a3a6b','#4fc3f7','#ffffff','#c9a84c','#ff7043','#69f0ae'];
