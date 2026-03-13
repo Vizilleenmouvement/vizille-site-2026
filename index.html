@@ -33,7 +33,20 @@
     .vote-banner-section { width: 100%; margin: 0; padding: 0; background: #fff; }
     .vote-banner-img { width: 100%; display: block; max-height: 520px; object-fit: cover; object-position: center 20%; margin-top: 1.5rem; }
     .vote-banner-post { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem 2.5rem; font-family: 'Source Sans 3', sans-serif; font-size: 1.05rem; line-height: 1.75; color: #1a1a2e; }
-    .vbp-titre { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 2.5vw, 1.55rem); line-height: 1.35; margin-bottom: 0.8rem; color: #1a1a2e; }
+    .vbp-titre-wrap { position: relative; text-align: center; padding: 1.5rem 1rem 1.2rem; margin-bottom: 1rem; }
+    .vbp-fireworks-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .vbp-titre {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(1.3rem, 3vw, 1.8rem);
+        line-height: 1.35;
+        margin: 0;
+        color: #1a1a2e;
+        white-space: nowrap;
+    }
+    @media (max-width: 700px) {
+        .vbp-titre { white-space: normal; text-align: center; font-size: clamp(1.1rem, 4.5vw, 1.4rem); }
+    }
+    .vbp-titre .ligne2 { display: block; font-size: 0.82em; color: #555; font-style: italic; margin-top: 0.2rem; }
     .vbp-sep { border: none; border-top: 2px solid #e8e0d0; margin: 1.1rem 0; }
     .vote-banner-post p { margin: 0.6rem 0; }
     .vbp-axes { background: #f7f4ef; border-left: 4px solid #c9a84c; padding: 0.75rem 1rem; border-radius: 0 6px 6px 0; font-size: 0.97rem; line-height: 1.8; }
@@ -52,7 +65,10 @@
     <section class="vote-banner-section">
         <img src="images/photo-equipe.jpg" alt="L'équipe Vizille en Mouvement" class="vote-banner-img">
         <div class="vote-banner-post">
-            <p class="vbp-titre">🗳️ Le 15 mars, votez <strong>Vizille en Mouvement</strong><br>Liste conduite par <strong>Catherine Troton</strong></p>
+            <div class="vbp-titre-wrap">
+                <canvas class="vbp-fireworks-canvas" id="vbp-canvas"></canvas>
+                <p class="vbp-titre">🗳️ Le 15 mars, votez <strong>Vizille en Mouvement</strong><span class="ligne2">Liste conduite par Catherine Troton</span></p>
+            </div>
             <hr class="vbp-sep">
             <p>La campagne municipale arrive à son terme dans quelques heures.</p>
             <p>Pour notre liste, elle aura été riche d'idées, de rencontres et d'échanges avec les Vizillois — et surtout d'un engagement collectif dont nous sommes fiers.</p>
@@ -67,6 +83,83 @@
             <p class="vbp-appel">🗳️ Votez <strong>Vizille en Mouvement</strong> — Catherine Troton</p>
         </div>
 
+        </div>
+        <script>
+        (function(){
+            const canvas = document.getElementById('vbp-canvas');
+            const wrap = canvas.parentElement;
+            function resize(){ canvas.width = wrap.offsetWidth; canvas.height = wrap.offsetHeight; }
+            resize();
+            const ctx = canvas.getContext('2d');
+            const particles = [];
+            const COLORS = ['#f9e04b','#e63c6e','#1a3a6b','#4fc3f7','#ffffff','#c9a84c','#ff7043','#69f0ae'];
+            function randomColor(){ return COLORS[Math.floor(Math.random()*COLORS.length)]; }
+            function burst(x, y){
+                const count = 55 + Math.floor(Math.random()*30);
+                for(let i=0;i<count;i++){
+                    const angle = (Math.PI*2/count)*i + Math.random()*0.3;
+                    const speed = 1.5 + Math.random()*3.5;
+                    const color = randomColor();
+                    particles.push({
+                        x, y,
+                        vx: Math.cos(angle)*speed,
+                        vy: Math.sin(angle)*speed - 1.2,
+                        alpha: 1,
+                        decay: 0.016 + Math.random()*0.012,
+                        radius: 2 + Math.random()*2.5,
+                        color,
+                        tail: []
+                    });
+                }
+            }
+            function shoot(){
+                const x = canvas.width * (0.15 + Math.random()*0.7);
+                const y = canvas.height * (0.1 + Math.random()*0.6);
+                burst(x, y);
+            }
+            let shots = 0, maxShots = 8;
+            function scheduleBursts(){
+                if(shots < maxShots){
+                    shoot();
+                    shots++;
+                    setTimeout(scheduleBursts, 300 + Math.random()*500);
+                }
+            }
+            setTimeout(scheduleBursts, 300);
+            function animate(){
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                for(let i=particles.length-1;i>=0;i--){
+                    const p = particles[i];
+                    p.tail.unshift({x:p.x, y:p.y});
+                    if(p.tail.length > 5) p.tail.pop();
+                    p.x += p.vx; p.y += p.vy;
+                    p.vy += 0.07;
+                    p.vx *= 0.98;
+                    p.alpha -= p.decay;
+                    if(p.alpha <= 0){ particles.splice(i,1); continue; }
+                    // traîne
+                    for(let t=0;t<p.tail.length;t++){
+                        ctx.beginPath();
+                        ctx.arc(p.tail[t].x, p.tail[t].y, p.radius*(1-t/p.tail.length)*0.7, 0, Math.PI*2);
+                        ctx.fillStyle = p.color;
+                        ctx.globalAlpha = p.alpha*(1-t/p.tail.length)*0.4;
+                        ctx.fill();
+                    }
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.alpha;
+                    ctx.shadowBlur = 6;
+                    ctx.shadowColor = p.color;
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                    ctx.globalAlpha = 1;
+                }
+                requestAnimationFrame(animate);
+            }
+            animate();
+        })();
+        </script>
         <!-- COMPTE À REBOURS -->
         <div class="countdown-section" id="countdown-section">
             <div class="countdown-container">
