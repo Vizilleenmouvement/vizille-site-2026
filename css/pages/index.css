@@ -116,11 +116,11 @@
     z-index: 1;
     display: grid;
     grid-template-columns: 1fr 1.4fr;
-    gap: 3rem;
+    gap: 1.5rem;
     align-items: center;
     max-width: 1100px;
     width: 100%;
-    padding: 2rem 3rem 2.5rem;
+    padding: 0.8rem 2rem 1rem;
     margin: 0 auto;
 }
 
@@ -134,14 +134,14 @@
 
 .hero-portrait {
     position: relative;
-    width: 200px;
-    height: 200px;
-    margin-bottom: 1.5rem;
+    width: 130px;
+    height: 130px;
+    margin-bottom: 0.7rem;
 }
 
 .hero-candidate-photo {
-    width: 200px;
-    height: 200px;
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
     object-fit: cover;
     object-position: center 20%;
@@ -165,7 +165,7 @@
 
 .hero-candidate-name {
     font-family: 'Playfair Display', serif;
-    font-size: 2.2rem;
+    font-size: 1.5rem;
     color: white;
     margin: 0;
     line-height: 1.1;
@@ -198,37 +198,37 @@
 }
 
 .hero-logo-small {
-    width: 160px;
-    margin-bottom: 1.5rem;
+    width: 110px;
+    margin-bottom: 0.7rem;
     filter: drop-shadow(0 5px 20px rgba(0, 0, 0, 0.3));
 }
 
 .hero-slogan {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+    font-size: clamp(1.1rem, 2vw, 1.6rem);
     color: white;
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 0.7rem 0;
     line-height: 1.3;
     font-weight: 700;
 }
 
 .hero-quote {
     font-family: 'Caveat', cursive;
-    font-size: 1.35rem;
+    font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.85);
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 0.7rem 0;
     max-width: 500px;
     line-height: 1.5;
     font-style: italic;
-    padding-left: 1.25rem;
+    padding-left: 1rem;
     border-left: 3px solid var(--or, #c9a227);
 }
 
 .hero-invitation {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     color: rgba(255, 255, 255, 0.9);
     font-style: italic;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.8rem;
 }
 
 .hero-invitation strong {
@@ -239,20 +239,22 @@
 
 .hero-cta {
     display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 
 .btn-hero {
-    padding: 0.85rem 1.8rem;
+    padding: 0.55rem 1.2rem;
     background: var(--rose);
     color: white;
     text-decoration: none;
     border-radius: 50px;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.88rem;
     transition: all 0.3s ease;
     box-shadow: 0 4px 20px rgba(233, 30, 99, 0.4);
+    white-space: nowrap;
 }
 
 .btn-hero:hover {
@@ -262,16 +264,17 @@
 }
 
 .btn-hero-outline {
-    padding: 0.85rem 1.8rem;
+    padding: 0.55rem 1.2rem;
     background: rgba(255, 255, 255, 0.08);
     color: white;
     text-decoration: none;
     border-radius: 50px;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.88rem;
     border: 1.5px solid rgba(255, 255, 255, 0.4);
     transition: all 0.3s ease;
     backdrop-filter: blur(4px);
+    white-space: nowrap;
 }
 
 .btn-hero-outline:hover {
