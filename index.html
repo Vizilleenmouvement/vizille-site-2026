@@ -30,28 +30,18 @@
     <link rel="stylesheet" href="css/components/flip-cards.css">
     <link rel="stylesheet" href="css/pages/index.css?v=4">
     <style>
-    .vote-banner-section { width: 100%; margin: 0; padding: 0; }
-    .vote-banner-photo { position: relative; width: 100%; overflow: hidden; max-height: 600px; }
-    .vote-banner-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; max-height: 600px; }
-    .vote-banner-overlay {
-        position: absolute; inset: 0;
-        background: linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.05) 100%);
-        display: flex; align-items: center; padding: 2rem 5%;
-    }
-    .vote-banner-card { max-width: 480px; color: #fff; }
-    .vote-banner-date { font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; color: #f9e04b; font-weight: 700; margin-bottom: 0.5rem; }
-    .vote-banner-titre { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.1; font-weight: 600; margin: 0 0 0.4rem 0; color: #fff; }
-    .vote-banner-titre strong { color: #f9e04b; }
-    .vote-banner-sous { font-size: 1rem; margin: 0 0 0.8rem 0; color: rgba(255,255,255,0.9); }
-    .vote-banner-sep { width: 48px; height: 3px; background: #f9e04b; border-radius: 2px; margin: 0.6rem 0 0.9rem; }
-    .vote-banner-texte { font-size: 0.92rem; line-height: 1.7; color: rgba(255,255,255,0.85); margin-bottom: 0.9rem; }
-    .vote-banner-appel { font-size: 1.05rem; color: #fff; }
+    .vote-banner-section { width: 100%; margin: 0; padding: 0; background: #fff; }
+    .vote-banner-img { width: 100%; display: block; max-height: 560px; object-fit: cover; object-position: center top; }
+    .vote-banner-post { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem 2.5rem; font-family: 'Source Sans 3', sans-serif; font-size: 1.05rem; line-height: 1.75; color: #1a1a2e; }
+    .vbp-titre { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 2.5vw, 1.55rem); line-height: 1.35; margin-bottom: 0.8rem; color: #1a1a2e; }
+    .vbp-sep { border: none; border-top: 2px solid #e8e0d0; margin: 1.1rem 0; }
+    .vote-banner-post p { margin: 0.6rem 0; }
+    .vbp-axes { background: #f7f4ef; border-left: 4px solid #c9a84c; padding: 0.75rem 1rem; border-radius: 0 6px 6px 0; font-size: 0.97rem; line-height: 1.8; }
+    .vbp-appel { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #1a3a6b; margin-top: 1rem !important; }
     @media (max-width: 600px) {
-        .vote-banner-photo { max-height: none; }
-        .vote-banner-img { max-height: 420px; }
-        .vote-banner-overlay { background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.85) 55%, rgba(0,0,0,0.95) 100%); align-items: flex-end; padding: 1.5rem; }
-        .vote-banner-texte { display: none; }
-        .vote-banner-titre { font-size: 1.7rem; }
+        .vote-banner-img { max-height: 280px; }
+        .vote-banner-post { padding: 1.5rem 1rem 2rem; font-size: 0.97rem; }
+        .vbp-axes { font-size: 0.9rem; }
     }
     </style>
 </head>
@@ -60,22 +50,21 @@
 
     <!-- BANNIÈRE FINALE VOTEZ -->
     <section class="vote-banner-section">
-        <div class="vote-banner-photo">
-            <img src="images/photo-equipe.jpg" alt="L'équipe Vizille en Mouvement" class="vote-banner-img">
-            <div class="vote-banner-overlay">
-                <div class="vote-banner-card">
-                    <p class="vote-banner-date">🗳️ DIMANCHE 15 MARS</p>
-                    <h2 class="vote-banner-titre">Votez<br><strong>Vizille en Mouvement</strong></h2>
-                    <p class="vote-banner-sous">Liste conduite par <strong>Catherine Troton</strong></p>
-                    <div class="vote-banner-sep"></div>
-                    <p class="vote-banner-texte">
-                        Six ans de mandat ont prouvé notre capacité à transformer Vizille.<br>
-                        Poursuivons ensemble cette dynamique — santé, déplacements,<br>
-                        solidarité, jeunesse, embellissement, vitalité commerciale.
-                    </p>
-                    <p class="vote-banner-appel">Ce dimanche, <strong>nous comptons sur vous.</strong></p>
-                </div>
-            </div>
+        <img src="images/photo-equipe.jpg" alt="L'équipe Vizille en Mouvement" class="vote-banner-img">
+        <div class="vote-banner-post">
+            <p class="vbp-titre">🗳️ Le 15 mars, votez <strong>Vizille en Mouvement</strong><br>Liste conduite par <strong>Catherine Troton</strong></p>
+            <hr class="vbp-sep">
+            <p>La campagne municipale arrive à son terme dans quelques heures.</p>
+            <p>Pour notre liste, elle aura été riche d'idées, de rencontres et d'échanges avec les Vizillois — et surtout d'un engagement collectif dont nous sommes fiers.</p>
+            <p>Notre équipe, soudée par des valeurs partagées et le travail accompli ensemble, porte l'enthousiasme d'agir au service de la commune et de ses habitants. 💙</p>
+            <hr class="vbp-sep">
+            <p>Six ans de mandat ont prouvé notre capacité à structurer des actions, nouer des partenariats, aller chercher des financements pour transformer Vizille.</p>
+            <p>Nous voulons aujourd'hui poursuivre et amplifier cette dynamique :</p>
+            <p class="vbp-axes">🏥 L'accès à la santé &nbsp;·&nbsp; 🚶 Les déplacements &nbsp;·&nbsp; 🤝 L'attention portée à chacun — aux plus jeunes comme aux plus âgés &nbsp;·&nbsp; 🌿 L'embellissement des espaces publics &nbsp;·&nbsp; 🛍️ La vitalité commerciale</p>
+            <hr class="vbp-sep">
+            <p>Vizille a besoin d'engagement sincère, de dialogue et d'énergie collective.</p>
+            <p>Ce dimanche 15 mars, nous comptons sur vous.</p>
+            <p class="vbp-appel">🗳️ Votez <strong>Vizille en Mouvement</strong> — Catherine Troton</p>
         </div>
     </section>
 
