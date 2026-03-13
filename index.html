@@ -144,6 +144,52 @@
     })();
     </script>
 
+    <!-- BANNIÈRE FINALE VOTEZ -->
+    <section class="vote-banner-section">
+        <div class="vote-banner-photo">
+            <img src="images/photo-equipe.jpg" alt="L'équipe Vizille en Mouvement" class="vote-banner-img">
+            <div class="vote-banner-overlay">
+                <div class="vote-banner-card">
+                    <p class="vote-banner-date">🗳️ DIMANCHE 15 MARS</p>
+                    <h2 class="vote-banner-titre">Votez<br><strong>Vizille en Mouvement</strong></h2>
+                    <p class="vote-banner-sous">Liste conduite par <strong>Catherine Troton</strong></p>
+                    <div class="vote-banner-sep"></div>
+                    <p class="vote-banner-texte">
+                        Six ans de mandat ont prouvé notre capacité à transformer Vizille.<br>
+                        Poursuivons ensemble cette dynamique — santé, déplacements,<br>
+                        solidarité, jeunesse, embellissement, vitalité commerciale.
+                    </p>
+                    <p class="vote-banner-appel">Ce dimanche, <strong>nous comptons sur vous.</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <style>
+    .vote-banner-section { width: 100%; margin: 0; padding: 0; }
+    .vote-banner-photo { position: relative; width: 100%; overflow: hidden; max-height: 600px; }
+    .vote-banner-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; max-height: 600px; }
+    .vote-banner-overlay {
+        position: absolute; inset: 0;
+        background: linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.05) 100%);
+        display: flex; align-items: center; padding: 2rem 5%;
+    }
+    .vote-banner-card { max-width: 480px; color: #fff; }
+    .vote-banner-date { font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; color: #f9e04b; font-weight: 700; margin-bottom: 0.5rem; }
+    .vote-banner-titre { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.1; font-weight: 600; margin: 0 0 0.4rem 0; color: #fff; }
+    .vote-banner-titre strong { color: #f9e04b; }
+    .vote-banner-sous { font-size: 1rem; margin: 0 0 0.8rem 0; color: rgba(255,255,255,0.9); }
+    .vote-banner-sep { width: 48px; height: 3px; background: #f9e04b; border-radius: 2px; margin: 0.6rem 0 0.9rem; }
+    .vote-banner-texte { font-size: 0.92rem; line-height: 1.7; color: rgba(255,255,255,0.85); margin-bottom: 0.9rem; }
+    .vote-banner-appel { font-size: 1.05rem; color: #fff; }
+    @media (max-width: 600px) {
+        .vote-banner-photo { max-height: none; }
+        .vote-banner-img { max-height: 420px; }
+        .vote-banner-overlay { background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.85) 55%, rgba(0,0,0,0.95) 100%); align-items: flex-end; padding: 1.5rem; }
+        .vote-banner-texte { display: none; }
+        .vote-banner-titre { font-size: 1.7rem; }
+    }
+    </style>
+
     <!-- CARROUSEL BILAN & PROJET -->
     <section class="carousel-section">
         <div class="carousel-header">
