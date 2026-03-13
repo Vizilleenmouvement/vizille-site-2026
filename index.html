@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="css/pages/index.css?v=4">
     <style>
     .vote-banner-section { width: 100%; margin: 0; padding: 0; background: #fff; }
-    .vote-banner-img { width: 100%; display: block; max-height: 560px; object-fit: cover; object-position: center top; }
+    .vote-banner-img { width: 100%; display: block; max-height: 520px; object-fit: cover; object-position: center 20%; margin-top: 1.5rem; }
     .vote-banner-post { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem 2.5rem; font-family: 'Source Sans 3', sans-serif; font-size: 1.05rem; line-height: 1.75; color: #1a1a2e; }
     .vbp-titre { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 2.5vw, 1.55rem); line-height: 1.35; margin-bottom: 0.8rem; color: #1a1a2e; }
     .vbp-sep { border: none; border-top: 2px solid #e8e0d0; margin: 1.1rem 0; }
@@ -66,6 +66,49 @@
             <p>Ce dimanche 15 mars, nous comptons sur vous.</p>
             <p class="vbp-appel">🗳️ Votez <strong>Vizille en Mouvement</strong> — Catherine Troton</p>
         </div>
+
+        <!-- COMPTE À REBOURS -->
+        <div class="countdown-section" id="countdown-section">
+            <div class="countdown-container">
+                <div class="countdown-date-bloc">
+                    <div class="countdown-date-label">🗳️ Tour unique</div>
+                    <div class="countdown-date-big">15 MARS 2026</div>
+                </div>
+                <div class="countdown-separator"></div>
+                <div class="countdown-right">
+                    <div class="countdown-label">Il reste</div>
+                    <div class="countdown-boxes" id="countdown-boxes">
+                        <div class="countdown-box"><span id="cd-days">--</span><small>jours</small></div>
+                        <div class="countdown-box"><span id="cd-hours">--</span><small>heures</small></div>
+                        <div class="countdown-box"><span id="cd-minutes">--</span><small>min</small></div>
+                        <div class="countdown-box"><span id="cd-secs">--</span><small>sec</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+        (function() {
+            const election = new Date('2026-03-15T08:00:00+01:00');
+            function update() {
+                const now = new Date();
+                const diff = election - now;
+                if (diff <= 0) {
+                    document.getElementById('countdown-section').innerHTML = '<div class="countdown-container"><div class="countdown-date-big" style="font-size:2rem;">🗳️ C\'est le jour du vote !</div></div>';
+                    return;
+                }
+                const d = Math.floor(diff / 86400000);
+                const h = Math.floor((diff % 86400000) / 3600000);
+                const m = Math.floor((diff % 3600000) / 60000);
+                const s = Math.floor((diff % 60000) / 1000);
+                document.getElementById('cd-days').textContent = d;
+                document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+                document.getElementById('cd-minutes').textContent = String(m).padStart(2,'0');
+                document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
+            }
+            update();
+            setInterval(update, 1000);
+        })();
+        </script>
     </section>
 
     <header class="header">
@@ -121,10 +164,6 @@
                 </div>
             </div>
         </div>
-        <div class="scroll-indicator">
-            <span>Défiler</span>
-            <div class="scroll-arrow"></div>
-        </div>
     </section>
 
     <!-- Bandeau élections -->
@@ -135,49 +174,6 @@
             <span class="election-icon">🗳️</span>
         </div>
     </div>
-
-    <!-- COMPTE À REBOURS -->
-    <div class="countdown-section" id="countdown-section">
-        <div class="countdown-container">
-            <div class="countdown-date-bloc">
-                <div class="countdown-date-label">🗳️ Tour unique</div>
-                <div class="countdown-date-big">15 MARS 2026</div>
-            </div>
-            <div class="countdown-separator"></div>
-            <div class="countdown-right">
-                <div class="countdown-label">Il reste</div>
-                <div class="countdown-boxes" id="countdown-boxes">
-                    <div class="countdown-box"><span id="cd-days">--</span><small>jours</small></div>
-                    <div class="countdown-box"><span id="cd-hours">--</span><small>heures</small></div>
-                    <div class="countdown-box"><span id="cd-minutes">--</span><small>min</small></div>
-                    <div class="countdown-box"><span id="cd-secs">--</span><small>sec</small></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-    (function() {
-        const election = new Date('2026-03-15T08:00:00+01:00');
-        function update() {
-            const now = new Date();
-            const diff = election - now;
-            if (diff <= 0) {
-                document.getElementById('countdown-section').innerHTML = '<div class="countdown-container"><div class="countdown-date-big" style="font-size:2rem;">🗳️ C\'est le jour du vote !</div></div>';
-                return;
-            }
-            const d = Math.floor(diff / 86400000);
-            const h = Math.floor((diff % 86400000) / 3600000);
-            const m = Math.floor((diff % 3600000) / 60000);
-            const s = Math.floor((diff % 60000) / 1000);
-            document.getElementById('cd-days').textContent = d;
-            document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
-            document.getElementById('cd-minutes').textContent = String(m).padStart(2,'0');
-            document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
-        }
-        update();
-        setInterval(update, 1000);
-    })();
-    </script>
 
     <!-- CARROUSEL BILAN & PROJET -->
     <section class="carousel-section">

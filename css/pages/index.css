@@ -79,13 +79,13 @@
 /* ===== HERO DYNAMIQUE ===== */
 .hero-dynamic {
     position: relative;
-    min-height: 520px;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    padding: 110px 5vw 0;
+    padding: 1.5rem 5vw 2rem;
     background: linear-gradient(135deg, var(--bleu) 0%, #1e4a6e 40%, #2c5282 70%, var(--cyan) 100%);
 }
 
