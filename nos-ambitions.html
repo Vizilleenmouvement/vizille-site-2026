@@ -88,6 +88,7 @@ body.retro{background:var(--fond);color:var(--blanc);font-family:var(--font-b);f
 .tc:hover{border-color:rgba(201,162,39,.35);box-shadow:0 10px 32px rgba(0,0,0,.35);transform:translateY(-2px)}
 .tc.bilan{border-left:3px solid var(--bilan-color);text-align:right}
 .tc.prog{border-left:3px solid var(--or)}
+.theme-contexte{font-size:.82rem;color:rgba(245,240,232,.6);font-style:italic;margin:.4rem 0 .8rem 1rem;line-height:1.6;border-left:2px solid rgba(201,162,39,.3);padding-left:.75rem}
 .tc.cont{border-left:3px dashed rgba(201,162,39,.5);opacity:.92}
 .tc-tag{display:inline-block;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
   padding:.18rem .55rem;border-radius:100px;margin-bottom:.45rem;font-weight:500}
@@ -225,7 +226,8 @@ async function loadData() {
 
 // Mapping thème bilan → config
 const THEMES = [
-  { key:"Intercommunalité",     prog:["Métropole"],                         icon:"🏙️", label:"Intercommunalité & Métropole" },
+  { key:"Intercommunalité",     prog:["Métropole"],                         icon:"🏙️", label:"Intercommunalité & Métropole",
+    continuite: "Un rapport du Sénat (sept. 2025) pointe un sentiment de dépossession des maires face aux intercommunalités. Vizille défend une Métropole partenaire, pas tutrice. Les décisions de proximité restent à Vizille : commerces, écoles, sécurité, cadre de vie." },
   { key:"Culture",              prog:["Culture","Animations de proximité"], icon:"🎭", label:"Culture & Animations",
     progLabel: "Culture et animations de proximité" },
   { key:"Environnement",        prog:["Transition écologique"],             icon:"🌿", label:"Environnement & Transition écologique",
@@ -317,12 +319,14 @@ function contCard(cfg) {
     '</div>';
 }
 
-function makeBlock(icon, label, left, right) {
+function makeBlock(icon, label, left, right, contexte) {
+  var ctx = contexte ? '<p class="theme-contexte">' + contexte + '</p>' : '';
   return '<div class="theme-block">' +
     '<div class="theme-header">' +
       '<div class="theme-icon-badge">' + icon + '</div>' +
       '<span class="theme-label">' + label + '</span>' +
     '</div>' +
+    ctx +
     '<div class="theme-cols">' +
       '<div class="col-left">' + (left  || '<div class="col-empty"></div>') + '</div>' +
       '<div class="col-center"><div class="spine-dot"></div></div>' +
@@ -372,9 +376,11 @@ async function buildFrise() {
 
   THEMES.forEach(function(cfg) {
     var bc = bilanCard(actions, cfg);
-    var pc = progCard(projets, cfg) || contCard(cfg);
+    var pc = progCard(projets, cfg);
+    var ctx = (pc && cfg.continuite) ? cfg.continuite : '';
+    if (!pc) pc = contCard(cfg);
     if (!bc && !pc) return;
-    html += makeBlock(cfg.icon, cfg.label, bc, pc);
+    html += makeBlock(cfg.icon, cfg.label, bc, pc, ctx);
   });
 
   root.innerHTML = html;
