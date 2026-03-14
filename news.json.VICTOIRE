@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "texte": "🎉 Vizille en Mouvement élue ! Merci à tous les Vizillois pour leur confiance.",
+    "lien": "",
+    "icon": "🏆",
+    "actif": true,
+    "dateDebut": "2026-03-15",
+    "dateFin": "2026-04-15"
+  },
+  {
+    "id": 2,
+    "texte": "Catherine Troton reconduite maire de Vizille — Le programme 2026-2032 commence !",
+    "lien": "nos-ambitions.html",
+    "icon": "🌟",
+    "actif": true,
+    "dateDebut": "2026-03-15",
+    "dateFin": "2026-04-15"
+  }
+]
