@@ -1,29 +1,20 @@
 [
   {
     "id": 1,
-    "texte": "Nouveau : Découvrez le bilan complet de nos actions depuis 2020",
-    "lien": "bilan.html",
-    "icon": "📊",
+    "texte": "🎉 Vizille en Mouvement élue ! Merci à tous les Vizillois pour leur confiance.",
+    "lien": "",
+    "icon": "🏆",
     "actif": true,
-    "dateDebut": "2026-02-01",
-    "dateFin": "2026-03-15"
+    "dateDebut": "2026-03-15",
+    "dateFin": "2026-04-15"
   },
   {
     "id": 2,
-    "texte": "Élections municipales les 15 et 22 mars 2026",
-    "lien": "",
-    "icon": "🗳️",
+    "texte": "Catherine Troton reconduite maire de Vizille — Le programme 2026-2032 commence !",
+    "lien": "nos-ambitions.html",
+    "icon": "🌟",
     "actif": true,
-    "dateDebut": "2026-02-01",
-    "dateFin": "2026-03-22"
-  },
-  {
-    "id": 3,
-    "texte": "Site mis à jour : nouvelles fiches actions ajoutées",
-    "lien": "bilan.html",
-    "icon": "🆕",
-    "actif": true,
-    "dateDebut": "2026-02-04",
-    "dateFin": "2026-02-28"
+    "dateDebut": "2026-03-15",
+    "dateFin": "2026-04-15"
   }
 ]
