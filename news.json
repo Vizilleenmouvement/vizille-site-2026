@@ -16,5 +16,14 @@
     "actif": true,
     "dateDebut": "2026-03-15",
     "dateFin": "2026-04-15"
+  },
+  {
+    "id": 3,
+    "texte": "Catherine Troton s'adressera très prochainement à tous les Vizillois.",
+    "lien": "",
+    "icon": "📣",
+    "actif": true,
+    "dateDebut": "2026-03-15",
+    "dateFin": "2026-04-15"
   }
 ]
