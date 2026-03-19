@@ -4,8 +4,8 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L'Équipe – Vizille en Mouvement</title>
-    <meta name="description" content="Découvrez l'équipe de Vizille en Mouvement. Des femmes et des hommes engagés pour Vizille.">
+    <title>Le Conseil Municipal 2026-2032 — Vizille en Mouvement</title>
+    <meta name="description" content="Les 26 conseillers municipaux élus de Vizille le 15 mars 2026. L'équipe Vizille en Mouvement au service des Vizillois pour le mandat 2026-2032.">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
@@ -64,7 +64,7 @@
     <section class="hero-unified">
         <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo" loading="lazy">
         <div class="hero-text">
-            <h1>👥 L'Équipe</h1>
+            <h1>🏛️ Le Conseil Municipal 2026-2032</h1>
             <p class="slogan">Ensemble pour une ville dynamique et solidaire</p>
             <p class="hero-subtitle">Notre liste rassemble des femmes et des hommes de tous horizons, unis par l'envie de servir Vizille et ses habitants.</p>
         </div>
@@ -85,7 +85,7 @@
         </div>
 
         <!-- L'ÉQUIPE COMPLÈTE -->
-        <h2 class="section-title">👥 L'équipe</h2>
+        <h2 class="section-title">🏛️ Les 26 élues et élus de Vizille</h2>
         <div id="team-grid"></div>
         
         <p id="click-hint" style="text-align: center; color: #666; font-style: italic; margin-top: 1rem; font-size: 0.9rem;">👆 Cliquez sur une carte pour découvrir le profil complet</p>
@@ -219,7 +219,7 @@
 
                 // Filtrer les actifs, trier : numérotés d'abord (par ordre), puis les autres par ordre alphabétique
                 candidatsData = candidatsData
-                    .filter(c => c.actif !== false)
+                    .filter(c => c.actif !== false && c.elu === true)
                     .sort((a, b) => {
                         const aOrdre = a.ordre != null ? a.ordre : Infinity;
                         const bOrdre = b.ordre != null ? b.ordre : Infinity;
@@ -266,16 +266,8 @@
                 mediaHtml = `<div class="equipe-card-placeholder">👤</div>`;
             }
 
-            // Statut
-            const prenomsFeminins = ['Catherine','Angélique','Saïda','Isabelle','Sakina'];
-            const feminin = ['Adjointe','Conseillère','Conseillère déléguée'].some(r => (candidat.role||'').startsWith(r))
-                || prenomsFeminins.includes(getPrenom(candidat));
+            // Statut masqué — désignations non encore attribuées
             let statutText = '';
-            if (candidat.nouveau) {
-                statutText = feminin ? 'Nouvelle' : 'Nouveau';
-            } else if (candidat.role) {
-                statutText = candidat.role;
-            }
 
             // Délai d'animation en cascade
             const delay = index * 0.1;
