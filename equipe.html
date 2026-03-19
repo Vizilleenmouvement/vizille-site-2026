@@ -171,7 +171,7 @@
 
     <footer class="footer">
         <p class="footer-slogan">« Ensemble pour une ville dynamique et solidaire »</p>
-        <p>© 2025 Vizille en Mouvement</p>
+        <p>© 2026 Vizille en Mouvement</p>
     </footer>
 
     <script>
@@ -413,9 +413,9 @@
             const socialsEl = document.getElementById('modal-socials');
             let socialsHtml = '';
             if (candidat.email) socialsHtml += `<a href="mailto:${candidat.email}" title="Email">📧</a>`;
-            if (candidat.facebook) socialsHtml += `<a href="${candidat.facebook}" target="_blank" title="Facebook">📘</a>`;
-            if (candidat.linkedin) socialsHtml += `<a href="${candidat.linkedin}" target="_blank" title="LinkedIn">💼</a>`;
-            if (candidat.twitter) socialsHtml += `<a href="${candidat.twitter}" target="_blank" title="Twitter">🐦</a>`;
+            if (candidat.facebook) socialsHtml += `<a href="${candidat.facebook}" target="_blank" rel="noopener" title="Facebook">📘</a>`;
+            if (candidat.linkedin) socialsHtml += `<a href="${candidat.linkedin}" target="_blank" rel="noopener" title="LinkedIn">💼</a>`;
+            if (candidat.twitter) socialsHtml += `<a href="${candidat.twitter}" target="_blank" rel="noopener" title="Twitter">🐦</a>`;
 
             if (socialsHtml) {
                 socialsEl.innerHTML = socialsHtml;

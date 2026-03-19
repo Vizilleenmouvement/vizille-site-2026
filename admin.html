@@ -1155,8 +1155,8 @@
             <input type="password" class="token-input" id="github-token" placeholder="🔐 Token GitHub" onchange="saveToken()">
             <button class="btn btn-sm" style="background: rgba(255,255,255,0.2);" onclick="toggleToken()">👁️</button>
             <button id="download-btn" class="btn btn-sm" style="background: #28a745; color: white; display: none;" onclick="downloadAllData()">💾 Télécharger JSON</button>
-            <a href="guide.html" target="_blank" class="btn btn-sm" style="background: #28a745; color: white;">📖 Guide</a>
-            <a href="https://Vizilleenmouvement.github.io/Vizille-en-mouvement/" target="_blank" class="btn btn-sm" style="background: var(--or); color: var(--bleu);">🌐 Voir le site</a>
+            <a href="guide.html" target="_blank" rel="noopener" class="btn btn-sm" style="background: #28a745; color: white;">📖 Guide</a>
+            <a href="https://Vizilleenmouvement.github.io/Vizille-en-mouvement/" target="_blank" rel="noopener" class="btn btn-sm" style="background: var(--or); color: var(--bleu);">🌐 Voir le site</a>
         </div>
     </header>
 
@@ -1312,10 +1312,10 @@
 
                     <!-- LIENS -->
                     <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <a href="https://Vizilleenmouvement.github.io/Vizille-en-mouvement/" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--bleu); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                        <a href="https://Vizilleenmouvement.github.io/Vizille-en-mouvement/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--bleu); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;">
                             🌐 Voir le site en ligne
                         </a>
-                        <a href="https://github.com/Vizilleenmouvement/Vizille-en-mouvement" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #333; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                        <a href="https://github.com/Vizilleenmouvement/Vizille-en-mouvement" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #333; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;">
                             📁 Voir sur GitHub
                         </a>
                     </div>
@@ -2453,9 +2453,9 @@
             // Construire les liens sociaux
             let socialLinks = '';
             if (email) socialLinks += `<a href="mailto:${email}" style="color: var(--bleu); margin-right: 10px; font-size: 1.2rem;" title="Email">📧</a>`;
-            if (facebook) socialLinks += `<a href="${facebook}" target="_blank" style="color: #1877f2; margin-right: 10px; font-size: 1.2rem;" title="Facebook">📘</a>`;
-            if (linkedin) socialLinks += `<a href="${linkedin}" target="_blank" style="color: #0077b5; margin-right: 10px; font-size: 1.2rem;" title="LinkedIn">💼</a>`;
-            if (twitter) socialLinks += `<a href="${twitter}" target="_blank" style="color: #1da1f2; margin-right: 10px; font-size: 1.2rem;" title="Twitter">🐦</a>`;
+            if (facebook) socialLinks += `<a href="${facebook}" target="_blank" rel="noopener" style="color: #1877f2; margin-right: 10px; font-size: 1.2rem;" title="Facebook">📘</a>`;
+            if (linkedin) socialLinks += `<a href="${linkedin}" target="_blank" rel="noopener" style="color: #0077b5; margin-right: 10px; font-size: 1.2rem;" title="LinkedIn">💼</a>`;
+            if (twitter) socialLinks += `<a href="${twitter}" target="_blank" rel="noopener" style="color: #1da1f2; margin-right: 10px; font-size: 1.2rem;" title="Twitter">🐦</a>`;
 
             const photoHTML = hasPhoto
                 ? `<img src="${photoUrl}" alt="${nom}" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid var(--or); box-shadow: 0 4px 15px rgba(0,0,0,0.2);">`
@@ -7934,7 +7934,7 @@ Pour vous désabonner, répondez à cet email.
                         <div style="font-size: 0.85rem; color: #888;">${doc.type?.toUpperCase() || 'Fichier'} ${doc.taille ? '• ' + doc.taille : ''}</div>
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
-                        <a href="${doc.fichier}" target="_blank" class="btn btn-sm btn-outline">👁️ Voir</a>
+                        <a href="${doc.fichier}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">👁️ Voir</a>
                         <button class="btn btn-sm btn-outline" onclick="openEditDocument(${index})">✏️</button>
                         <button class="btn btn-sm" style="background: #e74c3c; color: white;" onclick="deleteDocument(${index})">🗑️</button>
                     </div>
@@ -8063,7 +8063,7 @@ Pour vous désabonner, répondez à cet email.
                     <div style="position: relative;">
                         <img src="${thumbnail}" alt="${b.titre}" style="width: 100%; height: 140px; object-fit: cover; border-radius: 8px 8px 0 0;" onerror="this.src='https://img.youtube.com/vi/${b.videoId}/hqdefault.jpg'">
                         <span style="position: absolute; top: 8px; left: 8px; background: ${themeColor}; color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem;">${themeIcon} ${b.theme || 'Sans thème'}</span>
-                        <a href="https://www.youtube.com/watch?v=${b.videoId}" target="_blank" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(229,57,53,0.9); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; text-decoration: none;">▶</a>
+                        <a href="https://www.youtube.com/watch?v=${b.videoId}" target="_blank" rel="noopener" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(229,57,53,0.9); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; text-decoration: none;">▶</a>
                     </div>
                     <div style="padding: 1rem;">
                         <div style="font-weight: 600; color: var(--bleu); margin-bottom: 0.5rem;">${b.titre}</div>

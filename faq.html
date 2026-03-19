@@ -195,8 +195,8 @@
                     <h3>Suivez-nous</h3>
                     <p>Retrouvez notre actualité sur les réseaux sociaux.</p>
                     <div class="social-links" id="social-links">
-                        <a href="#" target="_blank" title="Facebook">📘</a>
-                        <a href="#" target="_blank" title="Instagram">📸</a>
+                        <a href="#" target="_blank" rel="noopener" title="Facebook">📘</a>
+                        <a href="#" target="_blank" rel="noopener" title="Instagram">📸</a>
                     </div>
                 </div>
             </div>
@@ -220,7 +220,7 @@
 
     <footer class="footer">
         <p class="footer-slogan">« Ensemble pour une ville dynamique et solidaire »</p>
-        <p>© 2025 Vizille en Mouvement</p>
+        <p>© 2026 Vizille en Mouvement</p>
     </footer>
 
     <script>
@@ -561,9 +561,9 @@
                     if (config.permanences) document.getElementById('contact-permanences').textContent = config.permanences;
 
                     let socialHtml = '';
-                    if (config.facebook) socialHtml += `<a href="${config.facebook}" target="_blank" title="Facebook">📘</a>`;
-                    if (config.instagram) socialHtml += `<a href="${config.instagram}" target="_blank" title="Instagram">📸</a>`;
-                    if (config.twitter) socialHtml += `<a href="${config.twitter}" target="_blank" title="Twitter">🐦</a>`;
+                    if (config.facebook) socialHtml += `<a href="${config.facebook}" target="_blank" rel="noopener" title="Facebook">📘</a>`;
+                    if (config.instagram) socialHtml += `<a href="${config.instagram}" target="_blank" rel="noopener" title="Instagram">📸</a>`;
+                    if (config.twitter) socialHtml += `<a href="${config.twitter}" target="_blank" rel="noopener" title="Twitter">🐦</a>`;
                     if (socialHtml) document.getElementById('social-links').innerHTML = socialHtml;
                 }
             } catch (err) {

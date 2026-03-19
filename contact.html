@@ -501,7 +501,7 @@
                     <h3>📱 Suivez-nous</h3>
                     <p>Retrouvez-nous sur les réseaux sociaux pour suivre notre actualité.</p>
                     <div class="social-links" id="social-links">
-                        <a href="https://facebook.com/vizilleenmouvement" target="_blank" title="Facebook">📘</a>
+                        <a href="https://facebook.com/vizilleenmouvement" target="_blank" rel="noopener" title="Facebook">📘</a>
                     </div>
                 </div>
                 
@@ -516,7 +516,7 @@
     
     <footer class="footer">
         <p class="footer-slogan">« vos questions pour une ville dynamique et solidaire »</p>
-        <p>© 2025 Vizille en Mouvement</p>
+        <p>© 2026 Vizille en Mouvement</p>
     </footer>
     
     <script>
@@ -549,10 +549,10 @@
                     
                     // Réseaux sociaux
                     let socialHtml = '';
-                    if (config.facebook) socialHtml += `<a href="${config.facebook}" target="_blank" title="Facebook">📘</a>`;
-                    if (config.instagram) socialHtml += `<a href="${config.instagram}" target="_blank" title="Instagram">📸</a>`;
-                    if (config.twitter) socialHtml += `<a href="${config.twitter}" target="_blank" title="Twitter">🐦</a>`;
-                    if (config.autre) socialHtml += `<a href="${config.autre}" target="_blank" title="Autre">🔗</a>`;
+                    if (config.facebook) socialHtml += `<a href="${config.facebook}" target="_blank" rel="noopener" title="Facebook">📘</a>`;
+                    if (config.instagram) socialHtml += `<a href="${config.instagram}" target="_blank" rel="noopener" title="Instagram">📸</a>`;
+                    if (config.twitter) socialHtml += `<a href="${config.twitter}" target="_blank" rel="noopener" title="Twitter">🐦</a>`;
+                    if (config.autre) socialHtml += `<a href="${config.autre}" target="_blank" rel="noopener" title="Autre">🔗</a>`;
                     
                     if (socialHtml) {
                         document.getElementById('social-links').innerHTML = socialHtml;
