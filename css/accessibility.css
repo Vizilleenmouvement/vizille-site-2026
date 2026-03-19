@@ -185,13 +185,26 @@ nav ul li a {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
-    
-    .card:hover {
+
+    .card:hover,
+    .btn:hover,
+    .theme-card:hover,
+    .actu-card:hover,
+    .carousel-card:hover {
         transform: none;
     }
-    
-    .btn:hover {
-        transform: none;
+
+    .carousel-track {
+        animation: none !important;
+    }
+
+    .animate-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .hero-portrait-ring {
+        animation: none !important;
     }
 }
 

@@ -4,23 +4,52 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vizille en Mouvement - Campagne municipale 2026</title>
-    <meta name="description" content="Bilan du mandat 2020-2026 et projet pour Vizille. Ensemble pour une ville dynamique et solidaire.">
+    <title>Vizille en Mouvement - Ensemble pour une ville dynamique et solidaire</title>
+    <meta name="description" content="Site officiel de Vizille en Mouvement. Bilan 2020-2026, projet 2026-2032 et équipe municipale. Catherine Troton, Maire de Vizille.">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vizilleenmouvement.fr/">
-    <meta property="og:title" content="Vizille en Mouvement - Campagne municipale 2026">
-    <meta property="og:description" content="Bilan du mandat 2020-2026 et projet pour Vizille. Ensemble pour une ville dynamique et solidaire.">
+    <meta property="og:title" content="Vizille en Mouvement - Ensemble pour une ville dynamique et solidaire">
+    <meta property="og:description" content="Site officiel de Vizille en Mouvement. Bilan 2020-2026, projet 2026-2032 et équipe municipale. Catherine Troton, Maire de Vizille.">
     <meta property="og:image" content="https://vizilleenmouvement.fr/images/logo.png">
     <meta property="og:locale" content="fr_FR">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://vizilleenmouvement.fr/">
-    <meta name="twitter:title" content="Vizille en Mouvement - Campagne municipale 2026">
-    <meta name="twitter:description" content="Bilan du mandat 2020-2026 et projet pour Vizille. Ensemble pour une ville dynamique et solidaire.">
+    <meta name="twitter:title" content="Vizille en Mouvement - Ensemble pour une ville dynamique et solidaire">
+    <meta name="twitter:description" content="Site officiel de Vizille en Mouvement. Bilan 2020-2026, projet 2026-2032 et équipe municipale. Catherine Troton, Maire de Vizille.">
     <meta name="twitter:image" content="https://vizilleenmouvement.fr/images/logo.png">
+
+    <!-- Données structurées Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "GovernmentOrganization",
+        "name": "Vizille en Mouvement",
+        "url": "https://vizilleenmouvement.fr",
+        "logo": "https://vizilleenmouvement.fr/images/logo.png",
+        "description": "Équipe municipale de Vizille, mandat 2026-2032. Catherine Troton, Maire.",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "145 chemin des Berthets",
+            "addressLocality": "Vizille",
+            "postalCode": "38220",
+            "addressCountry": "FR"
+        },
+        "email": "contact@vizilleenmouvement.fr",
+        "sameAs": [
+            "https://www.facebook.com/profile.php?id=61585097998743",
+            "https://www.instagram.com/vizilleenmouvement"
+        ],
+        "member": {
+            "@type": "Person",
+            "name": "Catherine Troton",
+            "jobTitle": "Maire de Vizille"
+        }
+    }
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,9 +62,7 @@
     .vote-banner-section { width: 100%; margin: 0; padding: 0; background: #fff; }
     .vote-banner-img { width: 100%; display: block; max-height: 520px; object-fit: cover; object-position: center 20%; margin-top: 1.5rem; }
     .vote-banner-post { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem 2.5rem; font-family: 'Source Sans 3', sans-serif; font-size: 1.05rem; line-height: 1.75; color: #1a1a2e; }
-    .vbp-titre-wrap { position: relative; text-align: center; padding: 1.5rem 1rem 1.2rem; margin-bottom: 1rem; min-height: 90px; }
-    .vbp-fireworks-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-    .vbp-titre { position: relative; z-index: 1; }
+    .vbp-titre-wrap { text-align: center; padding: 1.5rem 1rem 1.2rem; margin-bottom: 1rem; }
     .vbp-titre {
         font-family: 'Playfair Display', serif;
         font-size: clamp(1.3rem, 3vw, 1.8rem);
@@ -62,158 +89,27 @@
 <body>
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
-    <!-- BANNIÈRE FINALE VOTEZ -->
+    <!-- BANNIÈRE DE BIENVENUE -->
     <section class="vote-banner-section">
         <img src="images/photo-equipe.jpg" alt="L'équipe Vizille en Mouvement" class="vote-banner-img">
         <div class="vote-banner-post">
             <div class="vbp-titre-wrap">
-                <canvas class="vbp-fireworks-canvas" id="vbp-canvas"></canvas>
-                <p class="vbp-titre">🏆 Vizille en Mouvement élue !<span class="ligne2">Merci à tous les Vizillois pour votre confiance</span></p>
+                <p class="vbp-titre">Vizille en Mouvement<span class="ligne2">Mandat 2026-2032 — Au service des Vizillois</span></p>
             </div>
             <hr class="vbp-sep">
-            <p>La campagne municipale aura été riche d'idées, de rencontres et d'échanges avec les Vizillois — et surtout d'un engagement collectif dont nous sommes fiers.</p>
-            <p>Notre équipe, soudée par des valeurs partagées et le travail accompli ensemble, a porté l'enthousiasme d'agir au service de la commune et de ses habitants. 💙</p>
+            <p>Notre équipe, soudée par des valeurs partagées et le travail accompli ensemble, poursuit son engagement au service de la commune et de ses habitants.</p>
+            <p>Six ans de mandat ont prouvé notre capacité à structurer des actions, nouer des partenariats, aller chercher des financements pour transformer Vizille. Nous allons maintenant amplifier cette dynamique.</p>
             <hr class="vbp-sep">
-            <p>Six ans de mandat ont prouvé notre capacité à structurer des actions, nouer des partenariats, aller chercher des financements pour transformer Vizille.</p>
-            <p>Ensemble, nous allons maintenant poursuivre et amplifier cette dynamique :</p>
-            <p class="vbp-axes">🏥 L'accès à la santé &nbsp;·&nbsp; 🚶 Les déplacements &nbsp;·&nbsp; 🤝 L'attention portée à chacun — aux plus jeunes comme aux plus âgés &nbsp;·&nbsp; 🌿 L'embellissement des espaces publics &nbsp;·&nbsp; 🛍️ La vitalité commerciale</p>
+            <p class="vbp-axes">🏥 L'accès à la santé &nbsp;·&nbsp; 🚶 Les déplacements &nbsp;·&nbsp; 🤝 L'attention portée à chacun &nbsp;·&nbsp; 🌿 L'embellissement des espaces publics &nbsp;·&nbsp; 🛍️ La vitalité commerciale</p>
             <hr class="vbp-sep">
-            <p>Vizille a choisi l'engagement sincère, le dialogue et l'énergie collective.</p>
-            <p>Catherine Troton et toute l'équipe vous remercient chaleureusement pour votre confiance.</p>
-            <p class="vbp-appel">🌟 Le programme 2026-2032 commence maintenant !</p>
+            <p class="vbp-appel">Le programme 2026-2032 est en marche.</p>
         </div>
-
-        </div>
-        <script>
-        (function(){
-            const canvas = document.getElementById('vbp-canvas');
-            const wrap = canvas.parentElement;
-            function resize(){
-                canvas.width = wrap.offsetWidth || window.innerWidth;
-                canvas.height = Math.max(wrap.offsetHeight, 120);
-            }
-            window.addEventListener('resize', resize);
-            window.addEventListener('orientationchange', function(){ setTimeout(resize, 200); });
-            // Attendre le rendu complet avant de dimensionner
-            if(document.readyState === 'complete'){ resize(); } else { window.addEventListener('load', resize); }
-            const ctx = canvas.getContext('2d');
-            const particles = [];
-            const COLORS = ['#f9e04b','#e63c6e','#1a3a6b','#4fc3f7','#ffffff','#c9a84c','#ff7043','#69f0ae'];
-            function randomColor(){ return COLORS[Math.floor(Math.random()*COLORS.length)]; }
-            function burst(x, y){
-                const count = 55 + Math.floor(Math.random()*30);
-                for(let i=0;i<count;i++){
-                    const angle = (Math.PI*2/count)*i + Math.random()*0.3;
-                    const speed = 1.5 + Math.random()*3.5;
-                    const color = randomColor();
-                    particles.push({
-                        x, y,
-                        vx: Math.cos(angle)*speed,
-                        vy: Math.sin(angle)*speed - 1.2,
-                        alpha: 1,
-                        decay: 0.016 + Math.random()*0.012,
-                        radius: 2 + Math.random()*2.5,
-                        color,
-                        tail: []
-                    });
-                }
-            }
-            function shoot(){
-                const x = canvas.width * (0.15 + Math.random()*0.7);
-                const y = canvas.height * (0.1 + Math.random()*0.6);
-                burst(x, y);
-            }
-            let shots = 0, maxShots = 8;
-            function scheduleBursts(){
-                if(shots < maxShots){
-                    shoot();
-                    shots++;
-                    setTimeout(scheduleBursts, 300 + Math.random()*500);
-                }
-            }
-            setTimeout(scheduleBursts, 300);
-            function animate(){
-                ctx.clearRect(0,0,canvas.width,canvas.height);
-                for(let i=particles.length-1;i>=0;i--){
-                    const p = particles[i];
-                    p.tail.unshift({x:p.x, y:p.y});
-                    if(p.tail.length > 5) p.tail.pop();
-                    p.x += p.vx; p.y += p.vy;
-                    p.vy += 0.07;
-                    p.vx *= 0.98;
-                    p.alpha -= p.decay;
-                    if(p.alpha <= 0){ particles.splice(i,1); continue; }
-                    // traîne
-                    for(let t=0;t<p.tail.length;t++){
-                        ctx.beginPath();
-                        ctx.arc(p.tail[t].x, p.tail[t].y, p.radius*(1-t/p.tail.length)*0.7, 0, Math.PI*2);
-                        ctx.fillStyle = p.color;
-                        ctx.globalAlpha = p.alpha*(1-t/p.tail.length)*0.4;
-                        ctx.fill();
-                    }
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
-                    ctx.fillStyle = p.color;
-                    ctx.globalAlpha = p.alpha;
-                    ctx.shadowBlur = 6;
-                    ctx.shadowColor = p.color;
-                    ctx.fill();
-                    ctx.shadowBlur = 0;
-                    ctx.globalAlpha = 1;
-                }
-                requestAnimationFrame(animate);
-            }
-            animate();
-        })();
-        </script>
-        <!-- COMPTE À REBOURS -->
-        <div class="countdown-section" id="countdown-section">
-            <div class="countdown-container">
-                <div class="countdown-date-bloc">
-                    <div class="countdown-date-label">🏆 Élections du 15 mars 2026</div>
-                    <div class="countdown-date-big">VICTOIRE !</div>
-                </div>
-                <div class="countdown-separator"></div>
-                <div class="countdown-right">
-                    <div class="countdown-label">Il reste</div>
-                    <div class="countdown-boxes" id="countdown-boxes">
-                        <div class="countdown-box"><span id="cd-days">--</span><small>jours</small></div>
-                        <div class="countdown-box"><span id="cd-hours">--</span><small>heures</small></div>
-                        <div class="countdown-box"><span id="cd-minutes">--</span><small>min</small></div>
-                        <div class="countdown-box"><span id="cd-secs">--</span><small>sec</small></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script>
-        (function() {
-            const election = new Date('2026-03-15T08:00:00+01:00');
-            function update() {
-                const now = new Date();
-                const diff = election - now;
-                if (diff <= 0) {
-                    document.getElementById('countdown-section').innerHTML = '<div class="countdown-container"><div class="countdown-date-big" style="font-size:2rem;">🏆 Vizille en Mouvement élue !</div></div>';
-                    return;
-                }
-                const d = Math.floor(diff / 86400000);
-                const h = Math.floor((diff % 86400000) / 3600000);
-                const m = Math.floor((diff % 3600000) / 60000);
-                const s = Math.floor((diff % 60000) / 1000);
-                document.getElementById('cd-days').textContent = d;
-                document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
-                document.getElementById('cd-minutes').textContent = String(m).padStart(2,'0');
-                document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
-            }
-            update();
-            setInterval(update, 1000);
-        })();
-        </script>
     </section>
 
     <header class="header">
-        <div class="header-top"><p>Vizille en Mouvement - Municipales 2026</p></div>
+        <div class="header-top"><p>Vizille en Mouvement - Mandat 2026-2032</p></div>
         <div class="header-main">
-            <a href="index.html"><img src="images/logo-header.png" alt="Vizille en Mouvement" class="nav-header-logo" loading="lazy"></a>
+            <a href="index.html"><img src="images/logo-header.png" alt="Vizille en Mouvement" class="nav-header-logo"></a>
             <button class="menu-toggle" aria-label="Menu">☰</button>
             <nav>
                 <ul>
@@ -240,16 +136,16 @@
             <!-- Colonne gauche : portrait -->
             <div class="hero-left animate-fade-in">
                 <div class="hero-portrait">
-                    <img src="images/catherine-troton.jpg" alt="Catherine Troton" class="hero-candidate-photo" loading="lazy">
+                    <img src="images/catherine-troton.jpg" alt="Catherine Troton, Maire de Vizille" class="hero-candidate-photo">
                     <div class="hero-portrait-ring"></div>
                 </div>
                 <h1 class="hero-candidate-name">Catherine Troton</h1>
                 <span class="hero-candidate-title">Maire de Vizille</span>
-                <span class="hero-candidate-role">Candidate aux élections municipales 2026</span>
+                <span class="hero-candidate-role">Mandat 2026-2032</span>
             </div>
             <!-- Colonne droite : message -->
             <div class="hero-right">
-                <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo-small animate-fade-in delay-1" loading="lazy">
+                <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo-small animate-fade-in delay-1">
                 <p class="hero-slogan animate-slide-up delay-1">« Ensemble pour une ville<br>dynamique et solidaire »</p>
                 <blockquote class="hero-quote animate-slide-up delay-2">
                     Je crois en une action municipale proche des citoyens,
@@ -261,14 +157,6 @@
         </div>
     </section>
 
-    <!-- Bandeau élections -->
-    <div class="election-banner">
-        <div class="election-banner-content">
-            <span class="election-icon">🗳️</span>
-            <p>ÉLECTIONS MUNICIPALES - <strong>15 MARS 2026</strong></p>
-            <span class="election-icon">🗳️</span>
-        </div>
-    </div>
 
     <!-- CARROUSEL BILAN & PROJET -->
     <section class="carousel-section">
@@ -354,7 +242,7 @@
             </div>
 
             <div class="facebook-cta animate-on-scroll">
-                <a href="https://www.facebook.com/profile.php?id=61585097998743" target="_blank" class="btn-facebook">
+                <a href="https://www.facebook.com/profile.php?id=61585097998743" target="_blank" rel="noopener" class="btn-facebook">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                     Suivre notre page
                 </a>
@@ -452,11 +340,11 @@
                 <div class="info-card">
                     <h4>📱 Réseaux sociaux</h4>
                     <div class="social-buttons">
-                        <a href="https://www.facebook.com/profile.php?id=61585097998743" target="_blank" class="social-btn facebook">
+                        <a href="https://www.facebook.com/profile.php?id=61585097998743" target="_blank" rel="noopener" class="social-btn facebook">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                             Facebook
                         </a>
-                        <a href="https://www.instagram.com/vizilleenmouvement" target="_blank" class="social-btn instagram">
+                        <a href="https://www.instagram.com/vizilleenmouvement" target="_blank" rel="noopener" class="social-btn instagram">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
                             Instagram
                         </a>
@@ -470,10 +358,10 @@
         <div class="footer-grid">
             <div class="footer-brand">
                 <img src="images/logo-header.png" alt="" role="presentation" style="height: 40px; filter: brightness(0) invert(1);" loading="lazy">
-                <p>Liste citoyenne pour les élections municipales 2026.<br>Ensemble pour une ville dynamique et solidaire.</p>
+                <p>Équipe municipale de Vizille.<br>Ensemble pour une ville dynamique et solidaire.</p>
                 <div class="social-links">
-                    <a href="https://www.facebook.com/profile.php?id=61585097998743" target="_blank" aria-label="Facebook"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
-                    <a href="https://www.instagram.com/vizilleenmouvement" target="_blank" aria-label="Instagram"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                    <a href="https://www.facebook.com/profile.php?id=61585097998743" target="_blank" rel="noopener" aria-label="Facebook"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                    <a href="https://www.instagram.com/vizilleenmouvement" target="_blank" rel="noopener" aria-label="Instagram"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
                 </div>
             </div>
             <div>
@@ -497,12 +385,12 @@
                 <h4>Liens</h4>
                 <ul>
                     <li><a href="mentions-legales.html">Mentions légales</a></li>
-                    <li><a href="https://Vizilleenmouvement.github.io/test2/" target="_blank">Données ouvertes</a></li>
+                    <li><a href="https://Vizilleenmouvement.github.io/test2/" target="_blank" rel="noopener">Données ouvertes</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>2025 Vizille en Mouvement - Campagne municipale 2026</p>
+            <p>&copy; 2026 Vizille en Mouvement</p>
         </div>
     </footer>
 
