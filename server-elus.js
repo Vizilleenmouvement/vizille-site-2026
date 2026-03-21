@@ -196,6 +196,7 @@ function buildPage() {
   '<button onclick="showTab(\'agenda\',this)">&#128197; Agenda</button>' +
   '<button onclick="showTab(\'documents\',this)">&#128196; Documents</button>' +
   '<button onclick="showTab(\'notifs\',this)">&#128276; Notifications</button>' +
+  '<button onclick="showTab(\'creer\',this)">&#10010; Nouveau projet</button>' +
   '</nav>' +
 
   // === TAB PROJETS ===
@@ -246,6 +247,59 @@ function buildPage() {
   '<div id="notifs-list"></div>' +
   '</div>' +
 
+
+  // === TAB CREER PROJET ===
+  '<div class="tab" id="tab-creer">' +
+  '<div style="max-width:600px">' +
+  '<h2 style="font-size:.9rem;color:#666;font-weight:500;margin-bottom:1rem">Cr&eacute;er un nouveau projet</h2>' +
+  '<div class="card">' +
+  '<input type="text" id="np-titre" placeholder="Titre du projet *">' +
+  '<div class="form-row">' +
+  '<select class="form" id="np-theme">' +
+  '<option value="">-- Th&egrave;me --</option>' +
+  '<option>Mobilités</option>' +
+  '<option>Tranquillité publique</option>' +
+  '<option>Enfance/Jeunesse</option>' +
+  '<option>Travaux</option>' +
+  '<option>Transition écologique</option>' +
+  '<option>Urbanisme</option>' +
+  '<option>Culture</option>' +
+  '<option>Patrimoine</option>' +
+  '<option>Action sociale</option>' +
+  '<option>Animations de proximité</option>' +
+  '<option>Concertation citoyenne</option>' +
+  '<option>Economie</option>' +
+  '<option>Santé</option>' +
+  '<option>Jumelages</option>' +
+  '<option>Métropole</option>' +
+  '</select>' +
+  '<select class="form" id="np-statut">' +
+  '<option value="Programmé">Programmé</option>' +
+  '<option value="Prioritaire">Prioritaire</option>' +
+  '<option value="Planifié">Planifié</option>' +
+  '<option value="Étude">Etude</option>' +
+  '<option value="En cours">En cours</option>' +
+  '</select>' +
+  '</div>' +
+  '<div class="form-row">' +
+  '<input type="text" id="np-annee" placeholder="Année (ex: 2026)">' +
+  '<select class="form" id="np-importance">' +
+  '<option value="1">Importance 1</option>' +
+  '<option value="2">Importance 2</option>' +
+  '<option value="3" selected>Importance 3</option>' +
+  '</select>' +
+  '</div>' +
+  '<input type="text" id="np-resume" placeholder="Résumé court *">' +
+  '<textarea id="np-description" placeholder="Description détaillée (optionnel)" style="height:90px"></textarea>' +
+  '<input type="text" id="np-tags" placeholder="Tags (virgule-séparés, ex: Seniors, Accessibilité)">' +
+  '<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:.5rem">' +
+  '<button class="btn btn-ghost" onclick="resetForm()">Réinitialiser</button>' +
+  '<button class="btn" onclick="createProjet()">&#10003; Créer le projet</button>' +
+  '</div>' +
+  '</div>' +
+  '<div id="np-result" style="margin-top:12px"></div>' +
+  '</div>' +
+  '</div>' +
   // === MODALES ===
   '<div class="modal-bg" id="modal-agenda"><div class="modal">' +
   '<h3>Ajouter une r&eacute;union</h3>' +
@@ -387,6 +441,24 @@ function buildPage() {
   'fetch("/api/document/"+id,{method:"DELETE",headers:{"Authorization":"Basic "+btoa(":vizille2026")}})' +
   '.then(function(r){return r.json();}).then(function(d){if(d.ok){DC=DC.filter(function(d){return d.id!==id;});renderDocs();showToast("Supprim\u00e9");}});}' +
 
+
+  'function createProjet(){' +
+  'var titre=document.getElementById("np-titre").value.trim();' +
+  'var resume=document.getElementById("np-resume").value.trim();' +
+  'if(!titre||!resume){showToast("Titre et résumé obligatoires");return;}' +
+  'var data={titre:titre,theme:document.getElementById("np-theme").value,statut:document.getElementById("np-statut").value,annee:document.getElementById("np-annee").value,importance:document.getElementById("np-importance").value,resume:resume,description:document.getElementById("np-description").value,tags:document.getElementById("np-tags").value};' +
+  'fetch("/api/projet",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Basic "+btoa(":vizille2026")},body:JSON.stringify(data)})' +
+  '.then(function(r){return r.json();}).then(function(d){' +
+  'if(d.ok){' +
+  'P.push(d.projet);' +
+  'document.getElementById("np-result").innerHTML="<div style=\'background:#e8f0e8;border-radius:8px;padding:10px;font-size:.8rem;color:#363\'><strong>✓ Projet créé !</strong> ID #"+d.projet.id+" &mdash; "+d.projet.titre+"<br><small>Il apparaît maintenant dans l\'onglet Projets.</small></div>";' +
+  'resetForm();showToast("Projet créé : "+d.projet.titre);' +
+  '}});' +
+  '}' +
+  'function resetForm(){' +
+  'var ids=["np-titre","np-resume","np-description","np-tags","np-annee"];' +
+  'ids.forEach(function(id){document.getElementById(id).value="";});' +
+  '}' +
   'go();' +
   'var CL=["#1a3a2a","#4a8a5a","#7ab87a","#aad4aa","#2a5a3a","#3a6a4a","#5a9a6a","#8ac08a","#b0d8b0","#c8e8c8","#1a4a2a","#2a6a4a","#6ab06a","#3a7a5a","#9ac89a"];' +
   'new Chart(document.getElementById("cT"),{type:"bar",data:{labels:' + JSON.stringify(thKeys) + ',datasets:[{data:' + JSON.stringify(thVals) + ',backgroundColor:CL,borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:9}}},y:{ticks:{stepSize:1}}}}});' +
@@ -408,6 +480,35 @@ const server = http.createServer(function(req, res) {
 
   if (method === 'OPTIONS') { res.writeHead(200, {'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'GET,POST,DELETE','Access-Control-Allow-Headers':'Content-Type,Authorization'}); return res.end(); }
   if (!checkAuth(req)) return deny(res);
+
+
+  // API créer projet
+  if (p === '/api/projet' && method === 'POST') {
+    return readBody(req, function(err, data) {
+      if (err) return json(res, {ok:false}, 400);
+      var newId = projets.length ? Math.max.apply(null, projets.map(function(p){return p.id||0;})) + 1 : 9000;
+      var projet = {
+        id: newId,
+        titre: data.titre || '',
+        theme: data.theme || 'Autre',
+        statut: data.statut || 'Programmé',
+        annee: data.annee ? parseInt(data.annee) : null,
+        budget: 0,
+        resume: data.resume || '',
+        description: data.description || '',
+        importance: parseInt(data.importance) || 2,
+        chiffres: [],
+        tags: data.tags ? data.tags.split(',').map(function(t){return t.trim();}).filter(Boolean) : [],
+        created: new Date().toISOString()
+      };
+      projets.push(projet);
+      saveJSON('projets.json', projets);
+      var notif = { id: Date.now(), titre: projet.titre, statut: 'CRÉÉ', ancien: '', ts: new Date().toLocaleString('fr-FR'), new: true };
+      notifs.unshift(notif);
+      saveJSON('notifs.json', notifs);
+      return json(res, { ok: true, projet: projet });
+    });
+  }
 
   // API statut projet
   if (p === '/api/statut' && method === 'POST') {
