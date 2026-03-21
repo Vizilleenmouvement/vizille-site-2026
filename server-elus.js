@@ -197,6 +197,9 @@ function buildPage() {
   '<button onclick="showTab(\'documents\',this)">&#128196; Documents</button>' +
   '<button onclick="showTab(\'notifs\',this)">&#128276; Notifications</button>' +
   '<button onclick="showTab(\'creer\',this)">&#10010; Nouveau projet</button>' +
+  '<button onclick="showTab(\'budget\',this)">&#128200; Budget</button>' +
+  '<button onclick="showTab(\'elections\',this)">&#128499; Elections</button>' +
+  '<button onclick="showTab(\'comms\',this)">&#128221; Communications</button>' +
   '</nav>' +
 
   // === TAB PROJETS ===
@@ -298,6 +301,95 @@ function buildPage() {
   '</div>' +
   '</div>' +
   '<div id="np-result" style="margin-top:12px"></div>' +
+  '</div>' +
+  '</div>' +
+
+  // === TAB BUDGET ===
+  '<div class="tab" id="tab-budget">' +
+  '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">' +
+  '<h2 style="font-size:.9rem;color:#666;font-weight:500">Budget comparatif</h2>' +
+  '<label class="btn btn-sm" style="cursor:pointer">&#128196; Importer CSV/Excel<input type="file" id="budget-file" accept=".csv,.xlsx,.xls" style="display:none" onchange="importBudget(this)"></label>' +
+  '</div>' +
+  '<div id="budget-table">'+
+  '<p style="color:#aaa;font-size:.82rem;padding:1rem 0">Importez un fichier CSV ou Excel avec colonnes : Poste, Budget2025, Budget2026, Prévision2027</p>'+
+  '<div class="card" style="font-size:.78rem;color:#666">'+
+  '<strong>Format attendu :</strong><br>'+
+  '<code style="font-size:.72rem;background:#f4f4ef;padding:2px 6px;border-radius:4px">Poste,Budget2025,Budget2026,Prévision2027</code><br>'+
+  '<code style="font-size:.72rem;background:#f4f4ef;padding:2px 6px;border-radius:4px;margin-top:4px;display:inline-block">Fonctionnement,1200000,1250000,1280000</code>'+
+  '</div>'+
+  '</div>' +
+  '</div>' +
+
+  // === TAB ELECTIONS ===
+  '<div class="tab" id="tab-elections">' +
+  '<h2 style="font-size:.9rem;color:#666;font-weight:500;margin-bottom:1rem">&#128499; Elections &amp; listes &eacute;lectorales</h2>' +
+  '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:1rem">' +
+  '<div class="card">' +
+  '<h4>&#128101; Liste &eacute;lectorale Vizille</h4>' +
+  '<p>Commune de Vizille — Isère (38431)</p>' +
+  '<div class="meta" style="margin-top:.75rem;display:flex;flex-direction:column;gap:6px">' +
+  '<a href="https://www.service-public.fr/particuliers/vosdroits/F1367" target="_blank" class="btn btn-sm btn-ghost" style="text-align:center">&#128279; Service-Public.fr</a>' +
+  '<a href="https://www.interieur.gouv.fr/Elections/Les-resultats/Municipales" target="_blank" class="btn btn-sm btn-ghost" style="text-align:center">&#128279; Résultats officiels</a>' +
+  '<a href="https://www.insee.fr/fr/statistiques/zones/3720885" target="_blank" class="btn btn-sm btn-ghost" style="text-align:center">&#128279; INSEE - Vizille</a>' +
+  '</div></div>' +
+  '<div class="card">' +
+  '<h4>&#128202; Résultats mars 2026</h4>' +
+  '<table style="width:100%;font-size:.75rem;border-collapse:collapse">' +
+  '<tr><td style="padding:4px 0;color:#666">Inscrits</td><td style="text-align:right;font-weight:500">~5 000</td></tr>' +
+  '<tr><td style="padding:4px 0;color:#666">Tour 1 — 15 mars</td><td style="text-align:right"><span class="b b2">Victoire VeM</span></td></tr>' +
+  '<tr><td style="padding:4px 0;color:#666">Élus</td><td style="text-align:right;font-weight:500">29 conseillers</td></tr>' +
+  '<tr><td style="padding:4px 0;color:#666">Maire</td><td style="text-align:right;font-weight:500">Catherine Troton</td></tr>' +
+  '</table>' +
+  '</div></div>' +
+  '<div class="card">' +
+  '<h4>&#128203; Composition du conseil municipal</h4>' +
+  '<div id="conseil-table">' +
+  '<table style="width:100%;font-size:.76rem;border-collapse:collapse">' +
+  '<thead><tr style="background:#f0f0e8"><th style="padding:7px 10px;text-align:left">Poste</th><th style="padding:7px 10px;text-align:left">Élu(e)</th><th style="padding:7px 10px;text-align:left">Commission</th></tr></thead>' +
+  '<tbody>' +
+  '<tr><td style="padding:6px 10px;border-top:.5px solid #f0f0e8">Maire</td><td>Catherine Troton</td><td>—</td></tr>' +
+  '<tr><td style="padding:6px 10px;border-top:.5px solid #f0f0e8">Adjoint·e 1</td><td>—</td><td>—</td></tr>' +
+  '<tr><td style="padding:6px 10px;border-top:.5px solid #f0f0e8">Conseiller pos. 22</td><td>Michel T.</td><td>Numérique / Communication</td></tr>' +
+  '</tbody></table>' +
+  '</div>' +
+  '<div class="meta" style="margin-top:.75rem">' +
+  '<a href="https://www.collectivites-locales.gouv.fr" target="_blank" class="btn btn-sm btn-ghost">&#128279; Collectivités-locales.gouv.fr</a> &nbsp;' +
+  '<a href="https://www.amf.asso.fr" target="_blank" class="btn btn-sm btn-ghost">&#128279; AMF</a>' +
+  '</div></div>' +
+  '</div>' +
+
+  // === TAB COMMUNICATIONS ===
+  '<div class="tab" id="tab-comms">' +
+  '<h2 style="font-size:.9rem;color:#666;font-weight:500;margin-bottom:1rem">&#128221; R&eacute;dacteur municipal</h2>' +
+  '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">' +
+  '<div>' +
+  '<div class="card">' +
+  '<h4>Type de document</h4>' +
+  '<select class="form" id="comm-type" onchange="updateCommTemplate()">' +
+  '<option value="arrete">Arr&ecirc;t&eacute; municipal</option>' +
+  '<option value="deliberation">D&eacute;lib&eacute;ration</option>' +
+  '<option value="facebook">Post Facebook</option>' +
+  '<option value="communique">Communiqu&eacute; de presse</option>' +
+  '<option value="convocation">Convocation conseil municipal</option>' +
+  '<option value="discours">Discours / allocution</option>' +
+  '</select>' +
+  '<h4 style="margin-top:.75rem">Sujet / Instructions</h4>' +
+  '<textarea id="comm-sujet" style="height:120px" placeholder="D&eacute;crivez le contenu souhaité...&#10;Ex: Arrêté portant interdiction de stationnement rue de la République du 25 au 30 mars 2026 pour travaux de voirie."></textarea>' +
+  '<h4>Contexte (optionnel)</h4>' +
+  '<input type="text" id="comm-contexte" placeholder="Ex: Commune de Vizille, 5000 hab., Isère">' +
+  '<button class="btn" style="width:100%;margin-top:.5rem" onclick="genereComm()">&#10024; G&eacute;n&eacute;rer avec Claude</button>' +
+  '<div id="comm-status" style="font-size:.72rem;color:#aaa;margin-top:6px;text-align:center"></div>' +
+  '</div>' +
+  '</div>' +
+  '<div>' +
+  '<div class="card" style="height:100%">' +
+  '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">' +
+  '<h4>R&eacute;sultat</h4>' +
+  '<button class="btn btn-sm btn-ghost" onclick="copyComm()">&#128203; Copier</button>' +
+  '</div>' +
+  '<textarea id="comm-result" style="height:340px;font-size:.76rem;line-height:1.6;background:#fafaf8" placeholder="Le document g&eacute;n&eacute;r&eacute; appara&icirc;tra ici..."></textarea>' +
+  '</div>' +
+  '</div>' +
   '</div>' +
   '</div>' +
   // === MODALES ===
@@ -442,6 +534,75 @@ function buildPage() {
   '.then(function(r){return r.json();}).then(function(d){if(d.ok){DC=DC.filter(function(d){return d.id!==id;});renderDocs();showToast("Supprim\u00e9");}});}' +
 
 
+
+  // ---- BUDGET ----
+  'function importBudget(input){' +
+  'var file=input.files[0];if(!file)return;' +
+  'var reader=new FileReader();' +
+  'reader.onload=function(e){' +
+  'var text=e.target.result;' +
+  'var lines=text.split("\\n").filter(function(l){return l.trim();});' +
+  'if(!lines.length)return;' +
+  'var headers=lines[0].split(",").map(function(h){return h.trim();});' +
+  'var rows=lines.slice(1).map(function(l){return l.split(",").map(function(c){return c.trim();});});' +
+  'var html="<table style=\"width:100%;border-collapse:collapse;font-size:.78rem;background:#fff;border-radius:10px;overflow:hidden;border:.5px solid #e0e0d8\">";' +
+  'html+="<thead><tr style=\"background:#f0f0e8\">";' +
+  'headers.forEach(function(h,i){html+="<th style=\"padding:8px 10px;text-align:"+(i>0?"right":"left")+";font-weight:500;color:#555\">"+h+"</th>";});' +
+  'html+="</tr></thead><tbody>";' +
+  'rows.forEach(function(row){' +
+  'html+="<tr>";' +
+  'row.forEach(function(cell,i){' +
+  'var num=parseFloat(cell.replace(/[^0-9.-]/g,""));' +
+  'var fmt=(!isNaN(num)&&i>0)?new Intl.NumberFormat("fr-FR",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(num):cell;' +
+  'var color="";' +
+  'if(i===2&&row[1]){var v1=parseFloat(row[1].replace(/[^0-9.-]/g,"")),v2=parseFloat(row[2].replace(/[^0-9.-]/g,""));if(!isNaN(v1)&&!isNaN(v2)){color=v2>v1?"color:#a33":"color:#363";}}' +
+  'html+="<td style=\"padding:7px 10px;border-top:.5px solid #f0f0e8;text-align:"+(i>0?"right":"left")+";"+color+"\">"+fmt+"</td>";' +
+  '});html+="</tr>";' +
+  '});' +
+  'html+="</tbody></table>";' +
+  'document.getElementById("budget-table").innerHTML=html;' +
+  'showToast("Budget importé : "+rows.length+" lignes");' +
+  '};' +
+  'reader.readAsText(file);' +
+  '}' +
+
+  // ---- COMMUNICATIONS ----
+  'var COMM_TEMPLATES={' +
+  'arrete:"Rédigez un arrêté municipal officiel pour la Commune de Vizille (Isère, 38431). Incluez : numéro d\'arrêté, visa (vu le Code général des collectivités territoriales...), considérants, article(s) de disposition, article exécution. Ton administratif formel. Sujet : ",'+
+  'deliberation:"Rédigez une délibération du conseil municipal de Vizille. Structure : objet, exposé des motifs, le conseil municipal délibère et décide. Sujet : ",'+
+  'facebook:"Rédigez un post Facebook engageant pour la page Vizille en Mouvement. Ton chaleureux et proche des habitants, emojis appropriés, appel à l\'action. Maximum 300 mots. Sujet : ",'+
+  'communique:"Rédigez un communiqué de presse pour la Ville de Vizille. Structure journalistique : titre accrocheur, chapeau, corps, contact. Sujet : ",'+
+  'convocation:"Rédigez une convocation au conseil municipal de Vizille selon l\'article L.2121-10 du CGCT. Inclure : date, heure, lieu, ordre du jour. Sujet : ",'+
+  'discours:"Rédigez un discours ou allocution pour le/la Maire de Vizille. Ton sincère et ancré dans le territoire, référence au mandat 2026-2032. Sujet : "'+
+  '};' +
+
+  'function updateCommTemplate(){' +
+  'var type=document.getElementById("comm-type").value;' +
+  'document.getElementById("comm-sujet").placeholder="Instructions pour : "+type+"\nEx: "+({arrete:"Interdiction stationnement rue de la République du 25 au 30 mars pour travaux",deliberation:"Approbation du budget primitif 2026",facebook:"Victoire aux élections municipales du 15 mars — remercier les habitants",communique:"Lancement de la Maison des Solidarités prévue pour 2027",convocation:"Séance du 15 avril 2026 à 18h30, salle du conseil — budget, voirie, questions diverses",discours:"Cérémonie du 8 mai 2026 — hommage aux anciens combattants"}[type]||"");' +
+  '}' +
+
+  'function genereComm(){' +
+  'var type=document.getElementById("comm-type").value;' +
+  'var sujet=document.getElementById("comm-sujet").value.trim();' +
+  'var contexte=document.getElementById("comm-contexte").value.trim()||"Commune de Vizille, 5 000 habitants, Isère (38431), Maire : Catherine Troton, mandat 2026-2032.";' +
+  'if(!sujet){showToast("Décrivez le sujet du document");return;}' +
+  'var prompt=COMM_TEMPLATES[type]+sujet+"\n\nContexte : "+contexte;' +
+  'document.getElementById("comm-status").textContent="Génération en cours...";' +
+  'document.getElementById("comm-result").value="";' +
+  'fetch("/api/genere",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Basic "+btoa(":vizille2026")},body:JSON.stringify({prompt:prompt,type:type})})' +
+  '.then(function(r){return r.json();})' +
+  '.then(function(d){' +
+  'document.getElementById("comm-status").textContent="";' +
+  'if(d.ok){document.getElementById("comm-result").value=d.texte;showToast("Document généré !");}' +
+  'else{document.getElementById("comm-result").value="Erreur: "+d.error;showToast("Erreur génération");}' +
+  '}).catch(function(e){document.getElementById("comm-status").textContent="";document.getElementById("comm-result").value="Erreur réseau";});' +
+  '}' +
+
+  'function copyComm(){' +
+  'var t=document.getElementById("comm-result");' +
+  't.select();document.execCommand("copy");showToast("Copié !");' +
+  '}' +
+
   'function createProjet(){' +
   'var titre=document.getElementById("np-titre").value.trim();' +
   'var resume=document.getElementById("np-resume").value.trim();' +
@@ -481,6 +642,48 @@ const server = http.createServer(function(req, res) {
   if (method === 'OPTIONS') { res.writeHead(200, {'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'GET,POST,DELETE','Access-Control-Allow-Headers':'Content-Type,Authorization'}); return res.end(); }
   if (!checkAuth(req)) return deny(res);
 
+
+
+  // API génération Claude
+  if (p === '/api/genere' && method === 'POST') {
+    return readBody(req, function(err, data) {
+      if (err) return json(res, {ok:false, error:'Données invalides'}, 400);
+      var ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY || '';
+      if (!ANTHROPIC_KEY) return json(res, {ok:false, error:'Clé API Claude non configurée (ANTHROPIC_API_KEY)'});
+      var body = JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1500,
+        messages: [{ role: 'user', content: data.prompt }]
+      });
+      var opts = {
+        hostname: 'api.anthropic.com',
+        path: '/v1/messages',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': ANTHROPIC_KEY,
+          'anthropic-version': '2023-06-01',
+          'Content-Length': Buffer.byteLength(body)
+        }
+      };
+      var req2 = https.request(opts, function(r2) {
+        var d = '';
+        r2.on('data', function(c) { d += c; });
+        r2.on('end', function() {
+          try {
+            var resp = JSON.parse(d);
+            var texte = resp.content && resp.content[0] && resp.content[0].text || '';
+            return json(res, { ok: true, texte: texte });
+          } catch(e) {
+            return json(res, { ok: false, error: 'Erreur parsing réponse Claude' });
+          }
+        });
+      });
+      req2.on('error', function(e) { json(res, {ok:false, error: e.message}); });
+      req2.write(body);
+      req2.end();
+    });
+  }
 
   // API créer projet
   if (p === '/api/projet' && method === 'POST') {
