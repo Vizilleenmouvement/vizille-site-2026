@@ -192,7 +192,8 @@ function buildPage() {
   '</header>' +
 
   '<nav>' +
-  '<button class="active" onclick="showTab(\'projets\',this)">&#128203; Projets</button>' +
+  '<button class="active" onclick="showTab(\'accueil\',this)">&#127968; Accueil</button>' +
+  '<button onclick="showTab(\'projets\',this)">&#128203; Projets</button>' +
   '<button onclick="showTab(\'agenda\',this)">&#128197; Agenda</button>' +
   '<button onclick="showTab(\'documents\',this)">&#128196; Documents</button>' +
   '<button onclick="showTab(\'notifs\',this)">&#128276; Notifications</button>' +
@@ -202,8 +203,104 @@ function buildPage() {
   '<button onclick="showTab(\'comms\',this)">&#128221; Communications</button>' +
   '</nav>' +
 
+
+  // === TAB ACCUEIL ===
+  '<div class="tab active" id="tab-accueil">' +
+  '<div style="max-width:760px;margin:0 auto">' +
+
+  // Hero
+  '<div style="background:linear-gradient(135deg,#1a3a2a 60%,#2a5a3a);border-radius:14px;padding:2rem;color:#fff;margin-bottom:1.25rem;display:flex;align-items:center;gap:1.5rem">' +
+  '<div style="width:56px;height:56px;background:#4a8a5a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">VM</div>' +
+  '<div>' +
+  '<h2 style="font-size:1.2rem;font-weight:600;margin-bottom:.3rem">Bienvenue, espace &eacute;lus</h2>' +
+  '<p style="opacity:.8;font-size:.85rem;line-height:1.5">Vizille en Mouvement &mdash; Mandat 2026&ndash;2032<br>Tableau de bord r&eacute;serv&eacute; aux conseillers municipaux.</p>' +
+  '</div>' +
+  '</div>' +
+
+  // Stats rapides
+  '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem">' +
+  '<div class="m"><div class="v">91</div><div class="l">Projets au programme</div></div>' +
+  '<div class="m"><div class="v">15</div><div class="l">Th&egrave;mes couverts</div></div>' +
+  '<div class="m"><div class="v">29</div><div class="l">Conseillers &eacute;lus</div></div>' +
+  '<div class="m"><div class="v">2032</div><div class="l">Fin de mandat</div></div>' +
+  '</div>' +
+
+  // Mode d&rsquo;emploi
+  '<div class="card" style="margin-bottom:1rem">' +
+  '<h4 style="font-size:.95rem;margin-bottom:1rem;border-bottom:.5px solid #f0f0e8;padding-bottom:.75rem">&#128218; Mode d&rsquo;emploi</h4>' +
+  '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">' +
+
+  '<div style="display:flex;gap:10px;align-items:flex-start">' +
+  '<div style="width:32px;height:32px;background:#e8f0e8;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem">&#128203;</div>' +
+  '<div><strong style="font-size:.82rem">Projets</strong><p style="font-size:.76rem;color:#666;margin-top:2px;line-height:1.4">Consultez les 91 projets du mandat. Filtrez par th&egrave;me, statut ou ann&eacute;e. Mettez &agrave; jour le statut d&rsquo;un projet directement dans le tableau (menu d&eacute;roulant).</p></div>' +
+  '</div>' +
+
+  '<div style="display:flex;gap:10px;align-items:flex-start">' +
+  '<div style="width:32px;height:32px;background:#e8eef8;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem">&#128197;</div>' +
+  '<div><strong style="font-size:.82rem">Agenda</strong><p style="font-size:.76rem;color:#666;margin-top:2px;line-height:1.4">Planifiez vos r&eacute;unions (bureau, commissions, conseil municipal). Ajoutez date, heure, lieu et notes. Les &eacute;v&eacute;nements pass&eacute;s s&rsquo;affichent en gris&eacute;.</p></div>' +
+  '</div>' +
+
+  '<div style="display:flex;gap:10px;align-items:flex-start">' +
+  '<div style="width:32px;height:32px;background:#fef3e2;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem">&#128196;</div>' +
+  '<div><strong style="font-size:.82rem">Documents</strong><p style="font-size:.76rem;color:#666;margin-top:2px;line-height:1.4">Centralisez vos liens vers kDrive ou Google Drive. CR, d&eacute;lib&eacute;rations, rapports — acc&egrave;s direct en un clic depuis n&rsquo;importe quel appareil.</p></div>' +
+  '</div>' +
+
+  '<div style="display:flex;gap:10px;align-items:flex-start">' +
+  '<div style="width:32px;height:32px;background:#f0f0e8;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem">&#128276;</div>' +
+  '<div><strong style="font-size:.82rem">Notifications</strong><p style="font-size:.76rem;color:#666;margin-top:2px;line-height:1.4">Journal automatique de toutes les modifications de statut. Retrouvez qui a chang&eacute; quoi et quand. Configurer un email pour recevoir les alertes.</p></div>' +
+  '</div>' +
+
+  '<div style="display:flex;gap:10px;align-items:flex-start">' +
+  '<div style="width:32px;height:32px;background:#e8f8e8;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem">&#10010;</div>' +
+  '<div><strong style="font-size:.82rem">Nouveau projet</strong><p style="font-size:.76rem;color:#666;margin-top:2px;line-height:1.4">Cr&eacute;ez un projet hors programme initial. Il est sauvegard&eacute; imm&eacute;diatement et appara&icirc;t dans la liste avec les filtres.</p></div>' +
+  '</div>' +
+
+  '<div style="display:flex;gap:10px;align-items:flex-start">' +
+  '<div style="width:32px;height:32px;background:#fde8e8;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem">&#128200;</div>' +
+  '<div><strong style="font-size:.82rem">Budget</strong><p style="font-size:.76rem;color:#666;margin-top:2px;line-height:1.4">Importez un fichier CSV ou Excel pour g&eacute;n&eacute;rer un tableau comparatif 2025&ndash;2026 color&eacute; (rouge=hausse, vert=baisse).</p></div>' +
+  '</div>' +
+
+  '<div style="display:flex;gap:10px;align-items:flex-start">' +
+  '<div style="width:32px;height:32px;background:#e8eef8;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem">&#128499;</div>' +
+  '<div><strong style="font-size:.82rem">Elections</strong><p style="font-size:.76rem;color:#666;margin-top:2px;line-height:1.4">Acc&egrave;s rapide aux liens INSEE, Pr&eacute;fecture et r&eacute;sultats officiels. Composition du conseil municipal de Vizille.</p></div>' +
+  '</div>' +
+
+  '<div style="display:flex;gap:10px;align-items:flex-start">' +
+  '<div style="width:32px;height:32px;background:#f3e8f8;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem">&#128221;</div>' +
+  '<div><strong style="font-size:.82rem">Communications</strong><p style="font-size:.76rem;color:#666;margin-top:2px;line-height:1.4">R&eacute;dacteur assist&eacute; par Claude AI. G&eacute;n&egrave;re arr&ecirc;t&eacute;s, d&eacute;lib&eacute;rations, posts Facebook, discours en quelques secondes. N&eacute;cessite une cl&eacute; API Anthropic.</p></div>' +
+  '</div>' +
+
+  '</div></div>' +
+
+  // Accès et sécurité
+  '<div class="card" style="margin-bottom:1rem">' +
+  '<h4 style="font-size:.9rem;margin-bottom:.75rem">&#128274; Acc&egrave;s &amp; s&eacute;curit&eacute;</h4>' +
+  '<div style="font-size:.78rem;color:#555;line-height:1.7">' +
+  '<p>&#9679; Cet espace est prot&eacute;g&eacute; par un <strong>mot de passe unique</strong>. Ne le partagez qu&rsquo;aux &eacute;lus et collaborateurs autoris&eacute;s.</p>' +
+  '<p>&#9679; Mot de passe actuel&nbsp;: <code style="background:#f4f4ef;padding:1px 6px;border-radius:4px">vizille2026</code> &mdash; modifiable via la variable <code style="background:#f4f4ef;padding:1px 6px;border-radius:4px">VEM_PASSWORD</code> dans le Manager Infomaniak.</p>' +
+  '<p>&#9679; Les donn&eacute;es (agenda, documents, statuts) sont sauvegard&eacute;es sur le serveur. En cas de red&eacute;marrage, elles sont restaur&eacute;es automatiquement.</p>' +
+  '<p>&#9679; URL&nbsp;: <a href="https://elus.vizilleenmouvement.fr" target="_blank">https://elus.vizilleenmouvement.fr</a></p>' +
+  '</div>' +
+  '</div>' +
+
+  // Variables env
+  '<div class="card">' +
+  '<h4 style="font-size:.9rem;margin-bottom:.75rem">&#9881; Configuration avanc&eacute;e</h4>' +
+  '<table style="width:100%;font-size:.76rem;border-collapse:collapse">' +
+  '<thead><tr style="background:#f0f0e8"><th style="padding:7px 10px;text-align:left;font-weight:500">Variable</th><th style="padding:7px 10px;text-align:left;font-weight:500">Usage</th><th style="padding:7px 10px;text-align:left;font-weight:500">Exemple</th></tr></thead>' +
+  '<tbody>' +
+  '<tr><td style="padding:6px 10px;border-top:.5px solid #f0f0e8"><code>VEM_PASSWORD</code></td><td style="padding:6px 10px;border-top:.5px solid #f0f0e8">Mot de passe accès</td><td style="padding:6px 10px;border-top:.5px solid #f0f0e8;color:#666">vizille2026</td></tr>' +
+  '<tr><td style="padding:6px 10px;border-top:.5px solid #f0f0e8"><code>ANTHROPIC_API_KEY</code></td><td style="padding:6px 10px;border-top:.5px solid #f0f0e8">Rédacteur Claude AI</td><td style="padding:6px 10px;border-top:.5px solid #f0f0e8;color:#666">sk-ant-...</td></tr>' +
+  '<tr><td style="padding:6px 10px;border-top:.5px solid #f0f0e8"><code>NOTIF_EMAILS</code></td><td style="padding:6px 10px;border-top:.5px solid #f0f0e8">Alertes email statuts</td><td style="padding:6px 10px;border-top:.5px solid #f0f0e8;color:#666">maire@vizille.fr,michel@...</td></tr>' +
+  '<tr><td style="padding:6px 10px;border-top:.5px solid #f0f0e8"><code>WP_USER / WP_PASS</code></td><td style="padding:6px 10px;border-top:.5px solid #f0f0e8">Publication WordPress</td><td style="padding:6px 10px;border-top:.5px solid #f0f0e8;color:#666">admin / app-password</td></tr>' +
+  '</tbody></table>' +
+  '<p style="font-size:.72rem;color:#aaa;margin-top:.75rem">&#8594; Manager Infomaniak &rarr; elus.vizilleenmouvement.fr &rarr; Avanc&eacute; &rarr; Variables d&rsquo;environnement</p>' +
+  '</div>' +
+
+  '</div>' +
+  '</div>' +
   // === TAB PROJETS ===
-  '<div class="tab active" id="tab-projets">' +
+  '<div class="tab" id="tab-projets">' +
   '<div class="metrics">' +
   '<div class="m"><div class="v">' + stats.total + '</div><div class="l">Projets</div></div>' +
   '<div class="m"><div class="v">' + Object.keys(stats.themes).length + '</div><div class="l">Th&egrave;mes</div></div>' +
@@ -441,6 +538,7 @@ function buildPage() {
   'function showTab(id,btn){' +
   'document.querySelectorAll(".tab").forEach(function(t){t.classList.remove("active");});' +
   'document.getElementById("tab-"+id).classList.add("active");' +
+  '// reset nav' + +
   'document.querySelectorAll("nav button").forEach(function(b){b.classList.remove("active");});' +
   'btn.classList.add("active");' +
   'if(id==="agenda")renderAgenda();' +
