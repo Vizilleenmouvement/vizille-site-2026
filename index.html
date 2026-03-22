@@ -93,9 +93,25 @@
     <!-- BANDEAU INFORMATIF — piloté par page-sections.json -->
     <div id="section-bandeau"></div>
 
-    <!-- BANNIÈRE DE BIENVENUE -->
-    <section class="vote-banner-section">
-        <img src="images/photo-equipe.jpg" alt="L'équipe Vizille en Mouvement" class="vote-banner-img">
+    <!-- BANNIÈRE CAROUSEL -->
+    <section class="vote-banner-section" style="padding:0;margin:0;">
+
+        <!-- Carousel photos -->
+        <div id="home-carousel" style="position:relative;width:100%;overflow:hidden;background:#111;line-height:0;">
+            <div id="hc-track" style="display:flex;transition:transform 0.6s cubic-bezier(.4,0,.2,1);will-change:transform;">
+                <!-- slides injectées par JS -->
+            </div>
+            <!-- Flèches -->
+            <button id="hc-prev" onclick="hcMove(-1)" aria-label="Photo précédente"
+                style="position:absolute;top:50%;left:0.8rem;transform:translateY(-50%);background:rgba(0,0,0,0.42);color:#fff;border:none;font-size:2.4rem;line-height:1;padding:0.05rem 0.55rem 0.15rem;border-radius:4px;cursor:pointer;z-index:3;transition:background .2s;display:none;">&#8249;</button>
+            <button id="hc-next" onclick="hcMove(1)" aria-label="Photo suivante"
+                style="position:absolute;top:50%;right:0.8rem;transform:translateY(-50%);background:rgba(0,0,0,0.42);color:#fff;border:none;font-size:2.4rem;line-height:1;padding:0.05rem 0.55rem 0.15rem;border-radius:4px;cursor:pointer;z-index:3;transition:background .2s;display:none;">&#8250;</button>
+            <!-- Points -->
+            <div id="hc-dots" style="position:absolute;bottom:0.75rem;left:50%;transform:translateX(-50%);display:flex;gap:0.45rem;z-index:3;"></div>
+            <!-- Compteur discret -->
+            <div id="hc-counter" style="position:absolute;top:0.6rem;right:0.9rem;background:rgba(0,0,0,0.38);color:#fff;font-size:0.72rem;padding:0.2rem 0.55rem;border-radius:20px;font-family:'Source Sans 3',sans-serif;letter-spacing:0.05em;z-index:3;display:none;"></div>
+        </div>
+
         <div class="vote-banner-post">
             <div class="vbp-titre-wrap">
                 <p class="vbp-titre">Vizille en Mouvement<span class="ligne2">Mandat 2026-2032 — Au service des Vizillois</span></p>
@@ -109,6 +125,106 @@
             <p class="vbp-appel">Le programme 2026-2032 est en marche.</p>
         </div>
     </section>
+
+    <script>
+    (function() {
+        var HC = {
+            idx: 0,
+            imgs: [],
+            timer: null,
+            DELAY: 4500,
+
+            init: function(imgs) {
+                if (!imgs || !imgs.length) return;
+                this.imgs = imgs;
+                var track = document.getElementById('hc-track');
+                var dots  = document.getElementById('hc-dots');
+                var H = imgs.length > 1;
+                imgs.forEach(function(src, i) {
+                    var slide = document.createElement('div');
+                    slide.style.cssText = 'flex:0 0 100%;width:100%;';
+                    var img = document.createElement('img');
+                    img.src = src;
+                    img.alt = '';
+                    img.style.cssText = 'width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block;max-height:520px;';
+                    slide.appendChild(img);
+                    track.appendChild(slide);
+                    if (H) {
+                        var dot = document.createElement('span');
+                        dot.style.cssText = 'width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,' + (i===0?'1':'0.45') + ');cursor:pointer;transition:background .3s;display:inline-block;';
+                        dot.onclick = (function(n){ return function(){ HC.go(n); }; })(i);
+                        dots.appendChild(dot);
+                    }
+                });
+                if (H) {
+                    document.getElementById('hc-prev').style.display = '';
+                    document.getElementById('hc-next').style.display = '';
+                    document.getElementById('hc-dots').style.display = '';
+                    document.getElementById('hc-counter').style.display = '';
+                    this.updateCounter();
+                    this.startAuto();
+                    var carousel = document.getElementById('home-carousel');
+                    carousel.addEventListener('mouseenter', function(){ HC.stopAuto(); });
+                    carousel.addEventListener('mouseleave', function(){ HC.startAuto(); });
+                    // swipe tactile
+                    var startX = null;
+                    carousel.addEventListener('touchstart', function(e){ startX = e.touches[0].clientX; }, {passive:true});
+                    carousel.addEventListener('touchend', function(e){
+                        if (startX === null) return;
+                        var dx = e.changedTouches[0].clientX - startX;
+                        if (Math.abs(dx) > 40) HC.move(dx < 0 ? 1 : -1);
+                        startX = null;
+                    });
+                }
+            },
+
+            go: function(n) {
+                this.idx = (n + this.imgs.length) % this.imgs.length;
+                document.getElementById('hc-track').style.transform = 'translateX(-' + (this.idx * 100) + '%)';
+                var dots = document.getElementById('hc-dots').children;
+                for (var i = 0; i < dots.length; i++)
+                    dots[i].style.background = 'rgba(255,255,255,' + (i === this.idx ? '1' : '0.45') + ')';
+                this.updateCounter();
+            },
+
+            move: function(dir) { this.go(this.idx + dir); },
+
+            updateCounter: function() {
+                document.getElementById('hc-counter').textContent = (this.idx + 1) + ' / ' + this.imgs.length;
+            },
+
+            startAuto: function() {
+                this.stopAuto();
+                this.timer = setInterval(function(){ HC.move(1); }, HC.DELAY);
+            },
+
+            stopAuto: function() {
+                if (this.timer) { clearInterval(this.timer); this.timer = null; }
+            }
+        };
+
+        window.hcMove = function(dir) { HC.stopAuto(); HC.move(dir); HC.startAuto(); };
+
+        // Charger les images depuis articles.json
+        fetch('articles.json')
+            .then(function(r){ return r.json(); })
+            .then(function(articles) {
+                // Photo d'équipe toujours en premier
+                var imgs = ['images/photo-equipe.jpg'];
+                // Ajouter les photos de l'article à la une
+                var sorted = articles.slice().sort(function(a,b){ return new Date(b.date)-new Date(a.date); });
+                var art = sorted.find(function(a){ return a.a_la_une; }) || sorted[0];
+                if (art) {
+                    var artImgs = art.images || (art.image ? [art.image] : []);
+                    artImgs.forEach(function(src){ if (imgs.indexOf(src) === -1) imgs.push(src); });
+                }
+                HC.init(imgs);
+            })
+            .catch(function() {
+                HC.init(['images/photo-equipe.jpg']);
+            });
+    })();
+    </script>
 
     <!-- BLOC À LA UNE — chargé dynamiquement depuis articles.json -->
     <section id="bloc-a-la-une" style="background:#f7f4ef;border-bottom:3px solid #c9a84c;padding:0;display:none;">
