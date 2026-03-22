@@ -486,744 +486,156 @@
             <p class="slogan">Ensemble pour une ville dynamique et solidaire</p>
         </div>
     </section>
-    <div class="stats-bar" id="hero-stats"></div>
-    
-    <div class="categories-container">
-        <div class="categories" id="categories"></div>
-    </div>
 
-    <div class="subthemes-bar" id="subthemes-bar"></div>
-    <div class="selected-theme-bar" id="selected-theme-bar"></div>
-    
-    <div class="theme-banner-container">
-        <div class="theme-banner" id="theme-banner"></div>
-    </div>
-    
-    <div class="subtabs-container">
-        <div class="subtabs" id="subtabs"></div>
-    </div>
-    
-    <div class="results-count" id="results-count"></div>
-    
-    <div class="cards-container">
-        <div class="cards-grid" id="cards-grid"></div>
-    </div>
-    
-    <!-- Modal détail -->
-    <div class="modal-overlay" id="modal-overlay">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 id="modal-title"></h2>
-                <button class="modal-close" onclick="closeModal()">✕</button>
+    <!-- STATS BAR -->
+    <div class="stats-bar" id="hero-stats"></div>
+
+    <!-- GRILLE THÈMES -->
+    <section class="themes-section" id="themes-grid-section">
+        <div class="themes-container">
+            <h2 class="section-title" style="text-align:center;margin-bottom:2rem;">Nos réalisations par thème</h2>
+            <div class="themes-grid" id="bilan-themes-grid"></div>
+        </div>
+    </section>
+
+    <!-- VUE DÉTAIL THÈME -->
+    <section id="bilan-detail" style="display:none;">
+        <div style="max-width:1400px;margin:0 auto;padding:0 1rem;">
+            <div style="display:flex;align-items:center;gap:1rem;margin:1.5rem 0 1rem;">
+                <button onclick="retourThemes()" style="background:#1a3a6b;color:#fff;border:none;padding:0.5rem 1.1rem;border-radius:4px;cursor:pointer;font-size:0.85rem;letter-spacing:0.04em;">← Retour</button>
+                <h2 id="bilan-detail-titre" style="font-family:'Playfair Display',serif;font-size:1.4rem;color:#1a3a6b;margin:0;"></h2>
+                <span id="bilan-detail-count" style="font-size:0.8rem;color:#888;"></span>
             </div>
-            <div class="modal-body" id="modal-body"></div>
+            <div class="cards-grid" id="bilan-cards-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.2rem;"></div>
+        </div>
+    </section>
+
+    <!-- MODAL DÉTAIL ACTION -->
+    <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;align-items:center;justify-content:center;padding:1rem;">
+        <div class="modal" style="background:#fff;border-radius:8px;max-width:640px;width:100%;max-height:90vh;overflow-y:auto;">
+            <div class="modal-header" style="background:#1a3a6b;color:#fff;padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;border-radius:8px 8px 0 0;">
+                <h2 id="modal-title" style="margin:0;font-size:1.1rem;"></h2>
+                <button onclick="closeModal()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;line-height:1;">✕</button>
+            </div>
+            <div class="modal-body" id="modal-body" style="padding:1.5rem;"></div>
         </div>
     </div>
 
 <script>
-// Configuration des 5 catégories principales
-const CATEGORIES = [
-    {
-        id: 'cadre-vie',
-        name: 'Cadre de vie',
-        shortName: 'Cadre de vie',
-        icon: '🌿',
-        themes: ['Environnement', 'Plan Climat', 'Urbanisme', 'Travaux', 'Mobilités']
-    },
-    {
-        id: 'social',
-        name: 'Social & Solidarité',
-        shortName: 'Social',
-        icon: '🤝',
-        themes: ['Solidarité', 'Enfance', 'Santé', 'Personnel']
-    },
-    {
-        id: 'culture',
-        name: 'Culture & Patrimoine',
-        shortName: 'Culture',
-        icon: '🎭',
-        themes: ['Culture', 'Patrimoine', 'Jumelages']
-    },
-    {
-        id: 'sport',
-        name: 'Sport',
-        shortName: 'Sport',
-        icon: '⚽',
-        themes: ['Sport']
-    },
-    {
-        id: 'municipal',
-        name: 'Vie municipale',
-        shortName: 'Municipal',
-        icon: '🏛️',
-        themes: ['Administration', 'Finance', 'Intercommunalité', 'Concertation Citoyenne']
-    },
-    {
-        id: 'securite',
-        name: 'Tranquillité & Économie',
-        shortName: 'Tranquillité',
-        icon: '🛡️',
-        themes: ['Tranquillité publique', 'Économie']
+(function() {
+    var allActions = [];
+    var allThemes  = [];
+
+    // Charger données
+    Promise.all([
+        fetch('actions.json').then(function(r){ return r.json(); }),
+        fetch('themes.json').then(function(r){ return r.json(); })
+    ]).then(function(data) {
+        allActions = data[0];
+        allThemes  = data[1];
+        renderStats();
+        renderThemesGrid();
+    });
+
+    function renderStats() {
+        var total = allActions.filter(function(a){ return !a.suspendu; }).length;
+        var themes = new Set(allActions.filter(function(a){ return !a.suspendu; }).map(function(a){ return a.theme; })).size;
+        document.getElementById('hero-stats').innerHTML =
+            stat(total, 'actions réalisées') +
+            stat(themes, 'thèmes') +
+            stat('6', 'années de mandat');
     }
-];
 
-// Configuration des icônes par thème
-const THEMES = [
-    { id: 'Plan Climat', label: '🌍 Plan Climat', icon: '🌍', special: true },
-    { id: 'Concertation Citoyenne', label: '🗳️ Concertation', icon: '🗳️', special: true },
-    { id: 'Administration', label: 'Administration', icon: '📋' },
-    { id: 'Culture', label: 'Culture', icon: '🎭' },
-    { id: 'Économie', label: 'Économie', icon: '💼' },
-    { id: 'Enfance', label: 'Enfance', icon: '👶' },
-    { id: 'Environnement', label: 'Environnement', icon: '🌿' },
-    { id: 'Finance', label: 'Finance', icon: '💰' },
-    { id: 'Intercommunalité', label: 'Intercommunalité', icon: '🏙️' },
-    { id: 'Jumelages', label: 'Jumelages', icon: '🌍' },
-    { id: 'Mobilités', label: 'Mobilités', icon: '🚲' },
-    { id: 'Patrimoine', label: 'Patrimoine', icon: '🏛️' },
-    { id: 'Personnel', label: 'Personnel', icon: '👥' },
-    { id: 'Santé', label: 'Santé', icon: '🏥' },
-    { id: 'Solidarité', label: 'Solidarité', icon: '🤝' },
-    { id: 'Sport', label: 'Sport', icon: '⚽' },
-    { id: 'Tranquillité publique', label: 'Tranquillité', icon: '🛡️' },
-    { id: 'Travaux', label: 'Travaux', icon: '🏗️' },
-    { id: 'Urbanisme', label: 'Urbanisme', icon: '🏘️' }
-];
+    function stat(v, l) {
+        return '<div class="stat"><div class="stat-val">'+v+'</div><div class="stat-label">'+l+'</div></div>';
+    }
 
-const SUBCATEGORIES = {
-    'Plan Climat': [
-        { id: 'Axe 1 - Adaptation', label: 'Axe 1 - Adaptation', icon: '🌳' },
-        { id: 'Axe 2 - Énergie & Air', label: 'Axe 2 - Énergie', icon: '⚡' },
-        { id: 'Axe 3 - Ressources', label: 'Axe 3 - Ressources', icon: '♻️' },
-        { id: 'Axe 4 - Mobilisation', label: 'Axe 4 - Mobilisation', icon: '👥' },
-        { id: 'Axe 5 - Exemplarité', label: 'Axe 5 - Exemplarité', icon: '⭐' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ],
-    'Concertation Citoyenne': [
-        { id: 'Veillées de Belledonne', label: 'Veillées Belledonne', icon: '🏔️' },
-        { id: 'Concertations publiques', label: 'Concertations', icon: '🗣️' },
-        { id: 'Écoles participatives', label: 'Écoles', icon: '🏫' },
-        { id: 'Enquêtes citoyennes', label: 'Enquêtes', icon: '📊' },
-        { id: 'Participation citoyenne', label: 'Participation', icon: '👥' },
-        { id: 'Événements', label: 'Événements', icon: '🎉' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ],
-    'Culture': [
-        { id: 'Festivals', label: 'Festivals & Fêtes', icon: '🎉' },
-        { id: 'Jeunesse & Scolaires', label: 'Jeunesse', icon: '👦' },
-        { id: 'Médiathèque', label: 'Médiathèque', icon: '📚' },
-        { id: 'Jeu de Paume', label: 'Jeu de Paume', icon: '🎭' },
-        { id: 'Associations & Partenariats', label: 'Associations', icon: '🤝' },
-        { id: 'Art & Création', label: 'Art', icon: '🎨' },
-        { id: 'Autres', label: 'Autres', icon: '📋' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ],
-    'Environnement': [
-        { id: 'Énergie & Climat', label: 'Énergie & Climat', icon: '⚡' },
-        { id: 'Déchets & Recyclage', label: 'Déchets', icon: '♻️' },
-        { id: 'Nature & Biodiversité', label: 'Nature', icon: '🌳' },
-        { id: 'Eau', label: 'Eau', icon: '💧' },
-        { id: 'Renouvelables', label: 'Renouvelables', icon: '☀️' },
-        { id: 'Autres', label: 'Autres', icon: '📋' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ],
-    'Travaux': [
-        { id: 'Voirie & Espaces publics', label: 'Voirie', icon: '🛤️' },
-        { id: 'Réseaux', label: 'Réseaux', icon: '🔧' },
-        { id: 'Équipements', label: 'Équipements', icon: '🏗️' },
-        { id: 'Bâtiments', label: 'Bâtiments', icon: '🏢' },
-        { id: 'Autres', label: 'Autres', icon: '📋' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ],
-    'Patrimoine': [
-        { id: 'Monuments', label: 'Monuments', icon: '⛪' },
-        { id: 'Circuits & Tourisme', label: 'Tourisme', icon: '🗺️' },
-        { id: 'Associations & Partenariats', label: 'Associations', icon: '🤝' },
-        { id: 'Études & Projets', label: 'Études', icon: '📐' },
-        { id: 'Autres', label: 'Autres', icon: '📋' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ],
-    'Solidarité': [
-        { id: 'Aide internationale', label: 'Aide internationale', icon: '🌍' },
-        { id: 'Soutien économique', label: 'Soutien éco', icon: '💼' },
-        { id: 'Actions sociales', label: 'Actions sociales', icon: '🏠' },
-        { id: 'Égalité & Inclusion', label: 'Égalité', icon: '⚖️' },
-        { id: 'Autres', label: 'Autres', icon: '📋' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ],
-    'Sport': [
-        { id: 'Équipements', label: 'Équipements', icon: '🏟️' },
-        { id: 'Événements', label: 'Événements', icon: '🏆' },
-        { id: 'Associations & Partenariats', label: 'Associations', icon: '🤝' },
-        { id: 'Mise à disposition', label: 'Mise à dispo', icon: '🔑' },
-        { id: 'Autres', label: 'Autres', icon: '📋' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ],
-    'Enfance': [
-        { id: 'Petite enfance', label: 'Petite enfance', icon: '👶' },
-        { id: 'Écoles', label: 'Écoles', icon: '🏫' },
-        { id: 'Activités', label: 'Activités', icon: '🎿' },
-        { id: 'Numérique & Jeunesse', label: 'Numérique', icon: '💻' },
-        { id: 'Autres', label: 'Autres', icon: '📋' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ],
-    'Mobilités': [
-        { id: 'Piétons & Vélos', label: 'Piétons & Vélos', icon: '🚲' },
-        { id: 'Circulation', label: 'Circulation', icon: '🚗' },
-        { id: 'Stationnement', label: 'Stationnement', icon: '🅿️' },
-        { id: 'Arrêtés & Courriers', label: 'Arrêtés', icon: '📄' },
-        { id: 'Autres', label: 'Autres', icon: '📋' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ],
-    'Urbanisme': [
-        { id: 'Grands projets', label: 'Grands projets', icon: '🏗️' },
-        { id: 'Permis & Déclarations', label: 'Permis', icon: '📝' },
-        { id: 'Études & Diagnostics', label: 'Études', icon: '📐' },
-        { id: 'Logement', label: 'Logement', icon: '🏠' },
-        { id: 'Autres', label: 'Autres', icon: '📋' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ],
-    'Tranquillité publique': [
-        { id: 'Vidéo-protection', label: 'Vidéo-protection', icon: '📹' },
-        { id: 'Prévention', label: 'Prévention', icon: '🛡️' },
-        { id: 'Police municipale', label: 'Police', icon: '👮' },
-        { id: 'Sécurité civile', label: 'Sécurité civile', icon: '🚒' },
-        { id: 'Autres', label: 'Autres', icon: '📋' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ],
-    'Finance': [
-        { id: 'Budget', label: 'Budget', icon: '📊' },
-        { id: 'Fiscalité', label: 'Fiscalité', icon: '💶' },
-        { id: 'Gestion', label: 'Gestion', icon: '📁' },
-        { id: 'Distinctions', label: 'Distinctions', icon: '🏆' },
-        { id: 'Autres', label: 'Autres', icon: '📋' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ],
-    'Santé': [
-        { id: 'Accès aux soins', label: 'Accès aux soins', icon: '🏥' },
-        { id: 'Services publics', label: 'Services publics', icon: '🏛️' },
-        { id: 'Prévention', label: 'Prévention', icon: '💊' },
-        { id: 'Autres', label: 'Autres', icon: '📋' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ],
-    'Intercommunalité': [
-        { id: 'Métropole', label: 'Métropole', icon: '🏙️' },
-        { id: 'Conventions', label: 'Conventions', icon: '📜' },
-        { id: 'Participations', label: 'Participations', icon: '🤝' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ],
-    'Administration': [
-        { id: 'Conseil municipal', label: 'Conseil', icon: '🏛️' },
-        { id: 'Gestion', label: 'Gestion', icon: '📁' },
-        { id: 'Marchés', label: 'Marchés', icon: '📋' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ],
-    'Jumelages': [
-        { id: 'Échanges', label: 'Échanges', icon: '🤝' },
-        { id: 'Villes partenaires', label: 'Villes', icon: '🏘️' },
-        { id: 'Gouvernance', label: 'Gouvernance', icon: '📋' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ],
-    'Personnel': [
-        { id: 'Postes', label: 'Postes', icon: '👤' },
-        { id: 'Gestion RH', label: 'Gestion RH', icon: '📋' },
-        { id: 'all', label: 'Tout voir', icon: '👁️' }
-    ]
-};
+    function renderThemesGrid() {
+        var grid = document.getElementById('bilan-themes-grid');
+        // Thèmes avec actions uniquement
+        var themesAvecActions = allThemes.filter(function(t) {
+            return allActions.filter(function(a){ return a.theme === t.theme && !a.suspendu; }).length > 0;
+        });
 
-let allData = [];
-let currentTheme = 'Environnement';
-let currentSubcat = 'all';
-let openDropdown = null;
+        grid.innerHTML = themesAvecActions.map(function(t) {
+            var count = allActions.filter(function(a){ return a.theme === t.theme && !a.suspendu; }).length;
+            return '<button class="theme-card animate-on-scroll" onclick="ouvrirTheme(\''+escHtml(t.theme)+'\')">'
+                + '<div class="theme-icon">'+t.icon+'</div>'
+                + '<h3>'+escHtml(t.theme)+'</h3>'
+                + '<p>'+count+' action'+(count>1?'s':'')+' réalisée'+(count>1?'s':'')+'</p>'
+                + '<span class="theme-hint">↗ Voir les actions</span>'
+                + '<span class="theme-arrow" aria-hidden="true">→</span>'
+                + '</button>';
+        }).join('');
+    }
 
-async function init() {
-    const r = await fetch('data.json');
-    allData = await r.json();
-    renderHeroStats();
-    renderCategories();
-    renderSelectedThemeBar();
-    renderSubthemesBar();
-    renderBanner();
-    renderSubtabs();
-    renderCards();
-}
+    window.ouvrirTheme = function(theme) {
+        var actions = allActions.filter(function(a){ return a.theme === theme && !a.suspendu; });
+        var themeData = allThemes.find(function(t){ return t.theme === theme; }) || {};
 
-// Compte le nombre d'actions pour une catégorie
-function getCategoryCount(category) {
-    return category.themes.reduce((sum, theme) => {
-        return sum + allData.filter(a => a.theme === theme && !a.suspendu).length;
-    }, 0);
-}
+        document.getElementById('bilan-detail-titre').textContent = (themeData.icon||'') + ' ' + theme;
+        document.getElementById('bilan-detail-count').textContent = actions.length + ' action'+(actions.length>1?'s':'');
 
-// Trouve la catégorie contenant le thème actuel
-function getCurrentCategory() {
-    return CATEGORIES.find(cat => cat.themes.includes(currentTheme));
-}
-
-// Rendu des catégories
-function renderCategories() {
-    const container = document.getElementById('categories');
-    const currentCat = getCurrentCategory();
-
-    container.innerHTML = CATEGORIES.map(cat => {
-        const count = getCategoryCount(cat);
-        const isActive = currentCat && currentCat.id === cat.id;
-
-        // Génère les items du dropdown
-        const themesHtml = cat.themes.map(theme => {
-            const themeCount = allData.filter(a => a.theme === theme && !a.suspendu).length;
-            if (themeCount === 0) return '';
-            const themeData = THEMES.find(t => t.id === theme) || {};
-            const isActiveTheme = theme === currentTheme;
-            return `<div class="dropdown-item ${isActiveTheme ? 'active-theme' : ''}" onclick="selectThemeFromDropdown('${theme}', event)">
-                <span class="theme-icon">${themeData.icon || '📌'}</span>
-                <span class="theme-name">${theme}</span>
-                <span class="theme-count">${themeCount}</span>
-            </div>`;
+        var grid = document.getElementById('bilan-cards-grid');
+        grid.innerHTML = actions.map(function(a) {
+            var img = a.image || (a.images && a.images[0]) || '';
+            var color = themeData.color || '#1a3a6b';
+            return '<div class="card" style="border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);cursor:pointer;background:#fff;transition:transform .2s,box-shadow .2s;" onclick="ouvrirModal('+a.id+')" onmouseenter="this.style.transform=\'translateY(-4px)\';this.style.boxShadow=\'0 8px 24px rgba(0,0,0,0.15)\'" onmouseleave="this.style.transform=\'\';this.style.boxShadow=\'0 2px 8px rgba(0,0,0,0.1)\'">'
+                + (img ? '<div style="height:160px;overflow:hidden;"><img src="'+img+'" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"></div>' : '')
+                + '<div style="padding:0.8rem 1rem 0.4rem;background:'+color+';color:#fff;">'
+                + '<h3 style="margin:0;font-size:0.9rem;font-weight:600;line-height:1.3;">'+escHtml(a.titre||a.action||'')+'</h3>'
+                + '</div>'
+                + '<div style="padding:0.7rem 1rem 1rem;">'
+                + (a.description ? '<p style="font-size:0.82rem;color:#555;margin:0 0 0.5rem;line-height:1.5;">'+escHtml(a.description.slice(0,120))+(a.description.length>120?'…':'')+'</p>' : '')
+                + (a.budget ? '<span style="font-size:0.75rem;color:#888;">💶 '+a.budget+'</span>' : '')
+                + '</div>'
+                + '</div>';
         }).join('');
 
-        return `<div class="category-btn ${isActive ? 'active' : ''}" data-category="${cat.id}" onclick="toggleDropdown('${cat.id}')">
-            <span class="cat-icon">${cat.icon}</span>
-            <span class="cat-name">${cat.shortName}</span>
-            <span class="badge">${count}</span>
-            <span class="cat-arrow">▼</span>
-            <div class="category-dropdown">${themesHtml}</div>
-        </div>`;
-    }).join('');
-}
-
-// Affiche la barre du thème sélectionné
-function renderSelectedThemeBar() {
-    const bar = document.getElementById('selected-theme-bar');
-    const themeInfo = THEMES.find(t => t.id === currentTheme);
-    const count = allData.filter(p => p.theme === currentTheme && !p.suspendu).length;
-    bar.innerHTML = `Thème actuel : <strong>${themeInfo ? themeInfo.icon : ''} ${currentTheme}</strong> (${count} actions)`;
-}
-
-
-// Barre de sous-themes horizontale
-function renderSubthemesBar() {
-    const bar = document.getElementById('subthemes-bar');
-    const cat = getCurrentCategory();
-    if (!cat || cat.themes.length <= 1) {
-        bar.classList.remove('visible');
-        bar.innerHTML = '';
-        return;
-    }
-    bar.innerHTML = cat.themes.map(theme => {
-        const count = allData.filter(a => a.theme === theme && !a.suspendu).length;
-        if (count === 0) return '';
-        const themeData = THEMES.find(t => t.id === theme) || {};
-        const isActive = theme === currentTheme;
-        return '<div class="subtheme-pill ' + (isActive ? 'active' : '') + '" onclick="selectTheme(\'' + theme + '\')">' +
-            '<span>' + (themeData.icon || '') + '</span>' +
-            '<span>' + theme + '</span>' +
-            '<span class="pill-count">' + count + '</span>' +
-        '</div>';
-    }).join('');
-    bar.classList.add('visible');
-}
-// Ouvre/ferme un dropdown et sélectionne le 1er thème
-function toggleDropdown(categoryId) {
-    const btn = document.querySelector(`[data-category="${categoryId}"]`);
-    if (!btn) return;
-
-    const cat = CATEGORIES.find(c => c.id === categoryId);
-    if (!cat) return;
-
-    // Ferme l'autre dropdown si ouvert
-    if (openDropdown && openDropdown !== btn) {
-        openDropdown.classList.remove('open');
-    }
-
-    // Si on clique sur un onglet différent du thème actuel, sélectionner le 1er sous-thème
-    const currentCat = getCurrentCategory();
-    const isNewCategory = !currentCat || currentCat.id !== categoryId;
-
-    if (isNewCategory) {
-        // Trouver le 1er thème non vide de cette catégorie
-        const firstTheme = cat.themes.find(theme => {
-            return allData.filter(a => a.theme === theme && !a.suspendu).length > 0;
-        });
-        if (firstTheme) {
-            selectTheme(firstTheme);
-        }
-        // Ouvrir le dropdown pour montrer les autres thèmes disponibles
-        btn.classList.add('open');
-        openDropdown = btn;
-    } else {
-        // Si on reclique sur la même catégorie, toggle le dropdown
-        btn.classList.toggle('open');
-        openDropdown = btn.classList.contains('open') ? btn : null;
-    }
-}
-
-// Sélectionne un thème depuis le dropdown
-function selectThemeFromDropdown(theme, event) {
-    event.stopPropagation();
-    if (openDropdown) {
-        openDropdown.classList.remove('open');
-        openDropdown = null;
-    }
-    selectTheme(theme);
-}
-
-// Ferme les dropdowns au clic extérieur
-document.addEventListener('click', (e) => {
-    if (openDropdown && !e.target.closest('.category-btn')) {
-        openDropdown.classList.remove('open');
-        openDropdown = null;
-    }
-});
-
-function renderHeroStats() {
-    const actionsCount = allData.filter(p => !p.suspendu && p.theme !== 'Plan Climat').length;
-    const themesCount = new Set(allData.filter(p => !p.suspendu && p.theme !== 'Plan Climat').map(p => p.theme)).size;
-    document.getElementById('hero-stats').innerHTML = `
-        <div class="stat"><div class="stat-val">${actionsCount}</div><div class="stat-label">actions réalisées</div></div>
-        <div class="stat"><div class="stat-val">${themesCount}</div><div class="stat-label">domaines d'action</div></div>
-        <div class="stat"><div class="stat-val">6</div><div class="stat-label">années de mandat</div></div>
-    `;
-}
-
-
-function renderSubtabs() {
-    const container = document.getElementById('subtabs');
-    const defaultSubcats = [{ id: 'all', label: 'Tout voir', icon: '👁️' }];
-    const subcats = SUBCATEGORIES[currentTheme] || defaultSubcats;
-    
-    container.innerHTML = subcats.map(s => {
-        let count;
-        if (s.id === 'all') {
-            count = allData.filter(p => p.theme === currentTheme && !p.suspendu).length;
-        } else {
-            count = allData.filter(p => p.theme === currentTheme && p.sous_categorie === s.id && !p.suspendu).length;
-        }
-        if (count === 0 && s.id !== 'all') return '';
-        return `<div class="subtab ${s.id === currentSubcat ? 'active' : ''}" onclick="selectSubcat('${s.id}')">
-            ${s.icon} ${s.label} <span class="count">(${count})</span>
-        </div>`;
-    }).join('');
-}
-
-function renderBanner() {
-    const bannerContainer = document.getElementById('theme-banner');
-    const themeInfo = THEMES.find(t => t.id === currentTheme);
-    const count = allData.filter(p => p.theme === currentTheme && !p.suspendu).length;
-    const isPlanClimat = currentTheme === 'Plan Climat';
-    const themeDescriptions = {
-        'Plan Climat': 'Engagements de la Charte PCAEM 2020-2026 signée avec Grenoble-Alpes Métropole',
-        'Culture': 'Festivals, spectacles, médiathèque et vie associative',
-        'Environnement': 'Transition écologique et cadre de vie',
-        'Travaux': 'Rénovations et aménagements',
-        'Patrimoine': 'Préservation et valorisation du patrimoine vizillois',
-        'Solidarité': 'Actions sociales et entraide',
-        'Sport': 'Équipements et associations sportives',
-        'Enfance': 'Petite enfance, écoles et jeunesse',
-        'Mobilités': 'Déplacements doux et transports',
-        'Urbanisme': 'Aménagement du territoire',
-        'Tranquillité publique': 'Tranquillité et prévention',
-        'Finance': 'Gestion budgétaire et finances',
-        'Santé': 'Accès aux soins et prévention',
-        'Intercommunalité': 'Coopération métropolitaine',
-        'Administration': 'Services municipaux',
-        'Jumelages': 'Échanges avec Mölln et Cavalese',
-        'Personnel': 'Équipe municipale'
+        document.getElementById('themes-grid-section').style.display = 'none';
+        document.getElementById('bilan-detail').style.display = '';
+        window.scrollTo(0, 0);
     };
-    const entityLabel = isPlanClimat ? 'objectif' : 'action';
-    bannerContainer.className = 'theme-banner' + (isPlanClimat ? ' plan-climat' : '');
-    bannerContainer.innerHTML = `
-        <div class="icon">${themeInfo.icon}</div>
-        <div class="text">
-            <h2>${themeInfo.id}</h2>
-            <p>${themeDescriptions[currentTheme] || ''} • ${count} ${entityLabel}${count > 1 ? 's' : ''}</p>
-        </div>
-    `;
-}
 
-// Utilitaire couleur pour les dégradés
-function adjustColor(hex, amount) {
-    hex = hex.replace('#', '');
-    const r = Math.max(0, Math.min(255, parseInt(hex.substring(0, 2), 16) + amount));
-    const g = Math.max(0, Math.min(255, parseInt(hex.substring(2, 4), 16) + amount));
-    const b = Math.max(0, Math.min(255, parseInt(hex.substring(4, 6), 16) + amount));
-    return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
-}
+    window.retourThemes = function() {
+        document.getElementById('bilan-detail').style.display = 'none';
+        document.getElementById('themes-grid-section').style.display = '';
+        window.scrollTo(0, 0);
+    };
 
-function buildBilanFlipCard(p, color) {
-    const darkerColor = adjustColor(color, -25);
-    const firstImg = p.images && p.images.length > 0 ? p.images[0] : null;
-    const coverImage = firstImg ? (typeof firstImg === 'string' ? firstImg : firstImg.url || '') : (p.image || '');
-    const hasImage = !!coverImage;
-    const desc = (p.resume || p.description || '');
-    const truncDesc = desc.length > 150 ? desc.substring(0, 150) + '...' : desc;
+    window.ouvrirModal = function(id) {
+        var a = allActions.find(function(x){ return x.id === id; });
+        if (!a) return;
+        document.getElementById('modal-title').textContent = a.titre || a.action || '';
+        var imgs = a.images || (a.image ? [a.image] : []);
+        var galerie = imgs.length ? '<div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem;">'
+            + imgs.map(function(src){ return '<img src="'+src+'" style="height:120px;object-fit:cover;border-radius:4px;flex:1;min-width:120px;">'; }).join('')
+            + '</div>' : '';
+        document.getElementById('modal-body').innerHTML =
+            galerie
+            + (a.description ? '<p style="line-height:1.7;color:#333;margin:0 0 1rem;">'+escHtml(a.description)+'</p>' : '')
+            + (a.budget ? '<p style="font-size:0.85rem;color:#666;margin:0;"><strong>Budget :</strong> '+escHtml(a.budget)+'</p>' : '')
+            + (a.annee ? '<p style="font-size:0.85rem;color:#666;margin:0.3rem 0 0;"><strong>Année :</strong> '+escHtml(String(a.annee))+'</p>' : '');
+        var overlay = document.getElementById('modal-overlay');
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    };
 
-    // Statut
-    const isObjectif = p.statut === 'Objectif';
-    const statutClass = isObjectif ? 'objectif' : (p.statut === 'Réalisé' ? 'realise' : 'encours');
+    window.closeModal = function() {
+        document.getElementById('modal-overlay').style.display = 'none';
+        document.body.style.overflow = '';
+    };
 
-    // VERSO : chiffres clés
-    let chiffresHtml = '';
-    if (p.chiffres && p.chiffres.length) {
-        chiffresHtml = `<div class="flip-back-section">
-            <h4 class="section-indicateurs">📊 Chiffres clés</h4>
-            <div class="flip-back-chiffres">${p.chiffres.slice(0, 3).map(c =>
-                `<div class="flip-back-chiffre"><div class="val">${c.valeur}</div><div class="label">${c.label}</div></div>`
-            ).join('')}</div>
-        </div>`;
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+
+    function escHtml(s) {
+        return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
-
-    // VERSO : chronologie
-    let chronoHtml = '';
-    if (p.chronologie && p.chronologie.length) {
-        chronoHtml = `<div class="flip-back-section">
-            <h4 class="section-chronologie">📅 Chronologie</h4>
-            <ul>${p.chronologie.slice(0, 4).map(c =>
-                `<li><strong>${c.date}</strong> — ${c.evenement}</li>`
-            ).join('')}</ul>
-        </div>`;
-    }
-
-    // VERSO : description si pas de chiffres ni chronologie
-    let descHtml = '';
-    if (!chiffresHtml && !chronoHtml && desc) {
-        descHtml = `<div class="flip-back-section">
-            <h4 class="section-contenu">📝 Détail</h4>
-            <p style="font-size:0.85rem;line-height:1.6;color:#555;">${desc.length > 300 ? desc.substring(0, 300) + '...' : desc}</p>
-        </div>`;
-    }
-
-    return `
-        <div class="flip-card ${hasImage ? 'has-image' : ''}" data-id="${p.id}">
-            <div class="flip-card-inner">
-                <!-- RECTO -->
-                <div class="flip-card-front">
-                    ${hasImage ? `<div class="flip-front-image-container"><img src="${coverImage}" alt="" loading="lazy"></div>` : ''}
-                    <div class="flip-front-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
-                        <h3 class="flip-front-title">${p.titre}</h3>
-                        <div class="flip-front-meta">
-                            ${p.statut ? `<span class="flip-front-statut ${statutClass}">${p.statut}</span>` : ''}
-                            ${p.annee ? `<span class="flip-front-annee">📅 ${p.annee}</span>` : ''}
-                        </div>
-                    </div>
-                    <div class="flip-front-body">
-                        <div class="flip-front-pourquoi">${truncDesc}</div>
-                        <div class="flip-front-hint">
-                            <span class="flip-icon">🔄</span> Retourner pour découvrir
-                        </div>
-                    </div>
-                </div>
-                <!-- VERSO -->
-                <div class="flip-card-back">
-                    <div class="flip-back-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
-                        <span class="flip-back-title">${p.titre.length > 40 ? p.titre.substring(0, 40) + '...' : p.titre}</span>
-                        <span class="flip-back-close">↩ Retour</span>
-                    </div>
-                    <div class="flip-back-body">
-                        ${chiffresHtml}
-                        ${chronoHtml}
-                        ${descHtml}
-                    </div>
-                    <div class="flip-back-footer" onclick="event.stopPropagation(); openModal(${p.id});">
-                        📋 Voir le détail complet
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-}
-
-function renderCards() {
-    const container = document.getElementById('cards-grid');
-    let filtered = allData.filter(p => p.theme === currentTheme && !p.suspendu);
-
-    if (currentSubcat !== 'all') {
-        filtered = filtered.filter(p => p.sous_categorie === currentSubcat);
-    }
-
-    filtered.sort((a, b) => (a.titre || '').localeCompare(b.titre || '', 'fr'));
-
-    const isPlanClimat = currentTheme === 'Plan Climat';
-    const entityLabel = isPlanClimat ? 'objectif' : 'action';
-    document.getElementById('results-count').textContent = `${filtered.length} ${entityLabel}${filtered.length > 1 ? 's' : ''} affiché${filtered.length > 1 ? 's' : ''}`;
-
-    // Couleurs alternées pour les flip cards
-    const themeInfo = THEMES.find(t => t.id === currentTheme);
-    const baseColor = (themeInfo && allData.find(p => p.theme === currentTheme)?.color) || '#1a3a5c';
-    const colors = ['#e74c3c', '#e67e22', '#27ae60', '#3498db', '#9b59b6', '#1abc9c', '#34495e', '#2c3e50'];
-
-    container.className = 'flip-grid';
-    container.innerHTML = filtered.map((p, i) => {
-        const color = p.color || colors[i % colors.length];
-        return buildBilanFlipCard(p, color);
-    }).join('');
-
-    // Attacher les événements flip
-    container.querySelectorAll('.flip-card').forEach(card => {
-        card.addEventListener('click', (e) => {
-            if (e.target.closest('.flip-back-footer')) return;
-            card.classList.toggle('flipped');
-        });
-    });
-}
-
-function selectTheme(theme) {
-    currentTheme = theme;
-    const subcats = SUBCATEGORIES[currentTheme];
-    if (subcats && subcats.length > 0) {
-        currentSubcat = subcats[0].id;
-    } else {
-        currentSubcat = 'all';
-    }
-    renderCategories();
-    renderSelectedThemeBar();
-    renderSubthemesBar();
-    renderBanner();
-    renderSubtabs();
-    renderCards();
-}
-
-function selectSubcat(subcat) {
-    currentSubcat = subcat;
-    renderSubtabs();
-    renderCards();
-}
-
-let currentModalImages = [];
-let currentModalImageIndex = 0;
-
-function openModal(id) {
-    const p = allData.find(x => x.id === id);
-    if (!p) return;
-
-    document.getElementById('modal-title').textContent = p.titre;
-
-    let html = '';
-
-    // Galerie d'images - normaliser les URLs (objet {url, legende} ou string)
-    const rawImages = p.images || (p.image ? [p.image] : []);
-    const images = rawImages.map(img => typeof img === 'string' ? img : (img.url || ''));
-    const legends = rawImages.map(img => typeof img === 'object' ? (img.legende || '') : '');
-    currentModalImages = images;
-    currentModalImageIndex = 0;
-
-    if (images.length > 0) {
-        if (images.length > 1) {
-            html += `
-                <div class="modal-gallery">
-                    <div class="modal-gallery-main">
-                        <img id="modal-gallery-img" src="${images[0]}" alt="${legends[0]}" loading="lazy">
-                        <button class="modal-gallery-nav prev" onclick="prevModalImage(event)">‹</button>
-                        <button class="modal-gallery-nav next" onclick="nextModalImage(event)">›</button>
-                        <span class="modal-gallery-counter"><span id="modal-gallery-index">1</span>/${images.length}</span>
-                    </div>
-                    <div class="modal-gallery-thumbs">
-                        ${images.map((img, i) => `
-                            <img src="${img}" class="modal-thumb ${i === 0 ? 'active' : ''}" onclick="goToModalImage(${i}, event)" alt="" loading="lazy">
-                        `).join('')}
-                    </div>
-                </div>`;
-        } else {
-            html += `<div class="modal-single-image"><img src="${images[0]}" alt="${legends[0] || ''}" loading="lazy"></div>`;
-        }
-    }
-
-    if (p.description) {
-        html += `<div class="modal-section"><p>${p.description}</p></div>`;
-    }
-    if (p.chiffres && p.chiffres.length) {
-        html += `<div class="modal-section"><h4>📊 Chiffres clés</h4><div class="modal-chiffres">`;
-        p.chiffres.forEach(c => {
-            html += `<div class="modal-chiffre"><div class="val">${c.valeur}</div><div class="label">${c.label}</div></div>`;
-        });
-        html += `</div></div>`;
-    }
-    if (p.details) {
-        html += `<div class="modal-section"><h4>📋 Détails</h4><p>${p.details}</p></div>`;
-    }
-    if (p.chronologie && p.chronologie.length) {
-        html += `<div class="modal-section"><h4>📆 Chronologie</h4>`;
-        // Trier par date et formater uniformément
-        const chronoTriee = [...p.chronologie].sort((a, b) => {
-            const parseDate = (d) => {
-                if (!d) return new Date(0);
-                // Format YYYY-MM-DD
-                if (/^\d{4}-\d{2}-\d{2}$/.test(d)) return new Date(d);
-                // Format DD/MM/YYYY
-                if (/^\d{2}\/\d{2}\/\d{4}$/.test(d)) {
-                    const [j,m,a] = d.split('/');
-                    return new Date(`${a}-${m}-${j}`);
-                }
-                // Format YYYY seul
-                if (/^\d{4}$/.test(d)) return new Date(`${d}-01-01`);
-                return new Date(0);
-            };
-            return parseDate(a.date) - parseDate(b.date);
-        });
-        chronoTriee.slice(0, 6).forEach(c => {
-            // Formater la date en DD/MM/YYYY
-            let dateAffichee = c.date;
-            if (/^\d{4}-\d{2}-\d{2}$/.test(c.date)) {
-                const [a,m,j] = c.date.split('-');
-                dateAffichee = `${j}/${m}/${a}`;
-            } else if (/^\d{4}$/.test(c.date)) {
-                dateAffichee = c.date; // Garder l'année seule
-            }
-            html += `<div class="chrono-item"><span class="chrono-date">${dateAffichee}</span> ${c.evenement}</div>`;
-        });
-        html += `</div>`;
-    }
-    if (p.lien_source && p.lien_source.length) {
-        html += `<div class="modal-section"><h4>🔗 Sources</h4>`;
-        p.lien_source.forEach(s => {
-            html += `<a href="${s.url}" target="_blank" rel="noopener" class="source-btn">${s.label}</a>`;
-        });
-        html += `</div>`;
-    }
-    
-    document.getElementById('modal-body').innerHTML = html;
-    document.getElementById('modal-overlay').classList.add('active');
-}
-
-function closeModal() {
-    document.getElementById('modal-overlay').classList.remove('active');
-}
-
-function goToModalImage(index, event) {
-    if (event) event.stopPropagation();
-    if (index < 0 || index >= currentModalImages.length) return;
-    currentModalImageIndex = index;
-    document.getElementById('modal-gallery-img').src = currentModalImages[index];
-    document.getElementById('modal-gallery-index').textContent = index + 1;
-    document.querySelectorAll('.modal-thumb').forEach((t, i) => {
-        t.classList.toggle('active', i === index);
-    });
-}
-
-function prevModalImage(event) {
-    if (event) event.stopPropagation();
-    const newIndex = currentModalImageIndex === 0 ? currentModalImages.length - 1 : currentModalImageIndex - 1;
-    goToModalImage(newIndex);
-}
-
-function nextModalImage(event) {
-    if (event) event.stopPropagation();
-    const newIndex = currentModalImageIndex === currentModalImages.length - 1 ? 0 : currentModalImageIndex + 1;
-    goToModalImage(newIndex);
-}
-
-document.getElementById('modal-overlay').addEventListener('click', e => {
-    if (e.target.id === 'modal-overlay') closeModal();
-});
-
-document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeModal();
-});
-
-init();
+})();
 </script>
 
     <footer>
+
         <div class="footer-grid">
             <div class="footer-brand">
                 <img src="images/logo.png" alt="" role="presentation" style="height: 40px; filter: brightness(0) invert(1);" loading="lazy">
