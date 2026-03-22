@@ -90,9 +90,8 @@
     <a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
     <!-- BANDEAU INFORMATIF -->
-    <div style="background:#1a3a6b;color:#fff;text-align:center;padding:0.55rem 1rem;font-size:0.82rem;letter-spacing:0.03em;">
-        🏛️ <strong>Premier conseil municipal</strong> — Dimanche 22 mars 2026 à 10h00 &nbsp;·&nbsp; Installation, élection du Maire et des adjoints
-    </div>
+    <!-- BANDEAU INFORMATIF — piloté par page-sections.json -->
+    <div id="section-bandeau"></div>
 
     <!-- BANNIÈRE DE BIENVENUE -->
     <section class="vote-banner-section">
@@ -110,6 +109,47 @@
             <p class="vbp-appel">Le programme 2026-2032 est en marche.</p>
         </div>
     </section>
+
+    <!-- BLOC À LA UNE — chargé dynamiquement depuis articles.json -->
+    <section id="bloc-a-la-une" style="background:#f7f4ef;border-bottom:3px solid #c9a84c;padding:0;display:none;">
+        <div id="alaune-inner" style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;">
+            <!-- rempli par JS -->
+        </div>
+    </section>
+    <style>
+    @media(max-width:700px){
+        #alaune-inner { grid-template-columns:1fr !important; }
+        #alaune-img-wrap { max-height:220px !important; }
+    }
+    </style>
+    <script>
+    (function() {
+        fetch('articles.json')
+            .then(r => r.json())
+            .then(function(articles) {
+                var sorted = articles.slice().sort(function(a,b){ return new Date(b.date) - new Date(a.date); });
+                var art = sorted.find(function(a){ return a.a_la_une; }) || sorted[0];
+                if (!art) return;
+                var img = art.image || (art.images && art.images[0]) || '';
+                var d = art.date ? new Date(art.date) : null;
+                var dateStr = d ? d.toLocaleDateString('fr-FR', {day:'numeric', month:'long', year:'numeric'}) : '';
+                var cat = art.categorie ? ' \u00b7 ' + art.categorie : '';
+                document.getElementById('alaune-inner').innerHTML =
+                    '<div id="alaune-img-wrap" style="overflow:hidden;max-height:360px;">'
+                    + (img ? '<img src="'+img+'" alt="'+art.titre.replace(/"/g,'&quot;')+'" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;">' : '')
+                    + '</div>'
+                    + '<div style="padding:2rem 2.5rem;display:flex;flex-direction:column;justify-content:center;">'
+                    + '<p style="font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:#c9a84c;font-weight:700;margin:0 0 0.5rem;">'+dateStr+cat+'</p>'
+                    + '<h2 style="font-family:\'Playfair Display\',serif;font-size:clamp(1.1rem,2.5vw,1.6rem);font-weight:600;color:#1a3a6b;margin:0 0 0.8rem;line-height:1.3;">'+art.titre+'</h2>'
+                    + '<p style="font-size:0.88rem;color:#555;line-height:1.75;margin:0 0 1.2rem;">'+(art.extrait||'')+'</p>'
+                    + '<div style="display:flex;flex-wrap:wrap;gap:0.8rem;align-items:center;">'
+                    + '<a href="blog.html" style="display:inline-block;background:#1a3a6b;color:#fff;padding:0.6rem 1.3rem;border-radius:3px;text-decoration:none;font-size:0.8rem;letter-spacing:0.04em;">\ud83d\udcf0 Lire l\'article complet \u2192</a>'
+                    + '</div>'
+                    + '</div>';
+                document.getElementById('bloc-a-la-une').style.display = '';
+            });
+    })();
+    </script>
 
     <header class="header">
         <div class="header-top"><p>Vizille en Mouvement - Mandat 2026-2032</p></div>
@@ -162,10 +202,9 @@
         </div>
     </section>
 
-
     <!-- RÉSULTATS ÉLECTIONS -->
 
-    <section style="background:#f7f9fc;padding:2rem 1.5rem;">
+    <section style="background:#f7f9fc;padding:2rem 1.5rem;" id="section-resultats">
         <div style="max-width:860px;margin:0 auto;">
 
         <div style="overflow-x:auto;">
@@ -358,7 +397,7 @@
     </script>
 
     <!-- SECTION ACTUALITÉS DYNAMIQUES -->
-    <section class="actualites-section" id="main-content">
+    <section class="actualites-section" id="section-actualites">
         <div class="actualites-container">
             <h2 class="section-title animate-on-scroll">
                 <span>Dernières actualités</span>
@@ -375,7 +414,7 @@
     </section>
 
     <!-- SECTION FACEBOOK -->
-    <section class="facebook-section">
+    <section class="facebook-section" id="section-facebook">
         <div class="facebook-container">
             <h2 class="section-title animate-on-scroll">
                 <span class="facebook-icon">📘</span>
@@ -408,7 +447,7 @@
     </section>
 
     <!-- SECTION GALERIE PHOTOS -->
-    <section class="galerie-section">
+    <section class="galerie-section" id="section-galerie">
         <div class="galerie-container">
             <h2 class="section-title animate-on-scroll">
                 <span>En images</span>
@@ -421,7 +460,7 @@
     </section>
 
     <!-- SECTION ÉQUIPE (aperçu) -->
-    <section class="equipe-preview-section">
+    <section class="equipe-preview-section" id="section-equipe-preview">
         <div class="equipe-preview-container">
             <h2 class="section-title animate-on-scroll">Une équipe engagée</h2>
             <p class="section-subtitle animate-on-scroll">Des Vizillois au service de leur ville</p>
@@ -433,7 +472,7 @@
     </section>
 
     <!-- SECTION REJOIGNEZ-NOUS -->
-    <section class="rejoindre-section">
+    <section class="rejoindre-section" id="section-rejoindre">
         <div class="rejoindre-container">
             <div class="rejoindre-content animate-on-scroll">
                 <h2>Rejoignez le mouvement !</h2>
@@ -505,6 +544,7 @@
         </div>
     </footer>
 
+    <script src="js/page-sections.js"></script>
     <script src="js/site-features.js" defer></script>
     <script src="js/news-banner.js" defer></script>
     <script src="js/home-dynamic.js?v=5" defer></script>
