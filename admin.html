@@ -1172,6 +1172,7 @@
     <!-- NAVIGATION -->
     <nav class="nav-tabs">
         <button class="nav-tab active" data-tab="accueil">🏠 Accueil</button>
+        <button class="nav-tab" data-tab="pages">🏗️ Pages</button>
         <button class="nav-tab" data-tab="projets">🚀 Projets</button>
         <button class="nav-tab" data-tab="themes">🎨 Thèmes</button>
         <button class="nav-tab" data-tab="actions">📊 Actions</button>
@@ -1324,6 +1325,116 @@
         </section>
 
         <!-- TAB: PROJETS -->
+        <section class="tab-content" id="tab-pages">
+            <div class="section-header">
+                <h2>🏗️ Gestionnaire de pages</h2>
+                <p class="section-desc">Modifiez les sections de la page d'accueil sans toucher au code.</p>
+            </div>
+
+            <!-- BANDEAU -->
+            <div class="admin-card" style="margin-bottom:1.5rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+                    <h3 style="margin:0;color:var(--bleu);">📢 Bandeau informatif</h3>
+                    <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;">
+                        <input type="checkbox" id="pages-bandeau-visible" style="width:16px;height:16px;">
+                        <span style="font-size:0.85rem;">Visible</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Texte (HTML autorisé)</label>
+                    <input type="text" id="pages-bandeau-texte" class="form-input" placeholder="Texte du bandeau...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Lien (optionnel)</label>
+                    <input type="text" id="pages-bandeau-lien" class="form-input" placeholder="blog.html">
+                </div>
+            </div>
+
+            <!-- BLOC ÉVÉNEMENT -->
+            <div class="admin-card" style="margin-bottom:1.5rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+                    <h3 style="margin:0;color:var(--bleu);">📸 Bloc événement</h3>
+                    <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;">
+                        <input type="checkbox" id="pages-evt-visible" style="width:16px;height:16px;">
+                        <span style="font-size:0.85rem;">Visible</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Surtitre</label>
+                    <input type="text" id="pages-evt-surtitre" class="form-input" placeholder="22 mars 2026 · Conseil municipal">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Titre</label>
+                    <input type="text" id="pages-evt-titre" class="form-input" placeholder="Titre de l'événement">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Texte</label>
+                    <textarea id="pages-evt-texte" class="form-input" rows="3" placeholder="Description..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Détail (ligne supplémentaire)</label>
+                    <input type="text" id="pages-evt-detail" class="form-input" placeholder="Adjoints : ...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Photo (chemin)</label>
+                    <input type="text" id="pages-evt-photo" class="form-input" placeholder="images/conseil-2026/conseil-groupe-adjoints.jpg">
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Lien principal</label>
+                        <input type="text" id="pages-evt-lien1" class="form-input" placeholder="blog.html">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Texte lien principal</label>
+                        <input type="text" id="pages-evt-texte1" class="form-input" placeholder="Lire le compte rendu →">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Lien secondaire</label>
+                        <input type="text" id="pages-evt-lien2" class="form-input" placeholder="equipe.html">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Texte lien secondaire</label>
+                        <input type="text" id="pages-evt-texte2" class="form-input" placeholder="Découvrir l'équipe →">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTIONS VISIBILITÉ -->
+            <div class="admin-card" style="margin-bottom:1.5rem;">
+                <h3 style="margin:0 0 1rem;color:var(--bleu);">👁️ Visibilité des sections</h3>
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;" id="pages-sections-toggles">
+                </div>
+            </div>
+
+            <button class="btn-primary" id="pages-save-btn" style="min-width:200px;">💾 Enregistrer et publier</button>
+            <div id="pages-save-msg" style="display:none;margin-top:0.75rem;padding:0.6rem 1rem;border-radius:4px;font-size:0.85rem;"></div>
+
+            <!-- PRÉVISUALISATION LIVE -->
+            <div class="admin-card" style="margin-top:2rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+                    <h3 style="margin:0;color:var(--bleu);">👁️ Prévisualisation de la page d'accueil</h3>
+                    <div style="display:flex;gap:0.5rem;">
+                        <button class="btn" onclick="document.getElementById('preview-iframe').src = document.getElementById('preview-iframe').src" style="font-size:0.8rem;padding:0.4rem 0.8rem;">🔄 Actualiser</button>
+                        <select id="preview-page-select" onchange="document.getElementById('preview-iframe').src=this.value" style="font-size:0.8rem;padding:0.4rem 0.6rem;border:1px solid #ddd;border-radius:4px;">
+                            <option value="http://localhost:3000/">🏠 Accueil</option>
+                            <option value="http://localhost:3000/equipe.html">👥 Équipe</option>
+                            <option value="http://localhost:3000/projet.html">🚀 Projets</option>
+                            <option value="http://localhost:3000/blog.html">📰 Actualités</option>
+                            <option value="http://localhost:3000/bilan.html">📊 Bilan</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="border:2px solid #e0e0e0;border-radius:6px;overflow:hidden;position:relative;">
+                    <div style="background:#f5f5f5;padding:0.4rem 0.8rem;font-size:0.7rem;color:#888;display:flex;align-items:center;gap:0.5rem;border-bottom:1px solid #e0e0e0;">
+                        <span style="display:flex;gap:4px;"><span style="width:10px;height:10px;border-radius:50%;background:#ff5f57;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#febc2e;display:inline-block;"></span><span style="width:10px;height:10px;border-radius:50%;background:#28c840;display:inline-block;"></span></span>
+                        <span id="preview-url-display" style="background:#fff;padding:0.15rem 0.6rem;border-radius:3px;flex:1;font-family:monospace;">localhost:3000</span>
+                    </div>
+                    <iframe id="preview-iframe" src="http://localhost:3000/" style="width:100%;height:600px;border:none;display:block;" loading="lazy"></iframe>
+                </div>
+                <p style="font-size:0.75rem;color:#aaa;margin-top:0.5rem;">Cliquez sur 💾 Enregistrer puis 🔄 Actualiser pour voir vos changements.</p>
+            </div>
+        </section>
+
         <section class="tab-content" id="tab-projets">
             <div class="card">
                 <div class="card-header">
@@ -6192,6 +6303,13 @@
                             <option value="true" ${a.priorite ? 'selected' : ''}>⭐ Prioritaire — mis en avant</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;">
+                            <input type="checkbox" id="edit-a-la-une" ${a.a_la_une ? 'checked' : ''} style="width:18px;height:18px;accent-color:var(--bleu);">
+                            <span>🏠 À la une — bloc affiché sur la page d'accueil après le hero</span>
+                        </label>
+                        <p style="font-size:0.78rem;color:#888;margin-top:0.25rem;margin-left:1.6rem;">Un seul article à la fois. Cocher ici décoche automatiquement les autres.</p>
+                    </div>
                 </div>
 
                 <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
@@ -6456,6 +6574,7 @@
             const contenu = document.getElementById('edit-contenu').value.trim();
             const aPreciser = document.getElementById('edit-a-preciser').value === 'true';
             const priorite = document.getElementById('edit-priorite').value === 'true';
+            const aLaUne = document.getElementById('edit-a-la-une')?.checked || false;
             const documentId = document.getElementById('edit-document').value;
 
             if (!titre) {
@@ -6491,6 +6610,13 @@
             if (auteur) articleData.auteur = auteur;
             if (aPreciser) articleData.a_preciser = true;
             articleData.priorite = priorite;
+            // À la une : un seul à la fois
+            if (aLaUne) {
+                articlesData.forEach(a => { delete a.a_la_une; });
+                articleData.a_la_une = true;
+            } else {
+                delete articleData.a_la_une;
+            }
             if (documentId) articleData.document_id = parseInt(documentId);
 
             // Ajouter la date de modification (pour le mettre en tête de gondole)

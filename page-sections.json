@@ -1,0 +1,31 @@
+{
+  "bandeau": {
+    "visible": true,
+    "texte": "🏛️ <strong>Catherine Troton réélue Maire de Vizille</strong> &nbsp;·&nbsp; Conseil municipal installé le 22 mars 2026 &nbsp;·&nbsp; 8 adjoints désignés",
+    "lien": "",
+    "background": "#1a3a6b",
+    "couleur": "#ffffff"
+  },
+  "evenement": {
+    "visible": true,
+    "surtitre": "22 mars 2026 · Conseil municipal",
+    "titre": "Catherine Troton réélue Maire — Les 8 adjoints désignés",
+    "texte": "Devant un public nombreux et avec une émotion sincère et palpable, le premier conseil municipal du mandat 2026-2032 s'est réuni ce dimanche matin. Catherine Troton a été réélue Maire à l'unanimité et 8 adjoints ont été désignés.",
+    "detail": "Adjoints : B. Ughetto-Monfrin · S. Berriche · G. Faure · A. Hermitte · G. Forestier · M.-C. Argoud · L. Lamarca · M. Pasquiou",
+    "photo": "images/conseil-2026/conseil-groupe-adjoints.jpg",
+    "lien_principal": "blog.html",
+    "texte_lien_principal": "📰 Lire le compte rendu complet →",
+    "lien_secondaire": "equipe.html",
+    "texte_lien_secondaire": "👥 Découvrir le conseil municipal →"
+  },
+  "sections": {
+    "vote_banner": { "visible": true, "label": "Bannière photo équipe" },
+    "resultats": { "visible": true, "label": "Tableau résultats élections" },
+    "themes": { "visible": true, "label": "Nos priorités (thèmes)" },
+    "actualites": { "visible": true, "label": "Dernières actualités" },
+    "facebook": { "visible": true, "label": "Widget Facebook" },
+    "galerie": { "visible": true, "label": "Galerie photos" },
+    "equipe_preview": { "visible": true, "label": "Aperçu équipe" },
+    "rejoindre": { "visible": true, "label": "Rejoignez le mouvement" }
+  }
+}
