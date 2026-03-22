@@ -13,8 +13,9 @@ git commit -m "$MSG" 2>/dev/null || echo "  (rien à committer)"
 git pull --rebase --quiet
 git push
 
-echo "📘 Ping Facebook Sharing Debugger..."
-curl -s -o /dev/null -w "  Facebook : HTTP %{http_code}\n" \
-  "https://graph.facebook.com/?id=https%3A%2F%2Fvizilleenmouvement.fr&scrape=true"
+echo "📘 Ouverture du débogueur Facebook..."
+URL="${2:-https://vizilleenmouvement.fr}"
+ENCODED=$(python3 -c "import urllib.parse; print(urllib.parse.quote('$URL', safe=''))")
+open "https://developers.facebook.com/tools/debug/?q=${ENCODED}"
 
 echo "✅ Déployé : $MSG"
