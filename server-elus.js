@@ -10,14 +10,14 @@ const DIR = __dirname;
 function load(f, d) { try { return JSON.parse(fs.readFileSync(path.join(DIR,f),'utf8')); } catch(e) { return d; } }
 function save(f, d) { fs.writeFileSync(path.join(DIR,f), JSON.stringify(d,null,2), 'utf8'); }
 
-let projets  = load('projets.json', []);
-let agenda   = load('agenda.json', []);
-let documents= load('documents.json', []);
-let statuts  = load('statuts.json', {});
-let notifs   = load('notifs.json', []);
+let projets   = load('projets.json', []);
+let agenda    = load('agenda.json', []);
+let documents = load('documents.json', []);
+let statuts   = load('statuts.json', {});
+let notifs    = load('notifs.json', []);
 let notifEmails = (process.env.NOTIF_EMAILS||'').split(',').filter(Boolean);
 
-console.log('projets.json charge: '+projets.length+' projets');
+console.log('VeM Dashboard - projets: '+projets.length);
 
 function auth(req) {
   const a=req.headers['authorization']||'';
@@ -26,755 +26,571 @@ function auth(req) {
 }
 function deny(res) {
   res.writeHead(401,{'WWW-Authenticate':'Basic realm="VeM Elus"','Content-Type':'text/plain;charset=utf-8'});
-  res.end('Espace reserve aux elus');
+  res.end('Espace reserve aux elus de Vizille en Mouvement');
 }
 function json(res,d,c){ res.writeHead(c||200,{'Content-Type':'application/json;charset=utf-8','Access-Control-Allow-Origin':'*'}); res.end(JSON.stringify(d)); }
 function body(req,cb){ var b=''; req.on('data',function(d){b+=d;if(b.length>2e6)req.destroy();}); req.on('end',function(){try{cb(null,JSON.parse(b));}catch(e){cb(e);}}); }
 function nextId(a){ return a.length?Math.max.apply(null,a.map(function(i){return i.id||0;}))+1:1; }
 
 function buildPage() {
-  var today = new Date().toLocaleDateString('fr-FR');
+  const today = new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const P_JSON = '[{"id": 10, "titre": "Rendre la Maison de Santé pleinement opérationnelle", "theme": "Santé", "statut": "Programmé", "annee": 2027, "budget": 0, "resume": "Accès aux soins", "description": "", "importance": 2, "chiffres": [], "tags": ["Seniors"]}, {"id": 34, "titre": "Le maire siègera personnellement aux conseils métropolitains", "theme": "Métropole", "statut": "Programmé", "annee": 2026, "budget": 0, "resume": "Présence métropolitaine", "description": "", "importance": 2, "chiffres": []}, {"id": 101, "titre": "Objectif 1 - Mobilités structurantes", "theme": "Mobilités", "statut": "Étude", "annee": null, "budget": 0, "resume": "Explorer toutes les solutions - long terme", "description": "Améliorer les liaisons vers l\'agglomération et la vallée : bus, navettes, covoiturage, parkings relais, câble, rail.", "importance": 3, "chiffres": [], "tags": ["Connexion", "Alternatives", "Long terme", "Seniors"], "slogan": "Relier • Diversifier • Anticiper", "enjeux": ["Réduire la dépendance à la voiture individuelle", "Offrir des alternatives crédibles aux heures de pointe", "Anticiper les besoins futurs du bassin de vie"], "axes_action": ["Navettes adaptées aux horaires pendulaires", "Covoiturage et parkings relais identifiés", "Scénarios transport par câble (long terme)", "Réflexion sur la solution ferroviaire"], "indicateurs": ["Études engagées", "Partenaires mobilisés", "Usage des alternatives"], "vision": "Aucune hypothèse n\'est écartée pour connecter Vizille au territoire.", "numero": "1/7", "image": "images/objectifs/objectif_1.png"}, {"id": 102, "titre": "Objectif 2 - Renforcer les mobilités cyclables", "theme": "Mobilités", "statut": "Programmé", "annee": 2027, "budget": 0, "resume": "Vizille, cœur du maillage cycliste", "description": "Liaisons vers Grenoble, Oisans, Uriage et Matheysine. Réseau continu, lisible et sécurisé.", "importance": 3, "chiffres": [], "tags": ["Tranquillité", "Sécurité", "Mobilités"], "slogan": "Relier • Sécuriser • Rendre lisible", "enjeux": ["Sécuriser les trajets du quotidien", "Relier quartiers et équipements", "Favoriser une pratique familiale et intergénérationnelle"], "axes_action": ["Consolider l\'axe du Chemin des Murs", "Assurer la liaison centre ↔ Péage", "Traiter discontinuités et points de conflit", "Jalonnement cohérent • Cohabitation des usages"], "indicateurs": ["Continuités renforcées", "Points dangereux traités", "Retours d\'usagers"], "vision": "Un réseau cyclable continu, de quartier à quartier, de vallée à montagne.", "numero": "2/7", "image": "images/objectifs/objectif_2.png"}, {"id": 103, "titre": "Objectif 3 - Sécuriser les usagers vulnérables", "theme": "Mobilités", "statut": "Prioritaire", "annee": 2026, "budget": 0, "resume": "Priorité aux piétons, enfants, seniors, PMR", "description": "Traversées sûres, abords d\'écoles protégés, accessibilité renforcée pour tous.", "importance": 3, "chiffres": [], "tags": ["Sécurité", "Accessibilité", "Confort", "Seniors", "Jeunes"], "slogan": "Protéger • Faciliter • Rassurer", "enjeux": ["Réduire les situations à risque", "Améliorer l\'accessibilité et le confort de marche", "Renforcer le sentiment de sécurité"], "axes_action": ["Sécuriser les traversées piétonnes", "Protéger les abords d\'écoles", "Améliorer les cheminements accessibles", "Rendre les carrefours plus lisibles", "Apaiser les vitesses sur secteurs sensibles"], "indicateurs": ["Points sensibles traités", "Qualité des cheminements", "Retours usagers"], "vision": "Des déplacements sûrs et accessibles pour tous, à chaque âge de la vie.", "numero": "3/7", "image": "images/objectifs/objectif_3.png"}, {"id": 104, "titre": "Objectif 4 - Apaiser la circulation", "theme": "Mobilités", "statut": "Programmé", "annee": 2026, "budget": 0, "resume": "Protéger les quartiers habités", "description": "Réduire les nuisances du transit : bruit, vitesses excessives, à-coups de circulation.", "importance": 3, "chiffres": [], "tags": ["Tranquillité", "Cadre de vie", "Sécurité", "Seniors"], "slogan": "Ralentir • Protéger • Fluidifier", "enjeux": ["Réduire vitesses et nuisances sonores", "Limiter les reports en rues résidentielles", "Rendre la circulation plus prévisible"], "axes_action": ["Identifier les secteurs exposés au transit", "Mettre en œuvre des mesures progressives", "Assurer la cohérence avec le plan de circulation", "Suivre et ajuster selon les retours"], "indicateurs": ["Vitesses constatées", "Perception des nuisances", "Reports de trafic"], "vision": "Des quartiers protégés du transit, pour une vie quotidienne apaisée.", "numero": "4/7", "image": "images/objectifs/objectif_4.png"}, {"id": 105, "titre": "Objectif 5 - Organiser les flux", "theme": "Mobilités", "statut": "Étude", "annee": 2026, "budget": 0, "resume": "Un plan de circulation lisible", "description": "Clarifier les itinéraires, hiérarchiser les axes, réduire détours et conflits d\'usages.", "importance": 3, "chiffres": [], "tags": ["Lisibilité", "Hiérarchie", "Fluidité"], "slogan": "Clarifier • Hiérarchiser • Simplifier", "enjeux": ["Mieux se déplacer dans la commune", "Réduire le transit inutile en centre-ville", "Limiter les reports dans les quartiers"], "axes_action": ["Comptages aux points clés", "Hiérarchisation des axes (transit / desserte / apaisé)", "Clarification signalisation et carrefours", "Tester puis déployer progressivement"], "indicateurs": ["Répartition des flux", "Vitesses constatées", "Retours d\'usage"], "vision": "Un plan lisible pour des déplacements simples et cohérents.", "numero": "5/7", "image": "images/objectifs/objectif_5.png"}, {"id": 106, "titre": "Objectif 6 - Centre-ville et espaces partagés", "theme": "Mobilités", "statut": "Étude", "annee": 2027, "budget": 0, "resume": "Apaiser et dynamiser le cœur de ville", "description": "Cheminements piétons confortables, espaces partagés lisibles, connexion marché ↔ château.", "importance": 3, "chiffres": [], "tags": ["Convivialité", "Commerce", "Patrimoine", "Seniors"], "slogan": "Vivre • Partager • Relier", "enjeux": ["Améliorer la qualité de vie au centre-ville", "Renforcer l\'attractivité commerciale", "Réduire les conflits d\'usage"], "axes_action": ["Identifier les secteurs à requalifier", "Déployer des espaces partagés (20 km/h)", "Renforcer les continuités piétonnes", "Améliorer la liaison marché → château"], "indicateurs": ["Fréquentation", "Retours commerçants/habitants", "Qualité perçue"], "vision": "Un centre-ville apaisé, vivant et connecté à son patrimoine.", "numero": "6/7", "image": "images/objectifs/objectif_6.png"}, {"id": 107, "titre": "Objectif 7 - Feu de Jarrie (PPRT)", "theme": "Mobilités", "statut": "Prioritaire", "annee": 2026, "budget": 0, "resume": "Rétablir un fonctionnement adapté", "description": "Régulation conforme à la vocation du feu : déclenchée uniquement en cas de congestion avérée.", "importance": 3, "chiffres": [], "tags": ["Régulation", "Bouchons", "Fluidité"], "slogan": "Analyser • Adapter • Fluidifier", "enjeux": ["Réduire les temps de trajet quotidiens", "Éviter les bouchons récurrents aux heures de pointe", "Assurer une régulation dynamique et proportionnée"], "axes_action": ["Demander les données de fonctionnement à la DREAL", "Réviser le paramétrage du feu", "Porter le sujet avec les partenaires (Département, Métro)", "Mettre en cohérence avec les alternatives de mobilité"], "indicateurs": ["Temps de parcours", "Durée des phases", "Retours usagers"], "vision": "Transparence des données, régulation adaptée, bouchons réduits.", "numero": "7/8", "image": "images/objectifs/objectif_7.png"}, {"id": 201, "titre": "Objectif 1 - Présence sur le terrain", "theme": "Tranquillité publique", "statut": "Programmé", "annee": 2026, "budget": 0, "resume": "Renforcer la présence régulière aux bons moments", "description": "La présence visible des agents municipaux dans l\'espace public est un facteur essentiel de tranquillité. Elle rassure les habitants, dissuade les comportements inappropriés et permet une détection précoce des problèmes.", "importance": 3, "chiffres": [], "tags": ["Présence", "Proximité", "Prévention"], "slogan": "Être là • Au bon moment • Au bon endroit", "enjeux": ["Rassurer les habitants par une présence visible", "Dissuader les comportements inappropriés", "Détecter précocement les problèmes"], "axes_action": ["Créneaux fixes : sorties d\'école, fins de journée, secteurs sensibles", "Îlotage de proximité : commerces, équipements publics, espaces de vie", "Coordination avec les services municipaux", "Ajustement continu selon les retours terrain"], "indicateurs": ["Nombre de patrouilles par semaine", "Temps de réponse moyen", "Signalements traités"], "vision": "Une présence stratégique : être là où et quand c\'est utile.", "numero": "1/11", "image": "images/objectifs/tranquillite_1.png"}, {"id": 202, "titre": "Objectif 2 - Médiation & prévention", "theme": "Tranquillité publique", "statut": "Programmé", "annee": 2026, "budget": 0, "resume": "Désamorcer vite — élus et services mobilisés", "description": "Beaucoup de situations de tension naissent de malentendus ou de voisinages difficiles. La médiation est souvent plus efficace que la sanction : elle permet de restaurer le dialogue.", "importance": 3, "chiffres": [], "tags": ["Médiation", "Dialogue", "Prévention"], "slogan": "Écouter • Dialoguer • Résoudre", "enjeux": ["Traiter rapidement les tensions avant qu\'elles s\'enveniment", "Restaurer le dialogue entre les parties", "Trouver des solutions acceptables pour tous"], "axes_action": ["Élus référents et agents formés à la médiation", "Traitement prioritaire des situations répétées", "Prévention jeunesse sur créneaux sensibles", "Coordination avec bailleurs, écoles, associations"], "indicateurs": ["Conflits traités et apaisés", "Taux de récidive", "Retours des habitants"], "vision": "Une implication directe des élus dans la médiation et la prévention.", "numero": "2/11", "image": "images/objectifs/tranquillite_2.png"}, {"id": 203, "titre": "Objectif 3 - Bruit, incivilités, nuisances", "theme": "Tranquillité publique", "statut": "Programmé", "annee": 2026, "budget": 0, "resume": "Protéger le calme du quotidien", "description": "Le bruit est la première nuisance citée par les habitants. Notre approche : des règles connues, des contrôles ciblés, une réactivité quand ça déborde. La pédagogie d\'abord, la sanction si récidive.", "importance": 3, "chiffres": [], "tags": ["Bruit", "Nuisances", "Calme"], "slogan": "Prévenir • Contrôler • Sanctionner si récidive", "enjeux": ["Réduire les nuisances sonores au quotidien", "Faire respecter les règles de vie commune", "Agir rapidement sur les signalements"], "axes_action": ["Plan anti-bruit : deux-roues, fêtes, chantiers, établissements", "Charte chantiers : horaires, propreté, information riverains", "Lutte contre dépôts et dégradations", "Pédagogie et sanctions graduées"], "indicateurs": ["Plaintes liées au bruit", "Délai d\'intervention", "Actions correctives"], "vision": "Des règles connues, des contrôles ciblés, une réactivité sans faille.", "numero": "3/11", "image": "images/objectifs/tranquillite_3.png"}, {"id": 204, "titre": "Objectif 4 - Circulation, vitesse, rodéos", "theme": "Tranquillité publique", "statut": "Programmé", "annee": 2026, "budget": 0, "resume": "Apaiser sans bloquer les déplacements", "description": "Les comportements dangereux sur la route – vitesses excessives, rodéos, non-respect des priorités – sont une source majeure d\'inquiétude. L\'enjeu est d\'apaiser la circulation sans la bloquer.", "importance": 3, "chiffres": [], "tags": ["Vitesse", "Sécurité routière", "Rodéos"], "slogan": "Contrôler • Dissuader • Protéger", "enjeux": ["Protéger les usagers vulnérables", "Réduire le sentiment d\'insécurité routière", "Faire respecter les règles sans bloquer la circulation"], "axes_action": ["Contrôles vitesse avec cinémomètre portatif", "Actions anti-rodéos coordonnées avec gendarmerie", "Sécurisation des abords d\'écoles", "Mesures ciblées avec suivi d\'efficacité"], "indicateurs": ["Vitesse moyenne constatée", "Incidents signalés", "Ressenti aux abords des écoles"], "vision": "Faire respecter des règles qui permettent à chacun de circuler en sécurité.", "numero": "4/11", "image": "images/objectifs/tranquillite_4.png"}, {"id": 205, "titre": "Objectif 5 - Éclairage & aménagements", "theme": "Tranquillité publique", "statut": "Étude", "annee": 2027, "budget": 0, "resume": "Prévenir par le cadre de vie", "description": "L\'aménagement de l\'espace public influence directement le sentiment de sécurité. Un parking mal éclairé, un passage peu visible génèrent de l\'anxiété. La prévention par le cadre de vie est une approche durable.", "importance": 2, "chiffres": [], "tags": ["Éclairage", "Aménagement", "Prévention"], "slogan": "Éclairer • Dégager • Sécuriser", "enjeux": ["Réduire le sentiment d\'insécurité dans l\'espace public", "Supprimer les angles morts et zones anxiogènes", "Améliorer la lisibilité des cheminements"], "axes_action": ["Repérage des zones anxiogènes", "Corrections rapides : angles morts, visibilité, végétation", "Cheminements lisibles et continus", "Projets d\'éclairage adaptés secteur par secteur"], "indicateurs": ["Zones traitées", "Délai de traitement", "Ressenti sur les parcours"], "vision": "Un espace public où l\'on se sent en sécurité, de jour comme de nuit.", "numero": "5/11", "image": "images/objectifs/tranquillite_5.png"}, {"id": 206, "titre": "Objectif 6 - Vidéoprotection", "theme": "Tranquillité publique", "statut": "Programmé", "annee": 2026, "budget": 0, "resume": "Achever le maillage — transparence et efficacité", "description": "La vidéoprotection permet de dissuader certains comportements, de faciliter l\'identification des auteurs d\'infractions et de rassurer les habitants. L\'objectif est d\'achever le maillage prévu.", "importance": 2, "chiffres": [], "tags": ["Vidéoprotection", "Sécurité", "Transparence"], "slogan": "Couvrir • Exploiter • Respecter", "enjeux": ["Compléter la couverture des zones sensibles", "Garantir la qualité et l\'exploitation des images", "Respecter le cadre légal et informer les citoyens"], "axes_action": ["Achèvement du maillage : parkings, entrées/sorties, zones commerciales", "Maintenance et qualité d\'image", "Transparence réglementaire et affichage conforme", "Chaîne d\'action : signalement → visionnage → intervention"], "indicateurs": ["Incidents traités grâce à la vidéo", "Délai d\'exploitation", "Évolution des incivilités"], "vision": "Un outil efficace au service de la tranquillité, dans le respect du cadre légal.", "numero": "6/11", "image": "images/objectifs/tranquillite_6.png"}, {"id": 207, "titre": "Objectif 7 - Propreté & cadre de vie", "theme": "Tranquillité publique", "statut": "Programmé", "annee": 2026, "budget": 0, "resume": "Réactivité + prévention", "description": "La propreté de l\'espace public est une composante essentielle de la tranquillité. Une ville propre est une ville où l\'on se sent respecté. La propreté repose sur deux piliers : réactivité et prévention.", "importance": 2, "chiffres": [], "tags": ["Propreté", "Réactivité", "Cadre de vie"], "slogan": "Nettoyer vite • Éviter que ce soit sali", "enjeux": ["Maintenir un espace public propre et accueillant", "Réagir rapidement aux signalements", "Prévenir les comportements inciviques"], "axes_action": ["Équipe propreté réactive : tournées quotidiennes, intervention rapide", "Lutte contre les dépôts sauvages", "Déjections canines : pédagogie et distributeurs de sacs", "Équipements adaptés : corbeilles et cendriers"], "indicateurs": ["Délai d\'intervention", "Points critiques résolus", "Évolution des signalements"], "vision": "Une ville propre où les règles communes sont respectées.", "numero": "7/11", "image": "images/objectifs/tranquillite_7.png"}, {"id": 208, "titre": "Objectif 8 - Lien direct habitants", "theme": "Tranquillité publique", "statut": "Programmé", "annee": 2026, "budget": 0, "resume": "Référents de quartier + accès pour tous", "description": "Le lien avec les habitants est la clé d\'une action efficace. Ce sont eux qui vivent au quotidien dans les quartiers. Ce lien ne peut pas reposer uniquement sur le numérique.", "importance": 3, "chiffres": [], "tags": ["Proximité", "Référents", "Accessibilité"], "slogan": "Écouter • Relayer • Agir", "enjeux": ["Maintenir un lien direct avec les habitants", "Permettre à chacun de signaler facilement", "Ne laisser personne de côté (non-numérique)"], "axes_action": ["Référents de quartier : citoyens volontaires pour l\'écoute et le relais", "Moyens non numériques : fiches papier, téléphone", "Canal de signalement simple et unique", "Réunions de quartier ponctuelles et utiles"], "indicateurs": ["Signalements reçus et traités", "Retours des référents", "Participation aux réunions"], "vision": "Des relais humains identifiés dans chaque quartier.", "numero": "8/11", "image": "images/objectifs/tranquillite_8.png"}, {"id": 209, "titre": "Objectif 9 - Travailler ensemble", "theme": "Tranquillité publique", "statut": "Programmé", "annee": 2026, "budget": 0, "resume": "Chaîne de réponse partagée, sans angle mort", "description": "La tranquillité publique implique de nombreux acteurs : gendarmerie, bailleurs sociaux, établissements scolaires, associations, services de l\'État. L\'efficacité dépend de la coordination.", "importance": 2, "chiffres": [], "tags": ["Partenariat", "Coordination", "Efficacité"], "slogan": "Coordonner • Partager • Agir ensemble", "enjeux": ["Coordonner tous les acteurs de la tranquillité", "Éviter les angles morts dans le traitement des situations", "Garantir une réponse rapide et cohérente"], "axes_action": ["Organisation interne clarifiée : rôles, délais, suivi", "Coordination avec les référents de quartier", "Échanges opérationnels avec gendarmerie, bailleurs, écoles", "Projet de nouvelle gendarmerie"], "indicateurs": ["Actions conjointes réalisées", "Délais inter-acteurs", "Points noirs suivis en partenariat"], "vision": "Une chaîne de réponse partagée entre tous les acteurs.", "numero": "9/11", "image": "images/objectifs/tranquillite_9.png"}, {"id": 210, "titre": "Objectif 10 - Méthode & transparence", "theme": "Tranquillité publique", "statut": "Programmé", "annee": 2026, "budget": 0, "resume": "On dit ce qu\'on fait, on montre ce qu\'on améliore", "description": "La confiance des habitants repose sur la transparence de l\'action publique. Il ne suffit pas d\'agir, il faut montrer ce qu\'on fait et rendre compte des résultats.", "importance": 2, "chiffres": [], "tags": ["Transparence", "Méthode", "Bilan"], "slogan": "Identifier • Agir • Mesurer • Publier", "enjeux": ["Rendre compte de l\'action municipale", "Mesurer l\'efficacité des actions", "Maintenir la confiance des habitants"], "axes_action": ["Cartographie des points noirs actualisée", "Actions visibles et ciblées", "Projets d\'éclairage documentés secteur par secteur", "Bilan annuel public des résultats"], "indicateurs": ["Points noirs recensés et traités", "Délais de traitement", "Publication du bilan annuel"], "vision": "La méthode : identifier, agir, mesurer, publier.", "numero": "10/11", "image": "images/objectifs/tranquillite_10.png"}, {"id": 211, "titre": "Objectif 11 - PCS & culture du risque", "theme": "Tranquillité publique", "statut": "Programmé", "annee": 2026, "budget": 0, "resume": "Informer sans dramatiser — école d\'abord", "description": "Vizille est exposée à différents risques : inondation, risques industriels, risques naturels. La culture du risque consiste à informer sans dramatiser, à donner les bons réflexes.", "importance": 2, "chiffres": [], "tags": ["Risques", "Prévention", "Information"], "slogan": "Informer • Former • Préparer", "enjeux": ["Informer les habitants sur les risques locaux", "Donner les bons réflexes en cas d\'alerte", "Préparer la commune à gérer les crises"], "axes_action": ["Actions dans les écoles : risques, alertes, mise à l\'abri", "Ateliers \'bons réflexes\' pour les habitants", "Formation des élus et agents", "Exercices PCS réguliers et retours d\'expérience"], "indicateurs": ["Écoles sensibilisées", "Exercices réalisés", "Mises à jour du PCS"], "vision": "Une culture du risque partagée, sans dramatisation.", "numero": "11/11", "image": "images/objectifs/tranquillite_11.png"}, {"id": 500, "theme": "Enfance/Jeunesse", "type": "objectif", "titre": "Grandir ensemble — Agir pour les enfants et les jeunes (0–18 ans)", "resume": "À chaque âge, la commune accompagne, écoute et soutient, sans laisser personne au bord du chemin.", "description": "Quatre fils conducteurs guident l\'ensemble du programme :\\n\\n• Inclusion (handicap, précarité, isolement) — chaque enfant a sa place à Vizille, quelles que soient ses difficultés\\n• Continuité des parcours 0–18 ans — une logique de progression et de suivi, de la petite enfance à l\'entrée dans l\'âge adulte\\n• Parole des enfants et des jeunes — les associer aux décisions qui les concernent\\n• Travail en réseau — écoles, associations, médico-social, tous coordonnés au service des familles", "idee_force": "Grandir à Vizille, c\'est être accompagné à chaque étape.", "details": "4 engagements par tranche d\'âge :\\n1. 0–3 ans — Bien grandir dès la petite enfance\\n2. 3–10 ans — Grandir et devenir citoyen\\n3. 10–14 ans — Accompagner la transition\\n4. 14–18 ans — Aller vers et accompagner", "image": "images/objectifs/enfance_jeunesse.png"}, {"id": 507, "theme": "Enfance/Jeunesse", "titre": "Petite enfance (0–3 ans) — Bien grandir dès le début", "soustitre": "Accompagner le SICCE", "idee_force": "À Vizille, chaque enfant mérite un bon départ. Nous accompagnons les familles dès les premiers jours, des modes de garde aux espaces de jeux inclusifs.", "actions": ["Participation active à la gouvernance du SICCE", "Dialogue renforcé avec la CAF et le Département", "Amélioration de l\'accessibilité (stationnement, accès)", "Étude des besoins complémentaires"], "indicateurs": ["Places disponibles", "Délais d\'inscription", "Satisfaction familles"], "image": "images/objectifs/enfance_1.png", "description": "Faciliter l\'accès aux modes de garde en accompagnant les familles dans leurs démarches. Organiser des temps d\'information pour les parents sur les solutions existantes (crèche Les Petits Drôles, assistantes maternelles, Relais Petite Enfance).\\n\\nAméliorer et valoriser les aires de jeux, en veillant à leur accessibilité et à leur caractère inclusif : sols adaptés, jeux partagés, signalétique claire.\\n\\nSoutenir les parents et renforcer le lien avec les acteurs de la petite enfance, notamment via des informations sur les temps de parentalité.\\n\\nPoursuivre le travail au sein du Syndicat Intercommunal de Coopération et des Compétences Enfance (SICCE) pour sécuriser le fonctionnement et l\'accessibilité de la crèche Les Petits Drôles.", "slogan": "Accompagner • Sécuriser • Faciliter", "enjeux": ["Garantir l\'accès à la crèche pour les familles vizilloises", "Peser sur les orientations stratégiques du SICCE", "Coordonner avec le LAEP Bleu Citron et le Relais PE"], "axes_action": ["Participation active à la gouvernance du SICCE", "Dialogue renforcé avec la CAF et le Département", "Amélioration de l\'accessibilité (stationnement, accès)", "Étude des besoins complémentaires"], "vision": "Une offre petite enfance accessible et de qualité pour toutes les familles vizilloises.", "tags": ["Crèche", "SICCE", "Petite enfance", "Jeunes"], "resume": "Sécuriser les premiers parcours de vie et soutenir les familles dans l\'accès aux modes de garde et aux espaces d\'éveil.", "numero": "1/4", "objectif_parent": 500}, {"id": 508, "theme": "Enfance/Jeunesse", "titre": "Conseil municipal des enfants (3–10 ans) — Grandir citoyen", "soustitre": "Former les citoyens de demain", "idee_force": "Former les citoyens de demain commence dès l\'école. Le Conseil municipal des enfants permet aux élèves de s\'initier à la démocratie locale et de participer concrètement à la vie de la commune.", "actions": ["Créer un conseil des jeunes (élèves d\'élémentaire)", "S\'inspirer des dispositifs des communes voisines", "Organiser des séances régulières avec les élus", "Permettre aux jeunes de porter des projets concrets"], "indicateurs": ["Nombre de participants", "Projets proposés", "Écoles participantes"], "image": "images/objectifs/enfance_2.png", "description": "Accompagner la mise en place d\'un Conseil municipal des enfants ciblant prioritairement les élèves d\'élémentaire. Temps de formation dédiés, adultes référents, projets portés par les enfants eux-mêmes.\\n\\nDévelopper des projets éducatifs autour du vivre-ensemble, du respect et de la solidarité.\\n\\nFavoriser l\'inclusion de tous les enfants dans les temps périscolaires et de loisirs.", "slogan": "Écouter • Impliquer • Former", "enjeux": ["Former les futurs citoyens dès l\'école", "Donner la parole aux enfants", "Créer du lien entre jeunes et élus"], "axes_action": ["S\'inspirer des dispositifs des communes voisines", "Organiser des séances régulières avec les élus", "Permettre aux jeunes de porter des projets concrets", "Valoriser leurs réalisations"], "vision": "Les citoyens de demain se forment aujourd\'hui.", "tags": ["Démocratie", "Jeunesse", "Participation", "Jeunes"], "resume": "Donner la parole aux enfants et les initier à la démocratie locale, au vivre-ensemble et à la solidarité.", "numero": "2/4", "objectif_parent": 500}, {"id": 509, "theme": "Travaux", "titre": "Confort thermique des écoles", "soustitre": "Lutter contre les fortes chaleurs", "idee_force": "Les épisodes de canicule rendent les conditions d\'apprentissage difficiles. Des températures jusqu\'à 44°C ont été relevées. Il est urgent d\'agir pour protéger les enfants.", "actions": ["Déploiement de protections solaires (lames de bois, stores)", "Étude géothermique des écoles (solutions durables)", "Renforcement du plan canicule", "Végétalisation des cours (ombrage naturel)"], "indicateurs": ["Températures relevées", "Classes équipées", "Alertes canicule"], "image": "images/objectifs/enfance_3.png", "description": "Alerte sur les températures excessives dans les salles de classe l\'été (jusqu\'à 44°C mesurés). Un plan d\'action est nécessaire en attendant que les arbres plantés arrivent à maturité.", "slogan": "Protéger • Rafraîchir • Anticiper", "enjeux": ["Protéger la santé des enfants et enseignants", "Maintenir des conditions d\'apprentissage correctes", "Anticiper les épisodes caniculaires"], "axes_action": ["Déploiement de protections solaires (lames de bois, stores)", "Étude géothermique des écoles", "Renforcement du plan canicule", "Végétalisation des cours (ombrage naturel)"], "vision": "Des écoles où il fait bon apprendre, même en été.", "tags": ["Écoles", "Canicule", "Confort", "Jeunes"]}, {"id": 510, "theme": "Enfance/Jeunesse", "titre": "Engagement et accompagnement des jeunes (14–18 ans)", "soustitre": "Valoriser l\'engagement", "idee_force": "Certains jeunes Vizillois ne fréquentent pas les structures existantes. Nous irons à leur rencontre, sans jugement, pour comprendre leurs besoins et leur ouvrir des perspectives.", "actions": ["Identifier des jeunes référents (pompiers, associations)", "Formations aux gestes de premiers secours", "Mise en valeur des parcours d\'engagement", "Partenariat avec les associations locales"], "indicateurs": ["Jeunes formés", "Actions de bénévolat", "Référents identifiés"], "image": "images/objectifs/enfance_4.png", "description": "Développer une démarche d\'aller vers pour rencontrer les jeunes, notamment ceux en difficulté ou en décrochage. L\'objectif n\'est pas de surveiller mais d\'accompagner.\\n\\nTravailler en partenariat avec la Mission Locale, les établissements scolaires et les associations.\\n\\nAccompagner les jeunes dans leurs projets : orientation, engagement citoyen (premiers secours, pompiers, bénévolat associatif), insertion professionnelle.\\n\\nEncourager les jeunes à s\'engager dans des actions utiles à la collectivité. Un jeune référent peut inspirer ses pairs.", "slogan": "S\'engager • Apprendre • Transmettre", "enjeux": ["Encourager l\'engagement citoyen des jeunes", "Développer des compétences utiles", "Créer des vocations"], "axes_action": ["Identifier des jeunes référents engagement citoyen", "Formation aux gestes de premiers secours avec les pompiers", "Mise en valeur des parcours d\'engagement", "Partenariat avec les associations locales"], "vision": "Des jeunes acteurs de leur territoire.", "tags": ["Engagement", "Pompiers", "Bénévolat", "Jeunes"], "resume": "Aller à la rencontre des jeunes, en particulier ceux qui décrochent, pour leur proposer un accompagnement et des perspectives concrètes.", "numero": "4/4", "objectif_parent": 500}, {"id": 511, "theme": "Enfance/Jeunesse", "titre": "Pré-adolescents (10–14 ans) — Accompagner la transition", "soustitre": "Créer du lien", "idee_force": "La période 10–14 ans est charnière. Sans accompagnement adapté, certains jeunes décrochent. Vizille en Mouvement propose des espaces de parole, des activités et une présence bienveillante.", "actions": ["Actions « aller-vers » dans l\'espace public", "Écoute des besoins et attentes des adolescents", "Proposition d\'activités adaptées à leurs envies", "Accompagnement dans les projets (associations, initiatives)"], "indicateurs": ["Jeunes rencontrés", "Accompagnements réalisés", "Orientation vers structures"], "image": "images/objectifs/enfance_5.png", "description": "Garantir un accès au numérique pour tous, avec un accompagnement aux usages responsables. Développer l\'aide aux devoirs comme levier de réussite scolaire, en lien avec les associations et les établissements. Tous les enfants n\'ont pas les mêmes conditions de travail à la maison — la commune agira pour réduire ces inégalités.\\n\\nProposer des espaces et des activités adaptés aux pré-adolescents, pour s\'exprimer et se retrouver en dehors du cadre scolaire.\\n\\nMener des actions de prévention autour des écrans, du harcèlement et du bien-être, avec des espaces de parole dédiés.\\n\\nMieux accompagner les 10–14 ans, c\'est prévenir les difficultés de l\'adolescence avant qu\'elles ne s\'installent.", "slogan": "Écouter • Comprendre • Accompagner", "enjeux": ["Aller à la rencontre des jeunes", "Comprendre leurs besoins", "Proposer des accompagnements adaptés"], "axes_action": ["Dispositifs \'aller-vers\'", "Accompagnement dans les démarches administratives", "S\'appuyer sur l\'expérience associative locale", "Créer des espaces de dialogue"], "vision": "Aucun jeune ne doit rester sans solution.", "tags": ["Adolescents", "Prévention", "Accompagnement", "Jeunes"], "resume": "Prévenir les ruptures et accompagner les jeunes dans une période clé de leur développement, avec des espaces adaptés et des actions de prévention.", "numero": "3/4", "objectif_parent": 500}, {"id": 512, "theme": "Enfance/Jeunesse", "titre": "Accompagner les associations et les forces vives jeunesse", "soustitre": "Soutenir la jeunesse associative", "idee_force": "Les associations sont un levier essentiel pour l\'épanouissement des jeunes. Nous les accompagnerons, les écouterons et faciliterons leurs projets.", "actions": ["Permanence d\'aide aux démarches associatives", "Guide pratique « créer son association à Vizille »", "Mise en relation avec les associations existantes", "Soutien aux premiers projets (locaux, communication)"], "indicateurs": ["Associations créées", "Bénévoles accompagnés", "Projets soutenus"], "image": "images/objectifs/enfance_6.png", "description": "Aller à la rencontre des associations et institutions qui travaillent avec les jeunes Vizillois : écoles, associations culturelles et sportives, Maison des Pratiques Artistiques, collège, lycée, l\'Escale…\\n\\nÉcouter leurs projets, attentes et besoins. Les accompagner techniquement pour plus d\'efficacité. Encourager les partenariats.\\n\\nLes jeunes ont des idées mais se heurtent souvent à la complexité administrative. La commune peut les accompagner dans leurs démarches de création et de financement.\\n\\nAttention aux risques psychosociaux pour les professionnels de l\'animation et de l\'éducation : le personnel doit se sentir soutenu pour porter des projets de qualité.", "slogan": "Soutenir • Simplifier • Écouter", "enjeux": ["Favoriser la création d\'associations jeunesse", "Simplifier les démarches administratives", "Prévenir les risques psychosociaux"], "axes_action": ["Soutien aux créations d\'associations", "Simplification des démarches", "Écoute des attentes et besoins", "Accompagnement des bénévoles"], "vision": "Des associations dynamiques pour des jeunes épanouis.", "tags": ["Associations", "Bénévolat", "Soutien", "Jeunes"], "resume": "Soutenir les associations qui œuvrent pour les enfants et les jeunes, en allant à leur rencontre et en facilitant leurs projets.", "visible": false}, {"id": 513, "theme": "Enfance/Jeunesse", "titre": "Inclusion et handicap — Aucun enfant laissé au bord du chemin", "soustitre": "Une place pour chacun", "idee_force": "L\'inclusion n\'est pas une option. Nous ferons un état des lieux de l\'accessibilité et améliorerons l\'accompagnement des familles et des professionnels.", "actions": ["État des lieux accessibilité (écoles, crèche, périscolaire)", "Identification des besoins non couverts", "Renforcement de l\'accompagnement des familles", "Formation des personnels à l\'accueil du handicap"], "indicateurs": ["Structures accessibles", "Familles accompagnées", "Personnels formés"], "image": "images/objectifs/enfance_7.png", "description": "Réaliser un état des lieux de ce qui existe déjà dans les écoles et l\'accueil petite enfance. Coordination avec le Pôle Ressources Handicap du Syndicat Intercommunal de Coopération et des Compétences Enfance (SICCE).\\n\\nAméliorer l\'accessibilité des espaces publics et des équipements (aires de jeux, salles, signalétique).\\n\\nL\'inclusion est un fil conducteur de l\'ensemble du programme Enfance/Jeunesse : elle concerne le handicap, la précarité et l\'isolement.", "slogan": "Diagnostiquer • Accompagner • Inclure", "enjeux": ["Garantir l\'accessibilité des structures", "Accompagner les familles concernées", "Coordonner avec les partenaires spécialisés"], "axes_action": ["Diagnostic accessibilité des écoles", "Accompagnement des parents", "Coordination avec le Pôle Ressources Handicap du SICCE", "Formation des personnels"], "vision": "Une école et des structures ouvertes à tous.", "tags": ["Handicap", "Inclusion", "Accessibilité", "Jeunes"], "resume": "Améliorer l\'inclusion des enfants en situation de handicap dans tous les temps de vie : école, périscolaire, loisirs.", "visible": false}, {"id": 514, "theme": "Enfance/Jeunesse", "titre": "Numérique et aide aux devoirs — Réduire les inégalités", "soustitre": "Réduire la fracture numérique", "idee_force": "Tous les jeunes ne sont pas égaux face au numérique et à l\'aide aux devoirs. Vizille en Mouvement agira pour que chaque enfant dispose des outils nécessaires à sa réussite.", "actions": ["Accès au numérique pour tous (équipements, connexion)", "Renforcement de l\'aide aux devoirs", "Partenariats avec associations de soutien scolaire", "Formation des parents aux outils numériques"], "indicateurs": ["Jeunes accompagnés", "Séances d\'aide aux devoirs", "Formations réalisées"], "image": "images/objectifs/enfance_8.png", "description": "Garantir un accès au numérique pour tous, avec un accompagnement aux usages responsables — particulièrement pour les 10–14 ans.\\n\\nDévelopper l\'aide aux devoirs comme levier de réussite scolaire, en lien avec les associations et les établissements.\\n\\nTous les enfants n\'ont pas les mêmes conditions de travail à la maison. La commune agira pour réduire ces inégalités.", "slogan": "Accompagner • Former • Équiper", "enjeux": ["Réduire la fracture numérique", "Accompagner la réussite scolaire", "Former aux outils numériques"], "axes_action": ["Créer des espaces numériques accompagnés", "Mettre en place des dispositifs d\'aide aux devoirs", "Former les jeunes et les familles au numérique", "Équiper les structures en matériel adapté"], "vision": "Le numérique au service de la réussite de tous.", "tags": ["Numérique", "Devoirs", "Égalité", "Jeunes"], "resume": "Garantir un accès équitable au numérique et à l\'aide aux devoirs pour tous les enfants et jeunes de Vizille.", "visible": false}, {"id": 620, "theme": "Concertation citoyenne", "type": "objectif", "titre": "Axe 1 - Démocratie locale et participation citoyenne", "resume": "L\'idée est de faire vivre une démocratie active, inclusive et émancipatrice.", "description": "• Conseil de quartier : jeunes, personnes précaires, seniors\\n• Lieu ouvert dédié à l\'écoute, ateliers, débats, formations"}, {"id": 621, "theme": "Concertation citoyenne", "type": "objectif", "titre": "Axe 2 - Éducation populaire et culture pour tous", "resume": "Garantir l\'accès à une culture critique, émancipatrice et accessible.", "description": "• Création d\'un centre d\'éducation populaire permanent (style maison des jeunes)\\n• Café-débats, ciné-débats, théâtre-forums sur les différents sujets (enjeux sociaux, enjeux environnementaux, enjeux politiques)\\n• Appuis financiers aux associations locales d\'éducation populaire (conventions avec l\'Escale par ex)\\n• Résidences d\'artistes ou de chercheurs dans les écoles ou les quartiers"}, {"id": 622, "theme": "Concertation citoyenne", "type": "objectif", "titre": "Axe 3 - Jeunesse et émancipation", "resume": "Donner les moyens aux jeunes de devenir acteurs de leur vie et de leur territoire.", "description": "• Création d\'un conseil municipal des jeunes\\n• Atelier d\'autodéfense intellectuelle (pensée critique, préserver l\'intégrité intellectuelle)\\n• Chantiers jeunes participatifs (service civique local)"}, {"id": 623, "theme": "Concertation citoyenne", "type": "objectif", "titre": "Axe 4 - Lutte contre les inégalités et émancipation sociale", "resume": "Faire de l\'éducation populaire un outil d\'émancipation pour les personnes les plus éloignées des droits.", "description": "• Soutien à l\'apprentissage du français\\n• Ateliers juridiques, économiques et sociaux (comprendre ses droits, les institutions, le fonctionnement des aides)\\n• Accès gratuit à des lieux de convivialité et d\'apprentissage (jardins partagés, médiathèque animée, Escale, associations culturelles)\\n• Promotion de la santé : CLSM (Conseil Local à la Santé Mentale), outil de démocratie en santé", "tags": ["Seniors"]}, {"id": 624, "theme": "Concertation citoyenne", "type": "objectif", "titre": "Axe 5 - Transition écologique et savoirs partagés", "resume": "Faire de la transition un projet collectif, compris et maîtrisé localement.", "description": "• Sur la base du plan climat, approfondir les actions pédagogiques et sociétales\\n• Renforcer les actions autour de la santé publique (la pollution, les dangers professionnels, l\'habitat et les peuplements)\\n• Formation citoyenne sur les enjeux climatiques et les transitions\\n• Expérimentations collectives (potagers urbains par ex, déchets)\\n• Soutien pédagogique, projets dans les écoles\\n• Café-débats, ciné-débats"}, {"id": 625, "theme": "Transition écologique", "type": "objectif", "titre": "Objectif 1 - Intégrer l\'environnement dans chaque projet municipal", "resume": "Dans chaque projet municipal, dès la conception.", "description": "Pour que chaque décision (travaux, achats, urbanisme, services) réduise l\'empreinte écologique et améliore la qualité de vie, aujourd\'hui et demain.", "details": "Ce qu\'on fait : Évaluer l\'impact environnemental et énergétique des projets. Favoriser des solutions sobres, réparables et durables. Structurer une démarche commune : transition numérique responsable & responsabilité sociétale.", "benefices": "Moins de dépenses d\'énergie et de ressources. Des projets cohérents, lisibles et mesurables. Une commune plus résiliente et exemplaire.", "indicateurs": "% de projets avec bilan d\'impact • kWh économisés/an • Part d\'achats responsables"}, {"id": 626, "theme": "Transition écologique", "type": "objectif", "titre": "Objectif 2 - Faire de la transition un projet collectif compris et maîtrisé localement", "resume": "Un projet collectif, compris et maîtrisé localement.", "description": "Parce que la transition réussit quand elle est partagée : pédagogie, participation, santé publique et actions concrètes au plus près des habitants.", "details": "Ce qu\'on fait : S\'appuyer sur le Plan Climat du territoire pour amplifier les actions. Renforcer la santé publique (pollution, risques, expositions). Former et informer sur les enjeux climatiques. Lancer des expérimentations (potagers, déchets). Soutenir les projets scolaires. Cultiver les savoirs : cafés-débats, ciné-débat.", "benefices": "Des habitants acteurs, mieux informés. Des choix collectifs plus acceptés. Des initiatives locales qui essaiment.", "indicateurs": "Nb d\'actions pédagogiques/an • Nb de participants • Nb de projets écoles/assos"}, {"id": 627, "theme": "Urbanisme", "type": "objectif", "titre": "Objectif - Revitaliser le centre-ville de Vizille", "resume": "Transformer le centre-ville et positionner Vizille comme centralité du sud métropolitain.", "description": "• Opération de Revitalisation de Territoire (ORT) signée fin 2025 avec la Métropole\\n• Projet Centralité Vizilloise piloté conjointement avec Grenoble-Alpes Métropole\\n• Requalification urbaine, habitat, commerce, espaces publics\\n• Horizon 2030"}, {"id": 628, "theme": "Urbanisme", "type": "engagement", "titre": "ORT - Opération de Revitalisation de Territoire", "resume": "Convention cadre nationale pour revitaliser le centre-ville.", "description": "Convention signée décembre 2025, mise en œuvre 2025-2030.\\nPartenaires : État (ANCT), Métropole, ANAH, Banque des Territoires, EPF.\\nAccès aux aides ANAH, Action Cœur de Ville, fonds de revitalisation, exonérations fiscales.\\nPositionne Vizille comme centralité du sud métropolitain. Englobe OPAH-RU, commerces, mobilités."}, {"id": 629, "theme": "Urbanisme", "type": "engagement", "titre": "Projet Centralité Vizilloise", "resume": "Programme de requalification urbaine piloté avec la Métropole.", "description": "Requalification urbaine pilotée conjointement par Grenoble-Alpes Métropole et la Ville.\\nPoursuite du projet après retour et analyse des concertations."}, {"id": 630, "theme": "Urbanisme", "type": "engagement", "titre": "Secteur Tanneries", "resume": "Requalification du dernier grand tènement en centre-ville (~5 ha).", "description": "Logements, équipements, mobilité douce.\\nÉtudes, concertation et ateliers effectués pendant le mandat 2020-2026.\\nReprise du dossier fin 2026. Cession EPFL-D prévue novembre 2025.\\nPartenaires : Métropole, Ville, LPV, EPFL-D, Habitants.\\nPérimètre : rue République → rue Jean Jaurès / rue des Forges."}, {"id": 631, "theme": "Urbanisme", "type": "engagement", "titre": "Les Terrasses de la Romanche (Alliance Textile)", "resume": "52 logements en accession à la propriété.", "description": "Phase 1 : livraison 2ème semestre 2026 (logements et commerce).\\nPhase 2 : chantier en cours, livraison 2028.\\nPorté par LPV et Isalis Immo.\\nDispositif PSLA, TVA réduite 5,5%, exonération taxe foncière 15 ans."}, {"id": 632, "theme": "Urbanisme", "type": "engagement", "titre": "OPAH-RU Réno\'Vizille", "resume": "Opération d\'Amélioration de l\'Habitat sur 5 ans, 250 façades ciblées.", "description": "Accompagnement des propriétaires pour la rénovation des logements vacants, rénovation énergétique et façades.\\nPartenaires : État (ANAH), Métropole, Ville, Opérateur OPAH.\\nSubventions ANAH (jusqu\'à 50%), aides Métropole, accompagnement gratuit.", "tags": ["Seniors"]}, {"id": 633, "theme": "Travaux", "type": "objectif", "titre": "Objectif - Moderniser les infrastructures communales", "resume": "Travaux d\'entretien, rénovation et amélioration du patrimoine communal.", "description": "• Programme pluriannuel 2026-2032\\n• Qualité des espaces publics, maintenance des bâtiments\\n• VRD, éclairage public, propreté des locaux\\n• Transition environnementale\\n• Une trentaine d\'agents dont 6 en encadrement direct\\n• Gestion rigoureuse pour maintenir les services et préparer l\'avenir"}, {"id": 634, "theme": "Travaux", "type": "engagement", "titre": "Rue Général de Gaulle - Réseaux", "resume": "Réfection complète des réseaux d\'assainissement et eau potable.", "description": "Travaux de réseaux réalisés en 2024, piétonisation partielle décembre 2025.\\nPhase finale 2ème semestre 2027, achèvement début 2028.\\nPartenaires : Grenoble-Alpes Métropole (maître d\'ouvrage), Ville de Vizille.\\nFinancement Métropole (compétences eau/assainissement)."}, {"id": 635, "theme": "Travaux", "type": "engagement", "titre": "Rue Général de Gaulle - Voie partagée", "resume": "Piétonisation partielle pour apaiser les déplacements et dynamiser le commerce.", "description": "Amélioration des espaces publics.\\nÉtude, concertation, réunion publique fin 2026, travaux courant 2028.\\nPartenaires : Grenoble-Alpes Métropole (maître d\'ouvrage), Ville de Vizille.\\nFinancement Métropole (Centralité Vizilloise), Ville de Vizille."}, {"id": 636, "theme": "Santé", "type": "engagement", "titre": "Maison de Santé Pluriprofessionnelle", "resume": "Priorité du mandat face à la pénurie médicale.", "description": "La Ville a repris le pilotage. Médecins installés provisoirement dans les locaux de l\'Avant-Garde.\\nÉtudes et maîtrise d\'œuvre en 2026, travaux 2027, livraison début 2028.", "tags": ["Seniors"]}, {"id": 637, "theme": "Travaux", "type": "engagement", "titre": "Chapelle du Péage de Vizille", "resume": "Préservation et mise en valeur de ce lieu historique.", "description": "Chapelle rachetée par la commune.\\nRéunion publique courant 2026 pour débattre du devenir du site."}, {"id": 638, "theme": "Travaux", "type": "engagement", "titre": "Gendarmerie", "resume": "Échéance primordiale pour conserver la gendarmerie sur la commune.", "description": "Études et échanges menés tout au long du mandat.\\nPropositions discutées avec les services de l\'État.\\nL\'équipe met toutes les forces nécessaires pour conserver la gendarmerie sur la commune."}, {"id": 639, "theme": "Transition écologique", "type": "engagement", "titre": "Engagement 1 - Énergies renouvelables", "resume": "Réseau de chaleur & accompagnement des copropriétés.", "description": "Décarboner l\'énergie locale et réduire la facture, en priorisant un réseau de chaleur urbain (quartier nord / centre-ville).", "details": "Ce qu\'on fait : Déployer des ENR sur la commune (projets communaux). Accompagner habitants et copropriétés pour le raccordement. Informer sur les gains et les modalités.", "benefices": "Moins de CO₂. Une énergie plus stable et locale. Des logements mieux valorisés.", "indicateurs": "Taux de raccordement • tCO₂ évitées/an • Nb de copropriétés accompagnées", "perimetre": "Quartier nord / centre-ville"}, {"id": 640, "theme": "Transition écologique", "type": "engagement", "titre": "Engagement 2 - Désimperméabiliser les cours d\'écoles", "resume": "Cours d\'écoles prioritaires.", "description": "Limiter les ruissellements et rafraîchir les cours, au bénéfice des enfants et du voisinage.", "details": "Ce qu\'on fait : Sols perméables + végétalisation. Priorité : Joliot-Curie, maternelle centre, école du château. Co-conception avec équipes éducatives & parents.", "benefices": "Moins d\'îlots de chaleur. Meilleure gestion des eaux pluviales. Cours plus agréables et sûres.", "indicateurs": "m² désimperméabilisés • Nb d\'écoles concernées • Suivi température / confort", "perimetre": "Joliot-Curie, maternelle centre, école du château"}, {"id": 641, "theme": "Transition écologique", "type": "engagement", "titre": "Engagement 3 - Réaménager la Place Henri Barbusse", "resume": "Place Henri Barbusse (marché).", "description": "Créer un cœur de ville plus ombragé, plus convivial et mieux adapté aux usages du marché.", "details": "Ce qu\'on fait : Repenser circulations & usages. Ajouter ombrage, végétation, sols perméables. Co-concevoir avec commerçants & habitants.", "benefices": "Marché plus attractif. Confort été/hiver. Espace public apaisé.", "indicateurs": "% surface ombragée • Nb d\'événements/usages • Satisfaction usagers", "perimetre": "Place Henri Barbusse"}, {"id": 642, "theme": "Transition écologique", "type": "engagement", "titre": "Engagement 4 - Planter des arbres", "resume": "Développer les zones d\'ombrage.", "description": "Accélérer la création d\'ombre naturelle et de corridors de biodiversité.", "details": "Ce qu\'on fait : Plan de plantation pluriannuel. Essences adaptées au climat. Suivi : arrosage, protection, remplacement.", "benefices": "Plus de fraîcheur. Biodiversité renforcée. Cadre de vie amélioré.", "indicateurs": "Nb d\'arbres plantés/an • Taux de reprise • m² d\'ombre créée"}, {"id": 643, "theme": "Transition écologique", "type": "engagement", "titre": "Engagement 5 - Accès à la fraîcheur", "resume": "Canaux, espaces de fraîcheur, piscine.", "description": "Offrir des refuges de fraîcheur lors des épisodes chauds et valoriser les canaux comme atout local.", "details": "Ce qu\'on fait : Valoriser les canaux. Identifier et aménager des espaces de fraîcheur. Maintenir la piscine municipale en fonctionnement.", "benefices": "Meilleure adaptation aux canicules. Bien-être pour tous. Attractivité estivale.", "indicateurs": "Nb d\'espaces de fraîcheur • Fréquentation • Jours d\'ouverture piscine", "tags": ["Seniors"]}, {"id": 644, "theme": "Transition écologique", "type": "engagement", "titre": "Engagement 6 - Éclairage public sobre", "resume": "LED + pilotage intelligent.", "description": "Réduire la consommation tout en gardant un éclairage adapté aux usages et à la sécurité.", "details": "Ce qu\'on fait : Généraliser les LED. Déployer pilotage (détection présence, scénarios). Ajuster selon lieux et horaires.", "benefices": "Baisse des factures. Moins de pollution lumineuse. Confort & sécurité.", "indicateurs": "% points lumineux en LED • kWh économisés/an • Nb de zones pilotées"}, {"id": 645, "theme": "Transition écologique", "type": "engagement", "titre": "Engagement 7 - Rénovation énergétique des bâtiments", "resume": "Bâtiments communaux, priorité écoles.", "description": "Rationaliser le patrimoine bâti, réduire les charges et améliorer les conditions d\'apprentissage et de travail.", "details": "Ce qu\'on fait : Stratégie de rénovation + conformité. Études pour prioriser. Priorité groupes scolaires. Intégrer qualité de l\'air intérieur.", "benefices": "Économies durables. Confort thermique. Santé & performance à l\'école.", "indicateurs": "kWh/m²/an • € charges réduites • Nb de bâtiments rénovés"}, {"id": 646, "theme": "Transition écologique", "type": "engagement", "titre": "Engagement 8 - Numérique responsable", "resume": "Inclusion, réparation, accessibilité, vigilance IA.", "description": "Mettre le numérique au service de tous, en limitant l\'empreinte et en protégeant les données.", "details": "Ce qu\'on fait : Lutter contre la fracture numérique. Former les personnes en difficulté. Réparer/donner/recycler plutôt que remplacer. Créer un repair café ou Fablab. Accessibilité des sites. Cadre d\'usage IA + frugalité + données.", "benefices": "Plus d\'autonomie. Moins de déchets électroniques. Services publics plus accessibles.", "indicateurs": "Nb d\'ateliers/an • Nb d\'appareils réparés • Taux d\'accessibilité des sites"}, {"id": 647, "theme": "Transition écologique", "type": "engagement", "titre": "Engagement 9 - Forêt communale", "resume": "Gestion durable & résilience (125 ha).", "description": "Protéger un patrimoine naturel majeur et accompagner sa résilience face au climat avec l\'ONF et les partenaires.", "details": "Ce qu\'on fait : Biodiversité, sols, paysages. Production de bois encadrée. Accueil du public : promenade, rando, découverte. Actions avec Département pour l\'entretien.", "benefices": "Forêt plus résiliente. Espace nature accessible. Atout écologique et récréatif.", "indicateurs": "Actions ONF/partenaires • Indicateurs biodiversité • Entretien & fréquentation", "partenaires": "ONF, Département", "perimetre": "125 ha de forêt communale"}, {"id": 700, "theme": "Action sociale", "type": "engagement", "titre": "Maison des Solidarités", "resume": "Un lieu unique pour centraliser l\'accueil, l\'accompagnement et l\'orientation des habitants en difficulté.", "description": "Regrouper les services du CCAS, les permanences sociales, juridiques et d\'accès aux droits en un lieu identifié. En lien avec La Source (France Services), l\'Escale et le foyer résidence La Romanche. Créer un espace d\'éducation populaire avec des ateliers juridiques, économiques et sociaux ouverts à tous.", "statut": "Programmé", "annee": 2027, "importance": 3, "tags": ["CCAS", "Solidarité", "Accès aux droits", "Éducation populaire"], "chiffres": [{"valeur": "1", "label": "Maison des Solidarités"}, {"valeur": "CCAS", "label": "Pilotage"}]}, {"id": 701, "theme": "Animations de proximité", "type": "objectif", "titre": "Objectif — Animer Vizille au plus près des habitants", "resume": "Des événements festifs, gratuits et réguliers pour faire vivre le centre-ville et les quartiers.", "description": "Trois constats guident ce projet :\\n→ Le centre-ville manque d\'animation régulière et conviviale\\n→ Il n\'existe pas de scène intimiste de proximité\\n→ Les forces vives associatives ne sont pas assez accompagnées\\n\\nEn complément de la programmation culturelle existante (Jeu de Paume, médiathèque, festivals), nous créons un volet d\'animations de proximité piloté par les élus, ancré dans les rues, les places et les quartiers.\\n\\nDémarche progressive : 2026 = année test (1 événement par format, 5 000 €), puis montée en charge selon les retours du public.", "importance": 3, "slogan": "Animer • Rassembler • Faire vivre", "enjeux": ["Animer le centre-ville avec des événements festifs gratuits et réguliers", "Créer une scène intimiste complémentaire du Jeu de Paume", "Aller à la rencontre des associations pour les accompagner activement", "Tester en 2026, consolider en 2027, déployer en 2028"], "axes_action": ["Axe 1 — Animations extérieures en centre-ville (Chapeau l\'artiste, bals, nocturnes, Halloween)", "Axe 2 — La p\'tite salle, une scène intimiste (Isère en scène, Vizille en scène, Au théâtre ce soir)", "Axe 3 — Accompagner les forces vives associatives"], "indicateurs": ["Fréquentation des événements de proximité", "Nombre de soirées organisées par an", "Associations rencontrées et projets accompagnés", "Retours habitants et commerçants"], "vision": "Une ville où la culture ne se limite pas aux murs d\'une salle, mais vit dans les rues, sur les places et dans les quartiers.", "image": "images/objectifs/objectif_animations.png"}, {"id": 702, "theme": "Action sociale", "type": "engagement", "titre": "Réseaux d\'entraide dans les quartiers", "resume": "Structurer la solidarité de proximité par des réseaux de voisins solidaires dans chaque quartier.", "description": "Aide aux courses, accompagnement aux rendez-vous médicaux, veille auprès des personnes isolées, partage de savoir-faire. Coordination assurée par le CCAS et les associations locales (Secours Populaire, La Fourmi, PIMMS).", "statut": "Programmé", "annee": 2027, "importance": 2, "tags": ["Entraide", "Quartiers", "Voisins solidaires", "CCAS"], "chiffres": [{"valeur": "Tous", "label": "Quartiers couverts"}, {"valeur": "3+", "label": "Associations partenaires"}]}, {"id": 703, "theme": "Action sociale", "type": "engagement", "titre": "CLSM à l\'échelle du bassin de vie", "resume": "Impliquer les communes voisines dans le Conseil Local de Santé Mentale.", "description": "Étendre le CLSM (créé en 2025) aux communes du bassin du Pays Vizillois. Outil de démocratie en santé associant élus, professionnels, usagers et familles. Objectifs : prévention, repérage précoce, lutte contre la stigmatisation des troubles psychiques.", "statut": "Programmé", "annee": 2026, "importance": 2, "tags": ["Santé mentale", "CLSM", "Intercommunal", "Prévention"], "chiffres": [{"valeur": "2025", "label": "CLSM créé"}, {"valeur": "Bassin", "label": "Échelle visée"}]}, {"id": 704, "theme": "Action sociale", "type": "engagement", "titre": "Mutuelle communale", "resume": "Beaucoup de Vizillois n\'ont pas de mutuelle. D\'autres sont obligés de résilier face aux augmentations de tarifs. La commune négocie une complémentaire santé collective à tarifs réduits, ouverte à tous, sans condition de revenus ni d\'âge.", "description": "Chaque année, les tarifs des mutuelles augmentent — parfois de 8 à 10 % — et de plus en plus d\'habitants n\'ont pas d\'autre choix que de résilier. D\'autres n\'ont tout simplement jamais eu de mutuelle, faute de moyens. Résultat : des soins repoussés, des lunettes qu\'on ne renouvelle pas, des dents qu\'on ne soigne pas. À Vizille, avec 31 % de la population de plus de 60 ans et de nombreux retraités aux pensions modestes, le problème est concret et quotidien. La mutuelle communale repose sur un principe simple : la commune négocie collectivement avec un organisme complémentaire. L\'effet de volume permet d\'obtenir des tarifs réduits de 15 à 25 % par rapport au marché individuel. L\'adhésion est volontaire, ouverte à tous les Vizillois — actifs, retraités, demandeurs d\'emploi, indépendants, jeunes — sans condition d\'âge ni de ressources. Des communes comme Grenoble (mutuelle Entrenous), Caumont-sur-Durance ou Grande-Synthe ont déjà mis en place ce dispositif avec succès. Le CCAS accompagne chaque habitant dans ses démarches, avec des permanences dédiées. Le coût pour la commune est modeste (20 à 25 000 € par an) au regard du bénéfice pour la santé et le pouvoir d\'achat des habitants.", "statut": "Programmé", "annee": 2027, "importance": 3, "tags": ["Santé", "Mutuelle", "CCAS", "Pouvoir d\'achat"], "slogan": "Se soigner ne doit pas être un luxe.", "enjeux": ["Beaucoup de Vizillois n\'ont pas de mutuelle ou sont contraints de résilier face aux hausses de tarifs", "Le renoncement aux soins touche en priorité les retraités, les demandeurs d\'emploi et les indépendants", "Sans complémentaire, des soins essentiels (dentaire, optique, audioprothèses) restent inaccessibles", "La santé ne doit pas dépendre du niveau de revenus"], "axes_action": ["Négociation groupée avec un organisme complémentaire santé (appel d\'offres)", "Permanences d\'information et d\'accompagnement au CCAS", "Communication ciblée vers les publics prioritaires (retraités, jeunes, demandeurs d\'emploi)", "Suivi annuel : taux d\'adhésion, satisfaction, économies réalisées"], "indicateurs": ["Nombre de Vizillois adhérents à la mutuelle communale", "Économie moyenne réalisée par adhérent", "Taux de satisfaction des adhérents", "Évolution du renoncement aux soins sur la commune"], "chiffres": [{"valeur": "-15 à -25%", "label": "Réduction sur les cotisations"}, {"valeur": "20-25 k€/an", "label": "Coût pour la commune"}, {"valeur": "+8 à 10%", "label": "Hausse annuelle des mutuelles"}]}, {"id": 720, "theme": "Animations de proximité", "type": "engagement", "titre": "Spectacles « Chapeau l\'artiste » — Rue et place, tout l\'été", "resume": "NOUVEAU — Spectacles de rue gratuits en centre-ville, juin à août.", "description": "De juin à août, le centre-ville accueille des spectacles de rue pluridisciplinaires : musique, danse, clown, acrobates, jongleurs, théâtre. Sélection de troupes amateurs et professionnelles. Le public paie au chapeau — un format convivial, gratuit et sans coût de programmation. Année test 2026 : 1 soirée. Objectif 2028 : 5 soirées par été.", "importance": 3, "tags": ["Nouveau", "Animations de proximité", "Centre-ville", "Été"], "chiffres": [{"valeur": "1→5", "label": "Soirées / été (2026→2028)"}, {"valeur": "400 €", "label": "Coût unitaire"}, {"valeur": "Gratuit", "label": "Accès public"}]}, {"id": 721, "theme": "Animations de proximité", "type": "engagement", "titre": "Bals populaires — Place de Stalingrad ou Parc Vöhringen", "resume": "NOUVEAU — Bals gratuits avec orchestre, au printemps et en été.", "description": "Au printemps et en été, Vizille retrouve ses bals populaires ! Sur la place de Stalingrad ou au Parc Vöhringen, avec orchestre (si budget) ou DJ, un rendez-vous intergénérationnel gratuit pour danser et se retrouver. Ce format n\'existe pas aujourd\'hui à Vizille — c\'est un manque de convivialité festive que nous voulons combler. Année test 2026 : 1 bal. Objectif 2028 : 3 bals.", "importance": 3, "tags": ["Nouveau", "Animations de proximité", "Convivialité"], "chiffres": [{"valeur": "1→3", "label": "Bals / an (2026→2028)"}, {"valeur": "500 €", "label": "Coût unitaire"}, {"valeur": "Gratuit", "label": "Accès public"}]}, {"id": 722, "theme": "Animations de proximité", "type": "engagement", "titre": "Nocturnes gourmandes et musicales — Produits locaux en centre-ville", "resume": "NOUVEAU — Soirées produits locaux + musique live, place de Stalingrad.", "description": "De juin à août, le centre-ville accueille des nocturnes associant produits locaux à consommer sur place et orchestre d\'ambiance. Un concept de marché nocturne festif qui n\'existe pas encore à Vizille, en synergie avec l\'Union Commerçante Vizilloise et les producteurs du territoire. Année test 2026 : 1 soirée. Objectif 2028 : 5 soirées.", "importance": 3, "tags": ["Nouveau", "Animations de proximité", "Produits locaux", "Centre-ville"], "chiffres": [{"valeur": "1→5", "label": "Soirées / été (2026→2028)"}, {"valeur": "400 €", "label": "Coût unitaire"}, {"valeur": "Gratuit", "label": "Accès public"}]}, {"id": 723, "theme": "Animations de proximité", "type": "engagement", "titre": "Le petit conte d\'Halloween — Théâtre itinérant dans les quartiers", "resume": "NOUVEAU — Le 31 octobre, spectacle d\'improvisation pour les familles.", "description": "Le 31 octobre, une troupe de théâtre d\'improvisation amateur met en scène un conte d\'Halloween en parcourant les quartiers de Vizille. Gratuit, festif, familial. Ce spectacle itinérant comble le vide entre la rentrée et Noël dans le calendrier des animations. Année test 2026 : 1 représentation. Objectif 2028 : 2 quartiers couverts.", "importance": 2, "tags": ["Nouveau", "Animations de proximité", "Familles", "Quartiers"], "chiffres": [{"valeur": "1→2", "label": "Quartiers (2026→2028)"}, {"valeur": "200 €", "label": "Coût unitaire"}, {"valeur": "Gratuit", "label": "Accès public"}]}, {"id": 730, "theme": "Animations de proximité", "type": "engagement", "titre": "Spectacles « Isère en scène » — La p\'tite salle, les 1ers samedis du mois", "resume": "NOUVEAU — Programmation départementale intimiste, 10 €, toute l\'année.", "description": "Chaque premier samedi du mois, « La p\'tite salle » programme un spectacle isérois : musique ou théâtre, amateurs et professionnels. Une vitrine des troupes et lieux culturels de notre département dans un cadre intimiste, chaleureux, proche du public. Complémentaire du Jeu de Paume (grande jauge), cette programmation offre une expérience différente. Lancement prévu rentrée 2027, après une année de prospection.", "importance": 3, "tags": ["Nouveau", "P\'tite salle", "Isère", "Spectacles"], "chiffres": [{"valeur": "4→8", "label": "Samedis / an (2027→2028)"}, {"valeur": "10 €", "label": "Tarif"}, {"valeur": "500 €", "label": "Coût / spectacle"}]}, {"id": 731, "theme": "Animations de proximité", "type": "engagement", "titre": "« Isère en scène » et « Au théâtre ce soir » — Chaque 1er samedi du mois", "resume": "Spectacles de troupes et artistes locaux chaque 1er samedi du mois, dans la P\'tite salle ou une structure de quartier.", "description": "Accueillir des spectacles de troupes ou artistes locaux sous forme « Isère en scène » ou « Au théâtre ce soir » chaque 1er samedi du mois, dans la P\'tite salle ou dans une structure de quartier.\\n\\nMusiciens, danseurs, comédiens amateurs et professionnels disposent d\'une scène identifiée avec un nom propre et une programmation régulière.", "importance": 2, "tags": ["Nouveau", "P\'tite salle", "Artistes locaux"], "chiffres": [{"valeur": "3→5", "label": "Soirées / an (2027→2028)"}, {"valeur": "2 € / gratuit", "label": "Tarif"}]}, {"id": 732, "theme": "Animations de proximité", "type": "engagement", "titre": "Spectacles « Au théâtre ce soir » — L\'été amateur à la p\'tite salle", "resume": "NOUVEAU — Juillet-août, troupes amateurs isèroises, 5 € / tarif libre.", "description": "En juillet et août, les troupes théâtrales amateurs de l\'Isère rejouent leurs spectacles de fin d\'année dans notre p\'tite salle. 100 % amateur, 100 % convivial. Ce format comble le creux de programmation estival du Jeu de Paume et offre une seconde vie aux créations des compagnies du département. Tarif accessible : 5 € ou tarif libre. Lancement été 2027.", "importance": 2, "tags": ["Nouveau", "P\'tite salle", "Théâtre amateur", "Été"], "chiffres": [{"valeur": "4→6", "label": "Représentations / été (2027→2028)"}, {"valeur": "5 € / libre", "label": "Tarif"}]}, {"id": 740, "theme": "Animations de proximité", "type": "engagement", "titre": "Accompagner les forces vives — Aller à la rencontre des associations", "resume": "COMPLÉMENT — Écouter, accompagner, faciliter les projets citoyens.", "description": "Nous irons à la rencontre des associations et institutions qui animent Vizille : écoles, associations culturelles, OMS, Maison des Pratiques Artistiques, collège, lycée, l\'Escale… L\'objectif : écouter leurs projets, attentes et besoins, les accompagner techniquement pour plus d\'efficacité, encourager les habitants à être acteurs de l\'animation locale. On passe d\'une logique d\'accueil (les associations viennent demander) à une démarche d\'aller-vers (on va les rencontrer pour faire émerger des projets).", "importance": 3, "tags": ["Complément", "Associations", "Participation", "Aller-vers"], "enjeux": ["Écouter, connaître les projets, attentes et besoins", "Accompagner, faciliter, aider techniquement", "Encourager les habitants à être acteurs de l\'animation locale", "Permettre à des idées nouvelles de se concrétiser", "Dynamiser la vie locale"]}, {"id": 750, "theme": "Culture", "type": "objectif", "titre": "Objectif — Rayonnement culturel, patrimonial et animation", "resume": "Une culture forte, c\'est une culture qui rassemble, qui émancipe et qui donne à chacun la fierté de participer à la vie de la cité.", "description": "Nous voulons une ville créative, attractive et unie où la culture, le patrimoine et l\'animation renforcent l\'identité de Vizille. Nous vous proposons un projet qui valorise les savoir-faire locaux, notre histoire et prépare l\'avenir.\\n\\nSix axes structurent notre ambition :\\n→ Développer l\'éducation artistique et culturelle\\n→ Soutenir la création et associer les habitants\\n→ Animer la ville toute l\'année\\n→ Connaître, préserver et transmettre notre patrimoine\\n→ Conforter le lien avec nos villes jumelées\\n→ Soutenir et accompagner la vie associative\\n\\nUne culture forte, c\'est une culture qui rassemble, qui émancipe et qui donne à chacun la fierté de participer à la vie de la cité.", "importance": 3, "slogan": "Créer • Partager • Transmettre", "enjeux": ["Promouvoir l\'éducation artistique et culturelle pour tous les âges", "Soutenir la création et les acteurs culturels du territoire", "Fédérer par des événements conviviaux et intergénérationnels", "Accompagner la vie associative et les jumelages"], "axes_action": ["Axe 1 — Éducation artistique et culture accessible", "Axe 2 — Soutien à la création et aux artistes", "Axe 3 — Événements conviviaux et projets jeunesse", "Axe 4 — Vie associative et jumelage"], "indicateurs": ["Fréquentation des événements culturels", "Nombre de résidences d\'artistes et projets soutenus", "Associations accompagnées", "Échanges jumelage réalisés"], "vision": "Un projet culturel pour une ville où l\'on crée, où l\'on partage, où l\'on vit ensemble.", "image": "images/objectifs/objectif_culture.png"}, {"id": 751, "theme": "Culture", "type": "engagement", "titre": "Faciliter l\'accès à la culture pour tous", "resume": "Parcours artistique pour tous les Vizillois et toutes les générations, pass\'culture pour les jeunes de moins de 14 ans, aide au quotient familial, éducation artistique.", "description": "Développer l\'éducation artistique et culturelle en mettant en place un Projet d\'Éducation Artistique et Culturel communal, afin de coordonner, valoriser et renforcer toutes les actions menées sur le territoire et offrir à tous les Vizillois un véritable parcours artistique.\\n\\nGarantir une culture de qualité et accessible à tous : tarifs abordables et solidaires, soutien à l\'apprentissage artistique dès le plus jeune âge.\\n\\nFaciliter la découverte des pratiques artistiques notamment musicales : pass\'culture pour les jeunes de moins de 14 ans, aide au quotient familial, projets dans les écoles, en lien avec les associations et la Maison des Pratiques Artistiques.\\n\\nRenforcer les liens avec les structures culturelles métropolitaines.", "importance": 3, "tags": ["Culture", "Accès", "Pass\'culture", "Éducation", "Toutes générations"], "chiffres": [{"valeur": "Projet d\'Éducation Artistique et Culturel", "label": "Projet communal"}, {"valeur": "Tous âges", "label": "Accès dès le plus jeune âge"}]}, {"id": 752, "theme": "Culture", "type": "engagement", "titre": "Maintenir les événements culturels et des spectacles de qualité", "resume": "Saison culturelle, festivals P\'tits Mots P\'tits Mômes et du film pour enfants, Fête de la science, Estivales, tarifs abordables.", "description": "Maintenir les événements importants déjà en place : saison culturelle du Jeu de Paume, festivals P\'tits Mots P\'tits Mômes, Festival du film pour enfants, Fête de la science, Estivales.\\n\\nPoursuivre l\'effort pour maintenir des tarifs abordables pour la saison culturelle, les festivals et les événements culturels. Maintenir des spectacles de qualité tout en garantissant l\'accès au plus grand nombre grâce au soutien au quotient familial déjà existant.", "importance": 2, "tags": ["Culture", "Accessibilité", "Tarifs"], "image": "images/culture-patrimoine/fete_science.jpg"}, {"id": 753, "theme": "Culture", "type": "engagement", "titre": "Soutenir la création et accueillir des artistes", "resume": "Résidences d\'artistes, street art, parcours des arts, salle d\'exposition, rencontres avec les créateurs.", "description": "Accueillir des résidences d\'artistes et poursuivre le projet de street art « De la vie et des couleurs dans la ville ». Créer un parcours des arts dans la ville.\\n\\nFavoriser les moments de rencontre et d\'échange avec les artistes et créateurs, amateurs ou professionnels : dans le cadre des résidences, des peintres ou sculpteurs dans les rues de la ville.\\n\\nLancer des appels à projets artistiques ouverts aux créateurs locaux et régionaux.", "importance": 3, "tags": ["Création", "Résidences", "Street art", "Artistes"], "chiffres": [{"valeur": "Street art", "label": "De la vie et des couleurs"}, {"valeur": "Parcours", "label": "Des arts dans la ville"}], "image": "images/culture-patrimoine/fresque_peage.jpg"}, {"id": 754, "theme": "Culture", "type": "engagement", "titre": "Une salle d\'exposition accessible et spacieuse", "resume": "Création d\'un espace dédié aux expositions artistiques.", "description": "Création d\'une salle d\'exposition accessible et spacieuse pour accueillir des expositions de qualité. Un équipement culturel qui manque aujourd\'hui à Vizille pour valoriser les artistes locaux et accueillir des expositions itinérantes.", "importance": 2, "tags": ["Équipement", "Exposition", "Art"]}, {"id": 755, "theme": "Culture", "type": "engagement", "titre": "Projets artistiques avec les jeunes et les habitants", "resume": "Fresques, spectacles, jardin musical intergénérationnel, projets artistiques participatifs.", "description": "Mener des projets artistiques avec les jeunes vizillois et les habitants : fresques, spectacles théâtraux ou musicaux en lien avec des artistes.\\n\\nProposer l\'implantation d\'un « jardin musical » dans un parc, projet intergénérationnel en lien avec la Maison des Pratiques Artistiques (MPA).\\n\\nFaire vivre la ville au rythme des événements culturels de l\'année.", "importance": 2, "tags": ["Jeunesse", "Création", "Intergénérationnel", "Maison des Pratiques Artistiques"]}, {"id": 756, "theme": "Culture", "type": "engagement", "titre": "Animer la ville toute l\'année, dans chaque quartier", "resume": "Fête du printemps, repas de rue, fête des jeux, marché de Noël, veillée de Belledonne, spectacles de rue, nocturnes gourmandes.", "description": "Développer des animations variées au plus près des habitants lors de moments conviviaux de rencontre dans chaque quartier : fête du printemps, repas de rue, fête des jeux, marché de Noël, veillée de Belledonne, spectacles de rue « Chapeau l\'artiste », nocturnes gourmandes et musicales.\\n\\nProposer des animations en lien avec les associations des grands itinéraires touristiques et de cyclotourisme : Route Napoléon, Sur les pas des Huguenots, Route Napoléon à cheval.", "importance": 3, "tags": ["Convivialité", "Fêtes", "Toute l\'année", "Quartiers"], "image": "images/culture-patrimoine/bollywood_estivales_2025.jpg"}, {"id": 758, "theme": "Patrimoine", "type": "objectif", "titre": "Objectif — Connaître, préserver, transmettre le patrimoine vizillois", "resume": "Valoriser le patrimoine bâti, mémoriel et paysager de Vizille pour renforcer l\'identité locale et l\'attractivité touristique.", "description": "Vizille possède un patrimoine riche et varié : prieuré clunisien, chapelle du Péage, lavoirs, canaux des Tanneries, mémoire de la Résistance, petit patrimoine vernaculaire… Ce patrimoine mérite d\'être mieux connu, mieux préservé et mieux transmis.\\n\\nNotre approche associe restauration participative, parcours de découverte et attractivité touristique, en lien étroit avec les associations patrimoniales et les habitants.", "importance": 3, "slogan": "Connaître • Préserver • Transmettre", "enjeux": ["Sauvegarder et faire revivre les sites patrimoniaux majeurs", "Impliquer les habitants dans la préservation du patrimoine", "Développer des parcours de découverte accessibles à tous", "Renforcer l\'attractivité touristique du territoire"], "axes_action": ["Axe 1 — Restauration participative (lavoirs, chapelle, Tanneries)", "Axe 2 — Sites majeurs (prieuré, partenariats patrimoniaux)", "Axe 3 — Parcours de découverte dans la ville", "Axe 4 — Attractivité touristique"], "indicateurs": ["Sites patrimoniaux restaurés ou valorisés", "Parcours créés et fréquentation", "Partenariats actifs (AHPV, Fondation du patrimoine)", "Fréquentation touristique"], "vision": "Une ville qui connaît son histoire, la préserve et la partage avec fierté.", "image": "images/objectifs/objectif_patrimoine.png"}, {"id": 760, "theme": "Patrimoine", "type": "engagement", "titre": "Lavoirs, chapelle du Péage et tannerie : projets participatifs", "resume": "Restauration participative des lavoirs, résidence architecturale et artistique pour la chapelle du Péage et la tannerie.", "description": "Engager des projets participatifs pour embellir deux lavoirs.\\n\\nRéfléchir ensemble sur le devenir de la chapelle du Péage et de la tannerie à travers une résidence architecturale et artistique, pour penser leur avenir avec les habitants.", "importance": 2, "tags": ["Patrimoine", "Participatif", "Lavoirs", "Chapelle", "Tanneries"]}, {"id": 761, "theme": "Patrimoine", "type": "engagement", "titre": "Sauvegarder et faire revivre le prieuré", "resume": "Valorisation du prieuré en partenariat avec l\'AHPV, la Fondation du patrimoine et les sites clunisiens.", "description": "Sauvegarde du prieuré de Vizille : valorisation du monument et mise en projet pour le faire revivre, en partenariat avec les Amis de l\'Histoire du Pays Vizillois (AHPV), la Fondation du patrimoine et la fédération des sites clunisiens.\\n\\nOrganiser des animations culturelles en lien avec nos sites emblématiques, en collaboration avec les associations locales et la fédération des sites clunisiens.\\n\\nFaire découvrir les métiers liés à la restauration de monuments ou d\'œuvres : organisation d\'une fête des métiers du patrimoine, de la restauration et de l\'archéologie.", "importance": 3, "tags": ["Patrimoine", "Prieuré", "AHPV", "Clunisiens"], "chiffres": [{"valeur": "3", "label": "Partenaires patrimoniaux"}, {"valeur": "AHPV", "label": "Partenaire clé"}]}, {"id": 762, "theme": "Patrimoine", "type": "engagement", "titre": "Parcours patrimoniaux dans la ville", "resume": "Mémoire de la Résistance, petit patrimoine, parcours des fresques.", "description": "Mettre en place un parcours « Mémoire de la Résistance », un parcours au cimetière et un parcours du petit patrimoine. Créer un circuit « Ouvrons les yeux » pour découvrir le petit patrimoine vizillois (passages, lavoirs, statues, plaques de cochers, portes anciennes) à l\'aide de supports ludiques. Développer le parcours des fresques street art dans la ville.", "importance": 2, "tags": ["Patrimoine", "Parcours", "Résistance", "Découverte"], "image": "images/culture-patrimoine/porte_1733.jpg"}, {"id": 770, "theme": "Patrimoine", "type": "engagement", "titre": "Renforcer l\'attractivité touristique", "resume": "Office du tourisme renforcé, grands itinéraires, halte camping-cars.", "description": "Travailler avec la Métropole pour rendre plus visible l\'office du tourisme et en faire une Maison de pays, lieu dédié aux artistes et artisans locaux avec vente de leurs créations. Développer les animations en lien avec les grands itinéraires : Sur les pas des Huguenots, la Route Napoléon, itinéraires à cheval, circuits de cyclotourisme. Créer une halte de camping-cars pour accueillir les visiteurs.", "importance": 2, "tags": ["Tourisme", "Itinéraires", "Napoléon", "Cyclotourisme"], "chiffres": [{"valeur": "4", "label": "Grands itinéraires"}, {"valeur": "1", "label": "Halte camping-cars"}]}, {"id": 780, "theme": "Culture", "type": "engagement", "titre": "Soutenir et accompagner la vie associative", "resume": "Soutien financier, partenariats Les Cinémas Associés/Maison des Pratiques Artistiques, maison des associations.", "description": "Maintenir un lien fort avec les associations culturelles. Être à l\'écoute, facilitateurs pour leurs projets, pour renforcer les forces vives de la ville et construire ensemble une dynamique locale partagée.\\n\\nPoursuivre le dialogue et maintenir le soutien financier, matériel et logistique aux associations. Poursuivre les partenariats avec Les Cinémas Associés, la Maison des Pratiques Artistiques et les structures culturelles locales. Étudier la création d\'une maison des associations.", "importance": 3, "tags": ["Associations", "Les Cinémas Associés", "Maison des Pratiques Artistiques", "Soutien"], "chiffres": [{"valeur": "Les Cinémas Associés + Maison des Pratiques Artistiques", "label": "Partenariats maintenus"}, {"valeur": "1", "label": "Maison des associations"}]}, {"id": 781, "theme": "Jumelages", "type": "engagement", "titre": "Conforter le lien avec nos villes jumelées", "resume": "Implication des habitants, échanges culturels et citoyens entre les trois cités, Fêtes de l\'Amitié 2027 et 2030, Courrier du jumelage.", "description": "Impliquer des habitants dans le comité de jumelage. Développer les échanges culturels, associatifs et citoyens entre les trois cités.\\n\\nFaire des Fêtes de l\'Amitié de 2027 et 2030 à Vizille un temps fort de partage.\\n\\nUn « Courrier du jumelage » permettra de partager régulièrement sur les échanges et les projets.", "importance": 2, "tags": ["Jumelage", "Échanges", "International", "Jeunesse"], "chiffres": [{"valeur": "2027 + 2030", "label": "Fêtes de l\'Amitié"}, {"valeur": "1-2/an", "label": "Courrier du jumelage"}]}, {"id": 782, "theme": "Patrimoine", "type": "engagement", "titre": "Protéger et valoriser le moulin du Pétillon et les battoirs", "resume": "Protection urgente et valorisation du moulin du Pétillon et des battoirs, témoins de l\'histoire artisanale de Vizille.", "description": "Le moulin du Pétillon et les battoirs constituent des éléments patrimoniaux remarquables, longtemps restés à l\'abri mais aujourd\'hui menacés par le temps. Leur protection sera engagée dès ce mandat pour éviter toute dégradation irréversible. Cette démarche comprend la sécurisation et la conservation des mécanismes du moulin du Pétillon (roue, engrenages, battoirs), un diagnostic patrimonial pour évaluer l\'état des structures et les travaux prioritaires, ainsi qu\'un projet de valorisation pour faire connaître ce patrimoine artisanal aux Vizillois et aux visiteurs.", "importance": 3, "tags": ["Patrimoine", "Moulin du Pétillon", "Battoirs", "Protection"], "chiffres": [{"valeur": "1", "label": "Mandat pour agir"}], "image": "images/culture-patrimoine/roue_moulin_petillon.jpg"}, {"id": 108, "titre": "Objectif 8 - Algorithmes de navigation : reprendre le contrôle", "theme": "Mobilités", "statut": "Planifié", "annee": 2026, "budget": 0, "resume": "S\'attaquer aux diktats des GPS qui transforment nos quartiers en autoroutes de délestage", "description": "Lors des retours de stations, les algorithmes de Waze ou Google Maps transforment nos quartiers en autoroutes de délestage. Ce n\'est pas une fatalité — mais le corriger demandera de la méthode, des outils réglementaires et une présence numérique que nous sommes maintenant en mesure d\'activer.", "importance": 3, "chiffres": [], "tags": ["GPS", "Waze", "DiaLog", "Transit", "Quartiers", "Numérique"], "slogan": "Informer l\'algorithme · Protéger les quartiers · Reprendre le contrôle", "enjeux": ["Réduire le trafic de transit dans les quartiers résidentiels", "Rendre nos arrêtés municipaux visibles des GPS", "Préserver l\'âme et la tranquillité du centre historique"], "axes_action": ["Arrêtés rues → inadaptées au transit", "Macaron riverain : accès garanti, contrôles facilités", "Plateforme DiaLog : certification des arrêtés auprès des GPS", "Intégration au programme Waze for Cities", "Récupération des données trafic temps réel pour le Plan Circulation"], "indicateurs": ["Arrêtés transmis via DiaLog", "Adhésion au programme Waze for Cities", "Bilan trafic de transit hiver 2026-2027"], "vision": "Nos rues ne sont pas des autoroutes de délestage. Les outils existent, la volonté est là — nous mettrons tout dans la balance pour y arriver dès le premier hiver.", "phases": ["Phase 1 : Délibération au conseil municipal + préparation technique et réglementaire", "Phase 2 : Arrêtés, validation préfecture, macarons, outils numériques", "Phase 3 : Test grandeur nature — vacances 2026-2027, 1er bilan trafic"], "numero": "8/8", "image": "images/objectifs/objectif_8_gps.png"}, {"id": 501, "titre": "Revitaliser le commerce de centre-ville", "theme": "Économie", "statut": "Planifié", "type": "objectif", "resume": "Réhabiliter, attirer, installer", "description": "La vacance commerciale fragilise l\'attractivité du centre-ville et la vie de quartier.", "slogan": "Réhabiliter • Attirer • Installer", "axes_action": ["Partenariat avec la GAM et Inovaction pour la réhabilitation et la mise sur le marché des locaux vacants", "Préconiser des loyers modérés auprès de la GAM", "S\'appuyer sur l\'ORT Centralité Vizilloise", "Vitrines « Welcome Oisans »"], "indicateurs": ["Locaux réhabilités", "Commerces installés", "Taux de vacance"], "vision": "Un centre-ville vivant, c\'est une ville qui vit.", "tags": ["Commerce", "Urbanisme", "Centre-ville"], "importance": 3, "budget": 0, "chiffres": []}, {"id": 502, "titre": "Soutenir commerces et artisans", "theme": "Économie", "statut": "Planifié", "type": "engagement", "resume": "Animer, valoriser, fédérer", "description": "Fédérer les acteurs locaux pour dynamiser l\'offre commerciale.", "slogan": "Animer • Valoriser • Fédérer", "axes_action": ["Renforcer l\'Union Commerçante Vizilloise", "Organiser marchés thématiques et animations", "Créer le label Made in Vizille", "Réflexion en cours pour une boutique éphémère"], "indicateurs": ["Animations organisées", "Commerçants participants", "Fréquentation"], "vision": "Consommer local, c\'est soutenir nos voisins.", "tags": ["Commerce", "Artisanat", "Animation"], "importance": 3, "budget": 0, "chiffres": []}, {"id": 503, "titre": "Digitaliser les commerces", "theme": "Économie", "statut": "Planifié", "type": "engagement", "resume": "Former, connecter, vendre", "description": "Le numérique est devenu incontournable pour la visibilité et les ventes.", "slogan": "Former • Connecter • Vendre", "axes_action": ["Créer une plateforme e-commerce vizilloise", "Déployer le click & collect mutualisé", "Proposer, faciliter et coordonner l\'accès aux dispositifs de formation numérique existants (CCI, BPI, Région ARA)"], "indicateurs": ["Commerçants en ligne", "Ventes numériques", "Click & collect actif"], "vision": "Le digital au service du commerce de proximité.", "tags": ["Commerce", "Numérique"], "importance": 2, "budget": 0, "chiffres": []}, {"id": 504, "titre": "Accompagner la création d\'entreprises", "theme": "Économie", "statut": "Planifié", "type": "engagement", "resume": "Accueillir, accompagner, développer", "description": "Simplifier les démarches et offrir un écosystème favorable aux porteurs de projets.", "slogan": "Accueillir • Accompagner • Développer", "axes_action": ["Inciter nos partenaires à créer un guichet unique commerce / artisanat", "Étudier la création d\'ateliers partagés", "Relais BPI et GAM"], "indicateurs": ["Entreprises créées", "Porteurs accompagnés", "Emplois générés"], "vision": "Entreprendre à Vizille, c\'est possible.", "tags": ["Entreprises", "Emploi"], "importance": 2, "budget": 0, "chiffres": []}, {"id": 505, "titre": "Commerces éco-responsables", "theme": "Économie", "statut": "Planifié", "type": "engagement", "resume": "Réduire, recycler, valoriser", "description": "Accompagner les commerces vers des pratiques durables.", "slogan": "Réduire • Recycler • Valoriser", "axes_action": ["Coordonner les Éco-défis locaux", "Labelliser les commerces engagés"], "indicateurs": ["Commerces labellisés", "Déchets réduits", "Énergie économisée"], "vision": "Consommer responsable, près de chez soi.", "tags": ["Commerce", "Environnement"], "importance": 2, "budget": 0, "chiffres": []}]';
+  const COMM_JSON = '{"Culture, Patrimoine & Jumelages": ["Culture", "Patrimoine", "Jumelages"], "Mobilités": ["Mobilités"], "Transition écologique": ["Transition écologique"], "Action sociale": ["Action sociale"], "Concertation citoyenne": ["Concertation citoyenne"], "Animations de proximité": ["Animations de proximité"], "Économie": ["Économie"], "Métropole": ["Métropole"], "Enfance/Jeunesse": ["Enfance/Jeunesse"], "Tranquillité publique": ["Tranquillité publique"], "Travaux & Urbanisme": ["Travaux", "Urbanisme"], "Santé": ["Santé"]}';
+  const ICONS_JSON = '{"Culture, Patrimoine & Jumelages": "🎭", "Mobilités": "🚲", "Transition écologique": "🌿", "Action sociale": "🤝", "Concertation citoyenne": "🗣", "Animations de proximité": "🎪", "Économie": "💼", "Métropole": "🏙", "Enfance/Jeunesse": "👦", "Tranquillité publique": "🛡", "Travaux & Urbanisme": "🏗", "Santé": "🏥"}';
+  const REFS_JSON = '{"Culture, Patrimoine & Jumelages": "Marie-Claude", "Enfance/Jeunesse": "Angélique", "Animations de proximité": "Jean-Christophe"}';
+  const COLORS_JSON = '["#4a8a5a", "#5a9a6a", "#3a6a4a", "#6ab06a", "#2a5a3a", "#8ac08a", "#7ab87a", "#1a4a2a", "#4a8a5a", "#5a9a6a", "#3a6a4a", "#6ab06a"]';
+
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VeM - Espace elus</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<title>VeM &mdash; Espace élus</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"><\/script>
 <style>
+:root{--sg:#1a3a2a;--sm:#2d6a4f;--sl:#4a8a5a;--sp:#e8f0e8;--bg:#f0f2f5;--card:#fff;--border:#e0e4ea;--muted:#8a9099;--text:#1a1e26;--tl:#5a6270;--r:8px;--sh:0 1px 4px rgba(0,0,0,.08)}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f4f4ef;color:#111}
-header{background:#1a3a2a;color:#fff;padding:.85rem 2rem;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
-.logo{width:34px;height:34px;background:#4a8a5a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0}
-header h1{font-size:.95rem;font-weight:500;flex:1}
-header small{opacity:.6;font-size:.72rem}
-nav{background:#1a3a2a;border-top:1px solid rgba(255,255,255,.1);display:flex;flex-wrap:wrap;padding:0 1rem}
-nav button{background:none;border:none;color:rgba(255,255,255,.7);padding:.55rem .9rem;cursor:pointer;font-size:.78rem;border-bottom:2px solid transparent}
-nav button.active,nav button:hover{color:#fff;border-bottom-color:#7ab87a}
-.tab{display:none;padding:1.25rem 2rem 2rem;max-width:1100px}
-.tab.active{display:block}
-.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:1.25rem}
-.m{background:#fff;border-radius:10px;padding:.85rem 1rem;border:.5px solid #e0e0d8}
-.m .v{font-size:1.7rem;font-weight:600;color:#1a3a2a}
-.m .l{font-size:.68rem;color:#999;margin-top:2px}
-.charts{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-bottom:1.25rem}
-.cc{background:#fff;border-radius:10px;padding:1rem;border:.5px solid #e0e0d8}
-.cc h3{font-size:.75rem;color:#666;margin-bottom:.75rem;font-weight:500}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;height:100vh;overflow:hidden}
+.topbar{height:52px;background:var(--sg);display:flex;align-items:center;padding:0 1rem;gap:12px;flex-shrink:0;z-index:100}
+.t-logo{width:32px;height:32px;background:var(--sl);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;color:#fff;flex-shrink:0}
+.t-title{font-size:.9rem;font-weight:600;color:#fff;flex:1}
+.t-date{font-size:.72rem;color:rgba(255,255,255,.45)}
+.t-user{width:30px;height:30px;background:var(--sl);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:600;color:#fff}
+.layout{display:flex;flex:1;overflow:hidden}
+.sidebar{width:220px;background:var(--sg);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;padding:.5rem 0}
+.ns{padding:.5rem 1rem .25rem;font-size:.62rem;font-weight:600;color:rgba(255,255,255,.28);text-transform:uppercase;letter-spacing:.08em;margin-top:.25rem}
+.ni{display:flex;align-items:center;gap:10px;padding:.55rem 1rem;cursor:pointer;color:rgba(255,255,255,.65);font-size:.8rem;border-left:3px solid transparent}
+.ni:hover{background:rgba(255,255,255,.07);color:#fff}
+.ni.active{background:rgba(255,255,255,.12);color:#fff;border-left-color:var(--sl)}
+.ni-icon{width:18px;text-align:center;font-size:.88rem;flex-shrink:0}
+.nb{margin-left:auto;background:var(--sl);color:#fff;font-size:.6rem;font-weight:600;padding:1px 5px;border-radius:10px}
+.sf{margin-top:auto;padding:1rem;border-top:1px solid rgba(255,255,255,.08);font-size:.68rem;color:rgba(255,255,255,.28);line-height:1.5}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.ph{padding:.85rem 1.5rem;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-shrink:0}
+.ph h1{font-size:1rem;font-weight:600;color:var(--text);flex:1}
+.ph p{font-size:.74rem;color:var(--muted)}
+.content{flex:1;overflow-y:auto;padding:1.25rem 1.5rem}
+.page{display:none}.page.active{display:block}
+.metrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-bottom:1.25rem}
+.m{background:#fff;border-radius:var(--r);padding:.85rem 1rem;border:1px solid var(--border);box-shadow:var(--sh)}
+.m .v{font-size:1.8rem;font-weight:700;color:var(--sg);line-height:1}
+.m .l{font-size:.68rem;color:var(--muted);margin-top:4px}
+.cgrid{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;margin-bottom:1.25rem}
+.card{background:var(--card);border-radius:var(--r);border:1px solid var(--border);padding:1.1rem 1.25rem;box-shadow:var(--sh)}
 .cw{position:relative;height:200px}
-.fl{display:flex;gap:8px;margin-bottom:.85rem;flex-wrap:wrap;align-items:center}
-.fl select,.fl input{padding:5px 8px;border:.5px solid #ddd;border-radius:6px;font-size:.75rem;background:#fff;outline:none}
-table{width:100%;border-collapse:collapse;font-size:.76rem;background:#fff;border-radius:10px;overflow:hidden;border:.5px solid #e0e0d8}
-th{background:#f0f0e8;padding:8px 10px;text-align:left;font-weight:500;color:#555;font-size:.72rem}
-td{padding:7px 10px;border-top:.5px solid #f0f0e8;vertical-align:middle}
-tr:hover td{background:#f8f8f4}
-.b{display:inline-block;padding:1px 6px;border-radius:4px;font-size:.67rem;font-weight:500}
-.b1{background:#fde8e8;color:#a33}.b2{background:#e8f0e8;color:#363}.b3{background:#e8eef8;color:#336}.b4{background:#fef3e2;color:#863}.b5{background:#f0f0e8;color:#666}.b6{background:#e8f8e8;color:#2a6}
-.card{background:#fff;border-radius:10px;border:.5px solid #e0e0d8;padding:1.1rem;margin-bottom:12px}
-.card h4{font-size:.85rem;font-weight:500;margin-bottom:.5rem;color:#1a3a2a}
-.card p{font-size:.78rem;color:#666;line-height:1.5}
-.meta{font-size:.7rem;color:#aaa;margin-top:.5rem}
-.btn{display:inline-block;padding:5px 12px;border-radius:6px;font-size:.75rem;cursor:pointer;border:.5px solid #1a3a2a;background:#1a3a2a;color:#fff}
-.btn:hover{background:#2a5a3a}
-.btn-sm{padding:3px 8px;font-size:.7rem}
-.btn-ghost{background:transparent;color:#1a3a2a;border-color:#ccc}
-.btn-ghost:hover{background:#f0f0e8}
-.btn-red{background:#a33;border-color:#a33;color:#fff}
-.finput{width:100%;padding:6px 10px;border:.5px solid #ddd;border-radius:6px;font-size:.78rem;margin-bottom:8px;font-family:inherit}
-textarea.finput{height:80px;resize:vertical}
-select.finput{background:#fff}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:center;justify-content:center}
-.modal-bg.open{display:flex}
-.modal{background:#fff;border-radius:12px;padding:1.5rem;width:min(480px,90vw);max-height:85vh;overflow-y:auto}
-.modal h3{font-size:1rem;font-weight:500;margin-bottom:1rem;color:#1a3a2a}
-.notif-item{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fff;border-radius:8px;border:.5px solid #e0e0d8;margin-bottom:8px;font-size:.76rem}
-.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:#4a8a5a}
-.dot.old{background:#ccc}
-.ssel{padding:2px 6px;border:.5px solid #ddd;border-radius:4px;font-size:.7rem;background:#fff}
-a{color:#336;text-decoration:none}
-a:hover{text-decoration:underline}
-.hero{background:#1a3a2a;color:#fff;border-radius:14px;padding:1.75rem;display:flex;align-items:center;gap:1.5rem;margin-bottom:1.25rem}
-.hero-logo{width:56px;height:56px;background:#4a8a5a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
-.help-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1rem}
-.help-item{display:flex;gap:10px;align-items:flex-start}
-.help-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
-.toast{position:fixed;bottom:20px;right:20px;background:#1a3a2a;color:#fff;padding:10px 16px;border-radius:8px;font-size:.8rem;z-index:300;display:none}
-@media(max-width:650px){.charts{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.form-row{grid-template-columns:1fr}.help-grid{grid-template-columns:1fr}}
+.table-wrap{background:#fff;border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--sh);overflow:hidden}
+.fbar{padding:.7rem 1.25rem;background:#f8f9fa;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.fsel{padding:5px 8px;border:1px solid var(--border);border-radius:6px;font-size:.75rem;background:#fff;outline:none}
+.fsel:focus{border-color:var(--sl)}
+.fsrch{padding:5px 10px;border:1px solid var(--border);border-radius:6px;font-size:.75rem;background:#fff;outline:none;flex:1;min-width:140px}
+.fsrch:focus{border-color:var(--sl)}
+.fcnt{font-size:.72rem;color:var(--muted);white-space:nowrap}
+table{width:100%;border-collapse:collapse;font-size:.77rem}
+th{background:#f8f9fa;padding:8px 12px;text-align:left;font-weight:600;color:var(--tl);font-size:.71rem;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:8px 12px;border-bottom:1px solid #f4f4f4;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafbfc}
+.pn{font-weight:500;font-size:.8rem}
+.pr{font-size:.7rem;color:var(--muted);margin-top:1px}
+.badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:.67rem;font-weight:600;white-space:nowrap}
+.badge::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.7}
+.b-pr{background:#fdeaea;color:#c0392b}
+.b-pg{background:#eaf5ea;color:#27ae60}
+.b-pl{background:#eaeffa;color:#2980b9}
+.b-et{background:#fef5e7;color:#d68910}
+.b-ec{background:#fdf0e0;color:#e67e22}
+.b-re{background:#e8f8f0;color:#1e8449}
+.b-nd{background:#f4f4f4;color:#999}
+.comm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.cc{background:#fff;border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--sh);cursor:pointer;transition:.18s;overflow:hidden}
+.cc:hover{box-shadow:0 4px 18px rgba(0,0,0,.13);transform:translateY(-1px)}
+.cc-head{padding:.85rem 1rem;display:flex;align-items:center;gap:10px}
+.cc-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0}
+.cc-title{font-size:.84rem;font-weight:600;line-height:1.3}
+.cc-sub{font-size:.67rem;color:var(--muted);margin-top:2px}
+.cc-body{padding:.55rem 1rem .85rem;border-top:1px solid #f4f4f4}
+.cc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:.5rem}
+.cs-v{font-size:1.1rem;font-weight:700;text-align:center}
+.cs-l{font-size:.6rem;color:var(--muted);text-align:center}
+.pbar{background:#f0f2f5;border-radius:4px;height:5px}
+.pfill{height:5px;border-radius:4px;transition:.3s}
+.prog-lbl{display:flex;justify-content:space-between;font-size:.65rem;color:var(--muted);margin-top:3px}
+.finput{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:.8rem;color:var(--text);background:#fff;outline:none;transition:.15s;font-family:inherit}
+.finput:focus{border-color:var(--sl);box-shadow:0 0 0 3px rgba(74,138,90,.1)}
+textarea.finput{resize:vertical;min-height:80px}
+.ff{margin-bottom:.75rem}
+.ff label{display:block;font-size:.72rem;font-weight:600;color:var(--tl);margin-bottom:.3rem}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:6px;font-size:.78rem;font-weight:500;cursor:pointer;border:1px solid transparent;font-family:inherit}
+.btn-p{background:var(--sg);color:#fff;border-color:var(--sg)}.btn-p:hover{background:var(--sm)}
+.btn-s{background:#fff;color:var(--text);border-color:var(--border)}.btn-s:hover{background:#f4f6f8}
+.btn-g{background:transparent;color:var(--tl);border-color:transparent}.btn-g:hover{background:#f0f2f5}
+.btn-sm{padding:4px 10px;font-size:.72rem}
+.btn-d{background:#fee;color:#c0392b;border-color:#fcc}
+.ssel{padding:3px 6px;border:1px solid var(--border);border-radius:4px;font-size:.7rem;background:#fff;cursor:pointer;outline:none}
+.notif-i{display:flex;align-items:center;gap:10px;padding:.65rem .85rem;background:#fff;border-radius:6px;border:1px solid var(--border);margin-bottom:6px;font-size:.78rem}
+.ndot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.modal{background:#fff;border-radius:12px;padding:1.5rem;width:min(500px,92vw);max-height:88vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.2)}
+.mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+.mh h3{font-size:1rem;font-weight:600}
+.mc{background:none;border:none;cursor:pointer;font-size:1.2rem;color:var(--muted);padding:2px 6px;border-radius:4px}
+.mc:hover{background:#f0f2f5}
+.mf{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border)}
+.hero{background:linear-gradient(135deg,var(--sg) 0%,var(--sm) 100%);border-radius:12px;padding:1.75rem;color:#fff;display:flex;align-items:center;gap:1.5rem;margin-bottom:1.25rem}
+.h-av{width:60px;height:60px;background:rgba(255,255,255,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.hg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hi{display:flex;gap:10px;padding:.85rem;background:#f8f9fa;border-radius:8px;border:1px solid var(--border)}
+.hico{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;background:#fff;border:1px solid var(--border)}
+.hi strong{font-size:.78rem;display:block;margin-bottom:2px}
+.hi p{font-size:.72rem;color:var(--muted);line-height:1.4}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--sg);color:#fff;padding:10px 18px;border-radius:8px;font-size:.8rem;z-index:1000;display:none;box-shadow:0 4px 16px rgba(0,0,0,.25)}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:2px}
+@media(max-width:768px){.sidebar{display:none}.cgrid{grid-template-columns:1fr}.comm-grid{grid-template-columns:1fr}.hg{grid-template-columns:1fr}.fr{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
-<header>
-  <div class="logo">VM</div>
-  <h1>Vizille en Mouvement &mdash; Espace &eacute;lus</h1>
-  <small>${today}</small>
-</header>
-<nav>
-  <button class="active" onclick="showTab('accueil',this)">&#127968; Accueil</button>
-  <button onclick="showTab('global',this)">&#128202; Gestion globale</button>
-  <button onclick="showTab('agenda',this)">&#128197; Agenda</button>
-  <button onclick="showTab('documents',this)">&#128196; Documents</button>
-  <button onclick="showTab('notifs',this)">&#128276; Historique</button>
-  <button onclick="showTab('creer',this)">&#10010; Nouveau projet</button>
-  <button onclick="showTab('budget',this)">&#128200; Budget</button>
-  <button onclick="showTab('elections',this)">&#128499; Elections</button>
-  <button onclick="showTab('comms',this)">&#128221; Communications</button>
-  <button onclick="showTab('pages',this)">&#128101; Par commission</button>
-</nav>
+<div class="topbar">
+  <div class="t-logo">VM</div>
+  <span class="t-title">Vizille en Mouvement &mdash; Espace &eacute;lus</span>
+  <span class="t-date" id="tdate">${today}</span>
+  <div class="t-user" title="Michel T.">MT</div>
+</div>
+<div class="layout">
+<aside class="sidebar">
+  <div class="ns">Tableau de bord</div>
+  <div class="ni active" onclick="gp('accueil',this)"><span class="ni-icon">🏠</span>Accueil</div>
+  <div class="ns">Projets</div>
+  <div class="ni" onclick="gp('global',this)"><span class="ni-icon">📊</span>Gestion globale<span class="nb" id="nb-t">91</span></div>
+  <div class="ni" onclick="gp('comm',this)"><span class="ni-icon">👥</span>Par commission</div>
+  <div class="ns">Outils</div>
+  <div class="ni" onclick="gp('agenda',this)"><span class="ni-icon">📅</span>Agenda</div>
+  <div class="ni" onclick="gp('docs',this)"><span class="ni-icon">📄</span>Documents</div>
+  <div class="ni" onclick="gp('hist',this)"><span class="ni-icon">🔔</span>Historique</div>
+  <div class="ni" onclick="gp('creer',this)"><span class="ni-icon">➕</span>Nouveau projet</div>
+  <div class="ni" onclick="gp('budget',this)"><span class="ni-icon">📈</span>Budget</div>
+  <div class="ni" onclick="gp('elec',this)"><span class="ni-icon">🗳</span>&Eacute;lections</div>
+  <div class="ni" onclick="gp('comms',this)"><span class="ni-icon">✍</span>Communications</div>
+  <div class="sf">elus.vizilleenmouvement.fr<br>Mandat 2026&ndash;2032</div>
+</aside>
+<main class="main">
 
-<!-- ACCUEIL -->
-<div class="tab active" id="tab-accueil">
-  <div class="hero">
-    <div class="hero-logo">VM</div>
-    <div>
-      <h2 style="font-size:1.2rem;font-weight:600;margin-bottom:.3rem">Bienvenue, espace &eacute;lus</h2>
-      <p style="opacity:.8;font-size:.85rem;line-height:1.5">Vizille en Mouvement &mdash; Mandat 2026&ndash;2032<br>Tableau de bord r&eacute;serv&eacute; aux conseillers municipaux.</p>
+<div class="page active" id="p-accueil">
+  <div class="ph"><div><h1>Tableau de bord</h1><p>Vue d&rsquo;ensemble du mandat 2026&ndash;2032</p></div></div>
+  <div class="content">
+    <div class="hero"><div class="h-av">🏛</div><div><h2 style="font-size:1.15rem;font-weight:700;margin-bottom:.3rem">Bienvenue, espace &eacute;lus</h2><p style="opacity:.75;font-size:.82rem;line-height:1.5">Vizille en Mouvement &mdash; Mandat 2026&ndash;2032<br>Tableau de bord r&eacute;serv&eacute; aux conseillers municipaux.</p></div></div>
+    <div class="metrics">
+      <div class="m"><div class="v" id="a-tot">91</div><div class="l">Projets</div></div>
+      <div class="m"><div class="v">12</div><div class="l">Commissions</div></div>
+      <div class="m"><div class="v">29</div><div class="l">Conseillers</div></div>
+      <div class="m"><div class="v" id="a-pr">0</div><div class="l">Prioritaires</div></div>
+      <div class="m"><div class="v" id="a-26">0</div><div class="l">2026</div></div>
+      <div class="m"><div class="v">2032</div><div class="l">Fin mandat</div></div>
     </div>
-  </div>
-  <div class="metrics">
-    <div class="m"><div class="v" id="acc-total">—</div><div class="l">Projets</div></div>
-    <div class="m"><div class="v" id="acc-themes">—</div><div class="l">Th&egrave;mes</div></div>
-    <div class="m"><div class="v">13</div><div class="l">Commissions</div></div>
-  <div class="m"><div class="v">29</div><div class="l">Conseillers</div></div>
-    <div class="m"><div class="v">2032</div><div class="l">Fin de mandat</div></div>
-  </div>
-  <div class="card">
-    <h4 style="font-size:.95rem;margin-bottom:1rem;border-bottom:.5px solid #f0f0e8;padding-bottom:.75rem">&#128218; Mode d&rsquo;emploi</h4>
-    <div class="help-grid">
-      <div class="help-item"><div class="help-icon" style="background:#e8f0e8">&#128203;</div><div><strong style="font-size:.82rem">Projets</strong><p>Consultez les 91 projets du mandat. Filtrez par th&egrave;me, statut ou ann&eacute;e. Mettez &agrave; jour le statut d&rsquo;un projet via le menu d&eacute;roulant.</p></div></div>
-      <div class="help-item"><div class="help-icon" style="background:#e8eef8">&#128197;</div><div><strong style="font-size:.82rem">Agenda</strong><p>Planifiez vos r&eacute;unions (bureau, commissions, conseil). Les &eacute;v&eacute;nements pass&eacute;s s&rsquo;affichent en gris&eacute;.</p></div></div>
-      <div class="help-item"><div class="help-icon" style="background:#fef3e2">&#128196;</div><div><strong style="font-size:.82rem">Documents</strong><p>Centralisez vos liens kDrive ou Google Drive. CR, d&eacute;lib&eacute;rations, rapports en un clic.</p></div></div>
-      <div class="help-item"><div class="help-icon" style="background:#f0f0e8">&#128276;</div><div><strong style="font-size:.82rem">Historique</strong><p>Journal automatique de toutes les modifications de statut de projets.</p></div></div>
-      <div class="help-item"><div class="help-icon" style="background:#e8f8e8">&#10010;</div><div><strong style="font-size:.82rem">Nouveau projet</strong><p>Cr&eacute;ez un projet hors programme. Il est sauvegard&eacute; imm&eacute;diatement.</p></div></div>
-      <div class="help-item"><div class="help-icon" style="background:#fde8e8">&#128200;</div><div><strong style="font-size:.82rem">Budget</strong><p>Importez un CSV pour g&eacute;n&eacute;rer un tableau comparatif 2025&ndash;2026 color&eacute;.</p></div></div>
-      <div class="help-item"><div class="help-icon" style="background:#e8eef8">&#128499;</div><div><strong style="font-size:.82rem">Elections</strong><p>Liens INSEE, Pr&eacute;fecture, r&eacute;sultats officiels. Composition du conseil.</p></div></div>
-      <div class="help-item"><div class="help-icon" style="background:#f3e8f8">&#128221;</div><div><strong style="font-size:.82rem">Communications</strong><p>R&eacute;dacteur Claude AI : arr&ecirc;t&eacute;s, d&eacute;lib&eacute;rations, posts Facebook, discours.</p></div></div>
+    <div class="cgrid">
+      <div class="card"><div style="font-size:.8rem;font-weight:600;margin-bottom:.75rem">Projets par th&egrave;me</div><div class="cw"><canvas id="chT"></canvas></div></div>
+      <div class="card"><div style="font-size:.8rem;font-weight:600;margin-bottom:.75rem">Statuts</div><div class="cw"><canvas id="chS"></canvas></div></div>
     </div>
-  </div>
-  <div class="card">
-    <h4 style="font-size:.9rem;margin-bottom:.75rem">&#128274; Acc&egrave;s &amp; s&eacute;curit&eacute;</h4>
-    <div style="font-size:.78rem;color:#555;line-height:1.8">
-      <p>&#9679; Mot de passe&nbsp;: <code style="background:#f4f4ef;padding:1px 6px;border-radius:4px">vizille2026</code> &mdash; modifiable via <code style="background:#f4f4ef;padding:1px 6px;border-radius:4px">VEM_PASSWORD</code></p>
-      <p>&#9679; URL&nbsp;: <a href="https://elus.vizilleenmouvement.fr" target="_blank">https://elus.vizilleenmouvement.fr</a></p>
-      <p>&#9679; Pour activer le r&eacute;dacteur Claude&nbsp;: configurer <code style="background:#f4f4ef;padding:1px 6px;border-radius:4px">ANTHROPIC_API_KEY</code> dans Infomaniak &rarr; Avanc&eacute; &rarr; Variables d&rsquo;environnement</p>
-    </div>
-  </div>
-</div>
-
-<!-- PROJETS -->
-<div class="tab" id="tab-global">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
-    <div>
-      <h2 style="font-size:1rem;font-weight:600;color:#1a3a2a;margin-bottom:.2rem">Gestion globale des projets</h2>
-      <p style="font-size:.76rem;color:#999">Tous les projets du mandat 2026&ndash;2032 &mdash; mise &agrave; jour des statuts en temps r&eacute;el</p>
-    </div>
-    <button class="btn btn-sm" onclick="showTab('pages',document.querySelector('nav button:nth-child(9)'))">&#128101; Vue par commission &rarr;</button>
-  </div>
-  <div class="metrics">
-    <div class="m"><div class="v" id="p-total">—</div><div class="l">Projets</div></div>
-    <div class="m"><div class="v" id="p-themes">—</div><div class="l">Th&egrave;mes</div></div>
-    <div class="m"><div class="v" id="p-prio">—</div><div class="l">Prioritaires</div></div>
-    <div class="m"><div class="v" id="p-2026">—</div><div class="l">2026</div></div>
-    <div class="m"><div class="v" id="p-2027">—</div><div class="l">2027</div></div>
-  </div>
-  <div class="charts">
-    <div class="cc"><h3>Par th&egrave;me</h3><div class="cw"><canvas id="cT"></canvas></div></div>
-    <div class="cc"><h3>Par statut</h3><div class="cw"><canvas id="cS"></canvas></div></div>
-  </div>
-  <div class="fl">
-    <select id="fT" onchange="filtrer()"><option value="">Tous les th&egrave;mes</option></select>
-    <select id="fS" onchange="filtrer()"><option value="">Tous les statuts</option></select>
-    <select id="fA" onchange="filtrer()"><option value="">Toutes les ann&eacute;es</option></select>
-    <input id="fQ" placeholder="Rechercher..." oninput="filtrer()" style="flex:1;min-width:100px">
-    <small id="cpt" style="color:#aaa;white-space:nowrap"></small>
-  </div>
-  <table><thead><tr><th>Commission</th><th>Projet</th><th>Statut</th><th>Ann&eacute;e</th><th>Imp.</th><th>Action</th></tr></thead>
-  <tbody id="tb"></tbody></table>
-</div>
-
-<!-- AGENDA -->
-<div class="tab" id="tab-agenda">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
-    <h2 style="font-size:.9rem;color:#666;font-weight:500">R&eacute;unions &amp; &eacute;v&eacute;nements</h2>
-    <button class="btn btn-sm" onclick="openModal('agenda')">+ Ajouter</button>
-  </div>
-  <div id="agenda-list"></div>
-</div>
-
-<!-- DOCUMENTS -->
-<div class="tab" id="tab-documents">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
-    <h2 style="font-size:.9rem;color:#666;font-weight:500">Documents &amp; liens</h2>
-    <button class="btn btn-sm" onclick="openModal('doc')">+ Ajouter</button>
-  </div>
-  <div id="docs-list"></div>
-</div>
-
-<!-- HISTORIQUE -->
-<div class="tab" id="tab-notifs">
-  <h2 style="font-size:.9rem;color:#666;font-weight:500;margin-bottom:1rem">Journal des modifications</h2>
-  <div id="notifs-list"></div>
-</div>
-
-<!-- CREER PROJET -->
-<div class="tab" id="tab-creer">
-  <div style="max-width:560px">
-    <h2 style="font-size:.9rem;color:#666;font-weight:500;margin-bottom:1rem">Cr&eacute;er un nouveau projet</h2>
-    <div class="card">
-      <input class="finput" id="np-titre" placeholder="Titre du projet *">
-      <div class="form-row">
-        <select class="finput" id="np-theme">
-          <option value="">-- Th&egrave;me --</option>
-          <option>Mobilit&eacute;s</option><option>Tranquillit&eacute; publique</option>
-          <option>Enfance/Jeunesse</option><option>Travaux</option>
-          <option>Transition &eacute;cologique</option><option>Urbanisme</option>
-          <option>Culture</option><option>Patrimoine</option>
-          <option>Action sociale</option><option>Animations de proximit&eacute;</option>
-          <option>Concertation citoyenne</option><option>Economie</option>
-          <option>Sant&eacute;</option><option>Jumelages</option><option>M&eacute;tropole</option>
-        </select>
-        <select class="finput" id="np-statut">
-          <option value="Programm&eacute;">Programm&eacute;</option>
-          <option value="Prioritaire">Prioritaire</option>
-          <option value="Planifi&eacute;">Planifi&eacute;</option>
-          <option value="En cours">En cours</option>
-          <option value="Etude">Etude</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <input class="finput" id="np-annee" placeholder="Ann&eacute;e (ex: 2026)">
-        <select class="finput" id="np-importance">
-          <option value="1">Importance 1</option>
-          <option value="2">Importance 2</option>
-          <option value="3" selected>Importance 3</option>
-        </select>
-      </div>
-      <input class="finput" id="np-resume" placeholder="R&eacute;sum&eacute; court *">
-      <textarea class="finput" id="np-description" placeholder="Description (optionnel)"></textarea>
-      <input class="finput" id="np-tags" placeholder="Tags (virgule-s&eacute;par&eacute;s)">
-      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:.5rem">
-        <button class="btn btn-ghost" onclick="resetForm()">R&eacute;initialiser</button>
-        <button class="btn" onclick="createProjet()">&#10003; Cr&eacute;er</button>
-      </div>
-      <div id="np-result" style="margin-top:10px"></div>
-    </div>
-  </div>
-</div>
-
-<!-- BUDGET -->
-<div class="tab" id="tab-budget">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
-    <h2 style="font-size:.9rem;color:#666;font-weight:500">Budget comparatif</h2>
-    <label class="btn btn-sm" style="cursor:pointer">&#128196; Importer CSV<input type="file" id="budget-file" accept=".csv" style="display:none" onchange="importBudget(this)"></label>
-  </div>
-  <div id="budget-table">
-    <div class="card" style="font-size:.78rem;color:#666">
-      <strong>Format CSV attendu&nbsp;:</strong><br>
-      <code style="font-size:.72rem;background:#f4f4ef;padding:2px 6px;border-radius:4px;display:block;margin-top:6px">Poste,Budget2025,Budget2026,Prevision2027<br>Fonctionnement,1200000,1250000,1280000</code>
-    </div>
-  </div>
-</div>
-
-<!-- ELECTIONS -->
-<div class="tab" id="tab-elections">
-  <h2 style="font-size:.9rem;color:#666;font-weight:500;margin-bottom:1rem">Elections &amp; listes &eacute;lectorales</h2>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:1rem">
-    <div class="card">
-      <h4>&#128101; Liste &eacute;lectorale Vizille</h4>
-      <p style="margin:.5rem 0">Commune de Vizille &mdash; Is&egrave;re (38431)</p>
-      <div style="display:flex;flex-direction:column;gap:6px;margin-top:.75rem">
-        <a href="https://www.service-public.fr/particuliers/vosdroits/F1367" target="_blank" class="btn btn-ghost btn-sm" style="text-align:center">&#128279; Service-Public.fr</a>
-        <a href="https://www.interieur.gouv.fr/Elections/Les-resultats/Municipales" target="_blank" class="btn btn-ghost btn-sm" style="text-align:center">&#128279; R&eacute;sultats officiels</a>
-        <a href="https://www.insee.fr/fr/statistiques/zones/3720885" target="_blank" class="btn btn-ghost btn-sm" style="text-align:center">&#128279; INSEE Vizille</a>
+    <div class="card" style="margin-bottom:1rem">
+      <div style="font-size:.85rem;font-weight:600;margin-bottom:1rem;color:var(--sg)">Mode d&rsquo;emploi</div>
+      <div class="hg">
+        <div class="hi"><div class="hico">📊</div><div><strong>Gestion globale</strong><p>Tous les projets, filtres cascade commission&rarr;th&egrave;me&rarr;statut, mise &agrave; jour directe.</p></div></div>
+        <div class="hi"><div class="hico">👥</div><div><strong>Par commission</strong><p>12 cartes avec stats. Clic &rarr; page d&eacute;di&eacute;e avec suivi et filtres.</p></div></div>
+        <div class="hi"><div class="hico">📅</div><div><strong>Agenda</strong><p>R&eacute;unions bureau, commissions, conseil. Ajout/suppression en un clic.</p></div></div>
+        <div class="hi"><div class="hico">📄</div><div><strong>Documents</strong><p>Liens kDrive / Google Drive centralis&eacute;s. CR, d&eacute;lib&eacute;rations, rapports.</p></div></div>
+        <div class="hi"><div class="hico">➕</div><div><strong>Nouveau projet</strong><p>Cr&eacute;er un projet hors programme. Sauvegarde imm&eacute;diate.</p></div></div>
+        <div class="hi"><div class="hico">✍</div><div><strong>Communications</strong><p>R&eacute;dacteur Claude AI : arr&ecirc;t&eacute;s, d&eacute;lib&eacute;rations, posts FB, discours.</p></div></div>
       </div>
     </div>
-    <div class="card">
-      <h4>&#128202; R&eacute;sultats mars 2026</h4>
-      <table style="width:100%;font-size:.75rem;border-collapse:collapse;margin-top:.5rem">
-        <tr><td style="padding:4px 0;color:#666">Tour 1 — 15 mars</td><td style="text-align:right"><span class="b b2">Victoire VeM</span></td></tr>
-        <tr><td style="padding:4px 0;color:#666">Elus</td><td style="text-align:right;font-weight:500">29 conseillers</td></tr>
-        <tr><td style="padding:4px 0;color:#666">Maire</td><td style="text-align:right;font-weight:500">Catherine Troton</td></tr>
-        <tr><td style="padding:4px 0;color:#666">Vous</td><td style="text-align:right;font-weight:500">Position 22</td></tr>
-      </table>
-    </div>
-  </div>
-  <div class="card">
-    <h4>&#128203; Liens utiles</h4>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:.75rem">
-      <a href="https://www.collectivites-locales.gouv.fr" target="_blank" class="btn btn-ghost btn-sm">Collectivit&eacute;s-locales.gouv.fr</a>
-      <a href="https://www.amf.asso.fr" target="_blank" class="btn btn-ghost btn-sm">AMF</a>
-      <a href="https://www.legifrance.gouv.fr" target="_blank" class="btn btn-ghost btn-sm">L&eacute;gifrance</a>
-      <a href="https://www.maire-info.com" target="_blank" class="btn btn-ghost btn-sm">Maire-info</a>
+    <div class="card" style="font-size:.78rem;color:var(--tl);line-height:1.8">
+      <div style="font-size:.85rem;font-weight:600;margin-bottom:.75rem;color:var(--sg)">🔒 S&eacute;curit&eacute; &amp; acc&egrave;s</div>
+      <p>&#9679; URL : <a href="https://elus.vizilleenmouvement.fr" target="_blank" style="color:var(--sm)">https://elus.vizilleenmouvement.fr</a></p>
+      <p>&#9679; Mot de passe : <code style="background:#f4f6f8;padding:1px 6px;border-radius:4px">vizille2026</code></p>
+      <p>&#9679; Rédacteur AI : variable <code style="background:#f4f6f8;padding:1px 6px;border-radius:4px">ANTHROPIC_API_KEY</code> dans Infomaniak &rarr; Avanc&eacute;</p>
     </div>
   </div>
 </div>
 
-<!-- COMMUNICATIONS -->
-<div class="tab" id="tab-comms">
-  <h2 style="font-size:.9rem;color:#666;font-weight:500;margin-bottom:1rem">&#128221; R&eacute;dacteur municipal</h2>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-    <div>
-      <div class="card">
-        <h4 style="margin-bottom:.75rem">Type de document</h4>
-        <select class="finput" id="comm-type">
-          <option value="arrete">Arr&ecirc;t&eacute; municipal</option>
-          <option value="deliberation">D&eacute;lib&eacute;ration</option>
-          <option value="facebook">Post Facebook</option>
-          <option value="communique">Communiqu&eacute; de presse</option>
-          <option value="convocation">Convocation conseil municipal</option>
-          <option value="discours">Discours / allocution</option>
-        </select>
-        <h4 style="margin:.75rem 0 .4rem">Sujet / Instructions</h4>
-        <textarea class="finput" id="comm-sujet" style="height:120px" placeholder="Decrivez le contenu souhaite..."></textarea>
-        <h4 style="margin:.25rem 0 .4rem">Contexte (optionnel)</h4>
-        <input class="finput" id="comm-contexte" placeholder="Ex: Commune de Vizille, 5000 hab.">
-        <button class="btn" style="width:100%;margin-top:.25rem" onclick="genereComm()">&#10024; Generer avec Claude</button>
-        <div id="comm-status" style="font-size:.72rem;color:#aaa;margin-top:6px;text-align:center"></div>
-      </div>
+<div class="page" id="p-global">
+  <div class="ph"><div><h1>Gestion globale des projets</h1><p>Mise &agrave; jour des statuts en temps r&eacute;el</p></div><button class="btn btn-s btn-sm" onclick="gp('comm',document.querySelectorAll('.ni')[2])">👥 Par commission</button></div>
+  <div class="content" style="padding:0">
+    <div class="fbar">
+      <select class="fsel" id="fC" onchange="fG()"><option value="">Toutes commissions</option></select>
+      <select class="fsel" id="fT" onchange="fG()"><option value="">Tous th&egrave;mes</option></select>
+      <select class="fsel" id="fS" onchange="fG()"><option value="">Tous statuts</option></select>
+      <select class="fsel" id="fA" onchange="fG()"><option value="">Toutes ann&eacute;es</option></select>
+      <input class="fsrch" id="fQ" placeholder="🔍 Rechercher..." oninput="fG()">
+      <span class="fcnt" id="fCnt"></span>
     </div>
-    <div>
-      <div class="card" style="height:calc(100% - 12px)">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
-          <h4>R&eacute;sultat</h4>
-          <button class="btn btn-ghost btn-sm" onclick="copyComm()">&#128203; Copier</button>
+    <div class="table-wrap" style="border-radius:0;border-left:none;border-right:none;border-bottom:none">
+      <table><thead><tr><th>Commission</th><th>Projet</th><th>Statut</th><th>Ann&eacute;e</th><th>Imp.</th><th>Action</th></tr></thead>
+      <tbody id="g-tbody"></tbody></table>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="p-comm">
+  <div class="ph"><div><h1>Par commission</h1><p>Cliquer sur une commission pour sa page de gestion</p></div><button class="btn btn-s btn-sm" onclick="gp('global',document.querySelectorAll('.ni')[1])">📊 Vue globale</button></div>
+  <div class="content"><div class="comm-grid" id="cg"></div></div>
+</div>
+
+<div class="page" id="p-cdet">
+  <div class="ph" id="cdet-ph"><div><h1 id="cdet-title">Commission</h1><p id="cdet-sub"></p></div><button class="btn btn-s btn-sm" onclick="gp('comm',document.querySelectorAll('.ni')[2])">&#8592; Toutes les commissions</button></div>
+  <div class="content" style="padding:0">
+    <div id="cdet-metrics" style="display:flex;gap:10px;padding:.85rem 1.5rem;background:#fff;border-bottom:1px solid var(--border)"></div>
+    <div class="fbar">
+      <select class="fsel" id="cd-st" onchange="fCD()"><option value="">Tous statuts</option></select>
+      <input class="fsrch" id="cd-q" placeholder="🔍 Rechercher..." oninput="fCD()">
+      <span class="fcnt" id="cd-cnt"></span>
+    </div>
+    <div class="table-wrap" style="border-radius:0;border-left:none;border-right:none;border-bottom:none">
+      <table><thead><tr><th>Th&egrave;me</th><th>Projet</th><th>Statut</th><th>Ann&eacute;e</th><th>Imp.</th><th>Action</th></tr></thead>
+      <tbody id="cd-tbody"></tbody></table>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="p-agenda">
+  <div class="ph"><div><h1>Agenda</h1><p>R&eacute;unions et &eacute;v&eacute;nements</p></div><button class="btn btn-p btn-sm" onclick="om('agenda')">+ Ajouter</button></div>
+  <div class="content"><div id="ag-list"></div></div>
+</div>
+
+<div class="page" id="p-docs">
+  <div class="ph"><div><h1>Documents</h1><p>CR, d&eacute;lib&eacute;rations, rapports</p></div><button class="btn btn-p btn-sm" onclick="om('doc')">+ Ajouter</button></div>
+  <div class="content"><div id="dc-list"></div></div>
+</div>
+
+<div class="page" id="p-hist">
+  <div class="ph"><div><h1>Historique</h1><p>Journal des modifications</p></div></div>
+  <div class="content"><div id="nt-list"></div></div>
+</div>
+
+<div class="page" id="p-creer">
+  <div class="ph"><div><h1>Nouveau projet</h1><p>Ajouter un projet hors programme</p></div></div>
+  <div class="content"><div class="card" style="max-width:560px">
+    <div class="fr"><div class="ff" style="grid-column:1/-1"><label>Titre *</label><input class="finput" id="np-t" placeholder="Titre du projet"></div>
+    <div class="ff"><label>Th&egrave;me</label><select class="finput" id="np-th"><option value="">--</option>
+    <option>Mobilités</option><option>Tranquillité publique</option><option>Enfance/Jeunesse</option>
+    <option>Travaux</option><option>Transition écologique</option><option>Urbanisme</option>
+    <option>Culture</option><option>Patrimoine</option><option>Action sociale</option>
+    <option>Animations de proximité</option><option>Concertation citoyenne</option>
+    <option>Économie</option><option>Santé</option><option>Jumelages</option><option>Métropole</option>
+    </select></div>
+    <div class="ff"><label>Statut</label><select class="finput" id="np-s">
+    <option>Programmé</option><option>Prioritaire</option><option>Planifié</option><option>En cours</option><option>Étude</option>
+    </select></div>
+    <div class="ff"><label>Ann&eacute;e</label><input class="finput" id="np-a" placeholder="2026"></div>
+    <div class="ff"><label>Importance</label><select class="finput" id="np-i"><option value="1">★</option><option value="2">★★</option><option value="3" selected>★★★</option></select></div>
+    <div class="ff" style="grid-column:1/-1"><label>R&eacute;sum&eacute; *</label><input class="finput" id="np-r" placeholder="Résumé court"></div>
+    <div class="ff" style="grid-column:1/-1"><label>Description</label><textarea class="finput" id="np-d"></textarea></div>
+    <div class="ff" style="grid-column:1/-1"><label>Tags</label><input class="finput" id="np-tags" placeholder="Seniors, Accessibilité..."></div>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn btn-s" onclick="resetNP()">Réinitialiser</button>
+      <button class="btn btn-p" onclick="createP()">✓ Créer</button>
+    </div>
+    <div id="np-res" style="margin-top:.75rem"></div>
+  </div></div>
+</div>
+
+<div class="page" id="p-budget">
+  <div class="ph"><div><h1>Budget</h1><p>Tableau comparatif 2025&ndash;2027</p></div><label class="btn btn-p btn-sm" style="cursor:pointer">📂 Importer CSV<input type="file" id="bf" accept=".csv" style="display:none" onchange="impB(this)"></label></div>
+  <div class="content">
+    <div class="card" style="font-size:.78rem;color:var(--tl);margin-bottom:1rem">Format : <code style="background:#f4f6f8;padding:1px 6px;border-radius:4px">Poste,Budget2025,Budget2026,Prevision2027</code></div>
+    <div id="btable"></div>
+  </div>
+</div>
+
+<div class="page" id="p-elec">
+  <div class="ph"><div><h1>&Eacute;lections</h1><p>R&eacute;sultats mars 2026 et liens officiels</p></div></div>
+  <div class="content">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px">
+      <div class="card"><div style="font-size:.8rem;font-weight:600;margin-bottom:.75rem">R&eacute;sultats mars 2026</div>
+        <table style="font-size:.76rem;width:100%;border-collapse:collapse">
+          <tr><td style="padding:5px 0;color:var(--tl)">Tour 1 — 15 mars</td><td style="text-align:right"><span class="badge b-pg">Victoire VeM</span></td></tr>
+          <tr><td style="padding:5px 0;color:var(--tl)">Élus</td><td style="text-align:right;font-weight:600">29 conseillers</td></tr>
+          <tr><td style="padding:5px 0;color:var(--tl)">Maire</td><td style="text-align:right;font-weight:600">Catherine Troton</td></tr>
+          <tr><td style="padding:5px 0;color:var(--tl)">Position</td><td style="text-align:right;font-weight:600">#22 — Élu(e)</td></tr>
+        </table>
+      </div>
+      <div class="card"><div style="font-size:.8rem;font-weight:600;margin-bottom:.75rem">Liens officiels</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <a href="https://www.service-public.fr" target="_blank" class="btn btn-s btn-sm" style="justify-content:center">Service-Public.fr</a>
+          <a href="https://www.interieur.gouv.fr/Elections" target="_blank" class="btn btn-s btn-sm" style="justify-content:center">R&eacute;sultats officiels</a>
+          <a href="https://www.insee.fr/fr/statistiques/zones/3720885" target="_blank" class="btn btn-s btn-sm" style="justify-content:center">INSEE Vizille</a>
+          <a href="https://www.amf.asso.fr" target="_blank" class="btn btn-s btn-sm" style="justify-content:center">AMF</a>
         </div>
-        <textarea class="finput" id="comm-result" style="height:360px;font-size:.76rem;line-height:1.6;background:#fafaf8" placeholder="Le document apparaitra ici..."></textarea>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MODALES -->
-<div class="modal-bg" id="modal-agenda">
-  <div class="modal">
-    <h3>Ajouter une r&eacute;union</h3>
-    <input class="finput" id="ag-titre" placeholder="Titre">
-    <div class="form-row">
-      <input class="finput" type="date" id="ag-date">
-      <input class="finput" id="ag-heure" placeholder="Heure (ex: 18h30)">
+<div class="page" id="p-comms">
+  <div class="ph"><div><h1>R&eacute;dacteur municipal</h1><p>G&eacute;n&eacute;ration assist&eacute;e par Claude AI</p></div></div>
+  <div class="content"><div style="display:grid;grid-template-columns:1fr 1.2fr;gap:16px">
+    <div class="card">
+      <div class="ff"><label>Type</label><select class="finput" id="ct">
+        <option value="arrete">Arrêté municipal</option><option value="deliberation">Délibération</option>
+        <option value="facebook">Post Facebook</option><option value="communique">Communiqué de presse</option>
+        <option value="convocation">Convocation conseil</option><option value="discours">Discours</option>
+      </select></div>
+      <div class="ff"><label>Sujet / Instructions</label><textarea class="finput" id="cs" style="height:130px" placeholder="Décrivez le contenu..."></textarea></div>
+      <div class="ff"><label>Contexte</label><input class="finput" id="cc" placeholder="Commune de Vizille, 5000 hab..."></div>
+      <button class="btn btn-p" style="width:100%" onclick="genC()">✨ Générer avec Claude</button>
+      <div id="c-st" style="font-size:.72rem;color:var(--muted);text-align:center;margin-top:.5rem"></div>
     </div>
-    <input class="finput" id="ag-lieu" placeholder="Lieu">
-    <select class="finput" id="ag-type">
-      <option value="bureau">Bureau municipal</option>
-      <option value="commission">Commission</option>
-      <option value="conseil">Conseil municipal</option>
-      <option value="autre">Autre</option>
-    </select>
-    <textarea class="finput" id="ag-notes" placeholder="Notes (optionnel)"></textarea>
-    <div style="display:flex;gap:8px;justify-content:flex-end">
-      <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
-      <button class="btn" onclick="saveAgenda()">Enregistrer</button>
+    <div class="card" style="display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
+        <span style="font-size:.8rem;font-weight:600">R&eacute;sultat</span>
+        <button class="btn btn-g btn-sm" onclick="copyC()">📋 Copier</button>
+      </div>
+      <textarea class="finput" id="cr" style="flex:1;min-height:380px;font-size:.76rem;line-height:1.65;background:#fafbfc" placeholder="Apparaîtra ici..."></textarea>
     </div>
-  </div>
+  </div></div>
 </div>
 
-<div class="modal-bg" id="modal-doc">
-  <div class="modal">
-    <h3>Ajouter un document</h3>
-    <input class="finput" id="doc-titre" placeholder="Titre">
-    <select class="finput" id="doc-type">
-      <option value="cr">Compte-rendu</option>
-      <option value="delib">D&eacute;lib&eacute;ration</option>
-      <option value="rapport">Rapport</option>
-      <option value="autre">Autre</option>
-    </select>
-    <input class="finput" type="url" id="doc-url" placeholder="Lien (kDrive, Google Drive...)">
-    <input class="finput" type="date" id="doc-date">
-    <textarea class="finput" id="doc-notes" placeholder="Description (optionnel)"></textarea>
-    <div style="display:flex;gap:8px;justify-content:flex-end">
-      <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
-      <button class="btn" onclick="saveDoc()">Enregistrer</button>
-    </div>
-  </div>
+</main>
 </div>
 
+<div class="overlay" id="ov-agenda"><div class="modal">
+  <div class="mh"><h3>Ajouter une r&eacute;union</h3><button class="mc" onclick="cm()">×</button></div>
+  <div class="ff"><label>Titre *</label><input class="finput" id="ag-ti" placeholder="Ex : Bureau municipal"></div>
+  <div class="fr"><div class="ff"><label>Date</label><input class="finput" type="date" id="ag-d"></div><div class="ff"><label>Heure</label><input class="finput" id="ag-h" placeholder="18h30"></div></div>
+  <div class="ff"><label>Lieu</label><input class="finput" id="ag-l" placeholder="Salle du conseil..."></div>
+  <div class="ff"><label>Type</label><select class="finput" id="ag-ty">
+    <option value="bureau">Bureau municipal</option><option value="commission">Commission</option>
+    <option value="conseil">Conseil municipal</option><option value="autre">Autre</option>
+  </select></div>
+  <div class="ff"><label>Notes</label><textarea class="finput" id="ag-n" placeholder="Ordre du jour..."></textarea></div>
+  <div class="mf"><button class="btn btn-s" onclick="cm()">Annuler</button><button class="btn btn-p" onclick="svAg()">Enregistrer</button></div>
+</div></div>
 
-<!-- PAGES COMMISSIONS -->
-<div class="tab" id="tab-pages">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
-    <div>
-      <h2 style="font-size:1rem;font-weight:600;color:#1a3a2a;margin-bottom:.2rem">Gestion par commission</h2>
-      <p style="font-size:.76rem;color:#999">Cliquez sur une commission pour acc&eacute;der &agrave; sa page de gestion d&eacute;di&eacute;e</p>
-    </div>
-    <button class="btn btn-sm btn-ghost" onclick="showTab('global',document.querySelector('nav button:nth-child(2)'))">&#128202; Vue globale &rarr;</button>
+<div class="overlay" id="ov-doc"><div class="modal">
+  <div class="mh"><h3>Ajouter un document</h3><button class="mc" onclick="cm()">×</button></div>
+  <div class="ff"><label>Titre *</label><input class="finput" id="dc-ti" placeholder="Nom du document"></div>
+  <div class="fr">
+    <div class="ff"><label>Type</label><select class="finput" id="dc-ty"><option value="cr">Compte-rendu</option><option value="delib">D&eacute;lib&eacute;ration</option><option value="rapport">Rapport</option><option value="autre">Autre</option></select></div>
+    <div class="ff"><label>Date</label><input class="finput" type="date" id="dc-d"></div>
   </div>
-  <div id="comm-pages-list"></div>
-</div>
+  <div class="ff"><label>Lien</label><input class="finput" type="url" id="dc-u" placeholder="https://..."></div>
+  <div class="ff"><label>Description</label><textarea class="finput" id="dc-n"></textarea></div>
+  <div class="mf"><button class="btn btn-s" onclick="cm()">Annuler</button><button class="btn btn-p" onclick="svDc()">Enregistrer</button></div>
+</div></div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-var P=[], ST={}, AG=[], DC=[], NF=[];
-var COMMISSIONS = {
-  'Culture, Patrimoine & Jumelages': ['Culture','Patrimoine','Jumelages'],
-  'Mobilités': ['Mobilités'],
-  'Transition écologique': ['Transition écologique'],
-  'Action sociale': ['Action sociale'],
-  'Concertation citoyenne': ['Concertation citoyenne'],
-  'Animations de proximité': ['Animations de proximité'],
-  'Économie': ['Économie'],
-  'Métropole': ['Métropole'],
-  'Enfance/Jeunesse': ['Enfance/Jeunesse'],
-  'Tranquillité publique': ['Tranquillité publique'],
-  'Travaux & Urbanisme': ['Travaux','Urbanisme'],
-  'Santé': ['Santé']
-};
-var COMM_REFERENTS = {
-  'Culture, Patrimoine & Jumelages': 'Marie-Claude',
-  'Mobilités': '',
-  'Transition écologique': '',
-  'Action sociale': '',
-  'Concertation citoyenne': '',
-  'Animations de proximité': '',
-  'Économie': '',
-  'Métropole': '',
-  'Enfance/Jeunesse': 'Angélique',
-  'Tranquillité publique': '',
-  'Travaux & Urbanisme': '',
-  'Santé': ''
-};
-function themeToComm(theme) {
-  for (var c in COMMISSIONS) {
-    if (COMMISSIONS[c].indexOf(theme) >= 0) return c;
-  }
-  return 'Autre';
-}
-var SLIST=["Prioritaire","Programme","Planifie","Etude","En cours","Realise","Suspendu"];
-var CL=["#1a3a2a","#4a8a5a","#7ab87a","#aad4aa","#2a5a3a","#3a6a4a","#5a9a6a","#8ac08a","#b0d8b0","#c8e8c8","#1a4a2a","#2a6a4a","#6ab06a","#3a7a5a","#9ac89a"];
-var cT,cS;
+var P=[];
+var COMM={"Culture, Patrimoine & Jumelages": ["Culture", "Patrimoine", "Jumelages"], "Mobilités": ["Mobilités"], "Transition écologique": ["Transition écologique"], "Action sociale": ["Action sociale"], "Concertation citoyenne": ["Concertation citoyenne"], "Animations de proximité": ["Animations de proximité"], "Économie": ["Économie"], "Métropole": ["Métropole"], "Enfance/Jeunesse": ["Enfance/Jeunesse"], "Tranquillité publique": ["Tranquillité publique"], "Travaux & Urbanisme": ["Travaux", "Urbanisme"], "Santé": ["Santé"]};
+var ICONS={"Culture, Patrimoine & Jumelages": "🎭", "Mobilités": "🚲", "Transition écologique": "🌿", "Action sociale": "🤝", "Concertation citoyenne": "🗣", "Animations de proximité": "🎪", "Économie": "💼", "Métropole": "🏙", "Enfance/Jeunesse": "👦", "Tranquillité publique": "🛡", "Travaux & Urbanisme": "🏗", "Santé": "🏥"};
+var REFS={"Culture, Patrimoine & Jumelages": "Marie-Claude", "Enfance/Jeunesse": "Angélique", "Animations de proximité": "Jean-Christophe"};
+var COLS=["#4a8a5a", "#5a9a6a", "#3a6a4a", "#6ab06a", "#2a5a3a", "#8ac08a", "#7ab87a", "#1a4a2a", "#4a8a5a", "#5a9a6a", "#3a6a4a", "#6ab06a"];
+var SLIST=["Prioritaire","Programmé","Planifié","Étude","En cours","Réalisé","Suspendu"];
+var ST={},AG=[],DC=[],NF=[],_ci=0,chT=null,chS=null;
+var _auth='Basic '+btoa(':vizille2026');
 
-function api(url, opts) {
-  opts = opts||{};
-  opts.headers = opts.headers||{};
-  opts.headers['Authorization'] = 'Basic '+btoa(':'+btoa(':vizille2026').split('').reverse().join(''));
-  // On utilise le mot de passe directement
-  opts.headers['Authorization'] = 'Basic '+btoa(':vizille2026');
-  return fetch(url, opts).then(function(r){return r.json();});
-}
-
-function init() {
-  api('/api/all').then(function(d) {
-    P=d.projets; ST=d.statuts; AG=d.agenda; DC=d.documents; NF=d.notifs;
-    buildFilters();
-    filtrer();
-    buildCharts();
-    updateMetrics();
+function init(){
+  fetch('/api/all',{headers:{Authorization:_auth}}).then(function(r){return r.json();}).then(function(d){
+    P=d.projets;ST=d.statuts;AG=d.agenda;DC=d.documents;NF=d.notifs;
+    bFilters();fG();bCG();bCharts();updMeta();
   });
 }
 
-function updateMetrics() {
-  var t=Object.keys({});
-  var themes={},ann={},prio=0,n2026=0,n2027=0;
-  P.forEach(function(p){
-    themes[p.theme||'?']=1;
-    var s=ST[p.id]||p.statut||'';
-    if(s==='Prioritaire')prio++;
-    var a=p.annee?String(p.annee):'';
-    if(a==='2026')n2026++;
-    if(a==='2027')n2027++;
-  });
-  var nth=Object.keys(themes).length;
-  el('acc-total',P.length); el('acc-themes',nth);
-  el('p-total',P.length); el('p-themes',nth); el('p-prio',prio); el('p-2026',n2026); el('p-2027',n2027);
+function updMeta(){
+  var pr=0,n26=0;
+  P.forEach(function(p){var s=ST[p.id]||p.statut||'';if(s==='Prioritaire')pr++;if(p.annee===2026)n26++;});
+  el('a-tot',P.length);el('a-pr',pr);el('a-26',n26);el('nb-t',P.length);
 }
 function el(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
 
-function buildFilters() {
-  var themes={},statuts={},annees={};
-  P.forEach(function(p){
-    if(p.theme)themes[p.theme]=1;
-    var s=ST[p.id]||p.statut||'ND';
-    statuts[s]=1;
-    var a=p.annee?String(p.annee):'?';
-    annees[a]=1;
-  });
-  var commNames = Object.keys(COMMISSIONS);
-  fillSelect('fC', commNames, 'Toutes les commissions');
-  fillSelect('fT', Object.keys(themes).sort(), 'Tous les themes');
-  fillSelect('fS', Object.keys(statuts).sort(), 'Tous les statuts');
-  fillSelect('fA', Object.keys(annees).sort(), 'Toutes les annees');
-}
-function fillSelect(id, opts, def) {
-  var s=document.getElementById(id);
-  s.innerHTML='<option value="">'+def+'</option>';
-  opts.forEach(function(o){var op=document.createElement('option');op.value=o;op.textContent=o;s.appendChild(op);});
+function gp(id,ni){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.ni').forEach(function(n){n.classList.remove('active');});
+  var pg=document.getElementById('p-'+id);if(pg)pg.classList.add('active');
+  if(ni)ni.classList.add('active');
+  if(id==='agenda')rAg();
+  else if(id==='docs')rDc();
+  else if(id==='hist')rNt();
+  else if(id==='comm')bCG();
 }
 
-function bc(s){if(!s)return 'b5';var l=s.toLowerCase();if(l.indexOf('prioritaire')>=0)return 'b1';if(l.indexOf('programm')>=0||l.indexOf('programme')>=0)return 'b2';if(l.indexOf('planifi')>=0)return 'b3';if(l.indexOf('tude')>=0||l.indexOf('cours')>=0)return 'b4';if(l.indexOf('alis')>=0||l.indexOf('alise')>=0)return 'b6';return 'b5';}
+function bc(s){if(!s)return 'b-nd';var l=s.toLowerCase();if(l.indexOf('prioritaire')>=0)return 'b-pr';if(l.indexOf('programm')>=0)return 'b-pg';if(l.indexOf('planifi')>=0)return 'b-pl';if(l.indexOf('cours')>=0)return 'b-ec';if(l.indexOf('tude')>=0)return 'b-et';if(l.indexOf('alis')>=0)return 'b-re';return 'b-nd';}
+function imp(n){return n?'★'.repeat(n):'-';}
+function t2c(t){for(var c in COMM){if(COMM[c].indexOf(t)>=0)return c;}return 'Autre';}
 
-function filtrerComm() {
-  var c = document.getElementById('fC').value;
-  var themes = c ? COMMISSIONS[c] : null;
-  var fT = document.getElementById('fT');
-  var prev = fT.value;
-  fT.innerHTML = '<option value="">Tous les themes</option>';
-  var list = themes || Object.keys(COMMISSIONS).reduce(function(acc, k) { return acc.concat(COMMISSIONS[k]); }, []).sort();
-  list.sort().forEach(function(t) {
-    var o = document.createElement('option');
-    o.value = t; o.textContent = t;
-    if (t === prev) o.selected = true;
-    fT.appendChild(o);
-  });
-  filtrer();
+function bFilters(){
+  var th={},st={},an={};
+  P.forEach(function(p){th[p.theme||'?']=1;st[ST[p.id]||p.statut||'ND']=1;an[p.annee?String(p.annee):'?']=1;});
+  fSel('fC',Object.keys(COMM),'Toutes commissions');
+  fSel('fT',Object.keys(th).sort(),'Tous thèmes');
+  fSel('fS',Object.keys(st).sort(),'Tous statuts');
+  fSel('fA',Object.keys(an).sort(),'Toutes années');
+  fSel('cd-st',SLIST,'Tous statuts');
 }
+function fSel(id,opts,def){var s=document.getElementById(id);if(!s)return;s.innerHTML='<option value="">'+def+'</option>';opts.forEach(function(o){var op=document.createElement('option');op.value=o;op.textContent=o;s.appendChild(op);});}
 
-function filtrer() {
-  var c=document.getElementById('fC').value;
-  var t=document.getElementById('fT').value;
-  var s=document.getElementById('fS').value;
-  var a=document.getElementById('fA').value;
-  var q=document.getElementById('fQ').value.toLowerCase();
-  var r=P.filter(function(p){
-    var ps=ST[p.id]||p.statut||'ND';
-    var pa=p.annee?String(p.annee):'?';
-    var pc=themeToComm(p.theme);
-    return (!c||pc===c)&&(!t||p.theme===t)&&(!s||ps===s)&&(!a||pa===a)&&(!q||(p.titre||'').toLowerCase().indexOf(q)>=0||(p.resume||'').toLowerCase().indexOf(q)>=0);
-  });
-  document.getElementById('cpt').textContent=r.length+' projet(s)';
-  document.getElementById('tb').innerHTML=r.map(function(p){
+function fG(){
+  var c=v('fC'),t=v('fT'),s=v('fS'),a=v('fA'),q=v('fQ').toLowerCase();
+  var r=P.filter(function(p){var ps=ST[p.id]||p.statut||'ND',pa=p.annee?String(p.annee):'?',pc=t2c(p.theme);return(!c||pc===c)&&(!t||p.theme===t)&&(!s||ps===s)&&(!a||pa===a)&&(!q||(p.titre||'').toLowerCase().indexOf(q)>=0||(p.resume||'').toLowerCase().indexOf(q)>=0);});
+  el('fCnt',r.length+' projet(s)');
+  rTb('g-tbody',r,true);
+}
+function v(id){var e=document.getElementById(id);return e?e.value:'';}
+
+function rTb(bid,rows,showC){
+  var tb=document.getElementById(bid);if(!tb)return;
+  tb.innerHTML=rows.map(function(p){
     var st=ST[p.id]||p.statut||'ND';
-    var imp=p.importance?'\u2605'.repeat(p.importance):'-';
     var opts=SLIST.map(function(sv){return '<option value="'+sv+'"'+(st===sv?' selected':'')+'>'+sv+'</option>';}).join('');
-    return '<tr><td style="font-size:.7rem;color:#777">'+(p.theme||'—')+'</td>'
-      +'<td><strong>'+(p.titre||'—')+'</strong><br><span style="color:#aaa;font-size:.68rem">'+(p.resume||'')+'</span></td>'
-      +'<td><span class="b '+bc(st)+'">'+st+'</span></td>'
-      +'<td>'+(p.annee||'—')+'</td>'
-      +'<td style="color:#c8a000">'+imp+'</td>'
-      +'<td><select class="ssel" onchange="updateStatus('+p.id+',this.value,this.options[this.selectedIndex].text)">'+opts+'</select></td>'
-      +'</tr>';
+    var c1=showC?'<td style="font-size:.72rem"><span style="font-weight:500;color:var(--sg)">'+t2c(p.theme||'')+'</span><br><span style="color:var(--muted);">'+(p.theme||'—')+'</span></td>':'<td style="font-size:.72rem;color:var(--tl)">'+(p.theme||'—')+'</td>';
+    return '<tr>'+c1+'<td><div class="pn">'+(p.titre||'—')+'</div><div class="pr">'+(p.resume||'')+'</div></td><td><span class="badge '+bc(st)+'">'+st+'</span></td><td style="color:var(--tl)">'+(p.annee||'—')+'</td><td style="text-align:center;color:#c8a000;font-size:.75rem">'+imp(p.importance)+'</td><td><select class="ssel" data-pid="'+p.id+'" data-t="'+p.titre.replace(/"/g,'&quot;')+'" onchange="uSt(+this.dataset.pid,this.value,this.dataset.t)">'+opts+'</select></td></tr>';
   }).join('');
 }
 
-function buildCharts() {
-  var themes={},statuts={};
-  P.forEach(function(p){
-    var t=p.theme||'Autre'; themes[t]=(themes[t]||0)+1;
-    var s=ST[p.id]||p.statut||'ND'; statuts[s]=(statuts[s]||0)+1;
-  });
-  var thK=Object.keys(themes).sort(), thV=thK.map(function(k){return themes[k];});
-  var stK=Object.keys(statuts), stV=stK.map(function(k){return statuts[k];});
-  if(cT)cT.destroy(); if(cS)cS.destroy();
-  cT=new Chart(document.getElementById('cT'),{type:'bar',data:{labels:thK,datasets:[{data:thV,backgroundColor:CL,borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:9}}},y:{ticks:{stepSize:1}}}}});
-  cS=new Chart(document.getElementById('cS'),{type:'doughnut',data:{labels:stK,datasets:[{data:stV,backgroundColor:['#a33','#363','#336','#863','#888','#4a8a5a','#669']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:9},padding:5}}}}});
+function bCG(){
+  var ks=Object.keys(COMM);
+  document.getElementById('cg').innerHTML=ks.map(function(comm,idx){
+    var pp=P.filter(function(p){return COMM[comm].indexOf(p.theme)>=0;});
+    var to=pp.length,pr=0,ec=0,re=0;
+    pp.forEach(function(p){var s=ST[p.id]||p.statut||'';if(s==='Prioritaire')pr++;if(s.indexOf('cours')>=0)ec++;if(s.indexOf('alis')>=0)re++;});
+    var pct=to?Math.round(re/to*100):0;
+    var col=COLS[idx%COLS.length];
+    return '<div class="cc" onclick="showCD('+idx+')">'
+      +'<div class="cc-head">'
+      +'<div class="cc-icon" style="background:'+col+'22;border:1px solid '+col+'44">'+(ICONS[comm]||'📋')+'</div>'
+      +'<div style="flex:1"><div class="cc-title">'+comm+'</div>'
+      +'<div class="cc-sub">'+COMM[comm].join(', ')+(REFS[comm]?' &bull; '+REFS[comm]:'')+'</div></div>'
+      +'<svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="opacity:.25;flex-shrink:0"><path d="M5 10.5l3.5-3.5L5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>'
+      +'</div>'
+      +'<div class="cc-body">'
+      +'<div class="cc-stats">'
+      +'<div><div class="cs-v" style="color:var(--sg)">'+to+'</div><div class="cs-l">projets</div></div>'
+      +'<div><div class="cs-v" style="color:#c0392b">'+pr+'</div><div class="cs-l">priorit.</div></div>'
+      +'<div><div class="cs-v" style="color:#e67e22">'+ec+'</div><div class="cs-l">en cours</div></div>'
+      +'<div><div class="cs-v" style="color:#27ae60">'+re+'</div><div class="cs-l">réalisés</div></div>'
+      +'</div>'
+      +'<div class="pbar"><div class="pfill" style="width:'+pct+'%;background:'+col+'"></div></div>'
+      +'<div class="prog-lbl"><span>Avancement</span><span>'+pct+'%</span></div>'
+      +'</div></div>';
+  }).join('');
 }
 
-function updateStatus(id,newSt,titre) {
-  api('/api/statut',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id,statut:newSt,titre:titre})}).then(function(d){
-    if(d.ok){ST[id]=newSt;NF.unshift(d.notif);filtrer();buildCharts();updateMetrics();toast('Statut mis a jour');}
-  });
+function showCD(idx){
+  _ci=idx;
+  var comm=Object.keys(COMM)[idx],themes=COMM[comm],ref=REFS[comm]||'',icon=ICONS[comm]||'📋',col=COLS[idx%COLS.length];
+  var pp=P.filter(function(p){return themes.indexOf(p.theme)>=0;});
+  var to=pp.length,pr=0,ec=0,re=0;
+  pp.forEach(function(p){var s=ST[p.id]||p.statut||'';if(s==='Prioritaire')pr++;if(s.indexOf('cours')>=0)ec++;if(s.indexOf('alis')>=0)re++;});
+  document.getElementById('cdet-title').textContent=icon+' '+comm;
+  document.getElementById('cdet-sub').textContent=themes.join(' • ')+(ref?' — Réf: '+ref:'');
+  document.getElementById('cdet-metrics').innerHTML=
+    '<div class="m" style="flex:1;min-width:0"><div class="v" style="font-size:1.4rem">'+to+'</div><div class="l">Projets</div></div>'+
+    '<div class="m" style="flex:1;min-width:0"><div class="v" style="font-size:1.4rem;color:#c0392b">'+pr+'</div><div class="l">Prioritaires</div></div>'+
+    '<div class="m" style="flex:1;min-width:0"><div class="v" style="font-size:1.4rem;color:#e67e22">'+ec+'</div><div class="l">En cours</div></div>'+
+    '<div class="m" style="flex:1;min-width:0"><div class="v" style="font-size:1.4rem;color:#27ae60">'+re+'</div><div class="l">Réalisés</div></div>';
+  document.getElementById('cd-st').value='';
+  document.getElementById('cd-q').value='';
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.ni').forEach(function(n){n.classList.remove('active');});
+  document.getElementById('p-cdet').classList.add('active');
+  fCD();
 }
 
-function showTab(id,btn) {
-  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
-  document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('active');});
-  document.getElementById('tab-'+id).classList.add('active');
-  btn.classList.add('active');
-  if(id==='agenda')renderAgenda();
-  else if(id==='documents')renderDocs();
-  else if(id==='notifs')renderNotifs();
-  else if(id==='pages')renderCommPages();
+function fCD(){
+  var comm=Object.keys(COMM)[_ci],themes=COMM[comm];
+  var s=v('cd-st'),q=v('cd-q').toLowerCase();
+  var r=P.filter(function(p){var ps=ST[p.id]||p.statut||'ND';return themes.indexOf(p.theme)>=0&&(!s||ps===s)&&(!q||(p.titre||'').toLowerCase().indexOf(q)>=0||(p.resume||'').toLowerCase().indexOf(q)>=0);});
+  el('cd-cnt',r.length+' projet(s)');
+  rTb('cd-tbody',r,false);
 }
 
-function renderAgenda() {
+function uSt(id,nst,titre){
+  fetch('/api/statut',{method:'POST',headers:{'Content-Type':'application/json','Authorization':_auth},body:JSON.stringify({id:id,statut:nst,titre:titre})})
+    .then(function(r){return r.json();}).then(function(d){
+      if(d.ok){ST[id]=nst;NF.unshift(d.notif);fG();bCG();updMeta();bCharts();
+      if(document.getElementById('p-cdet').classList.contains('active'))fCD();
+      toast('✓ '+nst);}
+    });
+}
+
+function bCharts(){
+  var th={},st={};
+  P.forEach(function(p){var t=p.theme||'Autre';th[t]=(th[t]||0)+1;var s=ST[p.id]||p.statut||'ND';st[s]=(st[s]||0)+1;});
+  var tk=Object.keys(th).sort(),tv=tk.map(function(k){return th[k];});
+  var sk=Object.keys(st),sv=sk.map(function(k){return st[k];});
+  var CL=['#1a3a2a','#2d6a4f','#4a8a5a','#6ab06a','#7ab87a','#8ac08a','#aad4aa','#3a6a4a','#5a9a6a','#9ac89a','#b0d8b0','#c8e8c8','#2a5a3a','#4a8a5a','#6ab06a'];
+  if(chT)chT.destroy();if(chS)chS.destroy();
+  var et=document.getElementById('chT'),es=document.getElementById('chS');
+  if(et)chT=new Chart(et,{type:'bar',data:{labels:tk,datasets:[{data:tv,backgroundColor:CL,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:9}}},y:{ticks:{stepSize:1}}}}});
+  if(es)chS=new Chart(es,{type:'doughnut',data:{labels:sk,datasets:[{data:sv,backgroundColor:['#c0392b','#27ae60','#2980b9','#d68910','#e67e22','#1e8449','#999']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:8}}}}});
+}
+
+function rAg(){
   var now=new Date().toISOString().slice(0,10);
-  var sorted=AG.slice().sort(function(a,b){return a.date>b.date?1:-1;});
-  var types={bureau:'Bureau',commission:'Commission',conseil:'Conseil municipal',autre:'Autre'};
-  document.getElementById('agenda-list').innerHTML=sorted.length?sorted.map(function(e){
+  var MOIS=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+  var TYPES={bureau:'Bureau municipal',commission:'Commission',conseil:'Conseil municipal',autre:'Autre'};
+  document.getElementById('ag-list').innerHTML=AG.slice().sort(function(a,b){return a.date>b.date?1:-1;}).map(function(e){
     var past=e.date<now;
-    return '<div class="card"'+(past?' style="opacity:.6"':'')+'>'+
-      '<div style="display:flex;justify-content:space-between"><h4>'+e.titre+'</h4>'+
-      '<button class="btn btn-sm btn-red" onclick="delAgenda('+e.id+')">&#10005;</button></div>'+
-      '<p>&#128197; '+e.date+' &#128336; '+(e.heure||'')+'  &#128205; '+(e.lieu||'')+'</p>'+
-      '<div class="meta"><span class="b b3">'+(types[e.type]||e.type)+'</span>'+(e.notes?' '+e.notes:'')+'</div>'+
-      '</div>';
-  }).join(''):'<p style="color:#aaa;font-size:.82rem">Aucune reunion programmee.</p>';
+    return '<div class="card" style="margin-bottom:10px'+(past?';opacity:.55':'')+'">'
+      +'<div style="display:flex;justify-content:space-between;align-items:flex-start">'
+      +'<div style="display:flex;gap:12px;align-items:center">'
+      +'<div style="background:var(--sp);border-radius:8px;padding:.4rem .65rem;text-align:center;flex-shrink:0">'
+      +'<div style="font-size:.95rem;font-weight:700;color:var(--sg)">'+e.date.slice(8)+'</div>'
+      +'<div style="font-size:.6rem;color:var(--muted)">'+MOIS[+e.date.slice(5,7)-1]+'</div>'
+      +'</div>'
+      +'<div><div style="font-size:.88rem;font-weight:600">'+e.titre+'</div>'
+      +'<div style="font-size:.74rem;color:var(--tl);margin-top:2px">'+(e.heure?'🕐 '+e.heure+'  ':'')+( e.lieu?'📍 '+e.lieu:'')+'</div>'
+      +(e.notes?'<div style="font-size:.72rem;color:var(--muted);margin-top:3px">'+e.notes+'</div>':'')+
+      '</div></div>'
+      +'<div style="display:flex;gap:6px;align-items:center"><span class="badge b-pl">'+TYPES[e.type]+'</span>'
+      +'<button class="btn btn-d btn-sm" onclick="delAg('+e.id+')">×</button></div>'
+      +'</div></div>';
+  }).join('')||'<p style="color:var(--muted);font-size:.82rem">Aucune réunion.</p>';
 }
+function svAg(){var d={titre:v('ag-ti'),date:v('ag-d'),heure:v('ag-h'),lieu:v('ag-l'),type:v('ag-ty'),notes:v('ag-n')};aPost('/api/agenda',d).then(function(r){if(r.ok){AG.push(r.item);cm();rAg();toast('Réunion ajoutée');}});}
+function delAg(id){if(!confirm('Supprimer ?'))return;aDel('/api/agenda/'+id).then(function(r){if(r.ok){AG=AG.filter(function(a){return a.id!==id;});rAg();toast('Supprimé');}});}
 
-function renderDocs() {
-  var types={cr:'Compte-rendu',delib:'Deliberation',rapport:'Rapport',autre:'Autre'};
-  document.getElementById('docs-list').innerHTML=DC.length?DC.map(function(d){
-    return '<div class="card">'+
-      '<div style="display:flex;justify-content:space-between"><h4><a href="'+d.url+'" target="_blank">&#128196; '+d.titre+'</a></h4>'+
-      '<button class="btn btn-sm btn-red" onclick="delDoc('+d.id+')">&#10005;</button></div>'+
-      '<p><span class="b b3">'+(types[d.type]||d.type)+'</span> '+d.date+'</p>'+
-      (d.notes?'<p class="meta">'+d.notes+'</p>':'')+
-      '</div>';
-  }).join(''):'<p style="color:#aaa;font-size:.82rem">Aucun document.</p>';
+function rDc(){
+  var TYPES={cr:'Compte-rendu',delib:'Délibération',rapport:'Rapport',autre:'Autre'};
+  document.getElementById('dc-list').innerHTML=DC.map(function(d){
+    return '<div class="card" style="margin-bottom:10px">'
+      +'<div style="display:flex;justify-content:space-between;align-items:flex-start">'
+      +'<div style="display:flex;gap:10px"><div style="font-size:1.5rem;flex-shrink:0">📄</div>'
+      +'<div><a href="'+d.url+'" target="_blank" style="font-size:.88rem;font-weight:600;color:var(--sg)">'+d.titre+'</a>'
+      +'<div style="font-size:.74rem;color:var(--tl);margin-top:3px"><span class="badge b-pl">'+TYPES[d.type]+'</span> '+d.date+'</div>'
+      +(d.notes?'<div style="font-size:.72rem;color:var(--muted);margin-top:3px">'+d.notes+'</div>':'')
+      +'</div></div>'
+      +'<button class="btn btn-d btn-sm" onclick="delDc('+d.id+')">×</button>'
+      +'</div></div>';
+  }).join('')||'<p style="color:var(--muted);font-size:.82rem">Aucun document.</p>';
 }
+function svDc(){var d={titre:v('dc-ti'),type:v('dc-ty'),url:v('dc-u'),date:v('dc-d'),notes:v('dc-n')};aPost('/api/document',d).then(function(r){if(r.ok){DC.push(r.item);cm();rDc();toast('Document ajouté');}});}
+function delDc(id){if(!confirm('Supprimer ?'))return;aDel('/api/document/'+id).then(function(r){if(r.ok){DC=DC.filter(function(d){return d.id!==id;});rDc();toast('Supprimé');}});}
 
-function renderNotifs() {
-  document.getElementById('notifs-list').innerHTML=NF.length?NF.slice(0,50).map(function(n){
-    return '<div class="notif-item"><div class="dot'+(n.new?'':' old')+'"></div>'+
-      '<div><strong>'+n.titre+'</strong> &rarr; '+n.statut+'</div>'+
-      '<span style="color:#aaa;font-size:.68rem;margin-left:auto;white-space:nowrap">'+n.ts+'</span></div>';
-  }).join(''):'<p style="color:#aaa;font-size:.82rem">Aucune modification.</p>';
+function rNt(){document.getElementById('nt-list').innerHTML=NF.slice(0,100).map(function(n){return '<div class="notif-i"><div class="ndot" style="background:'+(n.new?'var(--sl)':'#ccc')+'"></div><div style="flex:1"><strong>'+n.titre+'</strong> → '+n.statut+'</div><span style="font-size:.68rem;color:var(--muted);white-space:nowrap">'+n.ts+'</span></div>';}).join('')||'<p style="color:var(--muted);font-size:.82rem">Aucune modification.</p>';}
+
+function createP(){
+  var t=v('np-t').trim(),r=v('np-r').trim();
+  if(!t||!r){toast('⚠ Titre et résumé obligatoires');return;}
+  var d={titre:t,theme:v('np-th'),statut:v('np-s'),annee:v('np-a'),importance:v('np-i'),resume:r,description:v('np-d'),tags:v('np-tags')};
+  aPost('/api/projet',d).then(function(res){if(res.ok){P.push(res.projet);bFilters();fG();bCG();updMeta();bCharts();resetNP();document.getElementById('np-res').innerHTML='<div style="background:#eaf5ea;border-radius:8px;padding:.75rem;font-size:.8rem;color:#27ae60;border:1px solid #b7e4c7">✓ Créé : <strong>'+res.projet.titre+'</strong> (ID #'+res.projet.id+')</div>';toast('Projet créé !');}});
 }
+function resetNP(){['np-t','np-r','np-d','np-tags','np-a'].forEach(function(i){var e=document.getElementById(i);if(e)e.value='';});document.getElementById('np-res').innerHTML='';}
 
-function openModal(t){document.getElementById('modal-'+t).classList.add('open');}
-function closeModal(){document.querySelectorAll('.modal-bg').forEach(function(m){m.classList.remove('open');});}
-document.querySelectorAll('.modal-bg').forEach(function(m){m.addEventListener('click',function(e){if(e.target===m)closeModal();});});
+function impB(input){var file=input.files[0];if(!file)return;var reader=new FileReader();reader.onload=function(e){var sep=String.fromCharCode(10);var lines=e.target.result.split(sep).filter(function(l){return l.trim();});if(!lines.length)return;var headers=lines[0].split(',').map(function(h){return h.trim();});var rows=lines.slice(1).map(function(l){return l.split(',').map(function(c){return c.trim();});});var html='<div class="table-wrap"><table><thead><tr>';headers.forEach(function(h,i){html+='<th style="text-align:'+(i>0?'right':'left')+'">'+h+'</th>';});html+='</tr></thead><tbody>';rows.forEach(function(row){html+='<tr>';row.forEach(function(cell,i){var num=parseFloat(cell.replace(/[^0-9.-]/g,''));var fmt=(!isNaN(num)&&i>0)?new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(num):cell;var color='';if(i===2&&row[1]){var v1=parseFloat(row[1].replace(/[^0-9.-]/g,'')),v2=parseFloat(row[2].replace(/[^0-9.-]/g,''));if(!isNaN(v1)&&!isNaN(v2)){color=v2>v1?'color:#c0392b;font-weight:500':'color:#27ae60;font-weight:500';}}html+='<td style="text-align:'+(i>0?'right':'left')+';'+color+'">'+fmt+'</td>';});html+='</tr>';});html+='</tbody></table></div>';document.getElementById('btable').innerHTML=html;toast('Budget importé : '+rows.length+' lignes');};reader.readAsText(file);}
 
-function saveAgenda(){
-  var d={titre:document.getElementById('ag-titre').value,date:document.getElementById('ag-date').value,heure:document.getElementById('ag-heure').value,lieu:document.getElementById('ag-lieu').value,type:document.getElementById('ag-type').value,notes:document.getElementById('ag-notes').value};
-  api('/api/agenda',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).then(function(r){if(r.ok){AG.push(r.item);closeModal();renderAgenda();toast('Reunion ajoutee');}});
-}
-function delAgenda(id){if(!confirm('Supprimer ?'))return;api('/api/agenda/'+id,{method:'DELETE'}).then(function(r){if(r.ok){AG=AG.filter(function(a){return a.id!==id;});renderAgenda();toast('Supprime');}});}
+var PROMPTS={arrete:'Redigez un arrete municipal officiel pour la Commune de Vizille (Isere 38431). Incluez numero, visas CGCT, considerants, articles. Sujet : ',deliberation:'Redigez une deliberation du conseil municipal de Vizille. Objet, motifs, decision. Sujet : ',facebook:'Post Facebook engageant pour Vizille en Mouvement. Ton chaleureux, emojis, 300 mots max. Sujet : ',communique:'Communique de presse Ville de Vizille. Titre, chapeau, corps, contact. Sujet : ',convocation:'Convocation conseil municipal Vizille art.L2121-10 CGCT. Date, heure, lieu, ODJ. Sujet : ',discours:'Discours pour le Maire de Vizille. Ton sincere et ancre dans le territoire. Sujet : '};
+function genC(){var type=v('ct'),sujet=v('cs').trim(),ctx=v('cc')||'Commune Vizille 5000 hab Isere 38431 Maire Catherine Troton mandat 2026-2032';if(!sujet){toast('⚠ Indiquez le sujet');return;}el('c-st','⏳ Génération...');document.getElementById('cr').value='';aPost('/api/genere',{type:type,sujet:sujet,contexte:ctx}).then(function(d){el('c-st','');if(d.ok){document.getElementById('cr').value=d.texte;toast('✓ Généré');}else{document.getElementById('cr').value='Erreur: '+d.error;}}).catch(function(){el('c-st','');toast('⚠ Erreur réseau');});}
+function copyC(){var t=document.getElementById('cr');t.select();document.execCommand('copy');toast('Copié !');}
 
-function saveDoc(){
-  var d={titre:document.getElementById('doc-titre').value,type:document.getElementById('doc-type').value,url:document.getElementById('doc-url').value,date:document.getElementById('doc-date').value,notes:document.getElementById('doc-notes').value};
-  api('/api/document',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).then(function(r){if(r.ok){DC.push(r.item);closeModal();renderDocs();toast('Document ajoute');}});
-}
-function delDoc(id){if(!confirm('Supprimer ?'))return;api('/api/document/'+id,{method:'DELETE'}).then(function(r){if(r.ok){DC=DC.filter(function(d){return d.id!==id;});renderDocs();toast('Supprime');}});}
+function om(t){document.getElementById('ov-'+t).classList.add('open');}
+function cm(){document.querySelectorAll('.overlay').forEach(function(o){o.classList.remove('open');});}
+document.querySelectorAll('.overlay').forEach(function(o){o.addEventListener('click',function(e){if(e.target===o)cm();});});
 
-function createProjet(){
-  var titre=document.getElementById('np-titre').value.trim();
-  var resume=document.getElementById('np-resume').value.trim();
-  if(!titre||!resume){toast('Titre et resume obligatoires');return;}
-  var d={titre:titre,theme:document.getElementById('np-theme').value,statut:document.getElementById('np-statut').value,annee:document.getElementById('np-annee').value,importance:document.getElementById('np-importance').value,resume:resume,description:document.getElementById('np-description').value,tags:document.getElementById('np-tags').value};
-  api('/api/projet',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).then(function(r){
-    if(r.ok){P.push(r.projet);buildFilters();filtrer();buildCharts();updateMetrics();resetForm();
-    document.getElementById('np-result').innerHTML='<div style="background:#e8f0e8;border-radius:8px;padding:10px;font-size:.8rem;color:#363">Projet cree : '+r.projet.titre+'</div>';
-    toast('Projet cree !');}
-  });
-}
-function resetForm(){['np-titre','np-resume','np-description','np-tags','np-annee'].forEach(function(i){document.getElementById(i).value='';});}
-
-function importBudget(input){
-  var file=input.files[0];if(!file)return;
-  var reader=new FileReader();
-  reader.onload=function(e){
-    var lines=e.target.result.split(String.fromCharCode(10)).filter(function(l){return l.trim();});
-    if(!lines.length)return;
-    var headers=lines[0].split(',').map(function(h){return h.trim();});
-    var rows=lines.slice(1).map(function(l){return l.split(',').map(function(c){return c.trim();});});
-    var html='<table><thead><tr>';
-    headers.forEach(function(h,i){html+='<th style="text-align:'+(i>0?'right':'left')+'">'+h+'</th>';});
-    html+='</tr></thead><tbody>';
-    rows.forEach(function(row){
-      html+='<tr>';
-      row.forEach(function(cell,i){
-        var num=parseFloat(cell.replace(/[^0-9.-]/g,''));
-        var fmt=(!isNaN(num)&&i>0)?new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(num):cell;
-        var color='';
-        if(i===2&&row[1]){var v1=parseFloat(row[1].replace(/[^0-9.-]/g,'')),v2=parseFloat(row[2].replace(/[^0-9.-]/g,''));if(!isNaN(v1)&&!isNaN(v2)){color=v2>v1?'color:#a33':'color:#363';}}
-        html+='<td style="text-align:'+(i>0?'right':'left')+';'+color+'">'+fmt+'</td>';
-      });
-      html+='</tr>';
-    });
-    html+='</tbody></table>';
-    document.getElementById('budget-table').innerHTML=html;
-    toast('Budget importe : '+rows.length+' lignes');
-  };
-  reader.readAsText(file);
-}
-
-function genereComm(){
-  var type=document.getElementById('comm-type').value;
-  var sujet=document.getElementById('comm-sujet').value.trim();
-  var contexte=document.getElementById('comm-contexte').value.trim()||'Commune de Vizille, 5000 habitants, Isere 38431, Maire Catherine Troton, mandat 2026-2032';
-  if(!sujet){toast('Indiquez le sujet');return;}
-  document.getElementById('comm-status').textContent='Generation en cours...';
-  document.getElementById('comm-result').value='';
-  api('/api/genere',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:type,sujet:sujet,contexte:contexte})}).then(function(d){
-    document.getElementById('comm-status').textContent='';
-    if(d.ok){document.getElementById('comm-result').value=d.texte;toast('Document genere !');}
-    else{document.getElementById('comm-result').value='Erreur: '+d.error;}
-  }).catch(function(){document.getElementById('comm-status').textContent='';document.getElementById('comm-result').value='Erreur reseau';});
-}
-function copyComm(){var t=document.getElementById('comm-result');t.select();document.execCommand('copy');toast('Copie !');}
-
+function aPost(url,data){return fetch(url,{method:'POST',headers:{'Content-Type':'application/json','Authorization':_auth},body:JSON.stringify(data)}).then(function(r){return r.json();});}
+function aDel(url){return fetch(url,{method:'DELETE',headers:{'Authorization':_auth}}).then(function(r){return r.json();});}
 function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
-
-
-function renderCommPages() {
-  var html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px">';
-  Object.keys(COMMISSIONS).forEach(function(comm) {
-    var themes = COMMISSIONS[comm];
-    var projetsComm = P.filter(function(p){ return themes.indexOf(p.theme) >= 0; });
-    var ref = COMM_REFERENTS[comm] || '';
-    var stats = {total:projetsComm.length, prio:0, encours:0, realise:0};
-    projetsComm.forEach(function(p){
-      var s = ST[p.id]||p.statut||'';
-      if(s==='Prioritaire') stats.prio++;
-      if(s.indexOf('cours')>=0) stats.encours++;
-      if(s.indexOf('alis')>=0||s.indexOf('alise')>=0) stats.realise++;
-    });
-    var pct = stats.total ? Math.round((stats.realise/stats.total)*100) : 0;
-    var commIdx = Object.keys(COMMISSIONS).indexOf(comm);
-    html += '<div class="card" style="cursor:pointer" onclick="showCommDetail(' + commIdx + ')">';
-    html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem">';
-    var colors=['#4a8a5a','#5a9a6a','#7ab87a','#3a6a4a','#2a5a3a','#8ac08a','#6ab06a','#1a3a2a','#4a8a5a','#5a9a6a','#3a6a4a','#7ab87a'];
-    var commColor = colors[commIdx % colors.length];
-    html += '<div style="width:4px;height:40px;background:'+commColor+';border-radius:2px;flex-shrink:0"></div>';
-    html += '<div style="flex:1"><h4 style="font-size:.88rem;line-height:1.3">'+comm+'</h4>'
-    if(ref) html += '<span class="b b3" style="white-space:nowrap;margin-left:8px">'+ref+'</span></div>';
-    html += '</div>';
-    html += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:.75rem">';
-    html += '<div style="text-align:center"><div style="font-size:1.3rem;font-weight:600;color:#1a3a2a">'+stats.total+'</div><div style="font-size:.65rem;color:#999">projets</div></div>';
-    html += '<div style="text-align:center"><div style="font-size:1.3rem;font-weight:600;color:#a33">'+stats.prio+'</div><div style="font-size:.65rem;color:#999">prioritaires</div></div>';
-    html += '<div style="text-align:center"><div style="font-size:1.3rem;font-weight:600;color:#863">'+stats.encours+'</div><div style="font-size:.65rem;color:#999">en cours</div></div>';
-    html += '<div style="text-align:center"><div style="font-size:1.3rem;font-weight:600;color:#363">'+stats.realise+'</div><div style="font-size:.65rem;color:#999">réalisés</div></div>';
-    html += '</div>';
-    // Barre de progression
-    html += '<div style="background:#f0f0e8;border-radius:4px;height:6px;margin-bottom:.5rem">';
-    html += '<div style="background:#4a8a5a;height:6px;border-radius:4px;width:'+pct+'%"></div></div>';
-    html += '<div style="font-size:.68rem;color:#aaa;display:flex;justify-content:space-between">';
-    html += '<span>Thèmes : '+themes.join(', ')+'</span><span>'+pct+'% réalisé</span></div>';
-    html += '</div>';
-  });
-  html += '</div>';
-  document.getElementById('comm-pages-list').innerHTML = html;
-}
-
-function showCommDetail(idx) {
-  var comm = Object.keys(COMMISSIONS)[idx];
-  var themes = COMMISSIONS[comm];
-  var projetsComm = P.filter(function(p){ return themes.indexOf(p.theme) >= 0; });
-  var ref = COMM_REFERENTS[comm]||'';
-  var html = '<div style="margin-bottom:1rem;display:flex;align-items:center;gap:10px">';
-  html += '</div>'; // end hidden div
-  html += '<h3 style="font-size:.95rem;color:#1a3a2a">'+comm+'</h3>';
-  if(ref) html += '<span class="b b3">Référent : '+ref+'</span>';
-  html += '</div>';
-  // Filtres rapides
-  html += '<div class="fl" style="margin-bottom:.85rem">';
-  html += '<select id="cd-statut" onchange="filtrerCommDetail(window._currentCommIdx)" style="padding:5px 8px;border:.5px solid #ddd;border-radius:6px;font-size:.75rem;background:#fff">';
-  html += '<option value="">Tous les statuts</option>';
-  ['Prioritaire','Programmé','Planifié','Étude','En cours','Réalisé'].forEach(function(s){html+='<option>'+s+'</option>';});
-  html += '</select>';
-  html += '<input id="cd-search" placeholder="Rechercher..." oninput="filtrerCommDetail(window._currentCommIdx)" style="padding:5px 8px;border:.5px solid #ddd;border-radius:6px;font-size:.75rem;background:#fff;flex:1">';
-  html += '</div>';
-  html += '<div id="comm-detail-table"></div>';
-  document.getElementById('comm-pages-list').innerHTML = html;
-  filtrerCommDetail(comm);
-}
-
-function filtrerCommDetail(idx) {
-  var comm = Object.keys(COMMISSIONS)[idx];
-  var themes = COMMISSIONS[comm];
-  var statut = (document.getElementById('cd-statut')||{}).value||'';
-  var q = ((document.getElementById('cd-search')||{}).value||'').toLowerCase();
-  var r = P.filter(function(p){
-    var ps = ST[p.id]||p.statut||'ND';
-    return themes.indexOf(p.theme)>=0 && (!statut||ps===statut) && (!q||(p.titre||'').toLowerCase().indexOf(q)>=0||(p.resume||'').toLowerCase().indexOf(q)>=0);
-  });
-  var html = '<table><thead><tr><th>Thème</th><th>Projet</th><th>Statut</th><th>Année</th><th>Imp.</th><th>Mise à jour</th></tr></thead><tbody>';
-  html += r.map(function(p){
-    var st=ST[p.id]||p.statut||'ND';
-    var imp=p.importance?'★'.repeat(p.importance):'-';
-    var opts=['Prioritaire','Programme','Planifie','Etude','En cours','Realise','Suspendu'].map(function(sv){return '<option value="'+sv+'"'+(st===sv?' selected':'')+'>'+sv+'</option>';}).join('');
-    return '<tr>'
-      +'<td style="font-size:.7rem;color:#777">'+(p.theme||'—')+'</td>'
-      +'<td><strong>'+(p.titre||'—')+'</strong><br><span style="color:#aaa;font-size:.68rem">'+(p.resume||'')+'</span></td>'
-      +'<td><span class="b '+bc(st)+'">'+st+'</span></td>'
-      +'<td>'+(p.annee||'—')+'</td>'
-      +'<td style="color:#c8a000">'+imp+'</td>'
-      +'<td><select class="ssel" data-pid="'+p.id+'" onchange="updateStatus(+this.dataset.pid,this.value,this.dataset.titre)" data-titre="'+p.titre.replace(/"/g,'&quot;')+'">'+opts+'</select></td>'
-      +'</tr>';
-  }).join('');
-  html += '</tbody></table>';
-  if(!r.length) html = '<p style="color:#aaa;font-size:.82rem;padding:.5rem 0">Aucun projet pour ce filtre.</p>';
-  document.getElementById('comm-detail-table').innerHTML = html;
-}
 
 init();
 </script>
@@ -783,116 +599,69 @@ init();
 }
 
 const server = http.createServer(function(req, res) {
-  var p = req.url.split('?')[0];
-  var method = req.method;
+  const p = req.url.split('?')[0];
+  const m = req.method;
+  if(m==='OPTIONS'){res.writeHead(200,{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'GET,POST,DELETE','Access-Control-Allow-Headers':'Content-Type,Authorization'});return res.end();}
+  if(!auth(req)) return deny(res);
 
-  if (method === 'OPTIONS') {
-    res.writeHead(200, {'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'GET,POST,DELETE','Access-Control-Allow-Headers':'Content-Type,Authorization'});
-    return res.end();
-  }
-  if (!auth(req)) return deny(res);
+  if(p==='/api/all') return json(res,{projets,statuts,agenda,documents,notifs:notifs.slice(0,100)});
 
-  // API tout en un
-  if (p === '/api/all') {
-    return json(res, {projets:projets, statuts:statuts, agenda:agenda, documents:documents, notifs:notifs.slice(0,50)});
-  }
+  if(p==='/api/statut'&&m==='POST') return body(req,function(err,d){
+    if(err)return json(res,{ok:false},400);
+    const old=statuts[d.id]||'ND';
+    statuts[d.id]=d.statut; save('statuts.json',statuts);
+    const ts=new Date().toLocaleString('fr-FR');
+    const notif={id:Date.now(),titre:d.titre,statut:d.statut,ancien:old,ts,new:true};
+    notifs.unshift(notif); if(notifs.length>200)notifs=notifs.slice(0,200);
+    save('notifs.json',notifs);
+    return json(res,{ok:true,notif});
+  });
 
-  // Statut
-  if (p === '/api/statut' && method === 'POST') {
-    return body(req, function(err, d) {
-      if (err) return json(res, {ok:false}, 400);
-      var old = statuts[d.id] || 'ND';
-      statuts[d.id] = d.statut;
-      save('statuts.json', statuts);
-      var ts = new Date().toLocaleString('fr-FR');
-      var notif = {id:Date.now(), titre:d.titre, statut:d.statut, ancien:old, ts:ts, new:true};
-      notifs.unshift(notif);
-      if (notifs.length > 200) notifs = notifs.slice(0, 200);
-      save('notifs.json', notifs);
-      return json(res, {ok:true, notif:notif});
-    });
+  if(p==='/api/agenda'&&m==='POST') return body(req,function(err,d){
+    if(err)return json(res,{ok:false},400);
+    d.id=nextId(agenda); agenda.push(d); save('agenda.json',agenda);
+    return json(res,{ok:true,item:d});
+  });
+  if(p.match(/^\/api\/agenda\/\d+$/)&&m==='DELETE'){
+    const id=parseInt(p.split('/').pop());
+    agenda=agenda.filter(a=>a.id!==id); save('agenda.json',agenda); return json(res,{ok:true});
   }
 
-  // Agenda
-  if (p === '/api/agenda' && method === 'POST') {
-    return body(req, function(err, d) {
-      if (err) return json(res, {ok:false}, 400);
-      d.id = nextId(agenda); agenda.push(d); save('agenda.json', agenda);
-      return json(res, {ok:true, item:d});
-    });
-  }
-  if (p.match(/^\/api\/agenda\/\d+$/) && method === 'DELETE') {
-    var id = parseInt(p.split('/').pop());
-    agenda = agenda.filter(function(a){return a.id !== id;});
-    save('agenda.json', agenda); return json(res, {ok:true});
+  if(p==='/api/document'&&m==='POST') return body(req,function(err,d){
+    if(err)return json(res,{ok:false},400);
+    d.id=nextId(documents); documents.push(d); save('documents.json',documents);
+    return json(res,{ok:true,item:d});
+  });
+  if(p.match(/^\/api\/document\/\d+$/)&&m==='DELETE'){
+    const id=parseInt(p.split('/').pop());
+    documents=documents.filter(d=>d.id!==id); save('documents.json',documents); return json(res,{ok:true});
   }
 
-  // Documents
-  if (p === '/api/document' && method === 'POST') {
-    return body(req, function(err, d) {
-      if (err) return json(res, {ok:false}, 400);
-      d.id = nextId(documents); documents.push(d); save('documents.json', documents);
-      return json(res, {ok:true, item:d});
-    });
-  }
-  if (p.match(/^\/api\/document\/\d+$/) && method === 'DELETE') {
-    var id = parseInt(p.split('/').pop());
-    documents = documents.filter(function(d){return d.id !== id;});
-    save('documents.json', documents); return json(res, {ok:true});
-  }
+  if(p==='/api/projet'&&m==='POST') return body(req,function(err,d){
+    if(err)return json(res,{ok:false},400);
+    const newId=projets.length?Math.max(...projets.map(x=>x.id||0))+1:9000;
+    const projet={id:newId,titre:d.titre||'',theme:d.theme||'Autre',statut:d.statut||'Programmé',annee:d.annee?parseInt(d.annee):null,budget:0,resume:d.resume||'',description:d.description||'',importance:parseInt(d.importance)||2,chiffres:[],tags:d.tags?d.tags.split(',').map(t=>t.trim()).filter(Boolean):[],created:new Date().toISOString()};
+    projets.push(projet); save('projets.json',projets);
+    const notif={id:Date.now(),titre:projet.titre,statut:'CRÉÉ',ancien:'',ts:new Date().toLocaleString('fr-FR'),new:true};
+    notifs.unshift(notif); save('notifs.json',notifs);
+    return json(res,{ok:true,projet});
+  });
 
-  // Créer projet
-  if (p === '/api/projet' && method === 'POST') {
-    return body(req, function(err, d) {
-      if (err) return json(res, {ok:false}, 400);
-      var newId = projets.length ? Math.max.apply(null, projets.map(function(x){return x.id||0;})) + 1 : 9000;
-      var projet = {id:newId, titre:d.titre||'', theme:d.theme||'Autre', statut:d.statut||'Programme', annee:d.annee?parseInt(d.annee):null, budget:0, resume:d.resume||'', description:d.description||'', importance:parseInt(d.importance)||2, chiffres:[], tags:d.tags?d.tags.split(',').map(function(t){return t.trim();}).filter(Boolean):[], created:new Date().toISOString()};
-      projets.push(projet); save('projets.json', projets);
-      var notif = {id:Date.now(), titre:projet.titre, statut:'CREE', ancien:'', ts:new Date().toLocaleString('fr-FR'), new:true};
-      notifs.unshift(notif); save('notifs.json', notifs);
-      return json(res, {ok:true, projet:projet});
-    });
-  }
+  if(p==='/api/genere'&&m==='POST') return body(req,function(err,d){
+    if(err)return json(res,{ok:false,error:'Données invalides'},400);
+    const KEY=process.env.ANTHROPIC_API_KEY||'';
+    if(!KEY)return json(res,{ok:false,error:'Clé API Claude non configurée (ANTHROPIC_API_KEY)'});
+    const prompts={arrete:'Redigez un arrete municipal pour la Commune de Vizille (Isere 38431). Sujet : ',deliberation:'Redigez une deliberation du conseil municipal de Vizille. Sujet : ',facebook:'Post Facebook pour Vizille en Mouvement. Sujet : ',communique:'Communique de presse Ville de Vizille. Sujet : ',convocation:'Convocation conseil municipal Vizille. Sujet : ',discours:'Discours pour le Maire de Vizille. Sujet : '};
+    const prompt=(prompts[d.type]||'')+( d.sujet||'')+' Contexte: '+(d.contexte||'Vizille Isere');
+    const rb=JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,messages:[{role:'user',content:prompt}]});
+    const opts={hostname:'api.anthropic.com',path:'/v1/messages',method:'POST',headers:{'Content-Type':'application/json','x-api-key':KEY,'anthropic-version':'2023-06-01','Content-Length':Buffer.byteLength(rb)}};
+    const r2=https.request(opts,function(resp){let data='';resp.on('data',c=>data+=c);resp.on('end',function(){try{const r=JSON.parse(data);return json(res,{ok:true,texte:(r.content&&r.content[0]&&r.content[0].text)||''});}catch(e){return json(res,{ok:false,error:'Erreur Claude'});}});});
+    r2.on('error',e=>json(res,{ok:false,error:e.message}));
+    r2.write(rb);r2.end();
+  });
 
-  // Claude AI
-  if (p === '/api/genere' && method === 'POST') {
-    return body(req, function(err, d) {
-      if (err) return json(res, {ok:false, error:'Donnees invalides'}, 400);
-      var KEY = process.env.ANTHROPIC_API_KEY || '';
-      if (!KEY) return json(res, {ok:false, error:'Cle API Claude non configuree (ANTHROPIC_API_KEY)'});
-      var prompts = {
-        arrete: 'Redigez un arrete municipal officiel pour la Commune de Vizille (Isere, 38431). Incluez numero, visas CGCT, considerants, articles de disposition, article execution. Sujet : ',
-        deliberation: 'Redigez une deliberation du conseil municipal de Vizille. Structure : objet, motifs, le conseil municipal delibere. Sujet : ',
-        facebook: 'Redigez un post Facebook engageant pour Vizille en Mouvement. Ton chaleureux, emojis, max 300 mots. Sujet : ',
-        communique: 'Redigez un communique de presse pour la Ville de Vizille. Titre, chapeau, corps, contact. Sujet : ',
-        convocation: 'Redigez une convocation au conseil municipal de Vizille (article L.2121-10 CGCT). Date, heure, lieu, ordre du jour. Sujet : ',
-        discours: 'Redigez un discours pour le Maire de Vizille. Ton sincere, ancre dans le territoire. Sujet : '
-      };
-      var prompt = (prompts[d.type]||'') + (d.sujet||'') + ' Contexte: ' + (d.contexte||'Vizille, Isere');
-      var reqBody = JSON.stringify({model:'claude-sonnet-4-20250514', max_tokens:1500, messages:[{role:'user', content:prompt}]});
-      var opts = {hostname:'api.anthropic.com', path:'/v1/messages', method:'POST', headers:{'Content-Type':'application/json','x-api-key':KEY,'anthropic-version':'2023-06-01','Content-Length':Buffer.byteLength(reqBody)}};
-      var req2 = https.request(opts, function(r2) {
-        var data='';
-        r2.on('data',function(c){data+=c;});
-        r2.on('end',function(){
-          try { var resp=JSON.parse(data); return json(res,{ok:true,texte:(resp.content&&resp.content[0]&&resp.content[0].text)||''}); }
-          catch(e) { return json(res,{ok:false,error:'Erreur Claude'}); }
-        });
-      });
-      req2.on('error',function(e){json(res,{ok:false,error:e.message});});
-      req2.write(reqBody); req2.end();
-    });
-  }
-
-  // Page principale
-  if (p === '/' || p === '/dashboard') {
-    res.writeHead(200, {'Content-Type':'text/html;charset=utf-8'});
-    return res.end(buildPage());
-  }
-  res.writeHead(404); res.end('404');
+  if(p==='/'||p==='/dashboard'){res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});return res.end(buildPage());}
+  res.writeHead(404);res.end('404');
 });
 
-server.listen(PORT, function() {
-  console.log('VeM Dashboard v3 port '+PORT);
-  console.log('projets.json charge: '+projets.length+' projets');
-});
+server.listen(PORT,function(){console.log('VeM Dashboard v4 (Bitrix-style) port '+PORT);console.log('projets: '+projets.length);});
