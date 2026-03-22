@@ -143,7 +143,7 @@
                     + '<h2 style="font-family:\'Playfair Display\',serif;font-size:clamp(1.1rem,2.5vw,1.6rem);font-weight:600;color:#1a3a6b;margin:0 0 0.8rem;line-height:1.3;">'+art.titre+'</h2>'
                     + '<p style="font-size:0.88rem;color:#555;line-height:1.75;margin:0 0 1.2rem;">'+(art.extrait||'')+'</p>'
                     + '<div style="display:flex;flex-wrap:wrap;gap:0.8rem;align-items:center;">'
-                    + '<a href="blog.html" style="display:inline-block;background:#1a3a6b;color:#fff;padding:0.6rem 1.3rem;border-radius:3px;text-decoration:none;font-size:0.8rem;letter-spacing:0.04em;">\ud83d\udcf0 Lire l\'article complet \u2192</a>'
+                    + '<a href="blog.html?article=' + art.id + '" style="display:inline-block;background:#1a3a6b;color:#fff;padding:0.6rem 1.3rem;border-radius:3px;text-decoration:none;font-size:0.8rem;letter-spacing:0.04em;">\ud83d\udcf0 Lire l\'article complet \u2192</a>'
                     + '</div>'
                     + '</div>';
                 document.getElementById('bloc-a-la-une').style.display = '';
