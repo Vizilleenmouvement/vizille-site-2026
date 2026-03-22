@@ -460,11 +460,14 @@ async function loadEquipePreview() {
 
         const candidats = await response.json();
 
-        // Prendre les candidats actifs avec photo, triés par ordre
+        // Séparer élus et non-élus
         const displayCandidats = candidats
-            .filter(c => c.actif !== false && (c.photo || c.video))
-            .sort((a, b) => (a.ordre || 999) - (b.ordre || 999))
-;
+            .filter(c => c.actif !== false && c.elu === true && (c.photo || c.video))
+            .sort((a, b) => (a.ordre || 999) - (b.ordre || 999));
+
+        const soutiens = candidats
+            .filter(c => c.elu === false && c.actif !== false && c.photo)
+            .sort((a, b) => (a.ordre || 999) - (b.ordre || 999));
 
         if (displayCandidats.length === 0) {
             grid.innerHTML = Array(6).fill(`
@@ -493,6 +496,23 @@ async function loadEquipePreview() {
             }
             return '';
         }).join('');
+
+        // Soutiens (non-élus)
+        const soutiensWrap = document.getElementById('equipe-soutiens-wrap');
+        const soutiensGrid = document.getElementById('equipe-soutiens-grid');
+        if (soutiensGrid && soutiens.length) {
+            soutiensGrid.innerHTML = soutiens.map(c => {
+                const nom = c.prenom ? (c.prenom + ' ' + (c.nom || '')) : (c.nom || '');
+                const pos = c.photoPosition || 'center 20%';
+                return `<a href="equipe.html" title="${nom}" style="text-align:center;text-decoration:none;">
+                    <div style="width:80px;height:80px;border-radius:50%;overflow:hidden;margin:0 auto 0.4rem;border:2px solid #c9a84c;opacity:0.8;">
+                        <img src="${c.photo}" alt="${nom}" style="width:100%;height:100%;object-fit:cover;object-position:${pos};filter:grayscale(30%);">
+                    </div>
+                    <p style="font-size:0.72rem;color:#888;margin:0;font-family:'Source Sans 3',sans-serif;">${nom}</p>
+                </a>`;
+            }).join('');
+            if (soutiensWrap) soutiensWrap.style.display = '';
+        }
 
         // Transition vidéo → photo après 10 secondes
         function transitionToPhoto() {
