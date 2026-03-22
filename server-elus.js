@@ -110,7 +110,7 @@ a:hover{text-decoration:underline}
 </header>
 <nav>
   <button class="active" onclick="showTab('accueil',this)">&#127968; Accueil</button>
-  <button onclick="showTab('projets',this)">&#128203; Projets</button>
+  <button onclick="showTab('global',this)">&#128202; Gestion globale</button>
   <button onclick="showTab('agenda',this)">&#128197; Agenda</button>
   <button onclick="showTab('documents',this)">&#128196; Documents</button>
   <button onclick="showTab('notifs',this)">&#128276; Historique</button>
@@ -118,7 +118,7 @@ a:hover{text-decoration:underline}
   <button onclick="showTab('budget',this)">&#128200; Budget</button>
   <button onclick="showTab('elections',this)">&#128499; Elections</button>
   <button onclick="showTab('comms',this)">&#128221; Communications</button>
-  <button onclick="showTab('pages',this)">&#128101; Commissions</button>
+  <button onclick="showTab('pages',this)">&#128101; Par commission</button>
 </nav>
 
 <!-- ACCUEIL -->
@@ -161,7 +161,14 @@ a:hover{text-decoration:underline}
 </div>
 
 <!-- PROJETS -->
-<div class="tab" id="tab-projets">
+<div class="tab" id="tab-global">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+    <div>
+      <h2 style="font-size:1rem;font-weight:600;color:#1a3a2a;margin-bottom:.2rem">Gestion globale des projets</h2>
+      <p style="font-size:.76rem;color:#999">Tous les projets du mandat 2026&ndash;2032 &mdash; mise &agrave; jour des statuts en temps r&eacute;el</p>
+    </div>
+    <button class="btn btn-sm" onclick="showTab('pages',document.querySelector('nav button:nth-child(9)'))">&#128101; Vue par commission &rarr;</button>
+  </div>
   <div class="metrics">
     <div class="m"><div class="v" id="p-total">—</div><div class="l">Projets</div></div>
     <div class="m"><div class="v" id="p-themes">—</div><div class="l">Th&egrave;mes</div></div>
@@ -383,7 +390,13 @@ a:hover{text-decoration:underline}
 
 <!-- PAGES COMMISSIONS -->
 <div class="tab" id="tab-pages">
-  <h2 style="font-size:.9rem;color:#666;font-weight:500;margin-bottom:1rem">&#128101; Pages par commission</h2>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+    <div>
+      <h2 style="font-size:1rem;font-weight:600;color:#1a3a2a;margin-bottom:.2rem">Gestion par commission</h2>
+      <p style="font-size:.76rem;color:#999">Cliquez sur une commission pour acc&eacute;der &agrave; sa page de gestion d&eacute;di&eacute;e</p>
+    </div>
+    <button class="btn btn-sm btn-ghost" onclick="showTab('global',document.querySelector('nav button:nth-child(2)'))">&#128202; Vue globale &rarr;</button>
+  </div>
   <div id="comm-pages-list"></div>
 </div>
 
@@ -689,8 +702,11 @@ function renderCommPages() {
     var commIdx = Object.keys(COMMISSIONS).indexOf(comm);
     html += '<div class="card" style="cursor:pointer" onclick="showCommDetail(' + commIdx + ')">';
     html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem">';
-    html += '<h4 style="font-size:.88rem;line-height:1.3">'+comm+'</h4>';
-    if(ref) html += '<span class="b b3" style="white-space:nowrap;margin-left:8px">'+ref+'</span>';
+    var colors=['#4a8a5a','#5a9a6a','#7ab87a','#3a6a4a','#2a5a3a','#8ac08a','#6ab06a','#1a3a2a','#4a8a5a','#5a9a6a','#3a6a4a','#7ab87a'];
+    var commColor = colors[commIdx % colors.length];
+    html += '<div style="width:4px;height:40px;background:'+commColor+';border-radius:2px;flex-shrink:0"></div>';
+    html += '<div style="flex:1"><h4 style="font-size:.88rem;line-height:1.3">'+comm+'</h4>'
+    if(ref) html += '<span class="b b3" style="white-space:nowrap;margin-left:8px">'+ref+'</span></div>';
     html += '</div>';
     html += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:.75rem">';
     html += '<div style="text-align:center"><div style="font-size:1.3rem;font-weight:600;color:#1a3a2a">'+stats.total+'</div><div style="font-size:.65rem;color:#999">projets</div></div>';
@@ -715,7 +731,7 @@ function showCommDetail(idx) {
   var projetsComm = P.filter(function(p){ return themes.indexOf(p.theme) >= 0; });
   var ref = COMM_REFERENTS[comm]||'';
   var html = '<div style="margin-bottom:1rem;display:flex;align-items:center;gap:10px">';
-  html += '<button class="btn btn-ghost btn-sm" onclick="renderCommPages()">&#8592; Retour</button>';
+  html += '</div>'; // end hidden div
   html += '<h3 style="font-size:.95rem;color:#1a3a2a">'+comm+'</h3>';
   if(ref) html += '<span class="b b3">Référent : '+ref+'</span>';
   html += '</div>';
