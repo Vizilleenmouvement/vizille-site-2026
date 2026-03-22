@@ -405,7 +405,7 @@ textarea.fi{resize:vertical;min-height:80px;}
       <div class="today-card">
         <div class="tc-head"><span class="tc-head-ico">📢</span><span class="tc-head-t">Annonces de l'équipe</span></div>
         <div class="tc-body" id="ann-list">
-          <div class="empty"><div class="empty-ico">📭</div><div class="empty-s">Aucune annonce pour l'instant</div></div>
+          <div class="empty"><div class="empty-ico">📭</div><div class="empty-s">Aucune annonce pour l&#39;instant</div></div>
         </div>
       </div>
     </div>
@@ -444,7 +444,7 @@ textarea.fi{resize:vertical;min-height:80px;}
 <div class="page" id="p-ressources">
   <div class="ph">
     <div class="ph-icon" style="background:var(--g8)">🔗</div>
-    <div><div class="ph-title">Ressources utiles</div><div class="ph-sub">Liens essentiels pour l'exercice de votre mandat</div></div>
+    <div><div class="ph-title">Ressources utiles</div><div class="ph-sub">Liens essentiels pour l&#39;exercice de votre mandat</div></div>
   </div>
   <div class="scr">
     <div class="ress-grid" id="ress-grid"></div>
@@ -496,7 +496,7 @@ textarea.fi{resize:vertical;min-height:80px;}
   <div class="ph">
     <div class="ph-icon" style="background:var(--g8)">👥</div>
     <div><div class="ph-title">Projets par commission</div><div class="ph-sub">Cliquez sur une commission pour accéder à sa page de suivi</div></div>
-    <div class="ph-act"><button class="btn btn-s btn-sm" onclick="gp('global',qss('.sb-it:nth-child(11)'))">📊 Tous les projets</button></div>
+    <div class="ph-act"><button class="btn btn-s btn-sm" onclick="navGlobal()">📊 Tous les projets</button></div>
   </div>
   <div class="scr"><div class="cg" id="cg"></div></div>
 </div>
@@ -506,7 +506,7 @@ textarea.fi{resize:vertical;min-height:80px;}
   <div class="ph">
     <div class="ph-icon" style="background:var(--g8)" id="cdet-ico">📋</div>
     <div><div class="ph-title" id="cdet-t">Commission</div><div class="ph-sub" id="cdet-s"></div></div>
-    <div class="ph-act"><button class="btn btn-s btn-sm" onclick="gp('comm',qss('.sb-it:nth-child(10)'))">← Toutes les commissions</button></div>
+    <div class="ph-act"><button class="btn btn-s btn-sm" onclick="navComm()">← Toutes les commissions</button></div>
   </div>
   <div class="scr" style="padding:0">
     <div style="padding:.85rem 1.4rem;background:#fff;border-bottom:1px solid var(--w2)" id="cdet-kpis"></div>
@@ -527,7 +527,7 @@ textarea.fi{resize:vertical;min-height:80px;}
   <div class="ph">
     <div class="ph-icon" style="background:#e0e7ff">📊</div>
     <div><div class="ph-title">Tous les projets du mandat</div><div class="ph-sub">91 projets · filtres et mise à jour de statut</div></div>
-    <div class="ph-act"><button class="btn btn-s btn-sm" onclick="gp('comm',qss('.sb-it:nth-child(10)'))">👥 Par commission</button></div>
+    <div class="ph-act"><button class="btn btn-s btn-sm" onclick="navComm()">👥 Par commission</button></div>
   </div>
   <div class="scr" style="padding:0">
     <div class="fb">
@@ -815,6 +815,7 @@ function gp(id,ni){
 }
 
 /* ── ACCUEIL ────────────────────────────────────────────────────────── */
+function navAgenda(){gp("agenda",document.querySelectorAll(".sb-it")[7]);}
 function renderNextMtg(){
   var now=new Date().toISOString().slice(0,10);
   var next=AG.filter(a=>a.date>=now).sort((a,b)=>a.date>b.date?1:-1)[0];
@@ -822,7 +823,7 @@ function renderNextMtg(){
   if(!next){wrap.innerHTML='';return;}
   var MOIS=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
   var TMAP={bureau:'Bureau municipal',commission:'Commission',conseil:'Conseil municipal',autre:'Autre'};
-  wrap.innerHTML='<div class="next-mtg" onclick="gp('agenda',qss('.sb-it:nth-child(8)'))">'
+  wrap.innerHTML='<div class="next-mtg" onclick="navAgenda()">'
     +'<div class="mtg-date-box"><div class="mtg-day">'+next.date.slice(8)+'</div><div class="mtg-mon">'+MOIS[+next.date.slice(5,7)-1]+'</div></div>'
     +'<div><div class="mtg-info-t">Prochaine réunion : '+next.titre+'</div>'
     +'<div class="mtg-info-s">'+(next.heure?'🕐 '+next.heure+' — ':'')+( next.lieu?'📍 '+next.lieu:'')+(next.notes?'<br>'+next.notes:'')+'</div></div>'
@@ -833,7 +834,7 @@ function renderNextMtg(){
 /* ── TÂCHES ─────────────────────────────────────────────────────────── */
 function renderTasks(){
   var tl=$('task-list');
-  if(!TASKS.length){tl.innerHTML='<div style="font-size:.74rem;color:var(--i4);padding:.5rem 0">Aucune tâche. Ajoutez-en une ci-dessous !</div>';return;}
+  if(!TASKS.length){tl.innerHTML='<div style="font-size:.74rem;color:var(--i4);padding:.5rem 0">Aucune tâche. Ajoutez une tache !</div>';return;}
   tl.innerHTML=TASKS.map(t=>'<div class="task-item" onclick="toggleTask('+t.id+')">'
     +'<div class="task-cb'+(t.done?' done':'')+'">'+( t.done?'<svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>':'')+
     '</div><div class="task-txt'+(t.done?' done':'')+'">'+t.titre+(t.echeance?'<div class="task-due">⏰ '+t.echeance+'</div>':'')+'</div>'
@@ -858,7 +859,7 @@ function delTask(id){
 var ANN_COLORS={normal:'var(--g4)',important:'var(--amber)',urgent:'var(--red)'};
 function renderAnn(){
   var al=$('ann-list');
-  if(!ANN.length){al.innerHTML='<div class="empty"><div class="empty-ico">📭</div><div class="empty-s">Aucune annonce pour l'instant</div></div>';return;}
+  if(!ANN.length){al.innerHTML='<div class="empty"><div class="empty-ico">📭</div><div class="empty-s">Aucune annonce</div></div>';return;}
   al.innerHTML=ANN.slice(0,8).map(a=>'<div class="ann-item">'
     +'<div class="ann-dot" style="background:'+(ANN_COLORS[a.priorite]||'var(--g4)')+'"></div>'
     +'<div class="ann-body"><div class="ann-title">'+a.titre+'</div>'
@@ -916,7 +917,7 @@ function openElu(i){
     +(e.commission?'<div class="info-row"><div class="info-lbl">Commission</div><div class="info-val"><span class="chip">'+e.commission+'</span></div></div>':'')
     +(e.tel?'<div class="info-row"><div class="info-lbl">Téléphone</div><div class="info-val"><a href="tel:'+e.tel+'" style="color:var(--g3)">'+e.tel+'</a></div></div>':'')
     +(e.email?'<div class="info-row"><div class="info-lbl">Email</div><div class="info-val"><a href="mailto:'+e.email+'" style="color:var(--g3)">'+e.email+'</a></div></div>':'')
-    +'<div style="margin-top:.5rem;font-size:.72rem;color:var(--i4)">Pour modifier les coordonnées, contactez l'administrateur du tableau de bord.</div>'
+    +'<div style="margin-top:.5rem;font-size:.72rem;color:var(--i4)">Pour modifier les coordonnees, contactez l&#39;administrateur.</div>'
     +'</div>';
   om('elu');
 }
