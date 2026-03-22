@@ -1,3 +1,4 @@
+// VeM Dashboard v6.1 - 20260322-0930 - standalone
 
 function buildPage() {
   const today = new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
