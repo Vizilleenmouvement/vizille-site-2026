@@ -89,7 +89,16 @@
         <div id="team-grid"></div>
         
         <p id="click-hint" style="text-align: center; color: #666; font-style: italic; margin-top: 1rem; font-size: 0.9rem;">👆 Cliquez sur une carte pour découvrir le profil complet</p>
-        <p style="text-align: center; color: var(--bleu-vizille); font-weight: 500; margin-top: 1.5rem; font-size: 1rem; padding: 1rem 2rem; background: #f0f7ff; border-radius: 12px; max-width: 600px; margin-left: auto; margin-right: auto;">Nous continuerons à vous présenter progressivement les candidates et candidats dans les prochains jours.</p>
+        <!-- SECTION SOUTIENS -->
+        <section class="soutiens-section" style="margin:3rem auto 0;max-width:1100px;padding:0 1.5rem;">
+            <div style="text-align:center;margin-bottom:2rem;">
+                <h2 class="section-title" style="margin-bottom:0.5rem;">💛 Ils ont porté le projet avec nous</h2>
+                <p style="color:#555;font-size:0.95rem;max-width:640px;margin:0 auto;line-height:1.7;">
+                    Engagés dès le premier jour, ils ont porté notre projet collectif avec ardeur tout au long de la campagne. Non élus au terme du scrutin, ils demeurent les soutiens les plus fidèles de Vizille en Mouvement et resteront pleinement associés à la vie de notre équipe.
+                </p>
+            </div>
+            <div id="soutiens-grid" style="display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem;"></div>
+        </section>
 
         <!-- CHARTE D'ENGAGEMENT -->
         <section class="values-section">
@@ -313,6 +322,26 @@
             }</div>`;
 
             grid.innerHTML = catherineHtml + autresHtml;
+
+            // Section soutiens — non-élus
+            const soutiens = await fetch('candidats.json?v=' + Date.now())
+                .then(r => r.json())
+                .then(all => all.filter(c => c.elu === false && c.actif !== false));
+            const soutiensGrid = document.getElementById('soutiens-grid');
+            if (soutiensGrid && soutiens.length) {
+                soutiensGrid.innerHTML = soutiens.map(c => {
+                    const nom = (c.prenom ? c.prenom + ' ' : '') + (c.nom || '');
+                    const photo = c.photo || '';
+                    const pos = c.photoPosition || 'center 20%';
+                    return `<div style="background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.07);overflow:hidden;width:180px;text-align:center;border-top:3px solid #c9a84c;">
+                        ${photo ? `<div style="height:180px;overflow:hidden;"><img src="${photo}" alt="${nom}" style="width:100%;height:100%;object-fit:cover;object-position:${pos};display:block;filter:grayscale(20%);"></div>` : `<div style="height:180px;background:linear-gradient(135deg,#e8f0fa,#f7f4ef);display:flex;align-items:center;justify-content:center;font-size:3rem;">👤</div>`}
+                        <div style="padding:0.9rem 0.75rem 1rem;">
+                            <p style="font-family:'Playfair Display',serif;font-weight:600;color:#1a3a6b;font-size:0.9rem;margin:0 0 0.4rem;line-height:1.3;">${nom}</p>
+                            <p style="font-size:0.72rem;color:#c9a84c;letter-spacing:0.08em;text-transform:uppercase;margin:0;font-weight:600;">Soutien fidèle</p>
+                        </div>
+                    </div>`;
+                }).join('');
+            }
 
             // Lancer les vidéos et transition vers photo après 10s
             function playAllVideos() {
