@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initCounters();
 
     // Charger les données dynamiques
+    loadALaUne();
     loadCarousel();
     loadActualites();
     loadGalerie();
@@ -533,6 +534,50 @@ async function loadEquipePreview() {
         grid.innerHTML = Array(6).fill(`
             <div style="width: 100px; height: 100px; border-radius: 50%; background: rgba(255,255,255,0.2);"></div>
         `).join('');
+    }
+}
+
+/**
+ * Bloc "À la une" — injecté dynamiquement après le hero
+ * Déclenché par a_la_une:true dans articles.json
+ */
+async function loadALaUne() { return; // géré directement dans index.html avec carousel
+    try {
+        const response = await fetch('articles.json?v=' + Date.now());
+        if (!response.ok) return;
+        const articles = await response.json();
+        const art = articles.find(a => a.a_la_une === true);
+        if (!art) return;
+
+        const img = art.image || (art.images && art.images[0]) || '';
+        const section = document.createElement('section');
+        section.id = 'bloc-a-la-une';
+        section.style.cssText = 'background:#f7f4ef;border-bottom:3px solid #c9a84c;padding:0;';
+        section.innerHTML = `
+            <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:${img ? '1fr 1fr' : '1fr'};min-height:280px;">
+                ${img ? `<div style="overflow:hidden;max-height:360px;"><img src="${img}" alt="${art.titre}" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block;"></div>` : ''}
+                <div style="padding:2rem 2.5rem;display:flex;flex-direction:column;justify-content:center;">
+                    <p style="font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:#c9a84c;font-weight:700;margin:0 0 0.5rem;">${formatDate(art.date)} · ${art.categorie || 'Actualité'}</p>
+                    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.1rem,2.5vw,1.6rem);font-weight:600;color:#1a3a6b;margin:0 0 0.8rem;line-height:1.3;">${art.titre}</h2>
+                    <p style="font-size:0.88rem;color:#555;line-height:1.75;margin:0 0 1.2rem;">${art.extrait || ''}</p>
+                    <div style="display:flex;flex-wrap:wrap;gap:0.8rem;align-items:center;">
+                        <a href="blog.html" style="display:inline-block;background:#1a3a6b;color:#fff;padding:0.6rem 1.3rem;border-radius:3px;text-decoration:none;font-size:0.8rem;letter-spacing:0.04em;">📰 Lire le compte rendu complet →</a>
+                        <a href="equipe.html" style="color:#1a3a6b;font-size:0.78rem;text-decoration:underline;letter-spacing:0.03em;">👥 Découvrir le conseil municipal →</a>
+                    </div>
+                </div>
+            </div>
+            <style>@media(max-width:700px){#bloc-a-la-une{grid-template-columns:1fr!important;}}</style>
+        `;
+        // Injecter dans le container dédié juste après le hero
+        const container = document.getElementById('bloc-a-la-une-container');
+        if (container) {
+            container.appendChild(section);
+        } else {
+            const hero = document.querySelector('.hero-dynamic');
+            hero ? hero.insertAdjacentElement('afterend', section) : document.body.appendChild(section);
+        }
+    } catch(e) {
+        console.warn('loadALaUne:', e);
     }
 }
 
