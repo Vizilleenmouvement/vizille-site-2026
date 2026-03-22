@@ -118,6 +118,7 @@ a:hover{text-decoration:underline}
   <button onclick="showTab('budget',this)">&#128200; Budget</button>
   <button onclick="showTab('elections',this)">&#128499; Elections</button>
   <button onclick="showTab('comms',this)">&#128221; Communications</button>
+  <button onclick="showTab('pages',this)">&#128101; Commissions</button>
 </nav>
 
 <!-- ACCUEIL -->
@@ -379,6 +380,13 @@ a:hover{text-decoration:underline}
   </div>
 </div>
 
+
+<!-- PAGES COMMISSIONS -->
+<div class="tab" id="tab-pages">
+  <h2 style="font-size:.9rem;color:#666;font-weight:500;margin-bottom:1rem">&#128101; Pages par commission</h2>
+  <div id="comm-pages-list"></div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -394,9 +402,22 @@ var COMMISSIONS = {
   'Métropole': ['Métropole'],
   'Enfance/Jeunesse': ['Enfance/Jeunesse'],
   'Tranquillité publique': ['Tranquillité publique'],
-  'Travaux': ['Travaux'],
-  'Urbanisme': ['Urbanisme'],
+  'Travaux & Urbanisme': ['Travaux','Urbanisme'],
   'Santé': ['Santé']
+};
+var COMM_REFERENTS = {
+  'Culture, Patrimoine & Jumelages': 'Marie-Claude',
+  'Mobilités': '',
+  'Transition écologique': '',
+  'Action sociale': '',
+  'Concertation citoyenne': '',
+  'Animations de proximité': '',
+  'Économie': '',
+  'Métropole': '',
+  'Enfance/Jeunesse': 'Angélique',
+  'Tranquillité publique': '',
+  'Travaux & Urbanisme': '',
+  'Santé': ''
 };
 function themeToComm(theme) {
   for (var c in COMMISSIONS) {
@@ -537,6 +558,7 @@ function showTab(id,btn) {
   if(id==='agenda')renderAgenda();
   else if(id==='documents')renderDocs();
   else if(id==='notifs')renderNotifs();
+  else if(id==='pages')renderCommPages();
 }
 
 function renderAgenda() {
@@ -648,6 +670,95 @@ function genereComm(){
 function copyComm(){var t=document.getElementById('comm-result');t.select();document.execCommand('copy');toast('Copie !');}
 
 function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(function(){t.style.display='none';},2500);}
+
+
+function renderCommPages() {
+  var html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px">';
+  Object.keys(COMMISSIONS).forEach(function(comm) {
+    var themes = COMMISSIONS[comm];
+    var projetsComm = P.filter(function(p){ return themes.indexOf(p.theme) >= 0; });
+    var ref = COMM_REFERENTS[comm] || '';
+    var stats = {total:projetsComm.length, prio:0, encours:0, realise:0};
+    projetsComm.forEach(function(p){
+      var s = ST[p.id]||p.statut||'';
+      if(s==='Prioritaire') stats.prio++;
+      if(s.indexOf('cours')>=0) stats.encours++;
+      if(s.indexOf('alis')>=0||s.indexOf('alise')>=0) stats.realise++;
+    });
+    var pct = stats.total ? Math.round((stats.realise/stats.total)*100) : 0;
+    var commIdx = Object.keys(COMMISSIONS).indexOf(comm);
+    html += '<div class="card" style="cursor:pointer" onclick="showCommDetail(' + commIdx + ')">';
+    html += '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem">';
+    html += '<h4 style="font-size:.88rem;line-height:1.3">'+comm+'</h4>';
+    if(ref) html += '<span class="b b3" style="white-space:nowrap;margin-left:8px">'+ref+'</span>';
+    html += '</div>';
+    html += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:.75rem">';
+    html += '<div style="text-align:center"><div style="font-size:1.3rem;font-weight:600;color:#1a3a2a">'+stats.total+'</div><div style="font-size:.65rem;color:#999">projets</div></div>';
+    html += '<div style="text-align:center"><div style="font-size:1.3rem;font-weight:600;color:#a33">'+stats.prio+'</div><div style="font-size:.65rem;color:#999">prioritaires</div></div>';
+    html += '<div style="text-align:center"><div style="font-size:1.3rem;font-weight:600;color:#863">'+stats.encours+'</div><div style="font-size:.65rem;color:#999">en cours</div></div>';
+    html += '<div style="text-align:center"><div style="font-size:1.3rem;font-weight:600;color:#363">'+stats.realise+'</div><div style="font-size:.65rem;color:#999">réalisés</div></div>';
+    html += '</div>';
+    // Barre de progression
+    html += '<div style="background:#f0f0e8;border-radius:4px;height:6px;margin-bottom:.5rem">';
+    html += '<div style="background:#4a8a5a;height:6px;border-radius:4px;width:'+pct+'%"></div></div>';
+    html += '<div style="font-size:.68rem;color:#aaa;display:flex;justify-content:space-between">';
+    html += '<span>Thèmes : '+themes.join(', ')+'</span><span>'+pct+'% réalisé</span></div>';
+    html += '</div>';
+  });
+  html += '</div>';
+  document.getElementById('comm-pages-list').innerHTML = html;
+}
+
+function showCommDetail(idx) {
+  var comm = Object.keys(COMMISSIONS)[idx];
+  var themes = COMMISSIONS[comm];
+  var projetsComm = P.filter(function(p){ return themes.indexOf(p.theme) >= 0; });
+  var ref = COMM_REFERENTS[comm]||'';
+  var html = '<div style="margin-bottom:1rem;display:flex;align-items:center;gap:10px">';
+  html += '<button class="btn btn-ghost btn-sm" onclick="renderCommPages()">&#8592; Retour</button>';
+  html += '<h3 style="font-size:.95rem;color:#1a3a2a">'+comm+'</h3>';
+  if(ref) html += '<span class="b b3">Référent : '+ref+'</span>';
+  html += '</div>';
+  // Filtres rapides
+  html += '<div class="fl" style="margin-bottom:.85rem">';
+  html += '<select id="cd-statut" onchange="filtrerCommDetail(window._currentCommIdx)" style="padding:5px 8px;border:.5px solid #ddd;border-radius:6px;font-size:.75rem;background:#fff">';
+  html += '<option value="">Tous les statuts</option>';
+  ['Prioritaire','Programmé','Planifié','Étude','En cours','Réalisé'].forEach(function(s){html+='<option>'+s+'</option>';});
+  html += '</select>';
+  html += '<input id="cd-search" placeholder="Rechercher..." oninput="filtrerCommDetail(window._currentCommIdx)" style="padding:5px 8px;border:.5px solid #ddd;border-radius:6px;font-size:.75rem;background:#fff;flex:1">';
+  html += '</div>';
+  html += '<div id="comm-detail-table"></div>';
+  document.getElementById('comm-pages-list').innerHTML = html;
+  filtrerCommDetail(comm);
+}
+
+function filtrerCommDetail(idx) {
+  var comm = Object.keys(COMMISSIONS)[idx];
+  var themes = COMMISSIONS[comm];
+  var statut = (document.getElementById('cd-statut')||{}).value||'';
+  var q = ((document.getElementById('cd-search')||{}).value||'').toLowerCase();
+  var r = P.filter(function(p){
+    var ps = ST[p.id]||p.statut||'ND';
+    return themes.indexOf(p.theme)>=0 && (!statut||ps===statut) && (!q||(p.titre||'').toLowerCase().indexOf(q)>=0||(p.resume||'').toLowerCase().indexOf(q)>=0);
+  });
+  var html = '<table><thead><tr><th>Thème</th><th>Projet</th><th>Statut</th><th>Année</th><th>Imp.</th><th>Mise à jour</th></tr></thead><tbody>';
+  html += r.map(function(p){
+    var st=ST[p.id]||p.statut||'ND';
+    var imp=p.importance?'★'.repeat(p.importance):'-';
+    var opts=['Prioritaire','Programme','Planifie','Etude','En cours','Realise','Suspendu'].map(function(sv){return '<option value="'+sv+'"'+(st===sv?' selected':'')+'>'+sv+'</option>';}).join('');
+    return '<tr>'
+      +'<td style="font-size:.7rem;color:#777">'+(p.theme||'—')+'</td>'
+      +'<td><strong>'+(p.titre||'—')+'</strong><br><span style="color:#aaa;font-size:.68rem">'+(p.resume||'')+'</span></td>'
+      +'<td><span class="b '+bc(st)+'">'+st+'</span></td>'
+      +'<td>'+(p.annee||'—')+'</td>'
+      +'<td style="color:#c8a000">'+imp+'</td>'
+      +'<td><select class="ssel" data-pid="'+p.id+'" onchange="updateStatus(+this.dataset.pid,this.value,this.dataset.titre)" data-titre="'+p.titre.replace(/"/g,'&quot;')+'">'+opts+'</select></td>'
+      +'</tr>';
+  }).join('');
+  html += '</tbody></table>';
+  if(!r.length) html = '<p style="color:#aaa;font-size:.82rem;padding:.5rem 0">Aucun projet pour ce filtre.</p>';
+  document.getElementById('comm-detail-table').innerHTML = html;
+}
 
 init();
 </script>
