@@ -1172,8 +1172,8 @@ let documents = load('documents.json', []);
 let statuts   = load('statuts.json', {});
 let notifs    = load('notifs.json', []);
 let chat      = load('chat.json', []);
-let elus      = load('elus.json', require('./elus_default.json'));
-let services  = load('services.json', require('./services_default.json'));
+let elus      = load('elus.json', [{"id": 1, "nom": "Catherine Troton", "prenom": "", "role": "Maire", "delegation": "Direction générale — Exécutif municipal", "commission": "", "tel": "", "email": "maire@vizille.fr", "avatar": "CT", "color": "#1a3a2a"}, {"id": 2, "nom": "Michel Troton", "prenom": "", "role": "Conseiller", "delegation": "Numérique, communication, histoire locale", "commission": "Culture, Patrimoine & Jumelages", "tel": "", "email": "", "avatar": "MT", "color": "#2d5a40"}, {"id": 3, "nom": "Marie-Claude", "prenom": "", "role": "Adjointe", "delegation": "Culture, Patrimoine, Jumelages", "commission": "Culture, Patrimoine & Jumelages", "tel": "", "email": "", "avatar": "MC", "color": "#8B5CF6"}, {"id": 4, "nom": "Angélique", "prenom": "", "role": "Adjointe", "delegation": "Enfance, Jeunesse, Périscolaire", "commission": "Enfance/Jeunesse", "tel": "", "email": "", "avatar": "AN", "color": "#F97316"}, {"id": 5, "nom": "Jean-Christophe", "prenom": "", "role": "Conseiller", "delegation": "Animations de proximité, Associations", "commission": "Animations de proximité", "tel": "", "email": "", "avatar": "JC", "color": "#EC4899"}]);
+let services  = load('services.json', [{"id": 1, "nom": "DGS", "titre": "Directeur Général des Services"}, {"id": 2, "nom": "Service Technique", "titre": "Chef de service voirie & travaux"}]);
 let projExtra = load('proj_extra.json', {}); // {id: {membres,chef_service,budget,subventions,contacts,notes}}
 
 console.log('VeM Dashboard v6 — projets:'+projets.length+' elus:'+elus.length);
