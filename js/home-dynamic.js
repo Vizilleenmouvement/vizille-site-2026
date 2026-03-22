@@ -301,6 +301,7 @@ async function loadActualites() {
 
         // Trier : prioritaires d'abord, puis par date de modification (style blog)
         const recentArticles = articles
+            .filter(a => !a.a_la_une)
             .sort((a, b) => {
                 if (a.priorite && !b.priorite) return -1;
                 if (!a.priorite && b.priorite) return 1;
