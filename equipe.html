@@ -292,7 +292,7 @@
             `;
         }
 
-        function renderTeam() {
+        async function renderTeam() {
             const grid = document.getElementById('team-grid');
 
             // Séparer Catherine (ordre 1) des autres
@@ -323,10 +323,9 @@
 
             grid.innerHTML = catherineHtml + autresHtml;
 
-            // Section soutiens — non-élus
-            const soutiens = await fetch('candidats.json?v=' + Date.now())
-                .then(r => r.json())
-                .then(all => all.filter(c => c.elu === false && c.actif !== false));
+            // Section soutiens — non-élus (données déjà chargées)
+            const allCandidats = await fetch('candidats.json?v=' + Date.now()).then(r => r.json());
+            const soutiens = allCandidats.filter(c => c.elu === false && c.actif !== false);
             const soutiensGrid = document.getElementById('soutiens-grid');
             if (soutiensGrid && soutiens.length) {
                 soutiensGrid.innerHTML = soutiens.map(c => {
