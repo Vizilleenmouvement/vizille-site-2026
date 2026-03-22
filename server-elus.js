@@ -132,7 +132,8 @@ a:hover{text-decoration:underline}
   <div class="metrics">
     <div class="m"><div class="v" id="acc-total">—</div><div class="l">Projets</div></div>
     <div class="m"><div class="v" id="acc-themes">—</div><div class="l">Th&egrave;mes</div></div>
-    <div class="m"><div class="v">29</div><div class="l">Conseillers</div></div>
+    <div class="m"><div class="v">13</div><div class="l">Commissions</div></div>
+  <div class="m"><div class="v">29</div><div class="l">Conseillers</div></div>
     <div class="m"><div class="v">2032</div><div class="l">Fin de mandat</div></div>
   </div>
   <div class="card">
@@ -178,7 +179,7 @@ a:hover{text-decoration:underline}
     <input id="fQ" placeholder="Rechercher..." oninput="filtrer()" style="flex:1;min-width:100px">
     <small id="cpt" style="color:#aaa;white-space:nowrap"></small>
   </div>
-  <table><thead><tr><th>Th&egrave;me</th><th>Projet</th><th>Statut</th><th>Ann&eacute;e</th><th>Imp.</th><th>Action</th></tr></thead>
+  <table><thead><tr><th>Commission</th><th>Projet</th><th>Statut</th><th>Ann&eacute;e</th><th>Imp.</th><th>Action</th></tr></thead>
   <tbody id="tb"></tbody></table>
 </div>
 
@@ -382,6 +383,27 @@ a:hover{text-decoration:underline}
 
 <script>
 var P=[], ST={}, AG=[], DC=[], NF=[];
+var COMMISSIONS = {
+  'Culture, Patrimoine & Jumelages': ['Culture','Patrimoine','Jumelages'],
+  'Mobilités': ['Mobilités'],
+  'Transition écologique': ['Transition écologique'],
+  'Action sociale': ['Action sociale'],
+  'Concertation citoyenne': ['Concertation citoyenne'],
+  'Animations de proximité': ['Animations de proximité'],
+  'Économie': ['Économie'],
+  'Métropole': ['Métropole'],
+  'Enfance/Jeunesse': ['Enfance/Jeunesse'],
+  'Tranquillité publique': ['Tranquillité publique'],
+  'Travaux': ['Travaux'],
+  'Urbanisme': ['Urbanisme'],
+  'Santé': ['Santé']
+};
+function themeToComm(theme) {
+  for (var c in COMMISSIONS) {
+    if (COMMISSIONS[c].indexOf(theme) >= 0) return c;
+  }
+  return 'Autre';
+}
 var SLIST=["Prioritaire","Programme","Planifie","Etude","En cours","Realise","Suspendu"];
 var CL=["#1a3a2a","#4a8a5a","#7ab87a","#aad4aa","#2a5a3a","#3a6a4a","#5a9a6a","#8ac08a","#b0d8b0","#c8e8c8","#1a4a2a","#2a6a4a","#6ab06a","#3a7a5a","#9ac89a"];
 var cT,cS;
@@ -431,6 +453,8 @@ function buildFilters() {
     var a=p.annee?String(p.annee):'?';
     annees[a]=1;
   });
+  var commNames = Object.keys(COMMISSIONS);
+  fillSelect('fC', commNames, 'Toutes les commissions');
   fillSelect('fT', Object.keys(themes).sort(), 'Tous les themes');
   fillSelect('fS', Object.keys(statuts).sort(), 'Tous les statuts');
   fillSelect('fA', Object.keys(annees).sort(), 'Toutes les annees');
@@ -443,7 +467,24 @@ function fillSelect(id, opts, def) {
 
 function bc(s){if(!s)return 'b5';var l=s.toLowerCase();if(l.indexOf('prioritaire')>=0)return 'b1';if(l.indexOf('programm')>=0||l.indexOf('programme')>=0)return 'b2';if(l.indexOf('planifi')>=0)return 'b3';if(l.indexOf('tude')>=0||l.indexOf('cours')>=0)return 'b4';if(l.indexOf('alis')>=0||l.indexOf('alise')>=0)return 'b6';return 'b5';}
 
+function filtrerComm() {
+  var c = document.getElementById('fC').value;
+  var themes = c ? COMMISSIONS[c] : null;
+  var fT = document.getElementById('fT');
+  var prev = fT.value;
+  fT.innerHTML = '<option value="">Tous les themes</option>';
+  var list = themes || Object.keys(COMMISSIONS).reduce(function(acc, k) { return acc.concat(COMMISSIONS[k]); }, []).sort();
+  list.sort().forEach(function(t) {
+    var o = document.createElement('option');
+    o.value = t; o.textContent = t;
+    if (t === prev) o.selected = true;
+    fT.appendChild(o);
+  });
+  filtrer();
+}
+
 function filtrer() {
+  var c=document.getElementById('fC').value;
   var t=document.getElementById('fT').value;
   var s=document.getElementById('fS').value;
   var a=document.getElementById('fA').value;
@@ -451,7 +492,8 @@ function filtrer() {
   var r=P.filter(function(p){
     var ps=ST[p.id]||p.statut||'ND';
     var pa=p.annee?String(p.annee):'?';
-    return (!t||p.theme===t)&&(!s||ps===s)&&(!a||pa===a)&&(!q||(p.titre||'').toLowerCase().indexOf(q)>=0||(p.resume||'').toLowerCase().indexOf(q)>=0);
+    var pc=themeToComm(p.theme);
+    return (!c||pc===c)&&(!t||p.theme===t)&&(!s||ps===s)&&(!a||pa===a)&&(!q||(p.titre||'').toLowerCase().indexOf(q)>=0||(p.resume||'').toLowerCase().indexOf(q)>=0);
   });
   document.getElementById('cpt').textContent=r.length+' projet(s)';
   document.getElementById('tb').innerHTML=r.map(function(p){
