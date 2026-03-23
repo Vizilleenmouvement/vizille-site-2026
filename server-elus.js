@@ -608,6 +608,118 @@ function renderAll() {
   loadChatMsgs();
 }
 
+// ── ÉVÉNEMENTS ────────────────────────────────────────────────
+const EV_CATS = [
+  {id:'Signalement',ico:'📢',color:'#EF4444'},
+  {id:'Incident',ico:'⚠️',color:'#F97316'},
+  {id:'Voirie',ico:'🚧',color:'#F59E0B'},
+  {id:'Éclairage',ico:'💡',color:'#EAB308'},
+  {id:'Propreté',ico:'🗑️',color:'#10B981'},
+  {id:'Nuisance',ico:'🔊',color:'#8B5CF6'},
+  {id:'Demande',ico:'📋',color:'#3B82F6'},
+  {id:'Autre',ico:'📌',color:'#6B7280'}
+];
+const EV_STATUTS = ['Nouveau','En cours','Transmis','Traité','Archivé'];
+let evCatSelected = 'Signalement';
+let evStatutFilter = '';
+
+function initEvenements() {
+  // Boutons catégorie
+  document.getElementById('ev-cat-btns').innerHTML = EV_CATS.map(c=>
+    '<button class="btn btn-ghost btn-sm" data-cat="'+c.id+'" data-color="'+c.color+'" style="justify-content:flex-start;gap:.4rem;'+(c.id===evCatSelected?'background:'+c.color+';color:#fff;border-color:'+c.color+';':'')+'" onclick="selectEvCat(this)">'+c.ico+' '+c.id+'</button>'
+  ).join('');
+  // Filtres statut
+  document.getElementById('ev-statut-filters').innerHTML =
+    '<button class="filtre-btn'+(evStatutFilter===''?' active':'')+'" data-s="" onclick="filtreEv(this)">Tous</button>'+
+    EV_STATUTS.map(s=>'<button class="filtre-btn'+(evStatutFilter===s?' active':'')+'" data-s="'+s+'" onclick="filtreEv(this)">'+s+'</button>').join('');
+}
+
+function selectEvCat(btn) {
+  const id = btn.dataset.cat; const color = btn.dataset.color;
+  evCatSelected = id;
+  document.querySelectorAll('#ev-cat-btns .btn').forEach(b=>{b.style.background='';b.style.color='';b.style.borderColor='';});
+  btn.style.background=color;btn.style.color='#fff';btn.style.borderColor=color;
+}
+
+function filtreEv(btn) {
+  evStatutFilter = btn.dataset.s||'';
+  document.querySelectorAll('#ev-statut-filters .filtre-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderEvenements();
+}
+
+function renderEvenements() {
+  initEvenements();
+  const evs = (D.evenements||[]).filter(e=>!evStatutFilter||e.statut===evStatutFilter)
+    .sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
+
+  // Stats
+  const counts = {};
+  EV_STATUTS.forEach(s=>counts[s]=0);
+  (D.evenements||[]).forEach(e=>{ if(counts[e.statut]!==undefined) counts[e.statut]++; });
+  document.getElementById('ev-stats').innerHTML =
+    '<div class="card stat-card" style="padding:1rem;"><div style="font-size:1.5rem;">🆕</div><div class="stat-val" style="font-size:1.5rem;">'+(counts['Nouveau']||0)+'</div><div class="stat-label">Nouveaux</div></div>'+
+    '<div class="card stat-card" style="padding:1rem;"><div style="font-size:1.5rem;">⚙️</div><div class="stat-val" style="font-size:1.5rem;">'+(counts['En cours']||0)+'</div><div class="stat-label">En cours</div></div>';
+
+  // Badge nav
+  const nbNew = counts['Nouveau']||0;
+  const badge = document.getElementById('ev-badge');
+  if(badge){badge.textContent=nbNew||'';badge.style.display=nbNew?'':'none';}
+
+  if(!evs.length){
+    document.getElementById('evenements-list').innerHTML='<div class="empty"><div class="empty-ico">🚨</div><div class="empty-text">Aucun événement'+(evStatutFilter?' avec ce statut':'')+'</div><div class="empty-sub">Utilisez le formulaire pour signaler</div></div>';
+    return;
+  }
+
+  document.getElementById('evenements-list').innerHTML = evs.map(e=>{
+    const cat = EV_CATS.find(c=>c.id===e.categorie)||EV_CATS[EV_CATS.length-1];
+    const sc = (e.statut||'Nouveau').replace(/[éèêë]/g,'e').replace(/\s/g,'-');
+    const d = e.date ? new Date(e.date).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'}) : '';
+    const prio = e.priorite==='urgente'?'<span style="background:#fee2e2;color:#991b1b;font-size:.68rem;font-weight:800;padding:.15rem .5rem;border-radius:10px;">🔴 URGENT</span>':'';
+    return '<div class="ev-card">'+
+      '<div class="ev-cat-dot" style="background:'+cat.color+'" title="'+cat.id+'"></div>'+
+      '<div>'+
+        '<div class="ev-titre">'+cat.ico+' '+e.titre+'</div>'+
+        '<div class="ev-meta">'+cat.id+(e.lieu?' · 📍'+e.lieu:'')+' · '+d+'</div>'+
+        (e.description?'<div class="ev-desc">'+e.description+'</div>':'')+
+      '</div>'+
+      '<div class="ev-statut-wrap">'+
+        '<div class="ev-statut ev-'+sc+'">'+(e.statut||'Nouveau')+'</div>'+
+        prio+
+        '<select style="font-size:.72rem;padding:.25rem .4rem;border:1px solid var(--border);border-radius:6px;font-family:\'Nunito\',sans-serif;cursor:pointer;" onchange="changeEvStatut('+e.id+',this.value)">'+
+        EV_STATUTS.map(s=>'<option'+(s===e.statut?' selected':'')+'>'+s+'</option>').join('')+
+        '</select>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+async function addEvenement() {
+  const titre = document.getElementById('ev-titre').value.trim();
+  if(!titre){toast('Indiquez un titre','⚠️');return;}
+  const ev = {
+    titre, categorie:evCatSelected,
+    description:document.getElementById('ev-desc').value.trim(),
+    lieu:document.getElementById('ev-lieu').value.trim(),
+    priorite:document.getElementById('ev-prio').value,
+    statut:'Nouveau', date:new Date().toISOString()
+  };
+  const r = await fetch('/api/evenement',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(ev)});
+  if((await r.json()).ok){
+    document.getElementById('ev-titre').value='';
+    document.getElementById('ev-desc').value='';
+    document.getElementById('ev-lieu').value='';
+    toast('Événement signalé ✅');
+    await loadAll();
+  }
+}
+
+async function changeEvStatut(id, statut) {
+  await fetch('/api/evenement/'+id+'/statut',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({statut})});
+  toast('Statut mis à jour : '+statut);
+  await loadAll();
+}
+
 // ── NAVIGATION ────────────────────────────────────────────────
 function goPage(id) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -939,7 +1051,7 @@ const EV_STATUTS = [
 ];
 let selectedEvCat = EV_CATS[0].id;
 let filtreEvStatut = '';
-let evenements = [];
+let evData = [];
 
 (function initEvenements() {
   // Boutons catégorie
@@ -1074,6 +1186,15 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
+// Lecture du fichier .env si présent
+try {
+  const envFile = fs.readFileSync(path.join(__dirname, '.env'), 'utf8');
+  envFile.split('\n').forEach(line => {
+    const [k, ...v] = line.split('=');
+    if (k && v.length && !process.env[k.trim()]) process.env[k.trim()] = v.join('=').trim();
+  });
+} catch(e) { /* pas de .env — variables d'env système utilisées */ }
+
 const PORT = process.env.PORT || 3000;
 const PASSWORD = process.env.VEM_PASSWORD || 'vizille2026';
 const DIR = __dirname;
@@ -1115,9 +1236,7 @@ let elus      = load('elus.json', [
   {"id":25,"nom":"Nathalie Germain-Vey","role":"Conseillère","delegation":"","avatar":"NG","color":"#3B82F6","photo":"images/nathalie-germain-vey.jpg","photoPosition":"center 15%"},
   {"id":26,"nom":"Stéphane Lasserre","role":"Conseiller","delegation":"","avatar":"SL","color":"#14B8A6","photo":"images/stephane-lasserre.jpg","photoPosition":"center 20%"}
 ]);
-let projExtra = load('proj_extra.json', {});
 let evenements = load('evenements.json', []);
-
 console.log('VeM Dashboard v7 — projets:'+projets.length+' elus:'+elus.length);
 
 function auth(req) {
@@ -1239,7 +1358,25 @@ const server = http.createServer(function(req, res) {
     r2.on('error',e=>J(res,{ok:false,error:e.message}));r2.write(rb);r2.end();
   });
 
-  if(p==='/'||p==='/dashboard'){res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});return res.end(buildPage());}
+  // ── ÉVÉNEMENTS ──────────────────────────────────────────────────────────────
+  if(p==='/api/evenement'&&m==='POST') return body(req,function(err,d){
+    if(err)return J(res,{ok:false},400);
+    d.id=nextId(evenements);d.date=d.date||new Date().toISOString();d.statut=d.statut||'Nouveau';
+    evenements.unshift(d);if(evenements.length>500)evenements=evenements.slice(0,500);
+    save('evenements.json',evenements);return J(res,{ok:true,item:d});
+  });
+  if(p.match(/^\/api\/evenement\/\d+\/statut$/)&&m==='POST') return body(req,function(err,d){
+    if(err)return J(res,{ok:false},400);
+    const id=parseInt(p.split('/')[3]);
+    evenements=evenements.map(e=>e.id===id?{...e,statut:d.statut,updated:new Date().toISOString()}:e);
+    save('evenements.json',evenements);return J(res,{ok:true});
+  });
+  if(p.match(/^\/api\/evenement\/\d+$/)&&m==='DELETE'){
+    const id=parseInt(p.split('/').pop());
+    evenements=evenements.filter(e=>e.id!==id);save('evenements.json',evenements);return J(res,{ok:true});
+  }
+
+    if(p==='/'||p==='/dashboard'){res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});return res.end(buildPage());}
   res.writeHead(404);res.end('404');
 });
 
