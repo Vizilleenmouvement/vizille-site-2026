@@ -345,7 +345,15 @@ function authUser(req){
   const pwd=dec.slice(colon+1);
   const account=ACCOUNTS[user];
   if(!account||account.pwd!==pwd)return null;
-  return {username:user,prenom:account.nom?(account.nom.split(' ')[0]):'',photo:account.photo||'',photoPos:account.photoPos||'center center',...account};
+  // Enrichir avec email depuis ELUS_DEF si non présent dans account
+  var email = account.email || '';
+  if(!email){
+    var eluMatch = ELUS_DEF.find ? ELUS_DEF.find(function(e){
+      return e.id === account.id;
+    }) : null;
+    if(eluMatch) email = eluMatch.email || '';
+  }
+  return {username:user,prenom:account.nom?(account.nom.split(' ')[0]):'',photo:account.photo||'',photoPos:account.photoPos||'center center',email:email,...account};
 }
 function auth(req){return !!authUser(req);}
 function deny(res){
@@ -408,11 +416,11 @@ const server=http.createServer(function(req,res){
     signalements,evenements,comptes_rendus,stats:stats(),
     biblio_count:biblio.length,
     chat:chat.slice(-50),
-    me:{id:ME.id,nom:ME.nom,prenom:ME.prenom||'',role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||'',photo:ME.photo||'',photoPos:ME.photoPos||'center center'}
+    me:{id:ME.id,nom:ME.nom,prenom:ME.prenom||'',role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||'',photo:ME.photo||'',photoPos:ME.photoPos||'center center',email:ME.email||''}
   });
 
   // IDENTITÉ CONNECTÉE
-  if(p==='/api/me')return J(res,{id:ME.id,nom:ME.nom,prenom:ME.prenom||'',role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||'',photo:ME.photo||'',photoPos:ME.photoPos||'center center'});
+  if(p==='/api/me')return J(res,{id:ME.id,nom:ME.nom,prenom:ME.prenom||'',role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||'',photo:ME.photo||'',photoPos:ME.photoPos||'center center',email:ME.email||''});
 
   // CHANGER SON MOT DE PASSE
   if(p==='/api/change_pwd'&&m==='POST')return body(req,function(err,d){
@@ -577,6 +585,7 @@ const server=http.createServer(function(req,res){
   if(p.match(/^\/api\/evenements\/\d+$/)&&m==='DELETE'){const id=parseInt(p.split('/').pop());evenements=evenements.filter(e=>e.id!==id);save('evenements.json',evenements);return J(res,{ok:true});}
 
   // ÉLUS
+  if(p==='/api/elus'&&m==='GET')return J(res,elus);
   if(p==='/api/elus'&&m==='PUT')return body(req,function(err,d){
     if(err)return J(res,{ok:false},400);
     elus=d;save('elus.json',elus);
