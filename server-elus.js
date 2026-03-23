@@ -561,7 +561,29 @@ const server=http.createServer(function(req,res){
   if(p.match(/^\/api\/evenements\/\d+$/)&&m==='DELETE'){const id=parseInt(p.split('/').pop());evenements=evenements.filter(e=>e.id!==id);save('evenements.json',evenements);return J(res,{ok:true});}
 
   // ÉLUS
-  if(p==='/api/elus'&&m==='PUT')return body(req,function(err,d){if(err)return J(res,{ok:false},400);elus=d;save('elus.json',elus);return J(res,{ok:true});});
+  if(p==='/api/elus'&&m==='PUT')return body(req,function(err,d){
+    if(err)return J(res,{ok:false},400);
+    elus=d;save('elus.json',elus);
+    return J(res,{ok:true});
+  });
+  // Mettre à jour un seul élu (tel, email, delegation)
+  if(p.match(/^\/api\/elus\/\d+$/)&&m==='PATCH')return body(req,function(err,d){
+    if(err)return J(res,{ok:false},400);
+    var id=parseInt(p.split('/').pop());
+    var updated=false;
+    elus=elus.map(function(e){
+      if(e.id!==id)return e;
+      updated=true;
+      return Object.assign({},e,{
+        tel:d.tel!==undefined?d.tel:e.tel,
+        email:d.email!==undefined?d.email:e.email,
+        delegation:d.delegation!==undefined?d.delegation:e.delegation,
+        commission:d.commission!==undefined?d.commission:e.commission
+      });
+    });
+    if(updated)save('elus.json',elus);
+    return J(res,{ok:true,updated:updated});
+  });
 
   // CLAUDE AI
   if(p==='/api/genere'&&m==='POST')return body(req,function(err,d){
@@ -1498,6 +1520,50 @@ textarea.fi{resize:vertical;min-height:90px;}
       </div>
     </div>
 
+    <!-- LIGNE 4 : TCHAT WIDGET -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+
+      <!-- WIDGET TCHAT -->
+      <div class="wg" style="background:#fff;border-radius:18px;border:1px solid var(--w2);box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;display:flex;flex-direction:column">
+        <div class="wg-h" style="padding:.85rem 1.1rem .65rem;border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:8px">
+          <div style="width:28px;height:28px;border-radius:8px;background:var(--g2);display:flex;align-items:center;justify-content:center;font-size:.9rem">&#x1F4AC;</div>
+          <div style="font-size:.78rem;font-weight:700;font-family:var(--fd);color:var(--ink);flex:1">Tchat de l&#x27;équipe</div>
+          <select id="wg-chat-ch" onchange="wgSwitchCh()" style="font-size:.65rem;padding:2px 6px;border:1px solid var(--w2);border-radius:6px;background:#fff;color:var(--i2);font-family:var(--fn)">
+            <option value="general">&#x1F4AC; Général</option>
+            <option value="bureau">&#x1F3DB; Bureau</option>
+            <option value="culture">&#x1F3AD; Culture</option>
+            <option value="mobilites">&#x1F6B2; Mobilités</option>
+            <option value="ecologie">&#x1F33F; Écologie</option>
+            <option value="social">&#x1F91D; Social</option>
+            <option value="enfance">&#x1F466; Enfance</option>
+            <option value="tranquillite">&#x1F6E1; Tranquillité</option>
+            <option value="travaux">&#x1F3D7; Travaux</option>
+          </select>
+          <div id="wg-chat-badge" style="width:8px;height:8px;border-radius:50%;background:var(--red);display:none;flex-shrink:0"></div>
+        </div>
+        <div id="wg-chat-msgs" style="flex:1;overflow-y:auto;padding:.65rem .9rem;display:flex;flex-direction:column;gap:6px;background:var(--w);min-height:140px;max-height:220px"></div>
+        <div style="padding:.6rem .9rem;border-top:1px solid var(--w2);display:flex;gap:7px;background:#fff">
+          <input id="wg-chat-inp" class="fi" placeholder="Message&#x2026;" style="flex:1;font-size:.74rem;padding:6px 9px" onkeydown="if(event.key==='Enter')wgSendMsg()">
+          <button class="btn btn-p btn-sm" onclick="wgSendMsg()" style="flex-shrink:0;background:var(--g2);border-color:var(--g2)">&#x2192;</button>
+        </div>
+      </div>
+
+      <!-- WIDGET ÉVÉNEMENTS À VENIR -->
+      <div class="wg" style="background:#fff;border-radius:18px;border:1px solid var(--w2);box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;display:flex;flex-direction:column">
+        <div class="wg-h" style="padding:.85rem 1.1rem .65rem;border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:8px">
+          <div style="width:28px;height:28px;border-radius:8px;background:#fef3c7;display:flex;align-items:center;justify-content:center;font-size:.9rem">&#x1F3AA;</div>
+          <div style="font-size:.78rem;font-weight:700;font-family:var(--fd);color:var(--ink);flex:1">Événements à venir</div>
+          <button class="btn btn-g btn-sm" onclick="gp('events',qsa('.sbi')[12])" style="font-size:.62rem">Tous →</button>
+        </div>
+        <div style="padding:.7rem 1rem;flex:1;overflow-y:auto;max-height:220px" id="ev-home-list">
+          <div style="font-size:.73rem;color:var(--i4);text-align:center;padding:.75rem 0">Aucun événement à venir</div>
+        </div>
+        <div style="padding:.6rem 1rem;border-top:1px solid var(--w2)">
+          <button class="btn btn-p btn-sm btn-full" onclick="om('event')" style="font-size:.68rem">+ Ajouter un événement</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -2076,7 +2142,7 @@ function init(){
     renderTasks(); renderAnn(); renderNextMtg();
     buildGuides(); buildRess();
     updSigBadge(); renderHeroAccueil();
-    renderWidgetAgenda(); renderWidgetSig(); renderCRHome(); checkUrgents();
+    renderWidgetAgenda(); renderWidgetSig(); renderCRHome(); renderEvHome(); checkUrgents(); initWidgetChat();
     el("k-sig",d.stats?d.stats.sig_new||0:0);
   });
 
@@ -2300,6 +2366,77 @@ function renderHeroAccueil(){
 
 /* Surcharger renderShortcuts — plus utilisé sur l'accueil v2, on garde pour compat */
 function renderShortcuts(){}
+
+
+
+/* ── WIDGET TCHAT ACCUEIL ────────────────────────────────────────────────── */
+var _wgChatLast = 0;
+
+function wgRenderMsgs(msgs) {
+  var el2 = $("wg-chat-msgs"); if(!el2) return;
+  if(!msgs.length) {
+    el2.innerHTML = '<div style="font-size:.72rem;color:var(--i4);text-align:center;padding:1rem 0">Aucun message — soyez le premier !</div>';
+    return;
+  }
+  el2.innerHTML = msgs.slice(-20).map(function(m) {
+    var isMe = m.auteur === ME.nom || m.avatar === ME.avatar;
+    return '<div style="display:flex;flex-direction:column;gap:1px;align-items:'+(isMe?"flex-end":"flex-start")+'">'
+      + '<div style="font-size:.58rem;color:var(--i4);padding:0 4px">'+m.auteur+' · '+m.ts+'</div>'
+      + '<div style="background:'+(isMe?"var(--g3)":"#fff")+';color:'+(isMe?"#fff":"var(--ink)")+';border-radius:'+(isMe?"10px 10px 3px 10px":"10px 10px 10px 3px")+';padding:.45rem .65rem;font-size:.74rem;max-width:88%;box-shadow:var(--s1);border:1px solid '+(isMe?"var(--g3)":"var(--w2)")+';line-height:1.45">'+m.texte+'</div>'
+      + '</div>';
+  }).join("");
+  el2.scrollTop = el2.scrollHeight;
+}
+
+function wgPollChat() {
+  var ch = v("wg-chat-ch") || "general";
+  apiGet("/api/chat?channel="+ch+"&since="+_wgChatLast).then(function(d) {
+    if(d.ok && d.messages && d.messages.length) {
+      CHAT = CHAT.concat(d.messages);
+      _wgChatLast = d.lastId;
+      wgRenderMsgs(CHAT.filter(function(m){return m.channel===ch;}));
+      // Indiquer nouveau message si pas visible
+      var badge = $("wg-chat-badge");
+      if(badge) badge.style.display = "block";
+    }
+  });
+}
+
+function wgSwitchCh() {
+  CHAT = []; _wgChatLast = 0;
+  var badge = $("wg-chat-badge");
+  if(badge) badge.style.display = "none";
+  // Charger l'historique du canal
+  var ch = v("wg-chat-ch") || "general";
+  apiGet("/api/chat?channel="+ch+"&since=0").then(function(d) {
+    if(d.ok) {
+      CHAT = d.messages || [];
+      _wgChatLast = d.lastId || 0;
+      wgRenderMsgs(CHAT);
+    }
+  });
+}
+
+function wgSendMsg() {
+  var inp = $("wg-chat-inp"), txt = inp ? inp.value.trim() : "";
+  if(!txt) return;
+  inp.value = "";
+  var ch = v("wg-chat-ch") || "general";
+  apiPost("/api/chat", {channel:ch, auteur:ME.nom, avatar:ME.avatar, texte:txt})
+    .then(function(d) {
+      if(d.ok) {
+        CHAT.push(d.message);
+        wgRenderMsgs(CHAT.filter(function(m){return m.channel===ch;}));
+        var badge = $("wg-chat-badge");
+        if(badge) badge.style.display = "none";
+      }
+    });
+}
+
+function initWidgetChat() {
+  wgSwitchCh();
+  setInterval(wgPollChat, 8000);
+}
 
 
 function renderNextMtg(){
@@ -2639,8 +2776,32 @@ function openElu(i){
     +(e.commission?'<div style="font-size:.78rem;padding:.5rem 0;border-bottom:1px solid var(--w2)"><strong style="color:var(--i3)">Commission :</strong> <span class="chip">'+e.commission+'</span></div>':"")
     +(e.tel?'<div style="font-size:.78rem;padding:.5rem 0;border-bottom:1px solid var(--w2)"><strong style="color:var(--i3)">Tél : </strong><a href="tel:'+e.tel+'" style="color:var(--g3)">'+e.tel+'</a></div>':"")
     +(e.email?'<div style="font-size:.78rem;padding:.5rem 0"><strong style="color:var(--i3)">Email : </strong><a href="mailto:'+e.email+'" style="color:var(--g3)">'+e.email+'</a></div>':"")
-    +((!e.tel&&!e.email)?'<div style="font-size:.73rem;color:var(--i4);margin-top:.5rem;font-style:italic">Coordonnees a completer par l&#39;administrateur.</div>':"");
+    + '<div style="margin-top:.85rem;padding-top:.75rem;border-top:1px solid var(--w2)">'
+    + '<div style="font-size:.68rem;font-weight:700;color:var(--i3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem">Modifier les coordonnées</div>'
+    + '<div style="display:flex;flex-direction:column;gap:8px">'
+    + '<div style="display:flex;align-items:center;gap:8px"><label style="font-size:.7rem;color:var(--i3);width:60px;flex-shrink:0">Tél.</label><input id="elu-edit-tel" class="fi" value="'+(e.tel||"")+'" placeholder="06 00 00 00 00" style="flex:1;font-size:.76rem;padding:6px 9px"></div>'
+    + '<div style="display:flex;align-items:center;gap:8px"><label style="font-size:.7rem;color:var(--i3);width:60px;flex-shrink:0">Email</label><input id="elu-edit-email" class="fi" value="'+(e.email||"")+'" placeholder="prenom.nom@ville.fr" type="email" style="flex:1;font-size:.76rem;padding:6px 9px"></div>'
+    + '<div style="display:flex;align-items:center;gap:8px"><label style="font-size:.7rem;color:var(--i3);width:60px;flex-shrink:0">Délég.</label><input id="elu-edit-deleg" class="fi" value="'+(e.delegation||"")+'" placeholder="Délégation officielle" style="flex:1;font-size:.76rem;padding:6px 9px"></div>'
+    + '<div style="display:flex;justify-content:flex-end;margin-top:4px"><button class="btn btn-p btn-sm" onclick="saveEluContact('+e.id+')">&#x1F4BE; Enregistrer</button></div>'
+    + '</div></div>';
   om("elu-det");
+}
+
+function saveEluContact(eluId) {
+  var tel = v("elu-edit-tel"), email = v("elu-edit-email"), deleg = v("elu-edit-deleg");
+  apiPut("/api/elus/"+eluId, {tel:tel, email:email, delegation:deleg})
+    .then(function(d){
+      if(d.ok) {
+        // Mettre à jour localement
+        var list = ELUS_DATA.length ? ELUS_DATA : ELUS0;
+        list.forEach(function(e){ if(e.id===eluId){e.tel=tel;e.email=email;e.delegation=deleg;} });
+        ELUS_DATA.forEach(function(e){ if(e.id===eluId){e.tel=tel;e.email=email;e.delegation=deleg;} });
+        cm(); renderElus();
+        toast("Coordonnées enregistrées !");
+      } else {
+        toast("Erreur d'enregistrement", 3000);
+      }
+    });
 }
 
 
