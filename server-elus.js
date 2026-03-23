@@ -407,6 +407,75 @@ const server=http.createServer(function(req,res){
     return res.end(JSON.stringify(pub));
   }
 
+
+  // ── UPLOAD FICHIER (multipart/form-data) ──────────────────────────────────
+  if(p==='/api/upload'&&m==='POST'){
+    var ct=req.headers['content-type']||'';
+    if(!ct.includes('multipart/form-data'))return J(res,{ok:false,error:'multipart requis'},400);
+    var boundary=ct.split('boundary=')[1];
+    if(!boundary)return J(res,{ok:false,error:'boundary manquant'},400);
+    var chunks=[];
+    req.on('data',function(c){chunks.push(c);});
+    req.on('end',function(){
+      try{
+        var buf=Buffer.concat(chunks);
+        var bnd=Buffer.from('--'+boundary);
+        var parts=[];
+        var pos=0;
+        while(pos<buf.length){
+          var start=buf.indexOf(bnd,pos);
+          if(start<0)break;
+          var end=buf.indexOf(bnd,start+bnd.length);
+          if(end<0)end=buf.length;
+          parts.push(buf.slice(start+bnd.length,end));
+          pos=end;
+        }
+        var fileData=null,fileName='',fieldName='';
+        parts.forEach(function(part){
+          var headerEnd=part.indexOf('\r\n\r\n');
+          if(headerEnd<0)return;
+          var headers=part.slice(0,headerEnd).toString();
+          var body=part.slice(headerEnd+4);
+          // Enlever le \r\n final
+          if(body[body.length-2]===13&&body[body.length-1]===10)body=body.slice(0,-2);
+          if(headers.includes('filename=')){
+            var fnMatch=headers.match(/filename="([^"]+)"/);
+            if(fnMatch)fileName=fnMatch[1];
+            fileData=body;
+          }
+        });
+        if(!fileData||!fileName)return J(res,{ok:false,error:'Fichier non trouvé'},400);
+        // Sécuriser le nom de fichier
+        var safeName=fileName.replace(/[^a-zA-Z0-9._\-]/g,'_');
+        var ts2=Date.now();
+        var outName=ts2+'_'+safeName;
+        var outPath=path.join(DIR,'uploads',outName);
+        // Créer le dossier uploads si nécessaire
+        try{fs.mkdirSync(path.join(DIR,'uploads'),{recursive:true});}catch(e){}
+        fs.writeFileSync(outPath,fileData);
+        var fileUrl='/uploads/'+outName;
+        return J(res,{ok:true,url:fileUrl,nom:fileName,taille:fileData.length});
+      }catch(e){
+        return J(res,{ok:false,error:e.message},500);
+      }
+    });
+    return;
+  }
+
+  // ── SERVIR les fichiers uploadés ──────────────────────────────────────────
+  if(p.startsWith('/uploads/')){
+    var fname2=p.slice(9);
+    var fpath=path.join(DIR,'uploads',fname2);
+    try{
+      var fdata=fs.readFileSync(fpath);
+      var ext2=fname2.split('.').pop().toLowerCase();
+      var mimes={'pdf':'application/pdf','docx':'application/vnd.openxmlformats-officedocument.wordprocessingml.document','xlsx':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet','jpg':'image/jpeg','jpeg':'image/jpeg','png':'image/png','gif':'image/gif','mp4':'video/mp4','txt':'text/plain','csv':'text/csv'};
+      var mime=mimes[ext2]||'application/octet-stream';
+      res.writeHead(200,{'Content-Type':mime,'Content-Disposition':'inline; filename="'+fname2+'"'});
+      return res.end(fdata);
+    }catch(e){return J(res,{ok:false,error:'Fichier non trouvé'},404);}
+  }
+
   if(!auth(req))return deny(res);
 
   const ME=authUser(req);
@@ -1394,6 +1463,30 @@ textarea.fi{resize:vertical;min-height:90px;}
   }
 }
 
+
+/* ── GRILLES FIXES DESKTOP ─────────────────────────────────────────────── */
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.grid-2-1{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;}
+.grid-3-1{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;align-items:start;}
+.grid-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+/* Sur desktop, les grilles restent fixes */
+@media(min-width:901px){
+  .grid-4{grid-template-columns:repeat(4,1fr)!important;}
+  .grid-3{grid-template-columns:repeat(3,1fr)!important;}
+  .grid-tiles{grid-template-columns:repeat(4,1fr)!important;}
+  .grid-3-1{grid-template-columns:1fr 1fr 1fr!important;}
+}
+@media(max-width:900px){
+  .grid-4{grid-template-columns:1fr 1fr!important;}
+  .grid-3{grid-template-columns:1fr!important;}
+  .grid-2{grid-template-columns:1fr!important;}
+  .grid-2-1{grid-template-columns:1fr!important;}
+  .grid-3-1{grid-template-columns:1fr!important;}
+  .grid-tiles{grid-template-columns:1fr 1fr!important;}
+}
+
 /* Hamburger caché sur desktop */
 .hamburger{display:none;}
 .bottom-tools{display:none;}
@@ -2156,7 +2249,32 @@ textarea.fi{resize:vertical;min-height:90px;}
     <div class="ff"><label>Date du document</label><input class="fi" type="date" id="bib-date"></div>
     <div class="ff"><label>Ann&#xe9;e</label><input class="fi" id="bib-year" placeholder="2026"></div>
   </div>
-  <div class="ff"><label>Lien (kDrive, URL&#x2026;) *</label><input class="fi" type="url" id="bib-url" placeholder="https://&#x2026;"></div>
+  <div class="ff">
+    <label>Document *</label>
+    <div style="display:flex;gap:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--w3);margin-bottom:6px">
+      <button id="bib-tab-url" onclick="bibSwitchTab('url')" style="flex:1;padding:7px;font-size:.73rem;font-weight:700;background:var(--g3);color:#fff;border:none;cursor:pointer">&#x1F517; Lien URL / kDrive</button>
+      <button id="bib-tab-file" onclick="bibSwitchTab('file')" style="flex:1;padding:7px;font-size:.73rem;font-weight:700;background:var(--w2);color:var(--i2);border:none;cursor:pointer">&#x1F4C1; Fichier disque / cl&#xe9; USB</button>
+    </div>
+    <div id="bib-url-section">
+      <input class="fi" id="bib-url" placeholder="https://&#x2026; ou lien kDrive" type="url">
+    </div>
+    <div id="bib-file-section" style="display:none">
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:.65rem .85rem;border:2px dashed var(--w3);border-radius:var(--r);background:var(--w);transition:.15s" onmouseover="this.style.borderColor='var(--g5)'" onmouseout="this.style.borderColor='var(--w3)'">
+        <span style="font-size:1.4rem">&#x1F4C2;</span>
+        <div style="flex:1">
+          <div style="font-size:.76rem;font-weight:700;color:var(--ink)" id="bib-file-label">Cliquer pour choisir un fichier</div>
+          <div style="font-size:.63rem;color:var(--i3);margin-top:1px">PDF, Word, Excel, image &#x2014; disque dur ou cl&#xe9; USB</div>
+        </div>
+        <input type="file" id="bib-file" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.png,.jpg,.jpeg,.gif" style="display:none" onchange="bibFileChosen(this)">
+      </label>
+      <div id="bib-upload-progress" style="display:none;margin-top:6px">
+        <div style="height:4px;background:var(--w2);border-radius:2px;overflow:hidden">
+          <div id="bib-upload-bar" style="height:4px;background:var(--g4);border-radius:2px;width:0%;transition:width .3s"></div>
+        </div>
+        <div id="bib-upload-msg" style="font-size:.68rem;color:var(--i3);margin-top:3px">Envoi en cours&#x2026;</div>
+      </div>
+    </div>
+  </div>
   <div class="ff"><label>Description</label><textarea class="fi" id="bib-desc" placeholder="R&#xe9;sum&#xe9;, contexte&#x2026;"></textarea></div>
   <div class="ff"><label>Tags (virgule-s&#xe9;par&#xe9;s)</label><input class="fi" id="bib-tags" placeholder="budget, 2026, voirie&#x2026;"></div>
   <div class="ff"><label>Visibilit&#xe9;</label>
@@ -2992,12 +3110,95 @@ function renderBiblio(){
   }).join(""):'<div class="empty"><div class="empty-ico">📚</div><div class="empty-t">Bibliothèque vide</div><div class="empty-s">Ajoutez des documents via le bouton + Ajouter.</div></div>';
 }
 
+
+/* ── BIBLIO : UPLOAD FICHIER ─────────────────────────────────────────────── */
+function bibSwitchTab(tab){
+  var urlSec  = $("bib-url-section");
+  var fileSec = $("bib-file-section");
+  var tabUrl  = $("bib-tab-url");
+  var tabFile = $("bib-tab-file");
+  if(tab==='url'){
+    if(urlSec)  urlSec.style.display='block';
+    if(fileSec) fileSec.style.display='none';
+    if(tabUrl)  {tabUrl.style.background='var(--g3)'; tabUrl.style.color='#fff';}
+    if(tabFile) {tabFile.style.background='var(--w2)'; tabFile.style.color='var(--i2)';}
+  } else {
+    if(urlSec)  urlSec.style.display='none';
+    if(fileSec) fileSec.style.display='block';
+    if(tabUrl)  {tabUrl.style.background='var(--w2)'; tabUrl.style.color='var(--i2)';}
+    if(tabFile) {tabFile.style.background='var(--g3)'; tabFile.style.color='#fff';}
+  }
+}
+
+function bibFileChosen(input){
+  var file = input.files[0]; if(!file) return;
+  var label = $("bib-file-label");
+  if(label) label.textContent = file.name + ' (' + Math.round(file.size/1024) + ' ko)';
+}
+
 function svBiblio(){
   var vis = document.querySelector('input[name="bib-vis"]:checked');
-  var d={titre:v("bib-ti"),type:v("bib-ty"),commission:v("bib-co"),url:v("bib-url"),description:v("bib-desc"),tags:v("bib-tags"),date_doc:v("bib-date"),annee:v("bib-year"),visibilite:vis?vis.value:"public"};
-  if(!d.titre||!d.url){toast("Titre et lien obligatoires");return;}
-  apiPost("/api/biblio",d).then(function(r){if(r.ok){BIBLIO.unshift(r.item);renderBiblio();cm();toast(d.visibilite==="prive"?"Document privé ajouté 🔒":"Document ajouté !");}});
+  var urlSec = $("bib-url-section");
+  var isFileMode = urlSec && urlSec.style.display === 'none';
+  var fileInput = $("bib-file");
+
+  if(isFileMode && fileInput && fileInput.files[0]){
+    // Mode upload fichier
+    var file = fileInput.files[0];
+    var titre = v("bib-ti");
+    if(!titre){ toast("Titre obligatoire"); return; }
+
+    var formData = new FormData();
+    formData.append('file', file);
+
+    // Afficher la progression
+    var prog = $("bib-upload-progress");
+    var bar  = $("bib-upload-bar");
+    var msg  = $("bib-upload-msg");
+    if(prog) prog.style.display='block';
+
+    // XHR pour suivre la progression
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/api/upload');
+    xhr.setRequestHeader('Authorization', _auth || '');
+    xhr.upload.onprogress = function(e){
+      if(e.lengthComputable && bar){
+        bar.style.width = Math.round(e.loaded/e.total*100) + '%';
+      }
+    };
+    xhr.onload = function(){
+      if(prog) prog.style.display='none';
+      if(bar)  bar.style.width='0%';
+      var r = JSON.parse(xhr.responseText);
+      if(r.ok){
+        var d={titre:titre,type:v("bib-ty"),commission:v("bib-co"),
+               url:r.url,nom_fichier:r.nom,taille:r.taille,
+               description:v("bib-desc"),tags:v("bib-tags"),
+               date_doc:v("bib-date"),annee:v("bib-year"),
+               visibilite:vis?vis.value:"public",source:"upload"};
+        apiPost("/api/biblio",d).then(function(res){
+          if(res.ok){BIBLIO.unshift(res.item);renderBiblio();cm();
+            toast(d.visibilite==="prive"?"Fichier privé ajouté 🔒":"Fichier ajouté !");}
+          else toast("Erreur d'enregistrement");
+        });
+      } else {
+        toast("Erreur upload: " + (r.error||"inconnue"), 4000);
+      }
+    };
+    xhr.onerror = function(){
+      if(prog) prog.style.display='none';
+      toast("Erreur réseau", 3000);
+    };
+    xhr.send(formData);
+  } else {
+    // Mode URL (comportement original)
+    var d={titre:v("bib-ti"),type:v("bib-ty"),commission:v("bib-co"),url:v("bib-url"),description:v("bib-desc"),tags:v("bib-tags"),date_doc:v("bib-date"),annee:v("bib-year"),visibilite:vis?vis.value:"public"};
+    if(!d.titre||!d.url){toast("Titre et lien obligatoires");return;}
+    apiPost("/api/biblio",d).then(function(r){if(r.ok){BIBLIO.unshift(r.item);renderBiblio();cm();toast(d.visibilite==="prive"?"Document privé ajouté 🔒":"Document ajouté !");}});
+  }
 }
+
+
 function delBiblio(id){if(!confirm("Supprimer ?"))return;apiDel("/api/biblio/"+id).then(function(d){if(d.ok){BIBLIO=BIBLIO.filter(function(b){return b.id!==id;});renderBiblio();}});}
 
 function saveCR(){
