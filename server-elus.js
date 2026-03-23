@@ -2591,7 +2591,7 @@ function toggleGuide(el){
 }
 function fmtGuide(txt){
   // Transformer le texte brut en HTML lisible
-  return txt.split(/[\r\n]+/).map(function(line){
+  return txt.split(String.fromCharCode(10)).map(function(line){
     var t=line.trim();
     if(!t) return '<div style="height:.4rem"></div>';
     // Titre de section (MAJUSCULES seules)
@@ -2621,7 +2621,7 @@ function buildGuides(){
     return;
   }
   gl.innerHTML=GUIDES.map(function(g,i){
-    var preview=g.contenu.split('\n').find(function(l){return l.trim().length>20;})||'';
+    var preview=g.contenu.split(String.fromCharCode(10)).find(function(l){return l.trim().length>20;})||'';
     return '<div class="guide" onclick="toggleGuide(this)">'
       +'<div class="guide-h">'
       +'<div class="guide-ico">'+g.icon+'</div>'
