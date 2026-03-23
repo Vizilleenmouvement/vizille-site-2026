@@ -383,6 +383,21 @@ const server=http.createServer(function(req,res){
   // PROJETS
   if(p==='/api/projets')return J(res,projets);
 
+  // NOUVEAU PROJET
+  if(p==='/api/projet'&&m==='POST')return body(req,function(err,d){
+    if(err)return J(res,{ok:false},400);
+    var newId=projets.length?Math.max.apply(null,projets.map(function(x){return x.id||0;}))+1:9000;
+    var projet={id:newId,titre:d.titre||'',theme:d.theme||'Autre',statut:d.statut||'Programmé',
+      annee:d.annee?parseInt(d.annee):null,budget:0,resume:d.resume||'',
+      description:d.description||'',importance:parseInt(d.importance)||2,
+      chiffres:[],tags:d.tags?d.tags.split(',').map(function(t){return t.trim();}).filter(Boolean):[],
+      created:new Date().toISOString()};
+    projets.push(projet);save('projets.json',projets);
+    var n={id:Date.now(),titre:projet.titre,statut:'CRÉÉ',ancien:'',ts:ts(),new:true,type:'projet'};
+    notifs.unshift(n);if(notifs.length>200)notifs=notifs.slice(0,200);save('notifs.json',notifs);
+    return J(res,{ok:true,projet:projet});
+  });
+
   // STATUT PROJET
   if(p==='/api/statut'&&m==='POST')return body(req,function(err,d){
     if(err)return J(res,{ok:false},400);
@@ -1909,6 +1924,11 @@ textarea.fi{resize:vertical;min-height:90px;}
 // ── DONNÉES ET ÉTAT ─────────────────────────────────────────────────────────
 var P=[],ST={},AG=[],DC=[],NF=[],CHAT=[],ANN=[],TASKS=[],SIGN=[],EVTS=[],CRS=[],BIBLIO=[],REP_ELUS={};
 var ELUS_DATA=[];
+var COMM=${JSON.stringify(COMM)};
+var COLORS=${JSON.stringify(COLORS)};
+var ICONS=${JSON.stringify(ICONS)};
+var REFS=${JSON.stringify(REFS)};
+var ELUS0=${JSON.stringify(ELUS0)};
 var GUIDES=${JSON.stringify(GUIDES)};
 var RESS=${JSON.stringify(RESS)};
 var SLIST=["Prioritaire","Programmé","Planifié","Étude","En cours","Réalisé","Suspendu"];
@@ -1952,7 +1972,9 @@ function gp(id,ni){
   else if(id==="signal")renderSig();
   else if(id==="events")renderEv();
   else if(id==="hist")renderNt();
-  else if(id==="comm")buildCG();
+  else if(id==="comm"){buildCG();}
+  else if(id==="global"){fG();}
+  else if(id==="creer"){resetNP();}
   else if(id==="guide"||id==="ress"){
     // Ress et Guide fusionnés
     qsa(".page").forEach(function(p){p.classList.remove("on");});
