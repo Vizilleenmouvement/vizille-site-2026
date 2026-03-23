@@ -1185,7 +1185,7 @@ textarea.fi{resize:vertical;min-height:90px;}
 .guide-ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;background:var(--g8);border:1px solid var(--g7);}
 .guide-t{font-size:.82rem;font-weight:700;font-family:var(--fd);}
 .guide-prev{padding:.75rem 1rem;font-size:.72rem;color:var(--i3);line-height:1.5;}
-.guide-full{display:none;padding:.75rem 1rem;font-size:.74rem;color:var(--i2);line-height:1.7;border-top:2px solid var(--g8);}
+.guide-full{display:none;padding:.85rem 1rem;font-size:.76rem;color:var(--i2);line-height:1.7;border-top:2px solid var(--g8);}
 .guide.open .guide-prev{display:none;}.guide.open .guide-full{display:block;}.guide.open{border-color:var(--g7);}
 
 /* RESSOURCES */
@@ -2090,7 +2090,7 @@ function gp(id,ni){
   else if(id==="biblio")renderBiblio();
   else if(id==="repelus")renderRepElus();
   else if(id==="elus")renderElus();
-  else if(id==="signal")renderSig();
+  else if(id==="signal"){fSig();updSig();}
   else if(id==="events")renderEv();
   else if(id==="hist")renderNt();
   else if(id==="comm"){buildCG();}
@@ -2533,7 +2533,7 @@ function buildGuides(){
       +'</div>'
       +'<div style="color:var(--i4);font-size:.7rem;flex-shrink:0;margin-left:8px">&#x25BC;</div>'
       +'</div>'
-      +'<div class="guide-full" style="padding:.85rem 1rem;font-size:.78rem;color:var(--i2);line-height:1.7;border-top:1px solid var(--g8)">'+g.contenu+'</div>'
+      +'<div class="guide-full">'+g.contenu+'</div>'
       +'</div>';
   }).join("");
 }
