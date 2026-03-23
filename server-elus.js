@@ -153,7 +153,24 @@ body{display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
 .next-date{font-size:.9rem;color:rgba(255,255,255,.75);}
 .next-empty{font-size:.95rem;color:rgba(255,255,255,.6);font-style:italic;}
 
-/* ── AGENDA ── */
+.tile.t-evenements{border-bottom-color:#EF4444;}.tile.t-evenements:hover{background:#fff5f5;}
+
+/* ── ÉVÉNEMENTS ── */
+.ev-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--ombre);padding:1.2rem 1.5rem;margin-bottom:.9rem;display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:start;transition:box-shadow .2s;}
+.ev-card:hover{box-shadow:var(--ombre-lg);}
+.ev-cat-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.ev-titre{font-weight:800;font-size:.95rem;margin-bottom:.3rem;}
+.ev-meta{font-size:.78rem;color:var(--gris);margin-bottom:.4rem;}
+.ev-desc{font-size:.85rem;color:var(--i2);line-height:1.5;}
+.ev-statut-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:.4rem;}
+.ev-statut{padding:.3rem .9rem;border-radius:20px;font-size:.72rem;font-weight:800;white-space:nowrap;}
+.ev-Nouveau{background:#fee2e2;color:#991b1b;}
+.ev-En-cours{background:#fef3c7;color:#92400e;}
+.ev-Transmis{background:#dbeafe;color:#1e40af;}
+.ev-Traite{background:#dcfce7;color:#166534;}
+.ev-Archive{background:#f3f4f6;color:#6b7280;}
+.ev-filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.2rem;}
+.cat-colors{--col-Signalement:#EF4444;--col-Incident:#F97316;--col-Voirie:#F59E0B;--col-Eclairage:#EAB308;--col-Proprete:#10B981;--col-Nuisance:#8B5CF6;--col-Demande:#3B82F6;--col-Autre:#6B7280;}
 .agenda-item{display:flex;align-items:flex-start;gap:1rem;padding:1rem 1.2rem;background:var(--card);border-radius:var(--radius-sm);border:1px solid var(--border);margin-bottom:.8rem;transition:box-shadow .2s;}
 .agenda-item:hover{box-shadow:var(--ombre);}
 .agenda-date-box{background:var(--bleu);color:#fff;border-radius:8px;width:52px;text-align:center;padding:.4rem .3rem;flex-shrink:0;}
@@ -293,6 +310,7 @@ body{display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
     <div class="nav-section">Navigation</div>
     <div class="nav-item active" onclick="goPage('accueil')"><span class="nav-icon">🏠</span> Accueil</div>
     <div class="nav-item" onclick="goPage('agenda')"><span class="nav-icon">📅</span> Agenda</div>
+    <div class="nav-item" onclick="goPage('evenements')"><span class="nav-icon">🚨</span> Événements <span class="nav-badge" id="ev-badge" style="display:none"></span></div>
     <div class="nav-item" onclick="goPage('projets')"><span class="nav-icon">📋</span> Nos projets</div>
     <div class="nav-item" onclick="goPage('equipe')"><span class="nav-icon">👥</span> L'équipe</div>
     <div class="nav-section">Ressources</div>
@@ -313,6 +331,11 @@ body{display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
           <div class="tile-ico">📅</div>
           <div class="tile-label">Agenda</div>
           <div class="tile-desc">Réunions et rendez-vous</div>
+        </div>
+        <div class="tile t-evenements" onclick="goPage('evenements')">
+          <div class="tile-ico">🚨</div>
+          <div class="tile-label">Événements</div>
+          <div class="tile-desc">Signalements et incidents</div>
         </div>
         <div class="tile t-projets" onclick="goPage('projets')">
           <div class="tile-ico">📋</div>
@@ -351,6 +374,57 @@ body{display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
         </div>
       </div>
       <div class="grid-4" id="stats-row"></div>
+    </div>
+
+    <!-- ── ÉVÉNEMENTS ── -->
+    <div id="page-evenements" class="page">
+      <div class="section-header">
+        <div>
+          <div class="page-title">🚨 Événements</div>
+          <div class="page-sub">Signalements, incidents, demandes — suivi en temps réel</div>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-bottom:1.5rem;">
+        <!-- Formulaire -->
+        <div class="form-card">
+          <div style="font-weight:800;font-size:1rem;color:var(--bleu);margin-bottom:1rem;">➕ Signaler un événement</div>
+          <div class="form-row">
+            <label class="form-label">Catégorie</label>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;" id="ev-cat-btns"></div>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Titre / Objet</label>
+            <input class="form-input" id="ev-titre" placeholder="Ex : Lampadaire éteint rue Barbusse">
+          </div>
+          <div class="form-row">
+            <label class="form-label">Description</label>
+            <textarea class="form-textarea" id="ev-desc" placeholder="Détails, localisation précise, personnes concernées…"></textarea>
+          </div>
+          <div class="form-row-2">
+            <div>
+              <label class="form-label">Localisation</label>
+              <input class="form-input" id="ev-lieu" placeholder="Adresse, quartier…">
+            </div>
+            <div>
+              <label class="form-label">Priorité</label>
+              <select class="form-select" id="ev-prio">
+                <option value="normale">Normale</option>
+                <option value="urgente">🔴 Urgente</option>
+                <option value="faible">Faible</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-danger btn-full" onclick="addEvenement()" style="background:#EF4444;color:#fff;">🚨 Signaler</button>
+        </div>
+        <!-- Stats rapides -->
+        <div>
+          <div class="grid-2" style="margin-bottom:1rem;" id="ev-stats"></div>
+          <div style="font-weight:800;font-size:.85rem;color:var(--gris);margin:.5rem 0 .6rem;">Filtrer par statut</div>
+          <div class="ev-filters" id="ev-statut-filters"></div>
+        </div>
+      </div>
+      <!-- Liste -->
+      <div class="cat-colors" id="evenements-list"></div>
     </div>
 
     <!-- ── AGENDA ── -->
@@ -844,6 +918,151 @@ function toast(msg, ico='✅') {
 document.addEventListener('keydown', e=>{
   if(e.key==='Escape'){closeGuide();closeProjModal();}
 });
+
+// ── ÉVÉNEMENTS ────────────────────────────────────────────────
+const EV_CATS = [
+  {id:'Signalement',icon:'📍',color:'#EF4444'},
+  {id:'Incident',icon:'⚠️',color:'#F97316'},
+  {id:'Voirie',icon:'🛣️',color:'#F59E0B'},
+  {id:'Éclairage',icon:'💡',color:'#EAB308'},
+  {id:'Propreté',icon:'🧹',color:'#10B981'},
+  {id:'Nuisance',icon:'🔊',color:'#8B5CF6'},
+  {id:'Demande',icon:'📝',color:'#3B82F6'},
+  {id:'Autre',icon:'📌',color:'#6B7280'}
+];
+const EV_STATUTS = [
+  {id:'Nouveau',color:'#fee2e2',text:'#991b1b'},
+  {id:'En cours',color:'#fef3c7',text:'#92400e'},
+  {id:'Transmis',color:'#dbeafe',text:'#1e40af'},
+  {id:'Traité',color:'#dcfce7',text:'#166534'},
+  {id:'Archivé',color:'#f3f4f6',text:'#6b7280'}
+];
+let selectedEvCat = EV_CATS[0].id;
+let filtreEvStatut = '';
+let evenements = [];
+
+(function initEvenements() {
+  // Boutons catégorie
+  const wrap = document.getElementById('ev-cat-btns');
+  if(!wrap) return;
+  wrap.innerHTML = EV_CATS.map(c=>'<button class="btn btn-ghost btn-sm" style="'+(c.id===selectedEvCat?'background:'+c.color+';color:#fff;border-color:'+c.color+';':'')+'" onclick="selectEvCat(\''+c.id+'\',this)">'+c.icon+' '+c.id+'</button>').join('');
+  // Filtres statut
+  const sf = document.getElementById('ev-statut-filters');
+  if(sf) {
+    sf.innerHTML = '<button class="filtre-btn active" onclick="filtreEv(\\'\\',this)">Tous</button>'
+      + EV_STATUTS.map(s=>'<button class="filtre-btn" onclick="filtreEv(\''+s.id+'\',this)">'+s.id+'</button>').join('');
+  }
+  loadEvenements();
+})();
+
+function selectEvCat(id, btn) {
+  selectedEvCat = id;
+  document.querySelectorAll('#ev-cat-btns .btn').forEach(b=>{b.style.background='';b.style.color='';b.style.borderColor='';});
+  const cat = EV_CATS.find(c=>c.id===id);
+  btn.style.background = cat.color; btn.style.color='#fff'; btn.style.borderColor=cat.color;
+}
+
+function filtreEv(s, btn) {
+  filtreEvStatut = s;
+  document.querySelectorAll('#ev-statut-filters .filtre-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderEvenements();
+}
+
+async function loadEvenements() {
+  try {
+    const r = await fetch('/api/evenements');
+    evenements = await r.json();
+    renderEvenements();
+  } catch(e){}
+}
+
+function renderEvenements() {
+  // Stats rapides
+  const stats = document.getElementById('ev-stats');
+  if(stats) {
+    const nvx = evenements.filter(e=>e.statut==='Nouveau').length;
+    const enc = evenements.filter(e=>e.statut==='En cours').length;
+    const trt = evenements.filter(e=>e.statut==='Traité').length;
+    const urg = evenements.filter(e=>e.priorite==='urgente').length;
+    stats.innerHTML = [
+      {ico:'🔴',val:nvx,label:'Nouveaux'},
+      {ico:'⚙️',val:enc,label:'En cours'},
+      {ico:'✅',val:trt,label:'Traités'},
+      {ico:'🚨',val:urg,label:'Urgents'}
+    ].map(s=>'<div class="card stat-card" style="padding:1rem .5rem;"><div class="stat-ico" style="font-size:1.5rem;">'+s.ico+'</div><div class="stat-val" style="font-size:1.6rem;">'+s.val+'</div><div class="stat-label">'+s.label+'</div></div>').join('');
+    // Badge sidebar
+    const badge = document.getElementById('ev-badge');
+    if(badge) { badge.textContent=nvx; badge.style.display=nvx?'':'none'; }
+  }
+  // Liste
+  const el = document.getElementById('evenements-list');
+  if(!el) return;
+  const liste = filtreEvStatut ? evenements.filter(e=>e.statut===filtreEvStatut) : evenements;
+  const sorted = liste.slice().sort((a,b)=>{
+    if(a.priorite==='urgente'&&b.priorite!=='urgente') return -1;
+    if(b.priorite==='urgente'&&a.priorite!=='urgente') return 1;
+    if(a.statut==='Nouveau'&&b.statut!=='Nouveau') return -1;
+    if(b.statut==='Nouveau'&&a.statut!=='Nouveau') return 1;
+    return new Date(b.date||0)-new Date(a.date||0);
+  });
+  if(!sorted.length){el.innerHTML='<div class="empty"><div class="empty-ico">✅</div><div class="empty-text">Aucun événement</div><div class="empty-sub">Rien à signaler pour le moment</div></div>';return;}
+  el.innerHTML = sorted.map(ev=>{
+    const cat = EV_CATS.find(c=>c.id===ev.categorie)||EV_CATS[7];
+    const st = EV_STATUTS.find(s=>s.id===ev.statut)||EV_STATUTS[0];
+    const urgBadge = ev.priorite==='urgente' ? '<span style="background:#fee2e2;color:#991b1b;font-size:.68rem;font-weight:800;padding:.2rem .5rem;border-radius:10px;margin-left:.4rem;">🔴 URGENT</span>' : '';
+    const nextStatuts = EV_STATUTS.filter(s=>s.id!==ev.statut);
+    const btns = nextStatuts.map(s=>'<button class="btn btn-ghost btn-sm" style="font-size:.7rem;padding:.3rem .7rem;" onclick="changerStatutEv('+ev.id+',\''+s.id+'\')">→ '+s.id+'</button>').join('');
+    return '<div class="ev-card" style="'+(ev.priorite==='urgente'?'border-left:4px solid #EF4444;':'')+'">'
+      +'<div class="ev-cat-dot" style="background:'+cat.color+'"></div>'
+      +'<div>'
+        +'<div class="ev-titre">'+cat.icon+' '+ev.titre+urgBadge+'</div>'
+        +'<div class="ev-meta">'+cat.id+(ev.lieu?' · '+ev.lieu:'')+(ev.date?' · '+new Date(ev.date).toLocaleDateString('fr-FR'):'')+'</div>'
+        +(ev.description?'<div class="ev-desc">'+ev.description+'</div>':'')
+        +'<div style="margin-top:.6rem;display:flex;flex-wrap:wrap;gap:.4rem;">'+btns
+        +'<button class="btn btn-ghost btn-sm" style="font-size:.7rem;padding:.3rem .7rem;color:#dc2626;" onclick="delEvenement('+ev.id+')">🗑 Supprimer</button></div>'
+      +'</div>'
+      +'<div class="ev-statut-wrap">'
+        +'<span class="ev-statut" style="background:'+st.color+';color:'+st.text+'">'+ev.statut+'</span>'
+      +'</div>'
+      +'</div>';
+  }).join('');
+}
+
+async function addEvenement() {
+  const titre = document.getElementById('ev-titre').value.trim();
+  if(!titre){toast('Indiquez un titre','⚠️');return;}
+  const data = {
+    titre,
+    categorie:selectedEvCat,
+    description:document.getElementById('ev-desc').value.trim(),
+    lieu:document.getElementById('ev-lieu').value.trim(),
+    priorite:document.getElementById('ev-prio').value,
+    statut:'Nouveau',
+    date:new Date().toISOString()
+  };
+  const r = await fetch('/api/evenements',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+  if((await r.json()).ok){
+    document.getElementById('ev-titre').value='';
+    document.getElementById('ev-desc').value='';
+    document.getElementById('ev-lieu').value='';
+    toast('Événement signalé ✅');
+    await loadEvenements();
+  }
+}
+
+async function changerStatutEv(id, statut) {
+  await fetch('/api/evenements/'+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({statut})});
+  toast('Statut mis à jour : '+statut+' ✅');
+  await loadEvenements();
+}
+
+async function delEvenement(id) {
+  if(!confirm('Supprimer cet événement ?')) return;
+  await fetch('/api/evenements/'+id,{method:'DELETE'});
+  toast('Événement supprimé');
+  await loadEvenements();
+}
 </script>
 </body>
 </html>`;
@@ -897,6 +1116,7 @@ let elus      = load('elus.json', [
   {"id":26,"nom":"Stéphane Lasserre","role":"Conseiller","delegation":"","avatar":"SL","color":"#14B8A6","photo":"images/stephane-lasserre.jpg","photoPosition":"center 20%"}
 ]);
 let projExtra = load('proj_extra.json', {});
+let evenements = load('evenements.json', []);
 
 console.log('VeM Dashboard v7 — projets:'+projets.length+' elus:'+elus.length);
 
@@ -921,7 +1141,7 @@ const server = http.createServer(function(req, res) {
   if(m==='OPTIONS'){res.writeHead(200,{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'GET,POST,PUT,DELETE','Access-Control-Allow-Headers':'Content-Type,Authorization'});return res.end();}
   if(!auth(req)) return deny(res);
 
-  if(p==='/api/all') return J(res,{projets,statuts,agenda,documents,notifs:notifs.slice(0,100),elus,chat:chat.slice(-50)});
+  if(p==='/api/all') return J(res,{projets,statuts,agenda,documents,notifs:notifs.slice(0,100),elus,chat:chat.slice(-50),evenements});
 
   if(p.match(/^\/api\/proj\/\d+$/) && m==='GET') {
     const id=parseInt(p.split('/').pop());
@@ -980,6 +1200,26 @@ const server = http.createServer(function(req, res) {
       res.writeHead(200,{'Content-Type':mime,'Cache-Control':'public, max-age=86400'});
       return res.end(data);
     } catch(e){ res.writeHead(404); return res.end('Image not found'); }
+  }
+
+  // ── ÉVÉNEMENTS ───────────────────────────────────────────────────────────
+  if(p==='/api/evenements'&&m==='GET') return J(res,evenements);
+  if(p==='/api/evenements'&&m==='POST') return body(req,function(err,d){
+    if(err)return J(res,{ok:false},400);
+    d.id=nextId(evenements); d.created=ts(); evenements.unshift(d);
+    if(evenements.length>500)evenements=evenements.slice(0,500);
+    save('evenements.json',evenements); return J(res,{ok:true,item:d});
+  });
+  if(p.match(/^\/api\/evenements\/\d+$/)&&m==='PUT') return body(req,function(err,d){
+    if(err)return J(res,{ok:false},400);
+    const id=parseInt(p.split('/').pop());
+    evenements=evenements.map(e=>e.id===id?{...e,...d}:e);
+    save('evenements.json',evenements); return J(res,{ok:true});
+  });
+  if(p.match(/^\/api\/evenements\/\d+$/)&&m==='DELETE'){
+    const id=parseInt(p.split('/').pop());
+    evenements=evenements.filter(e=>e.id!==id);
+    save('evenements.json',evenements); return J(res,{ok:true});
   }
 
   if(p==='/api/elus'&&m==='GET') return J(res,elus);
