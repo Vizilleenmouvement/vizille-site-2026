@@ -1024,7 +1024,7 @@ return `<!DOCTYPE html>
   --sw:252px;--th:54px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{font-size:14.5px;}
+html{font-size:14.5px;height:100%;}
 body{font-family:var(--fn);background:var(--w);color:var(--ink);height:100vh;overflow:hidden;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
 
 /* TOPBAR */
@@ -1041,10 +1041,10 @@ body{font-family:var(--fn);background:var(--w);color:var(--ink);height:100vh;ove
 .cbdg{width:7px;height:7px;background:var(--red);border-radius:50%;position:absolute;top:-2px;right:-2px;border:1.5px solid var(--g1);display:none;}
 
 /* LAYOUT */
-.layout{display:flex;flex:1;overflow:hidden;}
+.layout{display:flex;flex:1;overflow:hidden;min-height:0;height:0;}
 
 /* SIDEBAR */
-.sb{width:var(--sw);background:var(--g1);flex-shrink:0;display:flex;flex-direction:column;overflow-y:auto;}
+.sb{width:var(--sw);background:var(--g1);flex-shrink:0;display:flex;flex-direction:column;overflow-y:auto;position:sticky;top:0;align-self:flex-start;height:calc(100vh - var(--th));z-index:50;}
 .sb::-webkit-scrollbar{width:3px;}.sb::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px;}
 .sbs{padding:.75rem 1rem .2rem;font-size:.59rem;font-weight:700;color:rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:.1em;}
 .sbi{display:flex;align-items:center;gap:9px;padding:.46rem 1rem .46rem 1.1rem;cursor:pointer;color:rgba(255,255,255,.52);font-size:.78rem;border-left:2px solid transparent;transition:all .15s;user-select:none;}
@@ -1057,7 +1057,7 @@ body{font-family:var(--fn);background:var(--w);color:var(--ink);height:100vh;ove
 .sbf{margin-top:auto;padding:.85rem 1rem;border-top:1px solid rgba(255,255,255,.07);font-size:.63rem;color:rgba(255,255,255,.2);line-height:1.7;}
 
 /* MAIN */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;}
 .ph{padding:.72rem 1.4rem;background:#fff;border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:12px;flex-shrink:0;box-shadow:var(--s1);}
 .ph-ico{width:36px;height:36px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
 .ph-t{font-size:.94rem;font-weight:700;color:var(--ink);font-family:var(--fd);line-height:1.2;}
@@ -1290,7 +1290,7 @@ textarea.fi{resize:vertical;min-height:90px;}
 .ch-w{position:relative;height:180px;}
 
 /* TCHAT */
-.chat-panel{position:fixed;top:var(--th);right:0;bottom:0;width:min(340px,100vw);background:#fff;border-left:1px solid var(--w2);box-shadow:-6px 0 24px rgba(0,0,0,.1);z-index:400;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .25s ease;}
+.chat-panel{position:fixed;top:var(--th);right:0;bottom:0;width:320px;background:#fff;border-left:1px solid var(--w2);box-shadow:-6px 0 24px rgba(0,0,0,.1);z-index:400;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .25s ease;}
 .chat-panel.on{transform:none;}
 .chat-hd{padding:.75rem 1rem;border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:8px;background:var(--g1);}
 .chat-hd-t{font-size:.82rem;font-weight:700;color:#fff;flex:1;font-family:var(--fd);}
