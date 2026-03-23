@@ -1607,7 +1607,29 @@ textarea.fi{resize:vertical;min-height:90px;}
       </div>
     </div>
 
-    
+    <!-- KPI MANDAT : barre de contexte -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:0">
+      <div class="card" style="padding:.75rem 1rem;display:flex;align-items:center;gap:10px;border-left:3px solid var(--g4)">
+        <div style="font-size:1.3rem">&#x1F3DB;</div>
+        <div><div style="font-size:1.05rem;font-weight:800;color:var(--g2);font-family:var(--fd)" id="kpi-conseil">0/4</div>
+        <div style="font-size:.62rem;color:var(--i3);font-weight:600;text-transform:uppercase;letter-spacing:.04em">Sessions conseil</div></div>
+      </div>
+      <div class="card" style="padding:.75rem 1rem;display:flex;align-items:center;gap:10px;border-left:3px solid var(--blue)">
+        <div style="font-size:1.3rem">&#x1F4B6;</div>
+        <div><div style="font-size:1.05rem;font-weight:800;color:var(--blue);font-family:var(--fd)" id="kpi-budget">87%</div>
+        <div style="font-size:.62rem;color:var(--i3);font-weight:600;text-transform:uppercase;letter-spacing:.04em">Budget 2026 allou&#xe9;</div></div>
+      </div>
+      <div class="card" style="padding:.75rem 1rem;display:flex;align-items:center;gap:10px;border-left:3px solid var(--amber)">
+        <div style="font-size:1.3rem">&#x1F5C3;</div>
+        <div><div style="font-size:1.05rem;font-weight:800;color:var(--amber);font-family:var(--fd)" id="kpi-electeurs">4 856</div>
+        <div style="font-size:.62rem;color:var(--i3);font-weight:600;text-transform:uppercase;letter-spacing:.04em">&#xc9;lecteurs inscrits</div></div>
+      </div>
+      <div class="card" style="padding:.75rem 1rem;display:flex;align-items:center;gap:10px;border-left:3px solid var(--red)">
+        <div style="font-size:1.3rem">&#x1F6A6;</div>
+        <div><div id="kpi-sig-open" style="font-size:1.05rem;font-weight:800;font-family:var(--fd);color:var(--i2)">0</div>
+        <div style="font-size:.62rem;color:var(--i3);font-weight:600;text-transform:uppercase;letter-spacing:.04em">Signalements ouverts</div></div>
+      </div>
+    </div>
 
     </div><!-- /today-scr -->
   </div>
@@ -1854,10 +1876,90 @@ textarea.fi{resize:vertical;min-height:90px;}
 
 <!-- BUDGET -->
 <div class="page" id="p-budget">
-  <div class="ph"><div class="ph-ico" style="background:#dcfce7">&#x1F4C8;</div><div><div class="ph-t">Budget comparatif</div><div class="ph-s">Tableau de suivi 2025&#x2013;2027</div></div><div class="ph-a"><label class="btn btn-p btn-sm" style="cursor:pointer">&#x1F4C2; Importer CSV<input type="file" id="bf" accept=".csv" style="display:none" onchange="impB(this)"></label></div></div>
+  <div class="ph">
+    <div class="ph-ico" style="background:#dcfce7">&#x1F4C8;</div>
+    <div><div class="ph-t">Budget municipal</div><div class="ph-s">Vizille 2025&#x2013;2027 &#x2014; Suivi des cr&#xe9;dits</div></div>
+    <div class="ph-a"><label class="btn btn-p btn-sm" style="cursor:pointer">&#x1F4C2; Importer CSV<input type="file" id="bf" accept=".csv" style="display:none" onchange="impB(this)"></label></div>
+  </div>
   <div class="scr">
-    <div class="card" style="font-size:.78rem;color:var(--i3);margin-bottom:1rem">Format : <code style="background:var(--w);padding:1px 7px;border-radius:4px;font-family:var(--fm)">Poste,Budget2025,Budget2026,Prevision2027</code></div>
-    <div id="btable"></div>
+
+    <!-- KPI BUDGET -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px">
+      <div class="kpi" style="border-top:3px solid var(--g4)">
+        <div class="kpiv" style="color:var(--g2)" id="bkpi-fonc">8,5 M&#x20ac;</div>
+        <div class="kpil">Budget fonctionnement</div>
+      </div>
+      <div class="kpi" style="border-top:3px solid var(--blue)">
+        <div class="kpiv" style="color:var(--blue)" id="bkpi-inv">2,8 M&#x20ac;</div>
+        <div class="kpil">Budget investissement</div>
+      </div>
+      <div class="kpi" style="border-top:3px solid var(--amber)">
+        <div class="kpiv" style="color:var(--amber)" id="bkpi-sub">640 k&#x20ac;</div>
+        <div class="kpil">Subventions attendues</div>
+      </div>
+      <div class="kpi" style="border-top:3px solid var(--g5)">
+        <div class="kpiv" style="color:var(--g4)" id="bkpi-pct">87%</div>
+        <div class="kpil">Budget 2026 allou&#xe9;</div>
+      </div>
+    </div>
+
+    <!-- GRAPHIQUE + TABLEAU COMPARATIF -->
+    <div class="ch-row" style="margin-bottom:14px">
+      <div class="ch-c" style="flex:1.5">
+        <div class="ch-t">&#xc9;volution budg&#xe9;taire Vizille (k&#x20ac;)</div>
+        <div class="ch-w"><canvas id="budgetChart"></canvas></div>
+      </div>
+      <div class="ch-c" style="flex:1">
+        <div class="ch-t">D&#xe9;viation Pr&#xe9;vision / R&#xe9;el</div>
+        <div style="padding:.75rem 0">
+          <table style="width:100%;font-size:.75rem;border-collapse:collapse">
+            <thead>
+              <tr style="border-bottom:2px solid var(--w2)">
+                <th style="text-align:left;padding:.4rem .5rem;color:var(--i3);font-weight:600">Poste</th>
+                <th style="text-align:right;padding:.4rem .5rem;color:var(--i3);font-weight:600">2025 r&#xe9;el</th>
+                <th style="text-align:right;padding:.4rem .5rem;color:var(--i3);font-weight:600">2026 pr&#xe9;v.</th>
+                <th style="text-align:right;padding:.4rem .5rem;color:var(--i3);font-weight:600">&#xc9;cart</th>
+              </tr>
+            </thead>
+            <tbody id="bdev-table">
+              <tr style="border-bottom:1px solid var(--w2)">
+                <td style="padding:.4rem .5rem;color:var(--ink)">Fonctionnement</td>
+                <td style="text-align:right;padding:.4rem .5rem;font-family:var(--fm);color:var(--i2)">8 240 k&#x20ac;</td>
+                <td style="text-align:right;padding:.4rem .5rem;font-family:var(--fm);color:var(--i2)">8 500 k&#x20ac;</td>
+                <td style="text-align:right;padding:.4rem .5rem;font-weight:700;color:var(--red)">+2,4%</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--w2)">
+                <td style="padding:.4rem .5rem;color:var(--ink)">Investissement</td>
+                <td style="text-align:right;padding:.4rem .5rem;font-family:var(--fm);color:var(--i2)">2 850 k&#x20ac;</td>
+                <td style="text-align:right;padding:.4rem .5rem;font-family:var(--fm);color:var(--i2)">2 800 k&#x20ac;</td>
+                <td style="text-align:right;padding:.4rem .5rem;font-weight:700;color:var(--g4)">-1,8%</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--w2)">
+                <td style="padding:.4rem .5rem;color:var(--ink)">Subventions per&#xe7;ues</td>
+                <td style="text-align:right;padding:.4rem .5rem;font-family:var(--fm);color:var(--i2)">528 k&#x20ac;</td>
+                <td style="text-align:right;padding:.4rem .5rem;font-family:var(--fm);color:var(--i2)">640 k&#x20ac;</td>
+                <td style="text-align:right;padding:.4rem .5rem;font-weight:700;color:var(--g4)">+21%</td>
+              </tr>
+              <tr>
+                <td style="padding:.4rem .5rem;color:var(--ink)">DGF &#xc9;tat</td>
+                <td style="text-align:right;padding:.4rem .5rem;font-family:var(--fm);color:var(--i2)">1 120 k&#x20ac;</td>
+                <td style="text-align:right;padding:.4rem .5rem;font-family:var(--fm);color:var(--i2)">1 108 k&#x20ac;</td>
+                <td style="text-align:right;padding:.4rem .5rem;font-weight:700;color:var(--red)">-1,1%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLEAU IMPORT CSV -->
+    <div class="card" style="margin-bottom:14px">
+      <div style="font-size:.72rem;color:var(--i3);padding:.5rem 0 .75rem;margin-bottom:.5rem;border-bottom:1px solid var(--w2)">
+        Import CSV personnalis&#xe9; — format : <code style="background:var(--w);padding:1px 7px;border-radius:4px;font-family:var(--fm)">Poste,Budget2025,Budget2026,Prevision2027</code>
+      </div>
+      <div id="btable"></div>
+    </div>
+
   </div>
 </div>
 
@@ -2163,6 +2265,7 @@ function gp(id,ni){
   else if(id==="comm"){buildCG();}
   else if(id==="global"){fG();}
   else if(id==="creer"){resetNP();}
+  else if(id==="budget"){setTimeout(buildBudgetChart,50);}
   else if(id==="guide"||id==="ress"){
     // Ress et Guide fusionnés
     qsa(".page").forEach(function(p){p.classList.remove("on");});
@@ -2237,6 +2340,14 @@ function init(){
     renderTasks(); renderAnn(); renderNextMtg();
     buildGuides(); buildRess();
     updSigBadge(); renderHeroAccueil();
+    // KPI mandat contextuels
+    var sigOpen=SIGN.filter(function(s){return s.statut!=='Résolu'&&s.statut!=='Non retenu';}).length;
+    el("kpi-sig-open",sigOpen);
+    if(sigOpen>0)$("kpi-sig-open").style.color="var(--red)";
+    // Sessions conseil dans l'année
+    var y=new Date().getFullYear();
+    var conseils=AG.filter(function(a){return a.type==="conseil"&&(a.date||"").startsWith(String(y));}).length;
+    el("kpi-conseil",conseils+"/"+Math.max(conseils,4));
     initCal(); renderWidgetAgenda(); renderWidgetSig(); renderCRHome(); renderEvHome(); checkUrgents(); initWidgetChat();
     el("k-sig",d.stats?d.stats.sig_new||0:0);
   });
@@ -2940,6 +3051,34 @@ function buildFilters(){
   fSel("cd-st",SLIST,"Tous statuts");
 }
 function fSel(id,opts,def){var s=$(id);if(!s)return;s.innerHTML='<option value="">'+def+'</option>';opts.forEach(function(o){var op=document.createElement("option");op.value=o;op.textContent=o;s.appendChild(op);});}
+
+
+/* ── GRAPHIQUE BUDGET ────────────────────────────────────────────────────── */
+var _budgetChart = null;
+function buildBudgetChart(){
+  var canvas = $("budgetChart"); if(!canvas) return;
+  if(_budgetChart){_budgetChart.destroy(); _budgetChart=null;}
+  var ctx = canvas.getContext("2d");
+  _budgetChart = new Chart(ctx,{
+    type:"bar",
+    data:{
+      labels:["Fonctionnement","Investissement","Subventions","DGF État","Personnel","Services"],
+      datasets:[
+        {label:"2025 réel",backgroundColor:"rgba(45,90,64,.7)",data:[8240,2850,528,1120,3890,620]},
+        {label:"2026 prévu",backgroundColor:"rgba(61,122,90,.7)",data:[8500,2800,640,1108,4050,650]},
+        {label:"2027 projection",backgroundColor:"rgba(90,154,112,.5)",borderColor:"rgba(90,154,112,.8)",borderWidth:2,type:"line",data:[8700,3100,680,1095,4200,680]}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{font:{size:11},padding:12}}},
+      scales:{
+        x:{ticks:{font:{size:10}},grid:{display:false}},
+        y:{ticks:{font:{size:10},callback:function(v){return v>=1000?(v/1000).toFixed(1)+"M€":v+"k€";}},grid:{color:"rgba(0,0,0,.05)"}}
+      }
+    }
+  });
+}
 
 function fG(){
   var c=v("fC"),t=v("fT"),s=v("fS"),a=v("fA"),q=v("fQ").toLowerCase();
