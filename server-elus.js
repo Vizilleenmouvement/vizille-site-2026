@@ -696,13 +696,16 @@ function renderEquipe() {
   const el = document.getElementById('equipe-grid');
   el.innerHTML = (D.elus||[]).map(e=>{
     const initials = (e.avatar||(e.nom||'').split(' ').map(w=>w[0]).join('').slice(0,2)).toUpperCase();
-    return \`<div class="elu-card">
-      <div class="elu-avatar" style="background:\${e.color||'#1a3a6b'}">\${initials}</div>
-      <div class="elu-nom">\${e.nom||''}</div>
-      <div class="elu-role">\${e.role||''}</div>
-      <div class="elu-deleg">\${e.delegation||''}</div>
-      \${e.email?'<div style="margin-top:.5rem;"><a href="mailto:'+e.email+'" style="font-size:.75rem;color:var(--bleu);">✉️ '+e.email+'</a></div>':''}
-    </div>\`;
+    const photoPos = e.photoPosition||'center 20%';
+    const avatar = e.photo
+      ? '<div style="width:72px;height:72px;border-radius:50%;overflow:hidden;margin:0 auto .75rem;border:3px solid var(--or);flex-shrink:0;"><img src="'+e.photo+'" alt="'+e.nom+'" style="width:100%;height:100%;object-fit:cover;object-position:'+photoPos+';display:block;"></div>'
+      : '<div class="elu-avatar" style="background:'+( e.color||'#1a3a6b')+'">'+initials+'</div>';
+    return '<div class="elu-card">'+avatar+
+      '<div class="elu-nom">'+e.nom+'</div>'+
+      '<div class="elu-role">'+e.role+'</div>'+
+      (e.delegation?'<div class="elu-deleg">'+e.delegation+'</div>':'')+
+      (e.email?'<div style="margin-top:.5rem;"><a href="mailto:'+e.email+'" style="font-size:.75rem;color:var(--bleu);">✉️ '+e.email+'</a></div>':'')+
+      '</div>';
   }).join('');
 }
 
@@ -865,7 +868,34 @@ let documents = load('documents.json', []);
 let statuts   = load('statuts.json', {});
 let notifs    = load('notifs.json', []);
 let chat      = load('chat.json', []);
-let elus      = load('elus.json', [{"id":1,"nom":"Catherine Troton","role":"Maire","delegation":"Direction générale","avatar":"CT","color":"#1a3a6b","email":"maire@vizille.fr"},{"id":2,"nom":"Bernard Ughetto-Monfrin","role":"1er adjoint","delegation":"","avatar":"BU","color":"#2d5a9e"},{"id":3,"nom":"Saïda Berriche","role":"Adjointe","delegation":"","avatar":"SB","color":"#8B5CF6"},{"id":4,"nom":"Gilles Faure","role":"Adjoint","delegation":"","avatar":"GF","color":"#10B981"},{"id":5,"nom":"Angélique Hermitte","role":"Adjointe","delegation":"Enfance, Jeunesse","avatar":"AH","color":"#F97316"},{"id":6,"nom":"Gérard Forestier","role":"Adjoint","delegation":"","avatar":"GF","color":"#3B82F6"},{"id":7,"nom":"Marie-Claude Argoud","role":"Adjointe","delegation":"Culture, Patrimoine","avatar":"MA","color":"#EC4899"},{"id":8,"nom":"Louis Lamarca","role":"Adjoint","delegation":"","avatar":"LL","color":"#14B8A6"},{"id":9,"nom":"Muriel Pasquiou","role":"Adjointe","delegation":"","avatar":"MP","color":"#F59E0B"}]);
+let elus      = load('elus.json', [
+  {"id":1,"nom":"Catherine Troton","role":"Maire","delegation":"Direction générale — Exécutif municipal","avatar":"CT","color":"#1a3a6b","email":"maire@vizille.fr","photo":"images/catherine-troton.jpg","photoPosition":"center 15%"},
+  {"id":2,"nom":"Bernard Ughetto-Monfrin","role":"1er adjoint","delegation":"","avatar":"BU","color":"#2d5a9e","photo":"images/bernard-ughetto-monfrin.jpg","photoPosition":"center 20%"},
+  {"id":3,"nom":"Saïda Berriche","role":"Adjointe","delegation":"","avatar":"SB","color":"#8B5CF6","photo":"images/saida-berriche.jpg","photoPosition":"center 15%"},
+  {"id":4,"nom":"Gilles Faure","role":"Adjoint","delegation":"","avatar":"GF","color":"#10B981","photo":"images/gilles-faure.jpg","photoPosition":"center 20%"},
+  {"id":5,"nom":"Angélique Hermitte","role":"Adjointe","delegation":"Enfance, Jeunesse, Périscolaire","avatar":"AH","color":"#F97316","photo":"images/angelique-hermitte.jpg","photoPosition":"center 15%"},
+  {"id":6,"nom":"Gérard Forestier","role":"Adjoint","delegation":"","avatar":"GF","color":"#3B82F6","photo":"images/gerard-forestier.jpg","photoPosition":"center 20%"},
+  {"id":7,"nom":"Marie-Claude Argoud","role":"Adjointe","delegation":"Culture, Patrimoine, Jumelages","avatar":"MA","color":"#EC4899","photo":"images/marie-claude-argoud.jpg","photoPosition":"center 15%"},
+  {"id":8,"nom":"Louis Lamarca","role":"Adjoint","delegation":"","avatar":"LL","color":"#14B8A6","photo":"images/louis-lamarca.jpg","photoPosition":"center 20%"},
+  {"id":9,"nom":"Muriel Pasquiou","role":"Adjointe","delegation":"","avatar":"MP","color":"#F59E0B","photo":"images/muriel-pasquiou.jpg","photoPosition":"center 15%"},
+  {"id":10,"nom":"Laurent Pichon","role":"Conseiller","delegation":"","avatar":"LP","color":"#6366F1","photo":"images/laurent-pichon.jpg","photoPosition":"center 20%"},
+  {"id":11,"nom":"Sakina Yahiaoui","role":"Conseillère","delegation":"","avatar":"SY","color":"#EC4899","photo":"images/sakina-yahiaoui.jpg","photoPosition":"center 15%"},
+  {"id":12,"nom":"Mohamed Cherigui","role":"Conseiller","delegation":"","avatar":"MC","color":"#2d5a9e","photo":"images/mohamed-cherigui.jpg","photoPosition":"center 20%"},
+  {"id":13,"nom":"Christelle Reijasse","role":"Conseillère","delegation":"","avatar":"CR","color":"#8B5CF6","photo":"images/christelle-reijasse.jpg","photoPosition":"center 15%"},
+  {"id":14,"nom":"Ahmed Mendess","role":"Conseiller","delegation":"","avatar":"AM","color":"#10B981","photo":"images/ahmed-mendess.jpg","photoPosition":"center 20%"},
+  {"id":15,"nom":"Christine Sanchez","role":"Conseillère","delegation":"","avatar":"CS","color":"#F97316","photo":"images/christine-sanchez.jpg","photoPosition":"center 15%"},
+  {"id":16,"nom":"Fabrice Pasquiou","role":"Conseiller","delegation":"","avatar":"FP","color":"#3B82F6","photo":"images/fabrice-pasquiou.jpg","photoPosition":"center 20%"},
+  {"id":17,"nom":"Meriem El-Kebir","role":"Conseillère","delegation":"","avatar":"ME","color":"#14B8A6","photo":"images/meriem-el-kebir.jpg","photoPosition":"center 15%"},
+  {"id":18,"nom":"Jean-Christophe Garcia","role":"Conseiller","delegation":"Animations de proximité","avatar":"JG","color":"#F59E0B","photo":"images/jean-christophe-garcia.jpg","photoPosition":"center 20%"},
+  {"id":19,"nom":"Muriel Picca","role":"Conseillère","delegation":"","avatar":"MP","color":"#6366F1","photo":"images/muriel-picca.jpg","photoPosition":"center 15%"},
+  {"id":20,"nom":"Michel Thuillier","role":"Conseiller","delegation":"Numérique, communication, histoire locale","avatar":"MT","color":"#2d5a9e","photo":"images/michel-thuillier.jpg","photoPosition":"center 20%"},
+  {"id":21,"nom":"Isabelle Nifenecker","role":"Conseillère","delegation":"","avatar":"IN","color":"#EC4899","photo":"images/isabelle-nifenecker.jpg","photoPosition":"center 15%"},
+  {"id":22,"nom":"André-Paul Venans","role":"Conseiller","delegation":"","avatar":"AV","color":"#10B981","photo":"images/andre-paul-venans.jpg","photoPosition":"center 20%"},
+  {"id":23,"nom":"Nathalie Jacolin","role":"Conseillère","delegation":"","avatar":"NJ","color":"#8B5CF6","photo":"images/nathalie-jacolin.jpg","photoPosition":"center 15%"},
+  {"id":24,"nom":"Ignazio Cosentino","role":"Conseiller","delegation":"","avatar":"IC","color":"#F97316","photo":"images/ignazio-consentino.jpg","photoPosition":"center 20%"},
+  {"id":25,"nom":"Nathalie Germain-Vey","role":"Conseillère","delegation":"","avatar":"NG","color":"#3B82F6","photo":"images/nathalie-germain-vey.jpg","photoPosition":"center 15%"},
+  {"id":26,"nom":"Stéphane Lasserre","role":"Conseiller","delegation":"","avatar":"SL","color":"#14B8A6","photo":"images/stephane-lasserre.jpg","photoPosition":"center 20%"}
+]);
 let projExtra = load('proj_extra.json', {});
 
 console.log('VeM Dashboard v7 — projets:'+projets.length+' elus:'+elus.length);
@@ -939,6 +969,18 @@ const server = http.createServer(function(req, res) {
     chat.push(msg);if(chat.length>500)chat=chat.slice(-400);save('chat.json',chat);
     return J(res,{ok:true,message:msg});
   });
+
+  // ── IMAGES STATIQUES ─────────────────────────────────────────────────────
+  if(p.startsWith('/images/')) {
+    const imgPath = path.join(DIR, p);
+    try {
+      const data = fs.readFileSync(imgPath);
+      const ext = path.extname(p).toLowerCase();
+      const mime = {'.jpg':'image/jpeg','.jpeg':'image/jpeg','.png':'image/png','.gif':'image/gif','.webp':'image/webp'}[ext]||'application/octet-stream';
+      res.writeHead(200,{'Content-Type':mime,'Cache-Control':'public, max-age=86400'});
+      return res.end(data);
+    } catch(e){ res.writeHead(404); return res.end('Image not found'); }
+  }
 
   if(p==='/api/elus'&&m==='GET') return J(res,elus);
   if(p==='/api/elus'&&m==='POST') return body(req,function(err,d){
