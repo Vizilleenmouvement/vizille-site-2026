@@ -897,74 +897,107 @@ textarea.fi{resize:vertical;min-height:90px;}
 
 <!-- AUJOURD'HUI -->
 <div class="page on" id="p-today">
-  <div class="scr" style="padding:0;background:var(--w)">
+  <div class="scr" style="padding:0;overflow-y:auto">
 
-    <!-- HERO PERSONNALISÉ -->
-    <div style="background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 55%,var(--g3) 100%);padding:1.6rem 2rem;color:#fff;position:relative;overflow:hidden">
-      <div style="position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.04)"></div>
-      <div style="display:flex;align-items:center;gap:1.25rem;position:relative;z-index:1">
-        <div id="hero-av" style="width:58px;height:58px;border-radius:16px;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:700;font-family:var(--fd);flex-shrink:0">&#x1F3DB;</div>
-        <div style="flex:1">
-          <div id="hero-bonjour" style="font-size:1.12rem;font-weight:700;font-family:var(--fd);margin-bottom:.2rem">Bonjour !</div>
-          <div id="hero-date" style="font-size:.78rem;opacity:.6;margin-bottom:.3rem"></div>
-          <div id="hero-role" style="font-size:.73rem;opacity:.5;font-style:italic"></div>
+    <!-- HERO MATIN -->
+    <div id="hero-wrap" style="background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 50%,var(--g3) 100%);padding:1.4rem 1.8rem 1.6rem;color:#fff;position:relative;overflow:hidden;flex-shrink:0">
+      <div style="position:absolute;top:-80px;right:-80px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.03)"></div>
+      <div style="position:absolute;bottom:-60px;left:30%;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.02)"></div>
+      <div style="display:flex;align-items:center;gap:1.1rem;position:relative;z-index:1;margin-bottom:.9rem">
+        <div id="hero-av" style="width:54px;height:54px;border-radius:14px;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;font-family:var(--fd);flex-shrink:0;letter-spacing:-.5px">&#x1F3DB;</div>
+        <div style="flex:1;min-width:0">
+          <div id="hero-bonjour" style="font-size:1.05rem;font-weight:700;font-family:var(--fd);line-height:1.2;margin-bottom:.18rem">Bonjour !</div>
+          <div id="hero-role" style="font-size:.73rem;opacity:.55;line-height:1.3"></div>
         </div>
-        <button class="btn" style="background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.25);font-size:.72rem;flex-shrink:0" onclick="om('annonce')">&#x1F4E2; Publier</button>
+        <div style="text-align:right;flex-shrink:0">
+          <div id="hero-date-big" style="font-size:1.75rem;font-weight:800;font-family:var(--fd);line-height:1"></div>
+          <div id="hero-mois" style="font-size:.72rem;opacity:.55;margin-top:2px;text-transform:capitalize"></div>
+        </div>
       </div>
-      <div id="hero-citation" style="margin-top:1rem;padding:.7rem 1rem;background:rgba(255,255,255,.08);border-radius:10px;border-left:3px solid rgba(255,255,255,.28);font-size:.77rem;opacity:.75;font-style:italic;position:relative;z-index:1"></div>
+      <div id="hero-citation" style="font-size:.75rem;opacity:.6;font-style:italic;border-left:2px solid rgba(255,255,255,.25);padding-left:.75rem;line-height:1.5;position:relative;z-index:1"></div>
     </div>
 
-    <div style="padding:1.25rem 1.6rem">
+    <div style="padding:1rem 1.4rem 1.4rem">
 
-    <!-- PROCHAINE RÉUNION -->
-    <div id="next-mtg" style="margin-bottom:14px"></div>
+    <!-- ALERTE URGENTE -->
+    <div id="alert-urgents" style="display:none;background:#fef2f2;border:1.5px solid #fca5a5;border-radius:var(--R);padding:.75rem 1rem;margin-bottom:12px;display:flex;align-items:center;gap:10px">
+      <span style="font-size:1.1rem">&#x26A0;&#xFE0F;</span>
+      <div id="alert-urgents-txt" style="font-size:.76rem;color:#b91c1c;flex:1"></div>
+      <button class="btn btn-sm" style="background:#b91c1c;color:#fff;border-color:#b91c1c" onclick="gpByName('signal')">Voir</button>
+    </div>
 
-    <!-- GRILLE TACHES + ANNONCES -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
-      <div class="card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem">
+    <!-- GRILLE PRINCIPALE : calendrier + tâches + annonces -->
+    <div style="display:grid;grid-template-columns:auto 1fr 1fr;gap:12px;margin-bottom:12px;align-items:start">
+
+      <!-- CALENDRIER MINI -->
+      <div class="card" style="min-width:220px;padding:.85rem">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem">
+          <button onclick="calPrev()" style="background:none;border:none;cursor:pointer;color:var(--i3);font-size:1rem;padding:0 4px">&#x276E;</button>
+          <div id="cal-title" style="font-size:.78rem;font-weight:700;font-family:var(--fd);color:var(--ink);text-transform:capitalize"></div>
+          <button onclick="calNext()" style="background:none;border:none;cursor:pointer;color:var(--i3);font-size:1rem;padding:0 4px">&#x276F;</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;margin-bottom:5px">
+          <div style="font-size:.58rem;font-weight:700;color:var(--i4);text-align:center">L</div>
+          <div style="font-size:.58rem;font-weight:700;color:var(--i4);text-align:center">M</div>
+          <div style="font-size:.58rem;font-weight:700;color:var(--i4);text-align:center">M</div>
+          <div style="font-size:.58rem;font-weight:700;color:var(--i4);text-align:center">J</div>
+          <div style="font-size:.58rem;font-weight:700;color:var(--i4);text-align:center">V</div>
+          <div style="font-size:.58rem;font-weight:700;color:var(--amber);text-align:center">S</div>
+          <div style="font-size:.58rem;font-weight:700;color:var(--amber);text-align:center">D</div>
+        </div>
+        <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px"></div>
+        <!-- Légende -->
+        <div style="display:flex;gap:8px;margin-top:.65rem;padding-top:.6rem;border-top:1px solid var(--w2);flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:3px;font-size:.6rem;color:var(--i3)"><div style="width:8px;height:8px;border-radius:2px;background:var(--g4)"></div>Réunion</div>
+          <div style="display:flex;align-items:center;gap:3px;font-size:.6rem;color:var(--i3)"><div style="width:8px;height:8px;border-radius:2px;background:var(--amber)"></div>Événement</div>
+          <div style="display:flex;align-items:center;gap:3px;font-size:.6rem;color:var(--i3)"><div style="width:8px;height:8px;border-radius:2px;background:#dbeafe"></div>Conseil</div>
+        </div>
+      </div>
+
+      <!-- MES TÂCHES -->
+      <div class="card" style="height:100%">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
           <div class="cardt" style="margin-bottom:0">&#x2705; Mes tâches</div>
-          <span id="task-cnt" style="font-size:.63rem;color:var(--i4)"></span>
+          <span id="task-cnt" style="font-size:.62rem;color:var(--i4)"></span>
         </div>
         <div id="task-list"></div>
-        <div style="display:flex;gap:8px;margin-top:.75rem;padding-top:.65rem;border-top:1px solid var(--w2)">
-          <input class="fi" id="task-inp" placeholder="Nouvelle tâche..." style="flex:1;font-size:.76rem;padding:6px 9px" onkeydown="if(event.key==='Enter')addTask()">
+        <div style="display:flex;gap:7px;margin-top:.7rem;padding-top:.6rem;border-top:1px solid var(--w2)">
+          <input class="fi" id="task-inp" placeholder="Ajouter une tâche..." style="flex:1;font-size:.75rem;padding:6px 9px" onkeydown="if(event.key==='Enter')addTask()">
           <button class="btn btn-p btn-sm" onclick="addTask()">+</button>
         </div>
       </div>
-      <div class="card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem">
+
+      <!-- ANNONCES -->
+      <div class="card" style="height:100%">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
           <div class="cardt" style="margin-bottom:0">&#x1F4E2; Annonces</div>
-          <span id="ann-cnt" style="font-size:.63rem;color:var(--amber);font-weight:600"></span>
+          <button class="btn btn-p btn-sm" onclick="om('annonce')" style="font-size:.65rem">+ Publier</button>
         </div>
-        <div id="ann-list"><div style="font-size:.74rem;color:var(--i4);padding:.5rem 0;text-align:center">Aucune annonce</div></div>
+        <div id="ann-list"><div style="font-size:.74rem;color:var(--i4);text-align:center;padding:1rem 0">Aucune annonce</div></div>
       </div>
     </div>
 
-    <!-- RACCOURCIS VISUELS -->
-    <div style="margin-bottom:14px">
-      <div style="font-size:.7rem;font-weight:700;color:var(--i3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.65rem">Accès rapides</div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px" id="shortcuts-grid"></div>
+    <!-- AGENDA DE LA SEMAINE -->
+    <div class="card" style="margin-bottom:12px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+        <div class="cardt" style="margin-bottom:0">&#x1F4C5; Agenda — réunions &amp; événements</div>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-g btn-sm" onclick="gpByName('agenda')">+ Réunion</button>
+          <button class="btn btn-g btn-sm" onclick="gpByName('events')">+ Événement</button>
+        </div>
+      </div>
+      <!-- Onglets semaine -->
+      <div id="week-tabs" style="display:flex;gap:4px;margin-bottom:1rem;overflow-x:auto;padding-bottom:2px"></div>
+      <!-- Liste du jour sélectionné -->
+      <div id="agenda-day-list"></div>
+      <!-- Prochaines échéances -->
+      <div id="agenda-upcoming" style="margin-top:.85rem;padding-top:.85rem;border-top:1px solid var(--w2)"></div>
     </div>
 
-    <!-- BAROMÈTRE -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px">
-      <div class="kpi"><div class="kpiv" id="k-tot">—</div><div class="kpil">Projets</div></div>
-      <div class="kpi"><div class="kpiv" id="k-pr" style="color:var(--red)">—</div><div class="kpil">Prioritaires</div></div>
-      <div class="kpi"><div class="kpiv" id="k-re" style="color:var(--g4)">—</div><div class="kpil">Réalisés</div></div>
-      <div class="kpi"><div class="kpiv" id="k-26">—</div><div class="kpil">Prévus 2026</div></div>
-    </div>
+    <!-- LIGNE BASSE : derniers CR + accès rapides -->
+    <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:12px">
 
-    <!-- GRAPHIQUES -->
-    <div class="ch-row">
-      <div class="ch-c"><div class="ch-t">Projets par thème</div><div class="ch-w"><canvas id="chT"></canvas></div></div>
-      <div class="ch-c"><div class="ch-t">Avancement global</div><div class="ch-w"><canvas id="chS"></canvas></div></div>
-    </div>
-
-    <!-- DERNIÈRES ACTIVITÉS + PROCHAINS ÉVÉNEMENTS -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:0">
-
-      <!-- DERNIERS CR -->
+      <!-- DERNIERS COMPTES RENDUS -->
       <div class="card">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem">
           <div class="cardt" style="margin-bottom:0">&#x1F4DD; Derniers comptes rendus</div>
@@ -973,20 +1006,16 @@ textarea.fi{resize:vertical;min-height:90px;}
         <div id="cr-home-list"></div>
       </div>
 
-      <!-- PROCHAINS ÉVÉNEMENTS -->
+      <!-- ACCÈS RAPIDES -->
       <div class="card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem">
-          <div class="cardt" style="margin-bottom:0">&#x1F3AA; Prochains événements</div>
-          <button class="btn btn-g btn-sm" onclick="gpByName('events')">Tous →</button>
-        </div>
-        <div id="ev-home-list"></div>
+        <div class="cardt" style="margin-bottom:.75rem">&#x26A1; Accès rapides</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="shortcuts-grid"></div>
       </div>
     </div>
 
-    </div>
+    </div><!-- /padding -->
   </div>
 </div>
-
 <!-- GUIDE -->
 <div class="page" id="p-guide">
   <div class="ph"><div class="ph-ico" style="background:#fef9c3">&#x1F4D6;</div><div><div class="ph-t">Guide pratique de l&#x27;élu</div><div class="ph-s">Vos droits, devoirs et r&#xe9;flexes essentiels</div></div></div>
@@ -1560,11 +1589,13 @@ function init(){
     buildGuides(); buildRess();
     updSigBadge(); renderHeroAccueil(); renderShortcuts();
     renderCRHome(); renderEvHome();
+    initCal(); renderAgendaWeek(); checkUrgents();
     el("k-sig",d.stats?d.stats.sig_new||0:0);
   });
 
   apiGet("/api/projets").then(function(data){
     P=data; buildFilters(); fG(); buildCG(); buildCharts();
+    renderShortcuts(); // Mettre à jour compteur projets
   });
 
   apiGet("/api/biblio").then(function(data){
@@ -2196,77 +2227,257 @@ function scrollChat(){var e=$("chat-msgs");if(e)e.scrollTop=e.scrollHeight;}
     "Ensemble, nous portons l'avenir de notre commune.",
   ];
 
-  function renderHeroAccueil(){
-    var now = new Date();
-    var h = now.getHours();
-    var bonjour = h<12?"Bonjour":h<18?"Bon après-midi":"Bonsoir";
-    var av = $("hero-av"), bj = $("hero-bonjour"), dt = $("hero-date"), rl = $("hero-role"), ct = $("hero-citation");
-    if(av){ av.textContent = ME.avatar||"🏛"; av.style.background = ME.color||"var(--g4)"; }
-    if(bj) bj.textContent = bonjour + ", " + ME.nom.split(" ")[0] + " !";
-    if(dt) dt.textContent = now.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
-    if(rl) rl.textContent = ME.role + (ME.delegation ? " — " + ME.delegation : "");
-    if(ct) ct.textContent = CITATIONS[now.getDate() % CITATIONS.length];
-  }
+/* ── ACCUEIL : HERO ─────────────────────────────────────────────────────── */
+var CITATIONS = [
+  "La commune, c'est la cellule vivante de la démocratie.",
+  "Servir Vizille, c'est servir ses habitants au quotidien.",
+  "Chaque décision compte — même la plus petite améliore une vie.",
+  "Un élu de proximité voit la réalité là où d'autres voient des statistiques.",
+  "Le mandat 2026-2032 : six ans pour transformer Vizille ensemble.",
+  "Être élu, c'est avoir la confiance de ses voisins. Cela oblige.",
+  "Les grands projets naissent souvent d'une petite idée bien portée.",
+  "La concertation n'est pas une contrainte, c'est une force.",
+  "Vizille a une histoire extraordinaire — son avenir est entre nos mains.",
+  "L'action municipale, c'est du concret : une rue refaite, un enfant accueilli.",
+  "Ensemble nous représentons 4 350 Vizillois — responsabilité et fierté.",
+  "Le service public local, c'est le plus proche des gens.",
+];
 
-  function renderShortcuts(){
-    var sg = $("shortcuts-grid"); if(!sg)return;
-    var sigNew = SIGN.filter(function(s){return s.statut==="Nouveau";}).length;
-    var today2 = new Date().toISOString().slice(0,10);
-    var shortcuts = [
-      {ico:"📝", lbl:"Comptes rendus",   sub: CRS.length+" CR", page:"cr",      col:"var(--g8)",   tcol:"var(--g2)"},
-      {ico:"📚", lbl:"Bibliothèque",     sub: BIBLIO.length+" doc", page:"biblio", col:"#ede9fe",   tcol:"#6d28d9"},
-      {ico:"🔴", lbl:"Signalements",     sub: sigNew?sigNew+" urgent"+(sigNew>1?"s":""):"Aucun urgent", page:"signal", col:sigNew?"#fee2e2":"var(--g8)", tcol:sigNew?"var(--red)":"var(--g2)"},
-      {ico:"📂", lbl:"Mon dossier",      sub: "Privé 🔒", page:"repelus",         col:"#fef3c7",   tcol:"#92400e"},
-      {ico:"📅", lbl:"Agenda",           sub: AG.filter(function(a){return a.date>=today2;}).length+" à venir", page:"agenda", col:"#dbeafe", tcol:"#1e40af"},
-      {ico:"🎪", lbl:"Événements",       sub: EVTS.filter(function(e){return e.date>=today2;}).length+" à venir", page:"events", col:"#fef9c3", tcol:"#a16207"},
-      {ico:"👥", lbl:"Commissions",      sub: P.length+" projets", page:"comm",   col:"var(--g8)", tcol:"var(--g2)"},
-      {ico:"✍️", lbl:"Rédiger",          sub: "Assisté IA", page:"comms",         col:"#f3e8ff",   tcol:"#7c3aed"},
-    ];
-    sg.innerHTML = shortcuts.map(function(s){
-      return '<div onclick="gpN(this)" data-page="'+s.page+'" class="scut">'
-        +'<div style="width:38px;height:38px;border-radius:10px;background:'+s.col+';display:flex;align-items:center;justify-content:center;margin:0 auto .5rem;font-size:1.1rem">'+s.ico+'</div>'
-        +'<div style="font-size:.72rem;font-weight:700;color:var(--ink);margin-bottom:2px">'+s.lbl+'</div>'
-        +'<div style="font-size:.62rem;color:'+s.tcol+';font-weight:600">'+s.sub+'</div>'
-        +'</div>';
-    }).join("");
-  }
+function renderHeroAccueil(){
+  var now=new Date();
+  var h=now.getHours();
+  var salut=h<5?"Bonne nuit":h<12?"Bonjour":h<18?"Bon après-midi":"Bonsoir";
+  var JOURS=["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
+  var MOIS_L=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
 
-  function gp2(sbiIdx){
-    var items = qsa(".sbi");
-    if(items[sbiIdx]) items[sbiIdx].click();
-  }
+  var av=$("hero-av"),bj=$("hero-bonjour"),rl=$("hero-role"),ct=$("hero-citation");
+  var db=$("hero-date-big"),mo=$("hero-mois");
+  if(av){av.textContent=ME.avatar||"?";av.style.background=ME.color||"var(--g4)";}
+  if(bj) bj.textContent=salut+", "+ME.nom.split(" ")[0]+" !";
+  if(rl) rl.textContent=(ME.role||"")+(ME.delegation?" — "+ME.delegation:"");
+  if(db) db.textContent=now.getDate();
+  if(mo) mo.textContent=JOURS[now.getDay()]+" "+now.toLocaleDateString("fr-FR",{month:"long",year:"numeric"});
+  if(ct) ct.textContent=CITATIONS[now.getDate()%CITATIONS.length];
 
-function renderCRHome(){
-  var cl=$("cr-home-list"); if(!cl)return;
-  var last=CRS.slice(0,4);
-  if(!last.length){cl.innerHTML='<div style="font-size:.74rem;color:var(--i4);text-align:center;padding:.5rem 0">Aucun CR pour l&#x27;instant</div>';return;}
-  cl.innerHTML=last.map(function(cr){
-    var col={"Bureau municipal":"#1d3d2b","Conseil municipal":"#2d5a40","Culture, Patrimoine & Jumelages":"#8B5CF6","Mobilités":"#3B82F6","Transition écologique":"#10B981","Action sociale":"#F59E0B","Animations de proximité":"#EC4899","Enfance/Jeunesse":"#F97316","Tranquillité publique":"#EF4444","Travaux & Urbanisme":"#84CC16","Santé":"#06B6D4"}[cr.commission]||"var(--g4)";
-    return '<div style="display:flex;gap:9px;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--w2);cursor:pointer" onclick="openCR('+cr.id+')">'
-      +'<div style="width:28px;height:28px;border-radius:7px;background:'+col+'18;border:1px solid '+col+'30;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0">📝</div>'
-      +'<div style="flex:1;min-width:0"><div style="font-size:.76rem;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+cr.titre+'</div>'
-      +'<div style="font-size:.65rem;color:var(--i3)">'+cr.commission+(cr.date?" · "+cr.date:"")+'</div></div>'
+  // Mettre à jour avatar topbar
+  var topAv=$("top-av-btn");
+  if(topAv){topAv.textContent=ME.avatar||"?";topAv.style.background=ME.color||"var(--g4)";}
+}
+
+/* ── ACCUEIL : RACCOURCIS ────────────────────────────────────────────────── */
+function renderShortcuts(){
+  var sg=$("shortcuts-grid"); if(!sg)return;
+  var today2=new Date().toISOString().slice(0,10);
+  var sigNew=SIGN.filter(function(s){return s.statut==="Nouveau";}).length;
+  var shortcuts=[
+    {ico:"📚",lbl:"Bibliothèque",  sub:BIBLIO.length+" doc",       page:"biblio", col:"#ede9fe",tcol:"#6d28d9"},
+    {ico:"🔴",lbl:"Signalements",  sub:sigNew?sigNew+" urgent"+(sigNew>1?"s":""):"RAS", page:"signal",col:sigNew?"#fee2e2":"var(--g8)",tcol:sigNew?"var(--red)":"var(--g2)"},
+    {ico:"📂",lbl:"Mon dossier",   sub:"Privé 🔒",                  page:"repelus",col:"#fef3c7",tcol:"#92400e"},
+    {ico:"👥",lbl:"Commissions",   sub:P.length+" projets",          page:"comm",  col:"var(--g8)",tcol:"var(--g2)"},
+    {ico:"📊",lbl:"Tous projets",  sub:"Filtrer, modifier",          page:"global",col:"#e0e7ff",tcol:"#3730a3"},
+    {ico:"✍️",lbl:"Rédiger",       sub:"Assisté IA",                 page:"comms", col:"#f3e8ff",tcol:"#7c3aed"},
+    {ico:"🧑‍💼",lbl:"L'équipe",    sub:ELUS_DATA.length+" élus",    page:"elus",  col:"var(--g8)",tcol:"var(--g2)"},
+    {ico:"📖",lbl:"Guide élu",     sub:"Droits & devoirs",           page:"guide", col:"#fef9c3",tcol:"#a16207"},
+  ];
+  sg.innerHTML=shortcuts.map(function(s){
+    return '<div onclick="gpN(this)" data-page="'+s.page+'" class="scut">'
+      +'<div style="display:flex;align-items:center;gap:8px">'
+      +'<div style="width:30px;height:30px;border-radius:8px;background:'+s.col+';display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0">'+s.ico+'</div>'
+      +'<div style="min-width:0"><div style="font-size:.73rem;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+s.lbl+'</div>'
+      +'<div style="font-size:.62rem;color:'+s.tcol+';margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+s.sub+'</div>'
+      +'</div></div>'
       +'</div>';
   }).join("");
 }
 
-function renderEvHome(){
-  var el2=$("ev-home-list"); if(!el2)return;
-  var today2=new Date().toISOString().slice(0,10);
-  var next=EVTS.filter(function(e){return e.date>=today2;}).slice(0,4);
-  if(!next.length){el2.innerHTML='<div style="font-size:.74rem;color:var(--i4);text-align:center;padding:.5rem 0">Aucun événement à venir</div>';return;}
-  var MOIS2=["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"];
+/* ── CALENDRIER MENSUEL ──────────────────────────────────────────────────── */
+var _calYear=0,_calMonth=0;
+
+function initCal(){
+  var now=new Date();
+  _calYear=now.getFullYear(); _calMonth=now.getMonth();
+  renderCal();
+}
+function calPrev(){_calMonth--;if(_calMonth<0){_calMonth=11;_calYear--;}renderCal();}
+function calNext(){_calMonth++;if(_calMonth>11){_calMonth=0;_calYear++;}renderCal();}
+
+function renderCal(){
+  var MOIS_N=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+  var ct=$("cal-title"); if(ct)ct.textContent=MOIS_N[_calMonth]+" "+_calYear;
+  var grid=$("cal-grid"); if(!grid)return;
+
+  var today=new Date();
+  var todayStr=today.getFullYear()+"-"+(String(today.getMonth()+1).padStart(2,"0"))+"-"+(String(today.getDate()).padStart(2,"0"));
+
+  // Jours du mois
+  var firstDay=new Date(_calYear,_calMonth,1);
+  var lastDay=new Date(_calYear,_calMonth+1,0);
+  // Lundi=0, ..., Dimanche=6
+  var startDow=(firstDay.getDay()+6)%7; // convertir dim=0 → lun=0
+
+  // Collecter les dates avec événements
+  var eventDates={}, meetingDates={}, conseilDates={};
+  var ym=_calYear+"-"+(String(_calMonth+1).padStart(2,"0"));
+  AG.forEach(function(a){
+    if((a.date||"").startsWith(ym)){
+      var d=a.date.slice(8);
+      if(a.type==="conseil") conseilDates[d]=true;
+      else meetingDates[d]=true;
+    }
+  });
+  EVTS.forEach(function(e){
+    if((e.date||"").startsWith(ym)) eventDates[e.date.slice(8)]=true;
+  });
+
+  var cells="";
+  // Cases vides avant le 1er
+  for(var i=0;i<startDow;i++) cells+='<div></div>';
+  // Jours
+  for(var d2=1;d2<=lastDay.getDate();d2++){
+    var ds=String(d2).padStart(2,"0");
+    var fullDate=_calYear+"-"+(String(_calMonth+1).padStart(2,"0"))+"-"+ds;
+    var isToday=fullDate===todayStr;
+    var hasMtg=meetingDates[ds];
+    var hasEv=eventDates[ds];
+    var hasConseil=conseilDates[ds];
+
+    var bg=isToday?"var(--g3)":"transparent";
+    var fg=isToday?"#fff":"var(--ink)";
+    var fw=isToday?"800":"400";
+    var br=isToday?"50%":"4px";
+
+    // Indicateurs colorés
+    var dots="";
+    if(hasConseil) dots+='<div style="width:4px;height:4px;border-radius:50%;background:#93c5fd;margin:0 1px"></div>';
+    if(hasMtg)     dots+='<div style="width:4px;height:4px;border-radius:50%;background:var(--g5);margin:0 1px"></div>';
+    if(hasEv)      dots+='<div style="width:4px;height:4px;border-radius:50%;background:var(--amber);margin:0 1px"></div>';
+
+    var dotsHtml=dots?'<div style="display:flex;justify-content:center;margin-top:1px">'+dots+'</div>':"";
+
+    cells+='<div onclick="selDay(this)" data-date="'+fullDate+'" style="cursor:pointer;text-align:center;border-radius:'+br+';background:'+bg+';padding:2px 1px;transition:.12s">'
+      +'<div style="font-size:.7rem;font-weight:'+fw+';color:'+fg+'">'+d2+'</div>'
+      +dotsHtml
+      +'</div>';
+  }
+  grid.innerHTML=cells;
+}
+
+function selDay(el){selectCalDay(el.dataset.date||el.getAttribute("data-date"));}
+function selectCalDay(dateStr){
+  // Afficher les événements de ce jour dans l'agenda
+  renderAgendaDay(dateStr);
+}
+
+/* ── AGENDA SEMAINE + JOUR SÉLECTIONNÉ ───────────────────────────────────── */
+var _selDay="";
+
+function renderAgendaWeek(){
+  var now=new Date();
+  var todayStr=now.toISOString().slice(0,10);
+  _selDay=_selDay||todayStr;
+
+  // Onglets : aujourd'hui + 6 jours suivants
+  var tabs=$("week-tabs"); if(!tabs)return;
+  var JOURS_C=["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];
+  var MOIS_C=["jan","fév","mar","avr","mai","jun","jul","aoû","sep","oct","nov","déc"];
+  var html="";
+  for(var i=0;i<7;i++){
+    var d=new Date(now);
+    d.setDate(now.getDate()+i);
+    var ds=d.toISOString().slice(0,10);
+    var isSelected=ds===_selDay;
+    var isToday=ds===todayStr;
+    // Compter les événements du jour
+    var nb=AG.filter(function(a){return a.date===ds;}).length+EVTS.filter(function(e){return e.date===ds;}).length;
+    html+='<div onclick="selADay(this)" data-day="'+ds+'" style="flex-shrink:0;cursor:pointer;padding:.45rem .75rem;border-radius:var(--r);background:'+(isSelected?"var(--g2)":"var(--w)")+';color:'+(isSelected?"#fff":"var(--i2)")+';border:1.5px solid '+(isSelected?"var(--g2)":isToday?"var(--g5)":"var(--w2)")+';text-align:center;min-width:52px;transition:.15s">'
+      +'<div style="font-size:.6rem;font-weight:600;text-transform:uppercase;opacity:'+(isSelected?".8":".6")+'">'+JOURS_C[d.getDay()]+'</div>'
+      +'<div style="font-size:1rem;font-weight:800;font-family:var(--fd);line-height:1.1">'+d.getDate()+'</div>'
+      +'<div style="font-size:.58rem;opacity:'+(isSelected?".65":".45")+'">'+MOIS_C[d.getMonth()]+'</div>'
+      +(nb?'<div style="width:6px;height:6px;border-radius:50%;background:'+(isSelected?"rgba(255,255,255,.8)":"var(--g5)")+';margin:.15rem auto 0"></div>':"")
+      +'</div>';
+  }
+  tabs.innerHTML=html;
+  renderAgendaDay(_selDay);
+}
+
+function selADay(el){selectAgendaDay(el.dataset.day||el.getAttribute("data-day"));}
+function selectAgendaDay(ds){
+  _selDay=ds;
+  renderAgendaWeek();
+}
+
+function renderAgendaDay(ds){
+  var dl=$("agenda-day-list"); if(!dl)return;
+  var items=[];
+  var AT={bureau:"Bureau municipal",commission:"Commission",conseil:"Conseil municipal",autre:"Réunion"};
+  var ATCOL={bureau:"var(--g3)",commission:"var(--g4)",conseil:"var(--blue)",autre:"var(--i3)"};
   var EVC={municipal:"var(--g3)",associatif:"var(--amber)",culturel:"#8B5CF6",sportif:"var(--blue)",commemoration:"#7f8c8d",autre:"var(--i3)"};
-  el2.innerHTML=next.map(function(e){
-    var col=EVC[e.type]||"var(--i3)";
-    return '<div style="display:flex;gap:9px;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--w2)">'
-      +'<div style="background:'+col+'18;border:1px solid '+col+'30;border-radius:7px;padding:.3rem .45rem;text-align:center;min-width:36px;flex-shrink:0">'
-      +'<div style="font-size:.88rem;font-weight:800;color:'+col+';line-height:1;font-family:var(--fd)">'+e.date.slice(8)+'</div>'
-      +'<div style="font-size:.55rem;font-weight:700;color:'+col+';text-transform:uppercase">'+MOIS2[+e.date.slice(5,7)-1]+'</div></div>'
-      +'<div style="flex:1;min-width:0"><div style="font-size:.76rem;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+e.titre+'</div>'
-      +'<div style="font-size:.65rem;color:var(--i3)">'+(e.lieu||"")+(e.heure?" · "+e.heure:"")+'</div></div>'
+
+  AG.filter(function(a){return a.date===ds;}).forEach(function(a){
+    items.push({heure:a.heure||"",titre:a.titre,sous:a.lieu||"",col:ATCOL[a.type]||"var(--i3)",type:AT[a.type]||"Réunion",ico:"📅",id:"ag_"+a.id});
+  });
+  EVTS.filter(function(e){return e.date===ds;}).forEach(function(e){
+    items.push({heure:e.heure||"",titre:e.titre,sous:e.lieu||e.organisateur||"",col:EVC[e.type]||"var(--i3)",type:e.type,ico:"🎪",id:"ev_"+e.id});
+  });
+
+  if(!items.length){
+    dl.innerHTML='<div style="text-align:center;padding:.85rem 0;color:var(--i4);font-size:.75rem">Journée libre — aucune réunion ni événement prévu</div>';
+    return;
+  }
+  items.sort(function(a,b){return (a.heure||"99:99")>(b.heure||"99:99")?1:-1;});
+  dl.innerHTML=items.map(function(it){
+    return '<div style="display:flex;gap:10px;align-items:flex-start;padding:.6rem .5rem;border-radius:var(--r);transition:.12s;cursor:default">'
+      +'<div style="width:38px;text-align:center;flex-shrink:0;padding-top:1px">'
+      +(it.heure?'<div style="font-size:.7rem;font-weight:700;color:var(--i2);font-family:var(--fm)">'+it.heure+'</div>':"")
+      +'<div style="font-size:.9rem">'+it.ico+'</div>'
+      +'</div>'
+      +'<div style="border-left:3px solid '+it.col+';padding-left:.7rem;flex:1">'
+      +'<div style="font-size:.8rem;font-weight:700;color:var(--ink)">'+it.titre+'</div>'
+      +(it.sous?'<div style="font-size:.69rem;color:var(--i3);margin-top:1px">'+it.sous+'</div>':"")
+      +'<div style="font-size:.62rem;font-weight:600;color:'+it.col+';margin-top:2px">'+it.type+'</div>'
+      +'</div></div>';
+  }).join("");
+
+  // Prochaines échéances (7 prochains jours)
+  renderUpcoming();
+}
+
+function renderUpcoming(){
+  var up=$("agenda-upcoming"); if(!up)return;
+  var now=new Date();
+  var next7=new Date(now); next7.setDate(next7.getDate()+7);
+  var todayStr=now.toISOString().slice(0,10);
+  var endStr=next7.toISOString().slice(0,10);
+
+  var items=[];
+  var MOIS_U=["jan","fév","mar","avr","mai","jun","jul","aoû","sep","oct","nov","déc"];
+  AG.forEach(function(a){if(a.date>todayStr&&a.date<=endStr)items.push({date:a.date,titre:a.titre,col:"var(--g4)",ico:"📅"});});
+  EVTS.forEach(function(e){if(e.date>todayStr&&e.date<=endStr)items.push({date:e.date,titre:e.titre,col:"var(--amber)",ico:"🎪"});});
+  items.sort(function(a,b){return a.date>b.date?1:-1;});
+
+  if(!items.length){up.innerHTML='';return;}
+  var html='<div style="font-size:.68rem;font-weight:700;color:var(--i3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem">Dans les 7 prochains jours</div>';
+  html+=items.slice(0,5).map(function(it){
+    var d=new Date(it.date+"T00:00:00");
+    return '<div style="display:flex;align-items:center;gap:8px;padding:.35rem 0;border-bottom:1px solid var(--w2)">'
+      +'<div style="font-size:.7rem;color:'+it.col+';font-weight:700;font-family:var(--fm);width:50px;flex-shrink:0">'+d.getDate()+" "+MOIS_U[d.getMonth()]+'</div>'
+      +'<span style="font-size:.9rem">'+it.ico+'</span>'
+      +'<div style="font-size:.75rem;color:var(--ink)">'+it.titre+'</div>'
       +'</div>';
   }).join("");
+  up.innerHTML=html;
+}
+
+/* ── SIGNALEMENTS URGENTS SUR ACCUEIL ────────────────────────────────────── */
+function checkUrgents(){
+  var urgents=SIGN.filter(function(s){return s.statut==="Nouveau"&&s.urgence==="urgente";});
+  var al=$("alert-urgents"); if(!al)return;
+  if(urgents.length){
+    al.style.display="flex";
+    $("alert-urgents-txt").textContent=urgents.length+" signalement"+(urgents.length>1?"s":"")+" urgent"+(urgents.length>1?"s":"")+": "+urgents.slice(0,2).map(function(s){return s.titre;}).join(", ");
+  } else {
+    al.style.display="none";
+  }
 }
 
 function gpN(el){gpByName(el.dataset.page||el.getAttribute("data-page"));}
