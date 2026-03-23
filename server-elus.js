@@ -1834,6 +1834,8 @@ textarea.fi{resize:vertical;min-height:90px;}
 // ── DONNÉES ET ÉTAT ─────────────────────────────────────────────────────────
 var P=[],ST={},AG=[],DC=[],NF=[],CHAT=[],ANN=[],TASKS=[],SIGN=[],EVTS=[],CRS=[],BIBLIO=[],REP_ELUS={};
 var ELUS_DATA=[];
+var GUIDES=${JSON.stringify(GUIDES)};
+var RESS=${JSON.stringify(RESS)};
 var SLIST=["Prioritaire","Programmé","Planifié","Étude","En cours","Réalisé","Suspendu"];
 var MOIS=["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"];
 var _ci=0,_sigId=null,_crId=null,_repEluId=null,_chatLast=0,_chatOpen=false,_chatTimer=null;
