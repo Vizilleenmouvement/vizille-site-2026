@@ -722,14 +722,9 @@ async function loadChatMsgs() {
       const el = document.getElementById('chat-msgs');
       d.messages.forEach(m=>{
         const moi = m.auteur==='Moi';
-        el.innerHTML += \`<div class="msg-row\${moi?' moi':''}">
-          \${!moi?'<div class="msg-av" style="background:var(--bleu2)">\${m.avatar||'?'}</div>':''}
-          <div class="msg-bubble">
-            \${!moi?'<div class="msg-author">'+m.auteur+'</div>':''}
-            <div class="msg-text">\${m.texte}</div>
-            <div class="msg-time">\${m.ts||''}</div>
-          </div>
-        </div>\`;
+        const av = moi ? '' : '<div class="msg-av" style="background:var(--bleu2)">'+(m.avatar||'?')+'</div>';
+        const auth = moi ? '' : '<div class="msg-author">'+m.auteur+'</div>';
+        el.innerHTML += '<div class="msg-row'+(moi?' moi':'')+'">'+av+'<div class="msg-bubble">'+auth+'<div class="msg-text">'+m.texte+'</div><div class="msg-time">'+(m.ts||'')+'</div></div></div>';
       });
       el.scrollTop = el.scrollHeight;
       chatLastId = d.lastId;
@@ -779,7 +774,7 @@ async function generer() {
       toast('Document généré ✅');
     } else { toast('Erreur : '+(d.error||'IA indisponible'),'❌'); document.getElementById('rediger-placeholder').style.display=''; }
   } catch(e){ toast('Erreur réseau','❌'); document.getElementById('rediger-placeholder').style.display=''; }
-  btn.textContent='✨ Générer avec l\'IA';btn.disabled=false;
+  btn.textContent="✨ Générer avec l'IA";btn.disabled=false;
 }
 
 function copyResult() {
