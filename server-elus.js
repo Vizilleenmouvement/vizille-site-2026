@@ -1362,19 +1362,31 @@ textarea.fi{resize:vertical;min-height:90px;}
     </div>
   </div>
 </div>
-<!-- GUIDE -->
+<!-- GUIDE + RESSOURCES (fusionné) -->
 <div class="page" id="p-guide">
-  <div class="ph"><div class="ph-ico" style="background:#fef9c3">&#x1F4D6;</div><div><div class="ph-t">Guide pratique de l&#x27;élu</div><div class="ph-s">Vos droits, devoirs et r&#xe9;flexes essentiels</div></div></div>
+  <div class="ph">
+    <div class="ph-ico" style="background:#fef9c3">&#x1F4D6;</div>
+    <div><div class="ph-t">Guide &amp; Ressources de l&#x27;élu</div><div class="ph-s">Fiches pratiques du mandat + liens utiles</div></div>
+  </div>
   <div class="scr">
-    <div class="hero"><div class="hero-ico">&#x1F4D6;</div><div class="hero-c"><div class="hero-t">Guide du conseiller municipal</div><div class="hero-s">Cliquez sur un sujet pour le d&#xe9;velopper. Ces fiches vous aident à exercer votre mandat sereinement.</div></div></div>
-    <div id="guides-list"></div>
+
+    <!-- FICHES PRATIQUES -->
+    <div style="font-size:.7rem;font-weight:700;color:var(--i3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">&#x1F4CB; Fiches pratiques</div>
+    <div id="guides-list" style="margin-bottom:1.5rem"></div>
+
+    <!-- LIENS UTILES -->
+    <div style="font-size:.7rem;font-weight:700;color:var(--i3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">&#x1F517; Liens utiles</div>
+    <div id="ress-list" class="ress-g"></div>
+
   </div>
 </div>
 
-<!-- RESSOURCES -->
+<!-- RESSOURCES (alias → redirige vers guide) -->
 <div class="page" id="p-ress">
-  <div class="ph"><div class="ph-ico" style="background:var(--g8)">&#x1F517;</div><div><div class="ph-t">Ressources utiles</div><div class="ph-s">Liens essentiels pour votre mandat</div></div></div>
-  <div class="scr"><div class="ress-g" id="ress-list"></div></div>
+  <div class="scr" style="padding:1rem;font-size:.8rem;color:var(--i3)">
+    Redirection&#x2026;
+    <script>if(document.getElementById("p-ress").classList.contains("on")){document.getElementById("p-ress").classList.remove("on");document.getElementById("p-guide").classList.add("on");}<\/script>
+  </div>
 </div>
 
 <!-- AGENDA -->
@@ -1871,6 +1883,14 @@ function gp(id,ni){
   else if(id==="events")renderEv();
   else if(id==="hist")renderNt();
   else if(id==="comm")buildCG();
+  else if(id==="guide"||id==="ress"){
+    // Ress et Guide fusionnés
+    qsa(".page").forEach(function(p){p.classList.remove("on");});
+    var pg=$("p-guide");if(pg)pg.classList.add("on");
+    if(ni)ni.classList.add("on");
+    buildGuides(); buildRess();
+    return;
+  }
 }
 function goComm(){gp("comm",qsa(".sbi")[9]);}
 function goGlobal(){gp("global",qsa(".sbi")[10]);}
@@ -2070,11 +2090,20 @@ function delAnn(id){apiDel("/api/annonces/"+id).then(function(d){if(d.ok){ANN=AN
 function toggleGuide(el){el.classList.toggle("open");}
 function buildGuides(){
   var gl=$("guides-list"); if(!gl)return;
+  if(!GUIDES||!GUIDES.length){
+    gl.innerHTML='<div class="empty"><div class="empty-ico">&#x1F4D6;</div><div class="empty-t">Fiches en cours de chargement</div></div>';
+    return;
+  }
   gl.innerHTML=GUIDES.map(function(g){
     return '<div class="guide" onclick="toggleGuide(this)">'
-      +'<div class="guide-h"><div class="guide-ico">'+g.icon+'</div><div class="guide-t">'+g.titre+'</div><div style="margin-left:auto;color:var(--i4)">▼</div></div>'
-      +'<div class="guide-prev">'+g.contenu.substring(0,90)+'…</div>'
-      +'<div class="guide-full">'+g.contenu+'</div>'
+      +'<div class="guide-h">'
+      +'<div class="guide-ico">'+g.icon+'</div>'
+      +'<div style="flex:1"><div class="guide-t">'+g.titre+'</div>'
+      +'<div style="font-size:.67rem;color:var(--i3);margin-top:1px">'+g.contenu.substring(0,75)+'&#x2026;</div>'
+      +'</div>'
+      +'<div style="color:var(--i4);font-size:.7rem;flex-shrink:0;margin-left:8px">&#x25BC;</div>'
+      +'</div>'
+      +'<div class="guide-full" style="padding:.85rem 1rem;font-size:.78rem;color:var(--i2);line-height:1.7;border-top:1px solid var(--g8)">'+g.contenu+'</div>'
       +'</div>';
   }).join("");
 }
@@ -2082,10 +2111,19 @@ function buildGuides(){
 // ── RESSOURCES ───────────────────────────────────────────────────────────────
 function buildRess(){
   var rl=$("ress-list"); if(!rl)return;
+  if(!RESS||!RESS.length){
+    rl.innerHTML='<div class="empty"><div class="empty-ico">&#x1F517;</div><div class="empty-t">Ressources en cours de chargement</div></div>';
+    return;
+  }
   rl.innerHTML=RESS.map(function(r){
-    return '<a href="'+r.url+'" target="_blank" class="ress-c">'
+    return '<a href="'+r.url+'" target="_blank" rel="noopener" class="ress-c" style="text-decoration:none">'
       +'<div class="ress-ico">'+r.icon+'</div>'
-      +'<div><div class="ress-n">'+r.titre+'</div><div class="ress-d">'+r.desc+'</div></div>'
+      +'<div style="flex:1">'
+      +'<div class="ress-n">'+r.titre+'</div>'
+      +'<div class="ress-d">'+r.desc+'</div>'
+      +'<div style="font-size:.63rem;color:var(--g4);margin-top:3px;word-break:break-all">'+r.url+'</div>'
+      +'</div>'
+      +'<div style="font-size:.75rem;color:var(--g5);flex-shrink:0;margin-left:6px">&#x2197;</div>'
       +'</a>';
   }).join("");
 }
