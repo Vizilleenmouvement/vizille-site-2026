@@ -346,7 +346,17 @@ const server=http.createServer(function(req,res){
   });
 
   // IDENTITÉ CONNECTÉE
-  if(p==='/api/me')return J(res,{id:ME.id,nom:ME.nom,role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username});
+  if(p==='/api/me')return J(res,{id:ME.id,nom:ME.nom,role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||''});
+
+  // CHANGER SON MOT DE PASSE
+  if(p==='/api/change_pwd'&&m==='POST')return body(req,function(err,d){
+    if(err)return J(res,{ok:false},400);
+    if(!d.newpwd||d.newpwd.length<5)return J(res,{ok:false,error:'Mot de passe trop court (5 car. min.)'});
+    ACCOUNTS[ME.username].pwd=d.newpwd;
+    // Sauvegarder dans accounts.json
+    try{fs.writeFileSync(path.join(DIR,'accounts.json'),JSON.stringify(ACCOUNTS,null,2),'utf8');}catch(e){}
+    return J(res,{ok:true});
+  });
 
   // PROJETS
   if(p==='/api/projets')return J(res,projets);
@@ -849,7 +859,7 @@ textarea.fi{resize:vertical;min-height:90px;}
   <div style="display:flex;align-items:center;gap:8px">
     <button class="tbtn tbtn-v" onclick="openVisio()">&#x1F4F9; Visio</button>
     <button class="tbtn tbtn-c" onclick="toggleChat()">&#x1F4AC; Tchat<span class="cbdg" id="cbdg"></span></button>
-    <div class="top-av">MT</div>
+    <div class="top-av" id="top-av-btn" onclick="om('profile')" title="Mon profil">MT</div>
   </div>
 </div>
 
@@ -949,6 +959,28 @@ textarea.fi{resize:vertical;min-height:90px;}
     <div class="ch-row">
       <div class="ch-c"><div class="ch-t">Projets par thème</div><div class="ch-w"><canvas id="chT"></canvas></div></div>
       <div class="ch-c"><div class="ch-t">Avancement global</div><div class="ch-w"><canvas id="chS"></canvas></div></div>
+    </div>
+
+    <!-- DERNIÈRES ACTIVITÉS + PROCHAINS ÉVÉNEMENTS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:0">
+
+      <!-- DERNIERS CR -->
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem">
+          <div class="cardt" style="margin-bottom:0">&#x1F4DD; Derniers comptes rendus</div>
+          <button class="btn btn-g btn-sm" onclick="gpByName('cr')">Tous →</button>
+        </div>
+        <div id="cr-home-list"></div>
+      </div>
+
+      <!-- PROCHAINS ÉVÉNEMENTS -->
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem">
+          <div class="cardt" style="margin-bottom:0">&#x1F3AA; Prochains événements</div>
+          <button class="btn btn-g btn-sm" onclick="gpByName('events')">Tous →</button>
+        </div>
+        <div id="ev-home-list"></div>
+      </div>
     </div>
 
     </div>
@@ -1399,6 +1431,21 @@ textarea.fi{resize:vertical;min-height:90px;}
   <div class="mft"><button class="btn btn-g" onclick="cm()">Fermer</button></div>
 </div></div>
 
+
+<div class="ov" id="ov-profile"><div class="modal">
+  <div class="mhd"><h3>&#x1F464; Mon profil</h3><button class="mcl" onclick="cm()">&#xd7;</button></div>
+  <div id="profile-body" style="margin-bottom:1.2rem"></div>
+  <div style="border-top:1px solid var(--w2);padding-top:1rem">
+    <div style="font-size:.76rem;font-weight:700;color:var(--i2);margin-bottom:.75rem">Changer mon mot de passe</div>
+    <div class="ff"><label>Nouveau mot de passe</label><input class="fi" type="password" id="new-pwd" placeholder="Minimum 5 caractères&#x2026;" autocomplete="new-password"></div>
+    <div class="ff"><label>Confirmer</label><input class="fi" type="password" id="new-pwd2" placeholder="Répéter le mot de passe&#x2026;" autocomplete="new-password"></div>
+    <div id="pwd-msg" style="font-size:.72rem;margin-bottom:.5rem"></div>
+  </div>
+  <div class="mft">
+    <button class="btn btn-g" onclick="cm()">Fermer</button>
+    <button class="btn btn-p" onclick="changePwd()">Enregistrer</button>
+  </div>
+</div></div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1410,17 +1457,23 @@ var MOIS=["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","D
 var _ci=0,_sigId=null,_crId=null,_repEluId=null,_chatLast=0,_chatOpen=false,_chatTimer=null;
 var chT=null,chS=null;
 var ME={nom:"Chargement...",avatar:"?",id:0,role:"",color:"var(--g3)",username:""};
-var _auth="Basic "+btoa(":vizille2026");
+var _auth=""; // Sera mis à jour avec les credentials réels
 
 // ── UTILITAIRES ──────────────────────────────────────────────────────────────
 function $(i){return document.getElementById(i);}
 function qsa(s){return document.querySelectorAll(s);}
 function v(i){var e=$(i);return e?e.value:"";}
 function el(i,val){var e=$(i);if(e)e.textContent=val;}
-function apiGet(u){return fetch(u,{headers:{Authorization:_auth}}).then(function(r){return r.json();});}
-function apiPost(u,d){return fetch(u,{method:"POST",headers:{"Content-Type":"application/json",Authorization:_auth},body:JSON.stringify(d)}).then(function(r){return r.json();});}
-function apiPut(u,d){return fetch(u,{method:"PUT",headers:{"Content-Type":"application/json",Authorization:_auth},body:JSON.stringify(d)}).then(function(r){return r.json();});}
-function apiDel(u){return fetch(u,{method:"DELETE",headers:{Authorization:_auth}}).then(function(r){return r.json();});}
+function mkH(extra){
+  var h={"Content-Type":"application/json"};
+  if(_auth)h["Authorization"]=_auth;
+  return Object.assign(h,extra||{});
+}
+function apiGet(u){return fetch(u,{credentials:"include",headers:_auth?{Authorization:_auth}:{}}).then(function(r){if(r.status===401){showLoginMsg();return {};}return r.json();});}
+function apiPost(u,d){return fetch(u,{method:"POST",credentials:"include",headers:mkH(),body:JSON.stringify(d)}).then(function(r){if(r.status===401){showLoginMsg();return {ok:false};}return r.json();});}
+function apiPut(u,d){return fetch(u,{method:"PUT",credentials:"include",headers:mkH(),body:JSON.stringify(d)}).then(function(r){return r.json();});}
+function apiDel(u){return fetch(u,{method:"DELETE",credentials:"include",headers:_auth?{Authorization:_auth}:{} }).then(function(r){return r.json();});}
+function showLoginMsg(){toast("Session expirée — rechargez la page.",4000);}
 function toast(m,t){var e=$("toast");e.textContent=m;e.style.display="block";setTimeout(function(){e.style.display="none";},t||2500);}
 function om(id){var e=$("ov-"+id);if(e)e.classList.add("on");}
 function cm(){qsa(".ov").forEach(function(o){o.classList.remove("on");});}
@@ -1446,6 +1499,36 @@ function goComm(){gp("comm",qsa(".sbi")[9]);}
 function goGlobal(){gp("global",qsa(".sbi")[10]);}
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
+function openProfile(){
+  var av=$("top-av-btn");if(av){av.textContent=ME.avatar;av.style.background=ME.color||"var(--g4)";}
+  var pb=$("profile-body");if(!pb)return;
+  pb.innerHTML='<div style="display:flex;align-items:center;gap:14px;padding:.85rem;background:var(--g8);border-radius:var(--R)">'
+    +'<div style="width:50px;height:50px;border-radius:14px;background:'+(ME.color||"var(--g3)")+';display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;color:#fff;font-family:var(--fd)">'+ME.avatar+'</div>'
+    +'<div><div style="font-size:.95rem;font-weight:700;font-family:var(--fd);color:var(--ink)">'+ME.nom+'</div>'
+    +'<div style="font-size:.75rem;color:var(--i3);margin-top:1px">'+ME.role+(ME.delegation?" — "+ME.delegation:"")+'</div>'
+    +'<div style="font-size:.67rem;color:var(--i4);margin-top:2px;font-family:var(--fm)">Login : '+ME.username+'</div>'
+    +'</div></div>';
+  $("new-pwd").value=""; $("new-pwd2").value=""; $("pwd-msg").textContent="";
+  om("profile");
+}
+
+function changePwd(){
+  var p1=v("new-pwd"), p2=v("new-pwd2"), msg=$("pwd-msg");
+  if(!p1){msg.textContent="Entrez un nouveau mot de passe.";msg.style.color="var(--red)";return;}
+  if(p1.length<5){msg.textContent="Minimum 5 caractères.";msg.style.color="var(--red)";return;}
+  if(p1!==p2){msg.textContent="Les mots de passe ne correspondent pas.";msg.style.color="var(--red)";return;}
+  apiPost("/api/change_pwd",{newpwd:p1}).then(function(d){
+    if(d.ok){
+      msg.textContent="Mot de passe modifié. Reconnectez-vous avec vos nouveaux identifiants.";
+      msg.style.color="var(--g3)";
+      $("new-pwd").value=""; $("new-pwd2").value="";
+      // Mettre à jour le header auth stocké
+      _auth="Basic "+btoa(ME.username+":"+p1);
+      toast("Mot de passe modifié !");
+    } else {msg.textContent=d.error||"Erreur.";msg.style.color="var(--red)";}
+  });
+}
+
 function init(){
   var now=new Date();
   $("tdate").textContent=now.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
@@ -1456,7 +1539,7 @@ function init(){
     if(d.me){
       ME=d.me;
       // Mettre à jour l'avatar dans la topbar
-      var av=document.querySelector(".top-av");
+      var av=$("top-av-btn");
       if(av){av.textContent=ME.avatar;av.style.background=ME.color||"var(--g4)";}
       // Mettre à jour le label du répertoire
       var repT=document.querySelector("#p-repelus .ph-t");
@@ -1476,6 +1559,7 @@ function init(){
     renderTasks(); renderAnn(); renderNextMtg();
     buildGuides(); buildRess();
     updSigBadge(); renderHeroAccueil(); renderShortcuts();
+    renderCRHome(); renderEvHome();
     el("k-sig",d.stats?d.stats.sig_new||0:0);
   });
 
@@ -2127,18 +2211,19 @@ function scrollChat(){var e=$("chat-msgs");if(e)e.scrollTop=e.scrollHeight;}
   function renderShortcuts(){
     var sg = $("shortcuts-grid"); if(!sg)return;
     var sigNew = SIGN.filter(function(s){return s.statut==="Nouveau";}).length;
+    var today2 = new Date().toISOString().slice(0,10);
     var shortcuts = [
-      {ico:"📝", lbl:"Comptes rendus",   sub: CRS.length + " CR", idx:5,   col:"var(--g8)", tcol:"var(--g2)"},
-      {ico:"📚", lbl:"Bibliothèque",     sub: BIBLIO.length + " doc", idx:6, col:"#ede9fe", tcol:"#6d28d9"},
-      {ico:"🔴", lbl:"Signalements",     sub: sigNew ? sigNew+" urgent"+(sigNew>1?"s":"") : "Tout est OK", idx:13, col: sigNew?"#fee2e2":"var(--g8)", tcol:sigNew?"var(--red)":"var(--g2)"},
-      {ico:"📂", lbl:"Mon dossier",      sub: "Privé 🔒", idx:7, col:"#fef3c7", tcol:"#92400e"},
-      {ico:"📅", lbl:"Agenda",           sub: AG.filter(function(a){return a.date>=new Date().toISOString().slice(0,10);}).length+" à venir", idx:3, col:"#dbeafe", tcol:"#1e40af"},
-      {ico:"🎪", lbl:"Événements",       sub: EVTS.filter(function(e){return e.date>=new Date().toISOString().slice(0,10);}).length+" à venir", idx:14, col:"#fef9c3", tcol:"#a16207"},
-      {ico:"👥", lbl:"Commissions",      sub: "91 projets", idx:9, col:"var(--g8)", tcol:"var(--g2)"},
-      {ico:"✍️", lbl:"Rédiger un doc",   sub: "Assisté IA", idx:15, col:"#f3e8ff", tcol:"#7c3aed"},
+      {ico:"📝", lbl:"Comptes rendus",   sub: CRS.length+" CR", page:"cr",      col:"var(--g8)",   tcol:"var(--g2)"},
+      {ico:"📚", lbl:"Bibliothèque",     sub: BIBLIO.length+" doc", page:"biblio", col:"#ede9fe",   tcol:"#6d28d9"},
+      {ico:"🔴", lbl:"Signalements",     sub: sigNew?sigNew+" urgent"+(sigNew>1?"s":""):"Aucun urgent", page:"signal", col:sigNew?"#fee2e2":"var(--g8)", tcol:sigNew?"var(--red)":"var(--g2)"},
+      {ico:"📂", lbl:"Mon dossier",      sub: "Privé 🔒", page:"repelus",         col:"#fef3c7",   tcol:"#92400e"},
+      {ico:"📅", lbl:"Agenda",           sub: AG.filter(function(a){return a.date>=today2;}).length+" à venir", page:"agenda", col:"#dbeafe", tcol:"#1e40af"},
+      {ico:"🎪", lbl:"Événements",       sub: EVTS.filter(function(e){return e.date>=today2;}).length+" à venir", page:"events", col:"#fef9c3", tcol:"#a16207"},
+      {ico:"👥", lbl:"Commissions",      sub: P.length+" projets", page:"comm",   col:"var(--g8)", tcol:"var(--g2)"},
+      {ico:"✍️", lbl:"Rédiger",          sub: "Assisté IA", page:"comms",         col:"#f3e8ff",   tcol:"#7c3aed"},
     ];
     sg.innerHTML = shortcuts.map(function(s){
-      return '<div onclick="gp2('+s.idx+')" class="scut">'
+      return '<div onclick="gpN(this)" data-page="'+s.page+'" class="scut">'
         +'<div style="width:38px;height:38px;border-radius:10px;background:'+s.col+';display:flex;align-items:center;justify-content:center;margin:0 auto .5rem;font-size:1.1rem">'+s.ico+'</div>'
         +'<div style="font-size:.72rem;font-weight:700;color:var(--ink);margin-bottom:2px">'+s.lbl+'</div>'
         +'<div style="font-size:.62rem;color:'+s.tcol+';font-weight:600">'+s.sub+'</div>'
@@ -2151,6 +2236,49 @@ function scrollChat(){var e=$("chat-msgs");if(e)e.scrollTop=e.scrollHeight;}
     if(items[sbiIdx]) items[sbiIdx].click();
   }
 
+function renderCRHome(){
+  var cl=$("cr-home-list"); if(!cl)return;
+  var last=CRS.slice(0,4);
+  if(!last.length){cl.innerHTML='<div style="font-size:.74rem;color:var(--i4);text-align:center;padding:.5rem 0">Aucun CR pour l&#x27;instant</div>';return;}
+  cl.innerHTML=last.map(function(cr){
+    var col={"Bureau municipal":"#1d3d2b","Conseil municipal":"#2d5a40","Culture, Patrimoine & Jumelages":"#8B5CF6","Mobilités":"#3B82F6","Transition écologique":"#10B981","Action sociale":"#F59E0B","Animations de proximité":"#EC4899","Enfance/Jeunesse":"#F97316","Tranquillité publique":"#EF4444","Travaux & Urbanisme":"#84CC16","Santé":"#06B6D4"}[cr.commission]||"var(--g4)";
+    return '<div style="display:flex;gap:9px;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--w2);cursor:pointer" onclick="openCR('+cr.id+')">'
+      +'<div style="width:28px;height:28px;border-radius:7px;background:'+col+'18;border:1px solid '+col+'30;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0">📝</div>'
+      +'<div style="flex:1;min-width:0"><div style="font-size:.76rem;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+cr.titre+'</div>'
+      +'<div style="font-size:.65rem;color:var(--i3)">'+cr.commission+(cr.date?" · "+cr.date:"")+'</div></div>'
+      +'</div>';
+  }).join("");
+}
+
+function renderEvHome(){
+  var el2=$("ev-home-list"); if(!el2)return;
+  var today2=new Date().toISOString().slice(0,10);
+  var next=EVTS.filter(function(e){return e.date>=today2;}).slice(0,4);
+  if(!next.length){el2.innerHTML='<div style="font-size:.74rem;color:var(--i4);text-align:center;padding:.5rem 0">Aucun événement à venir</div>';return;}
+  var MOIS2=["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"];
+  var EVC={municipal:"var(--g3)",associatif:"var(--amber)",culturel:"#8B5CF6",sportif:"var(--blue)",commemoration:"#7f8c8d",autre:"var(--i3)"};
+  el2.innerHTML=next.map(function(e){
+    var col=EVC[e.type]||"var(--i3)";
+    return '<div style="display:flex;gap:9px;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--w2)">'
+      +'<div style="background:'+col+'18;border:1px solid '+col+'30;border-radius:7px;padding:.3rem .45rem;text-align:center;min-width:36px;flex-shrink:0">'
+      +'<div style="font-size:.88rem;font-weight:800;color:'+col+';line-height:1;font-family:var(--fd)">'+e.date.slice(8)+'</div>'
+      +'<div style="font-size:.55rem;font-weight:700;color:'+col+';text-transform:uppercase">'+MOIS2[+e.date.slice(5,7)-1]+'</div></div>'
+      +'<div style="flex:1;min-width:0"><div style="font-size:.76rem;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+e.titre+'</div>'
+      +'<div style="font-size:.65rem;color:var(--i3)">'+(e.lieu||"")+(e.heure?" · "+e.heure:"")+'</div></div>'
+      +'</div>';
+  }).join("");
+}
+
+function gpN(el){gpByName(el.dataset.page||el.getAttribute("data-page"));}
+function gpByName(pageName){
+  var items=qsa(".sbi");
+  for(var i=0;i<items.length;i++){
+    var item=items[i];
+    if(item.getAttribute("onclick")&&item.getAttribute("onclick").indexOf("'"+pageName+"'")>=0){
+      item.click(); return;
+    }
+  }
+}
 function navToAgenda(){gp("agenda",qsa(".sbi")[3]);}
 
 init();
