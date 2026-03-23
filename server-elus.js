@@ -2151,7 +2151,8 @@ function gp(id,ni){
   qsa(".sbi").forEach(function(n){n.classList.remove("on");});
   var pg=$("p-"+id);if(pg)pg.classList.add("on");
   if(ni&&ni.classList)ni.classList.add("on");
-  if(id==="agenda")renderAg();
+  if(id==="today"){renderHeroAccueil();renderWidgetAgenda();renderWidgetSig();renderCRHome();}
+  else if(id==="agenda")renderAg();
   else if(id==="cr")renderCR();
   else if(id==="biblio")renderBiblio();
   else if(id==="repelus")renderRepElus();
@@ -2236,7 +2237,7 @@ function init(){
     renderTasks(); renderAnn(); renderNextMtg();
     buildGuides(); buildRess();
     updSigBadge(); renderHeroAccueil();
-    renderWidgetAgenda(); renderWidgetSig(); renderCRHome(); renderEvHome(); checkUrgents(); initWidgetChat();
+    initCal(); renderWidgetAgenda(); renderWidgetSig(); renderCRHome(); renderEvHome(); checkUrgents(); initWidgetChat();
     el("k-sig",d.stats?d.stats.sig_new||0:0);
   });
 
