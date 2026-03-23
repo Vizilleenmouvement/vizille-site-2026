@@ -1093,8 +1093,8 @@ return `<!DOCTYPE html>
   --sw:252px;--th:54px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{font-size:14.5px;height:100%;}
-body{font-family:var(--fn);background:var(--w);color:var(--ink);height:100vh;margin:0;overflow:hidden;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;box-sizing:border-box;}
+html{font-size:14.5px;}
+body{font-family:var(--fn);background:var(--w);color:var(--ink);height:100vh;margin:0;overflow:hidden;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
 
 /* TOPBAR */
 .top{height:var(--th);background:var(--g1);display:flex;align-items:center;padding:0 1.25rem;gap:12px;flex-shrink:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,.25);}
@@ -1205,7 +1205,7 @@ body{font-family:var(--fn);background:var(--w);color:var(--ink);height:100vh;mar
 .cc-pct{display:flex;justify-content:space-between;font-size:.63rem;color:var(--i4);margin-top:3px;}
 
 /* TABLE */
-.tbw{background:#fff;border-radius:var(--R);border:1px solid var(--w2);box-shadow:var(--s1);overflow:hidden;}
+.tbw{background:#fff;border-radius:var(--R);border:1px solid var(--w2);box-shadow:var(--s1);overflow:auto;}
 .fb{padding:.6rem 1.1rem;background:var(--w);border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
 .fsel{padding:5px 8px;border:1px solid var(--w2);border-radius:7px;font-size:.73rem;background:#fff;color:var(--ink);outline:none;font-family:var(--fn);cursor:pointer;}
 .fsel:focus{border-color:var(--g4);}
@@ -1300,7 +1300,7 @@ textarea.fi{resize:vertical;min-height:90px;}
 .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--r);font-size:.76rem;font-weight:600;cursor:pointer;border:1.5px solid transparent;font-family:var(--fn);transition:all .15s;text-decoration:none;}
 .btn-p{background:var(--g2);color:#fff;border-color:var(--g2);}.btn-p:hover{background:var(--g1);}
 .btn-s{background:#fff;color:var(--i2);border-color:var(--w2);}.btn-s:hover{background:var(--w);}
-.btn-g{background:transparent;color:var(--i3);border-color:transparent;}.btn-g:hover{background:var(--w2);}
+.btn-g{background:var(--w);color:var(--g3);border:1px solid var(--w3);}.btn-g:hover{background:var(--g8);color:var(--g2);border-color:var(--g5);}
 .btn-d{background:#fee2e2;color:#b91c1c;border-color:#fca5a5;}.btn-d:hover{background:#fca5a5;}
 .btn-sm{padding:4px 9px;font-size:.7rem;}
 .btn-full{width:100%;justify-content:center;}
@@ -3436,7 +3436,7 @@ function rTb(bid,rows,showC){
       +'<td style="color:var(--i3);font-family:var(--fm);font-size:.72rem">'+(p.annee||"—")+'</td>'
       +'<td>'+imp(p.importance)+'</td>'
       +'<td><div style="display:flex;align-items:center;gap:5px"><select class="ssel" data-pid="'+p.id+'" data-t="'+p.titre.replace(/"/g,"&quot;")+'" onchange="uSt(+this.dataset.pid,this.value,this.dataset.t)">'+opts+'</select>'
-      +'<button class="btn btn-g btn-sm" onclick="oProj('+p.id+')" title="Modifier" style="padding:3px 7px;flex-shrink:0">&#x270F;</button></div></td>'
+      +'<button onclick="oProj('+p.id+')" title="Modifier le projet" style="padding:4px 8px;font-size:.8rem;cursor:pointer;background:var(--g3);color:#fff;border:none;border-radius:6px;flex-shrink:0;line-height:1">&#x270F;</button></div></td>'
       +'</tr>';
   }).join("");
 }
