@@ -6,10 +6,11 @@ const ACCOUNTS_DEFAULT = {
   "catherine.troton": {
     "id": 1,
     "nom": "Catherine Troton",
-    "role": "Maire",
+    "role": "Tête de Liste",
     "delegation": "Maire de Vizille",
     "avatar": "CT",
     "color": "#1a3a2a",
+    "photo": "https://vizilleenmouvement.fr/images/catherine-troton.jpg",
     "pwd": "ctr2026"
   },
   "bernard.ughetto-monfrin": {
@@ -19,177 +20,197 @@ const ACCOUNTS_DEFAULT = {
     "delegation": "Mobilités",
     "avatar": "BU",
     "color": "#2d5a40",
+    "photo": "https://vizilleenmouvement.fr/images/bernard-ughetto-monfrin.jpg",
     "pwd": "bug2026"
   },
   "saida.berriche": {
     "id": 3,
     "nom": "Saïda Berriche",
     "role": "Adjointe",
-    "delegation": "Tranquillité publique",
+    "delegation": "à la Tranquillité, le bien vivre ensemble, les commerces",
     "avatar": "SB",
     "color": "#3d7a5a",
+    "photo": "https://vizilleenmouvement.fr/images/saida-berriche.jpg",
     "pwd": "sbe2026"
   },
   "gilles.faure": {
     "id": 4,
     "nom": "Gilles Faure",
     "role": "Adjoint",
-    "delegation": "Accès aux droits, santé publique",
+    "delegation": "Accès aux droits, santé publique, action sociale et solidarité",
     "avatar": "GF",
     "color": "#8B5CF6",
+    "photo": "https://vizilleenmouvement.fr/images/gilles-faure.jpg",
     "pwd": "gfa2026"
   },
   "angelique.hermitte": {
     "id": 5,
     "nom": "Angélique Hermitte",
-    "role": "Adjointe",
+    "role": "Conseillère déléguée",
     "delegation": "Petite enfance",
     "avatar": "AH",
     "color": "#F97316",
+    "photo": "https://vizilleenmouvement.fr/images/angelique-hermitte.jpg",
     "pwd": "ahe2026"
   },
   "gerard.forestier": {
     "id": 6,
     "nom": "Gérard Forestier",
     "role": "Adjoint",
-    "delegation": "Urbanisme",
+    "delegation": "Transition environnementale",
     "avatar": "GF",
     "color": "#EC4899",
+    "photo": "https://vizilleenmouvement.fr/images/gerard-forestier.jpg",
     "pwd": "gfo2026"
   },
   "marie-claude.argoud": {
     "id": 7,
-    "nom": "Marie-Claude Argoud",
+    "nom": "Marie-Claude ARGOUD",
     "role": "Première Adjointe",
-    "delegation": "Culture, Patrimoine",
+    "delegation": "en charge de la  Culture, du Patrimoine et de la Communication.",
     "avatar": "MA",
     "color": "#F59E0B",
+    "photo": "https://vizilleenmouvement.fr/images/marie-claude-argoud.jpg",
     "pwd": "mar2026"
   },
   "louis.lamarca": {
     "id": 8,
     "nom": "Louis Lamarca",
     "role": "Adjoint",
-    "delegation": "Sports, vie associative",
+    "delegation": "à l'urbanisme et aux travaux",
     "avatar": "LL",
     "color": "#3B82F6",
+    "photo": "https://vizilleenmouvement.fr/images/louis-lamarca.jpg",
     "pwd": "lla2026"
   },
   "muriel.pasquiou": {
     "id": 9,
     "nom": "Muriel Pasquiou",
-    "role": "Conseillère",
+    "role": "",
     "delegation": "",
     "avatar": "MP",
     "color": "#10B981",
+    "photo": "https://vizilleenmouvement.fr/images/muriel-pasquiou.jpg",
     "pwd": "mpa2026"
   },
   "laurent.pichon": {
     "id": 10,
     "nom": "Laurent Pichon",
-    "role": "Conseiller",
+    "role": "",
     "delegation": "",
     "avatar": "LP",
     "color": "#EF4444",
+    "photo": "https://vizilleenmouvement.fr/images/laurent-pichon.jpg",
     "pwd": "lpi2026"
   },
   "sakina.yahiaoui": {
     "id": 11,
-    "nom": "Sakina Yahiaoui",
-    "role": "Conseillère déléguée",
-    "delegation": "",
+    "nom": "Sakina YAHIAOUI",
+    "role": "conseillère déléguée",
+    "delegation": "transition environnementale",
     "avatar": "SY",
     "color": "#14B8A6",
+    "photo": "https://vizilleenmouvement.fr/images/sakina-yahiaoui.jpg",
     "pwd": "sya2026"
   },
   "mohamed.cherigui": {
     "id": 12,
-    "nom": "Mohamed Cherigui",
-    "role": "Conseiller",
+    "nom": "Mohamed CHERIGUI",
+    "role": "",
     "delegation": "",
     "avatar": "MC",
     "color": "#6366F1",
+    "photo": "https://vizilleenmouvement.fr/images/mohamed-cherigui.jpg",
     "pwd": "mch2026"
   },
   "christelle.reijasse": {
     "id": 13,
-    "nom": "Christelle Reijasse",
-    "role": "Conseillère",
+    "nom": "Christelle REIJASSE",
+    "role": "",
     "delegation": "",
     "avatar": "CR",
     "color": "#db2777",
+    "photo": "https://vizilleenmouvement.fr/images/christelle-reijasse.jpg",
     "pwd": "cre2026"
   },
   "ahmed.mendess": {
     "id": 14,
-    "nom": "Ahmed Mendess",
-    "role": "Conseiller délégué",
-    "delegation": "",
+    "nom": "Ahmed MENDESS",
+    "role": "Conseillé délégué",
+    "delegation": "Accompagnement sports et jeunesse",
     "avatar": "AM",
     "color": "#0891b2",
+    "photo": "https://vizilleenmouvement.fr/images/ahmed-mendess.jpg",
     "pwd": "ame2026"
   },
   "christine.sanchez": {
     "id": 15,
     "nom": "Christine Sanchez",
-    "role": "Conseillère",
+    "role": "",
     "delegation": "",
     "avatar": "CS",
     "color": "#65a30d",
+    "photo": "https://vizilleenmouvement.fr/images/christine-sanchez.jpg",
     "pwd": "csa2026"
   },
   "fabrice.pasquiou": {
     "id": 16,
     "nom": "Fabrice Pasquiou",
     "role": "Conseiller délégué",
-    "delegation": "",
+    "delegation": "Risques majeurs",
     "avatar": "FP",
     "color": "#7c3aed",
+    "photo": "https://vizilleenmouvement.fr/images/fabrice-pasquiou.jpg",
     "pwd": "fpa2026"
   },
   "meriem.el-kebir": {
     "id": 17,
     "nom": "Meriem El-Kebir",
-    "role": "Conseillère",
+    "role": "",
     "delegation": "",
     "avatar": "ME",
     "color": "#9333ea",
+    "photo": "https://vizilleenmouvement.fr/images/meriem-el-kebir.jpg",
     "pwd": "mel2026"
   },
   "jean-christophe.garcia": {
     "id": 18,
     "nom": "Jean-Christophe Garcia",
-    "role": "Conseiller",
-    "delegation": "Animations de proximité",
+    "role": "",
+    "delegation": "",
     "avatar": "JG",
     "color": "#c2410c",
+    "photo": "https://vizilleenmouvement.fr/images/jean-christophe-garcia.jpg",
     "pwd": "jga2026"
   },
   "muriel.picca": {
     "id": 19,
-    "nom": "Muriel Picca",
-    "role": "Conseillère",
+    "nom": "Muriel PICCA",
+    "role": "",
     "delegation": "",
     "avatar": "MP",
     "color": "#b45309",
+    "photo": "https://vizilleenmouvement.fr/images/muriel-picca.jpg",
     "pwd": "mpi2026"
   },
   "michel.thuillier": {
     "id": 20,
     "nom": "Michel Thuillier",
-    "role": "Conseiller",
+    "role": "",
     "delegation": "",
     "avatar": "MT",
     "color": "#0f766e",
+    "photo": "https://vizilleenmouvement.fr/images/michel-thuillier.jpg",
     "pwd": "mth2026"
   },
   "isabelle.nifenecker": {
     "id": 21,
     "nom": "Isabelle Nifenecker",
-    "role": "Conseillère",
+    "role": "",
     "delegation": "",
     "avatar": "IN",
     "color": "#1d4ed8",
+    "photo": "https://vizilleenmouvement.fr/images/isabelle-nifenecker.jpg",
     "pwd": "ini2026"
   },
   "andre-paul.venans": {
@@ -199,52 +220,58 @@ const ACCOUNTS_DEFAULT = {
     "delegation": "",
     "avatar": "AV",
     "color": "#be185d",
+    "photo": "https://vizilleenmouvement.fr/images/andre-paul-venans.jpg",
     "pwd": "ave2026"
   },
-  "michel.troton": {
-    "id": 23,
-    "nom": "Michel Troton",
-    "role": "Conseiller",
-    "delegation": "Numérique, communication, histoire locale",
-    "avatar": "MT",
-    "color": "#2d5a40",
-    "pwd": "mtr2026"
-  },
   "nathalie.jacolin": {
-    "id": 24,
+    "id": 23,
     "nom": "Nathalie Jacolin",
-    "role": "Conseillère",
+    "role": "",
     "delegation": "",
     "avatar": "NJ",
     "color": "#15803d",
+    "photo": "https://vizilleenmouvement.fr/images/nathalie-jacolin.jpg",
     "pwd": "nja2026"
   },
   "ignazio.cosentino": {
-    "id": 25,
+    "id": 24,
     "nom": "Ignazio Cosentino",
-    "role": "Conseiller",
+    "role": "",
     "delegation": "",
     "avatar": "IC",
     "color": "#b91c1c",
+    "photo": "https://vizilleenmouvement.fr/images/ignazio-consentino.jpg",
     "pwd": "ico2026"
   },
   "nathalie.germain-vey": {
-    "id": 26,
+    "id": 25,
     "nom": "Nathalie Germain-Vey",
-    "role": "Conseillère déléguée",
+    "role": "conseillère déléguée",
     "delegation": "",
     "avatar": "NG",
     "color": "#6d28d9",
+    "photo": "https://vizilleenmouvement.fr/images/nathalie-germain-vey.jpg",
     "pwd": "nge2026"
   },
   "stephane.lasserre": {
-    "id": 27,
+    "id": 26,
     "nom": "Stéphane Lasserre",
     "role": "Conseiller",
     "delegation": "",
     "avatar": "SL",
     "color": "#0369a1",
+    "photo": "https://vizilleenmouvement.fr/images/stephane-lasserre.jpg",
     "pwd": "sla2026"
+  },
+  "michel.troton": {
+    "id": 27,
+    "nom": "Michel Troton",
+    "role": "Conseiller",
+    "delegation": "Numérique, communication, histoire locale",
+    "avatar": "MT",
+    "color": "#2d5a40",
+    "photo": "https://vizilleenmouvement.fr/images/michel-troton.jpg",
+    "pwd": "mtr2026"
   },
   "admin": {
     "id": 0,
@@ -253,6 +280,7 @@ const ACCOUNTS_DEFAULT = {
     "delegation": "",
     "avatar": "AD",
     "color": "#1a3a2a",
+    "photo": "",
     "pwd": "vem@dmin2026"
   }
 };
@@ -281,7 +309,7 @@ function stats(){
 let projets=load('projets.json',[]),agenda=load('agenda.json',[]),documents=load('documents.json',[]);
 let statuts=load('statuts.json',{}),notifs=load('notifs.json',[]),chat=load('chat.json',[]);
 
-const ELUS_DEF = [{"id": 1, "nom": "Troton", "prenom": "Catherine", "role": "Maire", "delegation": "Maire de Vizille", "avatar": "CT", "color": "#1a3a2a", "tel": "", "email": "", "commission": ""}, {"id": 2, "nom": "Ughetto-Monfrin", "prenom": "Bernard", "role": "Adjoint", "delegation": "Mobilités", "avatar": "BU", "color": "#2d5a40", "tel": "", "email": "", "commission": "Mobilités"}, {"id": 3, "nom": "Berriche", "prenom": "Saïda", "role": "Adjointe", "delegation": "Tranquillité publique", "avatar": "SB", "color": "#3d7a5a", "tel": "", "email": "", "commission": "Tranquillité publique"}, {"id": 4, "nom": "Faure", "prenom": "Gilles", "role": "Adjoint", "delegation": "Santé, action sociale", "avatar": "GF", "color": "#8B5CF6", "tel": "", "email": "", "commission": "Action sociale"}, {"id": 5, "nom": "Hermitte", "prenom": "Angélique", "role": "Adjointe", "delegation": "Petite enfance, jeunesse", "avatar": "AH", "color": "#F97316", "tel": "", "email": "", "commission": "Enfance/Jeunesse"}, {"id": 6, "nom": "Forestier", "prenom": "Gérard", "role": "Adjoint", "delegation": "Urbanisme, travaux", "avatar": "GF", "color": "#EC4899", "tel": "", "email": "", "commission": "Travaux & Urbanisme"}, {"id": 7, "nom": "Argoud", "prenom": "Marie-Claude", "role": "Première Adjointe", "delegation": "Culture, Patrimoine, Jumelages", "avatar": "MA", "color": "#F59E0B", "tel": "", "email": "", "commission": "Culture, Patrimoine & Jumelages"}, {"id": 8, "nom": "Lamarca", "prenom": "Louis", "role": "Adjoint", "delegation": "Sports, vie associative", "avatar": "LL", "color": "#3B82F6", "tel": "", "email": "", "commission": "Animations de proximité"}, {"id": 9, "nom": "Pasquiou", "prenom": "Muriel", "role": "Conseillère", "delegation": "", "avatar": "MP", "color": "#10B981", "tel": "", "email": "", "commission": ""}, {"id": 10, "nom": "Pichon", "prenom": "Laurent", "role": "Conseiller", "delegation": "", "avatar": "LP", "color": "#EF4444", "tel": "", "email": "", "commission": ""}, {"id": 11, "nom": "Yahiaoui", "prenom": "Sakina", "role": "Conseillère déléguée", "delegation": "", "avatar": "SY", "color": "#14B8A6", "tel": "", "email": "", "commission": ""}, {"id": 12, "nom": "Cherigui", "prenom": "Mohamed", "role": "Conseiller", "delegation": "", "avatar": "MC", "color": "#6366F1", "tel": "", "email": "", "commission": ""}, {"id": 13, "nom": "Reijasse", "prenom": "Christelle", "role": "Conseillère", "delegation": "", "avatar": "CR", "color": "#db2777", "tel": "", "email": "", "commission": ""}, {"id": 14, "nom": "Mendess", "prenom": "Ahmed", "role": "Conseiller délégué", "delegation": "", "avatar": "AM", "color": "#0891b2", "tel": "", "email": "", "commission": ""}, {"id": 15, "nom": "Sanchez", "prenom": "Christine", "role": "Conseillère", "delegation": "", "avatar": "CS", "color": "#65a30d", "tel": "", "email": "", "commission": ""}, {"id": 16, "nom": "Pasquiou", "prenom": "Fabrice", "role": "Conseiller délégué", "delegation": "", "avatar": "FP", "color": "#7c3aed", "tel": "", "email": "", "commission": ""}, {"id": 17, "nom": "El-Kebir", "prenom": "Meriem", "role": "Conseillère", "delegation": "", "avatar": "ME", "color": "#9333ea", "tel": "", "email": "", "commission": ""}, {"id": 18, "nom": "Garcia", "prenom": "Jean-Christophe", "role": "Conseiller", "delegation": "Animations de proximité", "avatar": "JG", "color": "#c2410c", "tel": "", "email": "", "commission": "Animations de proximité"}, {"id": 19, "nom": "Picca", "prenom": "Muriel", "role": "Conseillère", "delegation": "", "avatar": "MP", "color": "#b45309", "tel": "", "email": "", "commission": ""}, {"id": 20, "nom": "Thuillier", "prenom": "Michel", "role": "Conseiller", "delegation": "", "avatar": "MT", "color": "#0f766e", "tel": "", "email": "", "commission": ""}, {"id": 21, "nom": "Nifenecker", "prenom": "Isabelle", "role": "Conseillère", "delegation": "", "avatar": "IN", "color": "#1d4ed8", "tel": "", "email": "", "commission": ""}, {"id": 22, "nom": "Venans", "prenom": "André-Paul", "role": "Conseiller", "delegation": "", "avatar": "AV", "color": "#be185d", "tel": "", "email": "", "commission": ""}, {"id": 23, "nom": "Troton", "prenom": "Michel", "role": "Conseiller", "delegation": "Numérique, communication", "avatar": "MT", "color": "#2d5a40", "tel": "", "email": "", "commission": "Culture, Patrimoine & Jumelages"}, {"id": 24, "nom": "Jacolin", "prenom": "Nathalie", "role": "Conseillère", "delegation": "", "avatar": "NJ", "color": "#15803d", "tel": "", "email": "", "commission": ""}, {"id": 25, "nom": "Cosentino", "prenom": "Ignazio", "role": "Conseiller", "delegation": "", "avatar": "IC", "color": "#b91c1c", "tel": "", "email": "", "commission": ""}, {"id": 26, "nom": "Germain-Vey", "prenom": "Nathalie", "role": "Conseillère déléguée", "delegation": "", "avatar": "NG", "color": "#6d28d9", "tel": "", "email": "", "commission": ""}, {"id": 27, "nom": "Lasserre", "prenom": "Stéphane", "role": "Conseiller", "delegation": "", "avatar": "SL", "color": "#0369a1", "tel": "", "email": "", "commission": ""}];
+const ELUS_DEF = [{"id": 1, "nom": "Troton", "prenom": "Catherine", "role": "Tête de Liste", "delegation": "Maire de Vizille", "avatar": "CT", "color": "#1a3a2a", "photo": "https://vizilleenmouvement.fr/images/catherine-troton.jpg", "photoPos": "center 40%", "tel": "", "email": "", "commission": ""}, {"id": 2, "nom": "Ughetto-Monfrin", "prenom": "Bernard", "role": "Adjoint", "delegation": "Mobilités", "avatar": "BU", "color": "#2d5a40", "photo": "https://vizilleenmouvement.fr/images/bernard-ughetto-monfrin.jpg", "photoPos": "center 30%", "tel": "", "email": "", "commission": ""}, {"id": 3, "nom": "Berriche", "prenom": "Saïda", "role": "Adjointe", "delegation": "à la Tranquillité, le bien vivre ensemble, les commerces", "avatar": "SB", "color": "#3d7a5a", "photo": "https://vizilleenmouvement.fr/images/saida-berriche.jpg", "photoPos": "center 25%", "tel": "", "email": "", "commission": ""}, {"id": 4, "nom": "Faure", "prenom": "Gilles", "role": "Adjoint", "delegation": "Accès aux droits, santé publique, action sociale et solidarité", "avatar": "GF", "color": "#8B5CF6", "photo": "https://vizilleenmouvement.fr/images/gilles-faure.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 5, "nom": "Hermitte", "prenom": "Angélique", "role": "Conseillère déléguée", "delegation": "Petite enfance", "avatar": "AH", "color": "#F97316", "photo": "https://vizilleenmouvement.fr/images/angelique-hermitte.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 6, "nom": "Forestier", "prenom": "Gérard", "role": "Adjoint", "delegation": "Transition environnementale", "avatar": "GF", "color": "#EC4899", "photo": "https://vizilleenmouvement.fr/images/gerard-forestier.jpg", "photoPos": "center 40%", "tel": "", "email": "", "commission": ""}, {"id": 7, "nom": "ARGOUD", "prenom": "Marie-Claude", "role": "Première Adjointe", "delegation": "en charge de la  Culture, du Patrimoine et de la Communication.", "avatar": "MA", "color": "#F59E0B", "photo": "https://vizilleenmouvement.fr/images/marie-claude-argoud.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 8, "nom": "Lamarca", "prenom": "Louis", "role": "Adjoint", "delegation": "à l'urbanisme et aux travaux", "avatar": "LL", "color": "#3B82F6", "photo": "https://vizilleenmouvement.fr/images/louis-lamarca.jpg", "photoPos": "center 40%", "tel": "", "email": "", "commission": ""}, {"id": 9, "nom": "Pasquiou", "prenom": "Muriel", "role": "", "delegation": "", "avatar": "MP", "color": "#10B981", "photo": "https://vizilleenmouvement.fr/images/muriel-pasquiou.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 10, "nom": "Pichon", "prenom": "Laurent", "role": "", "delegation": "", "avatar": "LP", "color": "#EF4444", "photo": "https://vizilleenmouvement.fr/images/laurent-pichon.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 11, "nom": "YAHIAOUI", "prenom": "Sakina", "role": "conseillère déléguée", "delegation": "transition environnementale", "avatar": "SY", "color": "#14B8A6", "photo": "https://vizilleenmouvement.fr/images/sakina-yahiaoui.jpg", "photoPos": "center 40%", "tel": "", "email": "", "commission": ""}, {"id": 12, "nom": "CHERIGUI", "prenom": "Mohamed", "role": "", "delegation": "", "avatar": "MC", "color": "#6366F1", "photo": "https://vizilleenmouvement.fr/images/mohamed-cherigui.jpg", "photoPos": "center 25%", "tel": "", "email": "", "commission": ""}, {"id": 13, "nom": "REIJASSE", "prenom": "Christelle", "role": "", "delegation": "", "avatar": "CR", "color": "#db2777", "photo": "https://vizilleenmouvement.fr/images/christelle-reijasse.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 14, "nom": "MENDESS", "prenom": "Ahmed", "role": "Conseillé délégué", "delegation": "Accompagnement sports et jeunesse", "avatar": "AM", "color": "#0891b2", "photo": "https://vizilleenmouvement.fr/images/ahmed-mendess.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 15, "nom": "Sanchez", "prenom": "Christine", "role": "", "delegation": "", "avatar": "CS", "color": "#65a30d", "photo": "https://vizilleenmouvement.fr/images/christine-sanchez.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 16, "nom": "Pasquiou", "prenom": "Fabrice", "role": "Conseiller délégué", "delegation": "Risques majeurs", "avatar": "FP", "color": "#7c3aed", "photo": "https://vizilleenmouvement.fr/images/fabrice-pasquiou.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 17, "nom": "El-Kebir", "prenom": "Meriem", "role": "", "delegation": "", "avatar": "ME", "color": "#9333ea", "photo": "https://vizilleenmouvement.fr/images/meriem-el-kebir.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 18, "nom": "Garcia", "prenom": "Jean-Christophe", "role": "", "delegation": "", "avatar": "JG", "color": "#c2410c", "photo": "https://vizilleenmouvement.fr/images/jean-christophe-garcia.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 19, "nom": "PICCA", "prenom": "Muriel", "role": "", "delegation": "", "avatar": "MP", "color": "#b45309", "photo": "https://vizilleenmouvement.fr/images/muriel-picca.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 20, "nom": "Thuillier", "prenom": "Michel", "role": "", "delegation": "", "avatar": "MT", "color": "#0f766e", "photo": "https://vizilleenmouvement.fr/images/michel-thuillier.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 21, "nom": "Nifenecker", "prenom": "Isabelle", "role": "", "delegation": "", "avatar": "IN", "color": "#1d4ed8", "photo": "https://vizilleenmouvement.fr/images/isabelle-nifenecker.jpg", "photoPos": "center 40%", "tel": "", "email": "", "commission": ""}, {"id": 22, "nom": "Venans", "prenom": "André-Paul", "role": "Conseiller", "delegation": "", "avatar": "AV", "color": "#be185d", "photo": "https://vizilleenmouvement.fr/images/andre-paul-venans.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 23, "nom": "Jacolin", "prenom": "Nathalie", "role": "", "delegation": "", "avatar": "NJ", "color": "#15803d", "photo": "https://vizilleenmouvement.fr/images/nathalie-jacolin.jpg", "photoPos": "center 40%", "tel": "", "email": "", "commission": ""}, {"id": 24, "nom": "Cosentino", "prenom": "Ignazio", "role": "", "delegation": "", "avatar": "IC", "color": "#b91c1c", "photo": "https://vizilleenmouvement.fr/images/ignazio-consentino.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 25, "nom": "Germain-Vey", "prenom": "Nathalie", "role": "conseillère déléguée", "delegation": "", "avatar": "NG", "color": "#6d28d9", "photo": "https://vizilleenmouvement.fr/images/nathalie-germain-vey.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 26, "nom": "Lasserre", "prenom": "Stéphane", "role": "Conseiller", "delegation": "", "avatar": "SL", "color": "#0369a1", "photo": "https://vizilleenmouvement.fr/images/stephane-lasserre.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 27, "nom": "Troton", "prenom": "Michel", "role": "Conseiller", "delegation": "Numérique, communication, histoire locale", "avatar": "MT", "color": "#2d5a40", "photo": "https://vizilleenmouvement.fr/images/michel-troton.jpg", "photoPos": "center top", "tel": "", "email": "", "commission": "Culture, Patrimoine & Jumelages"}];
 let elus=load('elus.json',ELUS_DEF);
 let annonces=load('annonces.json',[]),tasks=load('tasks.json',[]);
 let signalements=load('signalements.json',[]),evenements=load('evenements.json',[]);
@@ -301,7 +329,7 @@ function authUser(req){
   const pwd=dec.slice(colon+1);
   const account=ACCOUNTS[user];
   if(!account||account.pwd!==pwd)return null;
-  return {username:user,...account};
+  return {username:user,prenom:account.nom?(account.nom.split(' ')[0]):'',photo:account.photo||'',photoPos:account.photoPos||'center center',...account};
 }
 function auth(req){return !!authUser(req);}
 function deny(res){
@@ -364,11 +392,11 @@ const server=http.createServer(function(req,res){
     signalements,evenements,comptes_rendus,stats:stats(),
     biblio_count:biblio.length,
     chat:chat.slice(-50),
-    me:{id:ME.id,nom:ME.nom,role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username}
+    me:{id:ME.id,nom:ME.nom,prenom:ME.prenom||'',role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||'',photo:ME.photo||'',photoPos:ME.photoPos||'center center'}
   });
 
   // IDENTITÉ CONNECTÉE
-  if(p==='/api/me')return J(res,{id:ME.id,nom:ME.nom,role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||''});
+  if(p==='/api/me')return J(res,{id:ME.id,nom:ME.nom,prenom:ME.prenom||'',role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||'',photo:ME.photo||'',photoPos:ME.photoPos||'center center'});
 
   // CHANGER SON MOT DE PASSE
   if(p==='/api/change_pwd'&&m==='POST')return body(req,function(err,d){
@@ -891,7 +919,7 @@ const COMM={"Culture, Patrimoine & Jumelages": ["Culture", "Patrimoine", "Jumela
 const COLORS={"Culture, Patrimoine & Jumelages": "#8B5CF6", "Mobilités": "#3B82F6", "Transition écologique": "#10B981", "Action sociale": "#F59E0B", "Concertation citoyenne": "#6366F1", "Animations de proximité": "#EC4899", "Économie": "#14B8A6", "Métropole": "#6B7280", "Enfance/Jeunesse": "#F97316", "Tranquillité publique": "#EF4444", "Travaux & Urbanisme": "#84CC16", "Santé": "#06B6D4"};
 const ICONS={"Culture, Patrimoine & Jumelages": "🎭", "Mobilités": "🚲", "Transition écologique": "🌿", "Action sociale": "🤝", "Concertation citoyenne": "🗣", "Animations de proximité": "🎪", "Économie": "💼", "Métropole": "🏙", "Enfance/Jeunesse": "👦", "Tranquillité publique": "🛡", "Travaux & Urbanisme": "🏗", "Santé": "🏥"};
 const REFS={"Culture, Patrimoine & Jumelages": "Marie-Claude", "Enfance/Jeunesse": "Angélique", "Animations de proximité": "Jean-Christophe"};
-const ELUS0=[{"id": 1, "nom": "Catherine Troton", "role": "Maire", "delegation": "Direction générale", "commission": "", "tel": "", "email": "maire@vizille.fr", "avatar": "CT", "color": "#1a3a2a"}, {"id": 2, "nom": "Michel Troton", "role": "Conseiller", "delegation": "Numérique, communication", "commission": "Culture, Patrimoine & Jumelages", "tel": "", "email": "", "avatar": "MT", "color": "#2d5a40"}, {"id": 3, "nom": "Marie-Claude", "role": "Adjointe", "delegation": "Culture, Patrimoine, Jumelages", "commission": "Culture, Patrimoine & Jumelages", "tel": "", "email": "", "avatar": "MC", "color": "#8B5CF6"}, {"id": 4, "nom": "Angélique", "role": "Adjointe", "delegation": "Enfance, Jeunesse", "commission": "Enfance/Jeunesse", "tel": "", "email": "", "avatar": "AN", "color": "#F97316"}, {"id": 5, "nom": "Jean-Christophe", "role": "Conseiller", "delegation": "Animations", "commission": "Animations de proximité", "tel": "", "email": "", "avatar": "JC", "color": "#EC4899"}];
+const ELUS0=[{"id": 1, "nom": "Troton", "prenom": "Catherine", "role": "Tête de Liste", "delegation": "Maire de Vizille", "avatar": "CT", "color": "#1a3a2a", "photo": "https://vizilleenmouvement.fr/images/catherine-troton.jpg", "photoPos": "center 40%", "tel": "", "email": "", "commission": ""}, {"id": 2, "nom": "Ughetto-Monfrin", "prenom": "Bernard", "role": "Adjoint", "delegation": "Mobilités", "avatar": "BU", "color": "#2d5a40", "photo": "https://vizilleenmouvement.fr/images/bernard-ughetto-monfrin.jpg", "photoPos": "center 30%", "tel": "", "email": "", "commission": ""}, {"id": 3, "nom": "Berriche", "prenom": "Saïda", "role": "Adjointe", "delegation": "à la Tranquillité, le bien vivre ensemble, les commerces", "avatar": "SB", "color": "#3d7a5a", "photo": "https://vizilleenmouvement.fr/images/saida-berriche.jpg", "photoPos": "center 25%", "tel": "", "email": "", "commission": ""}, {"id": 4, "nom": "Faure", "prenom": "Gilles", "role": "Adjoint", "delegation": "Accès aux droits, santé publique, action sociale et solidarité", "avatar": "GF", "color": "#8B5CF6", "photo": "https://vizilleenmouvement.fr/images/gilles-faure.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 5, "nom": "Hermitte", "prenom": "Angélique", "role": "Conseillère déléguée", "delegation": "Petite enfance", "avatar": "AH", "color": "#F97316", "photo": "https://vizilleenmouvement.fr/images/angelique-hermitte.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 6, "nom": "Forestier", "prenom": "Gérard", "role": "Adjoint", "delegation": "Transition environnementale", "avatar": "GF", "color": "#EC4899", "photo": "https://vizilleenmouvement.fr/images/gerard-forestier.jpg", "photoPos": "center 40%", "tel": "", "email": "", "commission": ""}, {"id": 7, "nom": "ARGOUD", "prenom": "Marie-Claude", "role": "Première Adjointe", "delegation": "en charge de la  Culture, du Patrimoine et de la Communication.", "avatar": "MA", "color": "#F59E0B", "photo": "https://vizilleenmouvement.fr/images/marie-claude-argoud.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 8, "nom": "Lamarca", "prenom": "Louis", "role": "Adjoint", "delegation": "à l'urbanisme et aux travaux", "avatar": "LL", "color": "#3B82F6", "photo": "https://vizilleenmouvement.fr/images/louis-lamarca.jpg", "photoPos": "center 40%", "tel": "", "email": "", "commission": ""}, {"id": 9, "nom": "Pasquiou", "prenom": "Muriel", "role": "", "delegation": "", "avatar": "MP", "color": "#10B981", "photo": "https://vizilleenmouvement.fr/images/muriel-pasquiou.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 10, "nom": "Pichon", "prenom": "Laurent", "role": "", "delegation": "", "avatar": "LP", "color": "#EF4444", "photo": "https://vizilleenmouvement.fr/images/laurent-pichon.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 11, "nom": "YAHIAOUI", "prenom": "Sakina", "role": "conseillère déléguée", "delegation": "transition environnementale", "avatar": "SY", "color": "#14B8A6", "photo": "https://vizilleenmouvement.fr/images/sakina-yahiaoui.jpg", "photoPos": "center 40%", "tel": "", "email": "", "commission": ""}, {"id": 12, "nom": "CHERIGUI", "prenom": "Mohamed", "role": "", "delegation": "", "avatar": "MC", "color": "#6366F1", "photo": "https://vizilleenmouvement.fr/images/mohamed-cherigui.jpg", "photoPos": "center 25%", "tel": "", "email": "", "commission": ""}, {"id": 13, "nom": "REIJASSE", "prenom": "Christelle", "role": "", "delegation": "", "avatar": "CR", "color": "#db2777", "photo": "https://vizilleenmouvement.fr/images/christelle-reijasse.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 14, "nom": "MENDESS", "prenom": "Ahmed", "role": "Conseillé délégué", "delegation": "Accompagnement sports et jeunesse", "avatar": "AM", "color": "#0891b2", "photo": "https://vizilleenmouvement.fr/images/ahmed-mendess.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 15, "nom": "Sanchez", "prenom": "Christine", "role": "", "delegation": "", "avatar": "CS", "color": "#65a30d", "photo": "https://vizilleenmouvement.fr/images/christine-sanchez.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 16, "nom": "Pasquiou", "prenom": "Fabrice", "role": "Conseiller délégué", "delegation": "Risques majeurs", "avatar": "FP", "color": "#7c3aed", "photo": "https://vizilleenmouvement.fr/images/fabrice-pasquiou.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 17, "nom": "El-Kebir", "prenom": "Meriem", "role": "", "delegation": "", "avatar": "ME", "color": "#9333ea", "photo": "https://vizilleenmouvement.fr/images/meriem-el-kebir.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 18, "nom": "Garcia", "prenom": "Jean-Christophe", "role": "", "delegation": "", "avatar": "JG", "color": "#c2410c", "photo": "https://vizilleenmouvement.fr/images/jean-christophe-garcia.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 19, "nom": "PICCA", "prenom": "Muriel", "role": "", "delegation": "", "avatar": "MP", "color": "#b45309", "photo": "https://vizilleenmouvement.fr/images/muriel-picca.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 20, "nom": "Thuillier", "prenom": "Michel", "role": "", "delegation": "", "avatar": "MT", "color": "#0f766e", "photo": "https://vizilleenmouvement.fr/images/michel-thuillier.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 21, "nom": "Nifenecker", "prenom": "Isabelle", "role": "", "delegation": "", "avatar": "IN", "color": "#1d4ed8", "photo": "https://vizilleenmouvement.fr/images/isabelle-nifenecker.jpg", "photoPos": "center 40%", "tel": "", "email": "", "commission": ""}, {"id": 22, "nom": "Venans", "prenom": "André-Paul", "role": "Conseiller", "delegation": "", "avatar": "AV", "color": "#be185d", "photo": "https://vizilleenmouvement.fr/images/andre-paul-venans.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 23, "nom": "Jacolin", "prenom": "Nathalie", "role": "", "delegation": "", "avatar": "NJ", "color": "#15803d", "photo": "https://vizilleenmouvement.fr/images/nathalie-jacolin.jpg", "photoPos": "center 40%", "tel": "", "email": "", "commission": ""}, {"id": 24, "nom": "Cosentino", "prenom": "Ignazio", "role": "", "delegation": "", "avatar": "IC", "color": "#b91c1c", "photo": "https://vizilleenmouvement.fr/images/ignazio-consentino.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 25, "nom": "Germain-Vey", "prenom": "Nathalie", "role": "conseillère déléguée", "delegation": "", "avatar": "NG", "color": "#6d28d9", "photo": "https://vizilleenmouvement.fr/images/nathalie-germain-vey.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 26, "nom": "Lasserre", "prenom": "Stéphane", "role": "Conseiller", "delegation": "", "avatar": "SL", "color": "#0369a1", "photo": "https://vizilleenmouvement.fr/images/stephane-lasserre.jpg", "photoPos": "center center", "tel": "", "email": "", "commission": ""}, {"id": 27, "nom": "Troton", "prenom": "Michel", "role": "Conseiller", "delegation": "Numérique, communication, histoire locale", "avatar": "MT", "color": "#2d5a40", "photo": "https://vizilleenmouvement.fr/images/michel-troton.jpg", "photoPos": "center top", "tel": "", "email": "", "commission": "Culture, Patrimoine & Jumelages"}];
 const GUIDES=[{"id": "1", "titre": "Droits et devoirs de l'élu", "icon": "⚖️", "contenu": "Droit à la formation (18h/an), protection fonctionnelle, indemnités selon rang. Devoir de réserve, déport en cas de conflit d'intérêts. Questions : DGS ou AMF (amf.asso.fr)."}, {"id": "2", "titre": "Le conseil municipal", "icon": "🏛️", "contenu": "Réunit au moins 4 fois/an. Convocation 5 jours avant. Vote à la majorité simple. Déport obligatoire si intérêt personnel. Questions orales possibles."}, {"id": "3", "titre": "Le budget municipal", "icon": "💰", "contenu": "Fonctionnement + investissement. Budget Vizille env. 8-9M/an. Subventions : DETR (Etat), GAM (Métropole), Département Isère, Région AURA. DOB en décembre avant vote."}, {"id": "4", "titre": "Qui fait quoi en mairie", "icon": "🏢", "contenu": "DGS coordonne. Services : Technique (voirie), Culturel, CCAS (social), Police Municipale, Enfance, Urbanisme. Passer toujours par la hiérarchie pour toute demande."}, {"id": "5", "titre": "Conflit d'intérêts", "icon": "🛡️", "contenu": "Si délibération vous concerne directement : quittez la salle avant le vote. Signalez au Maire en amont. En cas de doute : consultez le DGS."}, {"id": "6", "titre": "Droits à la formation", "icon": "🎓", "contenu": "18h/an remboursées. Organismes agréés : AMF Formation, CNFPT. Recommandés : finances locales, urbanisme, marchés publics. Demande au Maire avec justificatifs."}];
 const RESS=[{"titre": "AMF — Association des Maires", "url": "https://www.amf.asso.fr", "icon": "🏛", "desc": "Actualités, guides, formations"}, {"titre": "Légifrance", "url": "https://www.legifrance.gouv.fr", "icon": "⚖️", "desc": "Textes législatifs et réglementaires"}, {"titre": "Maire-Info", "url": "https://www.maire-info.com", "icon": "📰", "desc": "Actualité quotidienne des communes"}, {"titre": "Collectivités-locales.gouv", "url": "https://www.collectivites-locales.gouv.fr", "icon": "🏗", "desc": "Informations pour les élus"}, {"titre": "kMeet (Visio)", "url": "https://kmeet.infomaniak.com", "icon": "🎥", "desc": "Visioconférence sécurisée"}, {"titre": "kDrive (Documents)", "url": "https://kdrive.infomaniak.com", "icon": "📁", "desc": "Stockage partagé de l'équipe"}, {"titre": "Site Vizille en Mouvement", "url": "https://vizilleenmouvement.fr", "icon": "🌐", "desc": "Site public de la liste"}, {"titre": "WordPress Vizille", "url": "https://wp.vizilleenmouvement.fr", "icon": "🖥", "desc": "Site officiel de la commune"}];
 return `<!DOCTYPE html>
@@ -2130,6 +2158,7 @@ function renderEvHome(){
 
 /* ── WIDGETS ACCUEIL ─────────────────────────────────────────────────────── */
 
+function hideImg(el){el.style.display="none";}
 function addTaskFocus(){
   var i=$("task-inp");
   if(i){i.focus();}
@@ -2251,7 +2280,15 @@ function renderHeroAccueil(){
     "Vizille a une histoire extraordinaire — son avenir est entre nos mains.",
     "Le service public local est le plus proche des gens.",
   ];
-  if(av){av.textContent=ME.avatar||"?";av.style.background=ME.color||"var(--g4)";}
+  if(av){
+    if(ME.photo){
+      av.innerHTML='<img src="'+ME.photo+'" style="width:100%;height:100%;object-fit:cover;object-position:'+(ME.photoPos||"center center")+';border-radius:14px" onerror="hideImg(this)">';
+      av.style.background=ME.color||"var(--g4)";
+    } else {
+      av.textContent=ME.avatar||"?";
+      av.style.background=ME.color||"var(--g4)";
+    }
+  }
   if(bj) bj.textContent=salut+", "+ME.nom.split(" ")[0]+" !";
   if(rl) rl.textContent=(ME.role||"")+(ME.delegation?" — "+ME.delegation:"");
   if(db) db.textContent=now.getDate();
@@ -2499,14 +2536,20 @@ function saveCR(){
 var ELU_COLORS=["#1d3d2b","#2d5a40","#3d7a5a","#8B5CF6","#F97316","#EC4899","#F59E0B","#3B82F6","#10B981","#EF4444","#14B8A6","#6366F1"];
 
 function renderRepElus(){
-  // Répertoire personnel : afficher directement les fichiers de l'utilisateur connecté
   var g=$("rep-elus-grid"), f=$("rep-elus-files");
   if(g)g.style.display="none";
   if(f)f.style.display="block";
-  // En-tête avec identité
-  var av=$("rep-elu-av"),nm=$("rep-elu-name"),ro=$("rep-elu-role");
-  if(av){av.textContent=ME.avatar;av.style.background=ME.color||"var(--g3)";}
-  el("rep-elu-name",ME.nom);
+  // En-tête avec photo si disponible
+  var av=$("rep-elu-av");
+  if(av){
+    if(ME.photo){
+      av.innerHTML='<img src="'+ME.photo+'" style="width:100%;height:100%;object-fit:cover;object-position:'+(ME.photoPos||"center center")+'" onerror="hideImg(this)">';
+    } else {
+      av.textContent=ME.avatar;
+    }
+    av.style.background=ME.color||"var(--g3)";
+  }
+  el("rep-elu-name",(ME.prenom?ME.prenom+' ':'')+ME.nom);
   el("rep-elu-role",ME.role+" — Répertoire privé");
   // Charger les fichiers depuis le serveur
   apiGet("/api/rep_elus").then(function(data){
@@ -2564,26 +2607,42 @@ function renderElus(){
   var el2=$("elus-list"); if(!el2)return;
   var list=ELUS_DATA.length?ELUS_DATA:ELUS0;
   el2.innerHTML=list.map(function(e,i){
+    var photoHtml=e.photo
+      ?'<img src="'+e.photo+'" style="width:100%;height:100%;object-fit:cover;object-position:'+(e.photoPos||"center center")+'" onerror="hideImg(this)">'
+       +'<div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff;font-family:var(--fd)">'+e.avatar+'</div>'
+      :'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff;font-family:var(--fd)">'+e.avatar+'</div>';
     return '<div class="elu" onclick="openElu('+i+')">'
-      +'<div class="elu-av" style="background:'+(e.color||ELU_COLORS[i%ELU_COLORS.length])+'">'+e.avatar+'</div>'
-      +'<div><div class="elu-n">'+e.nom+'</div><div class="elu-r">'+e.role+'</div>'+(e.delegation?'<div class="elu-d">'+e.delegation+'</div>':"")+'</div>'
-      +'</div>';
+      +'<div class="elu-av" style="background:'+(e.color||'var(--g3)')+';overflow:hidden;border-radius:50%;flex-shrink:0">'+photoHtml+'</div>'
+      +'<div style="flex:1;min-width:0">'
+      +'<div class="elu-n">'+(e.prenom?e.prenom+' ':'')+e.nom+'</div>'
+      +'<div class="elu-r">'+e.role+'</div>'
+      +(e.delegation?'<div class="elu-d">'+e.delegation+'</div>':"")
+      +'</div></div>';
   }).join("");
 }
 function openElu(i){
   var list=ELUS_DATA.length?ELUS_DATA:ELUS0;
   var e=list[i];if(!e)return;
-  var col=e.color||ELU_COLORS[i%ELU_COLORS.length];
-  $("elu-det-t").textContent=e.nom;
-  $("elu-det-b").innerHTML='<div style="display:flex;align-items:center;gap:14px;padding:.85rem;background:var(--w);border-radius:var(--r);margin-bottom:1rem">'
-    +'<div style="width:50px;height:50px;border-radius:50%;background:'+col+';display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;color:#fff">'+e.avatar+'</div>'
-    +'<div><div style="font-size:.95rem;font-weight:700;font-family:var(--fd)">'+e.nom+'</div><div style="font-size:.75rem;color:var(--i3)">'+e.role+'</div></div></div>'
-    +(e.delegation?'<div style="font-size:.76rem;margin-bottom:.6rem"><strong>Délégation :</strong> '+e.delegation+'</div>':"")
-    +(e.commission?'<div style="font-size:.76rem;margin-bottom:.6rem"><strong>Commission :</strong> <span class="chip">'+e.commission+'</span></div>':"")
-    +(e.tel?'<div style="font-size:.76rem;margin-bottom:.6rem"><strong>Tél :</strong> <a href="tel:'+e.tel+'" style="color:var(--g3)">'+e.tel+'</a></div>':"")
-    +(e.email?'<div style="font-size:.76rem;margin-bottom:.6rem"><strong>Email :</strong> <a href="mailto:'+e.email+'" style="color:var(--g3)">'+e.email+'</a></div>':"");
+  var col=e.color||"var(--g3)";
+  var fullName=(e.prenom?e.prenom+" ":"")+e.nom;
+  $("elu-det-t").textContent=fullName;
+  var photoBlock=e.photo
+    ?'<img src="'+e.photo+'" style="width:72px;height:72px;border-radius:14px;object-fit:cover;object-position:'+(e.photoPos||"center center")+';flex-shrink:0" onerror="hideImg(this)">   '
+    :'<div style="width:72px;height:72px;border-radius:14px;background:'+col+';display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;color:#fff;flex-shrink:0">'+e.avatar+'</div>';
+  $("elu-det-b").innerHTML=
+    '<div style="display:flex;align-items:center;gap:14px;padding:.9rem;background:var(--g8);border-radius:var(--R);margin-bottom:1rem;border:1px solid var(--g7)">'
+    +photoBlock
+    +'<div><div style="font-size:1rem;font-weight:700;font-family:var(--fd)">'+fullName+'</div>'
+    +'<div style="font-size:.78rem;color:var(--g3);margin-top:2px;font-weight:600">'+e.role+'</div>'
+    +(e.delegation?'<div style="font-size:.72rem;color:var(--i3);margin-top:3px">'+e.delegation+'</div>':"")
+    +'</div></div>'
+    +(e.commission?'<div style="font-size:.78rem;padding:.5rem 0;border-bottom:1px solid var(--w2)"><strong style="color:var(--i3)">Commission :</strong> <span class="chip">'+e.commission+'</span></div>':"")
+    +(e.tel?'<div style="font-size:.78rem;padding:.5rem 0;border-bottom:1px solid var(--w2)"><strong style="color:var(--i3)">Tél : </strong><a href="tel:'+e.tel+'" style="color:var(--g3)">'+e.tel+'</a></div>':"")
+    +(e.email?'<div style="font-size:.78rem;padding:.5rem 0"><strong style="color:var(--i3)">Email : </strong><a href="mailto:'+e.email+'" style="color:var(--g3)">'+e.email+'</a></div>':"")
+    +((!e.tel&&!e.email)?'<div style="font-size:.73rem;color:var(--i4);margin-top:.5rem;font-style:italic">Coordonnees a completer par l&#39;administrateur.</div>':"");
   om("elu-det");
 }
+
 
 // ── COMMISSIONS ──────────────────────────────────────────────────────────────
 function buildFilters(){
@@ -2910,7 +2969,15 @@ function renderHeroAccueil(){
 
   var av=$("hero-av"),bj=$("hero-bonjour"),rl=$("hero-role"),ct=$("hero-citation");
   var db=$("hero-date-big"),mo=$("hero-mois");
-  if(av){av.textContent=ME.avatar||"?";av.style.background=ME.color||"var(--g4)";}
+  if(av){
+    if(ME.photo){
+      av.innerHTML='<img src="'+ME.photo+'" style="width:100%;height:100%;object-fit:cover;object-position:'+(ME.photoPos||"center center")+';border-radius:14px" onerror="hideImg(this)">';
+      av.style.background=ME.color||"var(--g4)";
+    } else {
+      av.textContent=ME.avatar||"?";
+      av.style.background=ME.color||"var(--g4)";
+    }
+  }
   if(bj) bj.textContent=salut+", "+ME.nom.split(" ")[0]+" !";
   if(rl) rl.textContent=(ME.role||"")+(ME.delegation?" — "+ME.delegation:"");
   if(db) db.textContent=now.getDate();
