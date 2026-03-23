@@ -450,6 +450,39 @@ const server=http.createServer(function(req,res){
     return J(res,{ok:true,projet:projet});
   });
 
+  // MODIFIER UN PROJET
+  if(p.match(/^\/api\/projet\/\d+$/)&&m==='PATCH')return body(req,function(err,d){
+    if(err)return J(res,{ok:false},400);
+    var pid=parseInt(p.split('/').pop()),found=false;
+    projets=projets.map(function(pr){
+      if(pr.id!==pid)return pr;
+      found=true;
+      return Object.assign({},pr,{
+        titre:d.titre!==undefined?d.titre:pr.titre,
+        theme:d.theme!==undefined?d.theme:pr.theme,
+        statut:d.statut!==undefined?d.statut:pr.statut,
+        annee:d.annee!==undefined?(d.annee?parseInt(d.annee):null):pr.annee,
+        importance:d.importance!==undefined?parseInt(d.importance)||1:pr.importance,
+        resume:d.resume!==undefined?d.resume:pr.resume,
+        description:d.description!==undefined?d.description:pr.description,
+        tags:d.tags!==undefined?d.tags:pr.tags,
+        modified:new Date().toISOString()
+      });
+    });
+    if(!found)return J(res,{ok:false,error:'Projet non trouve'},404);
+    save('projets.json',projets);
+    if(d.statut!==undefined){statuts[pid]=d.statut;save('statuts.json',statuts);}
+    return J(res,{ok:true,projet:projets.find(function(pr){return pr.id===pid;})});
+  });
+
+  // SUPPRIMER UN PROJET
+  if(p.match(/^\/api\/projet\/\d+$/)&&m==='DELETE'){
+    var pid=parseInt(p.split('/').pop()),before=projets.length;
+    projets=projets.filter(function(pr){return pr.id!==pid;});
+    if(projets.length<before){save('projets.json',projets);delete statuts[pid];save('statuts.json',statuts);}
+    return J(res,{ok:projets.length<before});
+  }
+
   // STATUT PROJET
   if(p==='/api/statut'&&m==='POST')return body(req,function(err,d){
     if(err)return J(res,{ok:false},400);
@@ -2068,6 +2101,25 @@ textarea.fi{resize:vertical;min-height:90px;}
     <button class="btn btn-p" onclick="changePwd()">Enregistrer</button>
   </div>
 </div></div>
+<div class="ov" id="ov-projet-edit"><div class="modal" style="max-width:600px">
+  <div class="mhd"><h3>&#x270F;&#xFE0F; Modifier le projet</h3><button class="mcl" onclick="cm()">&#xd7;</button></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:.75rem">
+    <div class="ff" style="grid-column:1/-1"><label>Titre</label><input class="fi" id="ep-titre"></div>
+    <div class="ff"><label>Commission / Th&#xe8;me</label><select class="fi" id="ep-theme"></select></div>
+    <div class="ff"><label>Statut</label><select class="fi" id="ep-statut"></select></div>
+    <div class="ff"><label>Ann&#xe9;e cible</label><input class="fi" id="ep-annee" type="number" min="2026" max="2032"></div>
+    <div class="ff"><label>Importance</label><select class="fi" id="ep-imp"><option value="1">&#x2605; Normale</option><option value="2">&#x2605;&#x2605; Importante</option><option value="3">&#x2605;&#x2605;&#x2605; Prioritaire</option></select></div>
+    <div class="ff" style="grid-column:1/-1"><label>R&#xe9;sum&#xe9;</label><input class="fi" id="ep-resume"></div>
+    <div class="ff" style="grid-column:1/-1"><label>Description</label><textarea class="fi" id="ep-desc" rows="3" style="resize:vertical"></textarea></div>
+    <div class="ff" style="grid-column:1/-1"><label>Tags</label><input class="fi" id="ep-tags" placeholder="tag1, tag2&#x2026;"></div>
+  </div>
+  <div id="ep-msg" style="font-size:.73rem;color:var(--red);margin-bottom:.5rem"></div>
+  <div class="mft">
+    <button class="btn btn-g" onclick="cm()">Annuler</button>
+    <button class="btn btn-d btn-sm" onclick="dlProj()" style="margin-right:auto">&#x1F5D1; Supprimer</button>
+    <button class="btn btn-p" onclick="svProj()">&#x1F4BE; Enregistrer</button>
+  </div>
+</div></div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -2100,6 +2152,7 @@ function mkH(extra){
 }
 function apiGet(u){return fetch(u,{credentials:"include",headers:_auth?{Authorization:_auth}:{}}).then(function(r){if(r.status===401){showLoginMsg();return {};}return r.json();});}
 function apiPost(u,d){return fetch(u,{method:"POST",credentials:"include",headers:mkH(),body:JSON.stringify(d)}).then(function(r){if(r.status===401){showLoginMsg();return {ok:false};}return r.json();});}
+function apiPatch(u,d){return fetch(u,{method:"PATCH",credentials:"include",headers:mkH(),body:JSON.stringify(d)}).then(function(r){return r.json();});}
 function apiPut(u,d){return fetch(u,{method:"PUT",credentials:"include",headers:mkH(),body:JSON.stringify(d)}).then(function(r){return r.json();});}
 function apiDel(u){return fetch(u,{method:"DELETE",credentials:"include",headers:_auth?{Authorization:_auth}:{} }).then(function(r){return r.json();});}
 function showLoginMsg(){toast("Session expirée — rechargez la page.",4000);}
@@ -2140,6 +2193,7 @@ function goGlobal(){gp("global",qsa(".sbi")[10]);}
 // ── INIT ─────────────────────────────────────────────────────────────────────
 function openProfile(){
   var av=$("top-av-btn");if(av){av.textContent=ME.avatar;av.style.background=ME.color||"var(--g4)";}
+      setTimeout(applyRoles,100);
   var pb=$("profile-body");if(!pb)return;
   pb.innerHTML='<div style="display:flex;align-items:center;gap:14px;padding:.85rem;background:var(--g8);border-radius:var(--R)">'
     +'<div style="width:50px;height:50px;border-radius:14px;background:'+(ME.color||"var(--g3)")+';display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;color:#fff;font-family:var(--fd)">'+ME.avatar+'</div>'
@@ -2553,7 +2607,7 @@ function toggleGuide(el){
 }
 function fmtGuide(txt){
   // Transformer le texte brut en HTML lisible
-  return txt.split('\n').map(function(line){
+  return txt.split(/[\r\n]+/).map(function(line){
     var t=line.trim();
     if(!t) return '<div style="height:.4rem"></div>';
     // Titre de section (MAJUSCULES seules)
@@ -2922,7 +2976,8 @@ function rTb(bid,rows,showC){
       +'<td><span class="b '+bc(st)+'">'+st+'</span></td>'
       +'<td style="color:var(--i3);font-family:var(--fm);font-size:.72rem">'+(p.annee||"—")+'</td>'
       +'<td>'+imp(p.importance)+'</td>'
-      +'<td><select class="ssel" data-pid="'+p.id+'" data-t="'+p.titre.replace(/"/g,"&quot;")+'" onchange="uSt(+this.dataset.pid,this.value,this.dataset.t)">'+opts+'</select></td>'
+      +'<td style="display:flex;align-items:center;gap:5px"><select class="ssel" data-pid="'+p.id+'" data-t="'+p.titre.replace(/"/g,"&quot;")+'" onchange="uSt(+this.dataset.pid,this.value,this.dataset.t)">'+opts+'</select>'
+      +'<button class="btn btn-g btn-sm" onclick="oProj('+p.id+')" title="Modifier" style="padding:3px 7px;flex-shrink:0">&#x270F;</button></td>'
       +'</tr>';
   }).join("");
 }
@@ -3462,6 +3517,57 @@ function gpByName(pageName){
   }
 }
 function navToAgenda(){gp("agenda",qsa(".sbi")[3]);}
+
+
+// ── ÉDITION PROJET ──────────────────────────────────────────────────────────
+var _ePid=null;
+function oProj(pid){
+  var p=P.find(function(x){return x.id===pid;});if(!p)return;
+  _ePid=pid;
+  var ts=$("ep-theme");
+  ts.innerHTML=Object.keys(COMM).map(function(k){return COMM[k].map(function(t){return'<option value="'+t+'"'+(p.theme===t?' selected':'')+'>'+k+' — '+t+'</option>';}).join('');}).join('');
+  var ss=$("ep-statut");
+  ss.innerHTML=SLIST.map(function(s){return'<option value="'+s+'"'+((ST[pid]||p.statut)===s?' selected':'')+'>'+s+'</option>';}).join('');
+  $("ep-titre").value=p.titre||'';
+  $("ep-resume").value=p.resume||'';
+  $("ep-desc").value=p.description||'';
+  $("ep-annee").value=p.annee||'';
+  $("ep-imp").value=String(p.importance||2);
+  $("ep-tags").value=Array.isArray(p.tags)?p.tags.join(', '):(p.tags||'');
+  $("ep-msg").textContent='';
+  om("projet-edit");
+}
+function svProj(){
+  if(!_ePid)return;
+  var titre=v("ep-titre");
+  if(!titre){$("ep-msg").textContent="Titre obligatoire.";return;}
+  apiPatch("/api/projet/"+_ePid,{titre:titre,theme:v("ep-theme"),statut:v("ep-statut"),annee:v("ep-annee")||null,importance:parseInt(v("ep-imp"))||2,resume:v("ep-resume"),description:v("ep-desc"),tags:v("ep-tags")}).then(function(d){
+    if(d.ok){P=P.map(function(p){return p.id===_ePid?d.projet:p;});ST[_ePid]=v("ep-statut");fG();buildCG();buildCharts();renderWidgetMandat();cm();toast("Projet modifie !");}
+    else{$("ep-msg").textContent=d.error||"Erreur.";}
+  });
+}
+function dlProj(){
+  if(!_ePid)return;
+  if(!confirm("Supprimer ce projet ?"))return;
+  apiDel("/api/projet/"+_ePid).then(function(d){
+    if(d.ok){P=P.filter(function(p){return p.id!==_ePid;});delete ST[_ePid];fG();buildCG();buildCharts();renderWidgetMandat();cm();toast("Projet supprime.");}
+  });
+}
+// ── RESTRICTION MENUS SELON ROLE ─────────────────────────────────────────────
+function applyRoles(){
+  var isPriv=ME.role==='Admin'||ME.role==='Maire'||ME.role==='Tete de Liste'||(ME.role&&ME.role.toLowerCase().indexOf('adjoint')>=0)||ME.username==='admin';
+  qsa(".sbi").forEach(function(el){
+    var oc=el.getAttribute("onclick")||'';
+    if(oc.indexOf("'creer'")>=0)el.style.display=isPriv?'':'none';
+  });
+  if(ME.username==='admin'||ME.role==='Admin'){
+    if(!$("adm-badge")){
+      var b=document.createElement("div");b.id="adm-badge";b.textContent="Admin";
+      b.style.cssText="background:#b91c1c;color:#fff;font-size:.6rem;font-weight:700;padding:2px 7px;border-radius:5px;letter-spacing:.05em;margin-right:6px;";
+      var tc=document.querySelector(".tbtn-c");if(tc)tc.before(b);
+    }
+  }
+}
 
 init();
 
