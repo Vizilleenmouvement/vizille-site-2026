@@ -4,12 +4,54 @@ function buildPage() {
   const COMM  = {"Culture, Patrimoine & Jumelages":["Culture","Patrimoine","Jumelages"],"Mobilités":["Mobilités"],"Transition écologique":["Transition écologique"],"Action sociale":["Action sociale"],"Concertation citoyenne":["Concertation citoyenne"],"Animations de proximité":["Animations de proximité"],"Économie":["Économie"],"Métropole":["Métropole"],"Enfance/Jeunesse":["Enfance/Jeunesse"],"Tranquillité publique":["Tranquillité publique"],"Travaux & Urbanisme":["Travaux","Urbanisme"],"Santé":["Santé"]};
   const CCOLORS = {"Culture, Patrimoine & Jumelages":"#8B5CF6","Mobilités":"#3B82F6","Transition écologique":"#10B981","Action sociale":"#F59E0B","Concertation citoyenne":"#6366F1","Animations de proximité":"#EC4899","Économie":"#14B8A6","Métropole":"#6B7280","Enfance/Jeunesse":"#F97316","Tranquillité publique":"#EF4444","Travaux & Urbanisme":"#84CC16","Santé":"#06B6D4"};
   const GUIDES = [
-    {id:"1",icon:"⚖️",titre:"Droits et devoirs de l'élu",court:"18h de formation/an, protection fonctionnelle, devoir de réserve.",contenu:"En tant que conseiller municipal, vous bénéficiez de protections juridiques et avez des obligations. Vous disposez d'un droit à la formation (18h/an rémunérées), d'une protection fonctionnelle, et d'indemnités de fonction si applicable. Vous êtes soumis au devoir de réserve et aux règles de déport en cas de conflit d'intérêts. Toute question : contactez le DGS ou l'AMF (amf.asso.fr)."},
-    {id:"2",icon:"🏛️",titre:"Le conseil municipal",court:"Au moins 4 réunions/an, vote à la majorité simple.",contenu:"Le conseil municipal se réunit au moins 4 fois/an, convoqué par le Maire au moins 5 jours avant (sauf urgence). L'ordre du jour est joint à la convocation. Vous pouvez poser des questions orales. Le vote est public (à main levée ou scrutin nominal) sauf cas particuliers. Une délibération est adoptée à la majorité simple. Vous devez vous déporter si vous avez un intérêt personnel dans une affaire."},
-    {id:"3",icon:"💰",titre:"Comprendre le budget",court:"8-9M€/an pour Vizille, vote en décembre.",contenu:"Le budget est voté en 2 parties : fonctionnement (charges courantes, personnel, services) et investissement (travaux, équipements). Vizille dispose d'environ 8-9M€ de budget annuel. Les subventions clés : DETR (État), GAM (Métropole Grenoble), Département Isère, Région AURA. Chaque commission peut proposer des lignes budgétaires. Le DOB (Débat d'Orientations Budgétaires) a lieu avant le vote du budget en décembre."},
-    {id:"4",icon:"🏢",titre:"Qui fait quoi en mairie ?",court:"DGS = coordinateur. Passez toujours par la hiérarchie.",contenu:"Le DGS coordonne les services. Les principaux services : Technique (travaux, voirie), Culturel (patrimoine, médiathèque), CCAS (social, seniors), Police Municipale, Service Enfance/Périscolaire, Urbanisme, Communication. Pour toute question opérationnelle, passez par votre chef de service référent ou le DGS. Ne donnez jamais d'instructions directes aux agents — passez toujours par la hiérarchie."},
-    {id:"5",icon:"🛡️",titre:"Conflit d'intérêts",court:"Vous devez quitter la salle si vous êtes concerné.",contenu:"Si une délibération concerne directement vos intérêts personnels (famille, activité professionnelle, patrimoine), vous DEVEZ vous retirer de la salle avant le vote. Mentionnez-le au Maire avant la séance. En cas de doute, consultez le DGS. Le préfet peut déférer une délibération entachée de conflit d'intérêts au tribunal administratif."},
-    {id:"6",icon:"🎓",titre:"Droits à la formation",court:"18h remboursées/an — AMF Formation, CNFPT.",contenu:"Tout élu bénéficie de 18 heures de formation/an, remboursées sur le budget communal dans la limite d'un plafond légal. Organismes agréés : AMF Formation, CNFPT, universités. Sujets recommandés pour débutants : finances locales, urbanisme, marchés publics, communication institutionnelle. Demande à adresser au Maire avec justificatifs."}
+    {id:"1",icon:"⚖️",titre:"Droits et devoirs de l'élu",court:"18h de formation/an, protection fonctionnelle, devoir de réserve.",
+     contenu:"En tant que conseiller municipal, vous bénéficiez de protections juridiques et avez des obligations. Vous disposez d'un droit à la formation (18h/an rémunérées), d'une protection fonctionnelle, et d'indemnités de fonction si applicable. Vous êtes soumis au devoir de réserve et aux règles de déport en cas de conflit d'intérêts. Toute question : contactez le DGS ou l'AMF.",
+     liens:[
+       {label:"Guide de l'élu — AMF",url:"https://www.amf.asso.fr/documents-guide-de-lelu-local/19779"},
+       {label:"Statut de l'élu local — Légifrance",url:"https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006070633/LEGISCTA000006149583/"},
+       {label:"Indemnités et droits — collectivités-locales.gouv.fr",url:"https://www.collectivites-locales.gouv.fr/les-elus/statut-de-lelu"},
+       {label:"Maire-info : actualités sur le statut de l'élu",url:"https://www.maire-info.com/statut-des-elus"}
+     ]},
+    {id:"2",icon:"🏛️",titre:"Le conseil municipal",court:"Au moins 4 réunions/an, vote à la majorité simple.",
+     contenu:"Le conseil municipal se réunit au moins 4 fois/an, convoqué par le Maire au moins 5 jours avant (sauf urgence). L'ordre du jour est joint à la convocation. Vous pouvez poser des questions orales. Le vote est public (à main levée ou scrutin nominal) sauf cas particuliers. Une délibération est adoptée à la majorité simple. Vous devez vous déporter si vous avez un intérêt personnel dans une affaire.",
+     liens:[
+       {label:"Fonctionnement du conseil municipal — service-public.fr",url:"https://www.service-public.fr/particuliers/vosdroits/F32341"},
+       {label:"CGCT — Articles L2121-1 et suivants",url:"https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006070633/LEGISCTA000006149563/"},
+       {label:"Questions orales au conseil — AMF",url:"https://www.amf.asso.fr/documents-les-questions-orales-au-conseil-municipal/11390"},
+       {label:"Modèles de délibérations — AMF",url:"https://www.amf.asso.fr/page-modeles-de-deliberations/20588"}
+     ]},
+    {id:"3",icon:"💰",titre:"Comprendre le budget",court:"8-9M€/an pour Vizille, vote en décembre.",
+     contenu:"Le budget est voté en 2 parties : fonctionnement (charges courantes, personnel, services) et investissement (travaux, équipements). Vizille dispose d'environ 8-9M€ de budget annuel. Les subventions clés : DETR (État), GAM (Métropole Grenoble), Département Isère, Région AURA. Chaque commission peut proposer des lignes budgétaires. Le DOB (Débat d'Orientations Budgétaires) a lieu avant le vote du budget en décembre.",
+     liens:[
+       {label:"Les finances locales — collectivités-locales.gouv.fr",url:"https://www.collectivites-locales.gouv.fr/finances-locales"},
+       {label:"Budget communal expliqué — AMF",url:"https://www.amf.asso.fr/documents-le-budget-communal/19160"},
+       {label:"DETR — dotation État pour travaux",url:"https://www.collectivites-locales.gouv.fr/dotation-dequipement-des-territoires-ruraux-detr"},
+       {label:"Comptes des communes — data.gouv.fr",url:"https://www.data.gouv.fr/fr/datasets/comptes-individuels-des-communes/"}
+     ]},
+    {id:"4",icon:"🏢",titre:"Qui fait quoi en mairie ?",court:"DGS = coordinateur. Passez toujours par la hiérarchie.",
+     contenu:"Le DGS coordonne les services. Les principaux services : Technique (travaux, voirie), Culturel (patrimoine, médiathèque), CCAS (social, seniors), Police Municipale, Service Enfance/Périscolaire, Urbanisme, Communication. Pour toute question opérationnelle, passez par votre chef de service référent ou le DGS. Ne donnez jamais d'instructions directes aux agents — passez toujours par la hiérarchie.",
+     liens:[
+       {label:"Rôle du DGS — CNFPT",url:"https://www.cnfpt.fr/content/directeur-general-services"},
+       {label:"Organisation des services communaux — AMF",url:"https://www.amf.asso.fr/documents-lorganisation-des-services-communaux/20415"},
+       {label:"CCAS — Centre Communal d'Action Sociale",url:"https://www.service-public.fr/particuliers/vosdroits/F17482"},
+       {label:"Police municipale — cadre juridique",url:"https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006070633/LEGISCTA000006149573/"}
+     ]},
+    {id:"5",icon:"🛡️",titre:"Conflit d'intérêts",court:"Vous devez quitter la salle si vous êtes concerné.",
+     contenu:"Si une délibération concerne directement vos intérêts personnels (famille, activité professionnelle, patrimoine), vous DEVEZ vous retirer de la salle avant le vote. Mentionnez-le au Maire avant la séance. En cas de doute, consultez le DGS. Le préfet peut déférer une délibération entachée de conflit d'intérêts au tribunal administratif.",
+     liens:[
+       {label:"HATVP — Autorité anticorruption des élus",url:"https://www.hatvp.fr/espace-elus/"},
+       {label:"Déclaration d'intérêts — formulaire",url:"https://www.hatvp.fr/deposer-une-declaration/"},
+       {label:"Conflit d'intérêts — guide DGCL",url:"https://www.collectivites-locales.gouv.fr/les-elus/deontologie-et-prevention-des-conflits-d-interets"},
+       {label:"Déport et abstention — Légifrance",url:"https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000038834440"}
+     ]},
+    {id:"6",icon:"🎓",titre:"Droits à la formation",court:"18h remboursées/an — AMF Formation, CNFPT.",
+     contenu:"Tout élu bénéficie de 18 heures de formation/an, remboursées sur le budget communal dans la limite d'un plafond légal. Organismes agréés : AMF Formation, CNFPT, universités. Sujets recommandés pour débutants : finances locales, urbanisme, marchés publics, communication institutionnelle. Demande à adresser au Maire avec justificatifs.",
+     liens:[
+       {label:"AMF Formation — catalogue des stages",url:"https://www.amf.asso.fr/page-amf-formation/20586"},
+       {label:"CNFPT — formations pour élus",url:"https://www.cnfpt.fr/elus"},
+       {label:"Droit à la formation — service-public.fr",url:"https://www.service-public.fr/particuliers/vosdroits/F32341"},
+       {label:"Financement de la formation des élus",url:"https://www.collectivites-locales.gouv.fr/les-elus/formation-des-elus"}
+     ]}
   ];
   const RESS = [
     {titre:"kMeet — Visioconférence",url:"https://kmeet.infomaniak.com",icon:"🎥",desc:"Réunion en ligne sécurisée"},
@@ -680,7 +722,13 @@ function openGuide(id) {
   if(!g) return;
   document.getElementById('gm-ico').textContent = g.icon;
   document.getElementById('gm-titre').textContent = g.titre;
-  document.getElementById('gm-body').textContent = g.contenu;
+  const liens = g.liens ? g.liens.map(l=>
+    '<a href="'+l.url+'" target="_blank" style="display:flex;align-items:center;gap:.6rem;padding:.65rem .9rem;background:#f0f4ff;border-radius:8px;text-decoration:none;color:var(--bleu);font-weight:700;font-size:.85rem;border:1px solid #c7d7f5;transition:background .15s;" onmouseover="this.style.background=\'#dbeafe\'" onmouseout="this.style.background=\'#f0f4ff\'">'+
+    '<span style="font-size:1.1rem;">↗</span><span>'+l.label+'</span></a>'
+  ).join('') : '';
+  document.getElementById('gm-body').innerHTML =
+    '<p style="line-height:1.85;margin-bottom:1.2rem;">'+g.contenu+'</p>'+
+    (liens ? '<div style="margin-top:1rem;"><div style="font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--gris);margin-bottom:.6rem;">Liens utiles</div><div style="display:flex;flex-direction:column;gap:.5rem;">'+liens+'</div></div>' : '');
   document.getElementById('guide-modal').classList.add('open');
 }
 function closeGuide(){document.getElementById('guide-modal').classList.remove('open');}
