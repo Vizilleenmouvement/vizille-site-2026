@@ -1,5 +1,23 @@
 const http=require('http'),https=require('https'),fs=require('fs'),path=require('path');
-const PORT=process.env.PORT||3000, PWD=process.env.VEM_PASSWORD||'vizille2026', DIR=__dirname;
+const PORT=process.env.PORT||3000, DIR=__dirname;
+
+// Comptes élus — peuvent être surchargés via ACCOUNTS_JSON env var
+const ACCOUNTS_DEFAULT = {
+  "catherine.troton":{"id":1,"nom":"Catherine Troton","role":"Maire","avatar":"CT","color":"#1a3a2a","pwd":"ct2026"},
+  "michel.troton":   {"id":2,"nom":"Michel Troton","role":"Conseiller","avatar":"MT","color":"#2d5a40","pwd":"mt2026"},
+  "marie-claude":    {"id":3,"nom":"Marie-Claude","role":"Adjointe","avatar":"MC","color":"#8B5CF6","pwd":"mc2026"},
+  "angelique":       {"id":4,"nom":"Angélique","role":"Adjointe","avatar":"AN","color":"#F97316","pwd":"an2026"},
+  "jean-christophe": {"id":5,"nom":"Jean-Christophe","role":"Conseiller","avatar":"JC","color":"#EC4899","pwd":"jc2026"},
+  "admin":           {"id":0,"nom":"Admin","role":"Admin","avatar":"AD","color":"#1a3a2a","pwd":"vizille2026"}
+};
+let ACCOUNTS = ACCOUNTS_DEFAULT;
+try {
+  if(process.env.ACCOUNTS_JSON) ACCOUNTS = JSON.parse(process.env.ACCOUNTS_JSON);
+  else {
+    const af = path.join(DIR,'accounts.json');
+    if(require('fs').existsSync(af)) ACCOUNTS = JSON.parse(require('fs').readFileSync(af,'utf8'));
+  }
+} catch(e) { console.log('Comptes par défaut utilisés'); }
 function load(f,d){try{return JSON.parse(fs.readFileSync(path.join(DIR,f),'utf8'));}catch(e){return d;}}
 function save(f,d){try{fs.writeFileSync(path.join(DIR,f),JSON.stringify(d,null,2),'utf8');}catch(e){}}
 function nid(a){return a.length?Math.max(...a.map(i=>i.id||0))+1:1;}
@@ -27,8 +45,41 @@ let rep_elus=load('rep_elus.json',{}); // {eluId: [{id,nom,url,date,notes}]}
 
 console.log('VeM v7 — projets:'+projets.length);
 
-function auth(req){const a=req.headers['authorization']||'';if(!a.startsWith('Basic '))return false;return Buffer.from(a.slice(6),'base64').toString().split(':').slice(1).join(':')=== PWD;}
-function deny(res){res.writeHead(401,{'WWW-Authenticate':'Basic realm="VeM Elus"','Content-Type':'text/html;charset=utf-8'});res.end('<div style="font-family:sans-serif;text-align:center;padding:4rem;color:#2e5e4e"><h2>VeM — Espace élus</h2><p>Accès protégé</p></div>');}
+function authUser(req){
+  const a=req.headers['authorization']||'';
+  if(!a.startsWith('Basic '))return null;
+  const dec=Buffer.from(a.slice(6),'base64').toString();
+  const colon=dec.indexOf(':');
+  if(colon<0)return null;
+  const user=dec.slice(0,colon).toLowerCase();
+  const pwd=dec.slice(colon+1);
+  const account=ACCOUNTS[user];
+  if(!account||account.pwd!==pwd)return null;
+  return {username:user,...account};
+}
+function auth(req){return !!authUser(req);}
+function deny(res){
+  res.writeHead(401,{'WWW-Authenticate':'Basic realm="VeM Elus - Identifiez-vous"','Content-Type':'text/html;charset=utf-8'});
+  res.end(`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+    body{font-family:-apple-system,BlinkMacSystemFont,"Inter",sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;background:#f4faf5;margin:0;}
+    .box{text-align:center;padding:2.5rem 3rem;background:#fff;border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,.1);border-top:4px solid #2d5a40;max-width:400px;}
+    .ico{font-size:2.5rem;margin-bottom:1rem;}
+    h2{font-size:1.1rem;font-weight:700;color:#1a3a2a;margin-bottom:.5rem;}
+    p{font-size:.82rem;color:#6a7870;line-height:1.6;margin-bottom:1.2rem;}
+    .hint{background:#e6f4ea;border-radius:10px;padding:.75rem 1rem;font-size:.76rem;color:#2d5a40;text-align:left;}
+    .hint b{display:block;margin-bottom:.35rem;font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;}
+    code{font-family:monospace;background:#fff;padding:1px 6px;border-radius:4px;border:1px solid #b8d9c4;}
+  </style></head><body><div class="box">
+    <div class="ico">🏛</div>
+    <h2>Vizille en Mouvement — Espace élus</h2>
+    <p>Espace réservé aux 29 conseillers municipaux.<br>Saisissez vos identifiants personnels.</p>
+    <div class="hint">
+      <b>Identifiants :</b>
+      Login : <code>prenom.nom</code> ou <code>prenom</code><br>
+      Mot de passe : transmis par l'administrateur
+    </div>
+  </div></body></html>`);
+}
 function J(res,d,c){res.writeHead(c||200,{'Content-Type':'application/json;charset=utf-8','Access-Control-Allow-Origin':'*'});res.end(JSON.stringify(d));}
 function body(req,cb){let b='';req.on('data',d=>{b+=d;if(b.length>2e6)req.destroy();});req.on('end',()=>{try{cb(null,JSON.parse(b));}catch(e){cb(e);}});}
 
@@ -38,14 +89,20 @@ const server=http.createServer(function(req,res){
   if(m==='OPTIONS'){res.writeHead(200,{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Methods':'GET,POST,PUT,DELETE','Access-Control-Allow-Headers':'Content-Type,Authorization'});return res.end();}
   if(!auth(req))return deny(res);
 
+  const ME=authUser(req);
   if(p==='/api/all')return J(res,{
     n_projets:projets.length,statuts,agenda,documents,
     notifs:notifs.slice(0,60),elus,annonces,tasks,
     signalements,evenements,comptes_rendus,stats:stats(),
     biblio_count:biblio.length,
-    chat:chat.slice(-50)
+    chat:chat.slice(-50),
+    me:{id:ME.id,nom:ME.nom,role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username}
   });
 
+  // IDENTITÉ CONNECTÉE
+  if(p==='/api/me')return J(res,{id:ME.id,nom:ME.nom,role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username});
+
+  // PROJETS
   if(p==='/api/projets')return J(res,projets);
 
   // STATUT PROJET
@@ -89,18 +146,26 @@ const server=http.createServer(function(req,res){
     return J(res,r);
   }
 
-  // RÉPERTOIRE ÉLUS
-  if(p==='/api/rep_elus'&&m==='GET'){const id=qs.elu_id;return J(res,id?rep_elus[id]||[]:rep_elus);}
+  // RÉPERTOIRE ÉLUS — privé par utilisateur
+  if(p==='/api/rep_elus'&&m==='GET'){
+    // Admin voit tout, élu voit seulement son propre répertoire
+    if(ME.id===0){const id=qs.elu_id;return J(res,id?rep_elus[id]||[]:rep_elus);}
+    return J(res,rep_elus[String(ME.id)]||[]);
+  }
   if(p==='/api/rep_elus'&&m==='POST')return body(req,function(err,d){
     if(err)return J(res,{ok:false},400);
-    const eid=String(d.elu_id);if(!rep_elus[eid])rep_elus[eid]=[];
-    d.id=Date.now();d.created=ts();
+    // Forcer l'ID de l'utilisateur connecté (impossible de poster pour quelqu'un d'autre)
+    const eid=String(ME.id);
+    if(!rep_elus[eid])rep_elus[eid]=[];
+    d.elu_id=ME.id;d.id=Date.now();d.created=ts();d.auteur=ME.nom;
     rep_elus[eid].unshift(d);save('rep_elus.json',rep_elus);
     return J(res,{ok:true,item:d});
   });
   if(p.match(/^\/api\/rep_elus\/\d+$/)&&m==='DELETE'){
-    const docId=parseInt(p.split('/').pop()),eid=qs.elu_id;
-    if(eid&&rep_elus[eid])rep_elus[eid]=rep_elus[eid].filter(d=>d.id!==docId);
+    const docId=parseInt(p.split('/').pop());
+    const eid=String(ME.id);
+    // Un élu ne peut supprimer que ses propres docs
+    if(rep_elus[eid])rep_elus[eid]=rep_elus[eid].filter(d=>d.id!==docId);
     save('rep_elus.json',rep_elus);return J(res,{ok:true});
   }
 
@@ -654,15 +719,17 @@ textarea.fi{resize:vertical;min-height:90px;}
 
 <!-- RÉPERTOIRE ÉLUS -->
 <div class="page" id="p-repelus">
-  <div class="ph"><div class="ph-ico" style="background:var(--g8)">&#x1F4C2;</div><div><div class="ph-t">R&#xe9;pertoire personnel des élus</div><div class="ph-s">Chaque élu dispose de son espace d&#x27;archivage personnel</div></div></div>
+  <div class="ph"><div class="ph-ico" style="background:var(--g8)">&#x1F4C2;</div><div><div class="ph-t">Mon r&#xe9;pertoire personnel</div><div class="ph-s">Vos documents priv&#xe9;s &#x2014; visibles uniquement par vous</div></div><div class="ph-a"><button class="btn btn-p btn-sm" onclick="om(&#x27;repelu&#x27;)">+ Ajouter un lien</button></div></div>
   <div class="scr">
-    <div class="rep-grid" id="rep-elus-grid"></div>
-    <div id="rep-elus-files" style="display:none">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;padding:.85rem 1rem;background:#fff;border-radius:var(--R);border:1px solid var(--w2);box-shadow:var(--s1)">
-        <div id="rep-elu-av" class="rep-av" style="width:36px;height:36px;font-size:.8rem;flex-shrink:0"></div>
-        <div><div id="rep-elu-name" class="rep-n"></div><div id="rep-elu-role" class="rep-r"></div></div>
-        <button class="btn btn-g btn-sm" onclick="closeRepElu()" style="margin-left:auto">&#x2190; Retour</button>
-        <button class="btn btn-p btn-sm" onclick="om('repelu')">+ Ajouter un lien</button>
+    <div id="rep-elus-grid"></div>
+    <div id="rep-elus-files">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;padding:.85rem 1rem;background:var(--g8);border-radius:var(--R);border:1px solid var(--g7);box-shadow:var(--s1)">
+        <div id="rep-elu-av" class="rep-av" style="width:40px;height:40px;font-size:.88rem;flex-shrink:0;background:var(--g3)">?</div>
+        <div style="flex:1"><div id="rep-elu-name" style="font-size:.86rem;font-weight:700;font-family:var(--fd);color:var(--ink)">Chargement...</div><div id="rep-elu-role" style="font-size:.7rem;color:var(--g3);margin-top:2px"></div></div>
+        <div style="background:var(--g3);color:#fff;font-size:.65rem;font-weight:700;padding:3px 9px;border-radius:8px">&#x1F512; Espace priv&#xe9;</div>
+      </div>
+      <div style="background:#fff;border-radius:var(--r);border:1px solid var(--w2);padding:.65rem 1rem;margin-bottom:1rem;font-size:.74rem;color:var(--i3)">
+        &#x26A0;&#xFE0F; Ces documents sont <strong>strictement priv&#xe9;s</strong>. Aucun autre &#xe9;lu ni l&#x27;administrateur ne peut y acc&#xe9;der. Seul vous y avez acc&#xe8;s avec vos identifiants.
       </div>
       <div id="rep-elu-list"></div>
     </div>
@@ -1040,7 +1107,7 @@ var SLIST=["Prioritaire","Programmé","Planifié","Étude","En cours","Réalisé
 var MOIS=["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"];
 var _ci=0,_sigId=null,_crId=null,_repEluId=null,_chatLast=0,_chatOpen=false,_chatTimer=null;
 var chT=null,chS=null;
-var ME={nom:"Michel Troton",avatar:"MT"};
+var ME={nom:"Chargement...",avatar:"?",id:0,role:"",color:"var(--g3)",username:""};
 var _auth="Basic "+btoa(":vizille2026");
 
 // ── UTILITAIRES ──────────────────────────────────────────────────────────────
@@ -1085,6 +1152,17 @@ function init(){
   apiGet("/api/all").then(function(d){
     ST=d.statuts; AG=d.agenda; DC=d.documents; NF=d.notifs;
     ANN=d.annonces||[]; TASKS=d.tasks||[];
+    if(d.me){
+      ME=d.me;
+      // Mettre à jour l'avatar dans la topbar
+      var av=document.querySelector(".top-av");
+      if(av){av.textContent=ME.avatar;av.style.background=ME.color||"var(--g4)";}
+      // Mettre à jour le label du répertoire
+      var repT=document.querySelector("#p-repelus .ph-t");
+      if(repT)repT.textContent="Mon répertoire personnel";
+      var repS=document.querySelector("#p-repelus .ph-s");
+      if(repS)repS.textContent="Vos documents privés — visibles uniquement par vous";
+    }
     SIGN=d.signalements||[]; EVTS=d.evenements||[];
     CRS=d.comptes_rendus||[]; ELUS_DATA=d.elus||[];
     BIBLIO=[]; // chargé séparément
@@ -1344,39 +1422,25 @@ function saveCR(){
 var ELU_COLORS=["#1d3d2b","#2d5a40","#3d7a5a","#8B5CF6","#F97316","#EC4899","#F59E0B","#3B82F6","#10B981","#EF4444","#14B8A6","#6366F1"];
 
 function renderRepElus(){
-  $("rep-elus-grid").style.display="grid";
-  $("rep-elus-files").style.display="none";
-  var g=$("rep-elus-grid"); if(!g)return;
-  var list=ELUS_DATA.length?ELUS_DATA:ELUS0;
-  g.innerHTML=list.map(function(e,i){
-    var cnt=REP_ELUS[e.id]?REP_ELUS[e.id].length:0;
-    return '<div class="rep-c" onclick="openRepElu('+e.id+')">'
-      +'<div style="display:flex;align-items:center;gap:10px">'
-      +'<div class="rep-av" style="background:'+(e.color||ELU_COLORS[i%ELU_COLORS.length])+'">'+e.avatar+'</div>'
-      +'<div><div class="rep-n">'+e.nom+'</div><div class="rep-r">'+e.role+'</div>'
-      +(cnt?'<div style="font-size:.62rem;color:var(--g3);margin-top:2px">'+cnt+' document(s)</div>':"")
-      +'</div></div>'
-      +'</div>';
-  }).join("");
-}
-
-function openRepElu(eluId){
-  _repEluId=eluId;
-  var list=ELUS_DATA.length?ELUS_DATA:ELUS0;
-  var elu=list.find(function(e){return e.id===eluId;})||{nom:"Élu",role:"",avatar:"?",color:"var(--g3)"};
+  // Répertoire personnel : afficher directement les fichiers de l'utilisateur connecté
   var g=$("rep-elus-grid"), f=$("rep-elus-files");
-  g.style.display="none"; f.style.display="block";
-  $("rep-elu-av").textContent=elu.avatar;
-  $("rep-elu-av").style.background=elu.color||"var(--g3)";
-  el("rep-elu-name",elu.nom);
-  el("rep-elu-role",elu.role);
-  renderRepEluFiles();
+  if(g)g.style.display="none";
+  if(f)f.style.display="block";
+  // En-tête avec identité
+  var av=$("rep-elu-av"),nm=$("rep-elu-name"),ro=$("rep-elu-role");
+  if(av){av.textContent=ME.avatar;av.style.background=ME.color||"var(--g3)";}
+  el("rep-elu-name",ME.nom);
+  el("rep-elu-role",ME.role+" — Répertoire privé");
+  // Charger les fichiers depuis le serveur
+  apiGet("/api/rep_elus").then(function(data){
+    REP_ELUS[ME.id]=Array.isArray(data)?data:(data[ME.id]||[]);
+    _repEluId=ME.id;
+    renderRepEluFiles();
+  });
 }
 
-function closeRepElu(){
-  $("rep-elus-grid").style.display="grid";
-  $("rep-elus-files").style.display="none";
-}
+function openRepElu(eluId){_repEluId=eluId;renderRepEluFiles();}
+function closeRepElu(){renderRepElus();}
 
 function renderRepEluFiles(){
   var files=REP_ELUS[_repEluId]||[];
@@ -1396,20 +1460,25 @@ function renderRepEluFiles(){
 }
 
 function svRepElu(){
-  var d={elu_id:_repEluId,titre:v("re-ti"),url:v("re-url"),notes:v("re-notes")};
+  var d={titre:v("re-ti"),url:v("re-url"),notes:v("re-notes")};
   if(!d.titre){toast("Titre obligatoire");return;}
   apiPost("/api/rep_elus",d).then(function(r){
     if(r.ok){
-      if(!REP_ELUS[_repEluId])REP_ELUS[_repEluId]=[];
-      REP_ELUS[_repEluId].unshift(r.item);
+      if(!REP_ELUS[ME.id])REP_ELUS[ME.id]=[];
+      REP_ELUS[ME.id].unshift(r.item);
+      _repEluId=ME.id;
       renderRepEluFiles();cm();toast("Lien ajouté");
+      ["re-ti","re-url","re-notes"].forEach(function(i){var e=$(i);if(e)e.value="";});
     }
   });
 }
 function delRepFile(id){
   if(!confirm("Supprimer ?"))return;
-  apiDel("/api/rep_elus/"+id+"?elu_id="+_repEluId).then(function(d){
-    if(d.ok){REP_ELUS[_repEluId]=REP_ELUS[_repEluId].filter(function(f){return f.id!==id;});renderRepEluFiles();}
+  apiDel("/api/rep_elus/"+id).then(function(d){
+    if(d.ok){
+      if(REP_ELUS[ME.id])REP_ELUS[ME.id]=REP_ELUS[ME.id].filter(function(f){return f.id!==id;});
+      renderRepEluFiles();
+    }
   });
 }
 
