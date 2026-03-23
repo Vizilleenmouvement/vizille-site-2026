@@ -3,12 +3,258 @@ const PORT=process.env.PORT||3000, DIR=__dirname;
 
 // Comptes élus — peuvent être surchargés via ACCOUNTS_JSON env var
 const ACCOUNTS_DEFAULT = {
-  "catherine.troton":{"id":1,"nom":"Catherine Troton","role":"Maire","avatar":"CT","color":"#1a3a2a","pwd":"ct2026"},
-  "michel.troton":   {"id":2,"nom":"Michel Troton","role":"Conseiller","avatar":"MT","color":"#2d5a40","pwd":"mt2026"},
-  "marie-claude":    {"id":3,"nom":"Marie-Claude","role":"Adjointe","avatar":"MC","color":"#8B5CF6","pwd":"mc2026"},
-  "angelique":       {"id":4,"nom":"Angélique","role":"Adjointe","avatar":"AN","color":"#F97316","pwd":"an2026"},
-  "jean-christophe": {"id":5,"nom":"Jean-Christophe","role":"Conseiller","avatar":"JC","color":"#EC4899","pwd":"jc2026"},
-  "admin":           {"id":0,"nom":"Admin","role":"Admin","avatar":"AD","color":"#1a3a2a","pwd":"vizille2026"}
+  "catherine.troton": {
+    "id": 1,
+    "nom": "Catherine Troton",
+    "role": "Maire",
+    "delegation": "Maire de Vizille",
+    "avatar": "CT",
+    "color": "#1a3a2a",
+    "pwd": "ctr2026"
+  },
+  "bernard.ughetto-monfrin": {
+    "id": 2,
+    "nom": "Bernard Ughetto-Monfrin",
+    "role": "Adjoint",
+    "delegation": "Mobilités",
+    "avatar": "BU",
+    "color": "#2d5a40",
+    "pwd": "bug2026"
+  },
+  "saida.berriche": {
+    "id": 3,
+    "nom": "Saïda Berriche",
+    "role": "Adjointe",
+    "delegation": "Tranquillité publique",
+    "avatar": "SB",
+    "color": "#3d7a5a",
+    "pwd": "sbe2026"
+  },
+  "gilles.faure": {
+    "id": 4,
+    "nom": "Gilles Faure",
+    "role": "Adjoint",
+    "delegation": "Accès aux droits, santé publique",
+    "avatar": "GF",
+    "color": "#8B5CF6",
+    "pwd": "gfa2026"
+  },
+  "angelique.hermitte": {
+    "id": 5,
+    "nom": "Angélique Hermitte",
+    "role": "Adjointe",
+    "delegation": "Petite enfance",
+    "avatar": "AH",
+    "color": "#F97316",
+    "pwd": "ahe2026"
+  },
+  "gerard.forestier": {
+    "id": 6,
+    "nom": "Gérard Forestier",
+    "role": "Adjoint",
+    "delegation": "Urbanisme",
+    "avatar": "GF",
+    "color": "#EC4899",
+    "pwd": "gfo2026"
+  },
+  "marie-claude.argoud": {
+    "id": 7,
+    "nom": "Marie-Claude Argoud",
+    "role": "Première Adjointe",
+    "delegation": "Culture, Patrimoine",
+    "avatar": "MA",
+    "color": "#F59E0B",
+    "pwd": "mar2026"
+  },
+  "louis.lamarca": {
+    "id": 8,
+    "nom": "Louis Lamarca",
+    "role": "Adjoint",
+    "delegation": "Sports, vie associative",
+    "avatar": "LL",
+    "color": "#3B82F6",
+    "pwd": "lla2026"
+  },
+  "muriel.pasquiou": {
+    "id": 9,
+    "nom": "Muriel Pasquiou",
+    "role": "Conseillère",
+    "delegation": "",
+    "avatar": "MP",
+    "color": "#10B981",
+    "pwd": "mpa2026"
+  },
+  "laurent.pichon": {
+    "id": 10,
+    "nom": "Laurent Pichon",
+    "role": "Conseiller",
+    "delegation": "",
+    "avatar": "LP",
+    "color": "#EF4444",
+    "pwd": "lpi2026"
+  },
+  "sakina.yahiaoui": {
+    "id": 11,
+    "nom": "Sakina Yahiaoui",
+    "role": "Conseillère déléguée",
+    "delegation": "",
+    "avatar": "SY",
+    "color": "#14B8A6",
+    "pwd": "sya2026"
+  },
+  "mohamed.cherigui": {
+    "id": 12,
+    "nom": "Mohamed Cherigui",
+    "role": "Conseiller",
+    "delegation": "",
+    "avatar": "MC",
+    "color": "#6366F1",
+    "pwd": "mch2026"
+  },
+  "christelle.reijasse": {
+    "id": 13,
+    "nom": "Christelle Reijasse",
+    "role": "Conseillère",
+    "delegation": "",
+    "avatar": "CR",
+    "color": "#db2777",
+    "pwd": "cre2026"
+  },
+  "ahmed.mendess": {
+    "id": 14,
+    "nom": "Ahmed Mendess",
+    "role": "Conseiller délégué",
+    "delegation": "",
+    "avatar": "AM",
+    "color": "#0891b2",
+    "pwd": "ame2026"
+  },
+  "christine.sanchez": {
+    "id": 15,
+    "nom": "Christine Sanchez",
+    "role": "Conseillère",
+    "delegation": "",
+    "avatar": "CS",
+    "color": "#65a30d",
+    "pwd": "csa2026"
+  },
+  "fabrice.pasquiou": {
+    "id": 16,
+    "nom": "Fabrice Pasquiou",
+    "role": "Conseiller délégué",
+    "delegation": "",
+    "avatar": "FP",
+    "color": "#7c3aed",
+    "pwd": "fpa2026"
+  },
+  "meriem.el-kebir": {
+    "id": 17,
+    "nom": "Meriem El-Kebir",
+    "role": "Conseillère",
+    "delegation": "",
+    "avatar": "ME",
+    "color": "#9333ea",
+    "pwd": "mel2026"
+  },
+  "jean-christophe.garcia": {
+    "id": 18,
+    "nom": "Jean-Christophe Garcia",
+    "role": "Conseiller",
+    "delegation": "Animations de proximité",
+    "avatar": "JG",
+    "color": "#c2410c",
+    "pwd": "jga2026"
+  },
+  "muriel.picca": {
+    "id": 19,
+    "nom": "Muriel Picca",
+    "role": "Conseillère",
+    "delegation": "",
+    "avatar": "MP",
+    "color": "#b45309",
+    "pwd": "mpi2026"
+  },
+  "michel.thuillier": {
+    "id": 20,
+    "nom": "Michel Thuillier",
+    "role": "Conseiller",
+    "delegation": "",
+    "avatar": "MT",
+    "color": "#0f766e",
+    "pwd": "mth2026"
+  },
+  "isabelle.nifenecker": {
+    "id": 21,
+    "nom": "Isabelle Nifenecker",
+    "role": "Conseillère",
+    "delegation": "",
+    "avatar": "IN",
+    "color": "#1d4ed8",
+    "pwd": "ini2026"
+  },
+  "andre-paul.venans": {
+    "id": 22,
+    "nom": "André-Paul Venans",
+    "role": "Conseiller",
+    "delegation": "",
+    "avatar": "AV",
+    "color": "#be185d",
+    "pwd": "ave2026"
+  },
+  "michel.troton": {
+    "id": 23,
+    "nom": "Michel Troton",
+    "role": "Conseiller",
+    "delegation": "Numérique, communication, histoire locale",
+    "avatar": "MT",
+    "color": "#2d5a40",
+    "pwd": "mtr2026"
+  },
+  "nathalie.jacolin": {
+    "id": 24,
+    "nom": "Nathalie Jacolin",
+    "role": "Conseillère",
+    "delegation": "",
+    "avatar": "NJ",
+    "color": "#15803d",
+    "pwd": "nja2026"
+  },
+  "ignazio.cosentino": {
+    "id": 25,
+    "nom": "Ignazio Cosentino",
+    "role": "Conseiller",
+    "delegation": "",
+    "avatar": "IC",
+    "color": "#b91c1c",
+    "pwd": "ico2026"
+  },
+  "nathalie.germain-vey": {
+    "id": 26,
+    "nom": "Nathalie Germain-Vey",
+    "role": "Conseillère déléguée",
+    "delegation": "",
+    "avatar": "NG",
+    "color": "#6d28d9",
+    "pwd": "nge2026"
+  },
+  "stephane.lasserre": {
+    "id": 27,
+    "nom": "Stéphane Lasserre",
+    "role": "Conseiller",
+    "delegation": "",
+    "avatar": "SL",
+    "color": "#0369a1",
+    "pwd": "sla2026"
+  },
+  "admin": {
+    "id": 0,
+    "nom": "Administrateur",
+    "role": "Admin",
+    "delegation": "",
+    "avatar": "AD",
+    "color": "#1a3a2a",
+    "pwd": "vem@dmin2026"
+  }
 };
 let ACCOUNTS = ACCOUNTS_DEFAULT;
 try {
@@ -35,7 +281,7 @@ function stats(){
 let projets=load('projets.json',[]),agenda=load('agenda.json',[]),documents=load('documents.json',[]);
 let statuts=load('statuts.json',{}),notifs=load('notifs.json',[]),chat=load('chat.json',[]);
 
-const ELUS_DEF = [{"id": 1, "nom": "Catherine Troton", "role": "Maire", "delegation": "Direction générale", "commission": "", "tel": "", "email": "maire@vizille.fr", "avatar": "CT", "color": "#1a3a2a"}, {"id": 2, "nom": "Michel Troton", "role": "Conseiller", "delegation": "Numérique, communication", "commission": "Culture, Patrimoine & Jumelages", "tel": "", "email": "", "avatar": "MT", "color": "#2d5a40"}, {"id": 3, "nom": "Marie-Claude", "role": "Adjointe", "delegation": "Culture, Patrimoine, Jumelages", "commission": "Culture, Patrimoine & Jumelages", "tel": "", "email": "", "avatar": "MC", "color": "#8B5CF6"}, {"id": 4, "nom": "Angélique", "role": "Adjointe", "delegation": "Enfance, Jeunesse", "commission": "Enfance/Jeunesse", "tel": "", "email": "", "avatar": "AN", "color": "#F97316"}, {"id": 5, "nom": "Jean-Christophe", "role": "Conseiller", "delegation": "Animations", "commission": "Animations de proximité", "tel": "", "email": "", "avatar": "JC", "color": "#EC4899"}];
+const ELUS_DEF = [{"id": 1, "nom": "Troton", "prenom": "Catherine", "role": "Maire", "delegation": "Maire de Vizille", "avatar": "CT", "color": "#1a3a2a", "tel": "", "email": "", "commission": ""}, {"id": 2, "nom": "Ughetto-Monfrin", "prenom": "Bernard", "role": "Adjoint", "delegation": "Mobilités", "avatar": "BU", "color": "#2d5a40", "tel": "", "email": "", "commission": "Mobilités"}, {"id": 3, "nom": "Berriche", "prenom": "Saïda", "role": "Adjointe", "delegation": "Tranquillité publique", "avatar": "SB", "color": "#3d7a5a", "tel": "", "email": "", "commission": "Tranquillité publique"}, {"id": 4, "nom": "Faure", "prenom": "Gilles", "role": "Adjoint", "delegation": "Santé, action sociale", "avatar": "GF", "color": "#8B5CF6", "tel": "", "email": "", "commission": "Action sociale"}, {"id": 5, "nom": "Hermitte", "prenom": "Angélique", "role": "Adjointe", "delegation": "Petite enfance, jeunesse", "avatar": "AH", "color": "#F97316", "tel": "", "email": "", "commission": "Enfance/Jeunesse"}, {"id": 6, "nom": "Forestier", "prenom": "Gérard", "role": "Adjoint", "delegation": "Urbanisme, travaux", "avatar": "GF", "color": "#EC4899", "tel": "", "email": "", "commission": "Travaux & Urbanisme"}, {"id": 7, "nom": "Argoud", "prenom": "Marie-Claude", "role": "Première Adjointe", "delegation": "Culture, Patrimoine, Jumelages", "avatar": "MA", "color": "#F59E0B", "tel": "", "email": "", "commission": "Culture, Patrimoine & Jumelages"}, {"id": 8, "nom": "Lamarca", "prenom": "Louis", "role": "Adjoint", "delegation": "Sports, vie associative", "avatar": "LL", "color": "#3B82F6", "tel": "", "email": "", "commission": "Animations de proximité"}, {"id": 9, "nom": "Pasquiou", "prenom": "Muriel", "role": "Conseillère", "delegation": "", "avatar": "MP", "color": "#10B981", "tel": "", "email": "", "commission": ""}, {"id": 10, "nom": "Pichon", "prenom": "Laurent", "role": "Conseiller", "delegation": "", "avatar": "LP", "color": "#EF4444", "tel": "", "email": "", "commission": ""}, {"id": 11, "nom": "Yahiaoui", "prenom": "Sakina", "role": "Conseillère déléguée", "delegation": "", "avatar": "SY", "color": "#14B8A6", "tel": "", "email": "", "commission": ""}, {"id": 12, "nom": "Cherigui", "prenom": "Mohamed", "role": "Conseiller", "delegation": "", "avatar": "MC", "color": "#6366F1", "tel": "", "email": "", "commission": ""}, {"id": 13, "nom": "Reijasse", "prenom": "Christelle", "role": "Conseillère", "delegation": "", "avatar": "CR", "color": "#db2777", "tel": "", "email": "", "commission": ""}, {"id": 14, "nom": "Mendess", "prenom": "Ahmed", "role": "Conseiller délégué", "delegation": "", "avatar": "AM", "color": "#0891b2", "tel": "", "email": "", "commission": ""}, {"id": 15, "nom": "Sanchez", "prenom": "Christine", "role": "Conseillère", "delegation": "", "avatar": "CS", "color": "#65a30d", "tel": "", "email": "", "commission": ""}, {"id": 16, "nom": "Pasquiou", "prenom": "Fabrice", "role": "Conseiller délégué", "delegation": "", "avatar": "FP", "color": "#7c3aed", "tel": "", "email": "", "commission": ""}, {"id": 17, "nom": "El-Kebir", "prenom": "Meriem", "role": "Conseillère", "delegation": "", "avatar": "ME", "color": "#9333ea", "tel": "", "email": "", "commission": ""}, {"id": 18, "nom": "Garcia", "prenom": "Jean-Christophe", "role": "Conseiller", "delegation": "Animations de proximité", "avatar": "JG", "color": "#c2410c", "tel": "", "email": "", "commission": "Animations de proximité"}, {"id": 19, "nom": "Picca", "prenom": "Muriel", "role": "Conseillère", "delegation": "", "avatar": "MP", "color": "#b45309", "tel": "", "email": "", "commission": ""}, {"id": 20, "nom": "Thuillier", "prenom": "Michel", "role": "Conseiller", "delegation": "", "avatar": "MT", "color": "#0f766e", "tel": "", "email": "", "commission": ""}, {"id": 21, "nom": "Nifenecker", "prenom": "Isabelle", "role": "Conseillère", "delegation": "", "avatar": "IN", "color": "#1d4ed8", "tel": "", "email": "", "commission": ""}, {"id": 22, "nom": "Venans", "prenom": "André-Paul", "role": "Conseiller", "delegation": "", "avatar": "AV", "color": "#be185d", "tel": "", "email": "", "commission": ""}, {"id": 23, "nom": "Troton", "prenom": "Michel", "role": "Conseiller", "delegation": "Numérique, communication", "avatar": "MT", "color": "#2d5a40", "tel": "", "email": "", "commission": "Culture, Patrimoine & Jumelages"}, {"id": 24, "nom": "Jacolin", "prenom": "Nathalie", "role": "Conseillère", "delegation": "", "avatar": "NJ", "color": "#15803d", "tel": "", "email": "", "commission": ""}, {"id": 25, "nom": "Cosentino", "prenom": "Ignazio", "role": "Conseiller", "delegation": "", "avatar": "IC", "color": "#b91c1c", "tel": "", "email": "", "commission": ""}, {"id": 26, "nom": "Germain-Vey", "prenom": "Nathalie", "role": "Conseillère déléguée", "delegation": "", "avatar": "NG", "color": "#6d28d9", "tel": "", "email": "", "commission": ""}, {"id": 27, "nom": "Lasserre", "prenom": "Stéphane", "role": "Conseiller", "delegation": "", "avatar": "SL", "color": "#0369a1", "tel": "", "email": "", "commission": ""}];
 let elus=load('elus.json',ELUS_DEF);
 let annonces=load('annonces.json',[]),tasks=load('tasks.json',[]);
 let signalements=load('signalements.json',[]),evenements=load('evenements.json',[]);
@@ -131,17 +377,26 @@ const server=http.createServer(function(req,res){
   if(p==='/api/biblio'&&m==='POST')return body(req,function(err,d){
     if(err)return J(res,{ok:false},400);
     d.id=nid(biblio);d.created=ts();d.date_doc=d.date_doc||ts().split(' ')[0];
+    d.auteur_id=ME.id;d.auteur_nom=ME.nom;
+    // public = visible par tous, prive = seulement l'auteur
+    d.visibilite=d.visibilite||'public';
     biblio.unshift(d);save('biblio.json',biblio);
     const n={id:Date.now(),titre:'Document ajouté : '+d.titre,statut:'',ancien:'',ts:ts(),new:true,type:'doc'};
     notifs.unshift(n);if(notifs.length>200)notifs=notifs.slice(0,200);save('notifs.json',notifs);
     return J(res,{ok:true,item:d});
   });
   if(p.match(/^\/api\/biblio\/\d+$/)&&m==='DELETE'){const id=parseInt(p.split('/').pop());biblio=biblio.filter(b=>b.id!==id);save('biblio.json',biblio);return J(res,{ok:true});}
+  if(p==='/api/biblio'&&m==='GET'){
+    // Filtrer: publics + les privés de l'utilisateur connecté
+    const visible=biblio.filter(b=>b.visibilite!=='prive'||b.auteur_id===ME.id||ME.id===0);
+    return J(res,visible);
+  }
   if(p==='/api/biblio/search'&&m==='GET'){
-    const q=(qs.q||'').toLowerCase(),type=qs.type||'',theme=qs.theme||'',comm=qs.commission||'';
-    const r=biblio.filter(b=>
+    const q=(qs.q||'').toLowerCase(),type=qs.type||'',comm=qs.commission||'';
+    const visible=biblio.filter(b=>b.visibilite!=='prive'||b.auteur_id===ME.id||ME.id===0);
+    const r=visible.filter(b=>
       (!q||(b.titre||'').toLowerCase().includes(q)||(b.description||'').toLowerCase().includes(q)||(b.tags||'').toLowerCase().includes(q))
-      &&(!type||b.type===type)&&(!theme||b.theme===theme)&&(!comm||b.commission===comm)
+      &&(!type||b.type===type)&&(!comm||b.commission===comm)
     );
     return J(res,r);
   }
@@ -539,6 +794,8 @@ textarea.fi{resize:vertical;min-height:90px;}
 .ch-c{background:#fff;border-radius:var(--R);border:1px solid var(--w2);box-shadow:var(--s1);padding:1rem;}
 .ch-t{font-size:.76rem;font-weight:700;font-family:var(--fd);color:var(--i2);margin-bottom:.7rem;display:flex;align-items:center;gap:6px;}
 .ch-t::before{content:"";width:3px;height:12px;background:var(--g4);border-radius:2px;}
+.scut{background:#fff;border-radius:var(--R);border:1px solid var(--w2);padding:.85rem .7rem;text-align:center;cursor:pointer;transition:all .18s;box-shadow:var(--s1);}
+.scut:hover{box-shadow:var(--s3);transform:translateY(-2px);}
 .ch-w{position:relative;height:180px;}
 
 /* TCHAT */
@@ -630,37 +887,70 @@ textarea.fi{resize:vertical;min-height:90px;}
 
 <!-- AUJOURD'HUI -->
 <div class="page on" id="p-today">
-  <div class="ph">
-    <div class="ph-ico" style="background:var(--g8)">&#x1F4CB;</div>
-    <div><div class="ph-t">Aujourd&#x27;hui</div><div class="ph-s" id="ph-date">Chargement&#x2026;</div></div>
-    <div class="ph-a"><button class="btn btn-p btn-sm" onclick="om('annonce')">&#x1F4E2; Annonce</button></div>
-  </div>
-  <div class="scr">
-    <div id="next-mtg"></div>
+  <div class="scr" style="padding:0;background:var(--w)">
+
+    <!-- HERO PERSONNALISÉ -->
+    <div style="background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 55%,var(--g3) 100%);padding:1.6rem 2rem;color:#fff;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.04)"></div>
+      <div style="display:flex;align-items:center;gap:1.25rem;position:relative;z-index:1">
+        <div id="hero-av" style="width:58px;height:58px;border-radius:16px;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:1.25rem;font-weight:700;font-family:var(--fd);flex-shrink:0">&#x1F3DB;</div>
+        <div style="flex:1">
+          <div id="hero-bonjour" style="font-size:1.12rem;font-weight:700;font-family:var(--fd);margin-bottom:.2rem">Bonjour !</div>
+          <div id="hero-date" style="font-size:.78rem;opacity:.6;margin-bottom:.3rem"></div>
+          <div id="hero-role" style="font-size:.73rem;opacity:.5;font-style:italic"></div>
+        </div>
+        <button class="btn" style="background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.25);font-size:.72rem;flex-shrink:0" onclick="om('annonce')">&#x1F4E2; Publier</button>
+      </div>
+      <div id="hero-citation" style="margin-top:1rem;padding:.7rem 1rem;background:rgba(255,255,255,.08);border-radius:10px;border-left:3px solid rgba(255,255,255,.28);font-size:.77rem;opacity:.75;font-style:italic;position:relative;z-index:1"></div>
+    </div>
+
+    <div style="padding:1.25rem 1.6rem">
+
+    <!-- PROCHAINE RÉUNION -->
+    <div id="next-mtg" style="margin-bottom:14px"></div>
+
+    <!-- GRILLE TACHES + ANNONCES -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
       <div class="card">
-        <div class="cardt">&#x2705; Mes t&#xe2;ches</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem">
+          <div class="cardt" style="margin-bottom:0">&#x2705; Mes tâches</div>
+          <span id="task-cnt" style="font-size:.63rem;color:var(--i4)"></span>
+        </div>
         <div id="task-list"></div>
         <div style="display:flex;gap:8px;margin-top:.75rem;padding-top:.65rem;border-top:1px solid var(--w2)">
-          <input class="fi" id="task-inp" placeholder="Ajouter une t&#xe2;che&#x2026;" style="flex:1" onkeydown="if(event.key==='Enter')addTask()">
+          <input class="fi" id="task-inp" placeholder="Nouvelle tâche..." style="flex:1;font-size:.76rem;padding:6px 9px" onkeydown="if(event.key==='Enter')addTask()">
           <button class="btn btn-p btn-sm" onclick="addTask()">+</button>
         </div>
       </div>
       <div class="card">
-        <div class="cardt">&#x1F4E2; Annonces de l&#x27;&#xe9;quipe</div>
-        <div id="ann-list"><div class="empty" style="padding:1.5rem 0"><div class="empty-ico" style="font-size:1.5rem">&#x1F4ED;</div><div class="empty-s">Aucune annonce</div></div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem">
+          <div class="cardt" style="margin-bottom:0">&#x1F4E2; Annonces</div>
+          <span id="ann-cnt" style="font-size:.63rem;color:var(--amber);font-weight:600"></span>
+        </div>
+        <div id="ann-list"><div style="font-size:.74rem;color:var(--i4);padding:.5rem 0;text-align:center">Aucune annonce</div></div>
       </div>
     </div>
-    <div class="kpig">
-      <div class="kpi"><div class="kpiv" id="k-tot">&#x2014;</div><div class="kpil">Projets</div></div>
-      <div class="kpi"><div class="kpiv" id="k-pr" style="color:var(--red)">&#x2014;</div><div class="kpil">Prioritaires</div></div>
-      <div class="kpi"><div class="kpiv" id="k-26">&#x2014;</div><div class="kpil">2026</div></div>
-      <div class="kpi"><div class="kpiv" id="k-re" style="color:var(--g4)">&#x2014;</div><div class="kpil">R&#xe9;alis&#xe9;s</div></div>
-      <div class="kpi"><div class="kpiv" id="k-sig" style="color:var(--red)">0</div><div class="kpil">Signalements nouveaux</div></div>
+
+    <!-- RACCOURCIS VISUELS -->
+    <div style="margin-bottom:14px">
+      <div style="font-size:.7rem;font-weight:700;color:var(--i3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.65rem">Accès rapides</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px" id="shortcuts-grid"></div>
     </div>
+
+    <!-- BAROMÈTRE -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px">
+      <div class="kpi"><div class="kpiv" id="k-tot">—</div><div class="kpil">Projets</div></div>
+      <div class="kpi"><div class="kpiv" id="k-pr" style="color:var(--red)">—</div><div class="kpil">Prioritaires</div></div>
+      <div class="kpi"><div class="kpiv" id="k-re" style="color:var(--g4)">—</div><div class="kpil">Réalisés</div></div>
+      <div class="kpi"><div class="kpiv" id="k-26">—</div><div class="kpil">Prévus 2026</div></div>
+    </div>
+
+    <!-- GRAPHIQUES -->
     <div class="ch-row">
-      <div class="ch-c"><div class="ch-t">Projets par th&#xe8;me</div><div class="ch-w"><canvas id="chT"></canvas></div></div>
-      <div class="ch-c"><div class="ch-t">Statuts</div><div class="ch-w"><canvas id="chS"></canvas></div></div>
+      <div class="ch-c"><div class="ch-t">Projets par thème</div><div class="ch-w"><canvas id="chT"></canvas></div></div>
+      <div class="ch-c"><div class="ch-t">Avancement global</div><div class="ch-w"><canvas id="chS"></canvas></div></div>
+    </div>
+
     </div>
   </div>
 </div>
@@ -1018,6 +1308,18 @@ textarea.fi{resize:vertical;min-height:90px;}
   <div class="ff"><label>Lien (kDrive, URL&#x2026;) *</label><input class="fi" type="url" id="bib-url" placeholder="https://&#x2026;"></div>
   <div class="ff"><label>Description</label><textarea class="fi" id="bib-desc" placeholder="R&#xe9;sum&#xe9;, contexte&#x2026;"></textarea></div>
   <div class="ff"><label>Tags (virgule-s&#xe9;par&#xe9;s)</label><input class="fi" id="bib-tags" placeholder="budget, 2026, voirie&#x2026;"></div>
+  <div class="ff"><label>Visibilit&#xe9;</label>
+    <div style="display:flex;gap:10px;margin-top:.25rem">
+      <label style="display:flex;align-items:center;gap:7px;cursor:pointer;flex:1;padding:.6rem .85rem;border-radius:var(--r);border:2px solid var(--g6);background:var(--g8)">
+        <input type="radio" name="bib-vis" id="bib-vis-pub" value="public" checked style="accent-color:var(--g3)">
+        <div><div style="font-size:.75rem;font-weight:700;color:var(--g2)">&#x1F465; Public</div><div style="font-size:.62rem;color:var(--i3)">Visible par toute l&#x27;&#xe9;quipe</div></div>
+      </label>
+      <label style="display:flex;align-items:center;gap:7px;cursor:pointer;flex:1;padding:.6rem .85rem;border-radius:var(--r);border:2px solid var(--w3);background:var(--w)">
+        <input type="radio" name="bib-vis" id="bib-vis-priv" value="prive" style="accent-color:var(--g3)">
+        <div><div style="font-size:.75rem;font-weight:700;color:var(--ink)">&#x1F512; Privé</div><div style="font-size:.62rem;color:var(--i3)">Uniquement vous</div></div>
+      </label>
+    </div>
+  </div>
   <div class="mft"><button class="btn btn-g" onclick="cm()">Annuler</button><button class="btn btn-p" onclick="svBiblio()">Ajouter</button></div>
 </div></div>
 
@@ -1147,7 +1449,6 @@ function goGlobal(){gp("global",qsa(".sbi")[10]);}
 function init(){
   var now=new Date();
   $("tdate").textContent=now.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
-  $("ph-date").textContent=now.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
 
   apiGet("/api/all").then(function(d){
     ST=d.statuts; AG=d.agenda; DC=d.documents; NF=d.notifs;
@@ -1174,7 +1475,8 @@ function init(){
     }
     renderTasks(); renderAnn(); renderNextMtg();
     buildGuides(); buildRess();
-    updSigBadge();
+    updSigBadge(); renderHeroAccueil(); renderShortcuts();
+    el("k-sig",d.stats?d.stats.sig_new||0:0);
   });
 
   apiGet("/api/projets").then(function(data){
@@ -1393,6 +1695,7 @@ function renderBiblio(){
       +'<div style="flex:1">'
       +'<a href="'+b.url+'" target="_blank" style="font-size:.84rem;font-weight:700;font-family:var(--fd);color:var(--g2);text-decoration:none">'+b.titre+'</a>'
       +'<div class="bib-m">'
+      +(b.visibilite==="prive"?'<span class="bib-tag" style="background:#fef3c7;color:#92400e">&#x1F512; Privé</span>':"")
       +(b.type?'<span class="bib-tag type">'+b.type+'</span>':"")
       +(b.commission?'<span class="bib-tag comm">'+b.commission+'</span>':"")
       +(b.date_doc?'<span class="bib-tag" style="font-family:var(--fm)">'+b.date_doc+'</span>':"")
@@ -1406,9 +1709,10 @@ function renderBiblio(){
 }
 
 function svBiblio(){
-  var d={titre:v("bib-ti"),type:v("bib-ty"),commission:v("bib-co"),url:v("bib-url"),description:v("bib-desc"),tags:v("bib-tags"),date_doc:v("bib-date"),annee:v("bib-year")};
+  var vis = document.querySelector('input[name="bib-vis"]:checked');
+  var d={titre:v("bib-ti"),type:v("bib-ty"),commission:v("bib-co"),url:v("bib-url"),description:v("bib-desc"),tags:v("bib-tags"),date_doc:v("bib-date"),annee:v("bib-year"),visibilite:vis?vis.value:"public"};
   if(!d.titre||!d.url){toast("Titre et lien obligatoires");return;}
-  apiPost("/api/biblio",d).then(function(r){if(r.ok){BIBLIO.unshift(r.item);renderBiblio();cm();toast("Document ajouté");}});
+  apiPost("/api/biblio",d).then(function(r){if(r.ok){BIBLIO.unshift(r.item);renderBiblio();cm();toast(d.visibilite==="prive"?"Document privé ajouté 🔒":"Document ajouté !");}});
 }
 function delBiblio(id){if(!confirm("Supprimer ?"))return;apiDel("/api/biblio/"+id).then(function(d){if(d.ok){BIBLIO=BIBLIO.filter(function(b){return b.id!==id;});renderBiblio();}});}
 
@@ -1796,6 +2100,57 @@ function renderChatMsgs(msgs){var el2=$("chat-msgs");if(!el2)return;el2.innerHTM
 function scrollChat(){var e=$("chat-msgs");if(e)e.scrollTop=e.scrollHeight;}
 
 // ── DÉMARRAGE ─────────────────────────────────────────────────────────────────
+  // ── PAGE ACCUEIL PERSONNALISÉE ─────────────────────────────────────────────
+  var CITATIONS = [
+    "Un élu de proximité, c'est d'abord quelqu'un qui écoute.",
+    "Vizille se construit ensemble, quartier par quartier.",
+    "L'action municipale, c'est du concret au quotidien.",
+    "Chaque projet voté est une promesse tenue aux Vizillois.",
+    "La démocratie locale commence dans nos rues et nos salles de conseil.",
+    "Gouverner, c'est prévoir — et agir avec le cœur.",
+    "Le mandat 2026-2032 : six ans pour transformer Vizille.",
+    "Ensemble, nous portons l'avenir de notre commune.",
+  ];
+
+  function renderHeroAccueil(){
+    var now = new Date();
+    var h = now.getHours();
+    var bonjour = h<12?"Bonjour":h<18?"Bon après-midi":"Bonsoir";
+    var av = $("hero-av"), bj = $("hero-bonjour"), dt = $("hero-date"), rl = $("hero-role"), ct = $("hero-citation");
+    if(av){ av.textContent = ME.avatar||"🏛"; av.style.background = ME.color||"var(--g4)"; }
+    if(bj) bj.textContent = bonjour + ", " + ME.nom.split(" ")[0] + " !";
+    if(dt) dt.textContent = now.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+    if(rl) rl.textContent = ME.role + (ME.delegation ? " — " + ME.delegation : "");
+    if(ct) ct.textContent = CITATIONS[now.getDate() % CITATIONS.length];
+  }
+
+  function renderShortcuts(){
+    var sg = $("shortcuts-grid"); if(!sg)return;
+    var sigNew = SIGN.filter(function(s){return s.statut==="Nouveau";}).length;
+    var shortcuts = [
+      {ico:"📝", lbl:"Comptes rendus",   sub: CRS.length + " CR", idx:5,   col:"var(--g8)", tcol:"var(--g2)"},
+      {ico:"📚", lbl:"Bibliothèque",     sub: BIBLIO.length + " doc", idx:6, col:"#ede9fe", tcol:"#6d28d9"},
+      {ico:"🔴", lbl:"Signalements",     sub: sigNew ? sigNew+" urgent"+(sigNew>1?"s":"") : "Tout est OK", idx:13, col: sigNew?"#fee2e2":"var(--g8)", tcol:sigNew?"var(--red)":"var(--g2)"},
+      {ico:"📂", lbl:"Mon dossier",      sub: "Privé 🔒", idx:7, col:"#fef3c7", tcol:"#92400e"},
+      {ico:"📅", lbl:"Agenda",           sub: AG.filter(function(a){return a.date>=new Date().toISOString().slice(0,10);}).length+" à venir", idx:3, col:"#dbeafe", tcol:"#1e40af"},
+      {ico:"🎪", lbl:"Événements",       sub: EVTS.filter(function(e){return e.date>=new Date().toISOString().slice(0,10);}).length+" à venir", idx:14, col:"#fef9c3", tcol:"#a16207"},
+      {ico:"👥", lbl:"Commissions",      sub: "91 projets", idx:9, col:"var(--g8)", tcol:"var(--g2)"},
+      {ico:"✍️", lbl:"Rédiger un doc",   sub: "Assisté IA", idx:15, col:"#f3e8ff", tcol:"#7c3aed"},
+    ];
+    sg.innerHTML = shortcuts.map(function(s){
+      return '<div onclick="gp2('+s.idx+')" class="scut">'
+        +'<div style="width:38px;height:38px;border-radius:10px;background:'+s.col+';display:flex;align-items:center;justify-content:center;margin:0 auto .5rem;font-size:1.1rem">'+s.ico+'</div>'
+        +'<div style="font-size:.72rem;font-weight:700;color:var(--ink);margin-bottom:2px">'+s.lbl+'</div>'
+        +'<div style="font-size:.62rem;color:'+s.tcol+';font-weight:600">'+s.sub+'</div>'
+        +'</div>';
+    }).join("");
+  }
+
+  function gp2(sbiIdx){
+    var items = qsa(".sbi");
+    if(items[sbiIdx]) items[sbiIdx].click();
+  }
+
 function navToAgenda(){gp("agenda",qsa(".sbi")[3]);}
 
 init();
