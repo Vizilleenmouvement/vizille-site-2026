@@ -1567,6 +1567,33 @@ textarea.fi{resize:vertical;min-height:90px;}
   </div>
 </div>
 
+<!-- GUIDE + RESSOURCES -->
+<div class="page" id="p-guide">
+  <div class="ph">
+    <div class="ph-ico" style="background:#fef9c3">&#x1F4D6;</div>
+    <div>
+      <div class="ph-t">Guide &amp; Ressources de l&#x27;élu</div>
+      <div class="ph-s">Fiches pratiques du mandat · Liens utiles</div>
+    </div>
+  </div>
+  <div class="scr">
+    <div style="font-size:.7rem;font-weight:700;color:var(--i3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">&#x1F4CB; Fiches pratiques</div>
+    <div id="guides-list" style="margin-bottom:1.75rem"></div>
+    <div style="font-size:.7rem;font-weight:700;color:var(--i3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">&#x1F517; Liens utiles</div>
+    <div id="ress-list" class="ress-g"></div>
+  </div>
+</div>
+
+<!-- RESSOURCES (alias vers guide) -->
+<div class="page" id="p-ress">
+  <div class="ph">
+    <div class="ph-ico" style="background:var(--g8)">&#x1F517;</div>
+    <div><div class="ph-t">Ressources utiles</div><div class="ph-s">Liens essentiels pour votre mandat</div></div>
+  </div>
+  <div class="scr"><div id="ress-list-2" class="ress-g"></div></div>
+</div>
+
+
 
 <!-- AGENDA -->
 <div class="page" id="p-agenda">
@@ -2513,12 +2540,8 @@ function buildGuides(){
 
 // ── RESSOURCES ───────────────────────────────────────────────────────────────
 function buildRess(){
-  var rl=$("ress-list"); if(!rl)return;
-  if(!RESS||!RESS.length){
-    rl.innerHTML='<div class="empty"><div class="empty-ico">&#x1F517;</div><div class="empty-t">Ressources en cours de chargement</div></div>';
-    return;
-  }
-  rl.innerHTML=RESS.map(function(r){
+  if(!RESS||!RESS.length) return;
+  var html=RESS.map(function(r){
     return '<a href="'+r.url+'" target="_blank" rel="noopener" class="ress-c" style="text-decoration:none">'
       +'<div class="ress-ico">'+r.icon+'</div>'
       +'<div style="flex:1">'
@@ -2529,6 +2552,8 @@ function buildRess(){
       +'<div style="font-size:.75rem;color:var(--g5);flex-shrink:0;margin-left:6px">&#x2197;</div>'
       +'</a>';
   }).join("");
+  var rl=$("ress-list"); if(rl) rl.innerHTML=html;
+  var rl2=$("ress-list-2"); if(rl2) rl2.innerHTML=html;
 }
 
 // ── AGENDA ───────────────────────────────────────────────────────────────────
