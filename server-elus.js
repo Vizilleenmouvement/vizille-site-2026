@@ -1362,8 +1362,8 @@ textarea.fi{resize:vertical;min-height:90px;}
       <div id="hero-citation" style="position:absolute;bottom:.75rem;left:calc(56px + 2.8rem);right:1.8rem;font-size:.71rem;opacity:.5;font-style:italic;z-index:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
     </div>
 
-    <!-- LIGNE 1 : Agenda + Tâches + Tchat + Signalements -->
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px">
+    <!-- LIGNE 1 : Agenda | Tâches | Signalements -->
+    <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:12px">
 
 
       <!-- WIDGET AGENDA -->
@@ -1407,30 +1407,7 @@ textarea.fi{resize:vertical;min-height:90px;}
         </div>
       </div>
 
-      <!-- WIDGET TCHAT -->
-      <div class="wg" style="background:#fff;border-radius:18px;border:1px solid var(--w2);box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;display:flex;flex-direction:column">
-        <div class="wg-h" style="padding:.85rem 1.1rem .65rem;border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:8px">
-          <div style="width:28px;height:28px;border-radius:8px;background:var(--g2);display:flex;align-items:center;justify-content:center;font-size:.9rem">&#x1F4AC;</div>
-          <div style="font-size:.78rem;font-weight:700;font-family:var(--fd);color:var(--ink);flex:1">Tchat de l&#x27;équipe</div>
-          <select id="wg-chat-ch" onchange="wgSwitchCh()" style="font-size:.65rem;padding:2px 6px;border:1px solid var(--w2);border-radius:6px;background:#fff;color:var(--i2);font-family:var(--fn)">
-            <option value="general">&#x1F4AC; Général</option>
-            <option value="bureau">&#x1F3DB; Bureau</option>
-            <option value="culture">&#x1F3AD; Culture</option>
-            <option value="mobilites">&#x1F6B2; Mobilités</option>
-            <option value="ecologie">&#x1F33F; Écologie</option>
-            <option value="social">&#x1F91D; Social</option>
-            <option value="enfance">&#x1F466; Enfance</option>
-            <option value="tranquillite">&#x1F6E1; Tranquillité</option>
-            <option value="travaux">&#x1F3D7; Travaux</option>
-          </select>
-          <div id="wg-chat-badge" style="width:8px;height:8px;border-radius:50%;background:var(--red);display:none;flex-shrink:0"></div>
-        </div>
-        <div id="wg-chat-msgs" style="flex:1;overflow-y:auto;padding:.65rem .9rem;display:flex;flex-direction:column;gap:6px;background:var(--w);min-height:140px;max-height:220px"></div>
-        <div style="padding:.6rem .9rem;border-top:1px solid var(--w2);display:flex;gap:7px;background:#fff">
-          <input id="wg-chat-inp" class="fi" placeholder="Message&#x2026;" style="flex:1;font-size:.74rem;padding:6px 9px" onkeydown="if(event.key==='Enter')wgSendMsg()">
-          <button class="btn btn-p btn-sm" onclick="wgSendMsg()" style="flex-shrink:0;background:var(--g2);border-color:var(--g2)">&#x2192;</button>
-        </div>
-      </div>
+      
 
       <!-- WIDGET SIGNALEMENTS -->
       <div class="wg" style="background:#fff;border-radius:18px;border:1px solid var(--w2);box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;display:flex;flex-direction:column">
@@ -1506,8 +1483,8 @@ textarea.fi{resize:vertical;min-height:90px;}
       </div>
     </div>
 
-    <!-- LIGNE 3 : Annonces + CR + Projets -->
-    <div style="display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:14px">
+    <!-- LIGNE 3 : Annonces | Tchat | CR | Baromètre -->
+    <div style="display:grid;grid-template-columns:1fr 1.2fr 1fr 1.1fr;gap:12px">
 
       <!-- WIDGET ANNONCES -->
       <div class="wg" style="background:#fff;border-radius:18px;border:1px solid var(--w2);box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;display:flex;flex-direction:column">
@@ -1518,6 +1495,31 @@ textarea.fi{resize:vertical;min-height:90px;}
         </div>
         <div style="padding:.7rem 1rem;flex:1" id="ann-list">
           <div style="font-size:.73rem;color:var(--i4);text-align:center;padding:.75rem 0">Aucune annonce</div>
+        </div>
+      </div>
+
+      <!-- WIDGET TCHAT -->
+      <div class="wg" style="background:#fff;border-radius:18px;border:1px solid var(--w2);box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;display:flex;flex-direction:column">
+        <div class="wg-h" style="padding:.85rem 1.1rem .65rem;border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:8px">
+          <div style="width:28px;height:28px;border-radius:8px;background:var(--g2);display:flex;align-items:center;justify-content:center;font-size:.9rem">&#x1F4AC;</div>
+          <div style="font-size:.78rem;font-weight:700;font-family:var(--fd);color:var(--ink);flex:1">Tchat de l&#x27;équipe</div>
+          <select id="wg-chat-ch" onchange="wgSwitchCh()" style="font-size:.65rem;padding:2px 6px;border:1px solid var(--w2);border-radius:6px;background:#fff;color:var(--i2);font-family:var(--fn)">
+            <option value="general">&#x1F4AC; Général</option>
+            <option value="bureau">&#x1F3DB; Bureau</option>
+            <option value="culture">&#x1F3AD; Culture</option>
+            <option value="mobilites">&#x1F6B2; Mobilités</option>
+            <option value="ecologie">&#x1F33F; Écologie</option>
+            <option value="social">&#x1F91D; Social</option>
+            <option value="enfance">&#x1F466; Enfance</option>
+            <option value="tranquillite">&#x1F6E1; Tranquillité</option>
+            <option value="travaux">&#x1F3D7; Travaux</option>
+          </select>
+          <div id="wg-chat-badge" style="width:8px;height:8px;border-radius:50%;background:var(--red);display:none;flex-shrink:0"></div>
+        </div>
+        <div id="wg-chat-msgs" style="flex:1;overflow-y:auto;padding:.65rem .9rem;display:flex;flex-direction:column;gap:6px;background:var(--w);min-height:140px;max-height:220px"></div>
+        <div style="padding:.6rem .9rem;border-top:1px solid var(--w2);display:flex;gap:7px;background:#fff">
+          <input id="wg-chat-inp" class="fi" placeholder="Message&#x2026;" style="flex:1;font-size:.74rem;padding:6px 9px" onkeydown="if(event.key==='Enter')wgSendMsg()">
+          <button class="btn btn-p btn-sm" onclick="wgSendMsg()" style="flex-shrink:0;background:var(--g2);border-color:var(--g2)">&#x2192;</button>
         </div>
       </div>
 
@@ -1572,27 +1574,9 @@ textarea.fi{resize:vertical;min-height:90px;}
       </div>
     </div>
 
-    <!-- LIGNE 4 : Événements à venir -->
-    <div style="display:grid;grid-template-columns:1fr;gap:12px">
-      <!-- WIDGET ÉVÉNEMENTS À VENIR -->
-      <div class="wg" style="background:#fff;border-radius:18px;border:1px solid var(--w2);box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;display:flex;flex-direction:column">
-        <div class="wg-h" style="padding:.85rem 1.1rem .65rem;border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:8px">
-          <div style="width:28px;height:28px;border-radius:8px;background:#fef3c7;display:flex;align-items:center;justify-content:center;font-size:.9rem">&#x1F3AA;</div>
-          <div style="font-size:.78rem;font-weight:700;font-family:var(--fd);color:var(--ink);flex:1">Événements à venir</div>
-          <button class="btn btn-g btn-sm" onclick="gp('events',qsa('.sbi')[12])" style="font-size:.62rem">Tous →</button>
-        </div>
-        <div style="padding:.7rem 1rem;flex:1;overflow-y:auto;max-height:220px" id="ev-home-list">
-          <div style="font-size:.73rem;color:var(--i4);text-align:center;padding:.75rem 0">Aucun événement à venir</div>
-        </div>
-        <div style="padding:.6rem 1rem;border-top:1px solid var(--w2)">
-          <button class="btn btn-p btn-sm btn-full" onclick="om('event')" style="font-size:.68rem">+ Ajouter un événement</button>
-        </div>
-      </div>
-    </div>
-    </div>
+    
 
-
-
+    </div><!-- /today-scr -->
   </div>
 </div>
 
