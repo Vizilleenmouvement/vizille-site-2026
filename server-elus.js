@@ -1252,121 +1252,114 @@ textarea.fi{resize:vertical;min-height:90px;}
 <div class="page on" id="p-today">
   <div class="scr" style="padding:0;overflow-y:auto">
 
-    <!-- HERO MATIN -->
-    <div id="hero-wrap" style="background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 50%,var(--g3) 100%);padding:1.4rem 1.8rem 1.6rem;color:#fff;position:relative;overflow:hidden;flex-shrink:0">
-      <div style="position:absolute;top:-80px;right:-80px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.03)"></div>
-      <div style="position:absolute;bottom:-60px;left:30%;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.02)"></div>
-      <div style="display:flex;align-items:center;gap:1.1rem;position:relative;z-index:1;margin-bottom:.9rem">
-        <div id="hero-av" style="width:54px;height:54px;border-radius:14px;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;font-family:var(--fd);flex-shrink:0;letter-spacing:-.5px">&#x1F3DB;</div>
-        <div style="flex:1;min-width:0">
-          <div id="hero-bonjour" style="font-size:1.05rem;font-weight:700;font-family:var(--fd);line-height:1.2;margin-bottom:.18rem">Bonjour !</div>
-          <div id="hero-role" style="font-size:.73rem;opacity:.55;line-height:1.3"></div>
+    <!-- HERO PERSONNALISÉ -->
+    <div id="hero-wrap" style="background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 50%,var(--g3) 100%);padding:1.3rem 1.8rem 1.5rem;color:#fff;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-80px;right:-80px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.03)"></div>
+      <div style="display:flex;align-items:center;gap:1rem;position:relative;z-index:1;margin-bottom:.75rem">
+        <div id="hero-av" style="width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:1.15rem;font-weight:800;font-family:var(--fd);flex-shrink:0">&#x1F3DB;</div>
+        <div style="flex:1">
+          <div id="hero-bonjour" style="font-size:1rem;font-weight:700;font-family:var(--fd);margin-bottom:.15rem">Bonjour !</div>
+          <div id="hero-role" style="font-size:.7rem;opacity:.5;line-height:1.3"></div>
         </div>
-        <div style="text-align:right;flex-shrink:0">
-          <div id="hero-date-big" style="font-size:1.75rem;font-weight:800;font-family:var(--fd);line-height:1"></div>
-          <div id="hero-mois" style="font-size:.72rem;opacity:.55;margin-top:2px;text-transform:capitalize"></div>
+        <div style="text-align:right">
+          <div id="hero-date-big" style="font-size:1.6rem;font-weight:800;font-family:var(--fd);line-height:1"></div>
+          <div id="hero-mois" style="font-size:.68rem;opacity:.5;margin-top:2px;text-transform:capitalize"></div>
         </div>
       </div>
-      <div id="hero-citation" style="font-size:.75rem;opacity:.6;font-style:italic;border-left:2px solid rgba(255,255,255,.25);padding-left:.75rem;line-height:1.5;position:relative;z-index:1"></div>
+      <div id="hero-citation" style="font-size:.73rem;opacity:.55;font-style:italic;border-left:2px solid rgba(255,255,255,.22);padding-left:.7rem;line-height:1.5;position:relative;z-index:1"></div>
     </div>
 
     <div style="padding:1rem 1.4rem 1.4rem">
 
-    <!-- ALERTE URGENTE -->
-    <div id="alert-urgents" style="display:none;background:#fef2f2;border:1.5px solid #fca5a5;border-radius:var(--R);padding:.75rem 1rem;margin-bottom:12px;display:flex;align-items:center;gap:10px">
-      <span style="font-size:1.1rem">&#x26A0;&#xFE0F;</span>
+    <!-- ALERTE SIGNALEMENTS URGENTS -->
+    <div id="alert-urgents" style="display:none;background:#fef2f2;border:1.5px solid #fca5a5;border-radius:var(--R);padding:.7rem 1rem;margin-bottom:12px;display:flex;align-items:center;gap:10px">
+      <span>&#x26A0;&#xFE0F;</span>
       <div id="alert-urgents-txt" style="font-size:.76rem;color:#b91c1c;flex:1"></div>
-      <button class="btn btn-sm" style="background:#b91c1c;color:#fff;border-color:#b91c1c" onclick="gpByName('signal')">Voir</button>
+      <button class="btn btn-sm" style="background:#b91c1c;color:#fff;border-color:#b91c1c;flex-shrink:0" onclick="gpByName('signal')">Voir</button>
     </div>
 
-    <!-- GRILLE PRINCIPALE : calendrier + tâches + annonces -->
-    <div style="display:grid;grid-template-columns:auto 1fr 1fr;gap:12px;margin-bottom:12px;align-items:start">
+    <!-- PROCHAINE RÉUNION -->
+    <div id="next-mtg" style="margin-bottom:12px"></div>
 
-      <!-- CALENDRIER MINI -->
-      <div class="card" style="min-width:220px;padding:.85rem">
+    <!-- GRILLE : CALENDRIER + TÂCHES + ANNONCES -->
+    <div style="display:grid;grid-template-columns:220px 1fr 1fr;gap:12px;margin-bottom:12px;align-items:start">
+
+      <!-- MINI CALENDRIER -->
+      <div class="card" style="padding:.85rem">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem">
-          <button onclick="calPrev()" style="background:none;border:none;cursor:pointer;color:var(--i3);font-size:1rem;padding:0 4px">&#x276E;</button>
-          <div id="cal-title" style="font-size:.78rem;font-weight:700;font-family:var(--fd);color:var(--ink);text-transform:capitalize"></div>
-          <button onclick="calNext()" style="background:none;border:none;cursor:pointer;color:var(--i3);font-size:1rem;padding:0 4px">&#x276F;</button>
+          <button onclick="calPrev()" style="background:none;border:none;cursor:pointer;color:var(--i3);font-size:1rem;width:24px">&#x276E;</button>
+          <div id="cal-title" style="font-size:.76rem;font-weight:700;font-family:var(--fd);text-transform:capitalize;text-align:center"></div>
+          <button onclick="calNext()" style="background:none;border:none;cursor:pointer;color:var(--i3);font-size:1rem;width:24px">&#x276F;</button>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;margin-bottom:5px">
-          <div style="font-size:.58rem;font-weight:700;color:var(--i4);text-align:center">L</div>
-          <div style="font-size:.58rem;font-weight:700;color:var(--i4);text-align:center">M</div>
-          <div style="font-size:.58rem;font-weight:700;color:var(--i4);text-align:center">M</div>
-          <div style="font-size:.58rem;font-weight:700;color:var(--i4);text-align:center">J</div>
-          <div style="font-size:.58rem;font-weight:700;color:var(--i4);text-align:center">V</div>
-          <div style="font-size:.58rem;font-weight:700;color:var(--amber);text-align:center">S</div>
-          <div style="font-size:.58rem;font-weight:700;color:var(--amber);text-align:center">D</div>
+        <div style="display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:4px">
+          <div style="font-size:.56rem;font-weight:700;color:var(--i4);text-align:center">L</div>
+          <div style="font-size:.56rem;font-weight:700;color:var(--i4);text-align:center">M</div>
+          <div style="font-size:.56rem;font-weight:700;color:var(--i4);text-align:center">M</div>
+          <div style="font-size:.56rem;font-weight:700;color:var(--i4);text-align:center">J</div>
+          <div style="font-size:.56rem;font-weight:700;color:var(--i4);text-align:center">V</div>
+          <div style="font-size:.56rem;font-weight:700;color:var(--amber);text-align:center">S</div>
+          <div style="font-size:.56rem;font-weight:700;color:var(--amber);text-align:center">D</div>
         </div>
         <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px"></div>
-        <!-- Légende -->
-        <div style="display:flex;gap:8px;margin-top:.65rem;padding-top:.6rem;border-top:1px solid var(--w2);flex-wrap:wrap">
-          <div style="display:flex;align-items:center;gap:3px;font-size:.6rem;color:var(--i3)"><div style="width:8px;height:8px;border-radius:2px;background:var(--g4)"></div>Réunion</div>
-          <div style="display:flex;align-items:center;gap:3px;font-size:.6rem;color:var(--i3)"><div style="width:8px;height:8px;border-radius:2px;background:var(--amber)"></div>Événement</div>
-          <div style="display:flex;align-items:center;gap:3px;font-size:.6rem;color:var(--i3)"><div style="width:8px;height:8px;border-radius:2px;background:#dbeafe"></div>Conseil</div>
+        <div style="display:flex;gap:8px;margin-top:.6rem;padding-top:.5rem;border-top:1px solid var(--w2)">
+          <div style="display:flex;align-items:center;gap:3px;font-size:.58rem;color:var(--i3)"><div style="width:7px;height:7px;border-radius:2px;background:var(--g8);border:1px solid var(--g7)"></div>Conseil</div>
+          <div style="display:flex;align-items:center;gap:3px;font-size:.58rem;color:var(--i3)"><div style="width:5px;height:5px;border-radius:50%;background:var(--g5)"></div>Événement</div>
         </div>
       </div>
 
       <!-- MES TÂCHES -->
-      <div class="card" style="height:100%">
+      <div class="card">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
           <div class="cardt" style="margin-bottom:0">&#x2705; Mes tâches</div>
           <span id="task-cnt" style="font-size:.62rem;color:var(--i4)"></span>
         </div>
         <div id="task-list"></div>
-        <div style="display:flex;gap:7px;margin-top:.7rem;padding-top:.6rem;border-top:1px solid var(--w2)">
-          <input class="fi" id="task-inp" placeholder="Ajouter une tâche..." style="flex:1;font-size:.75rem;padding:6px 9px" onkeydown="if(event.key==='Enter')addTask()">
+        <div style="display:flex;gap:7px;margin-top:.65rem;padding-top:.6rem;border-top:1px solid var(--w2)">
+          <input class="fi" id="task-inp" placeholder="Ajouter une tâche..." style="flex:1;font-size:.74rem;padding:6px 9px" onkeydown="if(event.key==='Enter')addTask()">
           <button class="btn btn-p btn-sm" onclick="addTask()">+</button>
         </div>
       </div>
 
       <!-- ANNONCES -->
-      <div class="card" style="height:100%">
+      <div class="card">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
           <div class="cardt" style="margin-bottom:0">&#x1F4E2; Annonces</div>
           <button class="btn btn-p btn-sm" onclick="om('annonce')" style="font-size:.65rem">+ Publier</button>
         </div>
-        <div id="ann-list"><div style="font-size:.74rem;color:var(--i4);text-align:center;padding:1rem 0">Aucune annonce</div></div>
+        <div id="ann-list"><div style="font-size:.73rem;color:var(--i4);text-align:center;padding:1rem 0">Aucune annonce</div></div>
       </div>
     </div>
 
-    <!-- AGENDA DE LA SEMAINE -->
+    <!-- AGENDA INTERACTIF -->
     <div class="card" style="margin-bottom:12px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem">
         <div class="cardt" style="margin-bottom:0">&#x1F4C5; Agenda — réunions &amp; événements</div>
         <div style="display:flex;gap:6px">
-          <button class="btn btn-g btn-sm" onclick="gpByName('agenda')">+ Réunion</button>
-          <button class="btn btn-g btn-sm" onclick="gpByName('events')">+ Événement</button>
+          <button class="btn btn-g btn-sm" onclick="om('agenda')">+ Réunion</button>
+          <button class="btn btn-g btn-sm" onclick="om('event')">+ Événement</button>
         </div>
       </div>
-      <!-- Onglets semaine -->
-      <div id="week-tabs" style="display:flex;gap:4px;margin-bottom:1rem;overflow-x:auto;padding-bottom:2px"></div>
-      <!-- Liste du jour sélectionné -->
+      <div id="week-tabs" style="display:flex;gap:4px;margin-bottom:.85rem;overflow-x:auto;padding-bottom:2px"></div>
       <div id="agenda-day-list"></div>
-      <!-- Prochaines échéances -->
-      <div id="agenda-upcoming" style="margin-top:.85rem;padding-top:.85rem;border-top:1px solid var(--w2)"></div>
+      <div id="agenda-upcoming" style="margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--w2)"></div>
     </div>
 
-    <!-- LIGNE BASSE : derniers CR + accès rapides -->
+    <!-- LIGNE BASSE : derniers CR + raccourcis -->
     <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:12px">
-
-      <!-- DERNIERS COMPTES RENDUS -->
       <div class="card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem">
           <div class="cardt" style="margin-bottom:0">&#x1F4DD; Derniers comptes rendus</div>
           <button class="btn btn-g btn-sm" onclick="gpByName('cr')">Tous →</button>
         </div>
         <div id="cr-home-list"></div>
       </div>
-
-      <!-- ACCÈS RAPIDES -->
       <div class="card">
         <div class="cardt" style="margin-bottom:.75rem">&#x26A1; Accès rapides</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="shortcuts-grid"></div>
       </div>
     </div>
 
-    </div><!-- /padding -->
+    </div>
   </div>
 </div>
 <!-- GUIDE -->
@@ -1980,6 +1973,49 @@ function imp(n){return n?"★".repeat(n):"-";}
 function t2c(t){for(var c in COMM){if(COMM[c].indexOf(t)>=0)return c;}return "Autre";}
 
 // ── PROCHAINE RÉUNION ────────────────────────────────────────────────────────
+
+function renderCRHome(){
+  var cl=$("cr-home-list"); if(!cl)return;
+  var last=CRS.slice(0,4);
+  if(!last.length){
+    cl.innerHTML='<div style="font-size:.74rem;color:var(--i4);text-align:center;padding:.5rem 0">Aucun CR pour l'instant</div>';
+    return;
+  }
+  var CRCC={"Bureau municipal":"#1d3d2b","Conseil municipal":"#2d5a40","Culture, Patrimoine & Jumelages":"#8B5CF6","Mobilités":"#3B82F6","Transition écologique":"#10B981","Action sociale":"#F59E0B","Animations de proximité":"#EC4899","Enfance/Jeunesse":"#F97316","Tranquillité publique":"#EF4444","Travaux & Urbanisme":"#84CC16","Santé":"#06B6D4"};
+  cl.innerHTML=last.map(function(cr){
+    var col=CRCC[cr.commission]||"var(--g4)";
+    return '<div style="display:flex;gap:9px;align-items:flex-start;padding:.5rem 0;border-bottom:1px solid var(--w2);cursor:pointer" onclick="openCR('+cr.id+')">'
+      +'<div style="width:28px;height:28px;border-radius:7px;background:'+col+'18;border:1px solid '+col+'30;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0">📝</div>'
+      +'<div style="flex:1;min-width:0">'
+      +'<div style="font-size:.76rem;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+cr.titre+'</div>'
+      +'<div style="font-size:.65rem;color:var(--i3)">'+cr.commission+(cr.date?" · "+cr.date:"")+'</div>'
+      +'</div></div>';
+  }).join("");
+}
+
+function renderEvHome(){
+  var el2=$("ev-home-list"); if(!el2)return;
+  var today2=new Date().toISOString().slice(0,10);
+  var next=EVTS.filter(function(e){return e.date>=today2;}).slice(0,4);
+  if(!next.length){
+    el2.innerHTML='<div style="font-size:.74rem;color:var(--i4);text-align:center;padding:.5rem 0">Aucun événement à venir</div>';
+    return;
+  }
+  var MOIS2=["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"];
+  var EVC={municipal:"var(--g3)",associatif:"var(--amber)",culturel:"#8B5CF6",sportif:"var(--blue)",commemoration:"#7f8c8d",autre:"var(--i3)"};
+  el2.innerHTML=next.map(function(e){
+    var col=EVC[e.type]||"var(--i3)";
+    return '<div style="display:flex;gap:9px;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--w2)">'
+      +'<div style="background:'+col+'18;border:1px solid '+col+'30;border-radius:7px;padding:.3rem .4rem;text-align:center;min-width:34px;flex-shrink:0">'
+      +'<div style="font-size:.85rem;font-weight:800;color:'+col+';line-height:1;font-family:var(--fd)">'+e.date.slice(8)+'</div>'
+      +'<div style="font-size:.52rem;font-weight:700;color:'+col+';text-transform:uppercase">'+MOIS2[+e.date.slice(5,7)-1]+'</div></div>'
+      +'<div style="flex:1;min-width:0">'
+      +'<div style="font-size:.76rem;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+e.titre+'</div>'
+      +'<div style="font-size:.65rem;color:var(--i3)">'+(e.lieu||"")+(e.heure?" · "+e.heure:"")+'</div>'
+      +'</div></div>';
+  }).join("");
+}
+
 function renderNextMtg(){
   var now=new Date().toISOString().slice(0,10);
   var next=AG.filter(function(a){return a.date>=now;}).sort(function(a,b){return a.date>b.date?1:-1;})[0];
