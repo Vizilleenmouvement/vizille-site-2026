@@ -1009,7 +1009,7 @@ body{font-family:var(--fn);background:var(--w);color:var(--ink);height:100vh;ove
 .scr::-webkit-scrollbar{width:4px;}.scr::-webkit-scrollbar-thumb{background:var(--w3);border-radius:2px;}
 
 /* PAGES */
-.page{display:none;}.page.on{display:block;}
+.page{display:none;}.page.on{display:flex;flex-direction:column;flex:1;overflow:hidden;}
 
 /* CARDS */
 .card{background:#fff;border-radius:var(--R);border:1px solid var(--w2);box-shadow:var(--s1);padding:1.1rem 1.25rem;margin-bottom:12px;}
@@ -1320,7 +1320,7 @@ textarea.fi{resize:vertical;min-height:90px;}
 
 <!-- AUJOURD'HUI -->
 <div class="page on" id="p-today">
-  <div id="today-scr" style="flex:1;overflow-y:auto;padding:1.25rem 1.5rem;background:var(--w);display:flex;flex-direction:column;gap:14px">
+  <div class="scr" id="today-scr" style="display:flex;flex-direction:column;gap:14px;padding:1.25rem 1.5rem;">
 
     <!-- HERO ACCUEIL -->
     <div id="hero-wrap" style="background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 55%,var(--g3) 100%);border-radius:20px;padding:1.4rem 1.8rem;color:#fff;display:flex;align-items:center;gap:1.25rem;position:relative;overflow:hidden;box-shadow:0 6px 28px rgba(15,35,24,.35)">
