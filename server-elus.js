@@ -1093,8 +1093,8 @@ return `<!DOCTYPE html>
   --sw:252px;--th:54px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{font-size:14.5px;height:100vh;margin:0;overflow:hidden;}
-body{font-family:var(--fn);background:var(--w);color:var(--ink);height:100vh;margin:0;overflow:hidden;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
+html{font-size:14.5px;height:100%;}
+body{font-family:var(--fn);background:var(--w);color:var(--ink);height:100vh;margin:0;overflow:hidden;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;box-sizing:border-box;}
 
 /* TOPBAR */
 .top{height:var(--th);background:var(--g1);display:flex;align-items:center;padding:0 1.25rem;gap:12px;flex-shrink:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,.25);}
@@ -1136,7 +1136,7 @@ body{font-family:var(--fn);background:var(--w);color:var(--ink);height:100vh;mar
 .scr::-webkit-scrollbar{width:4px;}.scr::-webkit-scrollbar-thumb{background:var(--w3);border-radius:2px;}
 
 /* PAGES */
-.page{display:none;}.page.on{display:flex;flex-direction:column;flex:1;overflow:hidden;}
+.page{display:none;}.page.on{display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden;}
 
 /* CARDS */
 .card{background:#fff;border-radius:var(--R);border:1px solid var(--w2);box-shadow:var(--s1);padding:1.1rem 1.25rem;margin-bottom:12px;}
@@ -3435,8 +3435,8 @@ function rTb(bid,rows,showC){
       +'<td><span class="b '+bc(st)+'">'+st+'</span></td>'
       +'<td style="color:var(--i3);font-family:var(--fm);font-size:.72rem">'+(p.annee||"—")+'</td>'
       +'<td>'+imp(p.importance)+'</td>'
-      +'<td style="display:flex;align-items:center;gap:5px"><select class="ssel" data-pid="'+p.id+'" data-t="'+p.titre.replace(/"/g,"&quot;")+'" onchange="uSt(+this.dataset.pid,this.value,this.dataset.t)">'+opts+'</select>'
-      +'<button class="btn btn-g btn-sm" onclick="oProj('+p.id+')" title="Modifier" style="padding:3px 7px;flex-shrink:0">&#x270F;</button></td>'
+      +'<td><div style="display:flex;align-items:center;gap:5px"><select class="ssel" data-pid="'+p.id+'" data-t="'+p.titre.replace(/"/g,"&quot;")+'" onchange="uSt(+this.dataset.pid,this.value,this.dataset.t)">'+opts+'</select>'
+      +'<button class="btn btn-g btn-sm" onclick="oProj('+p.id+')" title="Modifier" style="padding:3px 7px;flex-shrink:0">&#x270F;</button></div></td>'
       +'</tr>';
   }).join("");
 }
