@@ -1093,8 +1093,11 @@ return `<!DOCTYPE html>
   --sw:252px;--th:54px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{margin:0;height:100vh;overflow:hidden;font-family:var(--fn);background:var(--w);color:var(--ink);-webkit-font-smoothing:antialiased;}
 html{font-size:14.5px;}
-body{font-family:var(--fn);background:var(--w);color:var(--ink);height:100vh;overflow:hidden;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
+
+/* APP CONTAINER */
+.app-container{display:flex;flex-direction:column;height:100vh;}
 
 /* TOPBAR */
 .top{height:var(--th);background:var(--g1);display:flex;align-items:center;padding:0 1.25rem;gap:12px;flex-shrink:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,.25);}
@@ -1118,7 +1121,7 @@ body{font-family:var(--fn);background:var(--w);color:var(--ink);height:100vh;ove
 .sbs{padding:.75rem 1rem .2rem;font-size:.59rem;font-weight:700;color:rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:.1em;}
 .sbi{display:flex;align-items:center;gap:9px;padding:.46rem 1rem .46rem 1.1rem;cursor:pointer;color:rgba(255,255,255,.52);font-size:.78rem;border-left:2px solid transparent;transition:all .15s;user-select:none;}
 .sbi:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.88);}
-.sbi.on{background:rgba(255,255,255,.1);color:#fff;border-left-color:var(--g6);font-weight:600;}
+.sbi.on{background:rgba(255,255,255,.1);color:#fff;border-left:3px solid #4ade80;font-weight:600;}
 .sbi-ic{width:18px;text-align:center;font-size:.9rem;flex-shrink:0;}
 .sbi-n{font-size:.58rem;font-weight:700;background:var(--g4);color:#fff;padding:1px 6px;border-radius:8px;margin-left:auto;}
 .sbi-new{font-size:.56rem;font-weight:700;background:var(--red);color:#fff;padding:1px 5px;border-radius:8px;margin-left:auto;animation:blink 2s infinite;display:none;}
@@ -1126,17 +1129,17 @@ body{font-family:var(--fn);background:var(--w);color:var(--ink);height:100vh;ove
 .sbf{margin-top:auto;padding:.85rem 1rem;border-top:1px solid rgba(255,255,255,.07);font-size:.63rem;color:rgba(255,255,255,.2);line-height:1.7;}
 
 /* MAIN */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.main-content{flex:1;background:var(--w);overflow-y:auto;position:relative;}
 .ph{padding:.72rem 1.4rem;background:#fff;border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:12px;flex-shrink:0;box-shadow:var(--s1);}
 .ph-ico{width:36px;height:36px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
 .ph-t{font-size:.94rem;font-weight:700;color:var(--ink);font-family:var(--fd);line-height:1.2;}
 .ph-s{font-size:.69rem;color:var(--i3);margin-top:1px;}
 .ph-a{margin-left:auto;display:flex;gap:8px;align-items:center;}
-.scr{flex:1;overflow-y:auto;padding:1.2rem 1.4rem;}
+.scr{padding:1.2rem 1.4rem;}
 .scr::-webkit-scrollbar{width:4px;}.scr::-webkit-scrollbar-thumb{background:var(--w3);border-radius:2px;}
 
 /* PAGES */
-.page{display:none;}.page.on{display:flex;flex-direction:column;flex:1;overflow:hidden;}
+.page{display:none;padding:0;animation:fadeIn .2s ease;}.page.on{display:block;}@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
 /* CARDS */
 .card{background:#fff;border-radius:var(--R);border:1px solid var(--w2);box-shadow:var(--s1);padding:1.1rem 1.25rem;margin-bottom:12px;}
@@ -1494,7 +1497,7 @@ textarea.fi{resize:vertical;min-height:90px;}
 </style>
 </head>
 <body>
-
+<div class="app-container">
 <div class="top">
   <div style="display:flex;align-items:center;gap:10px">
     <div class="top-badge">VM</div>
@@ -1545,7 +1548,7 @@ textarea.fi{resize:vertical;min-height:90px;}
   <div class="sbf">elus.vizilleenmouvement.fr<br>Node.js &#xb7; Infomaniak</div>
 </aside>
 
-<main class="main">
+<main class="main-content">
 
 <!-- AUJOURD'HUI -->
 <div class="page on" id="p-today">
@@ -4031,6 +4034,7 @@ function applyRoles(){
 init();
 
 </script>
+</div><!-- /app-container -->
 </body>
 </html>
 `;
