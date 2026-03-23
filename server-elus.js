@@ -1322,7 +1322,82 @@ textarea.fi{resize:vertical;min-height:90px;}
 /* TOAST */
 .toast{position:fixed;bottom:22px;right:22px;background:var(--g1);color:#fff;padding:10px 18px;border-radius:var(--R);font-size:.78rem;font-weight:500;z-index:1000;display:none;box-shadow:var(--s3);border:1px solid rgba(255,255,255,.1);animation:mIn .2s;}
 
-@media(max-width:900px){.sb{display:none;}.ch-row{grid-template-columns:1fr;}.cg{grid-template-columns:1fr;}.fr2{grid-template-columns:1fr;}.kpig{grid-template-columns:repeat(3,1fr);}.rep-grid{grid-template-columns:1fr 1fr;}.elus-g{grid-template-columns:1fr 1fr;}}
+@media(max-width:900px){
+  /* Layout adaptatif */
+  .ch-row{grid-template-columns:1fr;}
+  .cg{grid-template-columns:1fr;}
+  .fr2{grid-template-columns:1fr;}
+  .kpig{grid-template-columns:repeat(2,1fr);}
+  .rep-grid{grid-template-columns:1fr;}
+  .elus-g{grid-template-columns:1fr 1fr;}
+
+  /* Sidebar : overlay glissant depuis gauche */
+  .sb{
+    position:fixed;left:0;top:var(--th);bottom:0;
+    width:280px;z-index:300;
+    transform:translateX(-100%);
+    transition:transform .25s cubic-bezier(.25,.8,.25,1);
+  }
+  .sb.on{transform:translateX(0);}
+
+  /* Overlay sombre derrière la sidebar */
+  .sb-overlay{
+    display:none;position:fixed;inset:0;
+    background:rgba(0,0,0,.5);z-index:299;
+  }
+  .sb-overlay.on{display:block;}
+
+  /* Hamburger */
+  .hamburger{display:flex;flex-direction:column;gap:4px;width:24px;cursor:pointer;padding:4px;}
+  .hamburger span{height:2px;background:#fff;border-radius:2px;transition:.2s;}
+  .hamburger.on span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}
+  .hamburger.on span:nth-child(2){opacity:0;}
+  .hamburger.on span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}
+
+  /* Topbar adaptée */
+  .top-date{display:none;}
+
+  /* Barre outils bas écran */
+  .bottom-tools{
+    position:fixed;bottom:0;left:0;right:0;
+    background:var(--g1);padding:.5rem .75rem;
+    display:flex;gap:6px;z-index:250;
+    box-shadow:0 -2px 12px rgba(0,0,0,.3);
+    padding-bottom:max(.5rem,env(safe-area-inset-bottom));
+  }
+  .bt-ic{
+    flex:1;min-width:0;height:42px;border-radius:10px;
+    background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-size:.7rem;color:rgba(255,255,255,.7);cursor:pointer;
+    transition:all .15s;gap:2px;text-align:center;
+  }
+  .bt-ic .bt-ico{font-size:1.1rem;}
+  .bt-ic.on{background:var(--g4);color:#fff;}
+  .bt-ic:active{transform:scale(.95);}
+
+  /* Padding bas pour ne pas cacher le contenu */
+  .main{padding-bottom:60px;}
+
+  /* Grille accueil compacte sur mobile */
+  #today-scr [style*="grid-template-columns:1fr 1fr 1fr 1fr"]{
+    grid-template-columns:1fr 1fr!important;
+  }
+  #today-scr [style*="grid-template-columns:1fr 1fr 1fr;"]{
+    grid-template-columns:1fr 1fr!important;
+  }
+  #today-scr [style*="grid-template-columns:repeat(4,1fr)"]{
+    grid-template-columns:1fr 1fr!important;
+  }
+  #today-scr [style*="grid-template-columns:220px 1fr 1fr"]{
+    grid-template-columns:1fr!important;
+  }
+}
+
+/* Hamburger caché sur desktop */
+.hamburger{display:none;}
+.bottom-tools{display:none;}
+.sb-overlay{display:none;}
 </style>
 </head>
 <body>
@@ -1335,6 +1410,9 @@ textarea.fi{resize:vertical;min-height:90px;}
       <span class="top-sub">Espace élus &#x2014; Mandat 2026&#x2013;2032</span>
     </div>
   </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Menu" style="background:none;border:none;flex-shrink:0;margin-right:4px">
+    <span></span><span></span><span></span>
+  </button>
   <div class="top-div"></div>
   <span class="top-date" id="tdate">${today}</span>
   <div style="display:flex;align-items:center;gap:8px">
@@ -2206,6 +2284,28 @@ textarea.fi{resize:vertical;min-height:90px;}
     <button class="btn btn-p" onclick="svProj()">&#x1F4BE; Enregistrer</button>
   </div>
 </div></div>
+<!-- Overlay mobile sidebar -->
+<div class="sb-overlay" id="sb-overlay" onclick="closeMobileMenu()"></div>
+
+<!-- Barre outils bas mobile -->
+<div class="bottom-tools" id="bottom-tools">
+  <div class="bt-ic on" id="bt-today" onclick="gpMobile('today','bt-today')">
+    <span class="bt-ico">&#x1F4CB;</span><span>Accueil</span>
+  </div>
+  <div class="bt-ic" id="bt-comm" onclick="gpMobile('comm','bt-comm')">
+    <span class="bt-ico">&#x1F5C2;</span><span>Projets</span>
+  </div>
+  <div class="bt-ic" id="bt-agenda" onclick="gpMobile('agenda','bt-agenda')">
+    <span class="bt-ico">&#x1F4C5;</span><span>Agenda</span>
+  </div>
+  <div class="bt-ic" id="bt-signal" onclick="gpMobile('signal','bt-signal')">
+    <span class="bt-ico">&#x1F534;</span><span>Alertes</span>
+  </div>
+  <div class="bt-ic" id="bt-elus" onclick="gpMobile('elus','bt-elus')">
+    <span class="bt-ico">&#x1F465;</span><span>&#xc9;lus</span>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -2253,6 +2353,8 @@ function gp(id,ni){
   qsa(".sbi").forEach(function(n){n.classList.remove("on");});
   var pg=$("p-"+id);if(pg)pg.classList.add("on");
   if(ni&&ni.classList)ni.classList.add("on");
+  // Fermer le menu sur mobile
+  if(window.innerWidth<=900) closeMobileMenu();
   if(id==="today"){renderHeroAccueil();renderWidgetAgenda();renderWidgetSig();renderCRHome();}
   else if(id==="agenda")renderAg();
   else if(id==="cr")renderCR();
@@ -3078,6 +3180,38 @@ function buildBudgetChart(){
       }
     }
   });
+}
+
+/* ── NAVIGATION MOBILE ───────────────────────────────────────────────────── */
+var _mobileMenuOpen = false;
+
+function toggleMobileMenu(){
+  var sb  = document.querySelector('.sb');
+  var ov  = $("sb-overlay");
+  var hbg = $("hamburger");
+  _mobileMenuOpen = !_mobileMenuOpen;
+  if(sb)  sb.classList.toggle("on", _mobileMenuOpen);
+  if(ov)  ov.classList.toggle("on", _mobileMenuOpen);
+  if(hbg) hbg.classList.toggle("on", _mobileMenuOpen);
+}
+
+function closeMobileMenu(){
+  var sb  = document.querySelector('.sb');
+  var ov  = $("sb-overlay");
+  var hbg = $("hamburger");
+  _mobileMenuOpen = false;
+  if(sb)  sb.classList.remove("on");
+  if(ov)  ov.classList.remove("on");
+  if(hbg) hbg.classList.remove("on");
+}
+
+function gpMobile(pageId, btId){
+  // Naviguer et mettre à jour la barre bas
+  gp(pageId);
+  qsa(".bt-ic").forEach(function(b){ b.classList.remove("on"); });
+  var bt = $(btId);
+  if(bt) bt.classList.add("on");
+  closeMobileMenu();
 }
 
 function fG(){
