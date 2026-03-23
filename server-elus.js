@@ -1159,6 +1159,11 @@ textarea.fi{resize:vertical;min-height:90px;}
 .ch-t::before{content:"";width:3px;height:12px;background:var(--g4);border-radius:2px;}
 .scut{background:#fff;border-radius:var(--R);border:1px solid var(--w2);padding:.85rem .7rem;text-align:center;cursor:pointer;transition:all .18s;box-shadow:var(--s1);}
 .scut:hover{box-shadow:var(--s3);transform:translateY(-2px);}
+.wg{transition:.18s;}
+.wg:hover{box-shadow:0 6px 24px rgba(0,0,0,.1);}
+#today-scr{scrollbar-width:thin;scrollbar-color:var(--w3) transparent;}
+#today-scr::-webkit-scrollbar{width:4px;}
+#today-scr::-webkit-scrollbar-thumb{background:var(--w3);border-radius:2px;}
 .ch-w{position:relative;height:180px;}
 
 /* TCHAT */
@@ -1250,144 +1255,209 @@ textarea.fi{resize:vertical;min-height:90px;}
 
 <!-- AUJOURD'HUI -->
 <div class="page on" id="p-today">
-  <div class="scr" style="padding:0;overflow-y:auto">
+  <div id="today-scr" style="flex:1;overflow-y:auto;padding:1.25rem 1.5rem;background:var(--w);display:flex;flex-direction:column;gap:14px">
 
-    <!-- HERO PERSONNALISÉ -->
-    <div id="hero-wrap" style="background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 50%,var(--g3) 100%);padding:1.3rem 1.8rem 1.5rem;color:#fff;position:relative;overflow:hidden">
-      <div style="position:absolute;top:-80px;right:-80px;width:240px;height:240px;border-radius:50%;background:rgba(255,255,255,.03)"></div>
-      <div style="display:flex;align-items:center;gap:1rem;position:relative;z-index:1;margin-bottom:.75rem">
-        <div id="hero-av" style="width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:1.15rem;font-weight:800;font-family:var(--fd);flex-shrink:0">&#x1F3DB;</div>
-        <div style="flex:1">
-          <div id="hero-bonjour" style="font-size:1rem;font-weight:700;font-family:var(--fd);margin-bottom:.15rem">Bonjour !</div>
-          <div id="hero-role" style="font-size:.7rem;opacity:.5;line-height:1.3"></div>
-        </div>
-        <div style="text-align:right">
-          <div id="hero-date-big" style="font-size:1.6rem;font-weight:800;font-family:var(--fd);line-height:1"></div>
-          <div id="hero-mois" style="font-size:.68rem;opacity:.5;margin-top:2px;text-transform:capitalize"></div>
-        </div>
+    <!-- HERO ACCUEIL -->
+    <div id="hero-wrap" style="background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 55%,var(--g3) 100%);border-radius:20px;padding:1.4rem 1.8rem;color:#fff;display:flex;align-items:center;gap:1.25rem;position:relative;overflow:hidden;box-shadow:0 6px 28px rgba(15,35,24,.35)">
+      <div style="position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.04)"></div>
+      <div id="hero-av" style="width:56px;height:56px;border-radius:15px;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;font-family:var(--fd);flex-shrink:0;z-index:1">?</div>
+      <div style="flex:1;z-index:1">
+        <div id="hero-bonjour" style="font-size:1.1rem;font-weight:700;font-family:var(--fd);margin-bottom:.2rem">Bonjour !</div>
+        <div id="hero-role" style="font-size:.75rem;opacity:.55;line-height:1.4"></div>
       </div>
-      <div id="hero-citation" style="font-size:.73rem;opacity:.55;font-style:italic;border-left:2px solid rgba(255,255,255,.22);padding-left:.7rem;line-height:1.5;position:relative;z-index:1"></div>
+      <div style="text-align:right;z-index:1;flex-shrink:0">
+        <div id="hero-date-big" style="font-size:2rem;font-weight:800;font-family:var(--fd);line-height:1"></div>
+        <div id="hero-mois" style="font-size:.72rem;opacity:.5;margin-top:2px;text-transform:capitalize"></div>
+      </div>
+      <div id="hero-citation" style="position:absolute;bottom:.75rem;left:calc(56px + 2.8rem);right:1.8rem;font-size:.71rem;opacity:.5;font-style:italic;z-index:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
     </div>
 
-    <div style="padding:1rem 1.4rem 1.4rem">
+    <!-- LIGNE 1 : 3 grands widgets -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
 
-    <!-- ALERTE SIGNALEMENTS URGENTS -->
-    <div id="alert-urgents" style="display:none;background:#fef2f2;border:1.5px solid #fca5a5;border-radius:var(--R);padding:.7rem 1rem;margin-bottom:12px;display:flex;align-items:center;gap:10px">
-      <span>&#x26A0;&#xFE0F;</span>
-      <div id="alert-urgents-txt" style="font-size:.76rem;color:#b91c1c;flex:1"></div>
-      <button class="btn btn-sm" style="background:#b91c1c;color:#fff;border-color:#b91c1c;flex-shrink:0" onclick="gpByName('signal')">Voir</button>
-    </div>
-
-    <!-- PROCHAINE RÉUNION -->
-    <div id="next-mtg" style="margin-bottom:12px"></div>
-
-    <!-- GRILLE : CALENDRIER + TÂCHES + ANNONCES -->
-    <div style="display:grid;grid-template-columns:220px 1fr 1fr;gap:12px;margin-bottom:12px;align-items:start">
-
-      <!-- MINI CALENDRIER -->
-      <div class="card" style="padding:.85rem">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem">
-          <button onclick="calPrev()" style="background:none;border:none;cursor:pointer;color:var(--i3);font-size:1rem;width:24px">&#x276E;</button>
-          <div id="cal-title" style="font-size:.76rem;font-weight:700;font-family:var(--fd);text-transform:capitalize;text-align:center"></div>
-          <button onclick="calNext()" style="background:none;border:none;cursor:pointer;color:var(--i3);font-size:1rem;width:24px">&#x276F;</button>
+      <!-- WIDGET AGENDA -->
+      <div class="wg" style="background:#fff;border-radius:18px;border:1px solid var(--w2);box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;display:flex;flex-direction:column">
+        <div class="wg-h" style="padding:.9rem 1.1rem .7rem;border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:8px">
+          <div style="width:32px;height:32px;border-radius:9px;background:var(--g8);display:flex;align-items:center;justify-content:center;font-size:1rem">&#x1F4C5;</div>
+          <div style="flex:1">
+            <div style="font-size:.8rem;font-weight:700;font-family:var(--fd);color:var(--ink)">Agenda</div>
+            <div id="wg-agenda-sub" style="font-size:.63rem;color:var(--i3)">Chargement…</div>
+          </div>
+          <button class="btn btn-g btn-sm" onclick="om('agenda')" style="font-size:.63rem">+</button>
         </div>
-        <div style="display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:4px">
-          <div style="font-size:.56rem;font-weight:700;color:var(--i4);text-align:center">L</div>
-          <div style="font-size:.56rem;font-weight:700;color:var(--i4);text-align:center">M</div>
-          <div style="font-size:.56rem;font-weight:700;color:var(--i4);text-align:center">M</div>
-          <div style="font-size:.56rem;font-weight:700;color:var(--i4);text-align:center">J</div>
-          <div style="font-size:.56rem;font-weight:700;color:var(--i4);text-align:center">V</div>
-          <div style="font-size:.56rem;font-weight:700;color:var(--amber);text-align:center">S</div>
-          <div style="font-size:.56rem;font-weight:700;color:var(--amber);text-align:center">D</div>
+        <div style="padding:.75rem 1rem;flex:1">
+          <!-- Onglets 7 jours compacts -->
+          <div id="wg-week" style="display:flex;gap:3px;margin-bottom:.75rem;overflow-x:auto"></div>
+          <div id="wg-day-events" style="min-height:80px"></div>
         </div>
-        <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px"></div>
-        <div style="display:flex;gap:8px;margin-top:.6rem;padding-top:.5rem;border-top:1px solid var(--w2)">
-          <div style="display:flex;align-items:center;gap:3px;font-size:.58rem;color:var(--i3)"><div style="width:7px;height:7px;border-radius:2px;background:var(--g8);border:1px solid var(--g7)"></div>Conseil</div>
-          <div style="display:flex;align-items:center;gap:3px;font-size:.58rem;color:var(--i3)"><div style="width:5px;height:5px;border-radius:50%;background:var(--g5)"></div>Événement</div>
+        <div style="padding:.6rem 1rem;border-top:1px solid var(--w2);display:flex;gap:6px">
+          <button class="btn btn-g btn-sm btn-full" onclick="gp('agenda',qsa('.sbi')[3])" style="font-size:.68rem">Toutes les réunions →</button>
         </div>
       </div>
 
-      <!-- MES TÂCHES -->
-      <div class="card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
-          <div class="cardt" style="margin-bottom:0">&#x2705; Mes tâches</div>
-          <span id="task-cnt" style="font-size:.62rem;color:var(--i4)"></span>
+      <!-- WIDGET TÂCHES + ANNONCES -->
+      <div class="wg" style="background:#fff;border-radius:18px;border:1px solid var(--w2);box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;display:flex;flex-direction:column">
+        <div class="wg-h" style="padding:.9rem 1.1rem .7rem;border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:8px">
+          <div style="width:32px;height:32px;border-radius:9px;background:#fef9c3;display:flex;align-items:center;justify-content:center;font-size:1rem">&#x2705;</div>
+          <div style="flex:1">
+            <div style="font-size:.8rem;font-weight:700;font-family:var(--fd);color:var(--ink)">Mes tâches</div>
+            <div id="task-cnt" style="font-size:.63rem;color:var(--i3)"></div>
+          </div>
+          <button class="btn btn-p btn-sm" onclick="addTaskFocus()" style="font-size:.63rem">+</button>
         </div>
-        <div id="task-list"></div>
-        <div style="display:flex;gap:7px;margin-top:.65rem;padding-top:.6rem;border-top:1px solid var(--w2)">
-          <input class="fi" id="task-inp" placeholder="Ajouter une tâche..." style="flex:1;font-size:.74rem;padding:6px 9px" onkeydown="if(event.key==='Enter')addTask()">
-          <button class="btn btn-p btn-sm" onclick="addTask()">+</button>
+        <div style="padding:.75rem 1rem;flex:1;overflow-y:auto;max-height:180px">
+          <div id="task-list"></div>
+        </div>
+        <div style="padding:.6rem 1rem;border-top:1px solid var(--w2)">
+          <div style="display:flex;gap:7px">
+            <input class="fi" id="task-inp" placeholder="Nouvelle tâche…" style="flex:1;font-size:.73rem;padding:6px 9px" onkeydown="if(event.key==='Enter')addTask()">
+            <button class="btn btn-p btn-sm" onclick="addTask()" style="flex-shrink:0">+</button>
+          </div>
         </div>
       </div>
 
-      <!-- ANNONCES -->
-      <div class="card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem">
-          <div class="cardt" style="margin-bottom:0">&#x1F4E2; Annonces</div>
-          <button class="btn btn-p btn-sm" onclick="om('annonce')" style="font-size:.65rem">+ Publier</button>
+      <!-- WIDGET SIGNALEMENTS -->
+      <div class="wg" style="background:#fff;border-radius:18px;border:1px solid var(--w2);box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;display:flex;flex-direction:column">
+        <div class="wg-h" style="padding:.9rem 1.1rem .7rem;border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:8px">
+          <div style="width:32px;height:32px;border-radius:9px;background:#fee2e2;display:flex;align-items:center;justify-content:center;font-size:1rem">&#x1F534;</div>
+          <div style="flex:1">
+            <div style="font-size:.8rem;font-weight:700;font-family:var(--fd);color:var(--ink)">Signalements</div>
+            <div id="wg-sig-sub" style="font-size:.63rem;color:var(--i3)">Chargement…</div>
+          </div>
+          <button class="btn btn-p btn-sm" onclick="om('signal')" style="font-size:.63rem;background:#dc2626;border-color:#dc2626">+</button>
         </div>
-        <div id="ann-list"><div style="font-size:.73rem;color:var(--i4);text-align:center;padding:1rem 0">Aucune annonce</div></div>
-      </div>
-    </div>
-
-    <!-- AGENDA INTERACTIF -->
-    <div class="card" style="margin-bottom:12px">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem">
-        <div class="cardt" style="margin-bottom:0">&#x1F4C5; Agenda — réunions &amp; événements</div>
-        <div style="display:flex;gap:6px">
-          <button class="btn btn-g btn-sm" onclick="om('agenda')">+ Réunion</button>
-          <button class="btn btn-g btn-sm" onclick="om('event')">+ Événement</button>
+        <div style="padding:.75rem 1rem;flex:1;overflow-y:auto;max-height:180px" id="wg-sig-list"></div>
+        <div style="padding:.6rem 1rem;border-top:1px solid var(--w2)">
+          <button class="btn btn-g btn-sm btn-full" onclick="gp('signal',qsa('.sbi')[11])" style="font-size:.68rem">Tous les signalements →</button>
         </div>
-      </div>
-      <div id="week-tabs" style="display:flex;gap:4px;margin-bottom:.85rem;overflow-x:auto;padding-bottom:2px"></div>
-      <div id="agenda-day-list"></div>
-      <div id="agenda-upcoming" style="margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--w2)"></div>
-    </div>
-
-    <!-- LIGNE BASSE : derniers CR + raccourcis -->
-    <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:12px">
-      <div class="card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem">
-          <div class="cardt" style="margin-bottom:0">&#x1F4DD; Derniers comptes rendus</div>
-          <button class="btn btn-g btn-sm" onclick="gpByName('cr')">Tous →</button>
-        </div>
-        <div id="cr-home-list"></div>
-      </div>
-      <div class="card">
-        <div class="cardt" style="margin-bottom:.75rem">&#x26A1; Accès rapides</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="shortcuts-grid"></div>
       </div>
     </div>
 
+    <!-- LIGNE 2 : 4 tuiles accès rapide -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+
+      <!-- KDRIVE -->
+      <a href="https://kdrive.infomaniak.com" target="_blank" rel="noopener" style="text-decoration:none">
+        <div class="wg-tile" style="background:linear-gradient(135deg,#1e40af,#3b82f6);border-radius:16px;padding:1.1rem 1rem;color:#fff;box-shadow:0 4px 16px rgba(30,64,175,.3);cursor:pointer;transition:.2s;display:flex;flex-direction:column;gap:.5rem" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(30,64,175,.4)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 16px rgba(30,64,175,.3)'">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem">&#x1F4C1;</div>
+            <div>
+              <div style="font-size:.82rem;font-weight:700;font-family:var(--fd)">kDrive</div>
+              <div style="font-size:.62rem;opacity:.65">Documents partagés</div>
+            </div>
+            <div style="margin-left:auto;font-size:.9rem;opacity:.6">&#x2197;</div>
+          </div>
+          <div style="font-size:.68rem;opacity:.55;line-height:1.4">Accès direct aux documents de l&#x27;équipe Infomaniak</div>
+        </div>
+      </a>
+
+      <!-- BIBLIO -->
+      <div class="wg-tile" style="background:linear-gradient(135deg,#6d28d9,#8b5cf6);border-radius:16px;padding:1.1rem 1rem;color:#fff;box-shadow:0 4px 16px rgba(109,40,217,.3);cursor:pointer;transition:.2s;display:flex;flex-direction:column;gap:.5rem" onclick="gp('biblio',qsa('.sbi')[5])" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(109,40,217,.4)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 16px rgba(109,40,217,.3)'">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem">&#x1F4DA;</div>
+          <div>
+            <div style="font-size:.82rem;font-weight:700;font-family:var(--fd)">Bibliothèque</div>
+            <div style="font-size:.62rem;opacity:.65">Documents officiels</div>
+          </div>
+        </div>
+        <div id="wg-bib-cnt" style="font-size:.68rem;opacity:.65;line-height:1.4">délibérations, arrêtés, rapports…</div>
+      </div>
+
+      <!-- MON DOSSIER -->
+      <div class="wg-tile" style="background:linear-gradient(135deg,#92400e,#d97706);border-radius:16px;padding:1.1rem 1rem;color:#fff;box-shadow:0 4px 16px rgba(146,64,14,.3);cursor:pointer;transition:.2s;display:flex;flex-direction:column;gap:.5rem" onclick="gp('repelus',qsa('.sbi')[6])" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(146,64,14,.4)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 16px rgba(146,64,14,.3)'">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem">&#x1F512;</div>
+          <div>
+            <div style="font-size:.82rem;font-weight:700;font-family:var(--fd)">Mon dossier</div>
+            <div style="font-size:.62rem;opacity:.65">Espace privé</div>
+          </div>
+        </div>
+        <div style="font-size:.68rem;opacity:.55;line-height:1.4">Archives personnelles, visible uniquement par vous</div>
+      </div>
+
+      <!-- VISIO KMEET -->
+      <div class="wg-tile" style="background:linear-gradient(135deg,#065f46,#10b981);border-radius:16px;padding:1.1rem 1rem;color:#fff;box-shadow:0 4px 16px rgba(6,95,70,.3);cursor:pointer;transition:.2s;display:flex;flex-direction:column;gap:.5rem" onclick="openVisio()" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(6,95,70,.4)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 4px 16px rgba(6,95,70,.3)'">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem">&#x1F4F9;</div>
+          <div>
+            <div style="font-size:.82rem;font-weight:700;font-family:var(--fd)">kMeet Visio</div>
+            <div style="font-size:.62rem;opacity:.65">Lancer une réunion</div>
+          </div>
+          <div style="margin-left:auto;font-size:.9rem;opacity:.6">&#x2197;</div>
+        </div>
+        <div style="font-size:.68rem;opacity:.55;line-height:1.4">Visioconférence sécurisée Infomaniak</div>
+      </div>
     </div>
+
+    <!-- LIGNE 3 : Annonces + CR + Projets -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:14px">
+
+      <!-- WIDGET ANNONCES -->
+      <div class="wg" style="background:#fff;border-radius:18px;border:1px solid var(--w2);box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;display:flex;flex-direction:column">
+        <div class="wg-h" style="padding:.85rem 1.1rem .65rem;border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:8px">
+          <div style="width:28px;height:28px;border-radius:8px;background:#fef3c7;display:flex;align-items:center;justify-content:center;font-size:.9rem">&#x1F4E2;</div>
+          <div style="font-size:.78rem;font-weight:700;font-family:var(--fd);color:var(--ink);flex:1">Annonces</div>
+          <button class="btn btn-p btn-sm" onclick="om('annonce')" style="font-size:.62rem">Publier</button>
+        </div>
+        <div style="padding:.7rem 1rem;flex:1" id="ann-list">
+          <div style="font-size:.73rem;color:var(--i4);text-align:center;padding:.75rem 0">Aucune annonce</div>
+        </div>
+      </div>
+
+      <!-- WIDGET DERNIERS CR -->
+      <div class="wg" style="background:#fff;border-radius:18px;border:1px solid var(--w2);box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;display:flex;flex-direction:column">
+        <div class="wg-h" style="padding:.85rem 1.1rem .65rem;border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:8px">
+          <div style="width:28px;height:28px;border-radius:8px;background:var(--g8);display:flex;align-items:center;justify-content:center;font-size:.9rem">&#x1F4DD;</div>
+          <div style="font-size:.78rem;font-weight:700;font-family:var(--fd);color:var(--ink);flex:1">Comptes rendus</div>
+          <button class="btn btn-g btn-sm" onclick="gpByName('cr')" style="font-size:.62rem">Tous →</button>
+        </div>
+        <div style="padding:.7rem 1rem;flex:1" id="cr-home-list">
+          <div style="font-size:.73rem;color:var(--i4);text-align:center;padding:.75rem 0">Aucun CR</div>
+        </div>
+        <div style="padding:.6rem 1rem;border-top:1px solid var(--w2)">
+          <button class="btn btn-p btn-sm btn-full" onclick="om('cr')" style="font-size:.68rem">+ Nouveau CR</button>
+        </div>
+      </div>
+
+      <!-- WIDGET BAROMÈTRE MANDAT -->
+      <div class="wg" style="background:#fff;border-radius:18px;border:1px solid var(--w2);box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;display:flex;flex-direction:column">
+        <div class="wg-h" style="padding:.85rem 1.1rem .65rem;border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:8px">
+          <div style="width:28px;height:28px;border-radius:8px;background:#e0e7ff;display:flex;align-items:center;justify-content:center;font-size:.9rem">&#x1F4CA;</div>
+          <div style="font-size:.78rem;font-weight:700;font-family:var(--fd);color:var(--ink);flex:1">Baromètre du mandat</div>
+          <button class="btn btn-g btn-sm" onclick="gp('global',qsa('.sbi')[9])" style="font-size:.62rem">Projets →</button>
+        </div>
+        <div style="padding:.85rem 1.1rem;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="text-align:center;background:var(--w);border-radius:12px;padding:.75rem .5rem">
+            <div id="k-tot" style="font-size:2rem;font-weight:800;color:var(--g2);line-height:1;font-family:var(--fd)">—</div>
+            <div style="font-size:.6rem;color:var(--i3);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Projets</div>
+          </div>
+          <div style="text-align:center;background:var(--w);border-radius:12px;padding:.75rem .5rem">
+            <div id="k-pr" style="font-size:2rem;font-weight:800;color:var(--red);line-height:1;font-family:var(--fd)">—</div>
+            <div style="font-size:.6rem;color:var(--i3);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Prioritaires</div>
+          </div>
+          <div style="text-align:center;background:var(--w);border-radius:12px;padding:.75rem .5rem">
+            <div id="k-re" style="font-size:2rem;font-weight:800;color:var(--g4);line-height:1;font-family:var(--fd)">—</div>
+            <div style="font-size:.6rem;color:var(--i3);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Réalisés</div>
+          </div>
+          <div style="text-align:center;background:var(--w);border-radius:12px;padding:.75rem .5rem">
+            <div id="k-26" style="font-size:2rem;font-weight:800;color:var(--blue);line-height:1;font-family:var(--fd)">—</div>
+            <div style="font-size:.6rem;color:var(--i3);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">En 2026</div>
+          </div>
+        </div>
+        <div style="padding:.6rem 1.1rem;border-top:1px solid var(--w2)">
+          <div id="wg-mandat-bar" style="height:6px;background:var(--w2);border-radius:3px;overflow:hidden">
+            <div id="wg-mandat-fill" style="height:6px;background:linear-gradient(90deg,var(--g4),var(--g6));border-radius:3px;width:0%;transition:width .6s ease"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:.6rem;color:var(--i4);margin-top:3px">
+            <span>Avancement réalisés</span><span id="wg-mandat-pct">0%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
-<!-- GUIDE + RESSOURCES (fusionné) -->
-<div class="page" id="p-guide">
-  <div class="ph">
-    <div class="ph-ico" style="background:#fef9c3">&#x1F4D6;</div>
-    <div><div class="ph-t">Guide &amp; Ressources de l&#x27;élu</div><div class="ph-s">Fiches pratiques du mandat + liens utiles</div></div>
-  </div>
-  <div class="scr">
 
-    <!-- FICHES PRATIQUES -->
-    <div style="font-size:.7rem;font-weight:700;color:var(--i3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">&#x1F4CB; Fiches pratiques</div>
-    <div id="guides-list" style="margin-bottom:1.5rem"></div>
-
-    <!-- LIENS UTILES -->
-    <div style="font-size:.7rem;font-weight:700;color:var(--i3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">&#x1F517; Liens utiles</div>
-    <div id="ress-list" class="ress-g"></div>
-
-  </div>
-</div>
-
-<!-- RESSOURCES (alias → redirige vers guide) -->
-<div class="page" id="p-ress">
-  <div class="scr" style="padding:1rem;font-size:.8rem;color:var(--i3)">
-    Redirection&#x2026;
-    <script>if(document.getElementById("p-ress").classList.contains("on")){document.getElementById("p-ress").classList.remove("on");document.getElementById("p-guide").classList.add("on");}<\/script>
-  </div>
-</div>
 
 <!-- AGENDA -->
 <div class="page" id="p-agenda">
@@ -1955,15 +2025,14 @@ function init(){
     }
     renderTasks(); renderAnn(); renderNextMtg();
     buildGuides(); buildRess();
-    updSigBadge(); renderHeroAccueil(); renderShortcuts();
-    renderCRHome(); renderEvHome();
-    initCal(); renderAgendaWeek(); checkUrgents();
+    updSigBadge(); renderHeroAccueil();
+    renderWidgetAgenda(); renderWidgetSig(); renderCRHome(); checkUrgents();
     el("k-sig",d.stats?d.stats.sig_new||0:0);
   });
 
   apiGet("/api/projets").then(function(data){
     P=data; buildFilters(); fG(); buildCG(); buildCharts();
-    renderShortcuts(); // Mettre à jour compteur projets
+    renderWidgetMandat();
   });
 
   apiGet("/api/biblio").then(function(data){
@@ -2035,6 +2104,144 @@ function renderEvHome(){
       +'</div></div>';
   }).join("");
 }
+
+
+/* ── WIDGETS ACCUEIL ─────────────────────────────────────────────────────── */
+
+function addTaskFocus(){
+  var i=$("task-inp");
+  if(i){i.focus();}
+}
+
+function renderWidgetAgenda(){
+  var now=new Date();
+  var todayStr=now.toISOString().slice(0,10);
+  var JOURS_C=["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];
+  var MOIS_C=["jan","fév","mar","avr","mai","jun","jul","aoû","sep","oct","nov","déc"];
+  
+  // Onglets 7 jours
+  var wt=$("wg-week"); if(!wt)return;
+  var html="";
+  for(var i=0;i<7;i++){
+    var d=new Date(now); d.setDate(now.getDate()+i);
+    var ds=d.toISOString().slice(0,10);
+    var isToday=ds===todayStr;
+    var nb=AG.filter(function(a){return a.date===ds;}).length
+           +EVTS.filter(function(e){return e.date===ds;}).length;
+    html+='<div onclick="selADay(this)" data-day="'+ds+'" style="flex-shrink:0;cursor:pointer;padding:.35rem .5rem;border-radius:8px;background:'+(isToday?"var(--g2)":"var(--w)")+';color:'+(isToday?"#fff":"var(--i2)")+';border:1.5px solid '+(isToday?"var(--g2)":isToday?"var(--g5)":"var(--w2)")+';text-align:center;min-width:40px;transition:.12s">'
+      +'<div style="font-size:.56rem;font-weight:600;text-transform:uppercase;opacity:.65">'+JOURS_C[d.getDay()]+'</div>'
+      +'<div style="font-size:.88rem;font-weight:800;font-family:var(--fd);line-height:1.1">'+d.getDate()+'</div>'
+      +(nb?'<div style="width:5px;height:5px;border-radius:50%;background:'+(isToday?"rgba(255,255,255,.8)":"var(--g5)")+';margin:.1rem auto 0"></div>':"<div style='height:5px'></div>")
+      +'</div>';
+  }
+  wt.innerHTML=html;
+
+  // Sélectionner aujourd'hui par défaut
+  if(!_selDay) _selDay=todayStr;
+  renderWidgetDay(_selDay);
+
+  // Sous-titre
+  var fut=AG.filter(function(a){return a.date>=todayStr;}).length
+          +EVTS.filter(function(e){return e.date>=todayStr;}).length;
+  var sub=$("wg-agenda-sub");
+  if(sub) sub.textContent=fut+" événement"+(fut>1?"s":"")+" à venir";
+}
+
+function renderWidgetDay(ds){
+  var dl=$("wg-day-events"); if(!dl)return;
+  var AT={bureau:"Bureau",commission:"Commission",conseil:"Conseil",autre:"Réunion"};
+  var AC={bureau:"var(--g3)",commission:"var(--g4)",conseil:"var(--blue)",autre:"var(--i3)"};
+  var EC={municipal:"var(--g3)",associatif:"var(--amber)",culturel:"#8B5CF6",sportif:"var(--blue)",commemoration:"#7f8c8d",autre:"var(--i3)"};
+  var items=[];
+  AG.filter(function(a){return a.date===ds;}).forEach(function(a){
+    items.push({heure:a.heure||"",titre:a.titre,lieu:a.lieu||"",col:AC[a.type]||"var(--i3)",lbl:AT[a.type]||"Réunion"});
+  });
+  EVTS.filter(function(e){return e.date===ds;}).forEach(function(e){
+    items.push({heure:e.heure||"",titre:e.titre,lieu:e.lieu||"",col:EC[e.type]||"var(--i3)",lbl:e.type||"Événement"});
+  });
+  if(!items.length){
+    dl.innerHTML='<div style="font-size:.72rem;color:var(--i4);text-align:center;padding:.85rem 0">Journée libre</div>';
+    return;
+  }
+  items.sort(function(a,b){return (a.heure||"99")>(b.heure||"99")?1:-1;});
+  dl.innerHTML=items.map(function(it){
+    return '<div style="display:flex;gap:8px;align-items:flex-start;padding:.45rem 0;border-bottom:1px solid var(--w2)">'
+      +'<div style="border-left:3px solid '+it.col+';padding-left:7px;flex:1">'
+      +'<div style="font-size:.76rem;font-weight:600;color:var(--ink)">'+it.titre+'</div>'
+      +'<div style="font-size:.64rem;color:var(--i3)">'+(it.heure?it.heure+" · ":"")+it.lbl+(it.lieu?" · "+it.lieu:"")+'</div>'
+      +'</div></div>';
+  }).join("");
+}
+
+function renderWidgetSig(){
+  var sl=$("wg-sig-list"); if(!sl)return;
+  var sub=$("wg-sig-sub"); 
+  var nb=SIGN.filter(function(s){return s.statut==="Nouveau";}).length;
+  if(sub) sub.textContent=nb+" nouveau"+(nb>1?"x":"")+" · "+SIGN.length+" total";
+  
+  var recent=SIGN.filter(function(s){return s.statut!=="Résolu"&&s.statut!=="Non retenu";}).slice(0,5);
+  if(!recent.length){
+    sl.innerHTML='<div style="font-size:.72rem;color:var(--i4);text-align:center;padding:.75rem 0">&#x2705; Aucun incident ouvert</div>';
+    return;
+  }
+  var SIGCOL={Nouveau:"var(--red)",En_cours:"var(--amber)",Resolu:"var(--g4)"};
+  sl.innerHTML=recent.map(function(s){
+    var col=s.statut==="Nouveau"?"var(--red)":s.statut==="En cours"?"var(--amber)":"var(--g4)";
+    return '<div style="display:flex;gap:8px;align-items:center;padding:.45rem 0;border-bottom:1px solid var(--w2);cursor:pointer" onclick="openSig('+s.id+')">'
+      +'<div style="width:7px;height:7px;border-radius:50%;background:'+col+';flex-shrink:0"></div>'
+      +'<div style="flex:1;min-width:0">'
+      +'<div style="font-size:.74rem;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+s.titre+'</div>'
+      +'<div style="font-size:.63rem;color:var(--i3)">'+s.lieu+(s.type?" · "+s.type:"")+'</div>'
+      +'</div>'
+      +'<span style="font-size:.6rem;font-weight:700;padding:1px 6px;border-radius:6px;background:'+col+'18;color:'+col+';flex-shrink:0">'+s.statut+'</span>'
+      +'</div>';
+  }).join("");
+}
+
+function renderWidgetMandat(){
+  var fill=$("wg-mandat-fill"), pct=$("wg-mandat-pct");
+  if(!fill||!P.length) return;
+  var re=P.filter(function(p){var s=ST[p.id]||p.statut||"";return s.toLowerCase().indexOf("alis")>=0;}).length;
+  var pc=Math.round(re/P.length*100);
+  fill.style.width=pc+"%";
+  if(pct) pct.textContent=pc+"% ("+re+"/"+P.length+")";
+  
+  var bib=$("wg-bib-cnt");
+  if(bib) bib.textContent=BIBLIO.length+" document"+(BIBLIO.length>1?"s":"")+" archivé"+(BIBLIO.length>1?"s":"");
+}
+
+/* Surcharger renderHeroAccueil pour la page today */
+function renderHeroAccueil(){
+  var now=new Date();
+  var h=now.getHours();
+  var salut=h<5?"Bonne nuit":h<12?"Bonjour":h<18?"Bon après-midi":"Bonsoir";
+  var JOURS_L=["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
+  var MOIS_L=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+  var av=$("hero-av"),bj=$("hero-bonjour"),rl=$("hero-role"),ct=$("hero-citation");
+  var db=$("hero-date-big"),mo=$("hero-mois");
+  var CITATIONS=[
+    "La commune est la cellule vivante de la démocratie.",
+    "Servir Vizille, c'est servir ses habitants au quotidien.",
+    "Mandat 2026-2032 — construire ensemble l'avenir de Vizille.",
+    "Chaque decision compte, meme la plus petite ameliore une vie.",
+    "L'action municipale c'est du concret : une rue refaite, un enfant accueilli.",
+    "Etre elu, c'est avoir la confiance de ses voisins. Cela oblige.",
+    "Vizille a une histoire extraordinaire — son avenir est entre nos mains.",
+    "Le service public local est le plus proche des gens.",
+  ];
+  if(av){av.textContent=ME.avatar||"?";av.style.background=ME.color||"var(--g4)";}
+  if(bj) bj.textContent=salut+", "+ME.nom.split(" ")[0]+" !";
+  if(rl) rl.textContent=(ME.role||"")+(ME.delegation?" — "+ME.delegation:"");
+  if(db) db.textContent=now.getDate();
+  if(mo) mo.textContent=JOURS_L[now.getDay()]+" "+now.toLocaleDateString("fr-FR",{month:"long",year:"numeric"});
+  if(ct) ct.textContent=CITATIONS[now.getDate()%CITATIONS.length];
+  var topAv=$("top-av-btn");
+  if(topAv){topAv.textContent=ME.avatar||"?";topAv.style.background=ME.color||"var(--g4)";}
+}
+
+/* Surcharger renderShortcuts — plus utilisé sur l'accueil v2, on garde pour compat */
+function renderShortcuts(){}
+
 
 function renderNextMtg(){
   var now=new Date().toISOString().slice(0,10);
