@@ -476,6 +476,11 @@ const server=http.createServer(function(req,res){
     }catch(e){return J(res,{ok:false,error:'Fichier non trouvé'},404);}
   }
 
+  // Localhost : connexion automatique michel.thuillier
+  var isLocal = req.socket.remoteAddress==='127.0.0.1'||req.socket.remoteAddress==='::1'||req.socket.remoteAddress==='::ffff:127.0.0.1';
+  if(isLocal && !req.headers['authorization']){
+    req.headers['authorization']='Basic '+Buffer.from('michel.thuillier:mth2026').toString('base64');
+  }
   if(!auth(req))return deny(res);
 
   const ME=authUser(req);
