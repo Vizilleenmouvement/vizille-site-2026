@@ -2542,7 +2542,8 @@ function closePanel(){
 }
 
 
-function goComm(){gp("comm",qsa(".sbi")[9]);}
+function goComm(){openPanel("comm");}
+function renderComm(){var pb=document.getElementById("panel-body");if(pb){var d=document.createElement("div");d.className="scr";d.innerHTML="";pb.innerHTML="";pb.appendChild(d);buildCG();}}
 function goGlobal(){gp("global",qsa(".sbi")[10]);}
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
@@ -3580,19 +3581,38 @@ function showCD(idx){
   var pp=P.filter(function(p){return themes.indexOf(p.theme)>=0;});
   var to=pp.length,pr=0,ec=0,re=0;
   pp.forEach(function(p){var s=ST[p.id]||p.statut||"";if(s==="Prioritaire")pr++;if(s.indexOf("cours")>=0)ec++;if(s.indexOf("alis")>=0)re++;});
-  $("cdet-ico").textContent=ICONS[comm]||"📋";
-  el("cdet-t",comm);
-  el("cdet-s",themes.join(" · ")+(REFS[comm]?" — "+REFS[comm]:""));
-  $("cdet-kpis").innerHTML=
-    '<div class="kpi" style="flex:1;min-width:0"><div class="kpiv">'+to+'</div><div class="kpil">Projets</div></div>'
-    +'<div class="kpi" style="flex:1;min-width:0"><div class="kpiv" style="color:var(--red)">'+pr+'</div><div class="kpil">Prioritaires</div></div>'
-    +'<div class="kpi" style="flex:1;min-width:0"><div class="kpiv" style="color:var(--amber)">'+ec+'</div><div class="kpil">En cours</div></div>'
-    +'<div class="kpi" style="flex:1;min-width:0"><div class="kpiv" style="color:var(--g4)">'+re+'</div><div class="kpil">Réalisés</div></div>';
-  $("cd-st").value=""; $("cd-q").value="";
-  qsa(".page").forEach(function(p){p.classList.remove("on");});
-  qsa(".sbi").forEach(function(n){n.classList.remove("on");});
-  $("p-cdet").classList.add("on");
-  fCD();
+  var statOpts=SLIST.map(function(s){return'<option value="'+s+'">'+s+'</option>';}).join('');
+  var html=''
+    +'<div style="background:'+col+'18;border-bottom:3px solid '+col+';padding:.85rem 1.4rem;display:flex;align-items:center;gap:12px">'
+    +'<div style="width:40px;height:40px;border-radius:10px;background:'+col+';display:flex;align-items:center;justify-content:center;font-size:1.2rem">'+(ICONS[comm]||"📋")+'</div>'
+    +'<div style="flex:1"><div style="font-size:1rem;font-weight:800;font-family:var(--fd)">'+comm+'</div>'
+    +'<div style="font-size:.72rem;color:var(--i3)">'+themes.join(" · ")+(REFS[comm]?" — <strong>"+REFS[comm]+"</strong>":"")+'</div></div>'
+    +'<button onclick="renderComm()" style="background:rgba(0,0,0,.07);border:none;border-radius:7px;padding:5px 12px;font-size:.73rem;cursor:pointer">← Retour</button>'
+    +'</div>'
+    +'<div style="display:flex;gap:8px;padding:.75rem 1.4rem;background:#fff;border-bottom:1px solid var(--w2)">'
+    +'<div class="kpi" style="flex:1"><div class="kpiv">'+to+'</div><div class="kpil">Projets</div></div>'
+    +'<div class="kpi" style="flex:1"><div class="kpiv" style="color:var(--red)">'+pr+'</div><div class="kpil">Prioritaires</div></div>'
+    +'<div class="kpi" style="flex:1"><div class="kpiv" style="color:var(--amber)">'+ec+'</div><div class="kpil">En cours</div></div>'
+    +'<div class="kpi" style="flex:1"><div class="kpiv" style="color:var(--g4)">'+re+'</div><div class="kpil">Réalisés</div></div>'
+    +'</div>'
+    +'<div class="fb">'
+    +'<select class="fsel" id="cdp-st" onchange="fCDP()"><option value="">Tous statuts</option>'+statOpts+'</select>'
+    +'<input class="fsrch" id="cdp-q" placeholder="🔍 Rechercher…" oninput="fCDP()">'
+    +'<span class="fcnt" id="cdp-cnt"></span>'
+    +'</div>'
+    +'<div class="tbw" style="border-radius:0;border-left:none;border-right:none;border-bottom:none">'
+    +'<table><thead><tr><th>Thème</th><th>Projet</th><th>Statut</th><th>Année</th><th>Imp.</th><th>Modifier</th></tr></thead>'
+    +'<tbody id="cdp-tb"></tbody></table></div>';
+  var pb=document.getElementById("panel-body");
+  if(pb){pb.innerHTML=html;fCDP();}
+}
+function fCDP(){
+  var comm=Object.keys(COMM)[_ci],themes=COMM[comm];
+  var sEl=document.getElementById("cdp-st"),qEl=document.getElementById("cdp-q");
+  var s=sEl?sEl.value:"",q=qEl?(qEl.value||"").toLowerCase():"";
+  var r=P.filter(function(p){var ps=ST[p.id]||p.statut||"ND";return themes.indexOf(p.theme)>=0&&(!s||ps===s)&&(!q||(p.titre||"").toLowerCase().indexOf(q)>=0||(p.resume||"").toLowerCase().indexOf(q)>=0);});
+  var cnt=document.getElementById("cdp-cnt");if(cnt)cnt.textContent=r.length+" projet(s)";
+  rTb("cdp-tb",r,false);
 }
 function fCD(){
   var comm=Object.keys(COMM)[_ci],themes=COMM[comm];
