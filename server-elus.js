@@ -565,12 +565,6 @@ const server=http.createServer(function(req,res){
   if(p==='/api/agenda'&&m==='POST')return body(req,function(err,d){
     if(err)return J(res,{ok:false},400);d.id=nid(agenda);d.created=ts();agenda.push(d);save('agenda.json',agenda);return J(res,{ok:true,item:d});
   });
-  if(p.match(/^\/api\/agenda\/\d+$/)&&m==='PATCH')return body(req,function(err,d){
-    if(err)return J(res,{ok:false},400);
-    var id=parseInt(p.split('/').pop());
-    agenda=agenda.map(function(a){return a.id===id?Object.assign({},a,{titre:d.titre||a.titre,date:d.date||a.date,heure:d.heure!==undefined?d.heure:a.heure,lieu:d.lieu!==undefined?d.lieu:a.lieu,type:d.type||a.type,notes:d.notes!==undefined?d.notes:a.notes}):a;});
-    save('agenda.json',agenda);return J(res,{ok:true});
-  });
   if(p.match(/^\/api\/agenda\/\d+$/)&&m==='DELETE'){const id=parseInt(p.split('/').pop());agenda=agenda.filter(a=>a.id!==id);save('agenda.json',agenda);return J(res,{ok:true});}
 
   // DOCUMENTS (liens simples)
@@ -2439,14 +2433,12 @@ qsa(".ov").forEach(function(o){o.addEventListener("click",function(e){if(e.targe
 
 // ── NAVIGATION ───────────────────────────────────────────────────────────────
 function gp(id,ni){
-  // Fermer le panneau si ouvert
-  var panel=document.getElementById("main-panel");
-  if(panel) panel.style.display="none";
   qsa(".page").forEach(function(p){p.classList.remove("on");});
   qsa(".sbi").forEach(function(n){n.classList.remove("on");});
   var pg=$("p-"+id);
   if(pg){pg.classList.add("on");pg.scrollTop=0;}
   if(ni&&ni.classList)ni.classList.add("on");
+  // Remonter le scroll de .main à 0 à chaque navigation
   var mainEl=document.querySelector(".main");
   if(mainEl)mainEl.scrollTop=0;
   if(window.innerWidth<=900) closeMobileMenu();
@@ -2534,8 +2526,8 @@ function closePanel(){
 }
 
 
-function goComm(){openPanel("comm");}
-function goGlobal(){openPanel("global");}
+function goComm(){gp("comm",qsa(".sbi")[9]);}
+function goGlobal(){gp("global",qsa(".sbi")[10]);}
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 function openProfile(){
@@ -3050,123 +3042,28 @@ function buildRess(){
 var ATMAP={bureau:"Bureau municipal",commission:"Commission",conseil:"Conseil municipal",autre:"Autre"};
 var ATCLS={bureau:"at-b",commission:"at-c",conseil:"at-k",autre:"at-a"};
 function renderAg(){
-  var al=document.querySelector("#panel-body #ag-list")||$("ag-list"); if(!al)return;
+  var al=$("ag-list"); if(!al)return;
   var now=new Date().toISOString().slice(0,10);
   var sorted=AG.slice().sort(function(a,b){return a.date>b.date?1:-1;});
-  var futur=sorted.filter(function(e){return e.date>=now;});
-  var passe=sorted.filter(function(e){return e.date<now;});
-
-  function agCard(e,isPast){
-    var col={bureau:"var(--g3)",commission:"#8B5CF6",conseil:"var(--blue)",autre:"var(--i3)"}[e.type]||"var(--i3)";
-    var ico={bureau:"🏢",commission:"👥",conseil:"🏛",autre:"📅"}[e.type]||"📅";
-    var label={bureau:"Bureau",commission:"Commission",conseil:"Conseil",autre:"Autre"}[e.type]||e.type;
-    var canEdit=ME.username==="admin"||(e.created_by&&e.created_by===ME.username)||(!e.created_by);
-    var d=new Date(e.date+"T00:00:00");
-    var daysLeft=Math.round((d-new Date())/86400000);
-    var badge=isPast?"":(daysLeft===0?'<span style="background:#fef9c3;color:#a16207;font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:7px">Aujourd\'hui</span>':daysLeft===1?'<span style="background:#fee2e2;color:#b91c1c;font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:7px">Demain</span>':(daysLeft<=7?'<span style="background:var(--g8);color:var(--g2);font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:7px">J\'\'—'+daysLeft+'</span>':""));
-
-    return '<div id="agcard-'+e.id+'" style="background:#fff;border-radius:16px;border:1px solid var(--w2);box-shadow:0 2px 10px rgba(0,0,0,.07);overflow:hidden;'+(isPast?"opacity:.55;":"")+"">"
-      // Bande couleur type
-      +'<div style="height:5px;background:'+col+'"></div>'
-      // Corps
-      +'<div style="padding:.9rem 1.1rem">'
-      // Ligne 1 : date + badge
-      +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:.55rem">'
-      +'<div style="font-size:1.6rem;font-weight:800;color:'+col+';font-family:var(--fd);line-height:1">'+d.getDate()+'</div>'
-      +'<div style="font-size:.7rem;color:var(--i3);line-height:1.3">'+MOIS[d.getMonth()].substring(0,4)+'<br>'+d.getFullYear()+'</div>'
-      +'<span style="display:inline-flex;align-items:center;gap:4px;font-size:.68rem;font-weight:700;padding:2px 9px;border-radius:8px;background:'+col+'18;color:'+col+'">'+ico+' '+label+'</span>'
-      +badge
-      +'<div style="margin-left:auto;display:flex;gap:6px">'
-      +(canEdit?'<button onclick="editAgCard('+e.id+')" title="Modifier" style="background:var(--w);border:1px solid var(--w2);border-radius:7px;width:28px;height:28px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center">✏️</button>':"")
-      +(canEdit?'<button onclick="delAg('+e.id+')" title="Supprimer" style="background:#fee2e2;border:1px solid #fca5a5;border-radius:7px;width:28px;height:28px;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center">×</button>':"")
-      +'</div></div>'
-      // Titre
-      +'<div style="font-size:.9rem;font-weight:700;font-family:var(--fd);color:var(--ink);margin-bottom:.35rem">'+e.titre+'</div>'
-      // Méta
-      +'<div style="font-size:.73rem;color:var(--i3);display:flex;flex-wrap:wrap;gap:10px">'
-      +(e.heure?'<span>🕐 '+e.heure+'</span>':"")
-      +(e.lieu?'<span>📍 '+e.lieu+'</span>':"")
-      +(e.notes?'<span style="color:var(--i4)">📝 '+e.notes.substring(0,60)+(e.notes.length>60?"…":"")+'</span>':"")
+  al.innerHTML=sorted.map(function(e){
+    var past=e.date<now;
+    return '<div class="agc'+(past?" past":"")+'">'
+      +'<div class="agc-db"><div class="agc-day">'+e.date.slice(8)+'</div><div class="agc-mon">'+MOIS[+e.date.slice(5,7)-1]+'</div></div>'
+      +'<div class="agc-inf">'
+      +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">'
+      +'<span class="agc-t">'+e.titre+'</span>'
+      +'<span class="atch '+(ATCLS[e.type]||"at-a")+'">'+(ATMAP[e.type]||e.type||"Autre")+'</span>'
       +'</div>'
-      +'</div></div>';
-  }
-
-  var html="";
-  if(futur.length){
-    html+='<div style="font-size:.68rem;font-weight:700;color:var(--i3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.65rem;margin-top:.25rem">À venir — '+futur.length+' réunion'+(futur.length>1?"s":"")+'</div>';
-    html+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:1.5rem">'+futur.map(function(e){return agCard(e,false);}).join("")+'</div>';
-  }
-  if(passe.length){
-    html+='<div style="font-size:.68rem;font-weight:700;color:var(--i3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.65rem;border-top:1px solid var(--w2);padding-top:.85rem">Passées — '+passe.length+'</div>';
-    html+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px">'+passe.map(function(e){return agCard(e,true);}).join("")+'</div>';
-  }
-  al.innerHTML=html||'<div class="empty"><div class="empty-ico">📅</div><div class="empty-t">Aucune réunion</div><div class="empty-s">Cliquez sur + Ajouter.</div></div>';
+      +'<div class="agc-m">'+(e.heure?"🕐 "+e.heure+"  ":"")+(e.lieu?"📍 "+e.lieu:"")+'</div>'
+      +(e.notes?'<div class="agc-n">'+e.notes+'</div>':'')
+      +'</div>'
+      +'<button class="btn btn-d btn-sm" style="flex-shrink:0;align-self:flex-start" onclick="delAg('+e.id+')">×</button>'
+      +'</div>';
+  }).join("")||'<div class="empty"><div class="empty-ico">📅</div><div class="empty-t">Aucune réunion</div><div class="empty-s">Cliquez sur + Ajouter.</div></div>';
 }
-
-function editAgCard(id){
-  var e=AG.find(function(a){return a.id===id;}); if(!e)return;
-  var card=document.getElementById("agcard-"+id); if(!card)return;
-  // Remplacer la carte par un formulaire inline
-  card.innerHTML='<div style="height:5px;background:var(--g4)"></div>'
-    +'<div style="padding:.9rem 1.1rem;display:flex;flex-direction:column;gap:8px">'
-    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
-    +'<div><label style="font-size:.64rem;font-weight:700;color:var(--i3);display:block;margin-bottom:2px;text-transform:uppercase">Titre *</label><input id="age-ti-'+id+'" class="fi" value="'+e.titre.replace(/"/g,"&quot;")+'" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'<div><label style="font-size:.64rem;font-weight:700;color:var(--i3);display:block;margin-bottom:2px;text-transform:uppercase">Date</label><input id="age-d-'+id+'" class="fi" type="date" value="'+e.date+'" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'</div>'
-    +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">'
-    +'<div><label style="font-size:.64rem;font-weight:700;color:var(--i3);display:block;margin-bottom:2px;text-transform:uppercase">Heure</label><input id="age-h-'+id+'" class="fi" value="'+( e.heure||"")+'" placeholder="18h30" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'<div><label style="font-size:.64rem;font-weight:700;color:var(--i3);display:block;margin-bottom:2px;text-transform:uppercase">Lieu</label><input id="age-l-'+id+'" class="fi" value="'+( e.lieu||"").replace(/"/g,"&quot;")+'" placeholder="Mairie" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'<div><label style="font-size:.64rem;font-weight:700;color:var(--i3);display:block;margin-bottom:2px;text-transform:uppercase">Type</label>'
-    +'<select id="age-ty-'+id+'" class="fi" style="font-size:.76rem;padding:6px 9px">'
-    +'<option value="bureau"'+(e.type==="bureau"?" selected":"")+'>Bureau</option>'
-    +'<option value="commission"'+(e.type==="commission"?" selected":"")+'>Commission</option>'
-    +'<option value="conseil"'+(e.type==="conseil"?" selected":"")+'>Conseil</option>'
-    +'<option value="autre"'+(e.type==="autre"?" selected":"")+'>Autre</option>'
-    +'</select></div></div>'
-    +'<div><label style="font-size:.64rem;font-weight:700;color:var(--i3);display:block;margin-bottom:2px;text-transform:uppercase">Notes</label><input id="age-n-'+id+'" class="fi" value="'+( e.notes||"").replace(/"/g,"&quot;")+'" placeholder="Ordre du jour, infos…" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'<div style="display:flex;gap:8px;justify-content:flex-end">'
-    +'<button onclick="renderAg()" class="btn btn-s btn-sm">Annuler</button>'
-    +'<button onclick="saveAgCard('+id+')" class="btn btn-p btn-sm">💾 Enregistrer</button>'
-    +'</div></div>';
-}
-
-function saveAgCard(id){
-  var titre=document.getElementById("age-ti-"+id);
-  if(!titre||!titre.value.trim()){toast("Titre obligatoire");return;}
-  var d={
-    titre:titre.value.trim(),
-    date:(document.getElementById("age-d-"+id)||{value:""}).value,
-    heure:(document.getElementById("age-h-"+id)||{value:""}).value,
-    lieu:(document.getElementById("age-l-"+id)||{value:""}).value,
-    type:(document.getElementById("age-ty-"+id)||{value:"autre"}).value,
-    notes:(document.getElementById("age-n-"+id)||{value:""}).value
-  };
-  apiPatch("/api/agenda/"+id,d).then(function(r){
-    if(r&&r.ok){
-      AG=AG.map(function(a){return a.id===id?Object.assign({},a,d):a;});
-      renderAg();renderNextMtg();toast("Réunion mise à jour !");
-    } else {
-      // Fallback : suppr + recréer si pas de PATCH agenda
-      apiDel("/api/agenda/"+id).then(function(){
-        apiPost("/api/agenda",d).then(function(r2){
-          if(r2.ok){AG=AG.filter(function(a){return a.id!==id;});AG.push(r2.item);renderAg();renderNextMtg();toast("Réunion mise à jour !");}
-        });
-      });
-    }
-  }).catch(function(){
-    // PATCH non supporté : delete + recreate
-    apiDel("/api/agenda/"+id).then(function(){
-      apiPost("/api/agenda",d).then(function(r2){
-        if(r2.ok){AG=AG.filter(function(a){return a.id!==id;});AG.push(r2.item);renderAg();renderNextMtg();toast("Réunion mise à jour !");}
-      });
-    });
-  });
-}
-
 function svAg(){
-  var d={titre:v("ag-ti"),date:v("ag-d"),heure:v("ag-h"),lieu:v("ag-l"),type:v("ag-ty"),notes:v("ag-n"),created_by:ME.username};
-  if(!d.titre||!d.date){toast("Titre et date obligatoires");return;}
-  apiPost("/api/agenda",d).then(function(r){if(r.ok){AG.push(r.item);cm();renderAg();renderNextMtg();toast("Réunion ajoutée");}});
+  apiPost("/api/agenda",{titre:v("ag-ti"),date:v("ag-d"),heure:v("ag-h"),lieu:v("ag-l"),type:v("ag-ty"),notes:v("ag-n")})
+    .then(function(d){if(d.ok){AG.push(d.item);cm();renderAg();renderNextMtg();toast("Réunion ajoutée");}});
 }
 function delAg(id){if(!confirm("Supprimer cette réunion ?"))return;apiDel("/api/agenda/"+id).then(function(d){if(d.ok){AG=AG.filter(function(a){return a.id!==id;});renderAg();renderNextMtg();}});}
 
@@ -3636,55 +3533,20 @@ function showCD(idx){
   var pp=P.filter(function(p){return themes.indexOf(p.theme)>=0;});
   var to=pp.length,pr=0,ec=0,re=0;
   pp.forEach(function(p){var s=ST[p.id]||p.statut||"";if(s==="Prioritaire")pr++;if(s.indexOf("cours")>=0)ec++;if(s.indexOf("alis")>=0)re++;});
-
-  // Construire le HTML du détail directement dans panel-body
-  var pb=document.getElementById("panel-body");
-  if(!pb) return;
-
-  // Mettre à jour le titre du panneau
-  var panelTitle=document.querySelector("#main-panel > div > span");
-  if(panelTitle) panelTitle.textContent=comm;
-
-  var statOpts=SLIST.map(function(s){return'<option value="'+s+'">'+s+'</option>';}).join('');
-
-  pb.innerHTML=
-    // En-tête coloré
-    '<div style="background:'+col+'18;border-bottom:3px solid '+col+';padding:.85rem 1.4rem;display:flex;align-items:center;gap:12px;flex-shrink:0">'
-    +'<div style="width:40px;height:40px;border-radius:10px;background:'+col+';display:flex;align-items:center;justify-content:center;font-size:1.2rem">'+(ICONS[comm]||"📋")+'</div>'
-    +'<div style="flex:1"><div style="font-size:1rem;font-weight:800;font-family:var(--fd)">'+comm+'</div>'
-    +'<div style="font-size:.72rem;color:var(--i3)">'+themes.join(" · ")+(REFS[comm]?" — <strong>"+REFS[comm]+"</strong>":"")+'</div></div>'
-    +'<button onclick="renderComm()" style="background:rgba(0,0,0,.07);border:none;border-radius:7px;padding:5px 12px;font-size:.73rem;cursor:pointer;color:var(--i2)">&#x2190; Commissions</button>'
-    +'</div>'
-    // KPIs
-    +'<div style="display:flex;gap:8px;padding:.75rem 1.4rem;background:#fff;border-bottom:1px solid var(--w2)">'
-    +'<div class="kpi" style="flex:1"><div class="kpiv">'+to+'</div><div class="kpil">Projets</div></div>'
-    +'<div class="kpi" style="flex:1"><div class="kpiv" style="color:var(--red)">'+pr+'</div><div class="kpil">Prioritaires</div></div>'
-    +'<div class="kpi" style="flex:1"><div class="kpiv" style="color:var(--amber)">'+ec+'</div><div class="kpil">En cours</div></div>'
-    +'<div class="kpi" style="flex:1"><div class="kpiv" style="color:var(--g4)">'+re+'</div><div class="kpil">Réalisés</div></div>'
-    +'</div>'
-    // Filtres
-    +'<div class="fb">'
-    +'<select class="fsel" id="cd-st-p" onchange="fCDP()"><option value="">Tous statuts</option>'+statOpts+'</select>'
-    +'<input class="fsrch" id="cd-q-p" placeholder="🔍 Rechercher…" oninput="fCDP()">'
-    +'<span class="fcnt" id="cd-cnt-p"></span>'
-    +'</div>'
-    // Tableau
-    +'<div class="tbw" style="border-radius:0;border-left:none;border-right:none;border-bottom:none">'
-    +'<table><thead><tr><th>Thème</th><th>Projet</th><th>Statut</th><th>Année</th><th>Imp.</th><th>Modifier</th></tr></thead>'
-    +'<tbody id="cd-tb-p"></tbody></table></div>';
-
-  fCDP();
+  $("cdet-ico").textContent=ICONS[comm]||"📋";
+  el("cdet-t",comm);
+  el("cdet-s",themes.join(" · ")+(REFS[comm]?" — "+REFS[comm]:""));
+  $("cdet-kpis").innerHTML=
+    '<div class="kpi" style="flex:1;min-width:0"><div class="kpiv">'+to+'</div><div class="kpil">Projets</div></div>'
+    +'<div class="kpi" style="flex:1;min-width:0"><div class="kpiv" style="color:var(--red)">'+pr+'</div><div class="kpil">Prioritaires</div></div>'
+    +'<div class="kpi" style="flex:1;min-width:0"><div class="kpiv" style="color:var(--amber)">'+ec+'</div><div class="kpil">En cours</div></div>'
+    +'<div class="kpi" style="flex:1;min-width:0"><div class="kpiv" style="color:var(--g4)">'+re+'</div><div class="kpil">Réalisés</div></div>';
+  $("cd-st").value=""; $("cd-q").value="";
+  qsa(".page").forEach(function(p){p.classList.remove("on");});
+  qsa(".sbi").forEach(function(n){n.classList.remove("on");});
+  $("p-cdet").classList.add("on");
+  fCD();
 }
-
-function fCDP(){
-  var comm=Object.keys(COMM)[_ci],themes=COMM[comm];
-  var s=(document.getElementById("cd-st-p")||{value:""}).value;
-  var q=((document.getElementById("cd-q-p")||{value:""}).value||"").toLowerCase();
-  var r=P.filter(function(p){var ps=ST[p.id]||p.statut||"ND";return themes.indexOf(p.theme)>=0&&(!s||ps===s)&&(!q||(p.titre||"").toLowerCase().indexOf(q)>=0||(p.resume||"").toLowerCase().indexOf(q)>=0);});
-  var cnt=document.getElementById("cd-cnt-p"); if(cnt) cnt.textContent=r.length+" projet(s)";
-  rTb("cd-tb-p",r,false);
-}
-
 function fCD(){
   var comm=Object.keys(COMM)[_ci],themes=COMM[comm];
   var s=v("cd-st"),q=v("cd-q").toLowerCase();
@@ -4038,49 +3900,8 @@ function renderCal(){
 
 function selDay(el){selectCalDay(el.dataset.date||el.getAttribute("data-date"));}
 function selectCalDay(dateStr){
-  // Afficher une popup succinte des événements du jour
-  var items=[];
-  var ATMAP2={bureau:"Bureau",commission:"Commission",conseil:"Conseil",autre:"Réunion"};
-  var EVCOL={municipal:"var(--g3)",associatif:"var(--amber)",culturel:"#8B5CF6",sportif:"var(--blue)",commemoration:"#7f8c8d",autre:"var(--i3)",bureau:"var(--g3)",commission:"#8B5CF6",conseil:"var(--blue)"};
-  AG.filter(function(a){return a.date===dateStr;}).forEach(function(a){
-    items.push({heure:a.heure||"",titre:a.titre,sous:(a.lieu||""),col:EVCOL[a.type]||"var(--g3)",ico:{bureau:"🏢",commission:"👥",conseil:"🏛",autre:"📅"}[a.type]||"📅",type:ATMAP2[a.type]||"Réunion"});
-  });
-  EVTS.filter(function(e){return e.date===dateStr;}).forEach(function(e){
-    items.push({heure:e.heure||"",titre:e.titre,sous:(e.lieu||e.organisateur||""),col:EVCOL[e.type]||"var(--i3)",ico:"🎪",type:e.type||"Événement"});
-  });
-
-  // Supprimer popup existante
-  var old=document.getElementById("cal-popup"); if(old) old.remove();
-  if(!items.length) return;
-
-  items.sort(function(a,b){return (a.heure||"99:99")>(b.heure||"99:99")?1:-1;});
-  var d=new Date(dateStr+"T00:00:00");
-  var JOURS_FR=["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];
-  var MOIS_FR=["jan","fév","mar","avr","mai","jun","jul","aoû","sep","oct","nov","déc"];
-  var pop=document.createElement("div");
-  pop.id="cal-popup";
-  pop.style.cssText="position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#fff;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.18);border:1px solid var(--w2);z-index:600;min-width:280px;max-width:360px;overflow:hidden;animation:mIn .15s ease";
-  pop.innerHTML='<div style="background:var(--g1);color:#fff;padding:.65rem 1rem;display:flex;align-items:center;justify-content:space-between">'+
-    '<div style="font-size:.82rem;font-weight:700;font-family:var(--fd)">'+JOURS_FR[d.getDay()]+' '+d.getDate()+' '+MOIS_FR[d.getMonth()]+' '+d.getFullYear()+'</div>'+
-    '<button onclick="document.getElementById(\'cal-popup\').remove()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:5px;width:22px;height:22px;cursor:pointer;font-size:.8rem">✕</button>'+
-    '</div>'+
-    '<div style="padding:.65rem .9rem;display:flex;flex-direction:column;gap:7px">'+
-    items.map(function(it){
-      return '<div style="display:flex;align-items:center;gap:9px;padding:.45rem .5rem;border-radius:8px;background:var(--w)">'+
-        '<div style="font-size:1.1rem">'+it.ico+'</div>'+
-        '<div style="flex:1;min-width:0">'+
-        '<div style="font-size:.78rem;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+it.titre+'</div>'+
-        (it.heure||it.sous?'<div style="font-size:.67rem;color:var(--i3)">'+( it.heure?"🕐 "+it.heure+" ":"")+( it.sous?"📍 "+it.sous:"")+'</div>':"")
-        +'</div>'+
-        '<span style="font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:5px;background:'+it.col+'18;color:'+it.col+';flex-shrink:0">'+it.type+'</span>'+
-        '</div>';
-    }).join("")+
-    '</div>';
-  document.body.appendChild(pop);
-  // Fermer au clic extérieur
-  setTimeout(function(){
-    document.addEventListener("click",function h(e){if(!pop.contains(e.target)){pop.remove();document.removeEventListener("click",h);}});
-  },100);
+  // Afficher les événements de ce jour dans l'agenda
+  renderAgendaDay(dateStr);
 }
 
 /* ── AGENDA SEMAINE + JOUR SÉLECTIONNÉ ───────────────────────────────────── */
