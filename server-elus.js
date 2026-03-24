@@ -730,7 +730,10 @@ const server=http.createServer(function(req,res){
   });
 
   // ── ESPACE PRIVÉ (avec authentification) ───────────────────────────────────
-  if(p==='/logout'){res.writeHead(302,{'Location':'/','WWW-Authenticate':'Basic realm="logout"','Cache-Control':'no-cache'});return res.end();}
+  if(p==='/logout'){
+    res.writeHead(401,{'WWW-Authenticate':'Basic realm="VeM Elus - Nouveau login"','Content-Type':'text/html;charset=utf-8','Cache-Control':'no-store'});
+    return res.end('<!DOCTYPE html><html><head><meta charset="UTF-8"><meta http-equiv="refresh" content="0;url=/espace"></head><body><script>window.location="/espace";<\/script></body></html>');
+  }
   if(p==='/espace'||p==='/dashboard'){res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});return res.end(buildPage());}
   res.writeHead(404);res.end('404');
 });
