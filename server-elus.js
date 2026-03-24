@@ -480,11 +480,12 @@ const server=http.createServer(function(req,res){
 
   const ME=authUser(req);
   if(p==='/api/all')return J(res,{
-    n_projets:projets.length,statuts,agenda,documents,
-    notifs:notifs.slice(0,60),elus,annonces,tasks,
-    signalements,evenements,comptes_rendus,stats:stats(),
-    biblio_count:biblio.length,
-    chat:chat.slice(-50),
+    n_projets:projets.length,statuts,agenda,
+    notifs:notifs.slice(0,30),annonces,tasks,
+    signalements:signalements.slice(0,20),
+    evenements:evenements.slice(0,20),
+    comptes_rendus:comptes_rendus.slice(0,10),
+    stats:stats(),chat:chat.slice(-20),
     me:{id:ME.id,nom:ME.nom,prenom:ME.prenom||'',role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||'',photo:ME.photo||'',photoPos:ME.photoPos||'center center',email:ME.email||''}
   });
 
@@ -687,7 +688,11 @@ const server=http.createServer(function(req,res){
   if(p.match(/^\/api\/evenements\/\d+$/)&&m==='DELETE'){const id=parseInt(p.split('/').pop());evenements=evenements.filter(e=>e.id!==id);save('evenements.json',evenements);return J(res,{ok:true});}
 
   // ÉLUS
-  if(p==='/api/elus'&&m==='GET')return J(res,elus);
+  if(p==='/api/elus'&&m==='GET'){
+    // Champs essentiels seulement pour chargement rapide
+    var elusLight=elus.map(function(e){return{id:e.id,nom:e.nom,prenom:e.prenom||'',role:e.role||'',avatar:e.avatar||'',color:e.color||'#2d5a40',photo:e.photo||'',photoPos:e.photoPos||'center center',tel:e.tel||'',email:e.email||'',commission:e.commission||''};});
+    return J(res,elusLight);
+  }
   if(p==='/api/elus'&&m==='PUT')return body(req,function(err,d){
     if(err)return J(res,{ok:false},400);
     elus=d;save('elus.json',elus);
