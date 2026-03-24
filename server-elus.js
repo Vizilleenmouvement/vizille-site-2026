@@ -2566,37 +2566,45 @@ function init(){
   var now=new Date();
   $("tdate").textContent=now.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
 
-  apiGet("/api/all").then(function(d){
+  // Afficher immédiatement le héro avec données de base (me)
+  apiGet("/api/me").then(function(me){
+    ME=me;
+    var av=$("top-av-btn");
+    if(av){av.textContent=ME.avatar;av.style.background=ME.color||"var(--g4)";}
+    renderHeroAccueil();
+  });
+
+  // Lancer tous les appels en parallèle
+  Promise.all([
+    apiGet("/api/all"),
+    apiGet("/api/projets")
+  ]).then(function(results){
+    var d=results[0], projData=results[1];
+
     ST=d.statuts; AG=d.agenda; DC=d.documents; NF=d.notifs;
     ANN=d.annonces||[]; TASKS=d.tasks||[];
-    if(d.me){
-      ME=d.me;
-      // Mettre à jour l'avatar dans la topbar
+    if(d.me){ ME=d.me;
       var av=$("top-av-btn");
       if(av){av.textContent=ME.avatar;av.style.background=ME.color||"var(--g4)";}
-      // Mettre à jour le label du répertoire
-      var repT=document.querySelector("#p-repelus .ph-t");
-      if(repT)repT.textContent="Mon répertoire personnel";
-      var repS=document.querySelector("#p-repelus .ph-s");
-      if(repS)repS.textContent="Vos documents privés — visibles uniquement par vous";
     }
     SIGN=d.signalements||[]; EVTS=d.evenements||[];
     CRS=d.comptes_rendus||[]; ELUS_DATA=d.elus||[];
-    BIBLIO=[]; // chargé séparément
+    BIBLIO=[];
     if(d.stats){
       el("k-tot",d.stats.total); el("k-pr",d.stats.prioritaires);
       el("k-26",d.stats.annee2026); el("k-re",d.stats.realises);
-      el("k-sig",d.stats.sig_new||0);
-      el("sb-tot",d.stats.total);
+      el("k-sig",d.stats.sig_new||0); el("sb-tot",d.stats.total);
     }
-    renderTasks(); renderAnn(); renderNextMtg();
-    buildGuides(); buildRess();
-    updSigBadge(); renderHeroAccueil();
-    // KPI mandat contextuels
-    var sigOpen=SIGN.filter(function(s){return s.statut!=='Résolu'&&s.statut!=='Non retenu';}).length;
+
+    // Projets
+    P=projData; buildFilters(); fG(); buildCG(); buildCharts(); renderWidgetMandat();
+
+    // Widgets accueil
+    renderHeroAccueil(); renderTasks(); renderAnn(); renderNextMtg();
+    buildGuides(); buildRess(); updSigBadge();
+    var sigOpen=SIGN.filter(function(s){return s.statut!=="Résolu"&&s.statut!=="Non retenu";}).length;
     el("kpi-sig-open",sigOpen);
     if(sigOpen>0)$("kpi-sig-open").style.color="var(--red)";
-    // Sessions conseil dans l'année
     var y=new Date().getFullYear();
     var conseils=AG.filter(function(a){return a.type==="conseil"&&(a.date||"").startsWith(String(y));}).length;
     el("kpi-conseil",conseils+"/"+Math.max(conseils,4));
@@ -2604,18 +2612,9 @@ function init(){
     el("k-sig",d.stats?d.stats.sig_new||0:0);
   });
 
-  apiGet("/api/projets").then(function(data){
-    P=data; buildFilters(); fG(); buildCG(); buildCharts();
-    renderWidgetMandat();
-  });
-
-  apiGet("/api/biblio").then(function(data){
-    BIBLIO=data; el("sb-bib",BIBLIO.length); renderBiblio();
-  });
-
-  apiGet("/api/rep_elus").then(function(data){
-    REP_ELUS=data||{};
-  });
+  // Biblio et répertoire en parallèle (moins prioritaires)
+  apiGet("/api/biblio").then(function(data){BIBLIO=data;el("sb-bib",BIBLIO.length);});
+  apiGet("/api/rep_elus").then(function(data){REP_ELUS=data||{};});
 
   _chatTimer=setInterval(pollChat,6000);
   renderChatMsgs([]);
