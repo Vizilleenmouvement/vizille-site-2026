@@ -2538,7 +2538,7 @@ function openProfile(){
   pb.innerHTML='<div style="display:flex;align-items:center;gap:14px;padding:.85rem;background:var(--g8);border-radius:var(--R)">'
     +'<div style="width:50px;height:50px;border-radius:14px;background:'+(ME.color||"var(--g3)")+';display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;color:#fff;font-family:var(--fd)">'+ME.avatar+'</div>'
     +'<div><div style="font-size:.95rem;font-weight:700;font-family:var(--fd);color:var(--ink)">'+ME.nom+'</div>'
-    +'<div style="font-size:.75rem;color:var(--i3);margin-top:1px">'+ME.role+(ME.delegation?" — "+ME.delegation:"")+'</div>'
+    +'<div style="font-size:.75rem;color:var(--i3);margin-top:1px">'+( ME.role||"")+'</div>'
     +'<div style="font-size:.67rem;color:var(--i4);margin-top:2px;font-family:var(--fm)">Login : '+ME.username+'</div>'
     +'</div></div>';
   $("new-pwd").value=""; $("new-pwd2").value=""; $("pwd-msg").textContent="";
@@ -2814,7 +2814,7 @@ function renderHeroAccueil(){
     }
   }
   if(bj) bj.textContent=salut+", "+ME.nom.split(" ")[0]+" !";
-  if(rl) rl.textContent=(ME.role||"")+(ME.delegation?" — "+ME.delegation:"");
+  if(rl) rl.textContent=ME.role||"";
   if(db) db.textContent=now.getDate();
   if(mo) mo.textContent=JOURS_L[now.getDay()]+" "+now.toLocaleDateString("fr-FR",{month:"long",year:"numeric"});
   if(ct) ct.textContent=CITATIONS[now.getDate()%CITATIONS.length];
@@ -3344,7 +3344,7 @@ function renderElus(){
       +'<div style="flex:1;min-width:0">'
       +'<div class="elu-n">'+(e.prenom?e.prenom+' ':'')+e.nom+'</div>'
       +'<div class="elu-r">'+e.role+'</div>'
-      +(e.delegation?'<div class="elu-d">'+e.delegation+'</div>':"")
+      
       +'</div></div>';
   }).join("");
 }
@@ -3362,7 +3362,7 @@ function openElu(i){
     +photoBlock
     +'<div><div style="font-size:1rem;font-weight:700;font-family:var(--fd)">'+fullName+'</div>'
     +'<div style="font-size:.78rem;color:var(--g3);margin-top:2px;font-weight:600">'+e.role+'</div>'
-    +(e.delegation?'<div style="font-size:.72rem;color:var(--i3);margin-top:3px">'+e.delegation+'</div>':"")
+    
     +'</div></div>'
     +(e.commission?'<div style="font-size:.78rem;padding:.5rem 0;border-bottom:1px solid var(--w2)"><strong style="color:var(--i3)">Commission :</strong> <span class="chip">'+e.commission+'</span></div>':"")
     +(e.tel?'<div style="font-size:.78rem;padding:.5rem 0;border-bottom:1px solid var(--w2)"><strong style="color:var(--i3)">Tél : </strong><a href="tel:'+e.tel+'" style="color:var(--g3)">'+e.tel+'</a></div>':"")
