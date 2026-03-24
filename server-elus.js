@@ -488,6 +488,16 @@ const server=http.createServer(function(req,res){
     me:{id:ME.id,nom:ME.nom,prenom:ME.prenom||'',role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||'',photo:ME.photo||'',photoPos:ME.photoPos||'center center',email:ME.email||''}
   });
 
+  // API LÉGÈRE pour chargement rapide
+  if(p==='/api/light')return J(res,{
+    statuts,agenda,annonces:annonces,tasks,
+    signalements:signalements.slice(0,30),
+    evenements:evenements.slice(0,30),
+    comptes_rendus:comptes_rendus.slice(0,15),
+    stats:stats(),chat:chat.slice(-20),
+    me:{id:ME.id,nom:ME.nom,prenom:ME.prenom||'',role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||'',photo:ME.photo||'',photoPos:ME.photoPos||'center center',email:ME.email||''}
+  });
+
   // IDENTITÉ CONNECTÉE
   if(p==='/api/me')return J(res,{id:ME.id,nom:ME.nom,prenom:ME.prenom||'',role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||'',photo:ME.photo||'',photoPos:ME.photoPos||'center center',email:ME.email||''});
 
@@ -2524,21 +2534,20 @@ function openPanel(id){
     + '<div id="panel-body" style="flex:1;overflow-y:auto;">'+panelHTML+'</div>';
   panel.style.display = "flex";
 
-  // Charger les données dans les conteneurs maintenant dans panel-body
+  // Charger les données
   if(id==="agenda") renderAg();
   else if(id==="cr") renderCR();
   else if(id==="biblio") renderBiblio();
   else if(id==="repelus") renderRepElus();
   else if(id==="elus") renderElus();
-  else if(id==="comm") renderComm();
-  else if(id==="global") renderGlobal();
-  else if(id==="signal") renderSignal();
-  else if(id==="events") renderEvents();
-  else if(id==="guide") renderGuide();
-  else if(id==="ress") renderRess();
-  else if(id==="hist") renderHist();
-  else if(id==="comms") renderComms();
-  else if(id==="creer") renderCreer();
+  else if(id==="comm") buildCG();
+  else if(id==="global"){buildFilters();fG();}
+  else if(id==="signal"){fSig();updSig();}
+  else if(id==="events") renderEv();
+  else if(id==="guide"){buildGuides();buildRess();}
+  else if(id==="ress") buildRess();
+  else if(id==="hist") renderNt();
+  else if(id==="creer"){buildFilters();resetNP();}
 }
 
 function closePanel(){
@@ -2589,57 +2598,27 @@ function init(){
   var now=new Date();
   $("tdate").textContent=now.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
 
-  apiGet("/api/all").then(function(d){
-    ST=d.statuts; AG=d.agenda; DC=d.documents; NF=d.notifs;
-    ANN=d.annonces||[]; TASKS=d.tasks||[];
-    if(d.me){
-      ME=d.me;
-      // Mettre à jour l'avatar dans la topbar
-      var av=$("top-av-btn");
-      if(av){av.textContent=ME.avatar;av.style.background=ME.color||"var(--g4)";}
-      // Mettre à jour le label du répertoire
-      var repT=document.querySelector("#p-repelus .ph-t");
-      if(repT)repT.textContent="Mon répertoire personnel";
-      var repS=document.querySelector("#p-repelus .ph-s");
-      if(repS)repS.textContent="Vos documents privés — visibles uniquement par vous";
-    }
-    SIGN=d.signalements||[]; EVTS=d.evenements||[];
-    CRS=d.comptes_rendus||[]; ELUS_DATA=d.elus||[];
-    BIBLIO=[]; // chargé séparément
-    if(d.stats){
-      el("k-tot",d.stats.total); el("k-pr",d.stats.prioritaires);
-      el("k-26",d.stats.annee2026); el("k-re",d.stats.realises);
-      el("k-sig",d.stats.sig_new||0);
-      el("sb-tot",d.stats.total);
-    }
-    renderTasks(); renderAnn(); renderNextMtg();
-    buildGuides(); buildRess();
-    updSigBadge(); renderHeroAccueil();
-    // KPI mandat contextuels
-    var sigOpen=SIGN.filter(function(s){return s.statut!=='Résolu'&&s.statut!=='Non retenu';}).length;
-    el("kpi-sig-open",sigOpen);
-    if(sigOpen>0)$("kpi-sig-open").style.color="var(--red)";
-    // Sessions conseil dans l'année
+  // Phase 1 : données légères → accueil rapide
+  apiGet("/api/light").then(function(d){
+    ST=d.statuts; AG=d.agenda; ANN=d.annonces||[]; TASKS=d.tasks||[];
+    SIGN=d.signalements||[]; EVTS=d.evenements||[]; CRS=d.comptes_rendus||[];
+    if(d.me){ME=d.me;var av=$("top-av-btn");if(av){av.textContent=ME.avatar;av.style.background=ME.color||"var(--g4)";}}
+    if(d.stats){el("k-tot",d.stats.total);el("k-pr",d.stats.prioritaires);el("k-26",d.stats.annee2026);el("k-re",d.stats.realises);el("k-sig",d.stats.sig_new||0);el("sb-tot",d.stats.total);}
+    renderHeroAccueil();renderTasks();renderAnn();renderNextMtg();buildGuides();buildRess();updSigBadge();
+    var sigOpen=SIGN.filter(function(s){return s.statut!=="Résolu"&&s.statut!=="Non retenu";}).length;
+    el("kpi-sig-open",sigOpen);if(sigOpen>0){var ks=$("kpi-sig-open");if(ks)ks.style.color="var(--red)";}
     var y=new Date().getFullYear();
-    var conseils=AG.filter(function(a){return a.type==="conseil"&&(a.date||"").startsWith(String(y));}).length;
-    el("kpi-conseil",conseils+"/"+Math.max(conseils,4));
-    initCal(); renderWidgetAgenda(); renderWidgetSig(); renderCRHome(); renderEvHome(); checkUrgents(); initWidgetChat();
-    el("k-sig",d.stats?d.stats.sig_new||0:0);
+    var nc=AG.filter(function(a){return a.type==="conseil"&&(a.date||"").startsWith(String(y));}).length;
+    el("kpi-conseil",nc+"/"+Math.max(nc,4));
+    initCal();renderWidgetAgenda();renderWidgetSig();renderCRHome();renderEvHome();checkUrgents();initWidgetChat();
   });
-
-  apiGet("/api/projets").then(function(data){
-    P=data; buildFilters(); fG(); buildCG(); buildCharts();
-    renderWidgetMandat();
-  });
-
-  apiGet("/api/biblio").then(function(data){
-    BIBLIO=data; el("sb-bib",BIBLIO.length); renderBiblio();
-  });
-
-  apiGet("/api/rep_elus").then(function(data){
-    REP_ELUS=data||{};
-  });
-
+  // Phase 2 : projets en parallèle
+  apiGet("/api/projets").then(function(data){P=data;buildFilters();fG();buildCG();buildCharts();renderWidgetMandat();});
+  // Phase 3 : élus
+  apiGet("/api/elus").then(function(data){ELUS_DATA=data;});
+  // Phase 4 : arrière-plan
+  apiGet("/api/biblio").then(function(data){BIBLIO=data;el("sb-bib",BIBLIO.length);});
+  apiGet("/api/rep_elus").then(function(data){REP_ELUS=data||{};});
   _chatTimer=setInterval(pollChat,6000);
   renderChatMsgs([]);
 }
