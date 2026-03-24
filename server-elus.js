@@ -3771,34 +3771,7 @@ var CITATIONS = [
   "Le service public local, c'est le plus proche des gens.",
 ];
 
-function renderHeroAccueil(){
-  var now=new Date();
-  var h=now.getHours();
-  var salut=h<5?"Bonne nuit":h<12?"Bonjour":h<18?"Bon après-midi":"Bonsoir";
-  var JOURS=["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
-  var MOIS_L=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
 
-  var av=$("hero-av"),bj=$("hero-bonjour"),rl=$("hero-role"),ct=$("hero-citation");
-  var db=$("hero-date-big"),mo=$("hero-mois");
-  if(av){
-    if(ME.photo){
-      av.innerHTML='<img src="'+ME.photo+'" style="width:100%;height:100%;object-fit:cover;object-position:'+(ME.photoPos||"center center")+';border-radius:14px" onerror="hideImg(this)">';
-      av.style.background=ME.color||"var(--g4)";
-    } else {
-      av.textContent=ME.avatar||"?";
-      av.style.background=ME.color||"var(--g4)";
-    }
-  }
-  if(bj) bj.textContent=salut+", "+ME.nom.split(" ")[0]+" !";
-  if(rl) rl.textContent=(ME.role||"")+(ME.delegation?" — "+ME.delegation:"");
-  if(db) db.textContent=now.getDate();
-  if(mo) mo.textContent=JOURS[now.getDay()]+" "+now.toLocaleDateString("fr-FR",{month:"long",year:"numeric"});
-  if(ct) ct.textContent=CITATIONS[now.getDate()%CITATIONS.length];
-
-  // Mettre à jour avatar topbar
-  var topAv=$("top-av-btn");
-  if(topAv){topAv.textContent=ME.avatar||"?";topAv.style.background=ME.color||"var(--g4)";}
-}
 
 /* ── ACCUEIL : RACCOURCIS ────────────────────────────────────────────────── */
 function renderShortcuts(){
