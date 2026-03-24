@@ -2433,6 +2433,7 @@ qsa(".ov").forEach(function(o){o.addEventListener("click",function(e){if(e.targe
 
 // ── NAVIGATION ───────────────────────────────────────────────────────────────
 function gp(id,ni){
+  var _p=document.getElementById("main-panel");if(_p)_p.style.display="none";
   qsa(".page").forEach(function(p){p.classList.remove("on");});
   qsa(".sbi").forEach(function(n){n.classList.remove("on");});
   var pg=$("p-"+id);
