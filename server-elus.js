@@ -2464,46 +2464,108 @@ function gp(id,ni){
     return;
   }
 }
-// ── PANEL MODAL — ouvre une section dans une modale plein-écran ──────────────
+// ── PANNEAU MULTI — ouvre jusqu'à 2 panneaux côte à côte sur grand écran ─────
+var _panels = []; // max 2 actifs
+
 function openPanel(id){
-  // Activer le menu item correspondant
-  qsa(".sbi").forEach(function(n){n.classList.remove("on");});
+  var isWide = window.innerWidth >= 1100;
+  var maxPanels = isWide ? 2 : 1;
+
+  // Activer le menu
   var menuEl = document.querySelector("[data-panel='" + id + "']");
-  if(menuEl) menuEl.classList.add("on");
+  if(menuEl){ qsa(".sbi").forEach(function(n){n.classList.remove("on");}); menuEl.classList.add("on"); }
 
-  // Trouver la page source
-  var pg = $("p-"+id);
-  if(!pg) return;
+  // Si déjà ouvert → le fermer (toggle)
+  var existing = document.getElementById("panel-"+id);
+  if(existing){ closeOnePanel(id); return; }
 
-  // Créer ou récupérer le container modal plein-écran
-  var panel = document.getElementById("main-panel");
-  if(!panel){
-    panel = document.createElement("div");
-    panel.id = "main-panel";
-    panel.style.cssText = "position:fixed;inset:0;top:var(--th);background:var(--w);z-index:100;overflow-y:auto;animation:fadeIn .15s ease;";
-    document.body.appendChild(panel);
-    // Bouton fermer
-    var closeBtn = document.createElement("button");
-    closeBtn.innerHTML = "&#x2190; Retour";
-    closeBtn.style.cssText = "position:sticky;top:0;z-index:10;background:var(--g1);color:#fff;border:none;padding:.6rem 1.2rem;font-size:.78rem;font-weight:600;cursor:pointer;width:100%;text-align:left;font-family:var(--fn);display:flex;align-items:center;gap:6px;";
-    closeBtn.onclick = function(){ closePanel(); };
-    panel.appendChild(closeBtn);
+  // Limiter à maxPanels
+  while(_panels.length >= maxPanels){ closeOnePanel(_panels[0]); }
+
+  _panels.push(id);
+  _rebuildPanelArea();
+  _loadPanelData(id);
+}
+
+function closeOnePanel(id){
+  _panels = _panels.filter(function(p){ return p !== id; });
+  var el = document.getElementById("panel-"+id);
+  if(el) el.remove();
+  _rebuildPanelArea();
+  // Désactiver menu si plus de panels
+  if(_panels.length === 0){
+    qsa(".sbi").forEach(function(n){n.classList.remove("on");});
+    var first = document.querySelector(".sbi");
+    if(first) first.classList.add("on");
   }
+}
 
-  // Vider le contenu précédent (sauf bouton fermer)
-  while(panel.children.length > 1){
-    panel.removeChild(panel.lastChild);
+function closeAllPanels(){
+  var ids = _panels.slice();
+  ids.forEach(function(id){ closeOnePanel(id); });
+}
+
+function _rebuildPanelArea(){
+  var area = document.getElementById("panels-area");
+  if(!area){
+    area = document.createElement("div");
+    area.id = "panels-area";
+    area.style.cssText = "position:fixed;left:var(--sw);right:0;top:var(--th);bottom:0;z-index:100;display:flex;flex-direction:row;gap:0;overflow:hidden;";
+    document.body.appendChild(area);
   }
+  // Supprimer panels qui ne sont plus dans _panels
+  var existing = area.querySelectorAll("[id^='panel-']");
+  existing.forEach(function(el){
+    var pid = el.id.replace("panel-","");
+    if(_panels.indexOf(pid) < 0) el.remove();
+  });
+  // Créer panels manquants
+  _panels.forEach(function(id){
+    if(!document.getElementById("panel-"+id)){
+      var pane = _createPane(id);
+      area.appendChild(pane);
+    }
+  });
+  // Mettre à jour les largeurs
+  var panes = area.querySelectorAll(".pane");
+  panes.forEach(function(p){ p.style.flex = "1"; p.style.borderRight = "1px solid var(--w2)"; });
+  if(panes.length === 0) area.style.display = "none";
+  else area.style.display = "flex";
+}
 
-  // Copier le contenu de la page dans le panel
-  var clone = pg.cloneNode(true);
-  clone.style.display = "block";
-  clone.style.animation = "none";
-  panel.appendChild(clone);
-  panel.scrollTop = 0;
-  panel.style.display = "block";
+function _createPane(id){
+  var pg = document.getElementById("p-"+id);
+  var pane = document.createElement("div");
+  pane.id = "panel-"+id;
+  pane.className = "pane";
+  pane.style.cssText = "flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--w);";
 
-  // Charger les données
+  // Barre titre
+  var bar = document.createElement("div");
+  bar.style.cssText = "background:var(--g1);color:#fff;padding:.5rem 1rem;display:flex;align-items:center;gap:8px;flex-shrink:0;font-size:.78rem;font-weight:600;font-family:var(--fd);";
+  var title = pg ? (pg.querySelector(".ph-t") ? pg.querySelector(".ph-t").textContent : id) : id;
+  bar.innerHTML = "<span style='flex:1'>"+title+"</span>";
+  var closeBtn = document.createElement("button");
+  closeBtn.innerHTML = "&#x2715;";
+  closeBtn.style.cssText = "background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:5px;width:22px;height:22px;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;";
+  closeBtn.onclick = (function(pid){ return function(){ closeOnePanel(pid); }; })(id);
+  bar.appendChild(closeBtn);
+  pane.appendChild(bar);
+
+  // Contenu scrollable
+  var body = document.createElement("div");
+  body.style.cssText = "flex:1;overflow-y:auto;";
+  if(pg){
+    var clone = pg.cloneNode(true);
+    clone.id = "pane-content-"+id;
+    clone.style.display = "block";
+    body.appendChild(clone);
+  }
+  pane.appendChild(body);
+  return pane;
+}
+
+function _loadPanelData(id){
   if(id==="agenda") renderAg();
   else if(id==="cr") renderCR();
   else if(id==="biblio") renderBiblio();
@@ -2520,12 +2582,13 @@ function openPanel(id){
   else if(id==="creer") renderCreer();
 }
 
-function closePanel(){
-  var panel = document.getElementById("main-panel");
-  if(panel) panel.style.display = "none";
-  qsa(".sbi").forEach(function(n){n.classList.remove("on");});
-  document.querySelector(".sbi").classList.add("on"); // today
-}
+// Réajuster sur redimensionnement
+window.addEventListener("resize", function(){
+  if(_panels.length > 1 && window.innerWidth < 1100){
+    // Sur petit écran : garder seulement le dernier
+    while(_panels.length > 1){ closeOnePanel(_panels[0]); }
+  }
+});
 
 
 function goComm(){gp("comm",qsa(".sbi")[9]);}
