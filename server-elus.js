@@ -1395,10 +1395,6 @@ textarea.fi{resize:vertical;min-height:90px;}
 .empty-s{font-size:.74rem;color:var(--i4);}
 
 /* TOAST */
-.tpick{display:flex;flex-direction:column;gap:5px;}
-.tpick-slots{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px;}
-.tpick-slot{font-size:.68rem;font-weight:600;padding:3px 8px;border-radius:6px;background:var(--w);border:1px solid var(--w2);cursor:pointer;color:var(--i2);transition:.12s;}
-.tpick-slot:hover{background:var(--g8);border-color:var(--g5);color:var(--g2);}
 .toast{position:fixed;bottom:22px;right:22px;background:var(--g1);color:#fff;padding:10px 18px;border-radius:var(--R);font-size:.78rem;font-weight:500;z-index:1000;display:none;box-shadow:var(--s3);border:1px solid rgba(255,255,255,.1);animation:mIn .2s;}
 
 @media(max-width:900px){
@@ -2149,21 +2145,7 @@ textarea.fi{resize:vertical;min-height:90px;}
   <div class="ff"><label>Titre *</label><input class="fi" id="ag-ti" placeholder="Bureau municipal, Commission&#x2026;"></div>
   <div class="fr2">
     <div class="ff"><label>Date</label><input class="fi" type="date" id="ag-d"></div>
-    <div class="ff"><label>Heure</label>
-      <div class="tpick">
-        <input class="fi" id="ag-h" type="time" style="font-size:.79rem;padding:7px 10px">
-        <div class="tpick-slots">
-          <span class="tpick-slot" onclick="setH('ag-h','09:00')">9h00</span>
-          <span class="tpick-slot" onclick="setH('ag-h','10:00')">10h00</span>
-          <span class="tpick-slot" onclick="setH('ag-h','14:00')">14h00</span>
-          <span class="tpick-slot" onclick="setH('ag-h','17:00')">17h00</span>
-          <span class="tpick-slot" onclick="setH('ag-h','18:00')">18h00</span>
-          <span class="tpick-slot" onclick="setH('ag-h','18:30')">18h30</span>
-          <span class="tpick-slot" onclick="setH('ag-h','20:00')">20h00</span>
-          <span class="tpick-slot" onclick="setH('ag-h','20:30')">20h30</span>
-        </div>
-      </div>
-    </div>
+    <div class="ff"><label>Heure</label><input class="fi" id="ag-h" placeholder="18h30"></div>
   </div>
   <div class="ff"><label>Lieu</label><input class="fi" id="ag-l" placeholder="Salle du conseil&#x2026;"></div>
   <div class="ff"><label>Type</label>
@@ -2339,21 +2321,7 @@ textarea.fi{resize:vertical;min-height:90px;}
   <div class="ff"><label>Titre *</label><input class="fi" id="ev-ti" placeholder="March&#xe9; du dimanche, Loto, AG&#x2026;"></div>
   <div class="fr2">
     <div class="ff"><label>Date *</label><input class="fi" type="date" id="ev-d"></div>
-    <div class="ff"><label>Heure</label>
-      <div class="tpick">
-        <input class="fi" id="ev-h" type="time" style="font-size:.79rem;padding:7px 10px">
-        <div class="tpick-slots">
-          <span class="tpick-slot" onclick="setH('ev-h','09:00')">9h00</span>
-          <span class="tpick-slot" onclick="setH('ev-h','10:00')">10h00</span>
-          <span class="tpick-slot" onclick="setH('ev-h','14:00')">14h00</span>
-          <span class="tpick-slot" onclick="setH('ev-h','15:00')">15h00</span>
-          <span class="tpick-slot" onclick="setH('ev-h','17:00')">17h00</span>
-          <span class="tpick-slot" onclick="setH('ev-h','18:00')">18h00</span>
-          <span class="tpick-slot" onclick="setH('ev-h','20:00')">20h00</span>
-          <span class="tpick-slot" onclick="setH('ev-h','20:30')">20h30</span>
-        </div>
-      </div>
-    </div>
+    <div class="ff"><label>Heure</label><input class="fi" id="ev-h" placeholder="10h00"></div>
   </div>
   <div class="fr2">
     <div class="ff"><label>Lieu</label><input class="fi" id="ev-lieu" placeholder="Salle, place&#x2026;"></div>
@@ -3146,15 +3114,7 @@ function editAgCard(id){
     +'<div><label style="font-size:.64rem;font-weight:700;color:var(--i3);display:block;margin-bottom:2px;text-transform:uppercase">Date</label><input id="age-d-'+id+'" class="fi" type="date" value="'+e.date+'" style="font-size:.76rem;padding:6px 9px"></div>'
     +'</div>'
     +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">'
-    +'<div><label style="font-size:.64rem;font-weight:700;color:var(--i3);display:block;margin-bottom:2px;text-transform:uppercase">Heure</label>'
-    +'<div class="tpick"><input id="age-h-'+id+'" class="fi" type="time" value="'+(e.heure?e.heure.replace(/h(\d)$/,"h0$1").replace("h",":"):"")+'" style="font-size:.76rem;padding:6px 9px">'
-    +'<div class="tpick-slots">'
-    +'<span class="tpick-slot" onclick="setH(\'age-h-'+id+'\',\'09:00\')">9h00</span>'
-    +'<span class="tpick-slot" onclick="setH(\'age-h-'+id+'\',\'14:00\')">14h00</span>'
-    +'<span class="tpick-slot" onclick="setH(\'age-h-'+id+'\',\'18:00\')">18h00</span>'
-    +'<span class="tpick-slot" onclick="setH(\'age-h-'+id+'\',\'18:30\')">18h30</span>'
-    +'<span class="tpick-slot" onclick="setH(\'age-h-'+id+'\',\'20:00\')">20h00</span>'
-    +'</div></div></div>'
+    +'<div><label style="font-size:.64rem;font-weight:700;color:var(--i3);display:block;margin-bottom:2px;text-transform:uppercase">Heure</label><input id="age-h-'+id+'" class="fi" value="'+( e.heure||"")+'" placeholder="18h30" style="font-size:.76rem;padding:6px 9px"></div>'
     +'<div><label style="font-size:.64rem;font-weight:700;color:var(--i3);display:block;margin-bottom:2px;text-transform:uppercase">Lieu</label><input id="age-l-'+id+'" class="fi" value="'+( e.lieu||"").replace(/"/g,"&quot;")+'" placeholder="Mairie" style="font-size:.76rem;padding:6px 9px"></div>'
     +'<div><label style="font-size:.64rem;font-weight:700;color:var(--i3);display:block;margin-bottom:2px;text-transform:uppercase">Type</label>'
     +'<select id="age-ty-'+id+'" class="fi" style="font-size:.76rem;padding:6px 9px">'
@@ -3176,7 +3136,7 @@ function saveAgCard(id){
   var d={
     titre:titre.value.trim(),
     date:(document.getElementById("age-d-"+id)||{value:""}).value,
-    heure:fmtH((document.getElementById("age-h-"+id)||{value:""}).value),
+    heure:(document.getElementById("age-h-"+id)||{value:""}).value,
     lieu:(document.getElementById("age-l-"+id)||{value:""}).value,
     type:(document.getElementById("age-ty-"+id)||{value:"autre"}).value,
     notes:(document.getElementById("age-n-"+id)||{value:""}).value
@@ -3204,7 +3164,7 @@ function saveAgCard(id){
 }
 
 function svAg(){
-  var d={titre:v("ag-ti"),date:v("ag-d"),heure:fmtH(v("ag-h")),lieu:v("ag-l"),type:v("ag-ty"),notes:v("ag-n"),created_by:ME.username};
+  var d={titre:v("ag-ti"),date:v("ag-d"),heure:v("ag-h"),lieu:v("ag-l"),type:v("ag-ty"),notes:v("ag-n"),created_by:ME.username};
   if(!d.titre||!d.date){toast("Titre et date obligatoires");return;}
   apiPost("/api/agenda",d).then(function(r){if(r.ok){AG.push(r.item);cm();renderAg();renderNextMtg();toast("Réunion ajoutée");}});
 }
@@ -3846,7 +3806,7 @@ function renderEv(){
   ev.innerHTML=html||'<div class="empty"><div class="empty-ico">🎪</div><div class="empty-t">Aucun événement</div><div class="empty-s">Cliquez sur + Ajouter.</div></div>';
 }
 function svEv(){
-  var d={titre:v("ev-ti"),date:v("ev-d"),heure:fmtH(v("ev-h")),lieu:v("ev-lieu"),type:v("ev-ty"),description:v("ev-desc"),organisateur:v("ev-org")};
+  var d={titre:v("ev-ti"),date:v("ev-d"),heure:v("ev-h"),lieu:v("ev-lieu"),type:v("ev-ty"),description:v("ev-desc"),organisateur:v("ev-org")};
   if(!d.titre||!d.date){toast("Titre et date obligatoires");return;}
   apiPost("/api/evenements",d).then(function(r){if(r.ok){EVTS.push(r.item);EVTS.sort(function(a,b){return a.date>b.date?1:-1;});cm();renderEv();toast("Événement ajouté");}});
 }
@@ -3913,10 +3873,6 @@ function copyC(){var t=$("cr-gen");t.select();document.execCommand("copy");toast
 
 // ── CHAT ──────────────────────────────────────────────────────────────────────
 function toggleChat(){_chatOpen=!_chatOpen;$("chat-panel").classList.toggle("on",_chatOpen);if(_chatOpen){$("cbdg").style.display="none";renderChatMsgs(CHAT);scrollChat();}}
-// Time picker helper
-function setH(id,val){var e=document.getElementById(id);if(e)e.value=val;}
-function fmtH(v){if(!v)return "";var p=v.split(":");return p[0]+"h"+(p[1]==="00"?"00":p[1]);}
-
 function openVisio(){window.open("https://kmeet.infomaniak.com/vizilleenmouvement","_blank");}
 function switchChannel(){CHAT=[];renderChatMsgs([]);pollChat();}
 function sendMsg(){var i=$("chat-inp"),txt=i.value.trim();if(!txt)return;i.value="";apiPost("/api/chat",{channel:v("chat-ch"),auteur:ME.nom,avatar:ME.avatar,texte:txt}).then(function(d){if(d.ok){CHAT.push(d.message);renderChatMsgs(CHAT);scrollChat();}});}
