@@ -2504,9 +2504,9 @@ function openPanel(id){
     + '</div>'
     + '<div id="panel-body" style="flex:1;overflow-y:auto;"></div>';
 
-  var clone = pg.cloneNode(true);
-  clone.style.display = "block";
-  document.getElementById("panel-body").appendChild(clone);
+  pg.style.display = "block";
+  pg.classList.add("on");
+  document.getElementById("panel-body").appendChild(pg);
   panel.style.display = "flex";
 
   // Charger données
@@ -2528,7 +2528,15 @@ function openPanel(id){
 
 function closePanel(){
   var panel = document.getElementById("main-panel");
-  if(panel) panel.style.display = "none";
+  if(panel){
+    var pg = panel.querySelector(".page");
+    if(pg){
+      pg.style.display = "";
+      pg.classList.remove("on");
+      document.querySelector(".main").appendChild(pg);
+    }
+    panel.style.display = "none";
+  }
   qsa(".sbi").forEach(function(n){n.classList.remove("on");});
   var first = document.querySelector(".sbi");
   if(first) first.classList.add("on");
@@ -3080,9 +3088,8 @@ function delAg(id){if(!confirm("Supprimer cette réunion ?"))return;apiDel("/api
 var CR_COM_COL={"Bureau municipal":"#1d3d2b","Conseil municipal":"#2d5a40","Culture, Patrimoine & Jumelages":"#8B5CF6","Mobilités":"#3B82F6","Transition écologique":"#10B981","Action sociale":"#F59E0B","Concertation citoyenne":"#6366F1","Animations de proximité":"#EC4899","Enfance/Jeunesse":"#F97316","Tranquillité publique":"#EF4444","Travaux & Urbanisme":"#84CC16","Santé":"#06B6D4"};
 
 function renderCR(){
-  var ctx=document.getElementById("panel-body")||document;
-  var cl=ctx.querySelector("#cr-list"); if(!cl)return;
-  var fc=ctx.querySelector("#cr-filt-comm");
+  var cl=$("cr-list"); if(!cl)return;
+  var fc=$("cr-filt-comm");
   if(fc&&fc.options.length<=1){
     var comms=["Bureau municipal","Conseil municipal"];
     Object.keys(COMM).forEach(function(c){comms.push(c);});

@@ -1,0 +1,15 @@
+{
+  "name": "VeM — Espace Élus",
+  "mainScripts": ["server-elus.js"],
+  "files.exclude": [
+    ".git",
+    "node_modules",
+    "*.json.AVANT-VICTOIRE",
+    "*.json.PROD",
+    "*.json.VICTOIRE",
+    "backups"
+  ],
+  "editor.tabSize": 2,
+  "editor.softTabs": true,
+  "editor.wrapping": "off"
+}

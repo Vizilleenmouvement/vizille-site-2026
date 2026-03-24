@@ -1,0 +1,38 @@
+{
+  "tasks": [
+    {
+      "name": "▶ Démarrer serveur local",
+      "buildSteps": [],
+      "runSteps": [
+        {
+          "type": "shell",
+          "command": "node server-elus.js",
+          "args": [],
+          "env": {}
+        }
+      ]
+    },
+    {
+      "name": "✅ Vérifier syntaxe",
+      "buildSteps": [
+        {
+          "type": "shell",
+          "command": "node --check server-elus.js && echo '✓ Syntaxe OK'",
+          "args": []
+        }
+      ],
+      "runSteps": []
+    },
+    {
+      "name": "🚀 Git push",
+      "buildSteps": [
+        {
+          "type": "shell",
+          "command": "git add server-elus.js && git commit -m 'update' && git push",
+          "args": []
+        }
+      ],
+      "runSteps": []
+    }
+  ]
+}

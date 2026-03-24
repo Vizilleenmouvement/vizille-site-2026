@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "texte": "Nouveau : Découvrez le bilan complet de nos actions depuis 2020",
+    "lien": "bilan.html",
+    "icon": "📊",
+    "actif": true,
+    "dateDebut": "2026-02-01",
+    "dateFin": "2026-03-15"
+  },
+  {
+    "id": 2,
+    "texte": "Élections municipales les 15 et 22 mars 2026",
+    "lien": "",
+    "icon": "🗳️",
+    "actif": true,
+    "dateDebut": "2026-02-01",
+    "dateFin": "2026-03-22"
+  },
+  {
+    "id": 3,
+    "texte": "Site mis à jour : nouvelles fiches actions ajoutées",
+    "lien": "bilan.html",
+    "icon": "🆕",
+    "actif": true,
+    "dateDebut": "2026-02-04",
+    "dateFin": "2026-02-28"
+  }
+]

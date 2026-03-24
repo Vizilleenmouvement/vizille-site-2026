@@ -3,16 +3,17 @@
     "id": 10,
     "titre": "Rendre la Maison de Santé pleinement opérationnelle",
     "theme": "Santé",
-    "statut": "Programmé",
+    "statut": "En cours",
     "annee": 2027,
     "budget": 0,
-    "resume": "Accès aux soins",
+    "resume": "Test modif",
     "description": "",
     "importance": 2,
     "chiffres": [],
     "tags": [
       "Seniors"
-    ]
+    ],
+    "modified": "2026-03-23T14:27:34.755Z"
   },
   {
     "id": 34,
