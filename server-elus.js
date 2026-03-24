@@ -2489,24 +2489,34 @@ function openPanel(id){
   if(phT) title = phT.textContent;
   else { var h = pg.querySelector("h2,h3"); if(h) title = h.textContent; else title = id; }
 
+  // Construire le panneau avec son en-tête + zone de contenu
   panel.innerHTML = '<div style="background:var(--g1);color:#fff;padding:.55rem 1rem;display:flex;align-items:center;gap:8px;flex-shrink:0;font-size:.78rem;font-weight:600;font-family:var(--fd);">'
     + '<span style="flex:1">'+title+'</span>'
     + '<button onclick="closePanel()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:5px;width:24px;height:24px;cursor:pointer;font-size:.9rem;">&#x2715;</button>'
     + '</div>'
-    + '<div id="panel-body" style="flex:1;overflow-y:auto;"></div>';
-
-  var clone = pg.cloneNode(true);
-  clone.style.display = "block";
-  document.getElementById("panel-body").appendChild(clone);
+    + '<div id="panel-body" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;"></div>';
+  panel.dataset.activeId = id;
   panel.style.display = "flex";
 
-  // Charger données
+  // Copier l'en-tête de la page dans le panneau (sans les listes à IDs uniques)
+  var pb = document.getElementById("panel-body");
+  var ph = pg.querySelector(".ph");
+  if(ph){ var phc=ph.cloneNode(true); phc.style.flexShrink="0"; pb.appendChild(phc); }
+
+  // Zone de contenu SANS IDs — les render functions vont écrire dedans via les IDs originaux
+  // On déplace temporairement les conteneurs dans panel-body
+  var scr = pg.querySelector(".scr");
+  if(!scr){ scr=document.createElement("div"); scr.className="scr"; }
+  pb.appendChild(scr);
+  pg._scr = scr; // garder référence pour closePanel
+
+  // Charger données — les render functions trouvent les IDs car les éléments sont dans panel-body
   if(id==="agenda") renderAg();
   else if(id==="cr") renderCR();
   else if(id==="biblio") renderBiblio();
   else if(id==="repelus") renderRepElus();
   else if(id==="elus") renderElus();
-  else if(id==="comm") renderComm();
+  else if(id==="comm"){var cgd=document.createElement("div");cgd.className="scr";cgd.innerHTML='<div class="cg" id="cg"></div>';pb.innerHTML=pb.innerHTML;pb.appendChild(cgd);buildCG();}
   else if(id==="global") renderGlobal();
   else if(id==="signal") renderSignal();
   else if(id==="events") renderEvents();
@@ -2519,7 +2529,20 @@ function openPanel(id){
 
 function closePanel(){
   var panel = document.getElementById("main-panel");
-  if(panel) panel.style.display = "none";
+  if(panel){
+    // Remettre le scr dans sa page d'origine
+    var pb=document.getElementById("panel-body");
+    if(pb){
+      var activeId=panel.dataset.activeId;
+      var pg=activeId?document.getElementById("p-"+activeId):null;
+      if(pg&&pg._scr){pg.appendChild(pg._scr);delete pg._scr;}
+    }
+    panel.style.display = "none";
+    panel.dataset.activeId="";
+  }
+  // Remettre today visible
+  var _p=document.getElementById("p-today");
+  if(_p){qsa(".page").forEach(function(p){p.classList.remove("on");});_p.classList.add("on");}
   qsa(".sbi").forEach(function(n){n.classList.remove("on");});
   var first = document.querySelector(".sbi");
   if(first) first.classList.add("on");
