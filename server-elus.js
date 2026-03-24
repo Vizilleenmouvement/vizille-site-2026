@@ -1742,65 +1742,31 @@ textarea.fi{resize:vertical;min-height:90px;}
         </div>
       </div>
 
-      <!-- WIDGET BAROMÈTRE MANDAT -->
+      <!-- WIDGET TCHAT PLEIN (remplace baromètre) -->
       <div class="wg" style="background:#fff;border-radius:18px;border:1px solid var(--w2);box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;display:flex;flex-direction:column">
         <div class="wg-h" style="padding:.85rem 1.1rem .65rem;border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:8px">
-          <div style="width:28px;height:28px;border-radius:8px;background:#e0e7ff;display:flex;align-items:center;justify-content:center;font-size:.9rem">&#x1F4CA;</div>
-          <div style="font-size:.78rem;font-weight:700;font-family:var(--fd);color:var(--ink);flex:1">Baromètre du mandat</div>
-          <button class="btn btn-g btn-sm" onclick="gp('global',qsa('.sbi')[9])" style="font-size:.62rem">Projets →</button>
+          <div style="width:28px;height:28px;border-radius:8px;background:var(--g2);display:flex;align-items:center;justify-content:center;font-size:.9rem">&#x1F4AC;</div>
+          <div style="font-size:.78rem;font-weight:700;font-family:var(--fd);color:var(--ink);flex:1">Tchat &#x2014; canal</div>
+          <select id="wg-chat-ch2" onchange="wgSwitchCh2()" style="font-size:.65rem;padding:2px 6px;border:1px solid var(--w2);border-radius:6px;background:#fff;color:var(--i2);font-family:var(--fn)">
+            <option value="general">&#x1F4AC; G&#xe9;n&#xe9;ral</option>
+            <option value="bureau">&#x1F3DB; Bureau</option>
+            <option value="culture">&#x1F3AD; Culture</option>
+            <option value="mobilites">&#x1F6B2; Mobilit&#xe9;s</option>
+            <option value="ecologie">&#x1F33F; &#xc9;cologie</option>
+            <option value="social">&#x1F91D; Social</option>
+            <option value="enfance">&#x1F466; Enfance</option>
+            <option value="tranquillite">&#x1F6E1; Tranquillit&#xe9;</option>
+            <option value="travaux">&#x1F3D7; Travaux</option>
+          </select>
         </div>
-        <div style="padding:.85rem 1.1rem;display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <div style="text-align:center;background:var(--w);border-radius:12px;padding:.75rem .5rem">
-            <div id="k-tot" style="font-size:2rem;font-weight:800;color:var(--g2);line-height:1;font-family:var(--fd)">—</div>
-            <div style="font-size:.6rem;color:var(--i3);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Projets</div>
-          </div>
-          <div style="text-align:center;background:var(--w);border-radius:12px;padding:.75rem .5rem">
-            <div id="k-pr" style="font-size:2rem;font-weight:800;color:var(--red);line-height:1;font-family:var(--fd)">—</div>
-            <div style="font-size:.6rem;color:var(--i3);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Prioritaires</div>
-          </div>
-          <div style="text-align:center;background:var(--w);border-radius:12px;padding:.75rem .5rem">
-            <div id="k-re" style="font-size:2rem;font-weight:800;color:var(--g4);line-height:1;font-family:var(--fd)">—</div>
-            <div style="font-size:.6rem;color:var(--i3);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Réalisés</div>
-          </div>
-          <div style="text-align:center;background:var(--w);border-radius:12px;padding:.75rem .5rem">
-            <div id="k-26" style="font-size:2rem;font-weight:800;color:var(--blue);line-height:1;font-family:var(--fd)">—</div>
-            <div style="font-size:.6rem;color:var(--i3);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">En 2026</div>
-          </div>
-        </div>
-        <div style="padding:.6rem 1.1rem;border-top:1px solid var(--w2)">
-          <div id="wg-mandat-bar" style="height:6px;background:var(--w2);border-radius:3px;overflow:hidden">
-            <div id="wg-mandat-fill" style="height:6px;background:linear-gradient(90deg,var(--g4),var(--g6));border-radius:3px;width:0%;transition:width .6s ease"></div>
-          </div>
-          <div style="display:flex;justify-content:space-between;font-size:.6rem;color:var(--i4);margin-top:3px">
-            <span>Avancement réalisés</span><span id="wg-mandat-pct">0%</span>
-          </div>
+        <div id="wg-chat-msgs2" style="flex:1;overflow-y:auto;padding:.65rem .9rem;display:flex;flex-direction:column;gap:6px;background:var(--w);min-height:140px;max-height:220px"></div>
+        <div style="padding:.6rem .9rem;border-top:1px solid var(--w2);display:flex;gap:7px;background:#fff">
+          <input id="wg-chat-inp2" class="fi" placeholder="Message&#x2026;" style="flex:1;font-size:.74rem;padding:6px 9px" onkeydown="if(event.key===&#39;Enter&#39;)wgSendMsg2()">
+          <button class="btn btn-p btn-sm" onclick="wgSendMsg2()" style="flex-shrink:0;background:var(--g2);border-color:var(--g2)">&#x2192;</button>
         </div>
       </div>
     </div>
 
-    <!-- KPI MANDAT : barre de contexte -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:0">
-      <div class="card" style="padding:.75rem 1rem;display:flex;align-items:center;gap:10px;border-left:3px solid var(--g4)">
-        <div style="font-size:1.3rem">&#x1F3DB;</div>
-        <div><div style="font-size:1.05rem;font-weight:800;color:var(--g2);font-family:var(--fd)" id="kpi-conseil">0/4</div>
-        <div style="font-size:.62rem;color:var(--i3);font-weight:600;text-transform:uppercase;letter-spacing:.04em">Sessions conseil</div></div>
-      </div>
-      <div class="card" style="padding:.75rem 1rem;display:flex;align-items:center;gap:10px;border-left:3px solid var(--blue)">
-        <div style="font-size:1.3rem">&#x1F4B6;</div>
-        <div><div style="font-size:1.05rem;font-weight:800;color:var(--blue);font-family:var(--fd)" id="kpi-budget">87%</div>
-        <div style="font-size:.62rem;color:var(--i3);font-weight:600;text-transform:uppercase;letter-spacing:.04em">Budget 2026 allou&#xe9;</div></div>
-      </div>
-      <div class="card" style="padding:.75rem 1rem;display:flex;align-items:center;gap:10px;border-left:3px solid var(--amber)">
-        <div style="font-size:1.3rem">&#x1F5C3;</div>
-        <div><div style="font-size:1.05rem;font-weight:800;color:var(--amber);font-family:var(--fd)" id="kpi-electeurs">4 856</div>
-        <div style="font-size:.62rem;color:var(--i3);font-weight:600;text-transform:uppercase;letter-spacing:.04em">&#xc9;lecteurs inscrits</div></div>
-      </div>
-      <div class="card" style="padding:.75rem 1rem;display:flex;align-items:center;gap:10px;border-left:3px solid var(--red)">
-        <div style="font-size:1.3rem">&#x1F6A6;</div>
-        <div><div id="kpi-sig-open" style="font-size:1.05rem;font-weight:800;font-family:var(--fd);color:var(--i2)">0</div>
-        <div style="font-size:.62rem;color:var(--i3);font-weight:600;text-transform:uppercase;letter-spacing:.04em">Signalements ouverts</div></div>
-      </div>
-    </div>
 
     </div><!-- /today-scr -->
   </div>
@@ -2861,6 +2827,27 @@ function wgSendMsg() {
       }
     });
 }
+function wgSendMsg2(){
+  var inp=$('wg-chat-inp2');
+  if(!inp||!inp.value.trim())return;
+  var ch=($('wg-chat-ch2')||{value:'general'}).value;
+  fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Basic '+btoa(ME.username+':'+ME._pwd)},body:JSON.stringify({channel:ch,auteur:ME.nom,avatar:ME.avatar,texte:inp.value.trim()})})
+  .then(function(r){return r.json();}).then(function(){inp.value='';wgLoadChat2();});
+}
+function wgLoadChat2(){
+  var ch=($('wg-chat-ch2')||{value:'general'}).value;
+  fetch('/api/chat?channel='+ch,{headers:{'Authorization':'Basic '+btoa(ME.username+':'+ME._pwd)}})
+  .then(function(r){return r.json();}).then(function(d){
+    var box=$('wg-chat-msgs2');if(!box)return;
+    var msgs=d.messages||[];
+    box.innerHTML=msgs.length?msgs.slice(-15).map(function(m){
+      var isMe=m.auteur===ME.nom;
+      return '<div class="msg-w'+(isMe?' me':'')+'"><div class="msg-meta">'+m.auteur+' · '+m.ts+'</div><div class="msg-bub">'+m.texte+'</div></div>';
+    }).join(''):'<div style="font-size:.72rem;color:var(--i4);text-align:center;padding:1rem">Aucun message</div>';
+    box.scrollTop=box.scrollHeight;
+  });
+}
+function wgSwitchCh2(){wgLoadChat2();}
 
 function initWidgetChat() {
   wgSwitchCh();
