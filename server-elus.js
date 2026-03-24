@@ -2433,12 +2433,14 @@ qsa(".ov").forEach(function(o){o.addEventListener("click",function(e){if(e.targe
 
 // ── NAVIGATION ───────────────────────────────────────────────────────────────
 function gp(id,ni){
+  // Fermer le panneau s'il est ouvert
+  var panel=document.getElementById("main-panel");
+  if(panel) panel.style.display="none";
   qsa(".page").forEach(function(p){p.classList.remove("on");});
   qsa(".sbi").forEach(function(n){n.classList.remove("on");});
   var pg=$("p-"+id);
   if(pg){pg.classList.add("on");pg.scrollTop=0;}
   if(ni&&ni.classList)ni.classList.add("on");
-  // Remonter le scroll de .main à 0 à chaque navigation
   var mainEl=document.querySelector(".main");
   if(mainEl)mainEl.scrollTop=0;
   if(window.innerWidth<=900) closeMobileMenu();
