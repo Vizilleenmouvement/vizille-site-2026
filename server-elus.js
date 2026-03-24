@@ -2465,54 +2465,62 @@ function gp(id,ni){
   }
 }
 // ── PANNEAU UNIQUE — s'ouvre par-dessus le dashboard ─────────────────────────
+var PANEL_HTML={
+  'agenda':{title:'📅 Agenda des réunions',body:'<div id="ag-list" style="padding:1.2rem 1.4rem"></div>'},
+  'cr':{title:'📝 Comptes rendus',body:'<div style="padding:.6rem 1rem;background:var(--w);border-bottom:1px solid var(--w2);display:flex;gap:8px;flex-wrap:wrap"><select class="fsel" id="cr-filt-comm" onchange="renderCR()"><option value="">Toutes commissions</option></select><button class="btn btn-p btn-sm" onclick="om(\'cr\')">+ Nouveau CR</button></div><div id="cr-list" style="padding:1rem 1.4rem"></div>'},
+  'biblio':{title:'📚 Bibliothèque',body:'<div style="padding:.6rem 1rem;background:var(--w);border-bottom:1px solid var(--w2);display:flex;gap:8px;flex-wrap:wrap"><input class="fsrch" id="bib-q" placeholder="🔍 Rechercher…" oninput="renderBiblio()" style="flex:2;min-width:120px"><select class="fsel" id="bib-type" onchange="renderBiblio()"><option value="">Tous types</option><option>Délibération</option><option>Arrêté</option><option>Rapport</option><option>Compte-rendu</option><option>Budget</option><option>Plan</option><option>Convention</option><option>Courrier</option><option>Autre</option></select><select class="fsel" id="bib-comm" onchange="renderBiblio()"><option value="">Toutes commissions</option></select><span class="fcnt" id="bib-cnt"></span><button class="btn btn-p btn-sm" onclick="om(\'biblio\')">+ Ajouter</button></div><div id="bib-list" style="padding:1rem 1.4rem"></div>'},
+  'repelus':{title:'📂 Mon répertoire',body:'<div id="rep-elus-grid" style="padding:1rem 1.4rem"></div><div id="rep-elus-files" style="padding:0 1.4rem 1.4rem"></div>'},
+  'elus':{title:'🧑‍💼 L\'équipe',body:'<div id="elus-list" class="elus-g" style="padding:1.2rem 1.4rem"></div>'},
+  'comm':{title:'👥 Par commission',body:'<div style="padding:.72rem 1.4rem;background:#fff;border-bottom:1px solid var(--w2);display:flex;align-items:center;justify-content:space-between"><span style="font-size:.84rem;font-weight:700">Cliquez sur une commission</span><button class="btn btn-s btn-sm" onclick="openPanel(\'global\')">📊 Vue globale</button></div><div class="scr"><div class="cg" id="cg"></div></div>'},
+  'global':{title:'📊 Tous les projets',body:'<div class="fb"><select class="fsel" id="fC" onchange="fG()"><option value="">Toutes commissions</option></select><select class="fsel" id="fT" onchange="fG()"><option value="">Tous thèmes</option></select><select class="fsel" id="fS" onchange="fG()"><option value="">Tous statuts</option></select><select class="fsel" id="fA" onchange="fG()"><option value="">Toutes années</option></select><input class="fsrch" id="fQ" placeholder="🔍 Rechercher…" oninput="fG()"><span class="fcnt" id="fCnt"></span></div><div class="tbw" style="border-radius:0;border-left:none;border-right:none;border-bottom:none"><table><thead><tr><th>Thème</th><th>Projet</th><th>Statut</th><th>Année</th><th>Imp.</th><th>Modifier</th></tr></thead><tbody id="gtb"></tbody></table></div>'},
+  'signal':{title:'🔴 Signalements',body:'<div class="fb"><select class="fsel" id="sf-type" onchange="fSig()"><option value="">Tous types</option><option value="Voirie">Voirie</option><option value="Eclairage">Éclairage</option><option value="Proprete">Propreté</option><option value="Espace vert">Espace vert</option><option value="Securite">Sécurité</option><option value="Batiment">Bâtiment</option><option value="Autre">Autre</option></select><select class="fsel" id="sf-st" onchange="fSig()"><option value="">Tous statuts</option><option>Nouveau</option><option>En cours</option><option>Résolu</option></select><input class="fsrch" id="sf-q" placeholder="🔍 Rechercher…" oninput="fSig()"><span class="fcnt" id="sf-cnt"></span><button class="btn btn-p btn-sm" onclick="om(\'signal\')" style="background:#dc2626;border-color:#dc2626">+ Signaler</button></div><div id="sig-list" style="padding:1rem 1.4rem"></div>'},
+  'events':{title:'🎪 Événements',body:'<div style="padding:.72rem 1.4rem;display:flex;justify-content:flex-end"><button class="btn btn-p btn-sm" onclick="om(\'evenement\')">+ Ajouter</button></div><div id="ev-list" style="padding:0 1.4rem 1.4rem"></div>'},
+  'guide':{title:'📖 Guide de l\'élu',body:'<div class="scr"><div id="guides-list" style="margin-bottom:1.5rem"></div><div style="font-size:.7rem;font-weight:700;color:var(--i3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.75rem">🔗 Liens utiles</div><div id="ress-list" class="ress-g"></div></div>'},
+  'ress':{title:'🔗 Ressources',body:'<div class="scr"><div id="ress-list-2" class="ress-g"></div></div>'},
+  'hist':{title:'🔔 Historique',body:'<div class="scr"><div id="nt-list"></div></div>'},
+  'comms':{title:'✍️ Rédiger un doc',body:'<div class="scr" id="comms-body"></div>'},
+  'creer':{title:'➕ Nouveau projet',body:'<div class="scr" id="creer-body"></div>'},
+};
+
 function openPanel(id){
   // Activer le menu
   qsa(".sbi").forEach(function(n){n.classList.remove("on");});
-  var menuEl = document.querySelector("[data-panel='" + id + "']");
+  var menuEl=document.querySelector("[data-panel='"+id+"']");
   if(menuEl) menuEl.classList.add("on");
 
-  var pg = document.getElementById("p-"+id);
-  if(!pg) return;
-
-  // Créer ou réutiliser le panneau
-  var panel = document.getElementById("main-panel");
+  // Créer ou réutiliser le panneau fixe
+  var panel=document.getElementById("main-panel");
   if(!panel){
-    panel = document.createElement("div");
-    panel.id = "main-panel";
-    panel.style.cssText = "position:fixed;left:var(--sw);right:0;top:var(--th);bottom:0;z-index:100;display:flex;flex-direction:column;overflow:hidden;background:var(--w);";
+    panel=document.createElement("div");
+    panel.id="main-panel";
+    panel.style.cssText="position:fixed;left:var(--sw);right:0;top:var(--th);bottom:0;z-index:100;display:flex;flex-direction:column;overflow:hidden;background:var(--w);";
     document.body.appendChild(panel);
   }
 
-  // Barre titre avec ✕
-  var title = "";
-  var phT = pg.querySelector(".ph-t");
-  if(phT) title = phT.textContent;
-  else { var h = pg.querySelector("h2,h3"); if(h) title = h.textContent; else title = id; }
+  // Titre et contenu depuis le mapping (pas de cloneNode — pas de doublons d'IDs)
+  var cfg=PANEL_HTML[id]||{title:id,body:""};
+  panel.innerHTML=
+    '<div style="background:var(--g1);color:#fff;padding:.55rem 1rem;display:flex;align-items:center;gap:8px;flex-shrink:0;font-size:.78rem;font-weight:600;font-family:var(--fd);">'
+    +'<span style="flex:1">'+cfg.title+'</span>'
+    +'<button onclick="closePanel()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:5px;width:24px;height:24px;cursor:pointer;font-size:.9rem;">&#x2715;</button>'
+    +'</div>'
+    +'<div id="panel-body" style="flex:1;overflow-y:auto;">'+cfg.body+'</div>';
 
-  panel.innerHTML = '<div style="background:var(--g1);color:#fff;padding:.55rem 1rem;display:flex;align-items:center;gap:8px;flex-shrink:0;font-size:.78rem;font-weight:600;font-family:var(--fd);">'
-    + '<span style="flex:1">'+title+'</span>'
-    + '<button onclick="closePanel()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:5px;width:24px;height:24px;cursor:pointer;font-size:.9rem;">&#x2715;</button>'
-    + '</div>'
-    + '<div id="panel-body" style="flex:1;overflow-y:auto;"></div>';
+  panel.style.display="flex";
 
-  var clone = pg.cloneNode(true);
-  clone.style.display = "block";
-  document.getElementById("panel-body").appendChild(clone);
-  panel.style.display = "flex";
-
-  // Charger données
+  // Charger les données dans les nouveaux éléments (IDs uniques, pas de doublons)
   if(id==="agenda") renderAg();
   else if(id==="cr") renderCR();
   else if(id==="biblio") renderBiblio();
   else if(id==="repelus") renderRepElus();
   else if(id==="elus") renderElus();
-  else if(id==="comm") renderComm();
-  else if(id==="global") renderGlobal();
-  else if(id==="signal") renderSignal();
-  else if(id==="events") renderEvents();
+  else if(id==="comm"){ buildCG(); }
+  else if(id==="global"){ buildFilters(); fG(); }
+  else if(id==="signal"){ fSig(); updSigBadge(); }
+  else if(id==="events") renderEv();
   else if(id==="guide") renderGuide();
   else if(id==="ress") renderRess();
-  else if(id==="hist") renderHist();
+  else if(id==="hist") renderNt();
   else if(id==="comms") renderComms();
   else if(id==="creer") renderCreer();
 }
