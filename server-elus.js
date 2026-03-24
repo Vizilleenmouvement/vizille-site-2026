@@ -1742,19 +1742,6 @@ textarea.fi{resize:vertical;min-height:90px;}
         </div>
       </div>
 
-      <!-- WIDGET NOUVEAUX DOCS PUBLICS -->
-      <div class="wg" style="background:#fff;border-radius:18px;border:1px solid var(--w2);box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;display:flex;flex-direction:column">
-        <div class="wg-h" style="padding:.85rem 1.1rem .65rem;border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:8px">
-          <div style="width:28px;height:28px;border-radius:8px;background:#ede9fe;display:flex;align-items:center;justify-content:center;font-size:.9rem">&#x1F4DA;</div>
-          <div style="font-size:.78rem;font-weight:700;font-family:var(--fd);color:var(--ink);flex:1">Nouveaux documents</div>
-          <span id="wg-docs-badge" style="display:none;background:var(--red);color:#fff;font-size:.6rem;font-weight:700;padding:1px 6px;border-radius:8px">NEW</span>
-          <button class="btn btn-g btn-sm" onclick="openPanel('biblio')" style="font-size:.62rem">Voir →</button>
-        </div>
-        <div style="padding:.7rem 1rem;flex:1;overflow-y:auto;max-height:200px" id="wg-docs-list">
-          <div style="font-size:.73rem;color:var(--i4);text-align:center;padding:.75rem 0">Aucun document public récent</div>
-        </div>
-      </div>
-
       <!-- WIDGET TCHAT PLEIN (remplace baromètre) -->
       <div class="wg" style="background:#fff;border-radius:18px;border:1px solid var(--w2);box-shadow:0 2px 12px rgba(0,0,0,.07);overflow:hidden;display:flex;flex-direction:column">
         <div class="wg-h" style="padding:.85rem 1.1rem .65rem;border-bottom:1px solid var(--w2);display:flex;align-items:center;gap:8px">
@@ -2425,12 +2412,6 @@ var _auth=""; // Sera mis à jour avec les credentials réels
 
 // ── UTILITAIRES ──────────────────────────────────────────────────────────────
 function $(i){return document.getElementById(i);}
-// Cherche un élément dans le panneau actif en priorité, sinon DOM global
-function pEl(i){
-  var pb=document.getElementById("panel-body");
-  if(pb){var e=pb.querySelector("[id=\""+i+"\"]");if(e)return e;}
-  return document.getElementById(i);
-}
 function qsa(s){return document.querySelectorAll(s);}
 function v(i){var e=$(i);return e?e.value:"";}
 function el(i,val){var e=$(i);if(e)e.textContent=val;}
@@ -2545,8 +2526,8 @@ function closePanel(){
 }
 
 
-function goComm(){openPanel("comm");}
-function goGlobal(){openPanel("global");}
+function goComm(){gp("comm",qsa(".sbi")[9]);}
+function goGlobal(){gp("global",qsa(".sbi")[10]);}
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 function openProfile(){
@@ -2908,38 +2889,6 @@ function wgSendMsg() {
       }
     });
 }
-function renderWidgetDocs(){
-  var list=document.getElementById("wg-docs-list");
-  var badge=document.getElementById("wg-docs-badge");
-  if(!list)return;
-  // Docs publics triés par date de création (plus récents d'abord)
-  var pub=BIBLIO.filter(function(b){return b.visibilite==="public";})
-    .slice(0,5);
-  if(!pub.length){
-    list.innerHTML='<div style="font-size:.73rem;color:var(--i4);text-align:center;padding:.75rem 0">Aucun document public</div>';
-    if(badge)badge.style.display="none";
-    return;
-  }
-  // Badge si doc de moins de 7 jours
-  var now7=new Date();now7.setDate(now7.getDate()-7);
-  var hasNew=pub.some(function(b){return b.created&&new Date(b.created)>now7;});
-  if(badge)badge.style.display=hasNew?"inline":"none";
-
-  var DOC_ICO={Délibération:"🏛",Arrêté:"📜",Rapport:"📊",Budget:"💶","Compte-rendu":"📝",Plan:"🗺",Convention:"🤝",Courrier:"✉️",Autre:"📄"};
-  list.innerHTML=pub.map(function(b){
-    var ico=DOC_ICO[b.type]||"📄";
-    var isNew=b.created&&new Date(b.created)>now7;
-    return '<div style="display:flex;align-items:flex-start;gap:8px;padding:.45rem 0;border-bottom:1px solid var(--w2);cursor:pointer" onclick="openPanel(\'biblio\')">' 
-      +'<div style="font-size:1.1rem;flex-shrink:0;margin-top:1px">'+ico+'</div>'
-      +'<div style="flex:1;min-width:0">'
-      +'<div style="font-size:.77rem;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+b.titre+'</div>'
-      +'<div style="font-size:.63rem;color:var(--i4);">'+( b.commission||b.type||"")+' · '+( b.date_doc||b.created||"")+'</div>'
-      +'</div>'
-      +(isNew?'<span style="background:#dcfce7;color:#166534;font-size:.56rem;font-weight:700;padding:1px 5px;border-radius:5px;flex-shrink:0;align-self:flex-start;margin-top:2px">NOUVEAU</span>':"")
-      +'</div>';
-  }).join("");
-}
-
 function wgSendMsg2(){
   var inp=$('wg-chat-inp2');
   if(!inp||!inp.value.trim())return;
@@ -3093,7 +3042,7 @@ function buildRess(){
 var ATMAP={bureau:"Bureau municipal",commission:"Commission",conseil:"Conseil municipal",autre:"Autre"};
 var ATCLS={bureau:"at-b",commission:"at-c",conseil:"at-k",autre:"at-a"};
 function renderAg(){
-  var al=pEl("ag-list"); if(!al)return;
+  var al=$("ag-list"); if(!al)return;
   var now=new Date().toISOString().slice(0,10);
   var sorted=AG.slice().sort(function(a,b){return a.date>b.date?1:-1;});
   al.innerHTML=sorted.map(function(e){
@@ -3122,8 +3071,8 @@ function delAg(id){if(!confirm("Supprimer cette réunion ?"))return;apiDel("/api
 var CR_COM_COL={"Bureau municipal":"#1d3d2b","Conseil municipal":"#2d5a40","Culture, Patrimoine & Jumelages":"#8B5CF6","Mobilités":"#3B82F6","Transition écologique":"#10B981","Action sociale":"#F59E0B","Concertation citoyenne":"#6366F1","Animations de proximité":"#EC4899","Enfance/Jeunesse":"#F97316","Tranquillité publique":"#EF4444","Travaux & Urbanisme":"#84CC16","Santé":"#06B6D4"};
 
 function renderCR(){
-  var cl=pEl("cr-list"); if(!cl)return;
-  var fc=pEl("cr-filt-comm");
+  var cl=$("cr-list"); if(!cl)return;
+  var fc=$("cr-filt-comm");
   if(fc&&fc.options.length<=1){
     var comms=["Bureau municipal","Conseil municipal"];
     Object.keys(COMM).forEach(function(c){comms.push(c);});
@@ -3178,114 +3127,39 @@ function delCR(){
 var BIB_ICONS={"Délibération":"⚖️","Arrêté":"🔏","Rapport":"📊","Compte-rendu":"📝","Budget":"💰","Plan":"🗺","Convention":"🤝","Courrier":"✉️","Autre":"📄"};
 
 function renderBiblio(){
-  // Mode cartes par commission/domaine
-  var bl=document.getElementById("bib-list"); if(!bl)return;
-  var q=(v("bib-q")||"").toLowerCase();
-  var ftype=v("bib-type")||"";
-  var fcomm=v("bib-comm")||"";
-
-  // Peupler le filtre commission
-  var bc=document.getElementById("bib-comm");
-  if(bc&&bc.children.length<=1){
-    var comms={};BIBLIO.forEach(function(b){if(b.commission)comms[b.commission]=1;});
-    Object.keys(comms).sort().forEach(function(c){var o=document.createElement("option");o.value=c;o.textContent=c;bc.appendChild(o);});
+  var q=v("bib-q").toLowerCase(), type=v("bib-type"), comm=v("bib-comm");
+  // Peupler le select commission
+  var bc=$("bib-comm");
+  if(bc&&bc.options.length<=1){
+    ["Bureau municipal","Conseil municipal"].concat(Object.keys(COMM)).forEach(function(c){
+      var o=document.createElement("option");o.value=c;o.textContent=c;bc.appendChild(o);
+    });
   }
-
-  // Filtrer
-  var visible=BIBLIO.filter(function(b){
-    return(!q||(b.titre||"").toLowerCase().indexOf(q)>=0||(b.description||"").toLowerCase().indexOf(q)>=0||(b.tags||"").toLowerCase().indexOf(q)>=0)
-      &&(!ftype||b.type===ftype)&&(!fcomm||b.commission===fcomm);
+  var r=BIBLIO.filter(function(b){
+    return (!q||(b.titre||"").toLowerCase().indexOf(q)>=0||(b.description||"").toLowerCase().indexOf(q)>=0||(b.tags||"").toLowerCase().indexOf(q)>=0)
+      &&(!type||b.type===type)&&(!comm||b.commission===comm);
   });
-
-  var cnt=document.getElementById("bib-cnt");
-  if(cnt)cnt.textContent=visible.length+" document(s)";
-
-  // Si filtre actif → liste directe
-  if(q||ftype||fcomm){
-    bl.innerHTML=visible.length?visible.map(function(b){return bibCard(b);}).join("")
-      :'<div class="empty"><div class="empty-ico">📭</div><div class="empty-t">Aucun document</div></div>';
-    return;
-  }
-
-  // Sinon → cartes par domaine (commission)
-  var byDomain={};
-  BIBLIO.forEach(function(b){
-    var dom=b.commission||"Général";
-    if(!byDomain[dom])byDomain[dom]=[];
-    byDomain[dom].push(b);
-  });
-
-  if(!Object.keys(byDomain).length){
-    bl.innerHTML='<div class="empty"><div class="empty-ico">📚</div><div class="empty-t">Bibliothèque vide</div><div class="empty-s">Cliquez sur + Ajouter pour déposer un document.</div></div>';
-    return;
-  }
-
-  var COMM_COLORS={"Culture, Patrimoine & Jumelages":"#8B5CF6","Mobilités":"#3B82F6","Transition écologique":"#10B981","Action sociale":"#F59E0B","Concertation citoyenne":"#6366F1","Animations de proximité":"#EC4899","Économie":"#14B8A6","Métropole":"#6B7280","Enfance/Jeunesse":"#F97316","Tranquillité publique":"#EF4444","Travaux & Urbanisme":"#84CC16","Santé":"#06B6D4","Général":"#2d5a40"};
-
-  var html='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;padding:1rem 0">';
-  Object.keys(byDomain).sort().forEach(function(dom){
-    var docs=byDomain[dom];
-    var col=COMM_COLORS[dom]||"#2d5a40";
-    var nb=docs.length;
-    var recent=docs.slice(0,2).map(function(d){return d.titre;}).join(", ");
-    html+='<div onclick="openBiblioCommission(\"'+dom.replace(/"/g,"&quot;")+'\")" style="background:#fff;border-radius:16px;border:1px solid var(--w2);overflow:hidden;cursor:pointer;transition:transform .18s,box-shadow .18s;box-shadow:0 2px 8px rgba(0,0,0,.07)" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.12)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 2px 8px rgba(0,0,0,.07)'">';
-    html+='<div style="height:56px;background:'+col+'20;border-bottom:2px solid '+col+'40;padding:.65rem 1rem;display:flex;align-items:center;gap:10px">';
-    html+='<div style="width:36px;height:36px;border-radius:9px;background:'+col+';display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">📁</div>';
-    html+='<div style="font-size:.82rem;font-weight:700;font-family:var(--fd);color:var(--ink);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+dom+'</div></div>';
-    html+='<div style="padding:.75rem 1rem">';
-    html+='<div style="font-size:1.6rem;font-weight:800;color:'+col+';font-family:var(--fd);line-height:1">'+nb+'</div>';
-    html+='<div style="font-size:.63rem;color:var(--i3);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-top:2px">document'+( nb>1?"s":"")+'</div>';
-    if(recent){html+='<div style="font-size:.67rem;color:var(--i4);margin-top:.5rem;line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">'+recent+(nb>2?" …":"")+'</div>';}
-    html+='</div></div>';
-  });
-  html+='</div>';
-  bl.innerHTML=html;
-}
-
-function openBiblioCommission(dom){
-  var docs=BIBLIO.filter(function(b){return(b.commission||"Général")===dom;});
-  var col={"Culture, Patrimoine & Jumelages":"#8B5CF6","Mobilités":"#3B82F6","Transition écologique":"#10B981","Action sociale":"#F59E0B","Concertation citoyenne":"#6366F1","Animations de proximité":"#EC4899","Économie":"#14B8A6","Métropole":"#6B7280","Enfance/Jeunesse":"#F97316","Tranquillité publique":"#EF4444","Travaux & Urbanisme":"#84CC16","Santé":"#06B6D4","Général":"#2d5a40"}[dom]||"#2d5a40";
-
-  var html='<div style="background:'+col+'15;border-bottom:3px solid '+col+';padding:.85rem 1.4rem;display:flex;align-items:center;gap:10px">'
-    +'<div style="font-size:1.2rem">📁</div>'
-    +'<div style="font-size:1rem;font-weight:800;font-family:var(--fd);color:var(--ink);flex:1">'+dom+'</div>'
-    +'<span style="font-size:.75rem;font-weight:700;color:'+col+'">'+docs.length+' doc'+( docs.length>1?"s":"")+'</span>'
-    +'<button onclick="renderBiblio()" style="margin-left:8px;background:rgba(0,0,0,.07);border:none;border-radius:7px;padding:5px 10px;font-size:.72rem;cursor:pointer;color:var(--i2)">&#x2190; Domaines</button>'
-    +'</div>';
-
-  html+='<div style="padding:1rem 1.4rem">';
-  html+=docs.length?docs.map(function(b){return bibCard(b);}).join("")
-    :'<div class="empty"><div class="empty-ico">📭</div><div class="empty-t">Aucun document dans ce domaine</div></div>';
-  html+='</div>';
-
-  var pb=document.getElementById("panel-body");
-  if(pb){
-    pb.innerHTML=html;
-    var panelBar=document.querySelector("#main-panel div");
-    if(panelBar){var sp=panelBar.querySelector("span");if(sp)sp.textContent="Bibliothèque — "+dom;}
-  }
-}
-
-function bibCard(b){
-  var DOC_ICO={Délibération:"🏛",Arrêté:"📜",Rapport:"📊",Budget:"💶","Compte-rendu":"📝",Plan:"🗺",Convention:"🤝",Courrier:"✉️",Autre:"📄"};
-  var ico=DOC_ICO[b.type]||"📄";
-  var pub=b.visibilite==="public";
-  return '<div class="bib-card">'
-    +'<div class="bib-ico" style="background:var(--g8)">'+ico+'</div>'
-    +'<div style="flex:1">'
-    +'<div class="bib-t">'+b.titre+'</div>'
-    +'<div class="bib-m">'
-    +(b.type?'<span class="bib-tag type">'+b.type+'</span>':"")
-    +(b.commission?'<span class="bib-tag comm">'+b.commission+'</span>':"")
-    +(b.date_doc?'<span class="bib-tag">'+b.date_doc+'</span>':"")
-    +(pub?'<span class="bib-tag" style="background:#dcfce7;color:#166534">Public</span>':'<span class="bib-tag" style="background:#fef3c7;color:#a16207">Privé</span>')
-    +'</div>'
-    +(b.description?'<div style="font-size:.7rem;color:var(--i3);margin-top:4px;line-height:1.4">'+b.description+'</div>':"")
-    +'<div style="font-size:.63rem;color:var(--i4);margin-top:4px">'+( b.auteur_nom||"")+" · "+(b.created||"")+'</div>'
-    +(b.url?'<a href="'+b.url+'" target="_blank" class="btn btn-g btn-sm" style="margin-top:6px">📎 Ouvrir</a>':"")
-    +'</div>'
-    +'<button class="btn btn-d btn-sm" style="flex-shrink:0;align-self:flex-start" onclick="delBib('+b.id+')">×</button>'
-    +'</div>';
+  el("bib-cnt",r.length+" document(s)");
+  el("sb-bib",BIBLIO.length);
+  var bl=$("bib-list"); if(!bl)return;
+  bl.innerHTML=r.length?r.map(function(b){
+    var ico=BIB_ICONS[b.type]||"📄";
+    return '<div class="bib-card">'
+      +'<div class="bib-ico" style="background:var(--g8);border:1px solid var(--g7)">'+ico+'</div>'
+      +'<div style="flex:1">'
+      +'<a href="'+b.url+'" target="_blank" style="font-size:.84rem;font-weight:700;font-family:var(--fd);color:var(--g2);text-decoration:none">'+b.titre+'</a>'
+      +'<div class="bib-m">'
+      +(b.visibilite==="prive"?'<span class="bib-tag" style="background:#fef3c7;color:#92400e">&#x1F512; Privé</span>':"")
+      +(b.type?'<span class="bib-tag type">'+b.type+'</span>':"")
+      +(b.commission?'<span class="bib-tag comm">'+b.commission+'</span>':"")
+      +(b.date_doc?'<span class="bib-tag" style="font-family:var(--fm)">'+b.date_doc+'</span>':"")
+      +(b.tags?b.tags.split(",").map(function(t){return '<span class="bib-tag">'+t.trim()+'</span>';}).join(""):"")
+      +'</div>'
+      +(b.description?'<div style="font-size:.71rem;color:var(--i3);margin-top:4px;line-height:1.4">'+b.description+'</div>':"")
+      +'</div>'
+      +'<button class="btn btn-d btn-sm" style="flex-shrink:0;align-self:flex-start" onclick="delBiblio('+b.id+')">×</button>'
+      +'</div>';
+  }).join(""):'<div class="empty"><div class="empty-ico">📚</div><div class="empty-t">Bibliothèque vide</div><div class="empty-s">Ajoutez des documents via le bouton + Ajouter.</div></div>';
 }
 
 
@@ -3389,7 +3263,7 @@ function saveCR(){
 var ELU_COLORS=["#1d3d2b","#2d5a40","#3d7a5a","#8B5CF6","#F97316","#EC4899","#F59E0B","#3B82F6","#10B981","#EF4444","#14B8A6","#6366F1"];
 
 function renderRepElus(){
-  var g=pEl("rep-elus-grid"), f=$("rep-elus-files");
+  var g=$("rep-elus-grid"), f=$("rep-elus-files");
   if(g)g.style.display="none";
   if(f)f.style.display="block";
   // En-tête avec photo si disponible
@@ -3417,7 +3291,7 @@ function closeRepElu(){renderRepElus();}
 
 function renderRepEluFiles(){
   var files=REP_ELUS[_repEluId]||[];
-  var rl=pEl("rep-elu-list"); if(!rl)return;
+  var rl=$("rep-elu-list"); if(!rl)return;
   rl.innerHTML=files.length?files.map(function(f){
     return '<div class="bib-card">'
       +'<div class="bib-ico" style="background:var(--g8);border:1px solid var(--g7)">📂</div>'
@@ -3457,7 +3331,7 @@ function delRepFile(id){
 
 // ── ÉLUS ─────────────────────────────────────────────────────────────────────
 function renderElus(){
-  var el2=pEl("elus-list"); if(!el2)return;
+  var el2=$("elus-list"); if(!el2)return;
   var list=ELUS_DATA.length?ELUS_DATA:ELUS0;
   el2.innerHTML=list.map(function(e,i){
     var photoHtml=e.photo
@@ -3620,12 +3494,12 @@ function rTb(bid,rows,showC){
 
 function uSt(id,nst,titre){
   apiPost("/api/statut",{id:id,statut:nst,titre:titre}).then(function(d){
-    if(d.ok){ST[id]=nst;NF.unshift(d.notif);fG();if(document.getElementById("cd-tb-p"))fCDp();buildCG();buildCharts();toast("Statut : "+nst);}
+    if(d.ok){ST[id]=nst;NF.unshift(d.notif);fG();if($("p-cdet").classList.contains("on"))fCD();buildCG();buildCharts();toast("Statut : "+nst);}
   });
 }
 
 function buildCG(){
-  var cg=pEl("cg"); if(!cg)return;
+  var cg=$("cg"); if(!cg)return;
   var ks=Object.keys(COMM);
   cg.innerHTML=ks.map(function(comm,idx){
     var pp=P.filter(function(p){return COMM[comm].indexOf(p.theme)>=0;});
@@ -3659,58 +3533,19 @@ function showCD(idx){
   var pp=P.filter(function(p){return themes.indexOf(p.theme)>=0;});
   var to=pp.length,pr=0,ec=0,re=0;
   pp.forEach(function(p){var s=ST[p.id]||p.statut||"";if(s==="Prioritaire")pr++;if(s.indexOf("cours")>=0)ec++;if(s.indexOf("alis")>=0)re++;});
-  var pct=to?Math.round(re/to*100):0;
-
-  // Générer le HTML du détail commission
-  var html='<div style="background:'+col+'15;border-bottom:3px solid '+col+';padding:.85rem 1.4rem;display:flex;align-items:center;gap:12px">'
-    +'<div style="width:42px;height:42px;border-radius:12px;background:'+col+';display:flex;align-items:center;justify-content:center;font-size:1.2rem">'+( ICONS[comm]||"📋")+'</div>'
-    +'<div><div style="font-size:1rem;font-weight:800;font-family:var(--fd);color:var(--ink)">'+comm+'</div>'
-    +'<div style="font-size:.72rem;color:var(--i3);">'+themes.join(" · ")+(REFS[comm]?" — <b>"+REFS[comm]+"</b>":"")+'</div></div>'
-    +'<button onclick="renderComm()" style="margin-left:auto;background:rgba(0,0,0,.07);border:none;border-radius:7px;padding:5px 10px;font-size:.72rem;cursor:pointer;color:var(--i2)">&#x2190; Commissions</button>'
-    +'</div>';
-
-  // KPIs
-  html+='<div style="display:flex;gap:8px;padding:.75rem 1.4rem;background:#fff;border-bottom:1px solid var(--w2)">'
-    +'<div class="kpi" style="flex:1;min-width:0"><div class="kpiv">'+to+'</div><div class="kpil">Projets</div></div>'
+  $("cdet-ico").textContent=ICONS[comm]||"📋";
+  el("cdet-t",comm);
+  el("cdet-s",themes.join(" · ")+(REFS[comm]?" — "+REFS[comm]:""));
+  $("cdet-kpis").innerHTML=
+    '<div class="kpi" style="flex:1;min-width:0"><div class="kpiv">'+to+'</div><div class="kpil">Projets</div></div>'
     +'<div class="kpi" style="flex:1;min-width:0"><div class="kpiv" style="color:var(--red)">'+pr+'</div><div class="kpil">Prioritaires</div></div>'
     +'<div class="kpi" style="flex:1;min-width:0"><div class="kpiv" style="color:var(--amber)">'+ec+'</div><div class="kpil">En cours</div></div>'
-    +'<div class="kpi" style="flex:1;min-width:0"><div class="kpiv" style="color:var(--g4)">'+re+'</div><div class="kpil">Réalisés</div></div>'
-    +'</div>';
-
-  // Barre filtre
-  html+='<div class="fb"><select class="fsel" id="cd-st" onchange="fCDp()"><option value="">Tous statuts</option>';
-  SLIST.forEach(function(s){html+='<option value="'+s+'">'+s+'</option>';});
-  html+='</select><input class="fsrch" id="cd-q" placeholder="🔍 Rechercher…" oninput="fCDp()"><span class="fcnt" id="cd-cnt"></span></div>';
-
-  // Tableau projets
-  html+='<div class="tbw" style="border-radius:0;border-left:none;border-right:none;border-bottom:none"><table><thead><tr><th>Thème</th><th>Projet</th><th>Statut</th><th>Année</th><th>Imp.</th><th>Modifier</th></tr></thead><tbody id="cd-tb-p"></tbody></table></div>';
-
-  // Injecter dans le panel body
-  var pb=document.getElementById("panel-body");
-  if(pb){
-    pb.innerHTML=html;
-    // Mettre à jour le titre du panneau
-    var panelBar=document.querySelector("#main-panel div");
-    if(panelBar){var sp=panelBar.querySelector("span");if(sp)sp.textContent=comm;}
-    fCDp();
-  } else {
-    // Fallback : mode page classique
-    $("cdet-ico").textContent=ICONS[comm]||"📋";
-    el("cdet-t",comm);
-    el("cdet-s",themes.join(" · ")+(REFS[comm]?" — "+REFS[comm]:""));
-    pEl("cd-st").value=""; pEl("cd-q").value="";
-    qsa(".page").forEach(function(p){p.classList.remove("on");});
-    $("p-cdet").classList.add("on");
-    fCD();
-  }
-}
-
-function fCDp(){
-  var comm=Object.keys(COMM)[_ci],themes=COMM[comm];
-  var s=v("cd-st"),q=(v("cd-q")||"").toLowerCase();
-  var r=P.filter(function(p){var ps=ST[p.id]||p.statut||"ND";return themes.indexOf(p.theme)>=0&&(!s||ps===s)&&(!q||(p.titre||"").toLowerCase().indexOf(q)>=0||(p.resume||"").toLowerCase().indexOf(q)>=0);});
-  el("cd-cnt",r.length+" projet(s)");
-  rTb("cd-tb-p",r,false);
+    +'<div class="kpi" style="flex:1;min-width:0"><div class="kpiv" style="color:var(--g4)">'+re+'</div><div class="kpil">Réalisés</div></div>';
+  $("cd-st").value=""; $("cd-q").value="";
+  qsa(".page").forEach(function(p){p.classList.remove("on");});
+  qsa(".sbi").forEach(function(n){n.classList.remove("on");});
+  $("p-cdet").classList.add("on");
+  fCD();
 }
 function fCD(){
   var comm=Object.keys(COMM)[_ci],themes=COMM[comm];
@@ -3748,7 +3583,7 @@ function fSig(){
   var ty=v("sf-type"),st=v("sf-st"),q=v("sf-q").toLowerCase();
   var r=SIGN.filter(function(s){return(!ty||s.type===ty)&&(!st||s.statut===st)&&(!q||(s.titre||"").toLowerCase().indexOf(q)>=0||(s.lieu||"").toLowerCase().indexOf(q)>=0);});
   el("sf-cnt",r.length+" signalement(s)");
-  var sl=pEl("sig-list"); if(!sl)return;
+  var sl=$("sig-list"); if(!sl)return;
   sl.innerHTML=r.length?r.map(function(s){
     var col=s.statut==="Nouveau"?"var(--red)":s.statut==="En cours"?"var(--amber)":s.statut==="Résolu"?"var(--g4)":"var(--i4)";
     var cls=s.statut==="Nouveau"?"new":s.statut==="En cours"?"enc":s.statut==="Résolu"?"res":"";
@@ -3812,7 +3647,7 @@ var EV_ICO={municipal:"🏛",associatif:"🤝",culturel:"🎭",sportif:"⚽",com
 var EV_COL={municipal:"var(--g3)",associatif:"var(--amber)",culturel:"#8B5CF6",sportif:"var(--blue)",commemoration:"#7f8c8d",autre:"var(--i3)"};
 function renderEv(){
   var now=new Date().toISOString().slice(0,10);
-  var ev=pEl("ev-list"); if(!ev)return;
+  var ev=$("ev-list"); if(!ev)return;
   var sorted=EVTS.slice().sort(function(a,b){return a.date>b.date?1:-1;});
   var fut=sorted.filter(function(e){return e.date>=now;}),past=sorted.filter(function(e){return e.date<now;});
   function card(e,isPast){
@@ -3853,7 +3688,7 @@ function resetNP(){["np-t","np-r","np-d","np-tags","np-a"].forEach(function(i){v
 
 // ── HISTORIQUE ────────────────────────────────────────────────────────────────
 function renderNt(){
-  var nl=pEl("nt-list"); if(!nl)return;
+  var nl=$("nt-list"); if(!nl)return;
   var TYPE_CLS={statut:"nt-tp",annonce:"nt-ta",doc:"nt-td",signalement:"nt-ts",cr:"nt-tp",projet:"nt-tc"};
   var TYPE_LBL={statut:"Statut",annonce:"Annonce",doc:"Document",signalement:"Signal.",cr:"CR",projet:"Créé"};
   nl.innerHTML=NF.slice(0,80).map(function(n){
@@ -4183,10 +4018,15 @@ function checkUrgents(){
 
 function gpN(el){gpByName(el.dataset.page||el.getAttribute("data-page"));}
 function gpByName(pageName){
-  if(pageName==="today"){ closePanel(); return; }
-  openPanel(pageName);
+  var items=qsa(".sbi");
+  for(var i=0;i<items.length;i++){
+    var item=items[i];
+    if(item.getAttribute("onclick")&&item.getAttribute("onclick").indexOf("'"+pageName+"'")>=0){
+      item.click(); return;
+    }
+  }
 }
-function navToAgenda(){openPanel("agenda");}
+function navToAgenda(){gp("agenda",qsa(".sbi")[3]);}
 
 
 // ── ÉDITION PROJET ──────────────────────────────────────────────────────────
