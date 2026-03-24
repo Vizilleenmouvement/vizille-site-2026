@@ -3409,6 +3409,7 @@ function renderElus(){
       +'</div></div>';
   }).join("");
 }
+var _eluId=null;
 function openElu(i){
   var list=ELUS_DATA.length?ELUS_DATA:ELUS0;
   var e=list[i];if(!e)return;
@@ -3439,7 +3440,6 @@ function openElu(i){
   om("elu-det");
 }
 
-var _eluId=null;
 function saveEluFull(){
   if(!_eluId)return;
   var d={
