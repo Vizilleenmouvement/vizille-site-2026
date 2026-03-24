@@ -1110,7 +1110,7 @@ body{font-family:var(--fn);background:var(--w);color:var(--ink);height:100vh;mar
 .cbdg{width:7px;height:7px;background:var(--red);border-radius:50%;position:absolute;top:-2px;right:-2px;border:1.5px solid var(--g1);display:none;}
 
 /* LAYOUT — division verticale fixe */
-.layout{display:flex;flex-direction:row;width:100%;height:calc(100vh - var(--th));overflow:hidden;}
+.layout{display:flex;flex-direction:row;width:100%;height:calc(100vh - var(--th));overflow:hidden;position:relative;}
 
 /* SIDEBAR */
 .sb{width:var(--sw);background:var(--g1);flex-shrink:0;display:flex;flex-direction:column;overflow-y:auto;z-index:50;}
@@ -2495,7 +2495,7 @@ function openPanel(id){
   if(!panel){
     panel=document.createElement("div");
     panel.id="main-panel";
-    panel.style.cssText="position:fixed;left:var(--sw);right:0;top:var(--th);bottom:0;z-index:100;display:flex;flex-direction:column;overflow:hidden;background:var(--w);";
+    panel.style.cssText="position:absolute;left:0;right:0;top:0;bottom:0;z-index:100;display:flex;flex-direction:column;overflow:hidden;background:var(--w);";
     document.body.appendChild(panel);
   }
 
@@ -2530,9 +2530,15 @@ function openPanel(id){
 function closePanel(){
   var panel = document.getElementById("main-panel");
   if(panel) panel.style.display = "none";
+  // Réafficher la page today
+  qsa(".page").forEach(function(p){p.classList.remove("on");});
+  var today = document.getElementById("p-today");
+  if(today) today.classList.add("on");
   qsa(".sbi").forEach(function(n){n.classList.remove("on");});
   var first = document.querySelector(".sbi");
   if(first) first.classList.add("on");
+  // Rafraîchir les widgets
+  renderHeroAccueil(); renderWidgetAgenda(); renderWidgetSig(); renderCRHome();
 }
 
 
