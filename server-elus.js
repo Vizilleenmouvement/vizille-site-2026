@@ -488,6 +488,17 @@ const server=http.createServer(function(req,res){
     me:{id:ME.id,nom:ME.nom,prenom:ME.prenom||'',role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||'',photo:ME.photo||'',photoPos:ME.photoPos||'center center',email:ME.email||''}
   });
 
+  // API LÉGÈRE — données essentielles seulement (accueil rapide)
+  if(p==='/api/light')return J(res,{
+    statuts,agenda,annonces,tasks,
+    signalements:signalements.slice(0,20),
+    evenements:evenements.slice(0,20),
+    comptes_rendus:comptes_rendus.slice(0,10),
+    stats:stats(),
+    chat:chat.slice(-20),
+    me:{id:ME.id,nom:ME.nom,prenom:ME.prenom||'',role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||'',photo:ME.photo||'',photoPos:ME.photoPos||'center center',email:ME.email||''}
+  });
+
   // IDENTITÉ CONNECTÉE
   if(p==='/api/me')return J(res,{id:ME.id,nom:ME.nom,prenom:ME.prenom||'',role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||'',photo:ME.photo||'',photoPos:ME.photoPos||'center center',email:ME.email||''});
 
@@ -2594,32 +2605,21 @@ function init(){
     renderHeroAccueil();
   });
 
-  // Lancer tous les appels en parallèle
-  Promise.all([
-    apiGet("/api/all"),
-    apiGet("/api/projets")
-  ]).then(function(results){
-    var d=results[0], projData=results[1];
-
-    ST=d.statuts; AG=d.agenda; DC=d.documents; NF=d.notifs;
+  // Phase 1 : données légères pour accueil rapide
+  apiGet("/api/light").then(function(d){
+    ST=d.statuts; AG=d.agenda;
     ANN=d.annonces||[]; TASKS=d.tasks||[];
     if(d.me){ ME=d.me;
       var av=$("top-av-btn");
       if(av){av.textContent=ME.avatar;av.style.background=ME.color||"var(--g4)";}
     }
     SIGN=d.signalements||[]; EVTS=d.evenements||[];
-    CRS=d.comptes_rendus||[]; ELUS_DATA=d.elus||[];
-    BIBLIO=[];
+    CRS=d.comptes_rendus||[];
     if(d.stats){
       el("k-tot",d.stats.total); el("k-pr",d.stats.prioritaires);
       el("k-26",d.stats.annee2026); el("k-re",d.stats.realises);
       el("k-sig",d.stats.sig_new||0); el("sb-tot",d.stats.total);
     }
-
-    // Projets
-    P=projData; buildFilters(); fG(); buildCG(); buildCharts(); renderWidgetMandat();
-
-    // Widgets accueil
     renderHeroAccueil(); renderTasks(); renderAnn(); renderNextMtg();
     buildGuides(); buildRess(); updSigBadge();
     var sigOpen=SIGN.filter(function(s){return s.statut!=="Résolu"&&s.statut!=="Non retenu";}).length;
@@ -2629,10 +2629,20 @@ function init(){
     var conseils=AG.filter(function(a){return a.type==="conseil"&&(a.date||"").startsWith(String(y));}).length;
     el("kpi-conseil",conseils+"/"+Math.max(conseils,4));
     initCal(); renderWidgetAgenda(); renderWidgetSig(); renderCRHome(); renderEvHome(); checkUrgents(); initWidgetChat();
-    el("k-sig",d.stats?d.stats.sig_new||0:0);
   });
 
-  // Biblio et répertoire en parallèle (moins prioritaires)
+  // Phase 2 : projets (en parallèle)
+  apiGet("/api/projets").then(function(data){
+    P=data; buildFilters(); fG(); buildCG(); buildCharts(); renderWidgetMandat();
+  });
+
+  // Phase 3 : élus chargés séparément (léger, rapide)
+  apiGet("/api/elus").then(function(data){
+    ELUS_DATA=data;
+    el("sb-tot", ELUS_DATA.length);
+  });
+
+  // Phase 4 : biblio et répertoire en arrière-plan
   apiGet("/api/biblio").then(function(data){BIBLIO=data;el("sb-bib",BIBLIO.length);});
   apiGet("/api/rep_elus").then(function(data){REP_ELUS=data||{};});
 
