@@ -2259,11 +2259,26 @@ textarea.fi{resize:vertical;min-height:90px;}
 </div></div>
 
 <div class="ov" id="ov-repelu"><div class="modal">
-  <div class="mhd"><h3>&#x1F4C2; Ajouter un lien</h3><button class="mcl" onclick="cm()">&#xd7;</button></div>
-  <div class="ff"><label>Titre *</label><input class="fi" id="re-ti" placeholder="Nom du document ou lien"></div>
-  <div class="ff"><label>Lien (URL)</label><input class="fi" type="url" id="re-url" placeholder="https://&#x2026;"></div>
-  <div class="ff"><label>Notes</label><textarea class="fi" id="re-notes" placeholder="Contexte, date, description&#x2026;"></textarea></div>
-  <div class="mft"><button class="btn btn-g" onclick="cm()">Annuler</button><button class="btn btn-p" onclick="svRepElu()">Enregistrer</button></div>
+  <div class="mhd"><h3>&#x1F4C2; Ajouter au r&#xe9;pertoire</h3><button class="mcl" onclick="cm()">&#xd7;</button></div>
+  <!-- Onglets type -->
+  <div style="display:flex;gap:6px;margin-bottom:1rem;background:var(--w);border-radius:var(--r);padding:4px">
+    <button id="re-tab-lien" onclick="reTab('lien')" class="btn btn-p btn-sm" style="flex:1;justify-content:center">&#x1F517; Lien URL</button>
+    <button id="re-tab-file" onclick="reTab('file')" class="btn btn-s btn-sm" style="flex:1;justify-content:center">&#x1F4CE; Fichier</button>
+  </div>
+  <div class="ff"><label>Titre *</label><input class="fi" id="re-ti" placeholder="Nom du document"></div>
+  <!-- Zone lien -->
+  <div id="re-zone-lien">
+    <div class="ff"><label>URL *</label><input class="fi" type="url" id="re-url" placeholder="https://kdrive.infomaniak.com/&#x2026;"></div>
+  </div>
+  <!-- Zone fichier -->
+  <div id="re-zone-file" style="display:none">
+    <div class="ff"><label>Fichier *</label>
+      <input class="fi" type="file" id="re-file" style="padding:6px" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.png,.jpg,.jpeg">
+      <div id="re-upload-st" style="font-size:.7rem;color:var(--i3);margin-top:4px"></div>
+    </div>
+  </div>
+  <div class="ff"><label>Notes</label><textarea class="fi" id="re-notes" placeholder="Contexte, date, description&#x2026;" style="height:70px"></textarea></div>
+  <div class="mft"><button class="btn btn-g" onclick="cm()">Annuler</button><button class="btn btn-p" id="re-save-btn" onclick="svRepElu()">Enregistrer</button></div>
 </div></div>
 
 <div class="ov" id="ov-annonce"><div class="modal">
@@ -3306,18 +3321,50 @@ function renderRepEluFiles(){
   }).join(""):'<div class="empty"><div class="empty-ico">📁</div><div class="empty-t">Répertoire vide</div><div class="empty-s">Cliquez sur "+ Ajouter un lien" pour archiver.</div></div>';
 }
 
+function reTab(t){
+  document.getElementById("re-zone-lien").style.display=t==="lien"?"block":"none";
+  document.getElementById("re-zone-file").style.display=t==="file"?"block":"none";
+  document.getElementById("re-tab-lien").className="btn btn-sm"+(t==="lien"?" btn-p":" btn-s")+" btn-sm";
+  document.getElementById("re-tab-file").className="btn btn-sm"+(t==="file"?" btn-p":" btn-s")+" btn-sm";
+  document.getElementById("re-tab-lien").style.flex="1";
+  document.getElementById("re-tab-file").style.flex="1";
+  document.getElementById("re-tab-lien").style.justifyContent="center";
+  document.getElementById("re-tab-file").style.justifyContent="center";
+}
+
 function svRepElu(){
-  var d={titre:v("re-ti"),url:v("re-url"),notes:v("re-notes")};
-  if(!d.titre){toast("Titre obligatoire");return;}
-  apiPost("/api/rep_elus",d).then(function(r){
-    if(r.ok){
-      if(!REP_ELUS[ME.id])REP_ELUS[ME.id]=[];
-      REP_ELUS[ME.id].unshift(r.item);
-      _repEluId=ME.id;
-      renderRepEluFiles();cm();toast("Lien ajouté");
-      ["re-ti","re-url","re-notes"].forEach(function(i){var e=$(i);if(e)e.value="";});
-    }
-  });
+  var ti=v("re-ti").trim();
+  if(!ti){toast("Titre obligatoire");return;}
+  var notes=v("re-notes");
+  var isFile=document.getElementById("re-zone-file").style.display!=="none";
+
+  if(isFile){
+    var fileInput=document.getElementById("re-file");
+    if(!fileInput||!fileInput.files.length){toast("Sélectionnez un fichier");return;}
+    var file=fileInput.files[0];
+    var st=document.getElementById("re-upload-st");
+    if(st)st.textContent="Envoi en cours…";
+    document.getElementById("re-save-btn").disabled=true;
+    var fd=new FormData();
+    fd.append("file",file);
+    fetch("/api/upload",{method:"POST",body:fd})
+      .then(function(r){return r.json();})
+      .then(function(r){
+        if(!r.ok){toast("Erreur upload : "+(r.error||"?"));document.getElementById("re-save-btn").disabled=false;return;}
+        var d={nom:ti,url:r.url,notes:notes,type:"fichier",nom_fichier:r.nom,taille:r.taille};
+        apiPost("/api/rep_elus",d).then(function(res){
+          if(res.ok){REP_ELUS[String(ME.id)]=REP_ELUS[String(ME.id)]||[];REP_ELUS[String(ME.id)].unshift(res.item);cm();renderRepEluFiles();toast("Fichier ajouté !");}
+          document.getElementById("re-save-btn").disabled=false;
+        });
+      }).catch(function(){toast("Erreur réseau");document.getElementById("re-save-btn").disabled=false;});
+  } else {
+    var url=v("re-url").trim();
+    if(!url){toast("URL obligatoire");return;}
+    var d={nom:ti,url:url,notes:notes,type:"lien"};
+    apiPost("/api/rep_elus",d).then(function(res){
+      if(res.ok){REP_ELUS[String(ME.id)]=REP_ELUS[String(ME.id)]||[];REP_ELUS[String(ME.id)].unshift(res.item);cm();renderRepEluFiles();toast("Lien ajouté !");}
+    });
+  }
 }
 function delRepFile(id){
   if(!confirm("Supprimer ?"))return;
