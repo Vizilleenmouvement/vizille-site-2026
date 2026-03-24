@@ -2424,10 +2424,11 @@ var ME={nom:"Chargement...",avatar:"?",id:0,role:"",color:"var(--g3)",username:"
 var _auth=""; // Sera mis à jour avec les credentials réels
 
 // ── UTILITAIRES ──────────────────────────────────────────────────────────────
-function $(i){
-  // Préférer l'élément dans le panneau actif s'il existe
+function $(i){return document.getElementById(i);}
+// Cherche un élément dans le panneau actif en priorité, sinon DOM global
+function pEl(i){
   var pb=document.getElementById("panel-body");
-  if(pb){var el=pb.querySelector("#"+i);if(el)return el;}
+  if(pb){var e=pb.querySelector("[id=\""+i+"\"]");if(e)return e;}
   return document.getElementById(i);
 }
 function qsa(s){return document.querySelectorAll(s);}
@@ -3092,7 +3093,7 @@ function buildRess(){
 var ATMAP={bureau:"Bureau municipal",commission:"Commission",conseil:"Conseil municipal",autre:"Autre"};
 var ATCLS={bureau:"at-b",commission:"at-c",conseil:"at-k",autre:"at-a"};
 function renderAg(){
-  var al=$("ag-list"); if(!al)return;
+  var al=pEl("ag-list"); if(!al)return;
   var now=new Date().toISOString().slice(0,10);
   var sorted=AG.slice().sort(function(a,b){return a.date>b.date?1:-1;});
   al.innerHTML=sorted.map(function(e){
@@ -3121,8 +3122,8 @@ function delAg(id){if(!confirm("Supprimer cette réunion ?"))return;apiDel("/api
 var CR_COM_COL={"Bureau municipal":"#1d3d2b","Conseil municipal":"#2d5a40","Culture, Patrimoine & Jumelages":"#8B5CF6","Mobilités":"#3B82F6","Transition écologique":"#10B981","Action sociale":"#F59E0B","Concertation citoyenne":"#6366F1","Animations de proximité":"#EC4899","Enfance/Jeunesse":"#F97316","Tranquillité publique":"#EF4444","Travaux & Urbanisme":"#84CC16","Santé":"#06B6D4"};
 
 function renderCR(){
-  var cl=$("cr-list"); if(!cl)return;
-  var fc=$("cr-filt-comm");
+  var cl=pEl("cr-list"); if(!cl)return;
+  var fc=pEl("cr-filt-comm");
   if(fc&&fc.options.length<=1){
     var comms=["Bureau municipal","Conseil municipal"];
     Object.keys(COMM).forEach(function(c){comms.push(c);});
@@ -3388,7 +3389,7 @@ function saveCR(){
 var ELU_COLORS=["#1d3d2b","#2d5a40","#3d7a5a","#8B5CF6","#F97316","#EC4899","#F59E0B","#3B82F6","#10B981","#EF4444","#14B8A6","#6366F1"];
 
 function renderRepElus(){
-  var g=$("rep-elus-grid"), f=$("rep-elus-files");
+  var g=pEl("rep-elus-grid"), f=$("rep-elus-files");
   if(g)g.style.display="none";
   if(f)f.style.display="block";
   // En-tête avec photo si disponible
@@ -3416,7 +3417,7 @@ function closeRepElu(){renderRepElus();}
 
 function renderRepEluFiles(){
   var files=REP_ELUS[_repEluId]||[];
-  var rl=$("rep-elu-list"); if(!rl)return;
+  var rl=pEl("rep-elu-list"); if(!rl)return;
   rl.innerHTML=files.length?files.map(function(f){
     return '<div class="bib-card">'
       +'<div class="bib-ico" style="background:var(--g8);border:1px solid var(--g7)">📂</div>'
@@ -3456,7 +3457,7 @@ function delRepFile(id){
 
 // ── ÉLUS ─────────────────────────────────────────────────────────────────────
 function renderElus(){
-  var el2=$("elus-list"); if(!el2)return;
+  var el2=pEl("elus-list"); if(!el2)return;
   var list=ELUS_DATA.length?ELUS_DATA:ELUS0;
   el2.innerHTML=list.map(function(e,i){
     var photoHtml=e.photo
@@ -3624,7 +3625,7 @@ function uSt(id,nst,titre){
 }
 
 function buildCG(){
-  var cg=$("cg"); if(!cg)return;
+  var cg=pEl("cg"); if(!cg)return;
   var ks=Object.keys(COMM);
   cg.innerHTML=ks.map(function(comm,idx){
     var pp=P.filter(function(p){return COMM[comm].indexOf(p.theme)>=0;});
@@ -3697,7 +3698,7 @@ function showCD(idx){
     $("cdet-ico").textContent=ICONS[comm]||"📋";
     el("cdet-t",comm);
     el("cdet-s",themes.join(" · ")+(REFS[comm]?" — "+REFS[comm]:""));
-    $("cd-st").value=""; $("cd-q").value="";
+    pEl("cd-st").value=""; pEl("cd-q").value="";
     qsa(".page").forEach(function(p){p.classList.remove("on");});
     $("p-cdet").classList.add("on");
     fCD();
@@ -3747,7 +3748,7 @@ function fSig(){
   var ty=v("sf-type"),st=v("sf-st"),q=v("sf-q").toLowerCase();
   var r=SIGN.filter(function(s){return(!ty||s.type===ty)&&(!st||s.statut===st)&&(!q||(s.titre||"").toLowerCase().indexOf(q)>=0||(s.lieu||"").toLowerCase().indexOf(q)>=0);});
   el("sf-cnt",r.length+" signalement(s)");
-  var sl=$("sig-list"); if(!sl)return;
+  var sl=pEl("sig-list"); if(!sl)return;
   sl.innerHTML=r.length?r.map(function(s){
     var col=s.statut==="Nouveau"?"var(--red)":s.statut==="En cours"?"var(--amber)":s.statut==="Résolu"?"var(--g4)":"var(--i4)";
     var cls=s.statut==="Nouveau"?"new":s.statut==="En cours"?"enc":s.statut==="Résolu"?"res":"";
@@ -3811,7 +3812,7 @@ var EV_ICO={municipal:"🏛",associatif:"🤝",culturel:"🎭",sportif:"⚽",com
 var EV_COL={municipal:"var(--g3)",associatif:"var(--amber)",culturel:"#8B5CF6",sportif:"var(--blue)",commemoration:"#7f8c8d",autre:"var(--i3)"};
 function renderEv(){
   var now=new Date().toISOString().slice(0,10);
-  var ev=$("ev-list"); if(!ev)return;
+  var ev=pEl("ev-list"); if(!ev)return;
   var sorted=EVTS.slice().sort(function(a,b){return a.date>b.date?1:-1;});
   var fut=sorted.filter(function(e){return e.date>=now;}),past=sorted.filter(function(e){return e.date<now;});
   function card(e,isPast){
@@ -3852,7 +3853,7 @@ function resetNP(){["np-t","np-r","np-d","np-tags","np-a"].forEach(function(i){v
 
 // ── HISTORIQUE ────────────────────────────────────────────────────────────────
 function renderNt(){
-  var nl=$("nt-list"); if(!nl)return;
+  var nl=pEl("nt-list"); if(!nl)return;
   var TYPE_CLS={statut:"nt-tp",annonce:"nt-ta",doc:"nt-td",signalement:"nt-ts",cr:"nt-tp",projet:"nt-tc"};
   var TYPE_LBL={statut:"Statut",annonce:"Annonce",doc:"Document",signalement:"Signal.",cr:"CR",projet:"Créé"};
   nl.innerHTML=NF.slice(0,80).map(function(n){
