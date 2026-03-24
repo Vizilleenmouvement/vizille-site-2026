@@ -98,5 +98,10 @@
     "theme": "Économie",
     "icon": "💼",
     "color": "#f39c12"
+  },
+  {
+    "theme": "Gouvernance",
+    "icon": "🏛️",
+    "color": "#5c6bc0"
   }
 ]
