@@ -2424,7 +2424,12 @@ var ME={nom:"Chargement...",avatar:"?",id:0,role:"",color:"var(--g3)",username:"
 var _auth=""; // Sera mis à jour avec les credentials réels
 
 // ── UTILITAIRES ──────────────────────────────────────────────────────────────
-function $(i){return document.getElementById(i);}
+function $(i){
+  // Préférer l'élément dans le panneau actif s'il existe
+  var pb=document.getElementById("panel-body");
+  if(pb){var el=pb.querySelector("#"+i);if(el)return el;}
+  return document.getElementById(i);
+}
 function qsa(s){return document.querySelectorAll(s);}
 function v(i){var e=$(i);return e?e.value:"";}
 function el(i,val){var e=$(i);if(e)e.textContent=val;}
@@ -2539,8 +2544,8 @@ function closePanel(){
 }
 
 
-function goComm(){gp("comm",qsa(".sbi")[9]);}
-function goGlobal(){gp("global",qsa(".sbi")[10]);}
+function goComm(){openPanel("comm");}
+function goGlobal(){openPanel("global");}
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 function openProfile(){
@@ -3614,7 +3619,7 @@ function rTb(bid,rows,showC){
 
 function uSt(id,nst,titre){
   apiPost("/api/statut",{id:id,statut:nst,titre:titre}).then(function(d){
-    if(d.ok){ST[id]=nst;NF.unshift(d.notif);fG();if($("p-cdet").classList.contains("on"))fCD();buildCG();buildCharts();toast("Statut : "+nst);}
+    if(d.ok){ST[id]=nst;NF.unshift(d.notif);fG();if(document.getElementById("cd-tb-p"))fCDp();buildCG();buildCharts();toast("Statut : "+nst);}
   });
 }
 
@@ -4177,15 +4182,10 @@ function checkUrgents(){
 
 function gpN(el){gpByName(el.dataset.page||el.getAttribute("data-page"));}
 function gpByName(pageName){
-  var items=qsa(".sbi");
-  for(var i=0;i<items.length;i++){
-    var item=items[i];
-    if(item.getAttribute("onclick")&&item.getAttribute("onclick").indexOf("'"+pageName+"'")>=0){
-      item.click(); return;
-    }
-  }
+  if(pageName==="today"){ closePanel(); return; }
+  openPanel(pageName);
 }
-function navToAgenda(){gp("agenda",qsa(".sbi")[3]);}
+function navToAgenda(){openPanel("agenda");}
 
 
 // ── ÉDITION PROJET ──────────────────────────────────────────────────────────
