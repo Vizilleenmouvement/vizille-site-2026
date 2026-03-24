@@ -707,9 +707,9 @@ const server=http.createServer(function(req,res){
         role:d.role!==undefined?d.role:e.role,
         tel:d.tel!==undefined?d.tel:e.tel,
         email:d.email!==undefined?d.email:e.email,
-        delegation:d.delegation!==undefined?d.delegation:e.delegation,
+        delegation:e.delegation,
         commission:d.commission!==undefined?d.commission:e.commission,
-        photo:d.photo!==undefined&&d.photo?d.photo:e.photo
+        photo:d.photo?d.photo:e.photo
       });
     });
     if(updated)save('elus.json',elus);
@@ -3354,105 +3354,48 @@ function renderElus(){
 function openElu(i){
   var list=ELUS_DATA.length?ELUS_DATA:ELUS0;
   var e=list[i];if(!e)return;
-  _eluEditIdx=i;
   var col=e.color||"var(--g3)";
   var fullName=(e.prenom?e.prenom+" ":"")+e.nom;
   $("elu-det-t").textContent=fullName;
-
-  // Options commissions
-  var commOpts=Object.keys(COMM).map(function(c){
-    return '<option value="'+c+'"'+(e.commission===c?' selected':'')+'>'+c+'</option>';
-  }).join('');
-
   var photoBlock=e.photo
-    ?'<img src="'+e.photo+'" id="elu-photo-prev" style="width:64px;height:64px;border-radius:12px;object-fit:cover;object-position:'+(e.photoPos||"center center")+';flex-shrink:0" onerror="this.style.display='none'">'
+    ?'<img id="elu-photo-prev" src="'+e.photo+'" style="width:64px;height:64px;border-radius:12px;object-fit:cover;object-position:'+(e.photoPos||"center center")+';flex-shrink:0" onerror="this.style.display=\'none\'">'
     :'<div id="elu-photo-prev" style="width:64px;height:64px;border-radius:12px;background:'+col+';display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;color:#fff;flex-shrink:0">'+e.avatar+'</div>';
-
+  var commOpts=Object.keys(COMM).map(function(c){return'<option value="'+c+'"'+(e.commission===c?' selected':'')+'>'+c+'</option>';}).join('');
   $("elu-det-b").innerHTML=
-    // Photo + nom actuel
     '<div style="display:flex;align-items:center;gap:12px;padding:.85rem;background:var(--g8);border-radius:var(--R);margin-bottom:1rem;border:1px solid var(--g7)">'
     +photoBlock
     +'<div><div style="font-size:.95rem;font-weight:700;font-family:var(--fd)">'+fullName+'</div>'
     +'<div style="font-size:.75rem;color:var(--g3);margin-top:2px">'+e.role+'</div>'
     +(e.commission?'<div style="font-size:.68rem;color:var(--i3);margin-top:2px">'+e.commission+'</div>':'')
     +'</div></div>'
-
-    // Formulaire complet
-    +'<div style="display:flex;flex-direction:column;gap:10px">'
-
-    // Ligne prénom + nom
+    +'<div style="display:flex;flex-direction:column;gap:9px">'
     +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em">Prénom</label>'
-    +'<input id="elu-f-prenom" class="fi" value="'+(e.prenom||'')+'" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em">Nom</label>'
-    +'<input id="elu-f-nom" class="fi" value="'+(e.nom||'')+'" style="font-size:.76rem;padding:6px 9px"></div>'
+    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Pr&#xe9;nom</label><input id="elu-f-prenom" class="fi" value="'+(e.prenom||'')+'" style="font-size:.76rem;padding:6px 9px"></div>'
+    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Nom</label><input id="elu-f-nom" class="fi" value="'+(e.nom||'')+'" style="font-size:.76rem;padding:6px 9px"></div>'
     +'</div>'
-
-    // Rôle
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em">Rôle / Titre</label>'
-    +'<input id="elu-f-role" class="fi" value="'+(e.role||'')+'" placeholder="Adjoint, Conseillère déléguée…" style="font-size:.76rem;padding:6px 9px"></div>'
-
-    // Commission
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em">Commission</label>'
-    +'<select id="elu-f-comm" class="fi" style="font-size:.76rem;padding:6px 9px"><option value="">— aucune —</option>'+commOpts+'</select></div>'
-
-    // Téléphone + Email
+    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">R&#xf4;le</label><input id="elu-f-role" class="fi" value="'+(e.role||'')+'" placeholder="Adjoint, Conseill&#xe8;re…" style="font-size:.76rem;padding:6px 9px"></div>'
+    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Commission</label><select id="elu-f-comm" class="fi" style="font-size:.76rem;padding:6px 9px"><option value="">— aucune —</option>'+commOpts+'</select></div>'
     +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em">Téléphone</label>'
-    +'<input id="elu-f-tel" class="fi" value="'+(e.tel||'')+'" placeholder="06 00 00 00 00" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em">Email</label>'
-    +'<input id="elu-f-email" class="fi" value="'+(e.email||'')+'" placeholder="prenom.nom@ville.fr" type="email" style="font-size:.76rem;padding:6px 9px"></div>'
+    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">T&#xe9;l.</label><input id="elu-f-tel" class="fi" value="'+(e.tel||'')+'" placeholder="06 00 00 00 00" style="font-size:.76rem;padding:6px 9px"></div>'
+    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Email</label><input id="elu-f-email" class="fi" value="'+(e.email||'')+'" type="email" style="font-size:.76rem;padding:6px 9px"></div>'
     +'</div>'
-
-    // URL photo
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.04em">URL photo</label>'
-    +'<input id="elu-f-photo" class="fi" value="'+(e.photo||'')+'" placeholder="https://vizilleenmouvement.fr/images/…" style="font-size:.76rem;padding:6px 9px" oninput="prevPhoto(this.value)"></div>'
-
-    // Bouton
-    +'<div style="display:flex;justify-content:flex-end;padding-top:4px">'
-    +'<button class="btn btn-p" onclick="saveEluFull('+e.id+')">&#x1F4BE; Enregistrer</button>'
-    +'</div>'
+    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">URL Photo</label><input id="elu-f-photo" class="fi" value="'+(e.photo||'')+'" placeholder="https://…" style="font-size:.76rem;padding:6px 9px" oninput="var p=$(\'elu-photo-prev\');if(p&&this.value)p.src=this.value"></div>'
+    +'<div style="display:flex;justify-content:flex-end;padding-top:4px"><button class="btn btn-p" onclick="saveEluFull('+e.id+')">&#x1F4BE; Enregistrer</button></div>'
     +'</div>';
   om("elu-det");
 }
 
-var _eluEditIdx = -1;
-
-function prevPhoto(url){
-  var p=$("elu-photo-prev"); if(!p)return;
-  if(url){p.src=url;p.style.display='block';}
-}
-
 function saveEluFull(eluId){
-  var d={
-    prenom: v("elu-f-prenom").trim(),
-    nom:    v("elu-f-nom").trim(),
-    role:   v("elu-f-role").trim(),
-    commission: v("elu-f-comm"),
-    tel:    v("elu-f-tel").trim(),
-    email:  v("elu-f-email").trim(),
-    photo:  v("elu-f-photo").trim()
-  };
+  var d={prenom:v("elu-f-prenom").trim(),nom:v("elu-f-nom").trim(),role:v("elu-f-role").trim(),commission:v("elu-f-comm"),tel:v("elu-f-tel").trim(),email:v("elu-f-email").trim(),photo:v("elu-f-photo").trim()};
   if(!d.nom){toast("Le nom est obligatoire");return;}
-  apiPatch("/api/elus/"+eluId, d).then(function(r){
+  apiPatch("/api/elus/"+eluId,d).then(function(r){
     if(r.ok){
-      // Mise à jour locale
-      [ELUS_DATA, ELUS0].forEach(function(arr){
-        arr.forEach(function(e){
-          if(e.id===eluId){
-            e.prenom=d.prenom;e.nom=d.nom;e.role=d.role;
-            e.commission=d.commission;e.tel=d.tel;
-            e.email=d.email;if(d.photo)e.photo=d.photo;
-          }
-        });
-      });
-      cm(); renderElus(); toast("Élu mis à jour !");
-    } else { toast("Erreur d'enregistrement",3000); }
+      [ELUS_DATA,ELUS0].forEach(function(arr){arr.forEach(function(e){if(e.id===eluId){e.prenom=d.prenom;e.nom=d.nom;e.role=d.role;e.commission=d.commission;e.tel=d.tel;e.email=d.email;if(d.photo)e.photo=d.photo;}});});
+      cm();renderElus();toast("&#xc9;lu mis &#xe0; jour !");
+    } else {toast("Erreur",3000);}
   });
 }
-
-// Alias legacy
-function saveEluContact(eluId){ saveEluFull(eluId); }
+function saveEluContact(eluId){saveEluFull(eluId);}
 
 
 // ── COMMISSIONS ──────────────────────────────────────────────────────────────
