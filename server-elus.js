@@ -488,17 +488,6 @@ const server=http.createServer(function(req,res){
     me:{id:ME.id,nom:ME.nom,prenom:ME.prenom||'',role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||'',photo:ME.photo||'',photoPos:ME.photoPos||'center center',email:ME.email||''}
   });
 
-  // API LÉGÈRE — données essentielles seulement (accueil rapide)
-  if(p==='/api/light')return J(res,{
-    statuts,agenda,annonces,tasks,
-    signalements:signalements.slice(0,20),
-    evenements:evenements.slice(0,20),
-    comptes_rendus:comptes_rendus.slice(0,10),
-    stats:stats(),
-    chat:chat.slice(-20),
-    me:{id:ME.id,nom:ME.nom,prenom:ME.prenom||'',role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||'',photo:ME.photo||'',photoPos:ME.photoPos||'center center',email:ME.email||''}
-  });
-
   // IDENTITÉ CONNECTÉE
   if(p==='/api/me')return J(res,{id:ME.id,nom:ME.nom,prenom:ME.prenom||'',role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||'',photo:ME.photo||'',photoPos:ME.photoPos||'center center',email:ME.email||''});
 
@@ -713,14 +702,10 @@ const server=http.createServer(function(req,res){
       if(e.id!==id)return e;
       updated=true;
       return Object.assign({},e,{
-        prenom:d.prenom!==undefined?d.prenom:e.prenom,
-        nom:d.nom!==undefined?d.nom:e.nom,
-        role:d.role!==undefined?d.role:e.role,
         tel:d.tel!==undefined?d.tel:e.tel,
         email:d.email!==undefined?d.email:e.email,
-        commission:d.commission!==undefined?d.commission:e.commission,
-        photo:d.photo?d.photo:e.photo,
-        delegation:e.delegation
+        delegation:d.delegation!==undefined?d.delegation:e.delegation,
+        commission:d.commission!==undefined?d.commission:e.commission
       });
     });
     if(updated)save('elus.json',elus);
@@ -813,7 +798,7 @@ function buildPublicPage(){
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Vizille en Mouvement — Mandat 2026-2032</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=DM+Sans:wght@600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -1079,9 +1064,9 @@ pubCalRender();
 
 function buildPage(){
 const today=new Date().toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
-const COMM={"Culture, Patrimoine & Jumelages": ["Culture", "Patrimoine", "Jumelages"], "Mobilités": ["Mobilités"], "Transition écologique": ["Transition écologique"], "Action sociale": ["Action sociale"], "Concertation citoyenne": ["Concertation citoyenne"], "Animations de proximité": ["Animations de proximité"], "Économie": ["Économie"], "Métropole": ["Métropole"], "Enfance/Jeunesse": ["Enfance/Jeunesse"], "Tranquillité publique": ["Tranquillité publique"], "Travaux & Urbanisme": ["Travaux", "Urbanisme"], "Santé": ["Santé"], "Gouvernance": ["Gouvernance"]};
-const COLORS={"Culture, Patrimoine & Jumelages": "#8B5CF6", "Mobilités": "#3B82F6", "Transition écologique": "#10B981", "Action sociale": "#F59E0B", "Concertation citoyenne": "#6366F1", "Animations de proximité": "#EC4899", "Économie": "#14B8A6", "Métropole": "#6B7280", "Enfance/Jeunesse": "#F97316", "Tranquillité publique": "#EF4444", "Travaux & Urbanisme": "#84CC16", "Santé": "#06B6D4", "Gouvernance": "#4F46E5"};
-const ICONS={"Culture, Patrimoine & Jumelages": "🎭", "Mobilités": "🚲", "Transition écologique": "🌿", "Action sociale": "🤝", "Concertation citoyenne": "🗣", "Animations de proximité": "🎪", "Économie": "💼", "Métropole": "🏙", "Enfance/Jeunesse": "👦", "Tranquillité publique": "🛡", "Travaux & Urbanisme": "🏗", "Santé": "🏥", "Gouvernance": "🏛️"};
+const COMM={"Culture, Patrimoine & Jumelages": ["Culture", "Patrimoine", "Jumelages"], "Mobilités": ["Mobilités"], "Transition écologique": ["Transition écologique"], "Action sociale": ["Action sociale"], "Concertation citoyenne": ["Concertation citoyenne"], "Animations de proximité": ["Animations de proximité"], "Économie": ["Économie"], "Métropole": ["Métropole"], "Enfance/Jeunesse": ["Enfance/Jeunesse"], "Tranquillité publique": ["Tranquillité publique"], "Travaux & Urbanisme": ["Travaux", "Urbanisme"], "Santé": ["Santé"]};
+const COLORS={"Culture, Patrimoine & Jumelages": "#8B5CF6", "Mobilités": "#3B82F6", "Transition écologique": "#10B981", "Action sociale": "#F59E0B", "Concertation citoyenne": "#6366F1", "Animations de proximité": "#EC4899", "Économie": "#14B8A6", "Métropole": "#6B7280", "Enfance/Jeunesse": "#F97316", "Tranquillité publique": "#EF4444", "Travaux & Urbanisme": "#84CC16", "Santé": "#06B6D4"};
+const ICONS={"Culture, Patrimoine & Jumelages": "🎭", "Mobilités": "🚲", "Transition écologique": "🌿", "Action sociale": "🤝", "Concertation citoyenne": "🗣", "Animations de proximité": "🎪", "Économie": "💼", "Métropole": "🏙", "Enfance/Jeunesse": "👦", "Tranquillité publique": "🛡", "Travaux & Urbanisme": "🏗", "Santé": "🏥"};
 const REFS={"Culture, Patrimoine & Jumelages": "Marie-Claude", "Enfance/Jeunesse": "Angélique", "Animations de proximité": "Jean-Christophe"};
 const ELUS0=[{"id": 1, "nom": "Troton", "prenom": "Catherine", "role": "Tête de Liste", "delegation": "", "avatar": "CT", "color": "#1a3a2a", "photo": "https://vizilleenmouvement.fr/images/catherine-troton.jpg", "photoPos": "center 40%", "tel": "", "email": "catherine.troton@ville-vizille.fr", "commission": ""}, {"id": 2, "nom": "Ughetto-Monfrin", "prenom": "Bernard", "role": "Adjoint", "delegation": "", "avatar": "BU", "color": "#2d5a40", "photo": "https://vizilleenmouvement.fr/images/bernard-ughetto-monfrin.jpg", "photoPos": "center 30%", "tel": "", "email": "bernard.UGHETTO-MONFRIN@ville-vizille.fr", "commission": ""}, {"id": 3, "nom": "Berriche", "prenom": "Saïda", "role": "Adjointe", "delegation": "", "avatar": "SB", "color": "#3d7a5a", "photo": "https://vizilleenmouvement.fr/images/saida-berriche.jpg", "photoPos": "center 25%", "tel": "", "email": "saida.berriche@ville-vizille.fr", "commission": ""}, {"id": 4, "nom": "Faure", "prenom": "Gilles", "role": "Adjoint", "delegation": "", "avatar": "GF", "color": "#8B5CF6", "photo": "https://vizilleenmouvement.fr/images/gilles-faure.jpg", "photoPos": "center center", "tel": "", "email": "gilles.FAURE@ville-vizille.fr", "commission": ""}, {"id": 5, "nom": "Hermitte", "prenom": "Angélique", "role": "Conseillère déléguée", "delegation": "", "avatar": "AH", "color": "#F97316", "photo": "https://vizilleenmouvement.fr/images/angelique-hermitte.jpg", "photoPos": "center center", "tel": "", "email": "angelique.HERMITTE@ville-vizille.fr", "commission": ""}, {"id": 6, "nom": "Forestier", "prenom": "Gérard", "role": "Adjoint", "delegation": "", "avatar": "GF", "color": "#EC4899", "photo": "https://vizilleenmouvement.fr/images/gerard-forestier.jpg", "photoPos": "center 40%", "tel": "", "email": "gerard.FORESTIER@ville-vizille.fr", "commission": ""}, {"id": 7, "nom": "ARGOUD", "prenom": "Marie-Claude", "role": "Première Adjointe", "delegation": "", "avatar": "MA", "color": "#F59E0B", "photo": "https://vizilleenmouvement.fr/images/marie-claude-argoud.jpg", "photoPos": "center center", "tel": "", "email": "marie-claude.ARGOUD@ville-vizille.fr", "commission": ""}, {"id": 8, "nom": "Lamarca", "prenom": "Louis", "role": "Adjoint", "delegation": "", "avatar": "LL", "color": "#3B82F6", "photo": "https://vizilleenmouvement.fr/images/louis-lamarca.jpg", "photoPos": "center 40%", "tel": "", "email": "Louis.Lamarca@ville-vizille.fr", "commission": ""}, {"id": 9, "nom": "Pasquiou", "prenom": "Muriel", "role": "", "delegation": "", "avatar": "MP", "color": "#10B981", "photo": "https://vizilleenmouvement.fr/images/muriel-pasquiou.jpg", "photoPos": "center center", "tel": "", "email": "muriel.pasquiou@gmail.com", "commission": ""}, {"id": 10, "nom": "Pichon", "prenom": "Laurent", "role": "", "delegation": "", "avatar": "LP", "color": "#EF4444", "photo": "https://vizilleenmouvement.fr/images/laurent-pichon.jpg", "photoPos": "center center", "tel": "", "email": "pichon.laurent@wanadoo.fr", "commission": ""}, {"id": 11, "nom": "YAHIAOUI", "prenom": "Sakina", "role": "conseillère déléguée", "delegation": "", "avatar": "SY", "color": "#14B8A6", "photo": "https://vizilleenmouvement.fr/images/sakina-yahiaoui.jpg", "photoPos": "center 40%", "tel": "", "email": "sakina.YAHIAOUI@ville-vizille.fr", "commission": ""}, {"id": 12, "nom": "CHERIGUI", "prenom": "Mohamed", "role": "", "delegation": "", "avatar": "MC", "color": "#6366F1", "photo": "https://vizilleenmouvement.fr/images/mohamed-cherigui.jpg", "photoPos": "center 25%", "tel": "", "email": "mohamed.cherigui@sdis38.fr", "commission": ""}, {"id": 13, "nom": "REIJASSE", "prenom": "Christelle", "role": "", "delegation": "", "avatar": "CR", "color": "#db2777", "photo": "https://vizilleenmouvement.fr/images/christelle-reijasse.jpg", "photoPos": "center center", "tel": "", "email": "reijassechristelle28@gmail.com", "commission": ""}, {"id": 14, "nom": "MENDESS", "prenom": "Ahmed", "role": "Conseillé délégué", "delegation": "", "avatar": "AM", "color": "#0891b2", "photo": "https://vizilleenmouvement.fr/images/ahmed-mendess.jpg", "photoPos": "center center", "tel": "", "email": "ahmed.MENDESS@ville-vizille.fr", "commission": ""}, {"id": 15, "nom": "Sanchez", "prenom": "Christine", "role": "", "delegation": "", "avatar": "CS", "color": "#65a30d", "photo": "https://vizilleenmouvement.fr/images/christine-sanchez.jpg", "photoPos": "center center", "tel": "", "email": "sanchez7.christine@gmail.com", "commission": ""}, {"id": 16, "nom": "Pasquiou", "prenom": "Fabrice", "role": "Conseiller délégué", "delegation": "", "avatar": "FP", "color": "#7c3aed", "photo": "https://vizilleenmouvement.fr/images/fabrice-pasquiou.jpg", "photoPos": "center center", "tel": "", "email": "fabrice.PASQUIOU@ville-vizille.fr", "commission": ""}, {"id": 17, "nom": "El-Kebir", "prenom": "Meriem", "role": "", "delegation": "", "avatar": "ME", "color": "#9333ea", "photo": "https://vizilleenmouvement.fr/images/meriem-el-kebir.jpg", "photoPos": "center center", "tel": "", "email": "Meriem.El-Kebir@ville-vizille.fr", "commission": ""}, {"id": 18, "nom": "Garcia", "prenom": "Jean-Christophe", "role": "", "delegation": "", "avatar": "JG", "color": "#c2410c", "photo": "https://vizilleenmouvement.fr/images/jean-christophe-garcia.jpg", "photoPos": "center center", "tel": "", "email": "jeanchristophe.garcia38@gmail.com", "commission": ""}, {"id": 19, "nom": "PICCA", "prenom": "Muriel", "role": "", "delegation": "", "avatar": "MP", "color": "#b45309", "photo": "https://vizilleenmouvement.fr/images/muriel-picca.jpg", "photoPos": "center center", "tel": "", "email": "piccamumu@hotmail.fr", "commission": ""}, {"id": 20, "nom": "Thuillier", "prenom": "Michel", "role": "", "delegation": "", "avatar": "MT", "color": "#0f766e", "photo": "https://vizilleenmouvement.fr/images/michel-thuillier.jpg", "photoPos": "center center", "tel": "", "email": "thuilliermichel@mac.com", "commission": ""}, {"id": 21, "nom": "Nifenecker", "prenom": "Isabelle", "role": "", "delegation": "", "avatar": "IN", "color": "#1d4ed8", "photo": "https://vizilleenmouvement.fr/images/isabelle-nifenecker.jpg", "photoPos": "center 40%", "tel": "", "email": "isabelle_nifenecker@hotmail.fr", "commission": ""}, {"id": 22, "nom": "Venans", "prenom": "André-Paul", "role": "Conseiller", "delegation": "", "avatar": "AV", "color": "#be185d", "photo": "https://vizilleenmouvement.fr/images/andre-paul-venans.jpg", "photoPos": "center center", "tel": "", "email": "Andre-Paul.Venans@ville-vizille.fr", "commission": ""}, {"id": 23, "nom": "Jacolin", "prenom": "Nathalie", "role": "", "delegation": "", "avatar": "NJ", "color": "#15803d", "photo": "https://vizilleenmouvement.fr/images/nathalie-jacolin.jpg", "photoPos": "center 40%", "tel": "", "email": "jacolin.nathalie@hotmail.fr", "commission": ""}, {"id": 24, "nom": "Cosentino", "prenom": "Ignazio", "role": "", "delegation": "", "avatar": "IC", "color": "#b91c1c", "photo": "https://vizilleenmouvement.fr/images/ignazio-consentino.jpg", "photoPos": "center center", "tel": "", "email": "ignazio.cosentino@free.fr", "commission": ""}, {"id": 25, "nom": "Germain-Vey", "prenom": "Nathalie", "role": "conseillère déléguée", "delegation": "", "avatar": "NG", "color": "#6d28d9", "photo": "https://vizilleenmouvement.fr/images/nathalie-germain-vey.jpg", "photoPos": "center center", "tel": "", "email": "Nathalie.Germain-Vey@ville-vizille.fr", "commission": ""}, {"id": 26, "nom": "Lasserre", "prenom": "Stéphane", "role": "Conseiller", "delegation": "", "avatar": "SL", "color": "#0369a1", "photo": "https://vizilleenmouvement.fr/images/stephane-lasserre.jpg", "photoPos": "center center", "tel": "", "email": "stephane.LASSERRE@ville-vizille.fr", "commission": ""}];
 const GUIDES=[{"id": "1", "icon": "⚖️", "titre": "Droits et devoirs de l'élu", "contenu": "En tant que conseiller municipal, vous bénéficiez de droits concrets et êtes soumis à des obligations précises.\n\nVOS DROITS\n• Formation : 18h/an remboursées (organismes agréés : AMF Formation, CNFPT). La commune prend en charge les frais pédagogiques et de déplacement.\n• Indemnités : versées selon le rang (maire, adjoint, conseiller). Pour Vizille (~4 350 hab.), les indemnités sont fixées par délibération du conseil.\n• Protection fonctionnelle : la commune vous défend en cas de mise en cause dans l'exercice de vos fonctions.\n• Droit à l'information : vous pouvez consulter tous les documents préparatoires aux délibérations.\n• Droit d'expression : vous pouvez vous exprimer en séance, poser des questions orales, demander des explications de vote.\n• Crédit d'heures : si vous êtes salarié, vous disposez d'un crédit d'heures pour exercer votre mandat (art. L2123-1 CGCT).\n\nVOS DEVOIRS\n• Discrétion : les informations confidentielles obtenues dans l'exercice du mandat ne peuvent être divulguées.\n• Déport : si une délibération vous concerne personnellement (votre rue, votre association, votre employeur), vous devez quitter la salle avant le vote et le signaler.\n• Déclaration d'intérêts : obligatoire pour les adjoints et conseillers délégués (HATVP).\n• Assiduité : votre présence aux séances du conseil est attendue. Trois absences injustifiées consécutives peuvent entraîner une radiation.\n\nEN CAS DE DOUTE : contactez le DGS ou l'AMF (amf.asso.fr, numéro vert gratuit)."}, {"id": "2", "icon": "🏛️", "titre": "Le conseil municipal — comment ça marche", "contenu": "Le conseil municipal est l'organe délibérant de la commune. Il vote le budget, prend les décisions importantes et contrôle l'exécutif.\n\nLES RÉUNIONS\n• Fréquence minimum : 4 fois par an, mais en pratique mensuelle à Vizille.\n• Convocation : envoyée au moins 5 jours avant la séance, avec l'ordre du jour et les documents annexes.\n• Publicité : les séances sont publiques (sauf huis clos voté). Les habitants peuvent assister.\n• Quorum : la moitié des membres en exercice doit être présente. Si le quorum n'est pas atteint, la séance est reportée à 3 jours minimum — sans condition de quorum cette fois.\n\nDÉROULEMENT TYPE D'UNE SÉANCE\n1. Appel nominal et vérification du quorum\n2. Désignation du secrétaire de séance\n3. Approbation du compte-rendu de la séance précédente\n4. Délibérations à l'ordre du jour\n5. Questions diverses / questions orales\n\nLES DÉLIBÉRATIONS\n• Vote à la majorité simple sauf dispositions particulières.\n• Vous pouvez demander un vote à bulletins secrets si la question porte sur des personnes.\n• Vous pouvez voter pour, contre, ou vous abstenir (l'abstention ne compte pas comme un vote).\n• Vous pouvez demander que votre explication de vote figure au procès-verbal.\n\nDROITS PRATIQUES EN SÉANCE\n• Droit d'amendement : vous pouvez proposer une modification d'une délibération.\n• Questions orales : à adresser au maire 48h avant la séance si possible.\n• Procuration : vous pouvez donner procuration à un autre conseiller (une seule procuration par personne)."}, {"id": "3", "icon": "💰", "titre": "Le budget municipal — l'essentiel", "contenu": "Comprendre le budget vous permet de participer utilement aux débats et de porter vos projets efficacement.\n\nSTRUCTURE DU BUDGET DE VIZILLE\n• Budget principal : environ 8-9 M€ par an (fonctionnement + investissement).\n• Section de fonctionnement : dépenses courantes (personnel, charges, subventions). Ne peut pas être financée par emprunt.\n• Section d'investissement : travaux, équipements. Peut être financée par emprunt ou subventions.\n• Règle d'or : le budget doit être voté en équilibre réel.\n\nLE CALENDRIER BUDGÉTAIRE\n• Octobre/novembre : Débat d'Orientation Budgétaire (DOB) — obligatoire, non décisionnel mais structurant.\n• Décembre/janvier : vote du Budget Primitif (BP).\n• En cours d'année : Décisions Modificatives (DM) si nécessaire.\n• N+1 : Compte Administratif (exécution réelle) vs Budget Primitif (prévisionnel).\n\nLES SOURCES DE FINANCEMENT\n• Fiscalité locale (taxe foncière, CFE) : principale ressource.\n• Dotations de l'État (DGF) : en baisse tendancielle depuis 2014.\n• DETR (État) : pour les projets d'investissement ruraux.\n• GAM (Grenoble-Alpes Métropole) : contrats de territoire.\n• Département Isère et Région AURA : appels à projets.\n\nCE QUE VOUS POUVEZ FAIRE\n• Poser des questions en séance sur n'importe quelle ligne budgétaire.\n• Demander un rapport spécial sur une dépense.\n• Voter contre le budget : cela déclenche une procédure de réformation préfectorale.\n• Proposer des vœux budgétaires lors du DOB."}, {"id": "4", "icon": "🏢", "titre": "Qui fait quoi en mairie — organigramme pratique", "contenu": "Connaître les services vous permet d'agir efficacement sans court-circuiter les procédures.\n\nL'EXÉCUTIF POLITIQUE\n• Maire (Catherine Troton) : dirige l'administration, représente la commune, signe les arrêtés et marchés.\n• Adjoints : délégation de signature dans leur domaine. Agissent par délégation du maire.\n• Conseillers délégués : missions spécifiques sans délégation de signature générale.\n• Conseillers : rôle délibératif au conseil, participation aux commissions.\n\nL'ADMINISTRATION MUNICIPALE\n• DGS (Directeur Général des Services) : coordonne tous les services. Votre interlocuteur principal pour les questions transversales.\n• Secrétariat du maire : gère l'agenda, les courriers officiels, les convocations.\n• Service technique (voirie, bâtiments, espaces verts) : travaux et maintenance.\n• Service culturel : médiathèque, animations, patrimoine.\n• CCAS (Centre Communal d'Action Sociale) : action sociale, aides aux personnes.\n• Police Municipale : tranquillité publique, stationnement.\n• Service enfance/jeunesse : crèche, périscolaire, accueil jeunes.\n• Service urbanisme : permis de construire, PLU.\n• Service finances : budget, marchés publics, paie.\n\nLA RÈGLE D'OR\n→ Pour toute demande touchant les services (travaux, renseignements, intervention), passer TOUJOURS par le DGS ou le maire. Ne jamais donner d'instructions directes aux agents.\n→ En tant que conseiller, vous n'avez pas pouvoir hiérarchique sur les agents municipaux.\n\nLES COMMISSIONS\n12 commissions thématiques (voir sidebar). Chaque commission instruit les dossiers avant le conseil. Votre présence aux commissions dont vous êtes membre est essentielle."}, {"id": "5", "icon": "🛡️", "titre": "Conflits d'intérêts — comment les gérer", "contenu": "Le conflit d'intérêts est une situation où votre intérêt personnel peut influencer l'exercice de vos fonctions. La loi est stricte, mais la procédure est simple.\n\nSITUATIONS TYPIQUES À VIZILLE\n• Une délibération concerne une rue où vous habitez (riverain direct).\n• Un marché est attribué à une entreprise qui vous emploie ou appartient à un proche.\n• Une subvention est accordée à une association dont vous êtes président ou membre actif.\n• Un permis de construire voisin de votre propriété est soumis au vote.\n\nLA PROCÉDURE DE DÉPORT (obligatoire)\n1. Signalez la situation au maire AVANT la séance (par écrit si possible).\n2. Lors de la séance, annoncez votre déport à voix haute.\n3. Quittez la salle pendant la délibération ET le vote.\n4. Le procès-verbal mentionnera votre absence sur ce point.\n\nATTENTION : rester assis dans la salle sans voter ne suffit pas — vous devez physiquement quitter la salle.\n\nDÉCLARATION D'INTÉRÊTS (pour adjoints et conseillers délégués)\n• Obligatoire dans les 2 mois suivant la prise de fonctions.\n• À déposer auprès du maire et de la HATVP (hatvp.fr).\n• Mise à jour en cas de changement de situation.\n\nEN CAS DE DOUTE\n• Conseil du DGS ou du maire.\n• Service juridique de l'AMF (gratuit pour les communes adhérentes).\n• En cas de mise en cause pénale : protection fonctionnelle de la commune.\n\nMieux vaut un déport de trop qu'une mise en cause pour prise illégale d'intérêts (délit pénal)."}, {"id": "6", "icon": "🎓", "titre": "Formation et montée en compétences", "contenu": "Vous avez le droit et le devoir de vous former. Les ressources sont nombreuses et souvent gratuites.\n\nVOS DROITS À LA FORMATION\n• 18 heures de formation par an, remboursées sur le budget communal.\n• Les frais pédagogiques, de déplacement et d'hébergement sont pris en charge.\n• Droit individuel à la formation (DIF élu) : 20h/an cumulables sur 6 ans = 120h max.\n• Si vous êtes salarié : droit à un congé formation de 18 jours/mandat.\n\nORGANISMES RECOMMANDÉS\n• AMF Formation (amf.asso.fr) : spécialiste des élus locaux. Programmes thématiques.\n• CNFPT (cnfpt.fr) : formations gratuites ou à tarif réduit pour les élus.\n• IEP Grenoble : formations locales sur les politiques publiques.\n• Université de Grenoble : certificats en droit public local.\n\nFORMATIONS PRIORITAIRES POUR VOTRE MANDAT\n→ Finances locales (comprendre le budget, les marchés publics)\n→ Urbanisme et droit des sols (PLU, permis de construire)\n→ Commande publique (marchés publics, DSP)\n→ Droit de la fonction publique territoriale\n→ Conduite de réunion et concertation citoyenne\n→ Transition écologique pour les collectivités\n\nPROCÉDURE PRATIQUE\n1. Choisissez votre formation sur amf.asso.fr ou cnfpt.fr.\n2. Présentez votre demande au maire avec programme + devis.\n3. Le conseil vote si le montant dépasse le plafond annuel.\n4. La commune paye directement l'organisme.\n\nRESSOURCES GRATUITES EN LIGNE\n• Légifrance (legifrance.gouv.fr) : tous les textes législatifs.\n• Collectivités-locales.gouv.fr : guides pratiques ministériels.\n• Maire-Info (maire-info.com) : actualité quotidienne des communes."}, {"id": "7", "icon": "🗳️", "titre": "Vizille en chiffres — connaître sa commune", "contenu": "Pour intervenir utilement en conseil, voici les données clés de Vizille.\n\nLA COMMUNE\n• Population : environ 7 200 habitants (commune centre) — environ 4 350 dans le périmètre de gestion directe.\n• Superficie : 20,5 km² — commune de montagne, vallée du Drac.\n• Intercommunalité : Grenoble-Alpes Métropole (49 communes, 450 000 hab.).\n• Situation : 25 km au sud de Grenoble, RN85 (route Napoléon), D1091 (Oisans).\n\nLE CONSEIL MUNICIPAL\n• 27 conseillers au total (liste VeM élue le 15 mars 2026).\n• Mandat 2026-2032 (6 ans).\n• Maire : Catherine Troton.\n• 8 adjoints, 5 conseillers délégués, 14 conseillers.\n\nLE BUDGET (estimations 2026)\n• Budget de fonctionnement : ~5,5-6 M€.\n• Budget d'investissement : ~2,5-3 M€.\n• Dette en cours : à consulter au Compte Administratif.\n• Taux de fiscalité : taxe foncière bâtie, CFE (voir délibérations).\n\nLES SERVICES MUNICIPAUX\n• ~80 agents à temps plein équivalent.\n• Services : technique, culturel, enfance, social (CCAS), urbanisme, police municipale, finances.\n\nLES ENJEUX DU MANDAT (programme VeM)\n• Mobilités : désaturation RN85/D1091, alternatives, vélo.\n• Transition écologique : rénovation énergétique, biodiversité, alimentation locale.\n• Centralité vizilloise : réhabilitation centre-ville, OPAH-RU, Tanneries.\n• Enfance/jeunesse : crèche, périscolaire, loisirs.\n• Action sociale : maintien à domicile, CCAS, inclusion.\n• Tranquillité publique : police municipale, médiation.\n• Culture/patrimoine : château, médiathèque, jumelages.\n\nCONTACTS CLÉS\n• Mairie : 04 76 78 06 00 — Place du Château, 38220 Vizille.\n• DGS : votre interlocuteur pour toute question administrative.\n• Préfecture de l'Isère (Grenoble) : tutelle administrative."}, {"id": "8", "icon": "📋", "titre": "Les commissions — rôle et fonctionnement", "contenu": "Les commissions préparent le travail du conseil. C'est là que se fait le vrai travail de fond.\n\nLES 12 COMMISSIONS DE VIZILLE EN MOUVEMENT\n1. Culture, Patrimoine & Jumelages\n2. Mobilités\n3. Transition écologique\n4. Action sociale\n5. Concertation citoyenne\n6. Animations de proximité\n7. Économie\n8. Métropole\n9. Enfance/Jeunesse\n10. Tranquillité publique\n11. Travaux & Urbanisme\n12. Santé\n\nRÔLE DES COMMISSIONS\n• Elles examinent les dossiers AVANT le conseil.\n• Elles formulent des recommandations (avis consultatif — la décision reste au conseil).\n• Elles permettent d'approfondir les sujets et d'auditionner des experts.\n• Elles sont le lieu du travail collectif et du débat interne à la majorité.\n\nFONCTIONNEMENT PRATIQUE\n• Chaque commission a un président (souvent l'adjoint référent du domaine).\n• Les réunions ne sont pas publiques (sauf décision contraire).\n• Vous pouvez assister aux commissions dont vous n'êtes pas membre, sauf vote contraire.\n• Un compte rendu est établi et communiqué aux conseillers.\n\nVOTRE RÔLE EN COMMISSION\n• Préparez les dossiers en lisant les documents transmis à l'avance.\n• Posez vos questions pendant la commission, pas en séance plénière.\n• Si vous êtes référent d'un projet, assurez-vous du suivi entre deux séances.\n• Faites le lien avec les habitants et les associations de votre secteur.\n\nASTUCE : La commission \"Métropole\" suit les dossiers GAM qui impactent Vizille. Particulièrement important pour les mobilités, l'urbanisme et les financements."}];
@@ -1093,7 +1078,7 @@ return `<!DOCTYPE html>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>VeM &#x2014; Espace élus</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js" defer><\/script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"><\/script>
 <style>
 :root{
   --g1:#0f2318;--g2:#1d3d2b;--g3:#2d5a40;--g4:#3d7a5a;--g5:#5a9a70;--g6:#7ab890;--g7:#b8d9c4;--g8:#e6f4ea;--g9:#f4fbf6;
@@ -2274,26 +2259,11 @@ textarea.fi{resize:vertical;min-height:90px;}
 </div></div>
 
 <div class="ov" id="ov-repelu"><div class="modal">
-  <div class="mhd"><h3>&#x1F4C2; Ajouter au r&#xe9;pertoire</h3><button class="mcl" onclick="cm()">&#xd7;</button></div>
-  <!-- Onglets type -->
-  <div style="display:flex;gap:6px;margin-bottom:1rem;background:var(--w);border-radius:var(--r);padding:4px">
-    <button id="re-tab-lien" onclick="reTab('lien')" class="btn btn-p btn-sm" style="flex:1;justify-content:center">&#x1F517; Lien URL</button>
-    <button id="re-tab-file" onclick="reTab('file')" class="btn btn-s btn-sm" style="flex:1;justify-content:center">&#x1F4CE; Fichier</button>
-  </div>
-  <div class="ff"><label>Titre *</label><input class="fi" id="re-ti" placeholder="Nom du document"></div>
-  <!-- Zone lien -->
-  <div id="re-zone-lien">
-    <div class="ff"><label>URL *</label><input class="fi" type="url" id="re-url" placeholder="https://kdrive.infomaniak.com/&#x2026;"></div>
-  </div>
-  <!-- Zone fichier -->
-  <div id="re-zone-file" style="display:none">
-    <div class="ff"><label>Fichier *</label>
-      <input class="fi" type="file" id="re-file" style="padding:6px" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.png,.jpg,.jpeg">
-      <div id="re-upload-st" style="font-size:.7rem;color:var(--i3);margin-top:4px"></div>
-    </div>
-  </div>
-  <div class="ff"><label>Notes</label><textarea class="fi" id="re-notes" placeholder="Contexte, date, description&#x2026;" style="height:70px"></textarea></div>
-  <div class="mft"><button class="btn btn-g" onclick="cm()">Annuler</button><button class="btn btn-p" id="re-save-btn" onclick="svRepElu()">Enregistrer</button></div>
+  <div class="mhd"><h3>&#x1F4C2; Ajouter un lien</h3><button class="mcl" onclick="cm()">&#xd7;</button></div>
+  <div class="ff"><label>Titre *</label><input class="fi" id="re-ti" placeholder="Nom du document ou lien"></div>
+  <div class="ff"><label>Lien (URL)</label><input class="fi" type="url" id="re-url" placeholder="https://&#x2026;"></div>
+  <div class="ff"><label>Notes</label><textarea class="fi" id="re-notes" placeholder="Contexte, date, description&#x2026;"></textarea></div>
+  <div class="mft"><button class="btn btn-g" onclick="cm()">Annuler</button><button class="btn btn-p" onclick="svRepElu()">Enregistrer</button></div>
 </div></div>
 
 <div class="ov" id="ov-annonce"><div class="modal">
@@ -2463,7 +2433,6 @@ qsa(".ov").forEach(function(o){o.addEventListener("click",function(e){if(e.targe
 
 // ── NAVIGATION ───────────────────────────────────────────────────────────────
 function gp(id,ni){
-  var _p=document.getElementById("main-panel");if(_p)_p.style.display="none";
   qsa(".page").forEach(function(p){p.classList.remove("on");});
   qsa(".sbi").forEach(function(n){n.classList.remove("on");});
   var pg=$("p-"+id);
@@ -2557,8 +2526,7 @@ function closePanel(){
 }
 
 
-function goComm(){openPanel("comm");}
-function renderComm(){var pb=document.getElementById("panel-body");if(pb){var d=document.createElement("div");d.className="scr";d.innerHTML="";pb.innerHTML="";pb.appendChild(d);buildCG();}}
+function goComm(){gp("comm",qsa(".sbi")[9]);}
 function goGlobal(){gp("global",qsa(".sbi")[10]);}
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
@@ -2569,7 +2537,7 @@ function openProfile(){
   pb.innerHTML='<div style="display:flex;align-items:center;gap:14px;padding:.85rem;background:var(--g8);border-radius:var(--R)">'
     +'<div style="width:50px;height:50px;border-radius:14px;background:'+(ME.color||"var(--g3)")+';display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;color:#fff;font-family:var(--fd)">'+ME.avatar+'</div>'
     +'<div><div style="font-size:.95rem;font-weight:700;font-family:var(--fd);color:var(--ink)">'+ME.nom+'</div>'
-    +'<div style="font-size:.75rem;color:var(--i3);margin-top:1px">'+( ME.role||"")+'</div>'
+    +'<div style="font-size:.75rem;color:var(--i3);margin-top:1px">'+ME.role+(ME.delegation?" — "+ME.delegation:"")+'</div>'
     +'<div style="font-size:.67rem;color:var(--i4);margin-top:2px;font-family:var(--fm)">Login : '+ME.username+'</div>'
     +'</div></div>';
   $("new-pwd").value=""; $("new-pwd2").value=""; $("pwd-msg").textContent="";
@@ -2597,54 +2565,56 @@ function init(){
   var now=new Date();
   $("tdate").textContent=now.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
 
-  // Afficher immédiatement le héro avec données de base (me)
-  apiGet("/api/me").then(function(me){
-    ME=me;
-    var av=$("top-av-btn");
-    if(av){av.textContent=ME.avatar;av.style.background=ME.color||"var(--g4)";}
-    renderHeroAccueil();
-  });
-
-  // Phase 1 : données légères pour accueil rapide
-  apiGet("/api/light").then(function(d){
-    ST=d.statuts; AG=d.agenda;
+  apiGet("/api/all").then(function(d){
+    ST=d.statuts; AG=d.agenda; DC=d.documents; NF=d.notifs;
     ANN=d.annonces||[]; TASKS=d.tasks||[];
-    if(d.me){ ME=d.me;
+    if(d.me){
+      ME=d.me;
+      // Mettre à jour l'avatar dans la topbar
       var av=$("top-av-btn");
       if(av){av.textContent=ME.avatar;av.style.background=ME.color||"var(--g4)";}
+      // Mettre à jour le label du répertoire
+      var repT=document.querySelector("#p-repelus .ph-t");
+      if(repT)repT.textContent="Mon répertoire personnel";
+      var repS=document.querySelector("#p-repelus .ph-s");
+      if(repS)repS.textContent="Vos documents privés — visibles uniquement par vous";
     }
     SIGN=d.signalements||[]; EVTS=d.evenements||[];
-    CRS=d.comptes_rendus||[];
+    CRS=d.comptes_rendus||[]; ELUS_DATA=d.elus||[];
+    BIBLIO=[]; // chargé séparément
     if(d.stats){
       el("k-tot",d.stats.total); el("k-pr",d.stats.prioritaires);
       el("k-26",d.stats.annee2026); el("k-re",d.stats.realises);
-      el("k-sig",d.stats.sig_new||0); el("sb-tot",d.stats.total);
+      el("k-sig",d.stats.sig_new||0);
+      el("sb-tot",d.stats.total);
     }
-    renderHeroAccueil(); renderTasks(); renderAnn(); renderNextMtg();
-    buildGuides(); buildRess(); updSigBadge();
-    var sigOpen=SIGN.filter(function(s){return s.statut!=="Résolu"&&s.statut!=="Non retenu";}).length;
+    renderTasks(); renderAnn(); renderNextMtg();
+    buildGuides(); buildRess();
+    updSigBadge(); renderHeroAccueil();
+    // KPI mandat contextuels
+    var sigOpen=SIGN.filter(function(s){return s.statut!=='Résolu'&&s.statut!=='Non retenu';}).length;
     el("kpi-sig-open",sigOpen);
     if(sigOpen>0)$("kpi-sig-open").style.color="var(--red)";
+    // Sessions conseil dans l'année
     var y=new Date().getFullYear();
     var conseils=AG.filter(function(a){return a.type==="conseil"&&(a.date||"").startsWith(String(y));}).length;
     el("kpi-conseil",conseils+"/"+Math.max(conseils,4));
     initCal(); renderWidgetAgenda(); renderWidgetSig(); renderCRHome(); renderEvHome(); checkUrgents(); initWidgetChat();
+    el("k-sig",d.stats?d.stats.sig_new||0:0);
   });
 
-  // Phase 2 : projets (en parallèle)
   apiGet("/api/projets").then(function(data){
-    P=data; buildFilters(); fG(); buildCG(); buildCharts(); renderWidgetMandat();
+    P=data; buildFilters(); fG(); buildCG(); buildCharts();
+    renderWidgetMandat();
   });
 
-  // Phase 3 : élus chargés séparément (léger, rapide)
-  apiGet("/api/elus").then(function(data){
-    ELUS_DATA=data;
-    el("sb-tot", ELUS_DATA.length);
+  apiGet("/api/biblio").then(function(data){
+    BIBLIO=data; el("sb-bib",BIBLIO.length); renderBiblio();
   });
 
-  // Phase 4 : biblio et répertoire en arrière-plan
-  apiGet("/api/biblio").then(function(data){BIBLIO=data;el("sb-bib",BIBLIO.length);});
-  apiGet("/api/rep_elus").then(function(data){REP_ELUS=data||{};});
+  apiGet("/api/rep_elus").then(function(data){
+    REP_ELUS=data||{};
+  });
 
   _chatTimer=setInterval(pollChat,6000);
   renderChatMsgs([]);
@@ -2843,7 +2813,7 @@ function renderHeroAccueil(){
     }
   }
   if(bj) bj.textContent=salut+", "+ME.nom.split(" ")[0]+" !";
-  if(rl) rl.textContent=ME.role||"";
+  if(rl) rl.textContent=(ME.role||"")+(ME.delegation?" — "+ME.delegation:"");
   if(db) db.textContent=now.getDate();
   if(mo) mo.textContent=JOURS_L[now.getDay()]+" "+now.toLocaleDateString("fr-FR",{month:"long",year:"numeric"});
   if(ct) ct.textContent=CITATIONS[now.getDate()%CITATIONS.length];
@@ -3336,50 +3306,18 @@ function renderRepEluFiles(){
   }).join(""):'<div class="empty"><div class="empty-ico">📁</div><div class="empty-t">Répertoire vide</div><div class="empty-s">Cliquez sur "+ Ajouter un lien" pour archiver.</div></div>';
 }
 
-function reTab(t){
-  document.getElementById("re-zone-lien").style.display=t==="lien"?"block":"none";
-  document.getElementById("re-zone-file").style.display=t==="file"?"block":"none";
-  document.getElementById("re-tab-lien").className="btn btn-sm"+(t==="lien"?" btn-p":" btn-s")+" btn-sm";
-  document.getElementById("re-tab-file").className="btn btn-sm"+(t==="file"?" btn-p":" btn-s")+" btn-sm";
-  document.getElementById("re-tab-lien").style.flex="1";
-  document.getElementById("re-tab-file").style.flex="1";
-  document.getElementById("re-tab-lien").style.justifyContent="center";
-  document.getElementById("re-tab-file").style.justifyContent="center";
-}
-
 function svRepElu(){
-  var ti=v("re-ti").trim();
-  if(!ti){toast("Titre obligatoire");return;}
-  var notes=v("re-notes");
-  var isFile=document.getElementById("re-zone-file").style.display!=="none";
-
-  if(isFile){
-    var fileInput=document.getElementById("re-file");
-    if(!fileInput||!fileInput.files.length){toast("Sélectionnez un fichier");return;}
-    var file=fileInput.files[0];
-    var st=document.getElementById("re-upload-st");
-    if(st)st.textContent="Envoi en cours…";
-    document.getElementById("re-save-btn").disabled=true;
-    var fd=new FormData();
-    fd.append("file",file);
-    fetch("/api/upload",{method:"POST",body:fd})
-      .then(function(r){return r.json();})
-      .then(function(r){
-        if(!r.ok){toast("Erreur upload : "+(r.error||"?"));document.getElementById("re-save-btn").disabled=false;return;}
-        var d={nom:ti,url:r.url,notes:notes,type:"fichier",nom_fichier:r.nom,taille:r.taille};
-        apiPost("/api/rep_elus",d).then(function(res){
-          if(res.ok){REP_ELUS[String(ME.id)]=REP_ELUS[String(ME.id)]||[];REP_ELUS[String(ME.id)].unshift(res.item);cm();renderRepEluFiles();toast("Fichier ajouté !");}
-          document.getElementById("re-save-btn").disabled=false;
-        });
-      }).catch(function(){toast("Erreur réseau");document.getElementById("re-save-btn").disabled=false;});
-  } else {
-    var url=v("re-url").trim();
-    if(!url){toast("URL obligatoire");return;}
-    var d={nom:ti,url:url,notes:notes,type:"lien"};
-    apiPost("/api/rep_elus",d).then(function(res){
-      if(res.ok){REP_ELUS[String(ME.id)]=REP_ELUS[String(ME.id)]||[];REP_ELUS[String(ME.id)].unshift(res.item);cm();renderRepEluFiles();toast("Lien ajouté !");}
-    });
-  }
+  var d={titre:v("re-ti"),url:v("re-url"),notes:v("re-notes")};
+  if(!d.titre){toast("Titre obligatoire");return;}
+  apiPost("/api/rep_elus",d).then(function(r){
+    if(r.ok){
+      if(!REP_ELUS[ME.id])REP_ELUS[ME.id]=[];
+      REP_ELUS[ME.id].unshift(r.item);
+      _repEluId=ME.id;
+      renderRepEluFiles();cm();toast("Lien ajouté");
+      ["re-ti","re-url","re-notes"].forEach(function(i){var e=$(i);if(e)e.value="";});
+    }
+  });
 }
 function delRepFile(id){
   if(!confirm("Supprimer ?"))return;
@@ -3405,63 +3343,55 @@ function renderElus(){
       +'<div style="flex:1;min-width:0">'
       +'<div class="elu-n">'+(e.prenom?e.prenom+' ':'')+e.nom+'</div>'
       +'<div class="elu-r">'+e.role+'</div>'
-      
+      +(e.delegation?'<div class="elu-d">'+e.delegation+'</div>':"")
       +'</div></div>';
   }).join("");
 }
-var _eluId=null;
 function openElu(i){
   var list=ELUS_DATA.length?ELUS_DATA:ELUS0;
   var e=list[i];if(!e)return;
-  _eluId=e.id;
   var col=e.color||"var(--g3)";
   var fullName=(e.prenom?e.prenom+" ":"")+e.nom;
   $("elu-det-t").textContent=fullName;
-  var commOpts=Object.keys(COMM).map(function(c){return'<option value="'+c+'"'+(e.commission===c?' selected':'')+'>'+c+'</option>';}).join('');
+  var photoBlock=e.photo
+    ?'<img src="'+e.photo+'" style="width:72px;height:72px;border-radius:14px;object-fit:cover;object-position:'+(e.photoPos||"center center")+';flex-shrink:0" onerror="hideImg(this)">   '
+    :'<div style="width:72px;height:72px;border-radius:14px;background:'+col+';display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;color:#fff;flex-shrink:0">'+e.avatar+'</div>';
   $("elu-det-b").innerHTML=
-    '<div style="display:flex;align-items:center;gap:12px;padding:.85rem;background:var(--g8);border-radius:var(--R);margin-bottom:1rem;border:1px solid var(--g7)">'
-    +(e.photo?'<img src="'+e.photo+'" style="width:56px;height:56px;border-radius:12px;object-fit:cover;flex-shrink:0" onerror="this.style.display='none'">':'<div style="width:56px;height:56px;border-radius:12px;background:'+col+';display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff;flex-shrink:0">'+e.avatar+'</div>')
-    +'<div><div style="font-size:.95rem;font-weight:700;font-family:var(--fd)">'+fullName+'</div>'
-    +'<div style="font-size:.75rem;color:var(--g3);margin-top:2px">'+e.role+'</div></div></div>'
-    +'<div style="display:flex;flex-direction:column;gap:9px">'
-    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Prénom</label><input id="ef-prenom" class="fi" value="'+(e.prenom||"")+'" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Nom</label><input id="ef-nom" class="fi" value="'+(e.nom||"")+'" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'</div>'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Rôle</label><input id="ef-role" class="fi" value="'+(e.role||"")+'" placeholder="Adjoint, Conseillère…" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Commission</label><select id="ef-comm" class="fi" style="font-size:.76rem;padding:6px 9px"><option value="">— aucune —</option>'+commOpts+'</select></div>'
-    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Téléphone</label><input id="ef-tel" class="fi" value="'+(e.tel||"")+'" placeholder="06 00 00 00 00" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Email</label><input id="ef-email" class="fi" value="'+(e.email||"")+'" type="email" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'</div>'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">URL Photo</label><input id="ef-photo" class="fi" value="'+(e.photo||"")+'" placeholder="https://vizilleenmouvement.fr/images/…" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'<div style="display:flex;justify-content:flex-end;padding-top:4px"><button class="btn btn-p" onclick="saveEluFull()">💾 Enregistrer</button></div>'
-    +'</div>';
+    '<div style="display:flex;align-items:center;gap:14px;padding:.9rem;background:var(--g8);border-radius:var(--R);margin-bottom:1rem;border:1px solid var(--g7)">'
+    +photoBlock
+    +'<div><div style="font-size:1rem;font-weight:700;font-family:var(--fd)">'+fullName+'</div>'
+    +'<div style="font-size:.78rem;color:var(--g3);margin-top:2px;font-weight:600">'+e.role+'</div>'
+    +(e.delegation?'<div style="font-size:.72rem;color:var(--i3);margin-top:3px">'+e.delegation+'</div>':"")
+    +'</div></div>'
+    +(e.commission?'<div style="font-size:.78rem;padding:.5rem 0;border-bottom:1px solid var(--w2)"><strong style="color:var(--i3)">Commission :</strong> <span class="chip">'+e.commission+'</span></div>':"")
+    +(e.tel?'<div style="font-size:.78rem;padding:.5rem 0;border-bottom:1px solid var(--w2)"><strong style="color:var(--i3)">Tél : </strong><a href="tel:'+e.tel+'" style="color:var(--g3)">'+e.tel+'</a></div>':"")
+    +(e.email?'<div style="font-size:.78rem;padding:.5rem 0"><strong style="color:var(--i3)">Email : </strong><a href="mailto:'+e.email+'" style="color:var(--g3)">'+e.email+'</a></div>':"")
+    + '<div style="margin-top:.85rem;padding-top:.75rem;border-top:1px solid var(--w2)">'
+    + '<div style="font-size:.68rem;font-weight:700;color:var(--i3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem">Modifier les coordonnées</div>'
+    + '<div style="display:flex;flex-direction:column;gap:8px">'
+    + '<div style="display:flex;align-items:center;gap:8px"><label style="font-size:.7rem;color:var(--i3);width:60px;flex-shrink:0">Tél.</label><input id="elu-edit-tel" class="fi" value="'+(e.tel||"")+'" placeholder="06 00 00 00 00" style="flex:1;font-size:.76rem;padding:6px 9px"></div>'
+    + '<div style="display:flex;align-items:center;gap:8px"><label style="font-size:.7rem;color:var(--i3);width:60px;flex-shrink:0">Email</label><input id="elu-edit-email" class="fi" value="'+(e.email||"")+'" placeholder="prenom.nom@ville.fr" type="email" style="flex:1;font-size:.76rem;padding:6px 9px"></div>'
+    + '<div style="display:flex;justify-content:flex-end;margin-top:4px"><button class="btn btn-p btn-sm" onclick="saveEluContact('+e.id+')">&#x1F4BE; Enregistrer</button></div>'
+    + '</div></div>';
   om("elu-det");
 }
 
-function saveEluFull(){
-  if(!_eluId)return;
-  var d={
-    prenom:(document.getElementById("ef-prenom")||{value:""}).value.trim(),
-    nom:(document.getElementById("ef-nom")||{value:""}).value.trim(),
-    role:(document.getElementById("ef-role")||{value:""}).value.trim(),
-    commission:(document.getElementById("ef-comm")||{value:""}).value,
-    tel:(document.getElementById("ef-tel")||{value:""}).value.trim(),
-    email:(document.getElementById("ef-email")||{value:""}).value.trim(),
-    photo:(document.getElementById("ef-photo")||{value:""}).value.trim()
-  };
-  if(!d.nom){toast("Le nom est obligatoire");return;}
-  apiPatch("/api/elus/"+_eluId,d).then(function(r){
-    if(r.ok){
-      [ELUS_DATA,ELUS0].forEach(function(arr){arr.forEach(function(e){
-        if(e.id===_eluId){e.prenom=d.prenom;e.nom=d.nom;e.role=d.role;e.commission=d.commission;e.tel=d.tel;e.email=d.email;if(d.photo)e.photo=d.photo;}
-      });});
-      cm();renderElus();toast("Élu mis à jour !");
-    } else {toast("Erreur d'enregistrement",3000);}
-  });
+function saveEluContact(eluId) {
+  var tel = v("elu-edit-tel"), email = v("elu-edit-email");
+  apiPatch("/api/elus/"+eluId, {tel:tel, email:email})
+    .then(function(d){
+      if(d.ok) {
+        // Mettre à jour localement
+        var list = ELUS_DATA.length ? ELUS_DATA : ELUS0;
+        list.forEach(function(e){ if(e.id===eluId){e.tel=tel;e.email=email;} });
+        ELUS_DATA.forEach(function(e){ if(e.id===eluId){e.tel=tel;e.email=email;} });
+        cm(); renderElus();
+        toast("Coordonnées enregistrées !");
+      } else {
+        toast("Erreur d'enregistrement", 3000);
+      }
+    });
 }
-function saveEluContact(eluId){_eluId=eluId;saveEluFull();}
 
 
 // ── COMMISSIONS ──────────────────────────────────────────────────────────────
@@ -3552,12 +3482,12 @@ function rTb(bid,rows,showC){
       ?'<td><span class="chip">'+t2c(p.theme||"")+'</span><br><span style="font-size:.63rem;color:var(--i4)">'+(p.theme||"—")+'</span></td>'
       :'<td style="font-size:.72rem;color:var(--i3)">'+(p.theme||"—")+'</td>';
     return '<tr>'+c1
-      +'<td style="max-width:180px"><div class="pn" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px">'+(p.titre||"—")+'</div><div class="pr" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px">'+(p.resume||"")+'</div></td>'
+      +'<td><div class="pn">'+(p.titre||"—")+'</div><div class="pr">'+(p.resume||"")+'</div></td>'
       +'<td><span class="b '+bc(st)+'">'+st+'</span></td>'
       +'<td style="color:var(--i3);font-family:var(--fm);font-size:.72rem">'+(p.annee||"—")+'</td>'
       +'<td>'+imp(p.importance)+'</td>'
       +'<td><div style="display:flex;align-items:center;gap:5px"><select class="ssel" data-pid="'+p.id+'" data-t="'+p.titre.replace(/"/g,"&quot;")+'" onchange="uSt(+this.dataset.pid,this.value,this.dataset.t)">'+opts+'</select>'
-      +'<button onclick="oProj('+p.id+')" style="padding:7px 16px;font-size:.78rem;font-weight:700;cursor:pointer;background:var(--g2);color:#fff;border:none;border-radius:8px;flex-shrink:0;font-family:var(--fd)">&#x270F; Modifier</button></div></td>'
+      +'<button onclick="oProj('+p.id+')" title="Modifier le projet" style="padding:4px 8px;font-size:.8rem;cursor:pointer;background:var(--g3);color:#fff;border:none;border-radius:6px;flex-shrink:0;line-height:1">&#x270F;</button></div></td>'
       +'</tr>';
   }).join("");
 }
@@ -3603,38 +3533,19 @@ function showCD(idx){
   var pp=P.filter(function(p){return themes.indexOf(p.theme)>=0;});
   var to=pp.length,pr=0,ec=0,re=0;
   pp.forEach(function(p){var s=ST[p.id]||p.statut||"";if(s==="Prioritaire")pr++;if(s.indexOf("cours")>=0)ec++;if(s.indexOf("alis")>=0)re++;});
-  var statOpts=SLIST.map(function(s){return'<option value="'+s+'">'+s+'</option>';}).join('');
-  var html=''
-    +'<div style="background:'+col+'18;border-bottom:3px solid '+col+';padding:.85rem 1.4rem;display:flex;align-items:center;gap:12px">'
-    +'<div style="width:40px;height:40px;border-radius:10px;background:'+col+';display:flex;align-items:center;justify-content:center;font-size:1.2rem">'+(ICONS[comm]||"📋")+'</div>'
-    +'<div style="flex:1"><div style="font-size:1rem;font-weight:800;font-family:var(--fd)">'+comm+'</div>'
-    +'<div style="font-size:.72rem;color:var(--i3)">'+themes.join(" · ")+(REFS[comm]?" — <strong>"+REFS[comm]+"</strong>":"")+'</div></div>'
-    +'<button onclick="renderComm()" style="background:rgba(0,0,0,.07);border:none;border-radius:7px;padding:5px 12px;font-size:.73rem;cursor:pointer">← Retour</button>'
-    +'</div>'
-    +'<div style="display:flex;gap:8px;padding:.75rem 1.4rem;background:#fff;border-bottom:1px solid var(--w2)">'
-    +'<div class="kpi" style="flex:1"><div class="kpiv">'+to+'</div><div class="kpil">Projets</div></div>'
-    +'<div class="kpi" style="flex:1"><div class="kpiv" style="color:var(--red)">'+pr+'</div><div class="kpil">Prioritaires</div></div>'
-    +'<div class="kpi" style="flex:1"><div class="kpiv" style="color:var(--amber)">'+ec+'</div><div class="kpil">En cours</div></div>'
-    +'<div class="kpi" style="flex:1"><div class="kpiv" style="color:var(--g4)">'+re+'</div><div class="kpil">Réalisés</div></div>'
-    +'</div>'
-    +'<div class="fb">'
-    +'<select class="fsel" id="cdp-st" onchange="fCDP()"><option value="">Tous statuts</option>'+statOpts+'</select>'
-    +'<input class="fsrch" id="cdp-q" placeholder="🔍 Rechercher…" oninput="fCDP()">'
-    +'<span class="fcnt" id="cdp-cnt"></span>'
-    +'</div>'
-    +'<div class="tbw" style="border-radius:0;border-left:none;border-right:none;border-bottom:none">'
-    +'<table><thead><tr><th>Thème</th><th>Projet</th><th>Statut</th><th>Année</th><th>Imp.</th><th>Modifier</th></tr></thead>'
-    +'<tbody id="cdp-tb"></tbody></table></div>';
-  var pb=document.getElementById("panel-body");
-  if(pb){pb.innerHTML=html;fCDP();}
-}
-function fCDP(){
-  var comm=Object.keys(COMM)[_ci],themes=COMM[comm];
-  var sEl=document.getElementById("cdp-st"),qEl=document.getElementById("cdp-q");
-  var s=sEl?sEl.value:"",q=qEl?(qEl.value||"").toLowerCase():"";
-  var r=P.filter(function(p){var ps=ST[p.id]||p.statut||"ND";return themes.indexOf(p.theme)>=0&&(!s||ps===s)&&(!q||(p.titre||"").toLowerCase().indexOf(q)>=0||(p.resume||"").toLowerCase().indexOf(q)>=0);});
-  var cnt=document.getElementById("cdp-cnt");if(cnt)cnt.textContent=r.length+" projet(s)";
-  rTb("cdp-tb",r,false);
+  $("cdet-ico").textContent=ICONS[comm]||"📋";
+  el("cdet-t",comm);
+  el("cdet-s",themes.join(" · ")+(REFS[comm]?" — "+REFS[comm]:""));
+  $("cdet-kpis").innerHTML=
+    '<div class="kpi" style="flex:1;min-width:0"><div class="kpiv">'+to+'</div><div class="kpil">Projets</div></div>'
+    +'<div class="kpi" style="flex:1;min-width:0"><div class="kpiv" style="color:var(--red)">'+pr+'</div><div class="kpil">Prioritaires</div></div>'
+    +'<div class="kpi" style="flex:1;min-width:0"><div class="kpiv" style="color:var(--amber)">'+ec+'</div><div class="kpil">En cours</div></div>'
+    +'<div class="kpi" style="flex:1;min-width:0"><div class="kpiv" style="color:var(--g4)">'+re+'</div><div class="kpil">Réalisés</div></div>';
+  $("cd-st").value=""; $("cd-q").value="";
+  qsa(".page").forEach(function(p){p.classList.remove("on");});
+  qsa(".sbi").forEach(function(n){n.classList.remove("on");});
+  $("p-cdet").classList.add("on");
+  fCD();
 }
 function fCD(){
   var comm=Object.keys(COMM)[_ci],themes=COMM[comm];
@@ -3646,8 +3557,6 @@ function fCD(){
 
 // ── CHARTS ───────────────────────────────────────────────────────────────────
 function buildCharts(){
-  var et=$("chT"),es=$("chS");
-  if(!et&&!es)return; // Pas de canvas visible, skip
   var th={},st={};
   P.forEach(function(p){var t=p.theme||"?";th[t]=(th[t]||0)+1;var s=ST[p.id]||p.statut||"ND";st[s]=(st[s]||0)+1;});
   var tk=Object.keys(th).sort(),tv=tk.map(function(k){return th[k];});
@@ -3862,7 +3771,34 @@ var CITATIONS = [
   "Le service public local, c'est le plus proche des gens.",
 ];
 
+function renderHeroAccueil(){
+  var now=new Date();
+  var h=now.getHours();
+  var salut=h<5?"Bonne nuit":h<12?"Bonjour":h<18?"Bon après-midi":"Bonsoir";
+  var JOURS=["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
+  var MOIS_L=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
 
+  var av=$("hero-av"),bj=$("hero-bonjour"),rl=$("hero-role"),ct=$("hero-citation");
+  var db=$("hero-date-big"),mo=$("hero-mois");
+  if(av){
+    if(ME.photo){
+      av.innerHTML='<img src="'+ME.photo+'" style="width:100%;height:100%;object-fit:cover;object-position:'+(ME.photoPos||"center center")+';border-radius:14px" onerror="hideImg(this)">';
+      av.style.background=ME.color||"var(--g4)";
+    } else {
+      av.textContent=ME.avatar||"?";
+      av.style.background=ME.color||"var(--g4)";
+    }
+  }
+  if(bj) bj.textContent=salut+", "+ME.nom.split(" ")[0]+" !";
+  if(rl) rl.textContent=(ME.role||"")+(ME.delegation?" — "+ME.delegation:"");
+  if(db) db.textContent=now.getDate();
+  if(mo) mo.textContent=JOURS[now.getDay()]+" "+now.toLocaleDateString("fr-FR",{month:"long",year:"numeric"});
+  if(ct) ct.textContent=CITATIONS[now.getDate()%CITATIONS.length];
+
+  // Mettre à jour avatar topbar
+  var topAv=$("top-av-btn");
+  if(topAv){topAv.textContent=ME.avatar||"?";topAv.style.background=ME.color||"var(--g4)";}
+}
 
 /* ── ACCUEIL : RACCOURCIS ────────────────────────────────────────────────── */
 function renderShortcuts(){
