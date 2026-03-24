@@ -3483,12 +3483,12 @@ function rTb(bid,rows,showC){
       ?'<td><span class="chip">'+t2c(p.theme||"")+'</span><br><span style="font-size:.63rem;color:var(--i4)">'+(p.theme||"—")+'</span></td>'
       :'<td style="font-size:.72rem;color:var(--i3)">'+(p.theme||"—")+'</td>';
     return '<tr>'+c1
-      +'<td><div class="pn">'+(p.titre||"—")+'</div><div class="pr">'+(p.resume||"")+'</div></td>'
+      +'<td style="max-width:180px"><div class="pn" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px">'+(p.titre||"—")+'</div><div class="pr" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px">'+(p.resume||"")+'</div></td>'
       +'<td><span class="b '+bc(st)+'">'+st+'</span></td>'
       +'<td style="color:var(--i3);font-family:var(--fm);font-size:.72rem">'+(p.annee||"—")+'</td>'
       +'<td>'+imp(p.importance)+'</td>'
       +'<td><div style="display:flex;align-items:center;gap:5px"><select class="ssel" data-pid="'+p.id+'" data-t="'+p.titre.replace(/"/g,"&quot;")+'" onchange="uSt(+this.dataset.pid,this.value,this.dataset.t)">'+opts+'</select>'
-      +'<button onclick="oProj('+p.id+')" title="Modifier le projet" style="padding:4px 8px;font-size:.8rem;cursor:pointer;background:var(--g3);color:#fff;border:none;border-radius:6px;flex-shrink:0;line-height:1">&#x270F;</button></div></td>'
+      +'<button onclick="oProj('+p.id+')" style="padding:7px 16px;font-size:.78rem;font-weight:700;cursor:pointer;background:var(--g2);color:#fff;border:none;border-radius:8px;flex-shrink:0;font-family:var(--fd)">&#x270F; Modifier</button></div></td>'
       +'</tr>';
   }).join("");
 }
