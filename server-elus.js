@@ -1110,7 +1110,7 @@ body{font-family:var(--fn);background:var(--w);color:var(--ink);height:100vh;ove
 .cbdg{width:7px;height:7px;background:var(--red);border-radius:50%;position:absolute;top:-2px;right:-2px;border:1.5px solid var(--g1);display:none;}
 
 /* LAYOUT */
-.layout{display:flex;flex:1;overflow:hidden;}
+.layout{display:flex;flex:1;overflow:hidden;height:calc(100vh - var(--th));}
 
 /* SIDEBAR */
 .sb{width:var(--sw);background:var(--g1);flex-shrink:0;display:flex;flex-direction:column;overflow-y:auto;z-index:50;}
