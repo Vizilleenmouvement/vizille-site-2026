@@ -1389,7 +1389,7 @@ textarea.fi{resize:vertical;min-height:90px;}
 .empty-s{font-size:.74rem;color:var(--i4);}
 
 /* TOAST */
-.toast{position:fixed;top:72px;left:50%;transform:translateX(-50%);background:var(--g1);color:#fff;padding:11px 22px;border-radius:var(--R);font-size:.82rem;font-weight:600;z-index:9999;display:none;box-shadow:0 8px 32px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.15);animation:mIn .2s;white-space:nowrap;}
+.toast{position:fixed;bottom:22px;right:22px;background:var(--g1);color:#fff;padding:10px 18px;border-radius:var(--R);font-size:.78rem;font-weight:500;z-index:1000;display:none;box-shadow:var(--s3);border:1px solid rgba(255,255,255,.1);animation:mIn .2s;}
 
 @media(max-width:900px){
   /* Layout adaptatif */
@@ -3098,7 +3098,7 @@ function renderCR(){
 
 function svCR(){
   var d={titre:v("cr-ti"),commission:v("cr-comm"),date:v("cr-date"),redige_par:v("cr-par"),participants:v("cr-part"),odj:v("cr-odj"),content:v("cr-content"),next_steps:v("cr-next"),url:v("cr-url")};
-  if(!d.titre){toast("Le titre est obligatoire");return;}
+  if(!d.titre||!d.content){toast("Titre et contenu obligatoires");return;}
   apiPost("/api/cr",d).then(function(r){if(r.ok){CRS.unshift(r.item);cm();renderCR();toast("CR enregistré");}});
 }
 
