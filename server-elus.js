@@ -476,11 +476,6 @@ const server=http.createServer(function(req,res){
     }catch(e){return J(res,{ok:false,error:'Fichier non trouvé'},404);}
   }
 
-  // Localhost : connexion automatique michel.thuillier
-  var isLocal = req.socket.remoteAddress==='127.0.0.1'||req.socket.remoteAddress==='::1'||req.socket.remoteAddress==='::ffff:127.0.0.1';
-  if(isLocal && !req.headers['authorization']){
-    req.headers['authorization']='Basic '+Buffer.from('michel.thuillier:mth2026').toString('base64');
-  }
   if(!auth(req))return deny(res);
 
   const ME=authUser(req);
@@ -707,14 +702,10 @@ const server=http.createServer(function(req,res){
       if(e.id!==id)return e;
       updated=true;
       return Object.assign({},e,{
-        prenom:d.prenom!==undefined?d.prenom:e.prenom,
-        nom:d.nom!==undefined?d.nom:e.nom,
-        role:d.role!==undefined?d.role:e.role,
         tel:d.tel!==undefined?d.tel:e.tel,
         email:d.email!==undefined?d.email:e.email,
-        delegation:e.delegation,
-        commission:d.commission!==undefined?d.commission:e.commission,
-        photo:d.photo?d.photo:e.photo
+        delegation:d.delegation!==undefined?d.delegation:e.delegation,
+        commission:d.commission!==undefined?d.commission:e.commission
       });
     });
     if(updated)save('elus.json',elus);
@@ -2546,7 +2537,7 @@ function openProfile(){
   pb.innerHTML='<div style="display:flex;align-items:center;gap:14px;padding:.85rem;background:var(--g8);border-radius:var(--R)">'
     +'<div style="width:50px;height:50px;border-radius:14px;background:'+(ME.color||"var(--g3)")+';display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;color:#fff;font-family:var(--fd)">'+ME.avatar+'</div>'
     +'<div><div style="font-size:.95rem;font-weight:700;font-family:var(--fd);color:var(--ink)">'+ME.nom+'</div>'
-    +'<div style="font-size:.75rem;color:var(--i3);margin-top:1px">'+( ME.role||"")+'</div>'
+    +'<div style="font-size:.75rem;color:var(--i3);margin-top:1px">'+ME.role+(ME.delegation?" — "+ME.delegation:"")+'</div>'
     +'<div style="font-size:.67rem;color:var(--i4);margin-top:2px;font-family:var(--fm)">Login : '+ME.username+'</div>'
     +'</div></div>';
   $("new-pwd").value=""; $("new-pwd2").value=""; $("pwd-msg").textContent="";
@@ -2822,7 +2813,7 @@ function renderHeroAccueil(){
     }
   }
   if(bj) bj.textContent=salut+", "+ME.nom.split(" ")[0]+" !";
-  if(rl) rl.textContent=ME.role||"";
+  if(rl) rl.textContent=(ME.role||"")+(ME.delegation?" — "+ME.delegation:"");
   if(db) db.textContent=now.getDate();
   if(mo) mo.textContent=JOURS_L[now.getDay()]+" "+now.toLocaleDateString("fr-FR",{month:"long",year:"numeric"});
   if(ct) ct.textContent=CITATIONS[now.getDate()%CITATIONS.length];
@@ -3080,9 +3071,8 @@ function delAg(id){if(!confirm("Supprimer cette réunion ?"))return;apiDel("/api
 var CR_COM_COL={"Bureau municipal":"#1d3d2b","Conseil municipal":"#2d5a40","Culture, Patrimoine & Jumelages":"#8B5CF6","Mobilités":"#3B82F6","Transition écologique":"#10B981","Action sociale":"#F59E0B","Concertation citoyenne":"#6366F1","Animations de proximité":"#EC4899","Enfance/Jeunesse":"#F97316","Tranquillité publique":"#EF4444","Travaux & Urbanisme":"#84CC16","Santé":"#06B6D4"};
 
 function renderCR(){
-  var ctx=document.getElementById("panel-body")||document;
-  var cl=ctx.querySelector("#cr-list"); if(!cl)return;
-  var fc=ctx.querySelector("#cr-filt-comm");
+  var cl=$("cr-list"); if(!cl)return;
+  var fc=$("cr-filt-comm");
   if(fc&&fc.options.length<=1){
     var comms=["Bureau municipal","Conseil municipal"];
     Object.keys(COMM).forEach(function(c){comms.push(c);});
@@ -3353,7 +3343,7 @@ function renderElus(){
       +'<div style="flex:1;min-width:0">'
       +'<div class="elu-n">'+(e.prenom?e.prenom+' ':'')+e.nom+'</div>'
       +'<div class="elu-r">'+e.role+'</div>'
-      
+      +(e.delegation?'<div class="elu-d">'+e.delegation+'</div>':"")
       +'</div></div>';
   }).join("");
 }
@@ -3364,44 +3354,44 @@ function openElu(i){
   var fullName=(e.prenom?e.prenom+" ":"")+e.nom;
   $("elu-det-t").textContent=fullName;
   var photoBlock=e.photo
-    ?'<img id="elu-photo-prev" src="'+e.photo+'" style="width:64px;height:64px;border-radius:12px;object-fit:cover;object-position:'+(e.photoPos||"center center")+';flex-shrink:0" onerror="this.style.display=\'none\'">'
-    :'<div id="elu-photo-prev" style="width:64px;height:64px;border-radius:12px;background:'+col+';display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;color:#fff;flex-shrink:0">'+e.avatar+'</div>';
-  var commOpts=Object.keys(COMM).map(function(c){return'<option value="'+c+'"'+(e.commission===c?' selected':'')+'>'+c+'</option>';}).join('');
+    ?'<img src="'+e.photo+'" style="width:72px;height:72px;border-radius:14px;object-fit:cover;object-position:'+(e.photoPos||"center center")+';flex-shrink:0" onerror="hideImg(this)">   '
+    :'<div style="width:72px;height:72px;border-radius:14px;background:'+col+';display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;color:#fff;flex-shrink:0">'+e.avatar+'</div>';
   $("elu-det-b").innerHTML=
-    '<div style="display:flex;align-items:center;gap:12px;padding:.85rem;background:var(--g8);border-radius:var(--R);margin-bottom:1rem;border:1px solid var(--g7)">'
+    '<div style="display:flex;align-items:center;gap:14px;padding:.9rem;background:var(--g8);border-radius:var(--R);margin-bottom:1rem;border:1px solid var(--g7)">'
     +photoBlock
-    +'<div><div style="font-size:.95rem;font-weight:700;font-family:var(--fd)">'+fullName+'</div>'
-    +'<div style="font-size:.75rem;color:var(--g3);margin-top:2px">'+e.role+'</div>'
-    +(e.commission?'<div style="font-size:.68rem;color:var(--i3);margin-top:2px">'+e.commission+'</div>':'')
+    +'<div><div style="font-size:1rem;font-weight:700;font-family:var(--fd)">'+fullName+'</div>'
+    +'<div style="font-size:.78rem;color:var(--g3);margin-top:2px;font-weight:600">'+e.role+'</div>'
+    +(e.delegation?'<div style="font-size:.72rem;color:var(--i3);margin-top:3px">'+e.delegation+'</div>':"")
     +'</div></div>'
-    +'<div style="display:flex;flex-direction:column;gap:9px">'
-    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Pr&#xe9;nom</label><input id="elu-f-prenom" class="fi" value="'+(e.prenom||'')+'" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Nom</label><input id="elu-f-nom" class="fi" value="'+(e.nom||'')+'" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'</div>'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">R&#xf4;le</label><input id="elu-f-role" class="fi" value="'+(e.role||'')+'" placeholder="Adjoint, Conseill&#xe8;re…" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Commission</label><select id="elu-f-comm" class="fi" style="font-size:.76rem;padding:6px 9px"><option value="">— aucune —</option>'+commOpts+'</select></div>'
-    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">T&#xe9;l.</label><input id="elu-f-tel" class="fi" value="'+(e.tel||'')+'" placeholder="06 00 00 00 00" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Email</label><input id="elu-f-email" class="fi" value="'+(e.email||'')+'" type="email" style="font-size:.76rem;padding:6px 9px"></div>'
-    +'</div>'
-    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">URL Photo</label><input id="elu-f-photo" class="fi" value="'+(e.photo||'')+'" placeholder="https://…" style="font-size:.76rem;padding:6px 9px" oninput="var p=$(\'elu-photo-prev\');if(p&&this.value)p.src=this.value"></div>'
-    +'<div style="display:flex;justify-content:flex-end;padding-top:4px"><button class="btn btn-p" onclick="saveEluFull('+e.id+')">&#x1F4BE; Enregistrer</button></div>'
-    +'</div>';
+    +(e.commission?'<div style="font-size:.78rem;padding:.5rem 0;border-bottom:1px solid var(--w2)"><strong style="color:var(--i3)">Commission :</strong> <span class="chip">'+e.commission+'</span></div>':"")
+    +(e.tel?'<div style="font-size:.78rem;padding:.5rem 0;border-bottom:1px solid var(--w2)"><strong style="color:var(--i3)">Tél : </strong><a href="tel:'+e.tel+'" style="color:var(--g3)">'+e.tel+'</a></div>':"")
+    +(e.email?'<div style="font-size:.78rem;padding:.5rem 0"><strong style="color:var(--i3)">Email : </strong><a href="mailto:'+e.email+'" style="color:var(--g3)">'+e.email+'</a></div>':"")
+    + '<div style="margin-top:.85rem;padding-top:.75rem;border-top:1px solid var(--w2)">'
+    + '<div style="font-size:.68rem;font-weight:700;color:var(--i3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem">Modifier les coordonnées</div>'
+    + '<div style="display:flex;flex-direction:column;gap:8px">'
+    + '<div style="display:flex;align-items:center;gap:8px"><label style="font-size:.7rem;color:var(--i3);width:60px;flex-shrink:0">Tél.</label><input id="elu-edit-tel" class="fi" value="'+(e.tel||"")+'" placeholder="06 00 00 00 00" style="flex:1;font-size:.76rem;padding:6px 9px"></div>'
+    + '<div style="display:flex;align-items:center;gap:8px"><label style="font-size:.7rem;color:var(--i3);width:60px;flex-shrink:0">Email</label><input id="elu-edit-email" class="fi" value="'+(e.email||"")+'" placeholder="prenom.nom@ville.fr" type="email" style="flex:1;font-size:.76rem;padding:6px 9px"></div>'
+    + '<div style="display:flex;justify-content:flex-end;margin-top:4px"><button class="btn btn-p btn-sm" onclick="saveEluContact('+e.id+')">&#x1F4BE; Enregistrer</button></div>'
+    + '</div></div>';
   om("elu-det");
 }
 
-function saveEluFull(eluId){
-  var d={prenom:v("elu-f-prenom").trim(),nom:v("elu-f-nom").trim(),role:v("elu-f-role").trim(),commission:v("elu-f-comm"),tel:v("elu-f-tel").trim(),email:v("elu-f-email").trim(),photo:v("elu-f-photo").trim()};
-  if(!d.nom){toast("Le nom est obligatoire");return;}
-  apiPatch("/api/elus/"+eluId,d).then(function(r){
-    if(r.ok){
-      [ELUS_DATA,ELUS0].forEach(function(arr){arr.forEach(function(e){if(e.id===eluId){e.prenom=d.prenom;e.nom=d.nom;e.role=d.role;e.commission=d.commission;e.tel=d.tel;e.email=d.email;if(d.photo)e.photo=d.photo;}});});
-      cm();renderElus();toast("&#xc9;lu mis &#xe0; jour !");
-    } else {toast("Erreur",3000);}
-  });
+function saveEluContact(eluId) {
+  var tel = v("elu-edit-tel"), email = v("elu-edit-email");
+  apiPatch("/api/elus/"+eluId, {tel:tel, email:email})
+    .then(function(d){
+      if(d.ok) {
+        // Mettre à jour localement
+        var list = ELUS_DATA.length ? ELUS_DATA : ELUS0;
+        list.forEach(function(e){ if(e.id===eluId){e.tel=tel;e.email=email;} });
+        ELUS_DATA.forEach(function(e){ if(e.id===eluId){e.tel=tel;e.email=email;} });
+        cm(); renderElus();
+        toast("Coordonnées enregistrées !");
+      } else {
+        toast("Erreur d'enregistrement", 3000);
+      }
+    });
 }
-function saveEluContact(eluId){saveEluFull(eluId);}
 
 
 // ── COMMISSIONS ──────────────────────────────────────────────────────────────
@@ -3800,7 +3790,7 @@ function renderHeroAccueil(){
     }
   }
   if(bj) bj.textContent=salut+", "+ME.nom.split(" ")[0]+" !";
-  if(rl) rl.textContent=ME.role||"";
+  if(rl) rl.textContent=(ME.role||"")+(ME.delegation?" — "+ME.delegation:"");
   if(db) db.textContent=now.getDate();
   if(mo) mo.textContent=JOURS[now.getDay()]+" "+now.toLocaleDateString("fr-FR",{month:"long",year:"numeric"});
   if(ct) ct.textContent=CITATIONS[now.getDate()%CITATIONS.length];
