@@ -3319,21 +3319,20 @@ function openElu(i){
     + '<div style="display:flex;flex-direction:column;gap:8px">'
     + '<div style="display:flex;align-items:center;gap:8px"><label style="font-size:.7rem;color:var(--i3);width:60px;flex-shrink:0">Tél.</label><input id="elu-edit-tel" class="fi" value="'+(e.tel||"")+'" placeholder="06 00 00 00 00" style="flex:1;font-size:.76rem;padding:6px 9px"></div>'
     + '<div style="display:flex;align-items:center;gap:8px"><label style="font-size:.7rem;color:var(--i3);width:60px;flex-shrink:0">Email</label><input id="elu-edit-email" class="fi" value="'+(e.email||"")+'" placeholder="prenom.nom@ville.fr" type="email" style="flex:1;font-size:.76rem;padding:6px 9px"></div>'
-    + '<div style="display:flex;align-items:center;gap:8px"><label style="font-size:.7rem;color:var(--i3);width:60px;flex-shrink:0">Délég.</label><input id="elu-edit-deleg" class="fi" value="'+(e.delegation||"")+'" placeholder="Délégation officielle" style="flex:1;font-size:.76rem;padding:6px 9px"></div>'
     + '<div style="display:flex;justify-content:flex-end;margin-top:4px"><button class="btn btn-p btn-sm" onclick="saveEluContact('+e.id+')">&#x1F4BE; Enregistrer</button></div>'
     + '</div></div>';
   om("elu-det");
 }
 
 function saveEluContact(eluId) {
-  var tel = v("elu-edit-tel"), email = v("elu-edit-email"), deleg = v("elu-edit-deleg");
-  apiPut("/api/elus/"+eluId, {tel:tel, email:email, delegation:deleg})
+  var tel = v("elu-edit-tel"), email = v("elu-edit-email");
+  apiPatch("/api/elus/"+eluId, {tel:tel, email:email})
     .then(function(d){
       if(d.ok) {
         // Mettre à jour localement
         var list = ELUS_DATA.length ? ELUS_DATA : ELUS0;
-        list.forEach(function(e){ if(e.id===eluId){e.tel=tel;e.email=email;e.delegation=deleg;} });
-        ELUS_DATA.forEach(function(e){ if(e.id===eluId){e.tel=tel;e.email=email;e.delegation=deleg;} });
+        list.forEach(function(e){ if(e.id===eluId){e.tel=tel;e.email=email;} });
+        ELUS_DATA.forEach(function(e){ if(e.id===eluId){e.tel=tel;e.email=email;} });
         cm(); renderElus();
         toast("Coordonnées enregistrées !");
       } else {
