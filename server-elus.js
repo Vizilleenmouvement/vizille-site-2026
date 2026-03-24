@@ -813,7 +813,7 @@ function buildPublicPage(){
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Vizille en Mouvement — Mandat 2026-2032</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=DM+Sans:wght@600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -1093,7 +1093,7 @@ return `<!DOCTYPE html>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>VeM &#x2014; Espace élus</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"><\/script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js" defer><\/script>
 <style>
 :root{
   --g1:#0f2318;--g2:#1d3d2b;--g3:#2d5a40;--g4:#3d7a5a;--g5:#5a9a70;--g6:#7ab890;--g7:#b8d9c4;--g8:#e6f4ea;--g9:#f4fbf6;
@@ -3646,6 +3646,8 @@ function fCD(){
 
 // ── CHARTS ───────────────────────────────────────────────────────────────────
 function buildCharts(){
+  var et=$("chT"),es=$("chS");
+  if(!et&&!es)return; // Pas de canvas visible, skip
   var th={},st={};
   P.forEach(function(p){var t=p.theme||"?";th[t]=(th[t]||0)+1;var s=ST[p.id]||p.statut||"ND";st[s]=(st[s]||0)+1;});
   var tk=Object.keys(th).sort(),tv=tk.map(function(k){return th[k];});
