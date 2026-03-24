@@ -702,10 +702,14 @@ const server=http.createServer(function(req,res){
       if(e.id!==id)return e;
       updated=true;
       return Object.assign({},e,{
+        prenom:d.prenom!==undefined?d.prenom:e.prenom,
+        nom:d.nom!==undefined?d.nom:e.nom,
+        role:d.role!==undefined?d.role:e.role,
         tel:d.tel!==undefined?d.tel:e.tel,
         email:d.email!==undefined?d.email:e.email,
-        delegation:d.delegation!==undefined?d.delegation:e.delegation,
-        commission:d.commission!==undefined?d.commission:e.commission
+        commission:d.commission!==undefined?d.commission:e.commission,
+        photo:d.photo?d.photo:e.photo,
+        delegation:e.delegation
       });
     });
     if(updated)save('elus.json',elus);
@@ -2465,6 +2469,28 @@ function gp(id,ni){
   }
 }
 // ── PANNEAU UNIQUE — s'ouvre par-dessus le dashboard ─────────────────────────
+// Génère le HTML skeleton de chaque panneau (sans données — les render functions remplissent)
+function buildPanelHTML(id){
+  var HTML = {
+    agenda: '<div class="ph"><div class="ph-ico" style="background:#dbeafe">&#x1F4C5;</div><div><div class="ph-t">Agenda des réunions</div><div class="ph-s">Bureau · Commissions · Conseil municipal</div></div><div class="ph-a"><button class="btn btn-p btn-sm" onclick="om('agenda')">+ Ajouter</button></div></div><div class="scr"><div id="ag-list"></div></div>',
+    cr: '<div class="ph"><div class="ph-ico" style="background:var(--g8)">&#x1F4DD;</div><div><div class="ph-t">Comptes rendus</div><div class="ph-s">CR de commissions, bureau, conseil</div></div><div class="ph-a"><select class="fsel" id="cr-filt-comm" onchange="renderCR()"><option value="">Toutes commissions</option></select><button class="btn btn-p btn-sm" onclick="om('cr')">+ Nouveau CR</button></div></div><div class="scr"><div id="cr-list"></div></div>',
+    biblio: '<div class="ph"><div class="ph-ico" style="background:var(--g8)">&#x1F4DA;</div><div><div class="ph-t">Bibliothèque documentaire</div><div class="ph-s">Documents classés par type et commission</div></div><div class="ph-a"><button class="btn btn-p btn-sm" onclick="om('biblio')">+ Ajouter</button></div></div><div class="scr" style="padding:0"><div class="fb"><input class="fsrch" id="bib-q" placeholder="Rechercher…" oninput="renderBiblio()"><select class="fsel" id="bib-type" onchange="renderBiblio()"><option value="">Tous types</option><option>Délibération</option><option>Arrêté</option><option>Rapport</option><option>Budget</option><option>Compte-rendu</option><option>Plan</option><option>Convention</option><option>Courrier</option><option>Autre</option></select><select class="fsel" id="bib-comm" onchange="renderBiblio()"><option value="">Toutes commissions</option></select><span class="fcnt" id="bib-cnt"></span></div><div style="padding:1rem 1.4rem" id="bib-list"></div></div>',
+    repelus: '<div class="ph"><div class="ph-ico" style="background:var(--g8)">&#x1F4C2;</div><div><div class="ph-t">Mon répertoire personnel</div><div class="ph-s">Documents privés — visibles uniquement par vous</div></div><div class="ph-a"><button class="btn btn-p btn-sm" onclick="om('repelu')">+ Ajouter</button></div></div><div class="scr"><div id="rep-elus-grid"></div><div id="rep-elus-files"><div id="rep-elu-list"></div></div></div>',
+    elus: '<div class="ph"><div class="ph-ico" style="background:var(--g8)">&#x1F9D1;&#x200D;&#x1F4BC;</div><div><div class="ph-t">L'équipe — 29 conseillers</div><div class="ph-s">Contacts et commissions</div></div></div><div class="scr"><div class="elus-g" id="elus-list"></div></div>',
+    comm: '<div class="ph"><div class="ph-ico" style="background:var(--g8)">&#x1F465;</div><div><div class="ph-t">Par commission</div><div class="ph-s">Cliquez pour accéder à la page dédiée</div></div><div class="ph-a"><button class="btn btn-s btn-sm" onclick="openPanel('global')">&#x1F4CA; Vue globale</button></div></div><div class="scr"><div class="cg" id="cg"></div></div>',
+    global: '<div class="ph"><div class="ph-ico" style="background:#e0e7ff">&#x1F4CA;</div><div><div class="ph-t">Tous les projets</div><div class="ph-s">Filtres et mise à jour de statut</div></div></div><div class="scr" style="padding:0"><div class="fb"><select class="fsel" id="fC" onchange="fG()"><option value="">Toutes commissions</option></select><select class="fsel" id="fT" onchange="fG()"><option value="">Tous thèmes</option></select><select class="fsel" id="fS" onchange="fG()"><option value="">Tous statuts</option></select><select class="fsel" id="fA" onchange="fG()"><option value="">Toutes années</option></select><input class="fsrch" id="fQ" placeholder="Rechercher un projet…" oninput="fG()"><span class="fcnt" id="fCnt"></span></div><div class="tbw" style="border-radius:0;border-left:none;border-right:none"><table><thead><tr><th>Thème</th><th>Projet</th><th>Statut</th><th>Année</th><th>Imp.</th><th>Modifier</th></tr></thead><tbody id="gtb"></tbody></table></div></div>',
+    signal: '<div class="ph"><div class="ph-ico" style="background:#fee2e2">&#x1F534;</div><div><div class="ph-t">Signalements</div><div class="ph-s">Suivi des problèmes terrain</div></div><div class="ph-a"><button class="btn btn-p btn-sm" onclick="om('signal')" style="background:#dc2626;border-color:#dc2626">+ Signaler</button></div></div><div class="scr" style="padding:0"><div class="fb"><select class="fsel" id="sf-type" onchange="fSig()"><option value="">Tous types</option><option>Voirie</option><option>Eclairage</option><option>Proprete</option><option>Espace vert</option><option>Securite</option><option>Batiment</option><option>Autre</option></select><select class="fsel" id="sf-st" onchange="fSig()"><option value="">Tous statuts</option><option>Nouveau</option><option>En cours</option><option>Résolu</option><option>Non retenu</option></select><input class="fsrch" id="sf-q" placeholder="Rechercher…" oninput="fSig()"><span class="fcnt" id="sf-cnt"></span></div><div style="padding:1rem" id="sig-list"></div></div>',
+    events: '<div class="ph"><div class="ph-ico" style="background:#fef3c7">&#x1F3AA;</div><div><div class="ph-t">Événements</div><div class="ph-s">Agenda événementiel de Vizille</div></div><div class="ph-a"><button class="btn btn-p btn-sm" onclick="om('event')">+ Ajouter</button></div></div><div class="scr"><div id="ev-list"></div></div>',
+    guide: '<div class="ph"><div class="ph-ico" style="background:#fef9c3">&#x1F4D6;</div><div><div class="ph-t">Guide & Ressources</div><div class="ph-s">Fiches pratiques du mandat</div></div></div><div class="scr"><div id="guides-list" style="margin-bottom:1.75rem"></div><div id="ress-list" class="ress-g"></div></div>',
+    ress: '<div class="ph"><div class="ph-ico" style="background:var(--g8)">&#x1F517;</div><div><div class="ph-t">Ressources utiles</div><div class="ph-s">Liens essentiels pour votre mandat</div></div></div><div class="scr"><div id="ress-list-2" class="ress-g"></div></div>',
+    hist: '<div class="ph"><div class="ph-ico" style="background:var(--g8)">&#x1F514;</div><div><div class="ph-t">Historique</div><div class="ph-s">Activité récente</div></div></div><div class="scr"><div id="nt-list"></div></div>',
+    comms: '<div class="ph"><div class="ph-ico" style="background:#f3e8ff">&#x270D;&#xFE0F;</div><div><div class="ph-t">Rédiger un document</div><div class="ph-s">Assisté par IA</div></div></div><div class="scr"><div class="ff"><label>Type de document</label><select class="fi" id="ct"><option value="arrete">Arrêté municipal</option><option value="deliberation">Délibération</option><option value="facebook">Post Facebook</option><option value="communique">Communiqué de presse</option><option value="convocation">Convocation conseil</option><option value="discours">Discours</option><option value="question">Question orale</option><option value="courrier">Courrier officiel</option><option value="cr">Compte-rendu</option></select></div><div class="ff"><label>Sujet *</label><input class="fi" id="cs" placeholder="Ex: Réfection de la rue du Château"></div><div class="ff"><label>Contexte</label><textarea class="fi" id="cc" style="height:80px" placeholder="Infos complémentaires…"></textarea></div><div class="ff"><button class="btn btn-p btn-full" onclick="genC()">&#x2728; Générer</button></div><div id="c-st" style="font-size:.73rem;color:var(--i3);text-align:center;padding:.5rem 0"></div><div class="ff"><textarea class="fi" id="cr-gen" style="height:300px;font-size:.76rem"></textarea></div><div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn btn-s btn-sm" onclick="copyC()">&#x1F4CB; Copier</button></div></div>',
+    creer: '<div class="ph"><div class="ph-ico" style="background:var(--g8)">&#x2795;</div><div><div class="ph-t">Nouveau projet</div><div class="ph-s">Ajouter un projet au programme</div></div></div><div class="scr"><div class="ff"><label>Titre *</label><input class="fi" id="np-t" placeholder="Titre du projet"></div><div class="ff"><label>Thème</label><select class="fi" id="np-th"></select></div><div class="fr2"><div class="ff"><label>Statut</label><select class="fi" id="np-s"></select></div><div class="ff"><label>Année</label><input class="fi" id="np-a" type="number" placeholder="2026"></div></div><div class="ff"><label>Résumé *</label><input class="fi" id="np-r" placeholder="En une phrase…"></div><div class="ff"><label>Description</label><textarea class="fi" id="np-d" style="height:100px"></textarea></div><div class="ff"><label>Importance</label><select class="fi" id="np-i"><option value="1">1 — Secondaire</option><option value="2" selected>2 — Standard</option><option value="3">3 — Important</option><option value="4">4 — Prioritaire</option></select></div><div class="ff"><label>Tags</label><input class="fi" id="np-tags" placeholder="tag1, tag2"></div><div class="mft"><button class="btn btn-p" onclick="createP()">Créer le projet</button></div><div id="np-res"></div></div>'
+  };
+  return HTML[id] || '<div class="scr"><div class="empty"><div class="empty-ico">📋</div><div class="empty-t">Contenu non disponible</div></div></div>';
+}
+
+
 function openPanel(id){
   // Activer le menu
   qsa(".sbi").forEach(function(n){n.classList.remove("on");});
@@ -2489,18 +2515,16 @@ function openPanel(id){
   if(phT) title = phT.textContent;
   else { var h = pg.querySelector("h2,h3"); if(h) title = h.textContent; else title = id; }
 
+  // Construire le contenu HTML du panneau selon l'ID — SANS cloneNode
+  var panelHTML = buildPanelHTML(id);
   panel.innerHTML = '<div style="background:var(--g1);color:#fff;padding:.55rem 1rem;display:flex;align-items:center;gap:8px;flex-shrink:0;font-size:.78rem;font-weight:600;font-family:var(--fd);">'
-    + '<span style="flex:1">'+title+'</span>'
+    + '<span id="panel-title" style="flex:1">'+title+'</span>'
     + '<button onclick="closePanel()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:5px;width:24px;height:24px;cursor:pointer;font-size:.9rem;">&#x2715;</button>'
     + '</div>'
-    + '<div id="panel-body" style="flex:1;overflow-y:auto;"></div>';
-
-  var clone = pg.cloneNode(true);
-  clone.style.display = "block";
-  document.getElementById("panel-body").appendChild(clone);
+    + '<div id="panel-body" style="flex:1;overflow-y:auto;">'+panelHTML+'</div>';
   panel.style.display = "flex";
 
-  // Charger données
+  // Charger les données dans les conteneurs maintenant dans panel-body
   if(id==="agenda") renderAg();
   else if(id==="cr") renderCR();
   else if(id==="biblio") renderBiblio();
@@ -3347,51 +3371,61 @@ function renderElus(){
       +'</div></div>';
   }).join("");
 }
+var _eluId=null;
 function openElu(i){
   var list=ELUS_DATA.length?ELUS_DATA:ELUS0;
   var e=list[i];if(!e)return;
+  _eluId=e.id;
   var col=e.color||"var(--g3)";
   var fullName=(e.prenom?e.prenom+" ":"")+e.nom;
   $("elu-det-t").textContent=fullName;
-  var photoBlock=e.photo
-    ?'<img src="'+e.photo+'" style="width:72px;height:72px;border-radius:14px;object-fit:cover;object-position:'+(e.photoPos||"center center")+';flex-shrink:0" onerror="hideImg(this)">   '
-    :'<div style="width:72px;height:72px;border-radius:14px;background:'+col+';display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;color:#fff;flex-shrink:0">'+e.avatar+'</div>';
+  var commOpts=Object.keys(COMM).map(function(c){return'<option value="'+c+'"'+(e.commission===c?' selected':'')+'>'+c+'</option>';}).join('');
   $("elu-det-b").innerHTML=
-    '<div style="display:flex;align-items:center;gap:14px;padding:.9rem;background:var(--g8);border-radius:var(--R);margin-bottom:1rem;border:1px solid var(--g7)">'
-    +photoBlock
-    +'<div><div style="font-size:1rem;font-weight:700;font-family:var(--fd)">'+fullName+'</div>'
-    +'<div style="font-size:.78rem;color:var(--g3);margin-top:2px;font-weight:600">'+e.role+'</div>'
-    +(e.delegation?'<div style="font-size:.72rem;color:var(--i3);margin-top:3px">'+e.delegation+'</div>':"")
-    +'</div></div>'
-    +(e.commission?'<div style="font-size:.78rem;padding:.5rem 0;border-bottom:1px solid var(--w2)"><strong style="color:var(--i3)">Commission :</strong> <span class="chip">'+e.commission+'</span></div>':"")
-    +(e.tel?'<div style="font-size:.78rem;padding:.5rem 0;border-bottom:1px solid var(--w2)"><strong style="color:var(--i3)">Tél : </strong><a href="tel:'+e.tel+'" style="color:var(--g3)">'+e.tel+'</a></div>':"")
-    +(e.email?'<div style="font-size:.78rem;padding:.5rem 0"><strong style="color:var(--i3)">Email : </strong><a href="mailto:'+e.email+'" style="color:var(--g3)">'+e.email+'</a></div>':"")
-    + '<div style="margin-top:.85rem;padding-top:.75rem;border-top:1px solid var(--w2)">'
-    + '<div style="font-size:.68rem;font-weight:700;color:var(--i3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem">Modifier les coordonnées</div>'
-    + '<div style="display:flex;flex-direction:column;gap:8px">'
-    + '<div style="display:flex;align-items:center;gap:8px"><label style="font-size:.7rem;color:var(--i3);width:60px;flex-shrink:0">Tél.</label><input id="elu-edit-tel" class="fi" value="'+(e.tel||"")+'" placeholder="06 00 00 00 00" style="flex:1;font-size:.76rem;padding:6px 9px"></div>'
-    + '<div style="display:flex;align-items:center;gap:8px"><label style="font-size:.7rem;color:var(--i3);width:60px;flex-shrink:0">Email</label><input id="elu-edit-email" class="fi" value="'+(e.email||"")+'" placeholder="prenom.nom@ville.fr" type="email" style="flex:1;font-size:.76rem;padding:6px 9px"></div>'
-    + '<div style="display:flex;justify-content:flex-end;margin-top:4px"><button class="btn btn-p btn-sm" onclick="saveEluContact('+e.id+')">&#x1F4BE; Enregistrer</button></div>'
-    + '</div></div>';
+    '<div style="display:flex;align-items:center;gap:12px;padding:.85rem;background:var(--g8);border-radius:var(--R);margin-bottom:1rem;border:1px solid var(--g7)">'
+    +(e.photo?'<img src="'+e.photo+'" style="width:56px;height:56px;border-radius:12px;object-fit:cover;flex-shrink:0" onerror="this.style.display='none'">':'')
+    +'<div style="width:56px;height:56px;border-radius:12px;background:'+col+';display:'+(e.photo?'none':'flex')+';align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff;flex-shrink:0">'+e.avatar+'</div>'
+    +'<div><div style="font-size:.95rem;font-weight:700;font-family:var(--fd)">'+fullName+'</div>'
+    +'<div style="font-size:.75rem;color:var(--g3);margin-top:2px">'+e.role+'</div></div></div>'
+    +'<div style="display:flex;flex-direction:column;gap:9px">'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
+    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Prénom</label><input id="ef-prenom" class="fi" value="'+(e.prenom||"")+'" style="font-size:.76rem;padding:6px 9px"></div>'
+    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Nom</label><input id="ef-nom" class="fi" value="'+(e.nom||"")+'" style="font-size:.76rem;padding:6px 9px"></div>'
+    +'</div>'
+    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Rôle</label><input id="ef-role" class="fi" value="'+(e.role||"")+'" placeholder="Adjoint, Conseillère…" style="font-size:.76rem;padding:6px 9px"></div>'
+    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Commission</label>'
+    +'<select id="ef-comm" class="fi" style="font-size:.76rem;padding:6px 9px"><option value="">— aucune —</option>'+commOpts+'</select></div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'
+    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Téléphone</label><input id="ef-tel" class="fi" value="'+(e.tel||"")+'" placeholder="06…" style="font-size:.76rem;padding:6px 9px"></div>'
+    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">Email</label><input id="ef-email" class="fi" value="'+(e.email||"")+'" type="email" style="font-size:.76rem;padding:6px 9px"></div>'
+    +'</div>'
+    +'<div><label style="font-size:.67rem;font-weight:700;color:var(--i3);display:block;margin-bottom:3px;text-transform:uppercase">URL Photo</label><input id="ef-photo" class="fi" value="'+(e.photo||"")+'" placeholder="https://…" style="font-size:.76rem;padding:6px 9px"></div>'
+    +'<div style="display:flex;justify-content:flex-end;padding-top:4px">'
+    +'<button class="btn btn-p" onclick="saveEluFull()">&#x1F4BE; Enregistrer</button></div>'
+    +'</div>';
   om("elu-det");
 }
-
-function saveEluContact(eluId) {
-  var tel = v("elu-edit-tel"), email = v("elu-edit-email");
-  apiPatch("/api/elus/"+eluId, {tel:tel, email:email})
-    .then(function(d){
-      if(d.ok) {
-        // Mettre à jour localement
-        var list = ELUS_DATA.length ? ELUS_DATA : ELUS0;
-        list.forEach(function(e){ if(e.id===eluId){e.tel=tel;e.email=email;} });
-        ELUS_DATA.forEach(function(e){ if(e.id===eluId){e.tel=tel;e.email=email;} });
-        cm(); renderElus();
-        toast("Coordonnées enregistrées !");
-      } else {
-        toast("Erreur d'enregistrement", 3000);
-      }
-    });
+function saveEluFull(){
+  if(!_eluId){toast("Erreur: aucun élu sélectionné");return;}
+  var d={
+    prenom:document.getElementById("ef-prenom").value.trim(),
+    nom:document.getElementById("ef-nom").value.trim(),
+    role:document.getElementById("ef-role").value.trim(),
+    commission:document.getElementById("ef-comm").value,
+    tel:document.getElementById("ef-tel").value.trim(),
+    email:document.getElementById("ef-email").value.trim(),
+    photo:document.getElementById("ef-photo").value.trim()
+  };
+  if(!d.nom){toast("Le nom est obligatoire");return;}
+  apiPatch("/api/elus/"+_eluId,d).then(function(r){
+    if(r.ok){
+      [ELUS_DATA,ELUS0].forEach(function(arr){arr.forEach(function(e){
+        if(e.id===_eluId){Object.assign(e,d);}
+      });});
+      cm();renderElus();toast("Élu mis à jour ✓");
+    } else {toast("Erreur serveur",3000);}
+  });
 }
+function saveEluContact(id){_eluId=id;saveEluFull();}
 
 
 // ── COMMISSIONS ──────────────────────────────────────────────────────────────
