@@ -2439,12 +2439,14 @@ qsa(".ov").forEach(function(o){o.addEventListener("click",function(e){if(e.targe
 
 // ── NAVIGATION ───────────────────────────────────────────────────────────────
 function gp(id,ni){
+  // Fermer le panneau si ouvert
+  var panel=document.getElementById("main-panel");
+  if(panel) panel.style.display="none";
   qsa(".page").forEach(function(p){p.classList.remove("on");});
   qsa(".sbi").forEach(function(n){n.classList.remove("on");});
   var pg=$("p-"+id);
   if(pg){pg.classList.add("on");pg.scrollTop=0;}
   if(ni&&ni.classList)ni.classList.add("on");
-  // Remonter le scroll de .main à 0 à chaque navigation
   var mainEl=document.querySelector(".main");
   if(mainEl)mainEl.scrollTop=0;
   if(window.innerWidth<=900) closeMobileMenu();
@@ -3048,7 +3050,7 @@ function buildRess(){
 var ATMAP={bureau:"Bureau municipal",commission:"Commission",conseil:"Conseil municipal",autre:"Autre"};
 var ATCLS={bureau:"at-b",commission:"at-c",conseil:"at-k",autre:"at-a"};
 function renderAg(){
-  var al=$("ag-list"); if(!al)return;
+  var al=document.querySelector("#panel-body #ag-list")||$("ag-list"); if(!al)return;
   var now=new Date().toISOString().slice(0,10);
   var sorted=AG.slice().sort(function(a,b){return a.date>b.date?1:-1;});
   var futur=sorted.filter(function(e){return e.date>=now;});
@@ -4036,8 +4038,49 @@ function renderCal(){
 
 function selDay(el){selectCalDay(el.dataset.date||el.getAttribute("data-date"));}
 function selectCalDay(dateStr){
-  // Afficher les événements de ce jour dans l'agenda
-  renderAgendaDay(dateStr);
+  // Afficher une popup succinte des événements du jour
+  var items=[];
+  var ATMAP2={bureau:"Bureau",commission:"Commission",conseil:"Conseil",autre:"Réunion"};
+  var EVCOL={municipal:"var(--g3)",associatif:"var(--amber)",culturel:"#8B5CF6",sportif:"var(--blue)",commemoration:"#7f8c8d",autre:"var(--i3)",bureau:"var(--g3)",commission:"#8B5CF6",conseil:"var(--blue)"};
+  AG.filter(function(a){return a.date===dateStr;}).forEach(function(a){
+    items.push({heure:a.heure||"",titre:a.titre,sous:(a.lieu||""),col:EVCOL[a.type]||"var(--g3)",ico:{bureau:"🏢",commission:"👥",conseil:"🏛",autre:"📅"}[a.type]||"📅",type:ATMAP2[a.type]||"Réunion"});
+  });
+  EVTS.filter(function(e){return e.date===dateStr;}).forEach(function(e){
+    items.push({heure:e.heure||"",titre:e.titre,sous:(e.lieu||e.organisateur||""),col:EVCOL[e.type]||"var(--i3)",ico:"🎪",type:e.type||"Événement"});
+  });
+
+  // Supprimer popup existante
+  var old=document.getElementById("cal-popup"); if(old) old.remove();
+  if(!items.length) return;
+
+  items.sort(function(a,b){return (a.heure||"99:99")>(b.heure||"99:99")?1:-1;});
+  var d=new Date(dateStr+"T00:00:00");
+  var JOURS_FR=["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];
+  var MOIS_FR=["jan","fév","mar","avr","mai","jun","jul","aoû","sep","oct","nov","déc"];
+  var pop=document.createElement("div");
+  pop.id="cal-popup";
+  pop.style.cssText="position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#fff;border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.18);border:1px solid var(--w2);z-index:600;min-width:280px;max-width:360px;overflow:hidden;animation:mIn .15s ease";
+  pop.innerHTML='<div style="background:var(--g1);color:#fff;padding:.65rem 1rem;display:flex;align-items:center;justify-content:space-between">'+
+    '<div style="font-size:.82rem;font-weight:700;font-family:var(--fd)">'+JOURS_FR[d.getDay()]+' '+d.getDate()+' '+MOIS_FR[d.getMonth()]+' '+d.getFullYear()+'</div>'+
+    '<button onclick="document.getElementById(\'cal-popup\').remove()" style="background:rgba(255,255,255,.15);border:none;color:#fff;border-radius:5px;width:22px;height:22px;cursor:pointer;font-size:.8rem">✕</button>'+
+    '</div>'+
+    '<div style="padding:.65rem .9rem;display:flex;flex-direction:column;gap:7px">'+
+    items.map(function(it){
+      return '<div style="display:flex;align-items:center;gap:9px;padding:.45rem .5rem;border-radius:8px;background:var(--w)">'+
+        '<div style="font-size:1.1rem">'+it.ico+'</div>'+
+        '<div style="flex:1;min-width:0">'+
+        '<div style="font-size:.78rem;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+it.titre+'</div>'+
+        (it.heure||it.sous?'<div style="font-size:.67rem;color:var(--i3)">'+( it.heure?"🕐 "+it.heure+" ":"")+( it.sous?"📍 "+it.sous:"")+'</div>':"")
+        +'</div>'+
+        '<span style="font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:5px;background:'+it.col+'18;color:'+it.col+';flex-shrink:0">'+it.type+'</span>'+
+        '</div>';
+    }).join("")+
+    '</div>';
+  document.body.appendChild(pop);
+  // Fermer au clic extérieur
+  setTimeout(function(){
+    document.addEventListener("click",function h(e){if(!pop.contains(e.target)){pop.remove();document.removeEventListener("click",h);}});
+  },100);
 }
 
 /* ── AGENDA SEMAINE + JOUR SÉLECTIONNÉ ───────────────────────────────────── */
