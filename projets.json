@@ -2203,5 +2203,43 @@
     "importance": 2,
     "budget": 0,
     "chiffres": []
+  },
+  {
+    "id": 801,
+    "titre": "Conseil Citoyen Économique et Social de Vizille (CCESV)",
+    "theme": "Gouvernance",
+    "type": "engagement",
+    "statut": "Programmé",
+    "annee": 2026,
+    "budget": 0,
+    "resume": "Une instance consultative permanente, une première pour une commune de cette taille",
+    "description": "Doter Vizille d'un organe structuré réunissant les forces vives de la commune — commerçants, artisans, professionnels de santé, acteurs associatifs, représentants du monde éducatif, du tourisme et du patrimoine, habitants engagés — pour éclairer les décisions municipales par l'expertise de terrain. 15 à 20 membres nommés pour la durée du mandat. Avis formels rendus publics et annexés aux délibérations du conseil municipal.",
+    "slogan": "Écouter • Délibérer • Décider mieux",
+    "enjeux": [
+      "Associer les forces vives à la conduite du mandat",
+      "Renforcer la légitimité des décisions municipales",
+      "Créer un espace de dialogue structuré entre habitants et élus"
+    ],
+    "axes_action": [
+      "Création par délibération du conseil municipal (art. L.2143-2 CGCT)",
+      "15 à 20 membres issus de la société civile vizilloise",
+      "2 sessions plénières par an minimum + saisines ponctuelles",
+      "Avis publiés sur le site de la ville et annexés aux délibérations",
+      "Secrétariat assuré par les services municipaux"
+    ],
+    "indicateurs": [
+      "Nombre de saisines par an",
+      "Avis rendus et publiés",
+      "Taux de prise en compte dans les délibérations"
+    ],
+    "vision": "Pour la ville qui a accueilli les États Généraux du Dauphiné en 1788, donner la parole aux citoyens n'est pas une option — c'est une filiation.",
+    "importance": 3,
+    "tags": [
+      "Démocratie",
+      "Participation",
+      "Proximité",
+      "Économie"
+    ],
+    "chiffres": []
   }
 ]
