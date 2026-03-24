@@ -480,12 +480,11 @@ const server=http.createServer(function(req,res){
 
   const ME=authUser(req);
   if(p==='/api/all')return J(res,{
-    n_projets:projets.length,statuts,agenda,
-    notifs:notifs.slice(0,30),annonces,tasks,
-    signalements:signalements.slice(0,20),
-    evenements:evenements.slice(0,20),
-    comptes_rendus:comptes_rendus.slice(0,10),
-    stats:stats(),chat:chat.slice(-20),
+    n_projets:projets.length,statuts,agenda,documents,
+    notifs:notifs.slice(0,20),annonces,tasks,
+    signalements:signalements.slice(0,15),evenements:evenements.slice(0,15),comptes_rendus:comptes_rendus.slice(0,10),stats:stats(),
+    biblio_count:biblio.length,
+    chat:chat.slice(-50),
     me:{id:ME.id,nom:ME.nom,prenom:ME.prenom||'',role:ME.role,avatar:ME.avatar,color:ME.color,username:ME.username,delegation:ME.delegation||'',photo:ME.photo||'',photoPos:ME.photoPos||'center center',email:ME.email||''}
   });
 
@@ -688,11 +687,7 @@ const server=http.createServer(function(req,res){
   if(p.match(/^\/api\/evenements\/\d+$/)&&m==='DELETE'){const id=parseInt(p.split('/').pop());evenements=evenements.filter(e=>e.id!==id);save('evenements.json',evenements);return J(res,{ok:true});}
 
   // ÉLUS
-  if(p==='/api/elus'&&m==='GET'){
-    // Champs essentiels seulement pour chargement rapide
-    var elusLight=elus.map(function(e){return{id:e.id,nom:e.nom,prenom:e.prenom||'',role:e.role||'',avatar:e.avatar||'',color:e.color||'#2d5a40',photo:e.photo||'',photoPos:e.photoPos||'center center',tel:e.tel||'',email:e.email||'',commission:e.commission||''};});
-    return J(res,elusLight);
-  }
+  if(p==='/api/elus'&&m==='GET'){var el2=elus.map(function(e){return{id:e.id,nom:e.nom,prenom:e.prenom||'',role:e.role||'',avatar:e.avatar||'',color:e.color||'#2d5a40',photo:e.photo||'',photoPos:e.photoPos||'center center',tel:e.tel||'',email:e.email||'',commission:e.commission||''};});return J(res,el2);}
   if(p==='/api/elus'&&m==='PUT')return body(req,function(err,d){
     if(err)return J(res,{ok:false},400);
     elus=d;save('elus.json',elus);
@@ -730,10 +725,7 @@ const server=http.createServer(function(req,res){
   });
 
   // ── ESPACE PRIVÉ (avec authentification) ───────────────────────────────────
-  if(p==='/logout'){
-    res.writeHead(401,{'WWW-Authenticate':'Basic realm="VeM Elus - Nouveau login"','Content-Type':'text/html;charset=utf-8','Cache-Control':'no-store'});
-    return res.end('<!DOCTYPE html><html><head><meta charset="UTF-8"><meta http-equiv="refresh" content="0;url=/espace"></head><body><script>window.location="/espace";<\/script></body></html>');
-  }
+  if(p==='/logout'){res.writeHead(401,{'WWW-Authenticate':'Basic realm="VeM-logout"','Content-Type':'text/html;charset=utf-8'});return res.end('<html><body><script>window.location="/espace";<\/script></body></html>');}
   if(p==='/espace'||p==='/dashboard'){res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});return res.end(buildPage());}
   res.writeHead(404);res.end('404');
 });
@@ -1520,7 +1512,7 @@ textarea.fi{resize:vertical;min-height:90px;}
   <div style="display:flex;align-items:center;gap:8px">
     <button class="tbtn tbtn-v" onclick="openVisio()">&#x1F4F9; Visio</button>
     <button class="tbtn tbtn-c" onclick="toggleChat()">&#x1F4AC; Tchat<span class="cbdg" id="cbdg"></span></button>
-    <a href="/logout" class="tbtn" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.65);font-size:.68rem;text-decoration:none">&#x1F511; D&#xe9;co</a>
+    <a href="/logout" style="display:inline-flex;align-items:center;padding:5px 10px;border-radius:7px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);font-size:.7rem;font-weight:600;text-decoration:none;margin-right:4px">&#x21BA; Changer</a>
     <div class="top-av" id="top-av-btn" onclick="om('profile')" title="Mon profil">MT</div>
   </div>
 </div>
@@ -2548,7 +2540,7 @@ function openProfile(){
   pb.innerHTML='<div style="display:flex;align-items:center;gap:14px;padding:.85rem;background:var(--g8);border-radius:var(--R)">'
     +'<div style="width:50px;height:50px;border-radius:14px;background:'+(ME.color||"var(--g3)")+';display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;color:#fff;font-family:var(--fd)">'+ME.avatar+'</div>'
     +'<div><div style="font-size:.95rem;font-weight:700;font-family:var(--fd);color:var(--ink)">'+ME.nom+'</div>'
-    +'<div style="font-size:.75rem;color:var(--i3);margin-top:1px">'+ME.role+(ME.delegation?" — "+ME.delegation:"")+'</div>'
+    +'<div style="font-size:.75rem;color:var(--i3);margin-top:1px">'+ME.role+'</div>'
     +'<div style="font-size:.67rem;color:var(--i4);margin-top:2px;font-family:var(--fm)">Login : '+ME.username+'</div>'
     +'</div></div>';
   $("new-pwd").value=""; $("new-pwd2").value=""; $("pwd-msg").textContent="";
@@ -2824,7 +2816,7 @@ function renderHeroAccueil(){
     }
   }
   if(bj) bj.textContent=salut+", "+ME.nom.split(" ")[0]+" !";
-  if(rl) rl.textContent=(ME.role||"")+(ME.delegation?" — "+ME.delegation:"");
+  if(rl) rl.textContent=(ME.role||"");
   if(db) db.textContent=now.getDate();
   if(mo) mo.textContent=JOURS_L[now.getDay()]+" "+now.toLocaleDateString("fr-FR",{month:"long",year:"numeric"});
   if(ct) ct.textContent=CITATIONS[now.getDate()%CITATIONS.length];
@@ -3354,7 +3346,7 @@ function renderElus(){
       +'<div style="flex:1;min-width:0">'
       +'<div class="elu-n">'+(e.prenom?e.prenom+' ':'')+e.nom+'</div>'
       +'<div class="elu-r">'+e.role+'</div>'
-      +(e.delegation?'<div class="elu-d">'+e.delegation+'</div>':"")
+      
       +'</div></div>';
   }).join("");
 }
@@ -3372,7 +3364,7 @@ function openElu(i){
     +photoBlock
     +'<div><div style="font-size:1rem;font-weight:700;font-family:var(--fd)">'+fullName+'</div>'
     +'<div style="font-size:.78rem;color:var(--g3);margin-top:2px;font-weight:600">'+e.role+'</div>'
-    +(e.delegation?'<div style="font-size:.72rem;color:var(--i3);margin-top:3px">'+e.delegation+'</div>':"")
+    
     +'</div></div>'
     +(e.commission?'<div style="font-size:.78rem;padding:.5rem 0;border-bottom:1px solid var(--w2)"><strong style="color:var(--i3)">Commission :</strong> <span class="chip">'+e.commission+'</span></div>':"")
     +(e.tel?'<div style="font-size:.78rem;padding:.5rem 0;border-bottom:1px solid var(--w2)"><strong style="color:var(--i3)">Tél : </strong><a href="tel:'+e.tel+'" style="color:var(--g3)">'+e.tel+'</a></div>':"")
@@ -3544,33 +3536,19 @@ function showCD(idx){
   var pp=P.filter(function(p){return themes.indexOf(p.theme)>=0;});
   var to=pp.length,pr=0,ec=0,re=0;
   pp.forEach(function(p){var s=ST[p.id]||p.statut||"";if(s==="Prioritaire")pr++;if(s.indexOf("cours")>=0)ec++;if(s.indexOf("alis")>=0)re++;});
-  var statOpts=SLIST.map(function(s){return'<option value="'+s+'">'+s+'</option>';}).join('');
-  var pb=document.getElementById("panel-body"); if(!pb)return;
-  pb.innerHTML=
-    '<div style="background:'+col+'18;border-bottom:3px solid '+col+';padding:.85rem 1.4rem;display:flex;align-items:center;gap:12px">'
-    +'<div style="width:40px;height:40px;border-radius:10px;background:'+col+';display:flex;align-items:center;justify-content:center;font-size:1.2rem">'+(ICONS[comm]||"📋")+'</div>'
-    +'<div style="flex:1"><div style="font-size:1rem;font-weight:800;font-family:var(--fd)">'+comm+'</div>'
-    +'<div style="font-size:.72rem;color:var(--i3)">'+themes.join(" · ")+'</div></div>'
-    +'<button onclick="buildCG()" style="background:rgba(0,0,0,.07);border:none;border-radius:7px;padding:5px 12px;font-size:.73rem;cursor:pointer">← Retour</button>'
-    +'</div>'
-    +'<div style="display:flex;gap:8px;padding:.75rem 1.4rem;border-bottom:1px solid var(--w2)">'
-    +'<div class="kpi" style="flex:1"><div class="kpiv">'+to+'</div><div class="kpil">Projets</div></div>'
-    +'<div class="kpi" style="flex:1"><div class="kpiv" style="color:var(--red)">'+pr+'</div><div class="kpil">Prioritaires</div></div>'
-    +'<div class="kpi" style="flex:1"><div class="kpiv" style="color:var(--amber)">'+ec+'</div><div class="kpil">En cours</div></div>'
-    +'<div class="kpi" style="flex:1"><div class="kpiv" style="color:var(--g4)">'+re+'</div><div class="kpil">Réalisés</div></div>'
-    +'</div>'
-    +'<div class="fb"><select class="fsel" id="cdp-st" onchange="fCDP()"><option value="">Tous statuts</option>'+statOpts+'</select>'
-    +'<input class="fsrch" id="cdp-q" placeholder="🔍 Rechercher…" oninput="fCDP()"><span class="fcnt" id="cdp-cnt"></span></div>'
-    +'<div class="tbw" style="border-radius:0;border-left:none;border-right:none"><table><thead><tr><th>Thème</th><th>Projet</th><th>Statut</th><th>Année</th><th>Imp.</th><th>Modifier</th></tr></thead><tbody id="cdp-tb"></tbody></table></div>';
-  fCDP();
-}
-function fCDP(){
-  var comm=Object.keys(COMM)[_ci],themes=COMM[comm];
-  var sEl=document.getElementById("cdp-st"),qEl=document.getElementById("cdp-q");
-  var s=sEl?sEl.value:"",q=qEl?(qEl.value||"").toLowerCase():"";
-  var r=P.filter(function(p){var ps=ST[p.id]||p.statut||"ND";return themes.indexOf(p.theme)>=0&&(!s||ps===s)&&(!q||(p.titre||"").toLowerCase().indexOf(q)>=0);});
-  var cnt=document.getElementById("cdp-cnt");if(cnt)cnt.textContent=r.length+" projet(s)";
-  rTb("cdp-tb",r,false);
+  $("cdet-ico").textContent=ICONS[comm]||"📋";
+  el("cdet-t",comm);
+  el("cdet-s",themes.join(" · ")+(REFS[comm]?" — "+REFS[comm]:""));
+  $("cdet-kpis").innerHTML=
+    '<div class="kpi" style="flex:1;min-width:0"><div class="kpiv">'+to+'</div><div class="kpil">Projets</div></div>'
+    +'<div class="kpi" style="flex:1;min-width:0"><div class="kpiv" style="color:var(--red)">'+pr+'</div><div class="kpil">Prioritaires</div></div>'
+    +'<div class="kpi" style="flex:1;min-width:0"><div class="kpiv" style="color:var(--amber)">'+ec+'</div><div class="kpil">En cours</div></div>'
+    +'<div class="kpi" style="flex:1;min-width:0"><div class="kpiv" style="color:var(--g4)">'+re+'</div><div class="kpil">Réalisés</div></div>';
+  $("cd-st").value=""; $("cd-q").value="";
+  qsa(".page").forEach(function(p){p.classList.remove("on");});
+  qsa(".sbi").forEach(function(n){n.classList.remove("on");});
+  $("p-cdet").classList.add("on");
+  fCD();
 }
 function fCD(){
   var comm=Object.keys(COMM)[_ci],themes=COMM[comm];
