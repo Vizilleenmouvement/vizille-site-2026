@@ -725,6 +725,10 @@ const server=http.createServer(function(req,res){
   });
 
   // ── ESPACE PRIVÉ (avec authentification) ───────────────────────────────────
+  if((p==='/espace'||p==='/dashboard')&&qs.logout){
+    res.writeHead(401,{'WWW-Authenticate':'Basic realm="VeM Elus - Identifiez-vous"','Content-Type':'text/html;charset=utf-8'});
+    return res.end('<script>window.location="/";<\/script>');
+  }
   if(p==='/espace'||p==='/dashboard'){res.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});return res.end(buildPage());}
   res.writeHead(404);res.end('404');
 });
@@ -1511,6 +1515,7 @@ textarea.fi{resize:vertical;min-height:90px;}
   <div style="display:flex;align-items:center;gap:8px">
     <button class="tbtn tbtn-v" onclick="openVisio()">&#x1F4F9; Visio</button>
     <button class="tbtn tbtn-c" onclick="toggleChat()">&#x1F4AC; Tchat<span class="cbdg" id="cbdg"></span></button>
+    <button class="tbtn" onclick="deconnexion()" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);font-size:.68rem">&#x1F511; D&#xe9;co</button>
     <div class="top-av" id="top-av-btn" onclick="om('profile')" title="Mon profil">MT</div>
   </div>
 </div>
@@ -3735,6 +3740,16 @@ function genC(){
 function copyC(){var t=$("cr-gen");t.select();document.execCommand("copy");toast("Copié !");}
 
 // ── CHAT ──────────────────────────────────────────────────────────────────────
+function deconnexion(){
+  // Vider les credentials Basic Auth en forçant une 401
+  fetch(window.location.href, {headers:{Authorization:"Basic invalid"}})
+    .catch(function(){});
+  // Rediriger vers la page de login (401 va déclencher la boîte de dialogue)
+  setTimeout(function(){
+    document.execCommand("ClearAuthenticationCache", false);
+    window.location.href = "/espace?logout=" + Date.now();
+  }, 100);
+}
 function toggleChat(){_chatOpen=!_chatOpen;$("chat-panel").classList.toggle("on",_chatOpen);if(_chatOpen){$("cbdg").style.display="none";renderChatMsgs(CHAT);scrollChat();}}
 function openVisio(){window.open("https://kmeet.infomaniak.com/vizilleenmouvement","_blank");}
 function switchChannel(){CHAT=[];renderChatMsgs([]);pollChat();}
