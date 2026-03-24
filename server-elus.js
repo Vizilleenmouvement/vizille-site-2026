@@ -1136,7 +1136,7 @@ body{font-family:var(--fn);background:var(--w);color:var(--ink);height:100vh;ove
 .scr::-webkit-scrollbar{width:4px;}.scr::-webkit-scrollbar-thumb{background:var(--w3);border-radius:2px;}
 
 /* PAGES */
-.page{display:none;flex:1;overflow:hidden;}.page.on{display:flex!important;flex-direction:column;}@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.page{display:none;}.page.on{display:flex!important;flex-direction:column;flex:1;overflow:hidden;}@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
 /* CARDS */
 .card{background:#fff;border-radius:var(--R);border:1px solid var(--w2);box-shadow:var(--s1);padding:1.1rem 1.25rem;margin-bottom:12px;}
