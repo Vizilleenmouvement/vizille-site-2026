@@ -1860,7 +1860,7 @@ textarea.fi{resize:vertical;min-height:90px;}
 
 <!-- ÉLUS -->
 <div class="page" id="p-elus">
-  <div class="ph"><div class="ph-ico" style="background:var(--g8)">&#x1F9D1;&#x200D;&#x1F4BC;</div><div><div class="ph-t">L&#x27;équipe &#x2014; 26 conseillers</div><div class="ph-s">Groupe majoritaire Vizille en Mouvement</div></div></div>
+  <div class="ph"><div class="ph-ico" style="background:var(--g8)">&#x1F9D1;&#x200D;&#x1F4BC;</div><div><div class="ph-t">L&#x27;équipe &#x2014; 29 conseillers</div><div class="ph-s">D&#xe9;l&#xe9;gations et contacts</div></div></div>
   <div class="scr"><div class="elus-g" id="elus-list"></div></div>
 </div>
 
@@ -3336,18 +3336,17 @@ function delRepFile(id){
 function renderElus(){
   var el2=$("elus-list"); if(!el2)return;
   var list=ELUS_DATA.length?ELUS_DATA:ELUS0;
-  // Avatar immédiat, photo en lazy loading
   el2.innerHTML=list.map(function(e,i){
-    var av='<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff;font-family:var(--fd)">'+e.avatar+'</div>';
     var photoHtml=e.photo
-      ?'<img loading="lazy" src="'+e.photo+'" style="width:100%;height:100%;object-fit:cover;object-position:'+(e.photoPos||"center center")+'" onerror="this.style.display='none';this.nextSibling.style.display='flex'">'
-       +av
-      :av;
+      ?'<img src="'+e.photo+'" style="width:100%;height:100%;object-fit:cover;object-position:'+(e.photoPos||"center center")+'" onerror="hideImg(this)">'
+       +'<div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff;font-family:var(--fd)">'+e.avatar+'</div>'
+      :'<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff;font-family:var(--fd)">'+e.avatar+'</div>';
     return '<div class="elu" onclick="openElu('+i+')">'
       +'<div class="elu-av" style="background:'+(e.color||'var(--g3)')+';overflow:hidden;border-radius:50%;flex-shrink:0">'+photoHtml+'</div>'
       +'<div style="flex:1;min-width:0">'
       +'<div class="elu-n">'+(e.prenom?e.prenom+' ':'')+e.nom+'</div>'
       +'<div class="elu-r">'+e.role+'</div>'
+      
       +'</div></div>';
   }).join("");
 }
