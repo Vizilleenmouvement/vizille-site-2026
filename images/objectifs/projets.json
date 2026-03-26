@@ -201,7 +201,7 @@
     "indicateurs": ["Études engagées", "Partenaires mobilisés", "Usage des alternatives"],
     "vision": "Aucune hypothèse n'est écartée pour connecter Vizille au territoire.",
     "numero": "1/7",
-    "image": "images/objectifs/objectif_1.png"
+    "image": "images/objectifs/objectif_1.webp"
   },
   {
     "id": 102,
@@ -230,7 +230,7 @@
     "indicateurs": ["Continuités renforcées", "Points dangereux traités", "Retours d'usagers"],
     "vision": "Un réseau cyclable continu, de quartier à quartier, de vallée à montagne.",
     "numero": "2/7",
-    "image": "images/objectifs/objectif_2.png"
+    "image": "images/objectifs/objectif_2.webp"
   },
   {
     "id": 103,
@@ -260,7 +260,7 @@
     "indicateurs": ["Points sensibles traités", "Qualité des cheminements", "Retours usagers"],
     "vision": "Des déplacements sûrs et accessibles pour tous, à chaque âge de la vie.",
     "numero": "3/7",
-    "image": "images/objectifs/objectif_3.png"
+    "image": "images/objectifs/objectif_3.webp"
   },
   {
     "id": 104,
@@ -289,7 +289,7 @@
     "indicateurs": ["Vitesses constatées", "Perception des nuisances", "Reports de trafic"],
     "vision": "Des quartiers protégés du transit, pour une vie quotidienne apaisée.",
     "numero": "4/7",
-    "image": "images/objectifs/objectif_4.png"
+    "image": "images/objectifs/objectif_4.webp"
   },
   {
     "id": 105,
@@ -318,7 +318,7 @@
     "indicateurs": ["Répartition des flux", "Vitesses constatées", "Retours d'usage"],
     "vision": "Un plan lisible pour des déplacements simples et cohérents.",
     "numero": "5/7",
-    "image": "images/objectifs/objectif_5.png"
+    "image": "images/objectifs/objectif_5.webp"
   },
   {
     "id": 106,
@@ -347,7 +347,7 @@
     "indicateurs": ["Fréquentation", "Retours commerçants/habitants", "Qualité perçue"],
     "vision": "Un centre-ville apaisé, vivant et connecté à son patrimoine.",
     "numero": "6/7",
-    "image": "images/objectifs/objectif_6.png"
+    "image": "images/objectifs/objectif_6.webp"
   },
   {
     "id": 107,
@@ -376,7 +376,7 @@
     "indicateurs": ["Temps de parcours", "Durée des phases", "Retours usagers"],
     "vision": "Transparence des données, régulation adaptée, bouchons réduits.",
     "numero": "7/7",
-    "image": "images/objectifs/objectif_7.png"
+    "image": "images/objectifs/objectif_7.webp"
   },
   {
     "id": 201,
@@ -405,7 +405,7 @@
     "indicateurs": ["Nombre de patrouilles par semaine", "Temps de réponse moyen", "Signalements traités"],
     "vision": "Une présence stratégique : être là où et quand c'est utile.",
     "numero": "1/11",
-    "image": "images/objectifs/tranquillite_1.png"
+    "image": "images/objectifs/tranquillite_1.webp"
   },
   {
     "id": 202,
@@ -434,7 +434,7 @@
     "indicateurs": ["Conflits traités et apaisés", "Taux de récidive", "Retours des habitants"],
     "vision": "Une implication directe des élus dans la médiation et la prévention.",
     "numero": "2/11",
-    "image": "images/objectifs/tranquillite_2.png"
+    "image": "images/objectifs/tranquillite_2.webp"
   },
   {
     "id": 203,
@@ -463,7 +463,7 @@
     "indicateurs": ["Plaintes liées au bruit", "Délai d'intervention", "Actions correctives"],
     "vision": "Des règles connues, des contrôles ciblés, une réactivité sans faille.",
     "numero": "3/11",
-    "image": "images/objectifs/tranquillite_3.png"
+    "image": "images/objectifs/tranquillite_3.webp"
   },
   {
     "id": 204,
@@ -492,7 +492,7 @@
     "indicateurs": ["Vitesse moyenne constatée", "Incidents signalés", "Ressenti aux abords des écoles"],
     "vision": "Faire respecter des règles qui permettent à chacun de circuler en sécurité.",
     "numero": "4/11",
-    "image": "images/objectifs/tranquillite_4.png"
+    "image": "images/objectifs/tranquillite_4.webp"
   },
   {
     "id": 205,
@@ -521,7 +521,7 @@
     "indicateurs": ["Zones traitées", "Délai de traitement", "Ressenti sur les parcours"],
     "vision": "Un espace public où l'on se sent en sécurité, de jour comme de nuit.",
     "numero": "5/11",
-    "image": "images/objectifs/tranquillite_5.png"
+    "image": "images/objectifs/tranquillite_5.webp"
   },
   {
     "id": 206,
@@ -550,7 +550,7 @@
     "indicateurs": ["Incidents traités grâce à la vidéo", "Délai d'exploitation", "Évolution des incivilités"],
     "vision": "Un outil efficace au service de la tranquillité, dans le respect du cadre légal.",
     "numero": "6/11",
-    "image": "images/objectifs/tranquillite_6.png"
+    "image": "images/objectifs/tranquillite_6.webp"
   },
   {
     "id": 207,
@@ -579,7 +579,7 @@
     "indicateurs": ["Délai d'intervention", "Points critiques résolus", "Évolution des signalements"],
     "vision": "Une ville propre où les règles communes sont respectées.",
     "numero": "7/11",
-    "image": "images/objectifs/tranquillite_7.png"
+    "image": "images/objectifs/tranquillite_7.webp"
   },
   {
     "id": 208,
@@ -608,7 +608,7 @@
     "indicateurs": ["Signalements reçus et traités", "Retours des référents", "Participation aux réunions"],
     "vision": "Des relais humains identifiés dans chaque quartier.",
     "numero": "8/11",
-    "image": "images/objectifs/tranquillite_8.png"
+    "image": "images/objectifs/tranquillite_8.webp"
   },
   {
     "id": 209,
@@ -637,7 +637,7 @@
     "indicateurs": ["Actions conjointes réalisées", "Délais inter-acteurs", "Points noirs suivis en partenariat"],
     "vision": "Une chaîne de réponse partagée entre tous les acteurs.",
     "numero": "9/11",
-    "image": "images/objectifs/tranquillite_9.png"
+    "image": "images/objectifs/tranquillite_9.webp"
   },
   {
     "id": 210,
@@ -666,7 +666,7 @@
     "indicateurs": ["Points noirs recensés et traités", "Délais de traitement", "Publication du bilan annuel"],
     "vision": "La méthode : identifier, agir, mesurer, publier.",
     "numero": "10/11",
-    "image": "images/objectifs/tranquillite_10.png"
+    "image": "images/objectifs/tranquillite_10.webp"
   },
   {
     "id": 211,
@@ -695,6 +695,6 @@
     "indicateurs": ["Écoles sensibilisées", "Exercices réalisés", "Mises à jour du PCS"],
     "vision": "Une culture du risque partagée, sans dramatisation.",
     "numero": "11/11",
-    "image": "images/objectifs/tranquillite_11.png"
+    "image": "images/objectifs/tranquillite_11.webp"
   }
 ]
