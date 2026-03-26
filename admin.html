@@ -44,7 +44,7 @@
     <title>Administration - Vizille en Mouvement</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/admin.css?v=20260326">
 </head>
 <body>
 
@@ -287,13 +287,13 @@
             <div class="ve-sidebar">
               <h3>Pages du site</h3>
               <ul class="ve-page-list">
-                <li class="ve-page-item active" data-page="index">🏠 Accueil</li>
-                <li class="ve-page-item" data-page="bilan">📊 Bilan</li>
-                <li class="ve-page-item" data-page="projet">🚀 Projet</li>
-                <li class="ve-page-item" data-page="equipe">👥 Équipe</li>
-                <li class="ve-page-item" data-page="blog">📰 Blog</li>
-                <li class="ve-page-item" data-page="faq">🤝 FAQ</li>
-                <li class="ve-page-item" data-page="medias">🖼️ Médias</li>
+                <li class="ve-page-item active" data-page="index" onclick="selectVEPage(this)">🏠 Accueil</li>
+                <li class="ve-page-item" data-page="bilan" onclick="selectVEPage(this)">📊 Bilan</li>
+                <li class="ve-page-item" data-page="projet" onclick="selectVEPage(this)">🚀 Projet</li>
+                <li class="ve-page-item" data-page="equipe" onclick="selectVEPage(this)">👥 Équipe</li>
+                <li class="ve-page-item" data-page="blog" onclick="selectVEPage(this)">📰 Blog</li>
+                <li class="ve-page-item" data-page="faq" onclick="selectVEPage(this)">🤝 FAQ</li>
+                <li class="ve-page-item" data-page="medias" onclick="selectVEPage(this)">🖼️ Médias</li>
               </ul>
               <div class="ve-actions">
                 <button class="btn-publish" onclick="publishPageSections()">🚀 Publier les pages</button>
@@ -1016,6 +1016,6 @@
             </div>
         </div>
     </div>
-    <script src="js/admin.js"></script>
+    <script src="js/admin.js?v=20260326"></script>
 </body>
 </html>

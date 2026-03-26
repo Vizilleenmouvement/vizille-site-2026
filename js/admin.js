@@ -619,7 +619,7 @@ async function loadLocalData() {
     const files = {
         projets: 'projets.json',
         themes: 'themes.json',
-        actions: 'data.json',
+        actions: 'actions.json',
         candidats: 'candidats.json',
         faq: 'faq.json',
         articles: 'articles.json',
@@ -860,7 +860,7 @@ async function loadAllData() {
     const files = {
         projets: 'projets.json',
         themes: 'themes.json',
-        actions: 'data.json',
+        actions: 'actions.json',
         candidats: 'candidats.json',
         faq: 'faq.json',
         articles: 'articles.json',
@@ -4921,7 +4921,7 @@ async function publish(section, retryCount = 0) {
         const files = {
             projets: 'projets.json',
             themes: 'themes.json',
-            actions: 'data.json',
+            actions: 'actions.json',
             candidats: 'candidats.json',
             faq: 'faq.json',
             articles: 'articles.json',
@@ -4942,7 +4942,7 @@ async function publish(section, retryCount = 0) {
     const files = {
         projets: 'projets.json',
         themes: 'themes.json',
-        actions: 'data.json',
+        actions: 'actions.json',
         candidats: 'candidats.json',
         faq: 'faq.json',
         articles: 'articles.json',
@@ -6598,28 +6598,42 @@ function setupVisualEditor() {
   if (_visualEditorInitialized) return;
   _visualEditorInitialized = true;
 
-  // Page selection
-  document.querySelectorAll('.ve-page-item').forEach(item => {
-    item.addEventListener('click', () => {
+  // Page selection — event delegation on the list for robustness
+  const pageList = document.querySelector('.ve-page-list');
+  if (pageList) {
+    pageList.addEventListener('click', (e) => {
+      const item = e.target.closest('.ve-page-item');
+      if (!item) return;
       document.querySelectorAll('.ve-page-item').forEach(i => i.classList.remove('active'));
       item.classList.add('active');
       currentEditPage = item.dataset.page;
       loadPageInEditor(currentEditPage);
     });
-  });
+  }
 
-  // Device switching
-  document.querySelectorAll('.ve-device-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
+  // Device switching — event delegation
+  const previewActions = document.querySelector('.ve-preview-actions');
+  if (previewActions) {
+    previewActions.addEventListener('click', (e) => {
+      const btn = e.target.closest('.ve-device-btn');
+      if (!btn) return;
       document.querySelectorAll('.ve-device-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const iframe = document.getElementById('ve-iframe');
       if (iframe) iframe.style.maxWidth = btn.dataset.width;
     });
-  });
+  }
 
   // Load first page
   loadPageInEditor('index');
+}
+
+// Inline onclick fallback — always works even if setupVisualEditor hasn't run
+function selectVEPage(el) {
+  document.querySelectorAll('.ve-page-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  currentEditPage = el.dataset.page;
+  loadPageInEditor(currentEditPage);
 }
 
 function loadPageInEditor(pageName) {
