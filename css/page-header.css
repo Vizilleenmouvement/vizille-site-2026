@@ -20,10 +20,6 @@
     filter: drop-shadow(0 4px 12px rgba(201, 162, 39, 0.5));
 }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); filter: drop-shadow(0 4px 12px rgba(201, 162, 39, 0.5)); }
-    50% { transform: scale(1.05); filter: drop-shadow(0 8px 24px rgba(201, 162, 39, 0.8)); }
-}
 
 .hero-unified .hero-text {
     text-align: left;
