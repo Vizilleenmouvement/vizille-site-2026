@@ -779,6 +779,10 @@ function setupTabs() {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             tab.classList.add('active');
             document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+            // Initialize visual editor when Pages tab is selected
+            if (tab.dataset.tab === 'pages') {
+                setupVisualEditor();
+            }
         });
     });
 }
@@ -1015,6 +1019,10 @@ function switchTab(tabName) {
     document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.toggle('active', content.id === 'tab-' + tabName);
     });
+    // Initialize visual editor when switching to Pages tab
+    if (tabName === 'pages') {
+        setupVisualEditor();
+    }
 }
 
 // ===== RECHERCHE GLOBALE =====
@@ -6373,40 +6381,11 @@ async function loadPageSections() {
     }
 }
 
-// Render the legacy Pages tab fields (bandeau, evenement, sections)
+// Legacy render stub — no longer needed with visual editor, 
+// but kept as a no-op so existing callers don't break
 function renderPagesTabLegacy() {
-    if (!pageSectionsData) return;
-    
-    const b = pageSectionsData.bandeau || {};
-    const el = (id) => document.getElementById(id);
-    
-    if (el('pages-bandeau-visible')) el('pages-bandeau-visible').checked = !!b.visible;
-    if (el('pages-bandeau-texte')) el('pages-bandeau-texte').value = b.texte || '';
-    if (el('pages-bandeau-lien')) el('pages-bandeau-lien').value = b.lien || '';
-    
-    const evt = pageSectionsData.evenement || {};
-    if (el('pages-evt-visible')) el('pages-evt-visible').checked = !!evt.visible;
-    if (el('pages-evt-surtitre')) el('pages-evt-surtitre').value = evt.surtitre || '';
-    if (el('pages-evt-titre')) el('pages-evt-titre').value = evt.titre || '';
-    if (el('pages-evt-texte')) el('pages-evt-texte').value = evt.texte || '';
-    if (el('pages-evt-detail')) el('pages-evt-detail').value = evt.detail || '';
-    if (el('pages-evt-photo')) el('pages-evt-photo').value = evt.photo || '';
-    if (el('pages-evt-lien1')) el('pages-evt-lien1').value = evt.lien_principal || '';
-    if (el('pages-evt-texte1')) el('pages-evt-texte1').value = evt.texte_lien_principal || '';
-    if (el('pages-evt-lien2')) el('pages-evt-lien2').value = evt.lien_secondaire || '';
-    if (el('pages-evt-texte2')) el('pages-evt-texte2').value = evt.texte_lien_secondaire || '';
-    
-    // Sections toggles
-    const sections = pageSectionsData.sections || {};
-    const container = el('pages-sections-toggles');
-    if (container) {
-        container.innerHTML = Object.entries(sections).map(([key, val]) => `
-            <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;padding:0.5rem;background:#f8f9fa;border-radius:6px;">
-                <input type="checkbox" data-section-key="${key}" ${val.visible ? 'checked' : ''} style="width:16px;height:16px;">
-                <span style="font-size:0.85rem;">${val.label || key}</span>
-            </label>
-        `).join('');
-    }
+    // Visual editor fields are populated via renderVEFields() instead.
+    // pageSectionsData is now the single source of truth.
 }
 
 // Save page-sections.json via GitHub API
@@ -6417,56 +6396,23 @@ async function publishPageSections() {
         return;
     }
 
-    // Read form values for bandeau
-    const el = (id) => document.getElementById(id);
-    
+    // Ensure pageSectionsData exists
     if (!pageSectionsData) pageSectionsData = {};
     
-    pageSectionsData.bandeau = {
-        visible: el('pages-bandeau-visible')?.checked || false,
-        texte: el('pages-bandeau-texte')?.value || '',
-        lien: el('pages-bandeau-lien')?.value || '',
-        background: pageSectionsData.bandeau?.background || '#1a3a6b',
-        couleur: pageSectionsData.bandeau?.couleur || '#ffffff'
-    };
-    
-    pageSectionsData.evenement = {
-        visible: el('pages-evt-visible')?.checked || false,
-        surtitre: el('pages-evt-surtitre')?.value || '',
-        titre: el('pages-evt-titre')?.value || '',
-        texte: el('pages-evt-texte')?.value || '',
-        detail: el('pages-evt-detail')?.value || '',
-        photo: el('pages-evt-photo')?.value || '',
-        lien_principal: el('pages-evt-lien1')?.value || '',
-        texte_lien_principal: el('pages-evt-texte1')?.value || '',
-        lien_secondaire: el('pages-evt-lien2')?.value || '',
-        texte_lien_secondaire: el('pages-evt-texte2')?.value || ''
-    };
-    
-    // Sections visibility
-    const sectionToggles = document.querySelectorAll('#pages-sections-toggles input[data-section-key]');
-    if (!pageSectionsData.sections) pageSectionsData.sections = {};
-    sectionToggles.forEach(toggle => {
-        const key = toggle.dataset.sectionKey;
-        if (pageSectionsData.sections[key]) {
-            pageSectionsData.sections[key].visible = toggle.checked;
-        }
-    });
-    
-    // Read page editor fields
+    // Visual editor writes directly to pageSectionsData.pages via updateVEField(),
+    // so we also read any current visual editor fields into pageSectionsData
     if (!pageSectionsData.pages) pageSectionsData.pages = {};
-    const pageNames = ['index', 'bilan', 'projet', 'equipe', 'blog', 'faq'];
-    pageNames.forEach(page => {
-        if (!pageSectionsData.pages[page]) pageSectionsData.pages[page] = {};
-        const fields = document.querySelectorAll(`[data-page="${page}"]`);
-        fields.forEach(field => {
-            const key = field.dataset.field;
-            if (key) pageSectionsData.pages[page][key] = field.value;
+    const veFields = document.querySelectorAll('[data-ve-key]');
+    if (veFields.length > 0 && currentEditPage) {
+        if (!pageSectionsData.pages[currentEditPage]) pageSectionsData.pages[currentEditPage] = {};
+        veFields.forEach(field => {
+            const key = field.dataset.veKey;
+            if (key) pageSectionsData.pages[currentEditPage][key] = field.value;
         });
-    });
+    }
 
     const content = JSON.stringify(pageSectionsData, null, 2);
-    const saveMsg = el('pages-save-msg');
+    const saveMsg = document.getElementById('pages-save-msg');
     
     try {
         // Get SHA
@@ -6536,7 +6482,8 @@ async function updateHtmlPages() {
         projet: 'projet.html',
         equipe: 'equipe.html',
         blog: 'blog.html',
-        faq: 'faq.html'
+        faq: 'faq.html',
+        medias: 'medias.html'
     };
     
     // We update pages one by one to avoid conflicts
@@ -6598,97 +6545,162 @@ async function updateHtmlPages() {
     }
 }
 
-// ===== PAGE EDITOR RENDERING =====
-const PAGE_EDITOR_CONFIG = {
-    index: {
-        label: '🏠 Accueil',
-        fields: [
-            { key: 'hero_titre', label: 'Titre hero', type: 'text' },
-            { key: 'hero_soustitre', label: 'Sous-titre hero', type: 'text' },
-            { key: 'hero_axes', label: 'Axes prioritaires', type: 'textarea' },
-            { key: 'hero_appel', label: 'Appel à l\'action', type: 'text' },
-            { key: 'candidate_nom', label: 'Nom candidate', type: 'text' },
-            { key: 'candidate_titre', label: 'Titre candidate', type: 'text' },
-            { key: 'candidate_role', label: 'Rôle / Mandat', type: 'text' },
-            { key: 'slogan', label: 'Slogan', type: 'text' },
-            { key: 'citation', label: 'Citation', type: 'textarea' }
-        ]
-    },
-    bilan: {
-        label: '📊 Bilan',
-        fields: [
-            { key: 'hero_titre', label: 'Titre hero', type: 'text' }
-        ]
-    },
-    projet: {
-        label: '🚀 Projet',
-        fields: [
-            { key: 'hero_titre', label: 'Titre hero', type: 'text' }
-        ]
-    },
-    equipe: {
-        label: '👥 Équipe',
-        fields: [
-            { key: 'hero_titre', label: 'Titre hero', type: 'text' },
-            { key: 'hero_soustitre', label: 'Sous-titre hero', type: 'textarea' }
-        ]
-    },
-    blog: {
-        label: '📰 Blog',
-        fields: [
-            { key: 'hero_titre', label: 'Titre hero', type: 'text' }
-        ]
-    },
-    faq: {
-        label: '🤝 FAQ',
-        fields: [
-            { key: 'hero_titre', label: 'Titre hero', type: 'text' },
-            { key: 'hero_soustitre', label: 'Sous-titre hero', type: 'textarea' }
-        ]
-    }
+// ===== VISUAL EDITOR =====
+
+const VE_PAGE_FIELDS = {
+  index: [
+    { key: 'hero_titre', label: 'Titre principal', type: 'text' },
+    { key: 'hero_soustitre', label: 'Sous-titre', type: 'text' },
+    { key: 'hero_axes', label: 'Axes prioritaires', type: 'textarea' },
+    { key: 'hero_appel', label: "Phrase d'appel", type: 'text' },
+    { key: 'candidate_nom', label: 'Nom de la candidate', type: 'text' },
+    { key: 'candidate_titre', label: 'Titre', type: 'text' },
+    { key: 'candidate_role', label: 'Rôle / Mandat', type: 'text' },
+    { key: 'slogan', label: 'Slogan', type: 'text' },
+    { key: 'citation', label: 'Citation', type: 'textarea' }
+  ],
+  bilan: [
+    { key: 'hero_titre', label: 'Titre hero', type: 'text' }
+  ],
+  projet: [
+    { key: 'hero_titre', label: 'Titre hero', type: 'text' }
+  ],
+  equipe: [
+    { key: 'hero_titre', label: 'Titre hero', type: 'text' },
+    { key: 'hero_soustitre', label: 'Sous-titre', type: 'textarea' }
+  ],
+  blog: [
+    { key: 'hero_titre', label: 'Titre hero', type: 'text' }
+  ],
+  faq: [
+    { key: 'hero_titre', label: 'Titre hero', type: 'text' },
+    { key: 'hero_soustitre', label: 'Sous-titre', type: 'textarea' }
+  ],
+  medias: [
+    { key: 'hero_titre', label: 'Titre hero', type: 'text' }
+  ]
 };
 
-function renderPageEditor() {
-    const container = document.getElementById('page-editor-container');
-    if (!container) return;
-    
-    const pages = pageSectionsData?.pages || {};
-    
-    // Build tabs
-    let tabsHtml = '<div class="page-editor-tabs">';
-    let contentHtml = '';
-    let first = true;
-    
-    for (const [pageName, config] of Object.entries(PAGE_EDITOR_CONFIG)) {
-        tabsHtml += `<button class="page-editor-tab${first ? ' active' : ''}" onclick="switchPageEditor('${pageName}')" data-page-tab="${pageName}">${config.label}</button>`;
-        
-        const pageData = pages[pageName] || {};
-        contentHtml += `<div class="page-editor-section${first ? ' active' : ''}" id="page-edit-${pageName}">`;
-        contentHtml += `<div class="admin-card" style="margin-bottom:1rem;">`;
-        contentHtml += `<h3 style="color:var(--bleu);margin-bottom:1rem;">${config.label} — Contenus éditables</h3>`;
-        
-        for (const field of config.fields) {
-            contentHtml += `<div class="form-group">`;
-            contentHtml += `<label class="form-label">${field.label}</label>`;
-            if (field.type === 'textarea') {
-                contentHtml += `<textarea class="form-input" data-page="${pageName}" data-field="${field.key}" rows="3">${pageData[field.key] || ''}</textarea>`;
-            } else {
-                contentHtml += `<input type="text" class="form-input" data-page="${pageName}" data-field="${field.key}" value="${(pageData[field.key] || '').replace(/"/g, '&quot;')}">`;
-            }
-            contentHtml += `</div>`;
-        }
-        
-        contentHtml += `</div></div>`;
-        first = false;
+const VE_PAGE_LABELS = {
+  index: '\ud83c\udfe0 Accueil',
+  bilan: '\ud83d\udcca Bilan',
+  projet: '\ud83d\ude80 Projet',
+  equipe: '\ud83d\udc65 \u00c9quipe',
+  blog: '\ud83d\udcf0 Blog',
+  faq: '\ud83e\udd1d FAQ',
+  medias: '\ud83d\uddbc\ufe0f M\u00e9dias'
+};
+
+let currentEditPage = 'index';
+let _visualEditorInitialized = false;
+
+function setupVisualEditor() {
+  if (_visualEditorInitialized) return;
+  _visualEditorInitialized = true;
+
+  // Page selection
+  document.querySelectorAll('.ve-page-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.ve-page-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      currentEditPage = item.dataset.page;
+      loadPageInEditor(currentEditPage);
+    });
+  });
+
+  // Device switching
+  document.querySelectorAll('.ve-device-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.ve-device-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const iframe = document.getElementById('ve-iframe');
+      if (iframe) iframe.style.maxWidth = btn.dataset.width;
+    });
+  });
+
+  // Load first page
+  loadPageInEditor('index');
+}
+
+function loadPageInEditor(pageName) {
+  const iframe = document.getElementById('ve-iframe');
+  const titleEl = document.getElementById('ve-current-page');
+  
+  if (titleEl) titleEl.textContent = VE_PAGE_LABELS[pageName] || pageName;
+  if (iframe) iframe.src = pageName === 'index' ? 'index.html' : pageName + '.html';
+  
+  renderVEFields(pageName);
+}
+
+function renderVEFields(pageName) {
+  const container = document.getElementById('ve-fields');
+  if (!container) return;
+  const fields = VE_PAGE_FIELDS[pageName] || [];
+  
+  // Get current values from pageSectionsData
+  const pageData = (pageSectionsData && pageSectionsData.pages && pageSectionsData.pages[pageName]) || {};
+  
+  let html = '';
+  fields.forEach(field => {
+    const value = pageData[field.key] || '';
+    if (field.type === 'textarea') {
+      html += `<div class="ve-field">
+        <label>${field.label}</label>
+        <textarea data-ve-key="${field.key}" oninput="updateVEField('${pageName}', '${field.key}', this.value)">${value}</textarea>
+      </div>`;
+    } else {
+      html += `<div class="ve-field">
+        <label>${field.label}</label>
+        <input type="text" data-ve-key="${field.key}" value="${value.replace(/"/g, '&quot;')}" oninput="updateVEField('${pageName}', '${field.key}', this.value)">
+      </div>`;
     }
-    
-    tabsHtml += '</div>';
-    container.innerHTML = tabsHtml + contentHtml;
+  });
+  
+  if (fields.length === 0) {
+    html = '<p style="color:#999;font-size:0.9rem;">Aucun champ modifiable pour cette page.</p>';
+  }
+  
+  container.innerHTML = html;
+}
+
+function updateVEField(pageName, key, value) {
+  // Ensure structure exists
+  if (!pageSectionsData) pageSectionsData = {};
+  if (!pageSectionsData.pages) pageSectionsData.pages = {};
+  if (!pageSectionsData.pages[pageName]) pageSectionsData.pages[pageName] = {};
+  
+  pageSectionsData.pages[pageName][key] = value;
+  markModified('pages');
+  
+  // Live update iframe via postMessage
+  try {
+    const iframe = document.getElementById('ve-iframe');
+    if (iframe && iframe.contentWindow) {
+      iframe.contentWindow.postMessage({
+        type: 'VEM_UPDATE_FIELD',
+        page: pageName,
+        key: key,
+        value: value
+      }, '*');
+    }
+  } catch(e) { /* cross-origin, ignore */ }
+}
+
+function refreshPreview() {
+  const iframe = document.getElementById('ve-iframe');
+  if (iframe) iframe.src = iframe.src;
+}
+
+// Kept for backward compatibility — renderPageEditor now triggers the visual editor
+function renderPageEditor() {
+  // The old page-editor-container no longer exists.
+  // Instead refresh the visual editor fields for the current page.
+  renderVEFields(currentEditPage);
 }
 
 function switchPageEditor(pageName) {
-    document.querySelectorAll('.page-editor-tab').forEach(t => t.classList.toggle('active', t.dataset.pageTab === pageName));
-    document.querySelectorAll('.page-editor-section').forEach(s => s.classList.toggle('active', s.id === 'page-edit-' + pageName));
+  // Legacy stub — now handled by visual editor sidebar clicks
+  loadPageInEditor(pageName);
 }
 
 // ===== RICH TEXT TOOLBAR =====
@@ -7224,10 +7236,10 @@ function initNewFeatures() {
     // Setup image drop zone
     setTimeout(setupDropZone, 500);
     
-    // Wire up pages save button
-    const pagesSaveBtn = document.getElementById('pages-save-btn');
-    if (pagesSaveBtn) {
-        pagesSaveBtn.onclick = publishPageSections;
+    // Visual editor publish button is wired via onclick in HTML.
+    // Setup visual editor if Pages tab is already active (unlikely but safe)
+    if (document.getElementById('tab-pages')?.classList.contains('active')) {
+        setupVisualEditor();
     }
     
     // Check connection when token changes
