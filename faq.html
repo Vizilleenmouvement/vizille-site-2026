@@ -258,7 +258,7 @@
         // ===== CHARGEMENT =====
         async function loadFaq() {
             try {
-                const response = await fetch('faq.json?v=' + Date.now());
+                const response = await fetch('faq.json?v=2026.03');
                 if (!response.ok) throw new Error('Erreur');
 
                 faqData = await response.json();
@@ -551,7 +551,7 @@
         // ===== CONFIG =====
         async function loadConfig() {
             try {
-                const response = await fetch('config.json?v=' + Date.now());
+                const response = await fetch('config.json?v=2026.03');
                 if (response.ok) {
                     const config = await response.json();
 

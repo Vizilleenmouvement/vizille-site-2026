@@ -203,7 +203,6 @@
                     btn.classList.remove('active');
                 }
             });
-            renderLeader();
             renderTeam();
         }
 
@@ -224,7 +223,7 @@
 
         async function loadCandidats() {
             try {
-                const response = await fetch('candidats.json?v=' + Date.now());
+                const response = await fetch('candidats.json?v=2026.03');
                 if (!response.ok) throw new Error('Erreur');
 
                 candidatsData = await response.json();
@@ -327,7 +326,7 @@
             grid.innerHTML = catherineHtml + autresHtml;
 
             // Section soutiens — non-élus (données déjà chargées)
-            const allCandidats = await fetch('candidats.json?v=' + Date.now()).then(r => r.json());
+            const allCandidats = candidatsData;
             const soutiens = allCandidats.filter(c => c.elu === false && c.actif !== false);
             const soutiensGrid = document.getElementById('soutiens-grid');
             if (soutiensGrid && soutiens.length) {

@@ -216,8 +216,8 @@ body.retro{background:var(--fond);color:var(--blanc);font-family:var(--font-b);f
 <script>
 async function loadData() {
   const [actRes, projRes] = await Promise.all([
-    fetch('actions.json?v=' + Date.now()),
-    fetch('projets.json?v=' + Date.now())
+    fetch('actions.json?v=2026.03'),
+    fetch('projets.json?v=2026.03')
   ]);
   const actions = await actRes.json();
   const projets = (await projRes.json()).filter(function(p){ return p.statut !== 'En veille'; });

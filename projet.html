@@ -362,6 +362,7 @@ let currentView = 'themes';
 let sortColumn = 'annee';
 let sortDirection = 'asc';
 let currentProjectIndex = 0;
+let currentAxe = 1;
 
 // Configuration des thèmes par défaut
 const defaultThemeConfig = {
@@ -409,7 +410,7 @@ let currentCategoryFilter = null;
 // Charger les thèmes depuis themes.json
 async function loadThemeConfig() {
     try {
-        const response = await fetch('themes.json?v=' + Date.now());
+        const response = await fetch('themes.json?v=2026.03');
         if (response.ok) {
             const themesArray = await response.json();
             themesArray.forEach(t => {
@@ -439,7 +440,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         await loadThemeConfig();
 
-        const response = await fetch('projets.json?v=' + Date.now());
+        const response = await fetch('projets.json?v=2026.03');
         if (!response.ok) throw new Error('Erreur chargement données');
         allData = await response.json();
         
