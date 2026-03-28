@@ -1,5 +1,20 @@
 [
   {
+    "id": 1774900000000,
+    "titre": "Organisation de l'équipe municipale — Les délégations se précisent",
+    "date": "2026-03-28",
+    "categorie": "Communiqué",
+    "extrait": "Sous l'impulsion de Catherine Troton, l'attribution des délégations et la nomination des conseillers délégués sont en très bonne voie pour le mandat 2026-2032.",
+    "contenu": "Sous l'impulsion de notre Maire Catherine Troton, l'attribution des délégations et la nomination des conseillers délégués sont en très bonne voie pour ce mandat 2026-2032.\n\nCette étape cruciale nous permettra de :\n🔹 Structurer efficacement notre action municipale\n🔹 Répartir les responsabilités selon les compétences de chacun\n🔹 Assurer un service optimal à tous les habitants\n🔹 Concrétiser nos engagements de campagne\n\nChaque délégation sera confiée avec soin pour répondre au mieux à vos attentes et aux besoins de notre belle commune iséroise !\n\nL'équipe Vizille en Mouvement se mobilise pleinement pour :\n✅ Le développement économique local\n✅ L'amélioration du cadre de vie\n✅ Le soutien aux associations\n✅ La transition écologique\n✅ Les services à la population\n\nNous avons hâte de vous présenter prochainement la répartition définitive des délégations !\n\nMerci pour votre confiance renouvelée. Ensemble, continuons à faire bouger Vizille dans le bon sens !\n\n👥 Votre équipe municipale mobilisée pour Vizille !",
+    "images": [
+      "images/articles/equipe-adjoints-2026.jpg"
+    ],
+    "image": "images/articles/equipe-adjoints-2026.jpg",
+    "priorite": true,
+    "lien": "article-delegations.html",
+    "modifie_le": "2026-03-28T20:00:00.000Z"
+  },
+  {
     "id": 1773828669349,
     "titre": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés",
     "date": "2026-03-22",
@@ -378,7 +393,7 @@
       "images/articles/article_1774082511562_sans_titre.jpg"
     ],
     "image": "images/articles/article_1774082511562_sans_titre.jpg",
-    "priorite": false,
-    "modifie_le": "2026-03-28T17:12:49.695Z"
+    "priorite": true,
+    "modifie_le": "2026-03-21T08:41:57.431Z"
   }
 ]
