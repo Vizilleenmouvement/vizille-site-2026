@@ -5,21 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Construisons ensemble – Vizille en Mouvement</title>
-    <meta name="description" content="Participez à la vie de votre ville. Posez vos questions, partagez vos idées et suggestions. Contactez l'équipe Vizille en Mouvement.">
+    <meta name="description" content="Participez à la vie de votre commune. Posez vos questions, partagez vos idées et suggestions. Échangez avec l'équipe municipale Vizille en Mouvement.">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vizilleenmouvement.fr/faq.html">
-    <meta property="og:title" content="Construisons ensemble - Vizille en Mouvement">
-    <meta property="og:description" content="Participez à la vie de votre ville. Posez vos questions, partagez vos idées.">
-    <meta property="og:image" content="https://vizilleenmouvement.fr/images/logo.png">
+    <meta property="og:title" content="Construisons ensemble — Vizille en Mouvement">
+    <meta property="og:description" content="La campagne est terminée, pas le dialogue. Participez à la vie de votre commune, partagez vos idées.">
+    <meta property="og:image" content="https://vizilleenmouvement.fr/images/articles/equipe-adjoints-2026.jpg">
     <meta property="og:locale" content="fr_FR">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Construisons ensemble - Vizille en Mouvement">
-    <meta name="twitter:description" content="Participez à la vie de votre ville.">
-    <meta name="twitter:image" content="https://vizilleenmouvement.fr/images/logo.png">
+    <meta name="twitter:title" content="Construisons ensemble — Vizille en Mouvement">
+    <meta name="twitter:description" content="La campagne est terminée, pas le dialogue. Participez !">
+    <meta name="twitter:image" content="https://vizilleenmouvement.fr/images/articles/equipe-adjoints-2026.jpg">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,8 +60,8 @@
         <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo">
         <div class="hero-text">
             <h1>Construisons ensemble</h1>
-            <p class="slogan">Ensemble pour une ville dynamique et solidaire</p>
-            <p class="hero-subtitle">Vos questions, vos idées, vos suggestions — participez à la vie de votre ville</p>
+            <p class="slogan">Mandat 2026-2032 — Le dialogue continue</p>
+            <p class="hero-subtitle">La campagne est terminée, pas le dialogue. Vos questions, vos idées, vos suggestions continuent d'alimenter notre action municipale.</p>
             <div class="hero-stats">
                 <div class="hero-stat">
                     <div class="hero-stat-value" id="stat-total">0</div>
@@ -96,7 +96,7 @@
         <!-- Section Questions & Réponses -->
         <div class="questions-header">
             <h2>Vos questions, nos réponses</h2>
-            <p>Les échanges avec les Vizillois — en permanence, sur le terrain, sur les réseaux</p>
+            <p>Les échanges avec les Vizillois — avant, pendant et après la campagne. Le dialogue continue avec votre équipe municipale.</p>
         </div>
 
         <div class="faq-list" id="faq-list">
@@ -111,8 +111,8 @@
 
         <!-- Formulaire pour participer -->
         <div class="ask-question-box" id="ask-box">
-            <h2>Participez au dialogue !</h2>
-            <p>Une question ? Une idée ? Une suggestion ? Partagez avec nous, nous vous répondrons !</p>
+            <h2>Échangez avec votre équipe municipale</h2>
+            <p>Une question sur le mandat ? Une idée pour la commune ? Un signalement ? Partagez avec nous, nous vous répondrons !</p>
 
             <div class="success-message" id="question-success" style="display: none;">
                 ✅ Votre message a bien été envoyé ! Nous vous répondrons prochainement.
@@ -139,9 +139,9 @@
                         <select id="q-subject" name="subject">
                             <option value="Question générale">Question générale</option>
                             <option value="Proposition / Idée">Proposition / Idée</option>
-                            <option value="Et vous, quelle ville voulez-vous pour l'avenir ?">Et vous, quelle ville voulez-vous ?</option>
-                            <option value="Rejoindre l'équipe">Rejoindre l'équipe</option>
-                            <option value="Demande de rencontre">Demande de rencontre</option>
+                            <option value="Signalement">Signalement (voirie, propreté, sécurité...)</option>
+                            <option value="Suivi d'un projet">Suivi d'un projet du programme</option>
+                            <option value="Demande de rencontre">Demande de rencontre avec un élu</option>
                             <option value="Autre">Autre</option>
                         </select>
                     </div>
@@ -186,7 +186,7 @@
 
                 <div class="contact-card">
                     <h3>Permanences</h3>
-                    <p id="contact-permanences">Nous organisons des permanences régulières pour vous rencontrer.</p>
+                    <p id="contact-permanences">Vos élus sont à votre écoute. Des permanences sont organisées régulièrement.</p>
                     <p style="margin-top: 0.75rem;"><a href="blog.html">→ Voir les actualités</a></p>
                 </div>
 
@@ -201,16 +201,19 @@
             </div>
 
             <div class="special-requests">
-                <h3>Envie de vous engager ?</h3>
+                <h3>Participez à la vie de votre commune</h3>
                 <div class="request-buttons">
-                    <a href="#ask-box" class="btn-request highlight" onclick="setSubject('Rejoindre l\'équipe')">
-                        Rejoindre l'équipe
+                    <a href="#ask-box" class="btn-request highlight" onclick="setSubject('Proposition / Idée')">
+                        💡 Proposer une idée
+                    </a>
+                    <a href="#ask-box" class="btn-request" onclick="setSubject('Signalement')">
+                        🔴 Faire un signalement
                     </a>
                     <a href="#ask-box" class="btn-request" onclick="setSubject('Demande de rencontre')">
-                        Demander une rencontre
+                        🤝 Rencontrer un élu
                     </a>
-                    <a href="#ask-box" class="btn-request" onclick="setSubject('Proposition / Idée')">
-                        Proposer une idée
+                    <a href="#ask-box" class="btn-request" onclick="setSubject('Suivi d\'un projet')">
+                        📋 Suivre un projet
                     </a>
                 </div>
             </div>
@@ -218,7 +221,7 @@
     </main>
 
     <footer class="footer">
-        <p class="footer-slogan">« Ensemble pour une ville dynamique et solidaire »</p>
+        <p class="footer-slogan">« Mandat 2026-2032 — Ensemble pour Vizille »</p>
         <p>© 2026 Vizille en Mouvement</p>
     </footer>
 
