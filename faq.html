@@ -139,7 +139,6 @@
                         <select id="q-subject" name="subject">
                             <option value="Question générale">Question générale</option>
                             <option value="Proposition / Idée">Proposition / Idée</option>
-                            <option value="Signalement">Signalement (voirie, propreté, sécurité...)</option>
                             <option value="Suivi d'un projet">Suivi d'un projet du programme</option>
                             <option value="Demande de rencontre">Demande de rencontre avec un élu</option>
                             <option value="Autre">Autre</option>
@@ -205,9 +204,6 @@
                 <div class="request-buttons">
                     <a href="#ask-box" class="btn-request highlight" onclick="setSubject('Proposition / Idée')">
                         💡 Proposer une idée
-                    </a>
-                    <a href="#ask-box" class="btn-request" onclick="setSubject('Signalement')">
-                        🔴 Faire un signalement
                     </a>
                     <a href="#ask-box" class="btn-request" onclick="setSubject('Demande de rencontre')">
                         🤝 Rencontrer un élu
@@ -278,9 +274,9 @@
             } catch (err) {
                 document.getElementById('faq-list').innerHTML = `
                     <div class="empty-state">
-                        <div class="icon">❓</div>
-                        <h3>Aucune question pour le moment</h3>
-                        <p>Soyez le premier à nous écrire !</p>
+                        <div class="icon">💬</div>
+                        <h3>Vos suggestions continuent d'alimenter notre réflexion</h3>
+                        <p>Certaines d'entre elles trouveront leur place dans les projets que nous allons conduire ensemble.</p>
                     </div>
                 `;
             }
@@ -486,7 +482,7 @@
                 <div class="paroles-section">
                     <div class="paroles-header">
                         <h2>Paroles de Vizillois</h2>
-                        <p>Messages de soutien et encouragements</p>
+                        <p>Vos retours et vos encouragements pour le mandat</p>
                     </div>
                     <div class="paroles-grid">
             `;
