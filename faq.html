@@ -112,7 +112,7 @@
         <!-- Formulaire pour participer -->
         <div class="ask-question-box" id="ask-box">
             <h2>Échangez avec votre équipe municipale</h2>
-            <p>Une question sur le mandat ? Une idée pour la commune ? Un signalement ? Partagez avec nous, nous vous répondrons !</p>
+            <p>Une question sur le mandat ? Une idée pour la commune ? Partagez avec nous, nous vous répondrons !</p>
 
             <div class="success-message" id="question-success" style="display: none;">
                 ✅ Votre message a bien été envoyé ! Nous vous répondrons prochainement.
@@ -358,9 +358,9 @@
             if (filtered.length === 0 && !searchQuery && !currentFilter) {
                 container.innerHTML = `
                     <div class="empty-state">
-                        <div class="icon">❓</div>
-                        <h3>Aucune question pour le moment</h3>
-                        <p>Soyez le premier à nous écrire !</p>
+                        <div class="icon">💬</div>
+                        <h3>Vos suggestions continuent d'alimenter notre réflexion</h3>
+                        <p>Certaines d'entre elles trouveront leur place dans les projets que nous allons conduire ensemble.</p>
                     </div>
                 `;
                 renderParoles(withoutAnswer);
