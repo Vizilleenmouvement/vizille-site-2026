@@ -1,0 +1,254 @@
+{
+  "catherine.troton": {
+    "id": 1,
+    "nom": "Catherine Troton",
+    "role": "Tête de Liste",
+    "delegation": "Maire de Vizille",
+    "avatar": "CT",
+    "color": "#1a3a2a",
+    "pwd": "ctr2026"
+  },
+  "bernard.ughetto-monfrin": {
+    "id": 2,
+    "nom": "Bernard Ughetto-Monfrin",
+    "role": "Adjoint",
+    "delegation": "Mobilités",
+    "avatar": "BU",
+    "color": "#2d5a40",
+    "pwd": "bug2026"
+  },
+  "saida.berriche": {
+    "id": 3,
+    "nom": "Saïda Berriche",
+    "role": "Adjointe",
+    "delegation": "à la Tranquillité, le bien vivre ensemble, les commerces",
+    "avatar": "SB",
+    "color": "#3d7a5a",
+    "pwd": "sbe2026"
+  },
+  "gilles.faure": {
+    "id": 4,
+    "nom": "Gilles Faure",
+    "role": "Adjoint",
+    "delegation": "Accès aux droits, santé publique, action sociale et solidarité",
+    "avatar": "GF",
+    "color": "#8B5CF6",
+    "pwd": "gfa2026"
+  },
+  "angelique.hermitte": {
+    "id": 5,
+    "nom": "Angélique Hermitte",
+    "role": "Conseillère déléguée",
+    "delegation": "Petite enfance",
+    "avatar": "AH",
+    "color": "#F97316",
+    "pwd": "ahe2026"
+  },
+  "gerard.forestier": {
+    "id": 6,
+    "nom": "Gérard Forestier",
+    "role": "Adjoint",
+    "delegation": "Transition environnementale",
+    "avatar": "GF",
+    "color": "#EC4899",
+    "pwd": "gfo2026"
+  },
+  "marie-claude.argoud": {
+    "id": 7,
+    "nom": "Marie-Claude ARGOUD",
+    "role": "Première Adjointe",
+    "delegation": "en charge de la  Culture, du Patrimoine et de la Communication.",
+    "avatar": "MA",
+    "color": "#F59E0B",
+    "pwd": "mar2026"
+  },
+  "louis.lamarca": {
+    "id": 8,
+    "nom": "Louis Lamarca",
+    "role": "Adjoint",
+    "delegation": "à l'urbanisme et aux travaux",
+    "avatar": "LL",
+    "color": "#3B82F6",
+    "pwd": "lla2026"
+  },
+  "muriel.pasquiou": {
+    "id": 9,
+    "nom": "Muriel Pasquiou",
+    "role": "",
+    "delegation": "",
+    "avatar": "MP",
+    "color": "#10B981",
+    "pwd": "mpa2026"
+  },
+  "laurent.pichon": {
+    "id": 10,
+    "nom": "Laurent Pichon",
+    "role": "",
+    "delegation": "",
+    "avatar": "LP",
+    "color": "#EF4444",
+    "pwd": "lpi2026"
+  },
+  "sakina.yahiaoui": {
+    "id": 11,
+    "nom": "Sakina YAHIAOUI",
+    "role": "conseillère déléguée",
+    "delegation": "transition environnementale",
+    "avatar": "SY",
+    "color": "#14B8A6",
+    "pwd": "sya2026"
+  },
+  "mohamed.cherigui": {
+    "id": 12,
+    "nom": "Mohamed CHERIGUI",
+    "role": "",
+    "delegation": "",
+    "avatar": "MC",
+    "color": "#6366F1",
+    "pwd": "mch2026"
+  },
+  "christelle.reijasse": {
+    "id": 13,
+    "nom": "Christelle REIJASSE",
+    "role": "",
+    "delegation": "",
+    "avatar": "CR",
+    "color": "#db2777",
+    "pwd": "cre2026"
+  },
+  "ahmed.mendess": {
+    "id": 14,
+    "nom": "Ahmed MENDESS",
+    "role": "Conseillé délégué",
+    "delegation": "Accompagnement sports et jeunesse",
+    "avatar": "AM",
+    "color": "#0891b2",
+    "pwd": "ame2026"
+  },
+  "christine.sanchez": {
+    "id": 15,
+    "nom": "Christine Sanchez",
+    "role": "",
+    "delegation": "",
+    "avatar": "CS",
+    "color": "#65a30d",
+    "pwd": "csa2026"
+  },
+  "fabrice.pasquiou": {
+    "id": 16,
+    "nom": "Fabrice Pasquiou",
+    "role": "Conseiller délégué",
+    "delegation": "Risques majeurs",
+    "avatar": "FP",
+    "color": "#7c3aed",
+    "pwd": "fpa2026"
+  },
+  "meriem.el-kebir": {
+    "id": 17,
+    "nom": "Meriem El-Kebir",
+    "role": "",
+    "delegation": "",
+    "avatar": "ME",
+    "color": "#9333ea",
+    "pwd": "mel2026"
+  },
+  "jean-christophe.garcia": {
+    "id": 18,
+    "nom": "Jean-Christophe Garcia",
+    "role": "",
+    "delegation": "",
+    "avatar": "JG",
+    "color": "#c2410c",
+    "pwd": "jga2026"
+  },
+  "muriel.picca": {
+    "id": 19,
+    "nom": "Muriel PICCA",
+    "role": "",
+    "delegation": "",
+    "avatar": "MP",
+    "color": "#b45309",
+    "pwd": "mpi2026"
+  },
+  "michel.thuillier": {
+    "id": 20,
+    "nom": "Michel Thuillier",
+    "role": "",
+    "delegation": "",
+    "avatar": "MT",
+    "color": "#0f766e",
+    "pwd": "mth2026"
+  },
+  "isabelle.nifenecker": {
+    "id": 21,
+    "nom": "Isabelle Nifenecker",
+    "role": "",
+    "delegation": "",
+    "avatar": "IN",
+    "color": "#1d4ed8",
+    "pwd": "ini2026"
+  },
+  "andre-paul.venans": {
+    "id": 22,
+    "nom": "André-Paul Venans",
+    "role": "Conseiller",
+    "delegation": "",
+    "avatar": "AV",
+    "color": "#be185d",
+    "pwd": "ave2026"
+  },
+  "nathalie.jacolin": {
+    "id": 23,
+    "nom": "Nathalie Jacolin",
+    "role": "",
+    "delegation": "",
+    "avatar": "NJ",
+    "color": "#15803d",
+    "pwd": "nja2026"
+  },
+  "ignazio.cosentino": {
+    "id": 24,
+    "nom": "Ignazio Cosentino",
+    "role": "",
+    "delegation": "",
+    "avatar": "IC",
+    "color": "#b91c1c",
+    "pwd": "ico2026"
+  },
+  "nathalie.germain-vey": {
+    "id": 25,
+    "nom": "Nathalie Germain-Vey",
+    "role": "conseillère déléguée",
+    "delegation": "",
+    "avatar": "NG",
+    "color": "#6d28d9",
+    "pwd": "nge2026"
+  },
+  "stephane.lasserre": {
+    "id": 26,
+    "nom": "Stéphane Lasserre",
+    "role": "Conseiller",
+    "delegation": "",
+    "avatar": "SL",
+    "color": "#0369a1",
+    "pwd": "sla2026"
+  },
+  "admin": {
+    "id": 0,
+    "nom": "Administrateur",
+    "role": "Admin",
+    "delegation": "",
+    "avatar": "AD",
+    "color": "#1a3a2a",
+    "pwd": "vem@dmin2026"
+  },
+  "michel.troton": {
+    "id": 22,
+    "nom": "Michel Troton",
+    "role": "Conseiller",
+    "delegation": "Numérique, communication, histoire locale",
+    "avatar": "MT",
+    "color": "#2d5a40",
+    "pwd": "mtr2026"
+  }
+}

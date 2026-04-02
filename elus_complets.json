@@ -9,7 +9,9 @@
     "color": "#1a3a2a",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/catherine-troton.jpg",
+    "photoPos": "center 40%"
   },
   {
     "id": 2,
@@ -21,7 +23,9 @@
     "color": "#2d5a40",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/bernard-ughetto-monfrin.jpg",
+    "photoPos": "center 30%"
   },
   {
     "id": 3,
@@ -33,7 +37,9 @@
     "color": "#3d7a5a",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/saida-berriche.jpg",
+    "photoPos": "center 25%"
   },
   {
     "id": 4,
@@ -45,7 +51,9 @@
     "color": "#8B5CF6",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/gilles-faure.jpg",
+    "photoPos": "center center"
   },
   {
     "id": 5,
@@ -57,7 +65,9 @@
     "color": "#F97316",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/angelique-hermitte.jpg",
+    "photoPos": "center center"
   },
   {
     "id": 6,
@@ -69,7 +79,9 @@
     "color": "#EC4899",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/gerard-forestier.jpg",
+    "photoPos": "center 40%"
   },
   {
     "id": 7,
@@ -81,7 +93,9 @@
     "color": "#F59E0B",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/marie-claude-argoud.jpg",
+    "photoPos": "center center"
   },
   {
     "id": 8,
@@ -93,7 +107,9 @@
     "color": "#3B82F6",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/louis-lamarca.jpg",
+    "photoPos": "center 40%"
   },
   {
     "id": 9,
@@ -105,7 +121,9 @@
     "color": "#10B981",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/muriel-pasquiou.jpg",
+    "photoPos": "center center"
   },
   {
     "id": 10,
@@ -117,7 +135,9 @@
     "color": "#EF4444",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/laurent-pichon.jpg",
+    "photoPos": "center center"
   },
   {
     "id": 11,
@@ -129,7 +149,9 @@
     "color": "#14B8A6",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/sakina-yahiaoui.jpg",
+    "photoPos": "center 40%"
   },
   {
     "id": 12,
@@ -141,7 +163,9 @@
     "color": "#6366F1",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/mohamed-cherigui.jpg",
+    "photoPos": "center 25%"
   },
   {
     "id": 13,
@@ -153,7 +177,9 @@
     "color": "#db2777",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/christelle-reijasse.jpg",
+    "photoPos": "center center"
   },
   {
     "id": 14,
@@ -165,7 +191,9 @@
     "color": "#0891b2",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/ahmed-mendess.jpg",
+    "photoPos": "center center"
   },
   {
     "id": 15,
@@ -177,7 +205,9 @@
     "color": "#65a30d",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/christine-sanchez.jpg",
+    "photoPos": "center center"
   },
   {
     "id": 16,
@@ -189,7 +219,9 @@
     "color": "#7c3aed",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/fabrice-pasquiou.jpg",
+    "photoPos": "center center"
   },
   {
     "id": 17,
@@ -201,7 +233,9 @@
     "color": "#9333ea",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/meriem-el-kebir.jpg",
+    "photoPos": "center center"
   },
   {
     "id": 18,
@@ -213,7 +247,9 @@
     "color": "#c2410c",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/jean-christophe-garcia.jpg",
+    "photoPos": "center center"
   },
   {
     "id": 19,
@@ -225,7 +261,9 @@
     "color": "#b45309",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/muriel-picca.jpg",
+    "photoPos": "center center"
   },
   {
     "id": 20,
@@ -237,7 +275,9 @@
     "color": "#0f766e",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/michel-thuillier.jpg",
+    "photoPos": "center center"
   },
   {
     "id": 21,
@@ -249,7 +289,9 @@
     "color": "#1d4ed8",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/isabelle-nifenecker.jpg",
+    "photoPos": "center 40%"
   },
   {
     "id": 22,
@@ -261,7 +303,9 @@
     "color": "#be185d",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/andre-paul-venans.jpg",
+    "photoPos": "center center"
   },
   {
     "id": 22,
@@ -285,7 +329,9 @@
     "color": "#15803d",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/nathalie-jacolin.jpg",
+    "photoPos": "center 40%"
   },
   {
     "id": 24,
@@ -297,7 +343,9 @@
     "color": "#b91c1c",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/ignazio-consentino.jpg",
+    "photoPos": "center center"
   },
   {
     "id": 25,
@@ -309,7 +357,9 @@
     "color": "#6d28d9",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/nathalie-germain-vey.jpg",
+    "photoPos": "center center"
   },
   {
     "id": 26,
@@ -321,6 +371,8 @@
     "color": "#0369a1",
     "tel": "",
     "email": "",
-    "commission": ""
+    "commission": "",
+    "photo": "https://vizilleenmouvement.fr/images/stephane-lasserre.jpg",
+    "photoPos": "center center"
   }
 ]

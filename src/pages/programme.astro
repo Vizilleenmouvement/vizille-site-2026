@@ -1,43 +1,83 @@
 ---
 import Base from '../layouts/Base.astro';
-import projets from '../../_legacy/projets.json';
-import themes from '../../_legacy/themes.json';
+import projets from '../../projets.json';
+import themes from '../../themes.json';
 
-// Grouper par theme
-const byTheme = {};
-projets.forEach(p => {
-  const t = p.theme || 'Autre';
-  if (!byTheme[t]) byTheme[t] = [];
-  byTheme[t].push(p);
-});
+const byTheme: Record<string, typeof projets> = {};
+projets.forEach(p => { const t = p.theme || 'Autre'; if (!byTheme[t]) byTheme[t] = []; byTheme[t].push(p); });
 const themeList = themes.map(t => t.theme).filter(t => byTheme[t]);
+const nbProjets = projets.length;
 ---
 <Base title="Programme 2026-2032" description="Les 92 projets du programme Vizille en Mouvement pour le mandat 2026-2032.">
 
-  <section style="background:var(--fond);padding:2rem 0;border-bottom:2px solid var(--gris-clair);">
-    <div class="container">
-      <h1 class="section-titre" style="margin-bottom:.5rem;">Programme 2026-2032</h1>
-      <p style="font-size:.9rem;color:var(--gris);">{projets.length} projets structures autour de {themeList.length} thematiques</p>
+  <!-- Hero -->
+  <section style="background:linear-gradient(135deg, var(--vert) 0%, var(--vert2) 100%);color:#fff;padding:3rem 0;">
+    <div class="container" style="text-align:center;">
+      <h1 style="font-family:var(--fd);font-size:1.8rem;margin-bottom:.5rem;">Notre programme 2026-2032</h1>
+      <p style="font-size:.95rem;opacity:.8;">{nbProjets} projets concrets pour transformer Vizille</p>
+      <p style="font-size:.82rem;opacity:.6;margin-top:.5rem;">{themeList.length} thematiques · 3 commissions du plan de mandat</p>
     </div>
   </section>
 
+  <!-- Navigation themes -->
+  <section style="background:var(--fond);padding:1rem 0;border-bottom:1px solid var(--gris-clair);position:sticky;top:0;z-index:10;">
+    <div class="container" style="display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;">
+      {themeList.map(t => {
+        const th = themes.find(x => x.theme === t);
+        const count = (byTheme[t] || []).length;
+        return (
+          <a href={'#' + t.replace(/\s+/g,'-').toLowerCase()} style="display:inline-flex;align-items:center;gap:4px;padding:.35rem .8rem;background:#fff;border:1px solid var(--gris-clair);border-radius:20px;font-size:.72rem;color:var(--texte);text-decoration:none;white-space:nowrap;">
+            <span>{th?.icon || ''}</span>
+            <span>{t}</span>
+            <span style="color:var(--gris);font-size:.65rem;">({count})</span>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- Projets par theme -->
   <section class="section">
     <div class="container">
       {themeList.map(themeName => {
         const themeData = themes.find(t => t.theme === themeName);
         const projs = byTheme[themeName] || [];
+        const color = themeData?.color || '#1a3a6b';
         return (
-          <div style="margin-bottom:2rem;">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:.8rem;padding-bottom:.4rem;border-bottom:2px solid var(--gris-clair);">
-              <span style="font-size:1.3rem;">{themeData?.icon || '📋'}</span>
-              <h2 style="font-size:1.1rem;font-weight:700;color:var(--bleu);font-family:var(--fd);">{themeName}</h2>
-              <span style="font-size:.72rem;color:var(--gris);">({projs.length} projets)</span>
+          <div id={themeName.replace(/\s+/g,'-').toLowerCase()} style="margin-bottom:3rem;scroll-margin-top:80px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;">
+              <div style={'width:44px;height:44px;border-radius:12px;background:'+color+'15;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;'}>{themeData?.icon || ''}</div>
+              <div>
+                <h2 style="font-size:1.15rem;font-weight:700;color:var(--texte);font-family:var(--fd);margin:0;">{themeName}</h2>
+                <div style="font-size:.75rem;color:var(--gris);">{projs.length} projet{projs.length > 1 ? 's' : ''}</div>
+              </div>
             </div>
-            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:.8rem;">
-              {projs.map(p => (
-                <div style="padding:.8rem 1rem;background:#fff;border-radius:8px;border:1px solid var(--gris-clair);">
-                  <div style="font-weight:700;font-size:.85rem;color:var(--texte);margin-bottom:.3rem;">{p.titre}</div>
-                  {p.resume && <div style="font-size:.78rem;color:var(--gris);line-height:1.6;">{p.resume}</div>}
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;">
+              {projs.map((p, i) => (
+                <div style="background:#fff;border-radius:10px;border:1px solid var(--gris-clair);overflow:hidden;transition:box-shadow .2s;">
+                  {p.image && (
+                    <div style="height:160px;overflow:hidden;">
+                      <img src={p.image} alt="" style="width:100%;height:100%;object-fit:cover;" loading="lazy" />
+                    </div>
+                  )}
+                  <div style="padding:1rem;">
+                    <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:.5rem;">
+                      <div style={'width:6px;height:6px;border-radius:50%;background:'+color+';flex-shrink:0;margin-top:7px;'}></div>
+                      <h3 style="font-size:.88rem;font-weight:700;color:var(--texte);line-height:1.35;margin:0;">{p.titre}</h3>
+                    </div>
+                    {p.resume && <p style="font-size:.78rem;color:var(--gris);line-height:1.6;margin:0;">{p.resume}</p>}
+                    {p.statut && p.statut !== 'ND' && (
+                      <div style="margin-top:.6rem;">
+                        <span style={'font-size:.65rem;padding:2px 8px;border-radius:4px;font-weight:600;' +
+                          (p.statut === 'Réalisé' ? 'background:#f0fdf4;color:#16a34a;' :
+                           p.statut === 'En cours' ? 'background:#fffbeb;color:#d97706;' :
+                           p.statut === 'Programmé' ? 'background:#eff6ff;color:#2563eb;' :
+                           p.statut === 'Prioritaire' ? 'background:#fef2f2;color:#dc2626;' :
+                           'background:#f9fafb;color:#6b7280;')
+                        }>{p.statut}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>

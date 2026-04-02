@@ -1,33 +1,122 @@
 ---
 import Base from '../layouts/Base.astro';
-import elus from '../../_legacy/elus_complets.json';
+import elus from '../../elus_complets.json';
+
+// Grouper par role
+const maire = elus.filter(e => e.delegation && e.delegation.toLowerCase().includes('maire'));
+const adjoints = elus.filter(e => (e.role||'').toLowerCase().includes('adjoint'));
+const delegues = elus.filter(e => (e.role||'').toLowerCase().includes('délégué') || (e.role||'').toLowerCase().includes('delegue'));
+const conseillers = elus.filter(e => !maire.includes(e) && !adjoints.includes(e) && !delegues.includes(e));
 ---
 <Base title="L'equipe municipale" description="Les 27 conseillers municipaux de Vizille en Mouvement, mandat 2026-2032.">
 
-  <section class="section">
-    <div class="container">
-      <h1 class="section-titre">L'equipe municipale</h1>
-      <p style="font-size:.9rem;color:var(--gris);margin-bottom:2rem;">27 elus au service des Vizillois — Mandat 2026-2032</p>
+  <!-- Hero equipe -->
+  <section style="background:var(--fond);padding:2.5rem 0;border-bottom:2px solid var(--gris-clair);">
+    <div class="container" style="text-align:center;">
+      <h1 style="font-family:var(--fd);font-size:1.8rem;color:var(--bleu);margin-bottom:.5rem;">L'equipe municipale</h1>
+      <p style="font-size:.95rem;color:var(--gris);max-width:600px;margin:0 auto;">{elus.length} elus au service des Vizillois<br>Mandat 2026-2032 — Catherine Troton, Maire</p>
+    </div>
+  </section>
 
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;">
-        {elus.map(elu => (
-          <div style="background:#fff;border-radius:8px;border:1px solid var(--gris-clair);overflow:hidden;text-align:center;padding-bottom:.8rem;">
-            <div style="height:200px;background:var(--fond);overflow:hidden;">
+  <!-- Maire -->
+  {maire.length > 0 && (
+    <section class="section">
+      <div class="container">
+        {maire.map(elu => (
+          <div style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap;max-width:700px;margin:0 auto;">
+            <div style="width:180px;height:220px;border-radius:12px;overflow:hidden;flex-shrink:0;box-shadow:0 4px 20px rgba(0,0,0,.1);">
               {elu.photo ? (
-                <img src={elu.photo} alt={`${elu.prenom} ${elu.nom}`} style="width:100%;height:100%;object-fit:cover;object-position:center 30%;">
+                <img src={elu.photo} alt={elu.prenom + ' ' + elu.nom} style="width:100%;height:100%;object-fit:cover;object-position:center 30%;" />
               ) : (
-                <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;color:var(--vert);font-family:var(--fd);">{elu.avatar || '?'}</div>
+                <div style="width:100%;height:100%;background:var(--fond);display:flex;align-items:center;justify-content:center;font-size:3rem;font-weight:800;color:var(--vert);">{elu.avatar}</div>
               )}
             </div>
-            <div style="padding:.8rem .6rem 0;">
-              <div style="font-weight:700;font-size:.88rem;color:var(--texte);">{elu.prenom} {elu.nom}</div>
-              {elu.role && <div style="font-size:.72rem;color:var(--or);font-weight:600;margin-top:.2rem;">{elu.role}</div>}
-              {elu.delegation && <div style="font-size:.7rem;color:var(--gris);margin-top:.2rem;">{elu.delegation}</div>}
+            <div>
+              <div style="font-family:var(--fd);font-size:1.4rem;font-weight:700;color:var(--texte);">{elu.prenom} {elu.nom}</div>
+              <div style="font-size:1rem;color:var(--or);font-weight:600;margin-top:.3rem;">{elu.delegation || elu.role}</div>
+              {elu.email && <div style="font-size:.82rem;color:var(--gris);margin-top:.5rem;"><a href={'mailto:'+elu.email}>{elu.email}</a></div>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Adjoints -->
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-titre">Les adjoints</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem;">
+        {adjoints.map(elu => (
+          <div style="background:#fff;border-radius:10px;border:1px solid var(--gris-clair);overflow:hidden;text-align:center;">
+            <div style="height:220px;background:var(--fond);overflow:hidden;">
+              {elu.photo ? (
+                <img src={elu.photo} alt={elu.prenom + ' ' + elu.nom} style="width:100%;height:100%;object-fit:cover;object-position:center 25%;" />
+              ) : (
+                <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;font-weight:800;color:var(--vert);">{elu.avatar}</div>
+              )}
+            </div>
+            <div style="padding:1rem .8rem;">
+              <div style="font-weight:700;font-size:.92rem;color:var(--texte);">{elu.prenom} {elu.nom}</div>
+              <div style="font-size:.72rem;color:var(--or);font-weight:600;margin-top:.3rem;">{elu.role}</div>
+              {elu.delegation && <div style="font-size:.7rem;color:var(--gris);margin-top:.3rem;line-height:1.4;">{elu.delegation}</div>}
             </div>
           </div>
         ))}
       </div>
     </div>
   </section>
+
+  <!-- Conseillers delegues -->
+  {delegues.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2 class="section-titre">Les conseillers delegues</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;">
+          {delegues.map(elu => (
+            <div style="background:#fff;border-radius:10px;border:1px solid var(--gris-clair);overflow:hidden;text-align:center;">
+              <div style="height:200px;background:var(--fond);overflow:hidden;">
+                {elu.photo ? (
+                  <img src={elu.photo} alt={elu.prenom + ' ' + elu.nom} style="width:100%;height:100%;object-fit:cover;object-position:center 30%;" />
+                ) : (
+                  <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;color:var(--vert);">{elu.avatar}</div>
+                )}
+              </div>
+              <div style="padding:.8rem .6rem;">
+                <div style="font-weight:700;font-size:.88rem;color:var(--texte);">{elu.prenom} {elu.nom}</div>
+                <div style="font-size:.7rem;color:var(--or);font-weight:600;margin-top:.2rem;">{elu.role}</div>
+                {elu.delegation && <div style="font-size:.68rem;color:var(--gris);margin-top:.2rem;">{elu.delegation}</div>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Conseillers -->
+  {conseillers.length > 0 && (
+    <section class="section section-alt">
+      <div class="container">
+        <h2 class="section-titre">Les conseillers municipaux</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;">
+          {conseillers.map(elu => (
+            <div style="background:#fff;border-radius:8px;border:1px solid var(--gris-clair);overflow:hidden;text-align:center;">
+              <div style="height:180px;background:var(--fond);overflow:hidden;">
+                {elu.photo ? (
+                  <img src={elu.photo} alt={elu.prenom + ' ' + elu.nom} style="width:100%;height:100%;object-fit:cover;object-position:center 30%;" />
+                ) : (
+                  <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;color:var(--vert);">{elu.avatar}</div>
+                )}
+              </div>
+              <div style="padding:.7rem .5rem;">
+                <div style="font-weight:700;font-size:.85rem;color:var(--texte);">{elu.prenom} {elu.nom}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
 </Base>

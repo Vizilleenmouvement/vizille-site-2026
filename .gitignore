@@ -1,17 +1,4 @@
-# Fichiers système
-._*
-.DS_Store
-
-# Environnement et secrets
-.env
-accounts.json
-accounts_elus.json
-
-# IDE et outils de dev
-.claude/
-.nova/
 node_modules/
-
-# Fichiers temporaires
-*.heic
-*.bak
+.astro/
+dist/
+.DS_Store
