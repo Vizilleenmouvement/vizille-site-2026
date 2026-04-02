@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "nom": "Catherine Troton",
+    "role": "Maire",
+    "delegation": "Exécutif municipal, coordination générale",
+    "commission": "",
+    "tel": "",
+    "email": "maire@vizille.fr",
+    "avatar": "CT"
+  },
+  {
+    "id": 2,
+    "nom": "Michel Troton",
+    "role": "Conseiller municipal",
+    "delegation": "Numérique, communication",
+    "commission": "",
+    "tel": "",
+    "email": "m.troton@vizille.fr",
+    "avatar": "MT"
+  },
+  {
+    "id": 3,
+    "nom": "Marie-Claude",
+    "role": "Adjointe",
+    "delegation": "Culture, Patrimoine, Jumelages",
+    "commission": "Culture, Patrimoine & Jumelages",
+    "tel": "",
+    "email": "",
+    "avatar": "MC"
+  },
+  {
+    "id": 4,
+    "nom": "Angélique",
+    "role": "Adjointe",
+    "delegation": "Enfance, Jeunesse",
+    "commission": "Enfance/Jeunesse",
+    "tel": "",
+    "email": "",
+    "avatar": "AN"
+  },
+  {
+    "id": 5,
+    "nom": "Jean-Christophe",
+    "role": "Conseiller",
+    "delegation": "Animations de proximité",
+    "commission": "Animations de proximité",
+    "tel": "",
+    "email": "",
+    "avatar": "JC"
+  }
+]

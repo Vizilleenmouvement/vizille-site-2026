@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualités – Vizille en Mouvement</title>
+    <meta name="description" content="Toutes les actualités de Vizille en Mouvement - Événements, communiqués, rendez-vous.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vizilleenmouvement.fr/blog.html">
+    <meta property="og:title" content="Actualités - Vizille en Mouvement">
+    <meta property="og:description" content="Toutes les actualités de Vizille en Mouvement - Événements, communiqués, rendez-vous.">
+    <meta property="og:image" content="https://vizilleenmouvement.fr/images/logo.png">
+    <meta property="og:locale" content="fr_FR">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Actualités - Vizille en Mouvement">
+    <meta name="twitter:description" content="Toutes les actualités de Vizille en Mouvement.">
+    <meta name="twitter:image" content="https://vizilleenmouvement.fr/images/logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components/flip-cards.css">
+
+    <style>
+        .content {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* Filtres discrets */
+        .filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .filter-btn {
+            padding: 0.35rem 1rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .filter-btn:hover { color: #1a3a5c; }
+        .filter-btn.active { color: #1a3a5c; font-weight: 700; border-bottom: 2px solid #c9a227; }
+
+        /* ARTICLE VEDETTE */
+        .hero-article {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 2rem;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            margin-bottom: 2.5rem;
+            cursor: pointer;
+            transition: box-shadow 0.3s;
+        }
+        .hero-article:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.14); }
+        .hero-article-img { width: 100%; height: 100%; min-height: 280px; object-fit: cover; }
+        .hero-article-img-placeholder {
+            min-height: 280px;
+            background: linear-gradient(135deg, #1a3a5c 0%, #2d5a87 100%);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 4rem; color: rgba(255,255,255,0.2);
+        }
+        .hero-article-body {
+            padding: 2rem 2rem 2rem 0;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .hero-article-body .tag {
+            display: inline-block; background: #c9a227; color: white;
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.5px; padding: 0.25rem 0.75rem; border-radius: 3px;
+            margin-bottom: 0.75rem; align-self: flex-start;
+        }
+        .hero-article-body h2 {
+            font-family: 'Playfair Display', serif; font-size: 1.6rem;
+            color: #1a3a5c; line-height: 1.3; margin: 0 0 0.75rem;
+        }
+        .hero-article-body .date { font-size: 0.8rem; color: #999; margin-bottom: 0.75rem; }
+        .hero-article-body .excerpt {
+            font-size: 0.95rem; color: #555; line-height: 1.6;
+            display: -webkit-box; -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .hero-article-body .actions {
+            display: flex; gap: 0.5rem; margin-top: 1rem; align-items: center;
+        }
+        .hero-article-body .read-btn {
+            color: #c9a227; font-weight: 600; font-size: 0.9rem;
+            background: none; border: none; cursor: pointer; padding: 0;
+        }
+
+        /* BANDEAU ÉVÉNEMENTS À VENIR */
+        .upcoming-strip { margin-bottom: 2.5rem; }
+        .upcoming-strip h3 {
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;
+            color: #999; margin: 0 0 1rem; font-weight: 600;
+        }
+        .upcoming-scroll {
+            display: flex; gap: 1rem; overflow-x: auto; padding-bottom: 0.5rem;
+            scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+        }
+        .upcoming-scroll::-webkit-scrollbar { height: 4px; }
+        .upcoming-scroll::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+        .upcoming-card {
+            flex-shrink: 0; width: 240px; background: white; border-radius: 12px;
+            overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            cursor: pointer; transition: all 0.2s; scroll-snap-align: start;
+            border-left: 4px solid #1a3a5c;
+        }
+        .upcoming-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+        .upcoming-card-body { padding: 1rem; }
+        .upcoming-date { font-size: 0.75rem; font-weight: 700; color: #c9a227; text-transform: uppercase; margin-bottom: 0.3rem; }
+        .upcoming-title { font-size: 0.9rem; font-weight: 600; color: #1a3a5c; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .upcoming-cat { font-size: 0.7rem; color: #999; margin-top: 0.3rem; }
+
+        /* GRILLE PETITES CARTES */
+        .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+        .mini-card {
+            background: white; border-radius: 10px; overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: pointer;
+            transition: all 0.2s; display: flex; flex-direction: column;
+        }
+        .mini-card:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
+        .mini-card-img { width: 100%; height: 120px; object-fit: cover; }
+        .mini-card-noimg { height: 6px; background: linear-gradient(90deg, #c9a227, #1a3a5c); }
+        .mini-card-body { padding: 0.8rem; flex: 1; display: flex; flex-direction: column; }
+        .mini-card-meta { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.4rem; flex-wrap: wrap; }
+        .mini-card-date { font-size: 0.7rem; color: #999; font-weight: 500; }
+        .mini-card-cat {
+            font-size: 0.6rem; padding: 0.15rem 0.5rem; border-radius: 10px;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .mini-card-cat.evenement { background: #e3f2fd; color: #1565c0; }
+        .mini-card-cat.communique { background: #fff3e0; color: #e65100; }
+        .mini-card-cat.reunion-de-quartier { background: #f3e5f5; color: #7b1fa2; }
+        .mini-card-cat.presse { background: #e8f5e9; color: #2e7d32; }
+        .mini-card-title {
+            font-size: 0.9rem; font-weight: 600; color: #1a3a5c; line-height: 1.3; margin: 0;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .mini-card-excerpt {
+            font-size: 0.78rem; color: #777; margin-top: 0.3rem; line-height: 1.4;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex: 1;
+        }
+        .mini-card.past { opacity: 0.55; }
+        .mini-card.past:hover { opacity: 0.85; }
+        .past-badge { font-size: 0.6rem; background: #e8f5e9; color: #388e3c; padding: 0.1rem 0.4rem; border-radius: 8px; font-weight: 600; }
+
+
+        /* Séparateur section */
+        .section-label {
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px;
+            color: #bbb; margin: 2.5rem 0 1rem; padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee; font-weight: 600;
+        }
+
+        /* ARTICLE COMPLET */
+        .article-full { display: none; background: white; border-radius: 16px; padding: 2rem; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .article-full.active { display: block; }
+        .article-full .back-link {
+            display: inline-flex; align-items: center; gap: 0.5rem; color: #1a3a5c;
+            text-decoration: none; margin-bottom: 1.5rem; font-weight: 500;
+            padding: 0.5rem 1rem; background: #f0f0f0; border-radius: 8px; transition: all 0.2s;
+        }
+        .article-full .back-link:hover { background: #c9a227; color: white; }
+        .article-full-image {
+            max-width: 400px; max-height: 300px; object-fit: cover; border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); margin: 1rem 0; cursor: pointer; transition: transform 0.2s;
+        }
+        .article-full-image:hover { transform: scale(1.02); }
+        .article-full-content { line-height: 1.8; font-size: 1.05rem; }
+        .article-full-content p { margin-bottom: 1rem; }
+
+        /* Partage FB dans article complet */
+        .share-bar {
+            display: flex; align-items: center; gap: 0.75rem; margin-top: 2rem;
+            padding-top: 1.5rem; border-top: 1px solid #eee; flex-wrap: wrap;
+        }
+        .fb-share-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: #1877F2; color: white; border: none; border-radius: 8px;
+            padding: 0.6rem 1.2rem; font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; text-decoration: none;
+        }
+        .fb-share-btn:hover { background: #0d65d9; transform: translateY(-1px); }
+        .fb-share-btn svg { width: 16px; height: 16px; }
+
+
+        /* Lightbox */
+        .lightbox-overlay {
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; padding: 1rem;
+        }
+        .lightbox-overlay.active { display: flex; }
+        .lightbox-image { max-width: 95vw; max-height: 90vh; object-fit: contain; border-radius: 8px; }
+        .lightbox-close {
+            position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2);
+            border: none; color: white; width: 40px; height: 40px; border-radius: 50%;
+            cursor: pointer; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;
+        }
+
+
+        .empty-state { text-align: center; padding: 3rem; color: #888; }
+        .empty-state .icon { font-size: 3rem; margin-bottom: 0.75rem; }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hero-article { grid-template-columns: 1fr; }
+            .hero-article-body { padding: 1.5rem; }
+            .hero-article-body h2 { font-size: 1.3rem; }
+            .cards-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 550px) {
+            .content { padding: 1.5rem 1rem 3rem; }
+            .hero-article-body h2 { font-size: 1.15rem; }
+            .hero-article-img { min-height: 180px; }
+            .cards-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+            .mini-card-img { height: 90px; }
+            .mini-card-body { padding: 0.6rem; }
+            .mini-card-title { font-size: 0.8rem; }
+            .mini-card-excerpt { display: none; }
+            .upcoming-card { width: 200px; }
+            .article-full { padding: 1.25rem; }
+        }
+    </style>
+    <style>
+    .article-carousel { position:relative; width:100%; margin-bottom:1.5rem; background:#000; border-radius:4px; overflow:hidden; }
+    .carousel-track { display:block; }
+    .carousel-slide { display:none; }
+    .carousel-slide.active { display:block; }
+    .carousel-slide img { width:100%; max-height:480px; object-fit:cover; display:block; cursor:zoom-in; }
+    .carousel-btn { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.45); color:#fff; border:none; font-size:2.2rem; line-height:1; padding:0.1rem 0.6rem 0.2rem; cursor:pointer; z-index:2; border-radius:3px; transition:background 0.2s; }
+    .carousel-btn:hover { background:rgba(0,0,0,0.75); }
+    .carousel-btn.prev { left:0.5rem; }
+    .carousel-btn.next { right:0.5rem; }
+    .carousel-dots { position:absolute; bottom:0.6rem; left:50%; transform:translateX(-50%); display:flex; gap:0.4rem; }
+    .carousel-dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.5); cursor:pointer; transition:background 0.2s; }
+    .carousel-dot.active { background:#fff; }
+    @media(max-width:600px){ .carousel-slide img { max-height:260px; } .carousel-btn { font-size:1.7rem; } }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+    <header class="header">
+        <div class="header-top">
+            <p>Actualités • Vizille en Mouvement</p>
+        </div>
+        <div class="header-main">
+            <a href="index.html">
+                <img src="images/logo-header.png" alt="Vizille en Mouvement" class="nav-header-logo">
+            </a>
+            <button class="menu-toggle" aria-label="Menu">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="nos-ambitions.html">Nos Ambitions</a></li>
+                    <li><a href="retrospective.html">Rétrospective</a></li>
+                    <li><a href="bilan.html">Bilan</a></li>
+                    <li><a href="projet.html">Projet</a></li>
+                    <li><a href="blog.html" class="active">Actualités</a></li>
+                    <li><a href="equipe.html">Équipe</a></li>
+                    <li><a href="medias.html">Médias</a></li>
+                    <li><a href="faq.html">Construisons ensemble</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <script src="js/menu-mobile.js"></script>
+
+    <section class="hero-unified">
+        <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo">
+        <div class="hero-text">
+            <h1>Actualités</h1>
+            <p class="slogan">Ensemble pour une ville dynamique et solidaire</p>
+        </div>
+    </section>
+
+    <main class="content" id="main-content">
+        <div id="articles-view">
+            <div class="filters" id="filters"></div>
+            <div id="magazine-layout">
+                <div class="empty-state"><div class="icon">⏳</div><p>Chargement...</p></div>
+            </div>
+        </div>
+
+        <div class="article-full" id="article-full">
+            <a href="#" class="back-link" onclick="showList(); return false;">← Retour aux actualités</a>
+            <div id="article-full-content"></div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p class="footer-slogan">« Ensemble pour une ville dynamique et solidaire »</p>
+        <p>© 2026 Vizille en Mouvement</p>
+    </footer>
+
+    <div class="lightbox-overlay" id="lightbox-overlay" onclick="closeLightbox(event)">
+        <button class="lightbox-close" onclick="closeLightbox(event)">✕</button>
+        <img src="" alt="" class="lightbox-image" id="lightbox-image">
+    </div>
+
+
+    <script>
+        let articlesData = [];
+        let currentCategory = '';
+
+        async function loadArticles() {
+            try {
+                const res = await fetch('articles.json');
+                articlesData = await res.json();
+                renderFilters();
+                renderMagazine();
+            } catch (e) {
+                document.getElementById('magazine-layout').innerHTML =
+                    '<div class="empty-state"><div class="icon">📭</div><p>Aucune actualité.</p></div>';
+            }
+        }
+
+        function renderFilters() {
+            const cats = [...new Set(articlesData.map(a => a.categorie).filter(c => c))];
+            document.getElementById('filters').innerHTML =
+                `<button class="filter-btn ${!currentCategory ? 'active' : ''}" onclick="filterCat('')">Tous</button>` +
+                cats.map(c => `<button class="filter-btn ${currentCategory === c ? 'active' : ''}" onclick="filterCat('${c}')">${c}</button>`).join('');
+        }
+
+        function filterCat(cat) { currentCategory = cat; renderFilters(); renderMagazine(); }
+        function cleanTitle(t) { return t.replace(/^[📰📅📣🎯✊🤝📊🚀📝ℹ️🎬]\s*/, ''); }
+        function fmtDate(d) { return d ? new Date(d).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : ''; }
+        function catClass(cat) { return (cat || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-').replace(/[^a-z-]/g, ''); }
+        var SITE = 'https://vizilleenmouvement.fr';
+
+        // Utilitaire couleur pour les dégradés
+        function adjustColor(hex, amount) {
+            hex = hex.replace('#', '');
+            const r = Math.max(0, Math.min(255, parseInt(hex.substring(0, 2), 16) + amount));
+            const g = Math.max(0, Math.min(255, parseInt(hex.substring(2, 4), 16) + amount));
+            const b = Math.max(0, Math.min(255, parseInt(hex.substring(4, 6), 16) + amount));
+            return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+        }
+
+        function updateOG(title, desc, image, url) {
+            var setMeta = function(prop, val) {
+                var el = document.querySelector('meta[property="' + prop + '"]');
+                if (el) el.setAttribute('content', val);
+            };
+            setMeta('og:title', title);
+            setMeta('og:description', desc);
+            setMeta('og:image', image || SITE + '/images/logo.png');
+            setMeta('og:url', url);
+        }
+
+        function shareOnFB(id) {
+            var url = SITE + '/blog.html?article=' + id;
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), 'fb-share', 'width=600,height=500');
+        }
+
+        // Couleurs par catégorie d'article
+        const CAT_COLORS = {
+            'Communiqué': '#e67e22',
+            'Événement': '#3498db',
+            'Réunion de quartier': '#9b59b6',
+            'Presse': '#27ae60'
+        };
+
+        function buildBlogFlipCard(a, color) {
+            const darkerColor = adjustColor(color, -25);
+            const hasImage = !!a.image;
+            const title = cleanTitle(a.titre);
+            const dateStr = a.a_preciser ? 'Date à préciser' : fmtDate(a.date);
+            const extrait = a.extrait || (a.contenu ? a.contenu.substring(0, 150) + '...' : '');
+            const truncExtrait = extrait.length > 150 ? extrait.substring(0, 150) + '...' : extrait;
+
+            // Contenu pour le verso (premiers ~300 chars du contenu)
+            const contenu = a.contenu || '';
+            const truncContenu = contenu.length > 300 ? contenu.substring(0, 300) + '...' : contenu;
+            const contenuHtml = truncContenu.split('\n').filter(p => p.trim()).slice(0, 6).map(p => '<p style="margin:0.3rem 0;">' + p + '</p>').join('');
+
+            // Catégorie badge
+            const catBadge = a.categorie ? `<span class="flip-front-category" style="background:${color};">${a.categorie}</span>` : '';
+            const isPriority = a.priorite;
+            const priorityBadge = isPriority ? '<span class="flip-front-priority">⭐ À la une</span>' : '';
+            const priorityClass = isPriority ? ' flip-card--priority' : '';
+
+            return `
+                <div class="flip-card flip-card--blog${priorityClass} ${hasImage ? 'has-image' : ''}" data-id="${a.id}">
+                    <div class="flip-card-inner">
+                        <!-- RECTO -->
+                        <div class="flip-card-front">
+                            ${hasImage ? `<div class="flip-front-image-container"><img src="${a.image}" alt="" loading="lazy"></div>` : ''}
+                            <div class="flip-front-header" style="background: linear-gradient(135deg, ${isPriority ? '#c9a227' : color} 0%, ${isPriority ? '#a68520' : darkerColor} 100%);">
+                                <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;margin-bottom:0.3rem;">
+                                    ${priorityBadge}
+                                    ${catBadge}
+                                    <span class="flip-front-date">${dateStr}</span>
+                                </div>
+                                <h3 class="flip-front-title">${title}</h3>
+                            </div>
+                            <div class="flip-front-body">
+                                <div class="flip-front-pourquoi">${truncExtrait}</div>
+                                <div class="flip-front-hint">
+                                    <span class="flip-icon">🔄</span> Retourner pour lire
+                                </div>
+                            </div>
+                        </div>
+                        <!-- VERSO -->
+                        <div class="flip-card-back">
+                            <div class="flip-back-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
+                                <span class="flip-back-title">${title.length > 35 ? title.substring(0, 35) + '...' : title}</span>
+                                <span class="flip-back-close">↩ Retour</span>
+                            </div>
+                            <div class="flip-back-body">
+                                <div class="flip-back-section">
+                                    <h4 class="section-contenu">📝 Aperçu</h4>
+                                    <div style="font-size:0.85rem;line-height:1.6;color:#555;">${contenuHtml}</div>
+                                </div>
+                                ${a.auteur ? `<div class="flip-back-auteur">✍️ Par ${a.auteur}</div>` : ''}
+                                ${a.source ? `<div class="flip-back-auteur">📰 Source : ${a.source}</div>` : ''}
+                            </div>
+                            <div class="flip-back-footer" onclick="event.stopPropagation(); showArticle(${a.id});">
+                                📰 Lire la suite
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMagazine() {
+            const container = document.getElementById('magazine-layout');
+            let all = [...articlesData];
+            if (currentCategory) all = all.filter(a => a.categorie === currentCategory);
+            if (all.length === 0) { container.innerHTML = '<div class="empty-state"><div class="icon">🔍</div><p>Aucun article trouvé.</p></div>'; return; }
+
+            // Trier : prioritaires d'abord, puis par date de modification (style blog)
+            all.sort((a, b) => {
+                if (a.priorite && !b.priorite) return -1;
+                if (!a.priorite && b.priorite) return 1;
+                return new Date(b.modifie_le || b.date || 0) - new Date(a.modifie_le || a.date || 0);
+            });
+
+            const colors = ['#e74c3c', '#e67e22', '#27ae60', '#3498db', '#9b59b6', '#1abc9c', '#34495e'];
+
+            container.innerHTML = '<div class="flip-grid">' +
+                all.map((a, i) => {
+                    const color = CAT_COLORS[a.categorie] || colors[i % colors.length];
+                    return buildBlogFlipCard(a, color);
+                }).join('') + '</div>';
+
+            // Attacher les événements flip
+            container.querySelectorAll('.flip-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('.flip-back-footer')) return;
+                    card.classList.toggle('flipped');
+                });
+            });
+        }
+
+        function showArticle(id) {
+            const a = articlesData.find(x => x.id === id);
+            if (!a) return;
+            // Carousel si plusieurs images, sinon image simple
+            const imgs = (a.images && a.images.length > 1) ? a.images : (a.image ? [a.image] : []);
+            let imgHtml = '';
+            if (imgs.length > 1) {
+                imgHtml = '<div class="article-carousel" id="carousel-' + id + '">'
+                    + '<div class="carousel-track">'
+                    + imgs.map((src, i) => '<div class="carousel-slide' + (i===0?' active':'') + '">'
+                        + '<img src="' + src + '" alt="" onclick="openLightbox(\'' + src + '\')" title="Agrandir">'
+                        + '</div>').join('')
+                    + '</div>'
+                    + '<button class="carousel-btn prev" onclick="carouselMove(\'' + id + '\',-1)" aria-label="Photo précédente">&#8249;</button>'
+                    + '<button class="carousel-btn next" onclick="carouselMove(\'' + id + '\',1)" aria-label="Photo suivante">&#8250;</button>'
+                    + '<div class="carousel-dots">'
+                    + imgs.map((_,i) => '<span class="carousel-dot' + (i===0?' active':'') + '" onclick="carouselGo(\'' + id + '\',' + i + ')"></span>').join('')
+                    + '</div>'
+                    + '</div>';
+            } else if (imgs.length === 1) {
+                imgHtml = '<img src="' + imgs[0] + '" alt="" class="article-full-image" onclick="openLightbox(\'' + imgs[0] + '\')" title="Agrandir">';
+            }
+            document.getElementById('article-full-content').innerHTML =
+                imgHtml +
+                '<div style="display:flex;gap:0.75rem;align-items:center;margin-bottom:0.5rem;flex-wrap:wrap;">' +
+                '<span style="color:#c9a227;font-weight:600;font-size:0.85rem;">' + (a.a_preciser ? 'Date à préciser' : fmtDate(a.date)) + '</span>' +
+                (a.categorie ? '<span style="background:#1a3a5c;color:white;padding:0.2rem 0.6rem;border-radius:12px;font-size:0.75rem;">' + a.categorie + '</span>' : '') +
+                '</div>' +
+                '<h1 style="font-family:\'Playfair Display\',serif;font-size:1.8rem;color:#1a3a5c;margin:0.5rem 0 1rem;line-height:1.3;">' + cleanTitle(a.titre) + '</h1>' +
+                (a.auteur ? '<p style="color:#888;font-size:0.9rem;">Par ' + a.auteur + '</p>' : '') +
+                (a.source ? '<p style="color:#888;font-size:0.9rem;">Source : ' + a.source + '</p>' : '') +
+                '<div class="article-full-content">' + a.contenu.split('\n').map(function(p) { return p.trim() ? '<p>' + p + '</p>' : ''; }).join('') + '</div>' +
+                '<div class="share-bar">' +
+                '<button class="fb-share-btn" onclick="shareOnFB(' + a.id + ')">' +
+                '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>' +
+                ' Partager sur Facebook</button></div>';
+
+            // Mettre à jour les balises OG pour que Facebook récupère la bonne image
+            var articleUrl = SITE + '/blog.html?article=' + a.id;
+            var articleImage = a.image ? (a.image.startsWith('http') ? a.image : SITE + '/' + a.image) : '';
+            updateOG(cleanTitle(a.titre), a.extrait || '', articleImage, articleUrl);
+
+            document.getElementById('articles-view').style.display = 'none';
+            document.getElementById('article-full').classList.add('active');
+            window.scrollTo(0, 0);
+            history.pushState({ id: id }, '', '?article=' + id);
+        }
+
+        function showList() {
+            document.getElementById('articles-view').style.display = 'block';
+            document.getElementById('article-full').classList.remove('active');
+            history.pushState({}, '', location.pathname);
+        }
+
+
+        function carouselMove(id, dir) {
+            const c = document.getElementById('carousel-' + id);
+            if (!c) return;
+            const slides = c.querySelectorAll('.carousel-slide');
+            const dots = c.querySelectorAll('.carousel-dot');
+            let cur = Array.from(slides).findIndex(s => s.classList.contains('active'));
+            slides[cur].classList.remove('active');
+            dots[cur].classList.remove('active');
+            cur = (cur + dir + slides.length) % slides.length;
+            slides[cur].classList.add('active');
+            dots[cur].classList.add('active');
+        }
+        function carouselGo(id, idx) {
+            const c = document.getElementById('carousel-' + id);
+            if (!c) return;
+            const slides = c.querySelectorAll('.carousel-slide');
+            const dots = c.querySelectorAll('.carousel-dot');
+            slides.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active'));
+            slides[idx].classList.add('active');
+            dots[idx].classList.add('active');
+        }
+
+        function openLightbox(src) {
+            document.getElementById('lightbox-image').src = src;
+            document.getElementById('lightbox-overlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox(e) {
+            if (e.target.id === 'lightbox-overlay' || e.target.classList.contains('lightbox-close')) {
+                document.getElementById('lightbox-overlay').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') { document.getElementById('lightbox-overlay').classList.remove('active'); document.body.style.overflow = ''; }
+        });
+
+        window.addEventListener('popstate', function(e) {
+            if (e.state && e.state.id) showArticle(e.state.id); else showList();
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadArticles().then(function() {
+                var id = new URLSearchParams(location.search).get('article');
+                if (id) showArticle(parseInt(id));
+            });
+        });
+    </script>
+
+    <script src="js/site-features.js"></script>
+<!-- Admin -->
+<a href="admin.html" style="position:fixed;bottom:12px;right:12px;display:flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(26,58,107,0.85);color:#fff;font-size:0.78rem;font-family:system-ui,sans-serif;text-decoration:none;border-radius:20px;z-index:9999;opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">⚙️ Admin</a>
+</body>
+</html>

@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import elus from '../../_legacy/elus_complets.json';
+---
+<Base title="L'equipe municipale" description="Les 27 conseillers municipaux de Vizille en Mouvement, mandat 2026-2032.">
+
+  <section class="section">
+    <div class="container">
+      <h1 class="section-titre">L'equipe municipale</h1>
+      <p style="font-size:.9rem;color:var(--gris);margin-bottom:2rem;">27 elus au service des Vizillois — Mandat 2026-2032</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;">
+        {elus.map(elu => (
+          <div style="background:#fff;border-radius:8px;border:1px solid var(--gris-clair);overflow:hidden;text-align:center;padding-bottom:.8rem;">
+            <div style="height:200px;background:var(--fond);overflow:hidden;">
+              {elu.photo ? (
+                <img src={elu.photo} alt={`${elu.prenom} ${elu.nom}`} style="width:100%;height:100%;object-fit:cover;object-position:center 30%;">
+              ) : (
+                <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;color:var(--vert);font-family:var(--fd);">{elu.avatar || '?'}</div>
+              )}
+            </div>
+            <div style="padding:.8rem .6rem 0;">
+              <div style="font-weight:700;font-size:.88rem;color:var(--texte);">{elu.prenom} {elu.nom}</div>
+              {elu.role && <div style="font-size:.72rem;color:var(--or);font-weight:600;margin-top:.2rem;">{elu.role}</div>}
+              {elu.delegation && <div style="font-size:.7rem;color:var(--gris);margin-top:.2rem;">{elu.delegation}</div>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Base>

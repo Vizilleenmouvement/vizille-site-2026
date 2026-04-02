@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import articles from '../../_legacy/articles.json';
+
+const sorted = articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+---
+<Base title="Actualites" description="Les dernieres actualites de Vizille en Mouvement.">
+
+  <section class="section">
+    <div class="container">
+      <h1 class="section-titre">Actualites</h1>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.2rem;">
+        {sorted.map(art => (
+          <article style="background:#fff;border-radius:8px;border:1px solid var(--gris-clair);overflow:hidden;">
+            {art.image && <img src={art.image} alt="" style="width:100%;height:200px;object-fit:cover;">}
+            <div style="padding:1.2rem;">
+              <div style="font-size:.68rem;color:var(--or);font-weight:600;margin-bottom:.3rem;">
+                {art.date ? new Date(art.date).toLocaleDateString('fr-FR', {day:'numeric',month:'long',year:'numeric'}) : ''}
+                {art.categorie ? ` · ${art.categorie}` : ''}
+              </div>
+              <h2 style="font-size:1rem;font-weight:700;margin-bottom:.5rem;color:var(--texte);line-height:1.3;">{art.titre}</h2>
+              {art.extrait && <p style="font-size:.82rem;color:var(--gris);line-height:1.7;margin-bottom:.8rem;">{art.extrait}</p>}
+              {art.contenu && <div style="font-size:.82rem;color:var(--texte);line-height:1.7;" set:html={art.contenu.substring(0, 300) + '...'} />}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Base>

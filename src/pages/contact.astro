@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Contact" description="Contactez l'equipe Vizille en Mouvement.">
+
+  <section class="section">
+    <div class="container" style="max-width:600px;">
+      <h1 class="section-titre">Nous contacter</h1>
+
+      <div style="background:var(--fond);border-radius:8px;padding:1.5rem;margin-bottom:1.5rem;">
+        <div style="margin-bottom:1rem;">
+          <div style="font-weight:700;margin-bottom:.3rem;">Vizille en Mouvement</div>
+          <div style="font-size:.85rem;color:var(--gris);">145 chemin des Berthets<br>38220 Vizille</div>
+        </div>
+        <div style="margin-bottom:1rem;">
+          <div style="font-weight:600;margin-bottom:.2rem;">Email</div>
+          <a href="mailto:contact@vizilleenmouvement.fr" style="font-size:.9rem;">contact@vizilleenmouvement.fr</a>
+        </div>
+        <div>
+          <div style="font-weight:600;margin-bottom:.2rem;">Reseaux sociaux</div>
+          <div style="display:flex;gap:1rem;">
+            <a href="https://www.facebook.com/Vizilleenmouvement" target="_blank">Facebook</a>
+            <a href="https://www.instagram.com/vizilleenmouvement" target="_blank">Instagram</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:#fff;border-radius:8px;border:1px solid var(--gris-clair);padding:1.5rem;">
+        <h2 style="font-size:1rem;font-weight:700;margin-bottom:1rem;">Envoyez-nous un message</h2>
+        <form action="mailto:contact@vizilleenmouvement.fr" method="post" enctype="text/plain">
+          <div style="margin-bottom:.8rem;">
+            <label style="font-size:.8rem;font-weight:600;display:block;margin-bottom:.3rem;">Nom</label>
+            <input type="text" name="nom" required style="width:100%;padding:.5rem;border:1px solid var(--gris-clair);border-radius:4px;font-family:var(--fn);">
+          </div>
+          <div style="margin-bottom:.8rem;">
+            <label style="font-size:.8rem;font-weight:600;display:block;margin-bottom:.3rem;">Email</label>
+            <input type="email" name="email" required style="width:100%;padding:.5rem;border:1px solid var(--gris-clair);border-radius:4px;font-family:var(--fn);">
+          </div>
+          <div style="margin-bottom:1rem;">
+            <label style="font-size:.8rem;font-weight:600;display:block;margin-bottom:.3rem;">Message</label>
+            <textarea name="message" rows="5" required style="width:100%;padding:.5rem;border:1px solid var(--gris-clair);border-radius:4px;font-family:var(--fn);resize:vertical;"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Envoyer</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</Base>

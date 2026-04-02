@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Conseil Municipal 2026-2032 — Vizille en Mouvement</title>
+    <meta name="description" content="Les 26 conseillers municipaux élus de Vizille le 15 mars 2026. L'équipe Vizille en Mouvement au service des Vizillois pour le mandat 2026-2032.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vizilleenmouvement.fr/equipe.html">
+    <meta property="og:title" content="L'Équipe - Vizille en Mouvement">
+    <meta property="og:description" content="Découvrez l'équipe de Vizille en Mouvement. Des femmes et des hommes engagés.">
+    <meta property="og:image" content="https://vizilleenmouvement.fr/images/og-elus.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:locale" content="fr_FR">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="L'Équipe - Vizille en Mouvement">
+    <meta name="twitter:description" content="Découvrez l'équipe de Vizille en Mouvement.">
+    <meta name="twitter:image" content="https://vizilleenmouvement.fr/images/og-elus.jpg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components/flip-cards.css">
+    <link rel="stylesheet" href="css/pages/equipe.css">
+</head>
+<body>
+    <!-- Skip Link pour navigation clavier -->
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+    <header class="header">
+        <div class="header-top">
+            <p>L'Équipe • Vizille en Mouvement</p>
+        </div>
+
+        <div class="header-main">
+            <a href="index.html">
+                <img src="images/logo-header.png" alt="Vizille en Mouvement" class="nav-header-logo" loading="lazy">
+            </a>
+            <button class="menu-toggle" aria-label="Menu">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="nos-ambitions.html">Nos Ambitions</a></li>
+                    <li><a href="retrospective.html">Rétrospective</a></li>
+                    <li><a href="bilan.html">Bilan</a></li>
+                    <li><a href="projet.html">Projet</a></li>
+                    <li><a href="blog.html">Actualités</a></li>
+                    <li><a href="equipe.html" class="active">Équipe</a></li>
+                    <li><a href="medias.html">Médias</a></li>
+                    <li><a href="faq.html">Construisons ensemble</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <script src="js/menu-mobile.js" defer></script>
+
+    <section class="hero-unified">
+        <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo" loading="lazy">
+        <div class="hero-text">
+            <h1>🏛️ Le Conseil Municipal 2026-2032</h1>
+            <p class="slogan">Ensemble pour une ville dynamique et solidaire</p>
+            <p class="hero-subtitle">Notre liste rassemble des femmes et des hommes de tous horizons, unis par l'envie de servir Vizille et ses habitants.</p>
+        </div>
+    </section>
+
+    <main class="content" id="main-content">
+
+        <!-- TOGGLE UNIQUE -->
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 1.5rem;">
+            <div class="view-toggle" style="display: flex; gap: 0.5rem;">
+                <button class="view-btn active" data-view="cards" onclick="setView('cards')" style="padding: 0.5rem 1rem; border: 2px solid var(--bleu-vizille); background: var(--bleu-vizille); color: white; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                    🎴 Cartes
+                </button>
+                <button class="view-btn" data-view="list" onclick="setView('list')" style="padding: 0.5rem 1rem; border: 2px solid var(--bleu-vizille); background: white; color: var(--bleu-vizille); border-radius: 8px; cursor: pointer; font-weight: 600;">
+                    📋 Liste
+                </button>
+            </div>
+        </div>
+
+        <!-- L'ÉQUIPE COMPLÈTE -->
+        <h2 class="section-title">🏛️ Les 26 élues et élus de Vizille en Mouvement</h2>
+        <div id="team-grid"></div>
+        
+        <p id="click-hint" style="text-align: center; color: #666; font-style: italic; margin-top: 1rem; font-size: 0.9rem;">👆 Cliquez sur une carte pour découvrir le profil complet</p>
+        <!-- SECTION SOUTIENS -->
+        <section class="soutiens-section" style="margin:3rem auto 0;max-width:1100px;padding:0 1.5rem;">
+            <div style="text-align:center;margin-bottom:2rem;">
+                <h2 class="section-title" style="margin-bottom:0.5rem;">💛 Ils ont porté le projet avec nous</h2>
+                <p style="color:#555;font-size:0.95rem;max-width:640px;margin:0 auto;line-height:1.7;">
+                    Engagés dès le premier jour, ils ont porté notre projet collectif avec ardeur tout au long de la campagne. Non élus au terme du scrutin, ils demeurent les soutiens les plus fidèles de Vizille en Mouvement et resteront pleinement associés à la vie de notre équipe.
+                </p>
+            </div>
+            <div id="soutiens-grid" style="display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem;"></div>
+        </section>
+
+        <!-- CHARTE D'ENGAGEMENT -->
+        <section class="values-section">
+            <h2 class="section-title">📜 Notre Charte d'Engagement</h2>
+            <div class="values-grid">
+                <div class="value-item">
+                    <div class="value-icon">👂</div>
+                    <h4>Écoute Citoyenne</h4>
+                    <p>Placer la parole des habitants au cœur de la décision</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🌱</div>
+                    <h4>Développement Durable</h4>
+                    <p>Agir pour une transition écologique ambitieuse</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🤝</div>
+                    <h4>Respect Mutuel</h4>
+                    <p>Instaurer la confiance avec le personnel municipal</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">⚖️</div>
+                    <h4>Égalité Réelle</h4>
+                    <p>Garantir l'égalité femmes-hommes dans les responsabilités</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">❤️</div>
+                    <h4>Dignité et Tolérance</h4>
+                    <p>Lutter contre toutes les discriminations</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🏛️</div>
+                    <h4>Laïcité & Neutralité</h4>
+                    <p>Respecter les principes républicains</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTRAT D'ACTION -->
+        <section class="values-section contrat-section">
+            <h2 class="section-title">✍️ Notre Contrat d'Action</h2>
+            <div class="values-grid">
+                <div class="value-item">
+                    <div class="value-icon">💝</div>
+                    <h4>Altruisme</h4>
+                    <p>Agir pour l'intérêt général avant tout</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">📊</div>
+                    <h4>Rigueur</h4>
+                    <p>Gestion transparente et responsable des deniers publics</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🗳️</div>
+                    <h4>Démocratie</h4>
+                    <p>Respect de l'opinion politique de chacun</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🏗️</div>
+                    <h4>Participation</h4>
+                    <p>Co-construction des projets avec les habitants</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">✨</div>
+                    <h4>Exemplarité</h4>
+                    <p>Refus des attaques personnelles, débat d'idées</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- REJOIGNEZ-NOUS -->
+        <section class="join-section">
+            <h2>🤝 Rejoignez-nous</h2>
+            <p>Vous souhaitez vous engager pour Vizille ?</p>
+            <a href="faq.html" class="btn-contact">Nous contacter</a>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p class="footer-slogan">« Ensemble pour une ville dynamique et solidaire »</p>
+        <p>© 2026 Vizille en Mouvement</p>
+    </footer>
+
+    <script>
+        let candidatsData = [];
+        let currentView = 'cards';
+
+        function setView(view) {
+            currentView = view;
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                if (btn.dataset.view === view) {
+                    btn.style.background = 'var(--bleu-vizille)';
+                    btn.style.color = 'white';
+                    btn.classList.add('active');
+                } else {
+                    btn.style.background = 'white';
+                    btn.style.color = 'var(--bleu-vizille)';
+                    btn.classList.remove('active');
+                }
+            });
+            renderTeam();
+        }
+
+        // Helper : extraire prénom et nom (compatible ancien et nouveau format)
+        function getPrenom(c) {
+            if (c.prenom) return c.prenom;
+            const parts = (c.nom || '').split(' ');
+            return parts[0] || '';
+        }
+        function getNom(c) {
+            if (c.prenom) return c.nom || '';
+            const parts = (c.nom || '').split(' ');
+            return parts.slice(1).join(' ') || '';
+        }
+        function getFullName(c) {
+            return c.prenom ? (c.prenom + ' ' + (c.nom || '')) : (c.nom || '');
+        }
+
+        async function loadCandidats() {
+            try {
+                const response = await fetch('candidats.json?v=2026.03');
+                if (!response.ok) throw new Error('Erreur');
+
+                candidatsData = await response.json();
+
+                // Filtrer les actifs, trier : numérotés d'abord (par ordre), puis les autres par ordre alphabétique
+                candidatsData = candidatsData
+                    .filter(c => c.actif !== false && c.elu === true)
+                    .sort((a, b) => {
+                        const aOrdre = a.ordre != null ? a.ordre : Infinity;
+                        const bOrdre = b.ordre != null ? b.ordre : Infinity;
+                        if (aOrdre !== bOrdre) return aOrdre - bOrdre;
+                        return getNom(a).localeCompare(getNom(b), 'fr');
+                    });
+
+                // Afficher toute l'équipe
+                renderTeam();
+            } catch (err) {
+                document.getElementById('team-grid').innerHTML = `
+                    <div class="loading">
+                        <span style="font-size: 2rem;">👥</span>
+                        <p>L'équipe sera bientôt dévoilée !</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Utilitaire couleur pour les dégradés
+        function adjustColor(hex, amount) {
+            hex = hex.replace('#', '');
+            const r = Math.max(0, Math.min(255, parseInt(hex.substring(0, 2), 16) + amount));
+            const g = Math.max(0, Math.min(255, parseInt(hex.substring(2, 4), 16) + amount));
+            const b = Math.max(0, Math.min(255, parseInt(hex.substring(4, 6), 16) + amount));
+            return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+        }
+
+        function buildEquipeCard(candidat, index, isLeader) {
+            const color = isLeader ? '#c9a227' : '#1a3a5c';
+            const darkerColor = adjustColor(color, -25);
+            const pos = candidat.photoPosition || 'center 20%';
+
+            const vidPos = candidat.videoPosition || 'center 25%';
+
+            // Media : vidéo 10s puis transition vers photo
+            let mediaHtml = '';
+            if (candidat.video && candidat.photo) {
+                mediaHtml = `<video src="${candidat.video}" autoplay muted loop playsinline style="object-position:${vidPos};"></video>` +
+                    `<img src="${candidat.photo}" alt="${getFullName(candidat)}" loading="lazy" class="equipe-photo-fallback" style="object-position:${pos};">`;
+            } else if (candidat.photo) {
+                mediaHtml = `<img src="${candidat.photo}" alt="${getFullName(candidat)}" loading="lazy" style="object-position:${pos};">`;
+            } else {
+                mediaHtml = `<div class="equipe-card-placeholder">👤</div>`;
+            }
+
+            // Statut masqué — désignations non encore attribuées
+            let statutText = '';
+
+            // Délai d'animation en cascade
+            const delay = index * 0.1;
+
+            return `
+                <div class="equipe-card ${isLeader ? 'equipe-card--leader' : ''}" data-index="${index}" style="animation-delay: ${delay}s;" onclick="openCandidatModal(${index});">
+                    <div class="equipe-card-media">${mediaHtml}</div>
+                    <div class="equipe-card-header" style="background: linear-gradient(135deg, ${color} 0%, ${darkerColor} 100%);">
+                        <h3>${isLeader ? '⭐ ' : ''}${getPrenom(candidat)} ${getNom(candidat)}</h3>
+                        ${statutText ? `<div class="equipe-card-statut">${statutText}</div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        async function renderTeam() {
+            const grid = document.getElementById('team-grid');
+
+            // Séparer Catherine (ordre 1) des autres
+            const catherine = candidatsData.find(c => c.ordre === 1);
+            const autres = candidatsData.filter(c => c.ordre !== 1).sort((a, b) => {
+                const aOrdre = a.ordre != null ? a.ordre : Infinity;
+                const bOrdre = b.ordre != null ? b.ordre : Infinity;
+                if (aOrdre !== bOrdre) return aOrdre - bOrdre;
+                return getNom(a).localeCompare(getNom(b), 'fr');
+            });
+
+            // Catherine seule en haut
+            let catherineHtml = '';
+            if (catherine) {
+                catherineHtml = `
+                    <div class="catherine-row">
+                        <div class="equipe-grid" style="max-width:280px;margin:0 auto;">
+                            ${buildEquipeCard(catherine, 0, true)}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Grille des autres candidats
+            const autresHtml = `<div class="equipe-grid">${
+                autres.map((c, i) => buildEquipeCard(c, i + 1, false)).join('')
+            }</div>`;
+
+            grid.innerHTML = catherineHtml + autresHtml;
+
+            // Section soutiens — non-élus (données déjà chargées)
+            const allCandidats = candidatsData;
+            const soutiens = allCandidats.filter(c => c.elu === false && c.actif !== false);
+            const soutiensGrid = document.getElementById('soutiens-grid');
+            if (soutiensGrid && soutiens.length) {
+                soutiensGrid.innerHTML = soutiens.map(c => {
+                    const nom = (c.prenom ? c.prenom + ' ' : '') + (c.nom || '');
+                    const photo = c.photo || '';
+                    const pos = c.photoPosition || 'center 20%';
+                    return `<div style="background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,0.07);overflow:hidden;width:180px;text-align:center;border-top:3px solid #c9a84c;">
+                        ${photo ? `<div style="height:180px;overflow:hidden;"><img src="${photo}" alt="${nom}" style="width:100%;height:100%;object-fit:cover;object-position:${pos};display:block;filter:grayscale(20%);"></div>` : `<div style="height:180px;background:linear-gradient(135deg,#e8f0fa,#f7f4ef);display:flex;align-items:center;justify-content:center;font-size:3rem;">👤</div>`}
+                        <div style="padding:0.9rem 0.75rem 1rem;">
+                            <p style="font-family:'Playfair Display',serif;font-weight:600;color:#1a3a6b;font-size:0.9rem;margin:0 0 0.4rem;line-height:1.3;">${nom}</p>
+
+                        </div>
+                    </div>`;
+                }).join('');
+            }
+
+            // Lancer les vidéos et transition vers photo après 10s
+            function playAllVideos() {
+                grid.querySelectorAll('.equipe-card-media video').forEach(v => {
+                    v.muted = true;
+                    v.play().catch(() => {});
+                });
+            }
+
+            function transitionToPhoto() {
+                grid.querySelectorAll('.equipe-card-media video').forEach(video => {
+                    const photo = video.parentElement.querySelector('.equipe-photo-fallback');
+                    if (photo) {
+                        video.style.opacity = '0';
+                        photo.style.opacity = '1';
+                        setTimeout(() => { video.pause(); }, 1000);
+                    } else {
+                        video.pause();
+                    }
+                });
+            }
+
+            playAllVideos();
+
+            // iOS : relancer au premier touch/scroll
+            const startVideos = () => {
+                playAllVideos();
+                setTimeout(transitionToPhoto, 10000);
+            };
+            document.addEventListener('touchstart', startVideos, { once: true });
+            document.addEventListener('scroll', startVideos, { once: true });
+
+            // Desktop : transition après 10 secondes
+            setTimeout(transitionToPhoto, 10000);
+        }
+
+        document.addEventListener('DOMContentLoaded', loadCandidats);
+
+        // ===== MODAL CANDIDAT =====
+        function openCandidatModal(index) {
+            const candidat = candidatsData[index];
+            if (!candidat) return;
+
+            const modal = document.getElementById('candidat-modal');
+
+            // Photo (toujours la photo sur la fiche, vidéo uniquement sur l'accueil)
+            const photoContainer = document.getElementById('modal-photo-container');
+            const modalPos = candidat.photoPosition || 'center 20%';
+            if (candidat.photo) {
+                photoContainer.innerHTML = `<img src="${candidat.photo}" alt="${getFullName(candidat)}" class="modal-photo" loading="lazy" style="object-position:${modalPos};">`;
+            } else {
+                photoContainer.innerHTML = `<div class="modal-photo-placeholder">👤</div>`;
+            }
+
+            // Infos de base
+            document.getElementById('modal-name').textContent = getFullName(candidat) || 'Nom non renseigné';
+
+            const roleEl = document.getElementById('modal-role');
+            if (candidat.nouveau) {
+                const prenomsFem = ['Catherine','Angélique','Saïda','Isabelle','Sakina'];
+                const feminin = ['Adjointe','Conseillère','Conseillère déléguée'].some(r => (candidat.role||'').startsWith(r))
+                    || prenomsFem.includes(getPrenom(candidat));
+                roleEl.textContent = feminin ? 'Nouvelle' : 'Nouveau';
+            } else {
+                roleEl.textContent = candidat.role || '';
+            }
+
+            // Délégation
+            const delegationEl = document.getElementById('modal-delegation');
+            if (candidat.delegation) {
+                delegationEl.textContent = candidat.delegation;
+                delegationEl.style.display = 'inline-block';
+            } else {
+                delegationEl.style.display = 'none';
+            }
+
+            // Bio / Présentation
+            document.getElementById('modal-bio').textContent = candidat.bio || 'Non renseigné';
+
+            // Parcours
+            document.getElementById('modal-pedigree').textContent = candidat.pedigree || 'Non renseigné';
+
+            // Objectifs
+            document.getElementById('modal-objectifs').textContent = candidat.objectifs || 'Non renseigné';
+
+            // Citation
+            document.getElementById('modal-citation').textContent = candidat.citation || 'Non renseigné';
+
+            // Réseaux sociaux
+            const socialsEl = document.getElementById('modal-socials');
+            let socialsHtml = '';
+            if (candidat.email) socialsHtml += `<a href="mailto:${candidat.email}" title="Email">📧</a>`;
+            if (candidat.facebook) socialsHtml += `<a href="${candidat.facebook}" target="_blank" rel="noopener" title="Facebook">📘</a>`;
+            if (candidat.linkedin) socialsHtml += `<a href="${candidat.linkedin}" target="_blank" rel="noopener" title="LinkedIn">💼</a>`;
+            if (candidat.twitter) socialsHtml += `<a href="${candidat.twitter}" target="_blank" rel="noopener" title="Twitter">🐦</a>`;
+
+            if (socialsHtml) {
+                socialsEl.innerHTML = socialsHtml;
+                socialsEl.style.display = 'flex';
+            } else {
+                socialsEl.innerHTML = '<span style="color: #999; font-size: 0.9rem;">Aucun réseau social</span>';
+                socialsEl.style.display = 'block';
+            }
+
+            // Afficher
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCandidatModal() {
+            document.getElementById('candidat-modal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Fermer avec Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeCandidatModal();
+        });
+
+        // Rendre accessible globalement
+        window.openCandidatModal = openCandidatModal;
+        window.closeCandidatModal = closeCandidatModal;
+    </script>
+
+    <!-- Modal Candidat -->
+    <div class="modal-overlay" id="candidat-modal" role="dialog" aria-modal="true" aria-labelledby="modal-name" onclick="if(event.target === this) closeCandidatModal()">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-close" onclick="closeCandidatModal()" aria-label="Fermer la fenêtre">✕</button>
+                <div id="modal-photo-container"></div>
+                <h2 class="modal-name" id="modal-name"></h2>
+                <p class="modal-role" id="modal-role"></p>
+            </div>
+            <div class="modal-body">
+                <span class="modal-delegation" id="modal-delegation"></span>
+
+                <div class="modal-section">
+                    <h4 class="modal-section-title">👤 Présentation</h4>
+                    <p class="modal-bio" id="modal-bio">Non renseigné</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4 class="modal-section-title">🎓 Parcours</h4>
+                    <p class="modal-pedigree" id="modal-pedigree">Non renseigné</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4 class="modal-section-title">🎯 Objectifs de campagne</h4>
+                    <p class="modal-objectifs" id="modal-objectifs">Non renseigné</p>
+                </div>
+
+                <div class="modal-section" id="modal-citation-section">
+                    <h4 class="modal-section-title">💬 Citation</h4>
+                    <p class="modal-citation" id="modal-citation">Non renseigné</p>
+                </div>
+
+                <div class="modal-socials" id="modal-socials"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Site Features JS -->
+    <script src="js/site-features.js" defer></script>
+
+<!-- Bandeau news désactivé temporairement -->
+<!-- <script src="js/news-banner.js"></script> -->
+<!-- Admin -->
+<a href="admin.html" style="position:fixed;bottom:12px;right:12px;display:flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(26,58,107,0.85);color:#fff;font-size:0.78rem;font-family:system-ui,sans-serif;text-decoration:none;border-radius:20px;z-index:9999;opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">⚙️ Admin</a>
+</body>
+</html>
+
+
+
+

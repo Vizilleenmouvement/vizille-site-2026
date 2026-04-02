@@ -1,0 +1,189 @@
+[
+  {
+    "id": "COM-001",
+    "axe": "Site web",
+    "categorie": "Infrastructure",
+    "tache": "Mise en place hébergement",
+    "description": "Configuration serveur et nom de domaine vizillenmouvement.fr\nhébergement gratuit Github",
+    "responsable": "Michel",
+    "statut": "Fait",
+    "priorite": "Haute",
+    "echeance": "2025-01-15"
+  },
+  {
+    "id": "COM-002",
+    "axe": "Site web",
+    "categorie": "Développement",
+    "tache": "Page d'accueil",
+    "description": "Création de la landing page avec présentation de la candidate et du projet.",
+    "responsable": "Michel",
+    "statut": "Fait",
+    "priorite": "Haute",
+    "echeance": "2025-01-20"
+  },
+  {
+    "id": "COM-003",
+    "axe": "Site web",
+    "categorie": "Contenu",
+    "tache": "Bilan du mandat",
+    "description": "Intégration du tableau de bord interactif des 271 actions",
+    "responsable": "Michel",
+    "statut": "Fait",
+    "priorite": "Haute",
+    "echeance": "2025-02-01"
+  },
+  {
+    "id": "COM-004",
+    "axe": "Site web",
+    "categorie": "Contenu",
+    "tache": "Équipe de campagne",
+    "description": "Photos et présentations des membres de l'équipe",
+    "responsable": "Michel",
+    "statut": "En cours",
+    "priorite": "Moyenne",
+    "echeance": "2025-02-15"
+  },
+  {
+    "id": "COM-005",
+    "axe": "Réseaux sociaux",
+    "categorie": "Organisation",
+    "tache": "Coordination FB/Site",
+    "description": "Guide de synchronisation entre publications Facebook et site web",
+    "responsable": "Laurent",
+    "statut": "À faire",
+    "priorite": "Moyenne",
+    "echeance": "2025-02-10"
+  },
+  {
+    "id": "COM-006",
+    "axe": "Réseaux sociaux",
+    "categorie": "Contenu",
+    "tache": "Planning éditorial",
+    "description": "Calendrier des publications pour les 6 prochains mois",
+    "responsable": "Laurent",
+    "statut": "En cours",
+    "priorite": "Haute",
+    "echeance": "2025-02-05"
+  },
+  {
+    "id": "COM-007",
+    "axe": "Supports papier",
+    "categorie": "Création",
+    "tache": "Tract de présentation",
+    "description": "Flyer A5 recto-verso avec QR code vers le site",
+    "responsable": "Équipe",
+    "statut": "À faire",
+    "priorite": "Haute",
+    "echeance": "2025-03-01"
+  },
+  {
+    "id": "COM-008",
+    "axe": "Supports papier",
+    "categorie": "Création",
+    "tache": "Affiche officielle",
+    "description": "Affiche de campagne format A3 et A2",
+    "responsable": "Équipe",
+    "statut": "À faire",
+    "priorite": "Moyenne",
+    "echeance": "2025-04-01"
+  },
+  {
+    "id": "COM-009",
+    "axe": "Site web",
+    "categorie": "Fonctionnalité",
+    "tache": "Questions citoyens",
+    "description": "Module de questions/réponses avec les habitants",
+    "responsable": "Michel",
+    "statut": "Fait",
+    "priorite": "Moyenne",
+    "echeance": "2025-02-20"
+  },
+  {
+    "id": "COM-010",
+    "axe": "Site web",
+    "categorie": "Contenu",
+    "tache": "Blog actualités",
+    "description": "Section actualités avec articles de campagne",
+    "responsable": "Michel",
+    "statut": "Fait",
+    "priorite": "Moyenne",
+    "echeance": "2025-02-25"
+  },
+  {
+    "id": "COM-011",
+    "axe": "Événementiel",
+    "categorie": "Organisation",
+    "tache": "Réunions publiques",
+    "description": "Planning et communication des réunions de quartier",
+    "responsable": "Catherine",
+    "statut": "À faire",
+    "priorite": "Haute",
+    "echeance": "2025-03-15"
+  },
+  {
+    "id": "COM-012",
+    "axe": "Email",
+    "categorie": "Infrastructure",
+    "tache": "Newsletter",
+    "description": "Mise en place d'un système d'inscription et d'envoi",
+    "responsable": "Michel",
+    "statut": "À faire",
+    "priorite": "Basse",
+    "echeance": "2025-04-01"
+  },
+  {
+    "id": "COM-013",
+    "axe": "Site web",
+    "categorie": "Contenu",
+    "tache": "Programme 2026-2032",
+    "description": "Présentation détaillée du projet municipal",
+    "responsable": "Équipe",
+    "statut": "À faire",
+    "priorite": "Haute",
+    "echeance": "2025-05-01"
+  },
+  {
+    "id": "COM-014",
+    "axe": "Presse",
+    "categorie": "Relations",
+    "tache": "Dossier de presse",
+    "description": "Kit média avec photos HD et communiqués",
+    "responsable": "Catherine",
+    "statut": "À faire",
+    "priorite": "Moyenne",
+    "echeance": "2025-04-15"
+  },
+  {
+    "id": "COM-015",
+    "axe": "Site web",
+    "categorie": "Technique",
+    "tache": "Optimisation SEO",
+    "description": "Référencement naturel et meta tags",
+    "responsable": "Michel",
+    "statut": "En cours",
+    "priorite": "Moyenne",
+    "echeance": "2025-03-01"
+  },
+  {
+    "id": "COM-016",
+    "axe": "Réseaux sociaux",
+    "categorie": "Contenu",
+    "tache": "Vidéos témoignages",
+    "description": "Témoignages d'habitants sur les réalisations",
+    "responsable": "Laurent",
+    "statut": "À faire",
+    "priorite": "Moyenne",
+    "echeance": "2025-04-01"
+  },
+  {
+    "id": "COM-017",
+    "axe": "Site web",
+    "categorie": "Administration",
+    "tache": "Interface admin",
+    "description": "Panneau d'administration pour mise à jour autonome",
+    "responsable": "Michel",
+    "statut": "Fait",
+    "priorite": "Haute",
+    "echeance": "2025-02-28"
+  }
+]

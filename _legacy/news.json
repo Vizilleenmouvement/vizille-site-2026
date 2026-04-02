@@ -1,0 +1,39 @@
+[
+  {
+    "id": 4,
+    "texte": "🏛️ Premier conseil municipal — Dimanche 22 mars à 10h00. Ordre du jour : installation du conseil (doyen d'âge), élection du Maire, détermination du nombre d'adjoints, élection des adjoints, lecture de la Charte de l'élu local.",
+    "lien": "blog.html",
+    "icon": "🏛️",
+    "actif": true,
+    "dateDebut": "2026-03-19",
+    "dateFin": "2026-03-22",
+    "priorite": true
+  },
+  {
+    "id": 3,
+    "texte": "Catherine Troton s'adressera très prochainement à tous les Vizillois.",
+    "lien": "",
+    "icon": "📣",
+    "actif": true,
+    "dateDebut": "2026-03-15",
+    "dateFin": "2026-04-15"
+  },
+  {
+    "id": 2,
+    "texte": "Catherine Troton reconduite maire de Vizille — Le programme 2026-2032 commence !",
+    "lien": "nos-ambitions.html",
+    "icon": "🌟",
+    "actif": true,
+    "dateDebut": "2026-03-15",
+    "dateFin": "2026-04-15"
+  },
+  {
+    "id": 1,
+    "texte": "🎉 Vizille en Mouvement élue ! Merci à tous les Vizillois pour leur confiance.",
+    "lien": "",
+    "icon": "🏆",
+    "actif": true,
+    "dateDebut": "2026-03-15",
+    "dateFin": "2026-04-15"
+  }
+]

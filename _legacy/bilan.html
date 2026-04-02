@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilan 2020-2026 – Vizille en Mouvement</title>
+    <meta name="description" content="Bilan complet du mandat 2020-2026 : plus de 330 actions réalisées pour Vizille.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components/flip-cards.css">
+    <link rel="stylesheet" href="css/pages/index.css?v=4">
+
+    <style>
+        /* ===== PAGE BILAN CARTES ===== */
+        body { padding-top: 0; }
+        
+        /* Hero utilise .hero-unified de page-header.css */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            background: linear-gradient(135deg, #1a3a5c, #2d5f8a);
+            padding: 0.75rem 2rem;
+            flex-wrap: wrap;
+        }
+        .stats-bar .stat { text-align: center; }
+        .stats-bar .stat-val { font-size: 1.6rem; font-weight: 700; color: var(--or-clair); }
+        .stats-bar .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.85); }
+        
+        
+        /* Sous-onglets (catégories) */
+        .subtabs-container { background: var(--blanc-casse); padding: 1rem 0; }
+        .subtabs {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+        .subtab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            background: white;
+            color: var(--gris-texte);
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        .subtab:hover { border-color: var(--bleu-clair); }
+        .subtab.active { background: var(--bleu-vizille); color: white; }
+        .subtab .count { opacity: 0.7; margin-left: 0.3rem; }
+        
+        /* Bandeau thème */
+        .theme-banner-container { max-width: 1400px; margin: 0 auto; padding: 1rem 1rem 0; }
+        .theme-banner {
+            background: linear-gradient(135deg, var(--bleu-vizille), var(--bleu-clair));
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .theme-banner .icon { font-size: 2.5rem; }
+        .theme-banner .text h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin: 0 0 0.3rem 0; }
+        .theme-banner .text p { opacity: 0.9; font-size: 0.95rem; margin: 0; }
+        .theme-banner.plan-climat { background: linear-gradient(135deg, #2c3e50, #34495e); }
+        
+        /* Grille de cartes */
+        .cards-container { max-width: 1400px; margin: 2rem auto; padding: 0 1rem; }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+        
+        /* Carte action */
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .card-image {
+            position: relative;
+            width: 100%;
+            height: 140px;
+            overflow: hidden;
+        }
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .card-gallery-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+        .card-header {
+            padding: 1rem 1.2rem;
+            background: linear-gradient(135deg, var(--bleu-vizille), var(--bleu-clair));
+            color: white;
+        }
+        .card-header h3 { font-size: 1rem; line-height: 1.3; margin: 0; }
+        .card-meta { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+        .card-meta span { font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; background: rgba(255,255,255,0.2); }
+        .card-body { padding: 1rem 1.2rem; }
+        .card-body p { font-size: 0.9rem; color: var(--gris-texte); line-height: 1.5; margin: 0; }
+        .card-chiffres { display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
+        .chiffre { text-align: center; }
+        .chiffre-val { font-size: 1.3rem; font-weight: 700; color: var(--bleu-vizille); }
+        .chiffre-label { font-size: 0.7rem; color: var(--gris-texte); }
+        
+        /* Carte objectif Plan Climat */
+        .card.objectif .card-header { background: linear-gradient(135deg, #2c3e50, #34495e); }
+        .card.objectif { border-left: 4px solid #9b59b6; }
+        
+        /* Statut badges */
+        .statut { padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.7rem; font-weight: 600; }
+        .statut.realise { background: var(--vert-realise); color: white; }
+        .statut.encours { background: var(--orange-encours); color: white; }
+        .statut.objectif { background: #9b59b6; color: white; }
+        
+        /* Modal détail */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: white;
+            border-radius: 16px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--bleu-vizille), var(--bleu-clair));
+            color: white;
+            position: relative;
+        }
+        .modal-header h2 { font-size: 1.3rem; padding-right: 2rem; margin: 0; }
+        .modal-close {
+            position: absolute;
+            top: 1rem; right: 1rem;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        .modal-body { padding: 1.5rem; }
+        .modal-section { margin-bottom: 1.5rem; }
+        .modal-section h4 { color: var(--bleu-vizille); margin: 0 0 0.5rem 0; font-size: 1rem; }
+        .modal-section p { margin: 0; line-height: 1.6; }
+        .modal-chiffres { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .modal-chiffre { background: var(--gris-doux); padding: 1rem; border-radius: 8px; text-align: center; min-width: 100px; }
+        .modal-chiffre .val { font-size: 1.5rem; font-weight: 700; color: var(--bleu-vizille); }
+        .modal-chiffre .label { font-size: 0.8rem; }
+        .chrono-item { padding: 0.5rem 0; border-left: 3px solid var(--bleu-clair); padding-left: 1rem; margin-left: 0.5rem; margin-bottom: 0.5rem; }
+        .chrono-date { background: var(--bleu-vizille); color: white; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; }
+        .source-btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--gris-doux);
+            border-radius: 6px;
+            color: var(--bleu-vizille);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin: 0.25rem;
+        }
+        .source-btn:hover { background: var(--bleu-vizille); color: white; }
+
+        /* Galerie images dans modal */
+        .modal-single-image {
+            margin-bottom: 1rem;
+        }
+        .modal-single-image img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .modal-gallery {
+            margin-bottom: 1rem;
+        }
+        .modal-gallery-main {
+            position: relative;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .modal-gallery-main img {
+            width: 100%;
+            max-height: 350px;
+            object-fit: contain;
+            display: block;
+        }
+        .modal-gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.9);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-gallery-nav:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .modal-gallery-nav.prev { left: 10px; }
+        .modal-gallery-nav.next { right: 10px; }
+        .modal-gallery-counter {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        .modal-gallery-thumbs {
+            display: flex;
+            gap: 8px;
+            padding: 10px 0;
+            overflow-x: auto;
+        }
+        .modal-thumb {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid transparent;
+            opacity: 0.6;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .modal-thumb:hover { opacity: 0.9; }
+        .modal-thumb.active {
+            border-color: var(--bleu-vizille);
+            opacity: 1;
+        }
+
+        /* Compteur */
+        .results-count { text-align: center; padding: 1rem; color: var(--gris-texte); font-size: 0.9rem; }
+
+        /* ===== CATÉGORIES PRINCIPALES ===== */
+        .categories-container {
+            background: white;
+            border-bottom: 2px solid var(--gris-doux);
+            position: sticky;
+            top: 110px;
+            z-index: 100;
+            padding: 1rem 0;
+        }
+        .categories {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            padding: 0 1rem;
+        }
+        .category-btn {
+            position: relative;
+            padding: 0.7rem 1.2rem;
+            background: var(--blanc-casse);
+            border: 2px solid var(--gris-doux);
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--bleu-vizille);
+            transition: all 0.2s;
+        }
+        .category-btn:hover {
+            background: var(--bleu-vizille);
+            color: white;
+            border-color: var(--bleu-vizille);
+        }
+        .category-btn.active {
+            background: var(--bleu-vizille);
+            color: white;
+            border-color: var(--bleu-vizille);
+        }
+        .category-btn .cat-icon { font-size: 1.2rem; }
+        .category-btn .cat-arrow {
+            font-size: 0.7rem;
+            margin-left: 0.3rem;
+            transition: transform 0.2s;
+        }
+        .category-btn.open .cat-arrow { transform: rotate(180deg); }
+        .category-btn .badge {
+            background: var(--bleu-clair);
+            color: white;
+            padding: 0.15rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            margin-left: 0.3rem;
+        }
+        .category-btn:hover .badge,
+        .category-btn.active .badge { background: rgba(255,255,255,0.3); }
+
+        /* Menu déroulant */
+        .category-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            min-width: 240px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+            padding: 0.5rem 0;
+            display: none;
+            z-index: 200;
+            margin-top: 0.5rem;
+        }
+        .category-btn.open .category-dropdown { display: block; }
+        .dropdown-item {
+            padding: 0.65rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--gris-texte);
+            transition: all 0.15s;
+        }
+        .dropdown-item:hover {
+            background: var(--blanc-casse);
+            color: var(--bleu-vizille);
+        }
+        .dropdown-item.active-theme {
+            background: var(--bleu-vizille);
+            color: white;
+        }
+        .dropdown-item .theme-icon { font-size: 1rem; }
+        .dropdown-item .theme-name { flex: 1; font-weight: 500; }
+        .dropdown-item .theme-count {
+            font-size: 0.75rem;
+            background: var(--gris-doux);
+            padding: 0.15rem 0.4rem;
+            border-radius: 8px;
+        }
+        .dropdown-item.active-theme .theme-count { background: rgba(255,255,255,0.3); }
+
+        /* Thème sélectionné affiché */
+        .selected-theme-bar {
+            background: var(--blanc-casse);
+            padding: 0.5rem 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--gris-texte);
+            border-bottom: 1px solid var(--gris-doux);
+        }
+        .selected-theme-bar strong { color: var(--bleu-vizille); }
+        /* Barre de sous-thèmes horizontale */
+        .subthemes-bar {
+            background: var(--blanc-casse);
+            padding: 0.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--gris-doux);
+            display: none;
+        }
+        .subthemes-bar.visible { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; }
+        .subtheme-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+            color: var(--gris-texte);
+            border: 1.5px solid var(--gris-doux);
+        }
+        .subtheme-pill:hover { border-color: var(--bleu-vizille); color: var(--bleu-vizille); }
+        .subtheme-pill.active {
+            background: var(--bleu-vizille);
+            color: white;
+            border-color: var(--bleu-vizille);
+        }
+        .subtheme-pill .pill-count {
+            font-size: 0.7rem;
+            background: rgba(0,0,0,0.1);
+            padding: 0.1rem 0.35rem;
+            border-radius: 8px;
+        }
+        .subtheme-pill.active .pill-count { background: rgba(255,255,255,0.3); }
+        
+        
+        @media (max-width: 768px) {
+            body { padding-top: 80px; }
+            .categories-container { top: 80px; padding: 0.7rem 0; }
+            .categories { gap: 0.5rem; }
+            .category-btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            .category-btn .cat-icon { font-size: 1rem; }
+            .category-btn .cat-name { display: none; }
+            .category-dropdown {
+                min-width: 200px;
+                left: 0;
+                transform: none;
+            }
+            .bilan-hero { padding: 1.5rem 1rem; }
+            .bilan-hero .logo-pulse { width: 80px; }
+            .bilan-hero h1 { font-size: 1.5rem; }
+            .bilan-hero .stat-val { font-size: 2rem; }
+            .cards-grid { grid-template-columns: 1fr; }
+
+            /* Sous-onglets plus compacts */
+            .subtabs { gap: 0.3rem; padding: 0 0.5rem; }
+            .subtab { padding: 0.4rem 0.7rem; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+    <header class="header">
+        <div class="header-top"><p>Vizille en Mouvement - Mandat 2026-2032</p></div>
+        <div class="header-main">
+            <a href="index.html"><img src="images/logo-header.png" alt="Vizille en Mouvement" class="nav-header-logo" loading="lazy"></a>
+            <button class="menu-toggle" aria-label="Menu">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="nos-ambitions.html">Nos Ambitions</a></li>
+                    <li><a href="retrospective.html">Rétrospective</a></li>
+                    <li><a href="bilan.html" class="active">Bilan</a></li>
+                    <li><a href="projet.html">Projet</a></li>
+                    <li><a href="blog.html">Actualités</a></li>
+                    <li><a href="equipe.html">Équipe</a></li>
+                    <li><a href="medias.html">Médias</a></li>
+                    <li><a href="faq.html">Construisons ensemble</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <script src="js/menu-mobile.js" defer></script>
+
+    <section class="hero-unified" id="main-content">
+        <img src="images/logo.png" alt="Vizille en Mouvement" class="hero-logo" loading="lazy">
+        <div class="hero-text">
+            <h1>Bilan 2020-2026</h1>
+            <p class="slogan">Ensemble pour une ville dynamique et solidaire</p>
+        </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar" id="hero-stats"></div>
+
+    <!-- GRILLE THÈMES -->
+    <section class="themes-section" id="themes-grid-section">
+        <div class="themes-container">
+            <h2 class="section-title" style="text-align:center;margin-bottom:2rem;">Nos réalisations par thème</h2>
+            <div class="themes-grid" id="bilan-themes-grid"></div>
+        </div>
+    </section>
+
+    <!-- VUE DÉTAIL THÈME -->
+    <section id="bilan-detail" style="display:none;">
+        <div style="max-width:1400px;margin:0 auto;padding:0 1rem;">
+            <div style="display:flex;align-items:center;gap:1rem;margin:1.5rem 0 1rem;">
+                <button onclick="retourThemes()" style="background:#1a3a6b;color:#fff;border:none;padding:0.5rem 1.1rem;border-radius:4px;cursor:pointer;font-size:0.85rem;letter-spacing:0.04em;">← Retour</button>
+                <h2 id="bilan-detail-titre" style="font-family:'Playfair Display',serif;font-size:1.4rem;color:#1a3a6b;margin:0;"></h2>
+                <span id="bilan-detail-count" style="font-size:0.8rem;color:#888;"></span>
+            </div>
+            <div class="cards-grid" id="bilan-cards-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.2rem;"></div>
+        </div>
+    </section>
+
+    <!-- MODAL DÉTAIL ACTION -->
+    <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1000;align-items:center;justify-content:center;padding:1rem;">
+        <div class="modal" style="background:#fff;border-radius:8px;max-width:640px;width:100%;max-height:90vh;overflow-y:auto;">
+            <div class="modal-header" style="background:#1a3a6b;color:#fff;padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;border-radius:8px 8px 0 0;">
+                <h2 id="modal-title" style="margin:0;font-size:1.1rem;"></h2>
+                <button onclick="closeModal()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;line-height:1;">✕</button>
+            </div>
+            <div class="modal-body" id="modal-body" style="padding:1.5rem;"></div>
+        </div>
+    </div>
+
+<script>
+(function() {
+    var allActions = [];
+    var allThemes  = [];
+
+    // Charger données
+    Promise.all([
+        fetch('actions.json').then(function(r){ return r.json(); }),
+        fetch('themes.json').then(function(r){ return r.json(); })
+    ]).then(function(data) {
+        allActions = data[0];
+        allThemes  = data[1];
+        renderStats();
+        renderThemesGrid();
+    });
+
+    function renderStats() {
+        var total = allActions.filter(function(a){ return !a.suspendu; }).length;
+        var themes = new Set(allActions.filter(function(a){ return !a.suspendu; }).map(function(a){ return a.theme; })).size;
+        document.getElementById('hero-stats').innerHTML =
+            stat(total, 'actions réalisées') +
+            stat(themes, 'thèmes') +
+            stat('6', 'années de mandat');
+    }
+
+    function stat(v, l) {
+        return '<div class="stat"><div class="stat-val">'+v+'</div><div class="stat-label">'+l+'</div></div>';
+    }
+
+    function renderThemesGrid() {
+        var grid = document.getElementById('bilan-themes-grid');
+        // Thèmes avec actions uniquement
+        var themesAvecActions = allThemes.filter(function(t) {
+            return allActions.filter(function(a){ return a.theme === t.theme && !a.suspendu; }).length > 0;
+        });
+
+        grid.innerHTML = themesAvecActions.map(function(t) {
+            var count = allActions.filter(function(a){ return a.theme === t.theme && !a.suspendu; }).length;
+            return '<button class="theme-card animate-on-scroll" onclick="ouvrirTheme(\''+escHtml(t.theme)+'\')">'
+                + '<div class="theme-icon">'+t.icon+'</div>'
+                + '<h3>'+escHtml(t.theme)+'</h3>'
+                + '<p>'+count+' action'+(count>1?'s':'')+' réalisée'+(count>1?'s':'')+'</p>'
+                + '<span class="theme-hint">↗ Voir les actions</span>'
+                + '<span class="theme-arrow" aria-hidden="true">→</span>'
+                + '</button>';
+        }).join('');
+    }
+
+    window.ouvrirTheme = function(theme) {
+        var actions = allActions.filter(function(a){ return a.theme === theme && !a.suspendu; });
+        var themeData = allThemes.find(function(t){ return t.theme === theme; }) || {};
+
+        document.getElementById('bilan-detail-titre').textContent = (themeData.icon||'') + ' ' + theme;
+        document.getElementById('bilan-detail-count').textContent = actions.length + ' action'+(actions.length>1?'s':'');
+
+        var grid = document.getElementById('bilan-cards-grid');
+        grid.innerHTML = actions.map(function(a) {
+            var img = a.image || (a.images && a.images[0]) || '';
+            var color = themeData.color || '#1a3a6b';
+            return '<div class="card" style="border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);cursor:pointer;background:#fff;transition:transform .2s,box-shadow .2s;" onclick="ouvrirModal('+a.id+')" onmouseenter="this.style.transform=\'translateY(-4px)\';this.style.boxShadow=\'0 8px 24px rgba(0,0,0,0.15)\'" onmouseleave="this.style.transform=\'\';this.style.boxShadow=\'0 2px 8px rgba(0,0,0,0.1)\'">'
+                + (img ? '<div style="height:160px;overflow:hidden;"><img src="'+img+'" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"></div>' : '')
+                + '<div style="padding:0.8rem 1rem 0.4rem;background:'+color+';color:#fff;">'
+                + '<h3 style="margin:0;font-size:0.9rem;font-weight:600;line-height:1.3;">'+escHtml(a.titre||a.action||'')+'</h3>'
+                + '</div>'
+                + '<div style="padding:0.7rem 1rem 1rem;">'
+                + (a.description ? '<p style="font-size:0.82rem;color:#555;margin:0 0 0.5rem;line-height:1.5;">'+escHtml(a.description.slice(0,120))+(a.description.length>120?'…':'')+'</p>' : '')
+                + (a.budget ? '<span style="font-size:0.75rem;color:#888;">💶 '+a.budget+'</span>' : '')
+                + '</div>'
+                + '</div>';
+        }).join('');
+
+        document.getElementById('themes-grid-section').style.display = 'none';
+        document.getElementById('bilan-detail').style.display = '';
+        window.scrollTo(0, 0);
+    };
+
+    window.retourThemes = function() {
+        document.getElementById('bilan-detail').style.display = 'none';
+        document.getElementById('themes-grid-section').style.display = '';
+        window.scrollTo(0, 0);
+    };
+
+    window.ouvrirModal = function(id) {
+        var a = allActions.find(function(x){ return x.id === id; });
+        if (!a) return;
+        document.getElementById('modal-title').textContent = a.titre || a.action || '';
+        var imgs = a.images || (a.image ? [a.image] : []);
+        var galerie = imgs.length ? '<div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem;">'
+            + imgs.map(function(src){ return '<img src="'+src+'" style="height:120px;object-fit:cover;border-radius:4px;flex:1;min-width:120px;">'; }).join('')
+            + '</div>' : '';
+        document.getElementById('modal-body').innerHTML =
+            galerie
+            + (a.description ? '<p style="line-height:1.7;color:#333;margin:0 0 1rem;">'+escHtml(a.description)+'</p>' : '')
+            + (a.budget ? '<p style="font-size:0.85rem;color:#666;margin:0;"><strong>Budget :</strong> '+escHtml(a.budget)+'</p>' : '')
+            + (a.annee ? '<p style="font-size:0.85rem;color:#666;margin:0.3rem 0 0;"><strong>Année :</strong> '+escHtml(String(a.annee))+'</p>' : '');
+        var overlay = document.getElementById('modal-overlay');
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    };
+
+    window.closeModal = function() {
+        document.getElementById('modal-overlay').style.display = 'none';
+        document.body.style.overflow = '';
+    };
+
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+
+    function escHtml(s) {
+        return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+})();
+</script>
+
+    <footer>
+
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <img src="images/logo.png" alt="" role="presentation" style="height: 40px; filter: brightness(0) invert(1);" loading="lazy">
+                <p>Équipe municipale de Vizille.<br>Ensemble pour une ville dynamique et solidaire.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/Vizilleenmouvement" target="_blank" rel="noopener" aria-label="Facebook"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                    <a href="https://www.instagram.com/vizilleenmouvement" target="_blank" rel="noopener" aria-label="Instagram"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                </div>
+            </div>
+            <div>
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="nos-ambitions.html">Nos Ambitions</a></li>
+                    <li><a href="retrospective.html">Rétrospective</a></li>
+                    <li><a href="bilan.html">Bilan</a></li>
+                    <li><a href="projet.html">Projet</a></li>
+                    <li><a href="blog.html">Actualités</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Informations</h4>
+                <ul>
+                    <li><a href="faq.html">Construisons ensemble</a></li>
+                    <li><a href="equipe.html">L'Équipe</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Liens</h4>
+                <ul>
+                    <li><a href="mentions-legales.html">Mentions légales</a></li>
+                    <li><a href="https://Vizilleenmouvement.github.io/test2/" target="_blank" rel="noopener">Données ouvertes</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Vizille en Mouvement - Ensemble pour une ville dynamique et solidaire</p>
+        </div>
+    </footer>
+
+    <script src="js/site-features.js" defer></script>
+
+<!-- Bandeau news désactivé temporairement -->
+<!-- <script src="js/news-banner.js"></script> -->
+<!-- Admin -->
+<a href="admin.html" style="position:fixed;bottom:12px;right:12px;display:flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(26,58,107,0.85);color:#fff;font-size:0.78rem;font-family:system-ui,sans-serif;text-decoration:none;border-radius:20px;z-index:9999;opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">⚙️ Admin</a>
+</body>
+</html>
+

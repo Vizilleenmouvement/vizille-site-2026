@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro';
+import elus from '../../_legacy/elus_complets.json';
+import articles from '../../_legacy/articles.json';
+import projets from '../../_legacy/projets.json';
+import themes from '../../_legacy/themes.json';
+
+const recentArticles = articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 3);
+const nbProjets = projets.length;
+const nbElus = elus.length;
+---
+<Base title="Accueil">
+
+  <!-- HERO -->
+  <section style="background:linear-gradient(135deg, var(--vert) 0%, var(--vert2) 100%); color:#fff; padding:3rem 0;">
+    <div class="container" style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap;">
+      <div style="flex:1;min-width:300px;">
+        <h1 style="font-family:var(--fd);font-size:clamp(1.5rem,4vw,2.2rem);margin-bottom:.8rem;line-height:1.3;">Vizille en Mouvement</h1>
+        <p style="font-size:1rem;opacity:.85;margin-bottom:1.5rem;line-height:1.7;">Mandat 2026-2032 — Au service des Vizillois.<br>Catherine Troton, Maire de Vizille, et son equipe de {nbElus} elus.</p>
+        <div style="display:flex;gap:.8rem;flex-wrap:wrap;">
+          <a href="/programme" class="btn btn-or">Decouvrir le programme</a>
+          <a href="/equipe" class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);">L'equipe municipale</a>
+        </div>
+      </div>
+      <div style="flex-shrink:0;">
+        <img src="/images/photo-equipe.jpg" alt="L'equipe" style="width:380px;max-width:100%;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.3);">
+      </div>
+    </div>
+  </section>
+
+  <!-- CHIFFRES -->
+  <section style="padding:2rem 0;background:var(--fond);border-bottom:2px solid var(--gris-clair);">
+    <div class="container" style="display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;text-align:center;">
+      <div>
+        <div style="font-size:2rem;font-weight:800;color:var(--vert);font-family:var(--fd);">{nbProjets}</div>
+        <div style="font-size:.78rem;color:var(--gris);">Projets au programme</div>
+      </div>
+      <div>
+        <div style="font-size:2rem;font-weight:800;color:var(--vert);font-family:var(--fd);">{nbElus}</div>
+        <div style="font-size:.78rem;color:var(--gris);">Elus engages</div>
+      </div>
+      <div>
+        <div style="font-size:2rem;font-weight:800;color:var(--vert);font-family:var(--fd);">3</div>
+        <div style="font-size:.78rem;color:var(--gris);">Commissions du mandat</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AXES -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-titre">Nos priorites pour Vizille</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;">
+        <div style="padding:1.2rem;background:var(--fond);border-radius:8px;border-left:3px solid var(--or);">
+          <div style="font-size:1.2rem;margin-bottom:.4rem;">🏥</div>
+          <div style="font-weight:700;margin-bottom:.3rem;">Sante et solidarites</div>
+          <div style="font-size:.85rem;color:var(--gris);">Maison de sante, action sociale, accompagnement des aines</div>
+        </div>
+        <div style="padding:1.2rem;background:var(--fond);border-radius:8px;border-left:3px solid var(--or);">
+          <div style="font-size:1.2rem;margin-bottom:.4rem;">🚶</div>
+          <div style="font-weight:700;margin-bottom:.3rem;">Mobilites et cadre de vie</div>
+          <div style="font-size:.85rem;color:var(--gris);">Pistes cyclables, apaisement circulation, espaces partages</div>
+        </div>
+        <div style="padding:1.2rem;background:var(--fond);border-radius:8px;border-left:3px solid var(--or);">
+          <div style="font-size:1.2rem;margin-bottom:.4rem;">🌿</div>
+          <div style="font-weight:700;margin-bottom:.3rem;">Transition ecologique</div>
+          <div style="font-size:.85rem;color:var(--gris);">Renovation energetique, arbres, eclairage sobre, foret communale</div>
+        </div>
+        <div style="padding:1.2rem;background:var(--fond);border-radius:8px;border-left:3px solid var(--or);">
+          <div style="font-size:1.2rem;margin-bottom:.4rem;">🛍️</div>
+          <div style="font-weight:700;margin-bottom:.3rem;">Vitalite du centre-ville</div>
+          <div style="font-size:.85rem;color:var(--gris);">Commerce, Tanneries, Alliance Textile, OPAH-RU</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DERNIERS ARTICLES -->
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-titre">Dernieres actualites</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;">
+        {recentArticles.map(art => (
+          <div style="background:#fff;border-radius:8px;overflow:hidden;border:1px solid var(--gris-clair);">
+            {art.image && <img src={art.image} alt="" style="width:100%;height:180px;object-fit:cover;">}
+            <div style="padding:1rem;">
+              <div style="font-size:.7rem;color:var(--or);font-weight:600;margin-bottom:.3rem;">{art.date ? new Date(art.date).toLocaleDateString('fr-FR', {day:'numeric',month:'long',year:'numeric'}) : ''}{art.categorie ? ` · ${art.categorie}` : ''}</div>
+              <h3 style="font-size:.95rem;font-weight:700;margin-bottom:.4rem;color:var(--texte);line-height:1.3;">{art.titre}</h3>
+              <p style="font-size:.82rem;color:var(--gris);line-height:1.6;">{art.extrait ? art.extrait.substring(0, 120) + '...' : ''}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style="text-align:center;margin-top:1.5rem;">
+        <a href="/actualites" class="btn btn-primary">Toutes les actualites →</a>
+      </div>
+    </div>
+  </section>
+
+</Base>

@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import projets from '../../_legacy/projets.json';
+import themes from '../../_legacy/themes.json';
+
+// Grouper par theme
+const byTheme = {};
+projets.forEach(p => {
+  const t = p.theme || 'Autre';
+  if (!byTheme[t]) byTheme[t] = [];
+  byTheme[t].push(p);
+});
+const themeList = themes.map(t => t.theme).filter(t => byTheme[t]);
+---
+<Base title="Programme 2026-2032" description="Les 92 projets du programme Vizille en Mouvement pour le mandat 2026-2032.">
+
+  <section style="background:var(--fond);padding:2rem 0;border-bottom:2px solid var(--gris-clair);">
+    <div class="container">
+      <h1 class="section-titre" style="margin-bottom:.5rem;">Programme 2026-2032</h1>
+      <p style="font-size:.9rem;color:var(--gris);">{projets.length} projets structures autour de {themeList.length} thematiques</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      {themeList.map(themeName => {
+        const themeData = themes.find(t => t.theme === themeName);
+        const projs = byTheme[themeName] || [];
+        return (
+          <div style="margin-bottom:2rem;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:.8rem;padding-bottom:.4rem;border-bottom:2px solid var(--gris-clair);">
+              <span style="font-size:1.3rem;">{themeData?.icon || '📋'}</span>
+              <h2 style="font-size:1.1rem;font-weight:700;color:var(--bleu);font-family:var(--fd);">{themeName}</h2>
+              <span style="font-size:.72rem;color:var(--gris);">({projs.length} projets)</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:.8rem;">
+              {projs.map(p => (
+                <div style="padding:.8rem 1rem;background:#fff;border-radius:8px;border:1px solid var(--gris-clair);">
+                  <div style="font-weight:700;font-size:.85rem;color:var(--texte);margin-bottom:.3rem;">{p.titre}</div>
+                  {p.resume && <div style="font-size:.78rem;color:var(--gris);line-height:1.6;">{p.resume}</div>}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+</Base>

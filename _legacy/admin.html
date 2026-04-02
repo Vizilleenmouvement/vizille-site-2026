@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <script>
+        // Protection par mot de passe - @@@@
+        (function() {
+            const PASSWORD = '@@@@';
+            const MAX_ATTEMPTS = 3;
+            
+            if (!sessionStorage.getItem('vizille_auth')) {
+                let attempts = 0;
+                let authenticated = false;
+                
+                while (!authenticated && attempts < MAX_ATTEMPTS) {
+                    const input = prompt('Mot de passe requis pour accéder au site :');
+                    
+                    if (input === null) {
+                        window.location.href = 'about:blank';
+                        break;
+                    }
+                    
+                    if (input === PASSWORD) {
+                        authenticated = true;
+                        sessionStorage.setItem('vizille_auth', 'true');
+                    } else {
+                        attempts++;
+                        if (attempts < MAX_ATTEMPTS) {
+                            alert('Mot de passe incorrect. Tentative ' + attempts + '/' + MAX_ATTEMPTS);
+                        } else {
+                            alert('Trop de tentatives. Accès refusé.');
+                            window.location.href = 'about:blank';
+                        }
+                    }
+                }
+                
+                if (!authenticated) {
+                    document.body.innerHTML = '';
+                }
+            }
+        })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - Vizille en Mouvement</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css?v=20260326">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <h1>⚙️ Administration - Vizille en Mouvement</h1>
+        <div class="header-actions">
+            <button id="mode-toggle" class="btn btn-sm" style="background: #17a2b8; color: white;" onclick="toggleLocalMode()">
+                <span id="mode-icon">🌐</span> <span id="mode-text">GitHub</span>
+            </button>
+            <span id="github-status-dot" class="github-status-dot disconnected" title="Non connecté"></span>
+            <input type="password" class="token-input" id="github-token" placeholder="🔐 Token GitHub" onchange="saveToken()">
+            <button class="btn btn-sm" style="background: rgba(255,255,255,0.2);" onclick="toggleToken()">👁️</button>
+            <button id="download-btn" class="btn btn-sm" style="background: #28a745; color: white; display: none;" onclick="downloadAllData()">💾 Télécharger JSON</button>
+            <button id="btn-publish-all" class="btn-publish-all" onclick="publishAll()">🚀 Tout publier</button>
+            <span id="autosave-indicator" class="autosave-indicator"></span>
+            <a href="guide.html" target="_blank" rel="noopener" class="btn btn-sm" style="background: #28a745; color: white;">📖 Guide</a>
+            <a href="https://Vizilleenmouvement.github.io/Vizille-en-mouvement/" target="_blank" rel="noopener" class="btn btn-sm" style="background: var(--or); color: var(--bleu);">🌐 Voir le site</a>
+        </div>
+    </header>
+
+    <!-- RECHERCHE GLOBALE -->
+    <div style="background: white; padding: 0.75rem 1rem; border-bottom: 1px solid var(--gris-border);">
+        <div class="global-search-container" style="max-width: 600px; margin: 0 auto;">
+            <span class="global-search-icon">🔍</span>
+            <input type="text" class="global-search-input" id="global-search" placeholder="Rechercher dans tout le contenu..." oninput="handleGlobalSearch(this.value)" onfocus="handleGlobalSearch(this.value)">
+            <div class="global-search-results" id="global-search-results"></div>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav class="nav-tabs">
+        <button class="nav-tab active" data-tab="accueil">🏠 Accueil</button>
+        <button class="nav-tab" data-tab="pages">🏗️ Pages</button>
+        <button class="nav-tab" data-tab="projets">🚀 Projets</button>
+        <button class="nav-tab" data-tab="themes">🎨 Thèmes</button>
+        <button class="nav-tab" data-tab="actions">📊 Actions</button>
+        <button class="nav-tab" data-tab="candidats">👥 Candidats</button>
+        <button class="nav-tab" data-tab="faq">🤝 Construisons ensemble</button>
+        <button class="nav-tab" data-tab="articles">📰 Articles</button>
+        <button class="nav-tab" data-tab="medias">🖼️ Médias</button>
+        <button class="nav-tab" data-tab="communication">📢 Communication</button>
+        <button class="nav-tab" data-tab="config">⚙️ Paramètres</button>
+    </nav>
+
+    <!-- MAIN -->
+    <main>
+        
+        <!-- TAB: ACCUEIL -->
+        <section class="tab-content active" id="tab-accueil">
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(135deg, #1a3a5c 0%, #c9a227 100%);">
+                    <h2>🏠 Bienvenue dans l'Administration</h2>
+                </div>
+                <div class="card-body">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <h1 style="color: var(--bleu); font-size: 2rem; margin-bottom: 0.5rem;">Vizille en Mouvement</h1>
+                        <p style="color: var(--or); font-size: 1.2rem;">Interface de gestion du site de campagne</p>
+                    </div>
+
+                    <!-- DASHBOARD STATS -->
+                    <div class="dashboard-stats-grid">
+                        <div class="dashboard-stat-card" onclick="switchTab('projets')" style="cursor:pointer;">
+                            <div class="stat-icon">🚀</div>
+                            <div class="stat-value" id="stat-projets">0</div>
+                            <div class="stat-label">Projets</div>
+                        </div>
+                        <div class="dashboard-stat-card" onclick="switchTab('actions')" style="cursor:pointer;">
+                            <div class="stat-icon">📊</div>
+                            <div class="stat-value" id="stat-actions">0</div>
+                            <div class="stat-label">Actions</div>
+                        </div>
+                        <div class="dashboard-stat-card" onclick="switchTab('articles')" style="cursor:pointer;">
+                            <div class="stat-icon">📰</div>
+                            <div class="stat-value" id="stat-articles">0</div>
+                            <div class="stat-label">Articles</div>
+                        </div>
+                        <div class="dashboard-stat-card" onclick="switchTab('faq')" style="cursor:pointer;">
+                            <div class="stat-icon">🤝</div>
+                            <div class="stat-value" id="stat-faq">0</div>
+                            <div class="stat-label">FAQ</div>
+                        </div>
+                        <div class="dashboard-stat-card" onclick="switchTab('candidats')" style="cursor:pointer;">
+                            <div class="stat-icon">👥</div>
+                            <div class="stat-value" id="stat-candidats">0</div>
+                            <div class="stat-label">Candidats</div>
+                        </div>
+                        <div class="dashboard-stat-card" onclick="switchTab('themes')" style="cursor:pointer;">
+                            <div class="stat-icon">🎨</div>
+                            <div class="stat-value" id="stat-themes">0</div>
+                            <div class="stat-label">Thèmes</div>
+                        </div>
+                    </div>
+
+                    <!-- LAST PUBLISH + MODIFIED SECTIONS -->
+                    <div id="last-publish-date" class="last-publish-info">🕐 Dernière publication : chargement...</div>
+                    <div id="modified-sections-container" style="margin-bottom: 1.5rem;"></div>
+
+                    <!-- PROJETS STATUS BREAKDOWN -->
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+                        <div style="background:white;border-radius:12px;padding:1.25rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+                            <h4 style="color:var(--bleu);margin-bottom:0.75rem;">🚀 Projets par statut</h4>
+                            <div id="dashboard-projets-status"></div>
+                        </div>
+                        <div style="background:white;border-radius:12px;padding:1.25rem;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+                            <h4 style="color:var(--bleu);margin-bottom:0.75rem;">📊 Actions par statut</h4>
+                            <div id="dashboard-actions-breakdown"></div>
+                        </div>
+                    </div>
+
+                    <!-- ÉTAPES -->
+                    <div style="background: #e8f4fc; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;">
+                        <h3 style="color: var(--bleu); margin-bottom: 1rem;">🚀 Comment ça marche ?</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <div style="background: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">1️⃣</div>
+                                <strong style="color: var(--bleu);">Configurer le token</strong>
+                                <p style="font-size: 0.9rem; color: var(--gris-texte);">Collez le token GitHub en haut de page (une seule fois)</p>
+                            </div>
+                            <div style="background: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">2️⃣</div>
+                                <strong style="color: var(--bleu);">Modifier le contenu</strong>
+                                <p style="font-size: 0.9rem; color: var(--gris-texte);">Ajoutez, modifiez ou supprimez des éléments</p>
+                            </div>
+                            <div style="background: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">3️⃣</div>
+                                <strong style="color: var(--bleu);">Publier</strong>
+                                <p style="font-size: 0.9rem; color: var(--gris-texte);">Cliquez sur 🚀 Publier dans l'onglet modifié</p>
+                            </div>
+                            <div style="background: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">4️⃣</div>
+                                <strong style="color: var(--bleu);">C'est en ligne !</strong>
+                                <p style="font-size: 0.9rem; color: var(--gris-texte);">Le site se met à jour en 1-2 minutes</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ONGLETS -->
+                    <h3 style="color: var(--bleu); margin-bottom: 1rem;">📑 Les onglets</h3>
+                    <div style="display: grid; gap: 1rem; margin-bottom: 2rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--gris-bg); border-radius: 8px;">
+                            <span style="font-size: 1.5rem;">🚀</span>
+                            <div>
+                                <strong style="color: var(--bleu);">Projets</strong>
+                                <p style="font-size: 0.9rem; margin: 0;">Les projets du programme 2026-2032 → Page "Notre Projet"</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--gris-bg); border-radius: 8px;">
+                            <span style="font-size: 1.5rem;">📊</span>
+                            <div>
+                                <strong style="color: var(--bleu);">Actions</strong>
+                                <p style="font-size: 0.9rem; margin: 0;">Les 330 actions du bilan 2020-2026 → Page "Bilan"</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--gris-bg); border-radius: 8px;">
+                            <span style="font-size: 1.5rem;">👥</span>
+                            <div>
+                                <strong style="color: var(--bleu);">Candidats</strong>
+                                <p style="font-size: 0.9rem; margin: 0;">L'équipe et les colistiers avec photos → Page "Équipe"</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--gris-bg); border-radius: 8px;">
+                            <span style="font-size: 1.5rem;">💬</span>
+                            <div>
+                                <strong style="color: var(--bleu);">Construisons ensemble</strong>
+                                <p style="font-size: 0.9rem; margin: 0;">Questions, idées, contact → Page "Construisons ensemble"</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--gris-bg); border-radius: 8px;">
+                            <span style="font-size: 1.5rem;">📰</span>
+                            <div>
+                                <strong style="color: var(--bleu);">Articles</strong>
+                                <p style="font-size: 0.9rem; margin: 0;">Actualités et communiqués → Page "Blog"</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--gris-bg); border-radius: 8px;">
+                            <span style="font-size: 1.5rem;">📢</span>
+                            <div>
+                                <strong style="color: var(--bleu);">Communication</strong>
+                                <p style="font-size: 0.9rem; margin: 0;">Abonnés newsletter, partage Facebook, envoi newsletter</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--gris-bg); border-radius: 8px;">
+                            <span style="font-size: 1.5rem;">⚙️</span>
+                            <div>
+                                <strong style="color: var(--bleu);">Paramètres</strong>
+                                <p style="font-size: 0.9rem; margin: 0;">Coordonnées, réseaux sociaux, permanences → Page "Construisons ensemble"</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STATUTS -->
+                    <h3 style="color: var(--bleu); margin-bottom: 1rem;">🚦 Les statuts</h3>
+                    <div style="display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="background: var(--vert); color: white; padding: 0.3rem 0.75rem; border-radius: 20px; font-size: 0.85rem;">✓ À jour</span>
+                            <span>= Aucune modification en attente</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="background: var(--orange); color: white; padding: 0.3rem 0.75rem; border-radius: 20px; font-size: 0.85rem;">⚠️ Modifié</span>
+                            <span>= Modifications à publier</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="background: rgba(0,0,0,0.3); color: white; padding: 0.3rem 0.75rem; border-radius: 20px; font-size: 0.85rem;">⏳ Publication...</span>
+                            <span>= Envoi en cours</span>
+                        </div>
+                    </div>
+
+                    <!-- TOKEN -->
+                    <div style="background: #1b1f23; color: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+                        <h3 style="margin-bottom: 1rem;">🔐 Le Token GitHub</h3>
+                        <p style="margin-bottom: 1rem;">Le token permet de publier directement sur le site. Il est sauvegardé dans votre navigateur.</p>
+                        <ul style="margin-left: 1.5rem; line-height: 2;">
+                            <li>Collez-le dans le champ 🔐 en haut de page</li>
+                            <li>Cliquez sur 👁️ pour le voir/masquer</li>
+                            <li>Il est mémorisé automatiquement</li>
+                        </ul>
+                        <p style="margin-top: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.1); border-radius: 8px; font-size: 0.9rem;">
+                            ⚠️ Ne partagez pas ce token publiquement. Demandez-le à Michel si besoin.
+                        </p>
+                    </div>
+
+                    <!-- LIENS -->
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <a href="https://Vizilleenmouvement.github.io/Vizille-en-mouvement/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 0.5rem; background: var(--bleu); color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                            🌐 Voir le site en ligne
+                        </a>
+                        <a href="https://github.com/Vizilleenmouvement/Vizille-en-mouvement" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #333; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                            📁 Voir sur GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: PROJETS -->
+        <section class="tab-content" id="tab-pages">
+          <div class="visual-editor">
+            <!-- Sidebar pages -->
+            <div class="ve-sidebar">
+              <h3>Pages du site</h3>
+              <ul class="ve-page-list">
+                <li class="ve-page-item active" data-page="index" onclick="selectVEPage(this)">🏠 Accueil</li>
+                <li class="ve-page-item" data-page="bilan" onclick="selectVEPage(this)">📊 Bilan</li>
+                <li class="ve-page-item" data-page="projet" onclick="selectVEPage(this)">🚀 Projet</li>
+                <li class="ve-page-item" data-page="equipe" onclick="selectVEPage(this)">👥 Équipe</li>
+                <li class="ve-page-item" data-page="blog" onclick="selectVEPage(this)">📰 Blog</li>
+                <li class="ve-page-item" data-page="faq" onclick="selectVEPage(this)">🤝 FAQ</li>
+                <li class="ve-page-item" data-page="medias" onclick="selectVEPage(this)">🖼️ Médias</li>
+              </ul>
+              <div class="ve-actions">
+                <button class="btn-publish" onclick="publishPageSections()">🚀 Publier les pages</button>
+              </div>
+            </div>
+            
+            <!-- Preview iframe -->
+            <div class="ve-preview">
+              <div class="ve-preview-toolbar">
+                <span class="ve-preview-title" id="ve-current-page">Accueil</span>
+                <div class="ve-preview-actions">
+                  <button class="ve-device-btn active" data-width="100%" title="Desktop">🖥️</button>
+                  <button class="ve-device-btn" data-width="768px" title="Tablette">📱</button>
+                  <button class="ve-device-btn" data-width="375px" title="Mobile">📲</button>
+                  <button class="ve-btn-refresh" onclick="refreshPreview()">🔄</button>
+                </div>
+              </div>
+              <iframe id="ve-iframe" src="index.html" class="ve-iframe"></iframe>
+            </div>
+            
+            <!-- Edit panel -->
+            <div class="ve-panel">
+              <h3>✏️ Modifier le contenu</h3>
+              <div id="ve-fields"></div>
+            </div>
+          </div>
+          <div id="pages-save-msg" style="display:none;margin-top:0.75rem;padding:0.6rem 1rem;border-radius:4px;font-size:0.85rem;"></div>
+        </section>
+
+        <section class="tab-content" id="tab-projets">
+            <div class="card">
+                <div class="card-header">
+                    <h2>🚀 Projets 2026-2032</h2>
+                    <div class="publish-bar">
+                        <span class="status saved" id="status-projets">✓ À jour</span>
+                        <button class="btn-publish" onclick="publish('projets')">🚀 Publier</button>
+                        <button class="btn-publish local-only" style="background: #fd7e14; display: none;" onclick="downloadSingleFile('projets.json', 'projets')">🚀 Publier</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-primary" onclick="openAddProjet()">+ Ajouter un projet</button>
+                    
+                    <!-- FILTRES PAR THÈME -->
+                    <div style="margin: 1.5rem 0;">
+                        <h4 style="color: var(--bleu); margin-bottom: 0.75rem;">Filtrer par thème :</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" id="projet-theme-filters">
+                            <button class="theme-btn active" data-theme="" onclick="filterProjets('')">
+                                📋 Tous (<span id="pcount-all">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="urbanisme" onclick="filterProjets('urbanisme')">
+                                🏘️ Urbanisme (<span id="pcount-urbanisme">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="environnement" onclick="filterProjets('environnement')">
+                                🌿 Environnement (<span id="pcount-environnement">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="solidarite" onclick="filterProjets('solidarite')">
+                                🤝 Solidarité (<span id="pcount-solidarite">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="sante" onclick="filterProjets('sante')">
+                                🏥 Santé (<span id="pcount-sante">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="enfance" onclick="filterProjets('enfance')">
+                                👶 Enfance (<span id="pcount-enfance">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="culture" onclick="filterProjets('culture')">
+                                🎭 Culture (<span id="pcount-culture">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="sport" onclick="filterProjets('sport')">
+                                ⚽ Sport (<span id="pcount-sport">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="economie" onclick="filterProjets('economie')">
+                                💼 Économie (<span id="pcount-economie">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="intercommunalite" onclick="filterProjets('intercommunalite')">
+                                🏛️ Intercommunalité (<span id="pcount-intercommunalite">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="tranquillite" onclick="filterProjets('tranquillite')">
+                                🛡️ Tranquillité (<span id="pcount-tranquillite">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="mobilites" onclick="filterProjets('mobilites')">
+                                🚴 Mobilités (<span id="pcount-mobilites">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="seniors" onclick="filterProjets('seniors')">
+                                👴 Seniors (<span id="pcount-seniors">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="democratie" onclick="filterProjets('democratie')">
+                                🗣️ Démocratie (<span id="pcount-democratie">0</span>)
+                            </button>
+                            <button class="theme-btn" data-theme="metropole" onclick="filterProjets('metropole')">
+                                🏛️ Métropole (<span id="pcount-metropole">0</span>)
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="items-list">
+                        <div class="items-header">
+                            <h3>Projets : <span id="projets-count">0</span></h3>
+                            <input type="text" id="search-projets" placeholder="🔍 Rechercher..." style="padding: 0.5rem 1rem; border: 2px solid var(--gris-border); border-radius: 8px; width: 200px;" oninput="renderProjets()">
+                        </div>
+                        <div id="projets-themes-view" class="themes-grid"></div>
+                        <div id="projets-detail-view" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: THÈMES -->
+        <section class="tab-content" id="tab-themes">
+            <div class="card">
+                <div class="card-header">
+                    <h2>🎨 Gestion des Thèmes</h2>
+                    <div class="publish-bar">
+                        <span class="status saved" id="status-themes">✓ À jour</span>
+                        <button class="btn-publish" onclick="publish('themes')">🚀 Publier</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p style="color: #666; margin-bottom: 1.5rem;">
+                        Gérez les thèmes disponibles pour classer vos projets. Un thème ne peut être supprimé que s'il n'est rattaché à aucun projet.
+                    </p>
+                    
+                    <!-- Formulaire d'ajout -->
+                    <div style="display: flex; gap: 10px; margin-bottom: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; flex-wrap: wrap; align-items: flex-end;">
+                        <div class="form-group" style="margin: 0; flex: 1; min-width: 150px;">
+                            <label style="font-size: 0.85rem;">Nom du thème</label>
+                            <input type="text" id="new-theme-name" placeholder="Ex: Numérique" maxlength="30" style="width: 100%;">
+                        </div>
+                        <div class="form-group" style="margin: 0; width: 80px;">
+                            <label style="font-size: 0.85rem;">Icône</label>
+                            <select id="new-theme-icon" style="width: 100%; font-size: 1.2rem; text-align: center;">
+                                <option value="📌">📌</option>
+                                <option value="🏥">🏥</option>
+                                <option value="🏘️">🏘️</option>
+                                <option value="🌿">🌿</option>
+                                <option value="🎭">🎭</option>
+                                <option value="🏛️">🏛️</option>
+                                <option value="👶">👶</option>
+                                <option value="🤝">🤝</option>
+                                <option value="⚽">⚽</option>
+                                <option value="💼">💼</option>
+                                <option value="🚴">🚴</option>
+                                <option value="🛡️">🛡️</option>
+                                <option value="🏗️">🏗️</option>
+                                <option value="💰">💰</option>
+                                <option value="👥">👥</option>
+                                <option value="📚">📚</option>
+                                <option value="🎓">🎓</option>
+                                <option value="🗳️">🗳️</option>
+                                <option value="🎯">🎯</option>
+                                <option value="🌍">🌍</option>
+                                <option value="🚗">🚗</option>
+                                <option value="🏠">🏠</option>
+                                <option value="💡">💡</option>
+                                <option value="📱">📱</option>
+                                <option value="🌳">🌳</option>
+                                <option value="👴">👴</option>
+                                <option value="🗣️">🗣️</option>
+                                <option value="🎪">🎪</option>
+                                <option value="🏆">🏆</option>
+                                <option value="🔧">🔧</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin: 0; width: 80px;">
+                            <label style="font-size: 0.85rem;">Couleur</label>
+                            <input type="color" id="new-theme-color" value="#1a3a5c" style="width: 100%; height: 38px; border: none; border-radius: 4px; cursor: pointer;">
+                        </div>
+                        <button class="btn btn-primary" onclick="addNewTheme()" style="height: 38px;">
+                            + Ajouter
+                        </button>
+                    </div>
+                    
+                    <!-- Liste des thèmes -->
+                    <h4 style="color: var(--bleu); margin-bottom: 1rem;">Thèmes existants (<span id="themes-count">0</span>)</h4>
+                    <div id="themes-list" class="themes-grid">
+                        <!-- Généré dynamiquement -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: ACTIONS -->
+        <section class="tab-content" id="tab-actions">
+            <div class="card">
+                <div class="card-header">
+                    <h2>📊 Actions du Bilan 2020-2026</h2>
+                    <div class="publish-bar">
+                        <span class="status saved" id="status-actions">✓ À jour</span>
+                        <button class="btn-publish" onclick="publish('actions')">🚀 Publier</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-primary" onclick="openAddAction()">+ Ajouter une action</button>
+                    
+                    <!-- FILTRES PAR CATÉGORIE -->
+                    <div style="margin: 1.5rem 0;">
+                        <h4 style="color: var(--bleu); margin-bottom: 0.75rem;">Filtrer par catégorie :</h4>
+                        <div id="category-filters" style="display: flex; flex-wrap: wrap; gap: 0.5rem;"></div>
+                        <div id="theme-filters-sub" style="margin-top: 0.75rem; display: none;"></div>
+                    </div>
+                    
+                    <div class="items-list">
+                        <div class="items-header">
+                            <h3>Actions : <span id="actions-count">0</span></h3>
+                            <input type="text" id="search-actions" placeholder="🔍 Rechercher..." style="padding: 0.5rem 1rem; border: 2px solid var(--gris-border); border-radius: 8px; width: 200px;" oninput="renderActions()">
+                        </div>
+                        <div id="actions-themes-view" class="themes-grid"></div>
+                        <div id="actions-detail-view" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: CANDIDATS -->
+        <section class="tab-content" id="tab-candidats">
+            <div class="card">
+                <div class="card-header">
+                    <h2>👥 Candidats</h2>
+                    <div class="publish-bar">
+                        <span class="status saved" id="status-candidats">✓ À jour</span>
+                        <button class="btn-publish" onclick="publish('candidats')">🚀 Publier</button>
+                        <button class="btn-publish local-only" style="background: #fd7e14; display: none;" onclick="downloadSingleFile('candidats.json', 'candidats')">🚀 Publier</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-primary" onclick="openAddCandidat()">+ Ajouter un candidat</button>
+
+                    <div class="items-list">
+                        <div class="items-header">
+                            <h3>Candidats (<span id="candidats-count">0</span>)</h3>
+                            <input type="text" id="search-candidats" placeholder="🔍 Rechercher..." style="padding: 0.5rem 1rem; border: 2px solid var(--gris-border); border-radius: 8px; width: 200px;" oninput="renderCandidats()">
+                        </div>
+                        <div id="candidats-list" class="cards-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: FAQ -->
+        <section class="tab-content" id="tab-faq">
+            <div class="card">
+                <div class="card-header">
+                    <h2>🤝 Construisons ensemble - Questions & Messages</h2>
+                    <div class="publish-bar">
+                        <span class="status saved" id="status-faq">✓ À jour</span>
+                        <button class="btn-publish" onclick="publish('faq')">🚀 Publier</button>
+                        <button class="btn-publish local-only" style="background: #fd7e14; display: none;" onclick="downloadSingleFile('faq.json', 'faq')">🚀 Publier</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-primary" onclick="openAddFaq()">+ Ajouter une question / message</button>
+
+                    <!-- FILTRES PAR CATÉGORIE -->
+                    <div style="margin: 1.5rem 0;">
+                        <h4 style="color: var(--bleu); margin-bottom: 0.75rem;">Filtrer par catégorie :</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" id="faq-category-filters">
+                            <button class="theme-btn active" data-faq-category="" onclick="filterFaq('')">
+                                📋 Tous (<span id="fcount-all">0</span>)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="items-list">
+                        <div class="items-header">
+                            <h3>Questions & Messages (<span id="faq-count">0</span>)</h3>
+                            <input type="text" id="search-faq" placeholder="🔍 Rechercher..." style="padding: 0.5rem 1rem; border: 2px solid var(--gris-border); border-radius: 8px; width: 200px;" oninput="renderFaq()">
+                        </div>
+                        <div id="faq-list"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: ARTICLES -->
+        <section class="tab-content" id="tab-articles">
+            <div class="card">
+                <div class="card-header">
+                    <h2>📰 Articles / Actualités</h2>
+                    <div class="publish-bar">
+                        <span class="status saved" id="status-articles">✓ À jour</span>
+                        <button class="btn-publish" onclick="publish('articles')">🚀 Publier</button>
+                        <button class="btn-publish local-only" style="background: #fd7e14; display: none;" onclick="downloadSingleFile('articles.json', 'articles')">🚀 Publier</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-primary" onclick="openAddArticle()">+ Ajouter un article</button>
+
+                    <!-- FILTRES PAR CATÉGORIE -->
+                    <div style="margin: 1.5rem 0;">
+                        <h4 style="color: var(--bleu); margin-bottom: 0.75rem;">Filtrer par catégorie :</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" id="article-category-filters">
+                            <button class="theme-btn active" data-category="" onclick="filterArticles('')">
+                                📋 Tous (<span id="acount-all">0</span>)
+                            </button>
+                            <button class="theme-btn" data-category="Événement" onclick="filterArticles('Événement')">
+                                📅 Événement (<span id="acount-evenement">0</span>)
+                            </button>
+                            <button class="theme-btn" data-category="Communiqué" onclick="filterArticles('Communiqué')">
+                                📣 Communiqué (<span id="acount-communique">0</span>)
+                            </button>
+                            <button class="theme-btn" data-category="Réunion" onclick="filterArticles('Réunion')">
+                                🤝 Réunion (<span id="acount-reunion">0</span>)
+                            </button>
+                            <button class="theme-btn" data-category="Action" onclick="filterArticles('Action')">
+                                ✊ Action (<span id="acount-action">0</span>)
+                            </button>
+                            <button class="theme-btn" data-category="Bilan" onclick="filterArticles('Bilan')">
+                                📊 Bilan (<span id="acount-bilan">0</span>)
+                            </button>
+                            <button class="theme-btn" data-category="Projet" onclick="filterArticles('Projet')">
+                                🚀 Projet (<span id="acount-projet">0</span>)
+                            </button>
+                            <button class="theme-btn" data-category="Tribune" onclick="filterArticles('Tribune')">
+                                📝 Tribune (<span id="acount-tribune">0</span>)
+                            </button>
+                            <button class="theme-btn" data-category="Info" onclick="filterArticles('Info')">
+                                ℹ️ Info (<span id="acount-info">0</span>)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="items-list">
+                        <div class="items-header">
+                            <h3>Articles (<span id="articles-count">0</span>)</h3>
+                            <input type="text" id="search-articles" placeholder="🔍 Rechercher..." style="padding: 0.5rem 1rem; border: 2px solid var(--gris-border); border-radius: 8px; width: 200px;" oninput="renderArticles()">
+                        </div>
+                        <div id="articles-list" class="cards-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: MEDIAS -->
+        <section class="tab-content" id="tab-medias">
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%);">
+                    <h2>🖼️ Gestion des Médias</h2>
+                    <div class="publish-bar">
+                        <span class="status saved" id="status-medias">✓ À jour</span>
+                        <button class="btn-publish" onclick="publish('medias')">🚀 Publier</button>
+                        <button class="btn-publish local-only" style="background: #fd7e14; display: none;" onclick="downloadSingleFile('medias.json', 'medias')">🚀 Publier</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- IMAGE LIBRARY SUB-TAB -->
+                    <div class="media-sub-tabs" style="margin-bottom:1.5rem;">
+                        <button class="media-sub-tab active" data-subtab="content" onclick="switchMediaSubTab('content')">📋 Contenu</button>
+                        <button class="media-sub-tab" data-subtab="library" onclick="switchMediaSubTab('library')">🖼️ Bibliothèque d'images (<span id="image-library-count">0</span>)</button>
+                    </div>
+                    
+                    <div id="media-sub-library" class="media-sub-content" style="display:none;">
+                        <div id="image-drop-zone" class="drop-zone">
+                            <div class="drop-icon">📤</div>
+                            <p><strong>Glissez-déposez vos images ici</strong></p>
+                            <p style="font-size:0.85rem;">ou cliquez pour sélectionner des fichiers</p>
+                        </div>
+                        <div id="image-library-content">
+                            <p style="text-align:center;color:#888;padding:2rem;">Cliquez sur l'onglet pour charger les images</p>
+                        </div>
+                    </div>
+                    
+                    <div id="media-sub-content" class="media-sub-content">
+                    <!-- Zone média le plus récent -->
+                    <div id="latest-media-zone" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; display: none;">
+                        <h3 style="margin: 0 0 1rem; color: var(--bleu); font-size: 1.1rem;">✨ Dernier média ajouté</h3>
+                        <div id="latest-media-content"></div>
+                    </div>
+
+                    <!-- Bouton collecte automatique -->
+                    <div style="background: #e8f4fc; border: 1px solid #3498db; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem;">
+                        <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                            <span style="font-size: 1.5rem;">📥</span>
+                            <div style="flex: 1;">
+                                <strong style="color: var(--bleu);">Importer depuis les Actualités</strong>
+                                <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: #666;">Récupère les images et vidéos des articles (événements, rencontres, communiqués...)</p>
+                                <p style="margin: 0.25rem 0 0; font-size: 0.8rem; color: #888; font-style: italic;">Les médias des Projets ne sont pas inclus (ajout manuel uniquement)</p>
+                            </div>
+                            <button class="btn btn-primary" onclick="collectAllMedia()">📥 Importer</button>
+                        </div>
+                    </div>
+
+                    <!-- Sous-onglets médias -->
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                        <button class="theme-btn active" data-media-tab="albums" onclick="switchMediaTab('albums')">📁 Albums</button>
+                        <button class="theme-btn" data-media-tab="photos" onclick="switchMediaTab('photos')">📷 Photos</button>
+                        <button class="theme-btn" data-media-tab="presse" onclick="switchMediaTab('presse')">📰 Presse</button>
+                        <button class="theme-btn" data-media-tab="videos" onclick="switchMediaTab('videos')">🎬 Vidéos</button>
+                        <button class="theme-btn" data-media-tab="bobines" onclick="switchMediaTab('bobines')">🎞️ Bobines</button>
+                        <button class="theme-btn" data-media-tab="documents" onclick="switchMediaTab('documents')">📄 Documents</button>
+                    </div>
+
+                    <!-- ALBUMS -->
+                    <div class="media-tab-content active" id="media-albums">
+                        <div style="background: #e8f4fc; border: 1px solid #3498db; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                            <strong>📁 Albums</strong> = Regroupement de photos par événement ou thème.
+                            <br><small>3 types : <strong>Campagne</strong> (réunions, marchés...), <strong>Bilan</strong> (thèmes du mandat), <strong>Objectifs</strong> (projets futurs)</small>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center;">
+                            <button class="btn btn-primary" onclick="openAddAlbum()">+ Créer un album</button>
+                            <span style="color: var(--gris-texte);">📁 <span id="albums-count">0</span> albums</span>
+                        </div>
+                        <!-- Filtres par type -->
+                        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                            <button class="btn btn-sm btn-outline album-type-btn active" data-type="all" onclick="filterAlbumsAdmin('all')">Tous</button>
+                            <button class="btn btn-sm btn-outline album-type-btn" data-type="campagne" onclick="filterAlbumsAdmin('campagne')">🎤 Campagne</button>
+                            <button class="btn btn-sm btn-outline album-type-btn" data-type="bilan" onclick="filterAlbumsAdmin('bilan')">📊 Bilan</button>
+                            <button class="btn btn-sm btn-outline album-type-btn" data-type="objectifs" onclick="filterAlbumsAdmin('objectifs')">🎯 Objectifs</button>
+                        </div>
+                        <div id="albums-list" class="cards-grid"></div>
+                    </div>
+
+                    <!-- PHOTOS -->
+                    <div class="media-tab-content" id="media-photos" style="display: none;">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center;">
+                            <button class="btn btn-primary" onclick="openAddPhoto()">+ Ajouter une photo</button>
+                            <span style="color: var(--gris-texte);">📷 <span id="photos-count">0</span> photos</span>
+                        </div>
+                        <div id="photos-list" class="cards-grid"></div>
+                    </div>
+
+                    <!-- PRESSE -->
+                    <div class="media-tab-content" id="media-presse" style="display: none;">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center;">
+                            <button class="btn btn-primary" onclick="openAddPresse()">+ Ajouter un article de presse</button>
+                            <span style="color: var(--gris-texte);">📰 <span id="presse-count">0</span> articles</span>
+                        </div>
+                        <div id="presse-list"></div>
+                    </div>
+
+                    <!-- VIDEOS -->
+                    <div class="media-tab-content" id="media-videos" style="display: none;">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center;">
+                            <button class="btn btn-primary" onclick="openAddVideo()">+ Ajouter une vidéo</button>
+                            <span style="color: var(--gris-texte);">🎬 <span id="videos-count">0</span> vidéos</span>
+                        </div>
+                        <div id="videos-list" class="cards-grid"></div>
+                    </div>
+
+                    <!-- BOBINES (vidéos thématiques courtes) -->
+                    <div class="media-tab-content" id="media-bobines" style="display: none;">
+                        <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                            <strong>🎞️ Bobines</strong> = Vidéos thématiques courtes affichées dans l'onglet "Bobines" du Blog.
+                            <br><small>Chaque bobine est associée à un thème (Culture, Environnement, etc.)</small>
+                        </div>
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center;">
+                            <button class="btn btn-primary" onclick="openAddBobine()">+ Ajouter une bobine</button>
+                            <span style="color: var(--gris-texte);">🎞️ <span id="bobines-count">0</span> bobines</span>
+                        </div>
+                        <div id="bobines-list" class="cards-grid"></div>
+                    </div>
+
+                    <!-- DOCUMENTS -->
+                    <div class="media-tab-content" id="media-documents" style="display: none;">
+                        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center;">
+                            <button class="btn btn-primary" onclick="openAddDocument()">+ Ajouter un document</button>
+                            <span style="color: var(--gris-texte);">📄 <span id="documents-count">0</span> documents</span>
+                        </div>
+                        <div id="documents-list"></div>
+                    </div>
+                </div>
+            </div><!-- /media-sub-content -->
+                    </div>
+        </section>
+
+        <!-- TAB: COMMUNICATION -->
+        <section class="tab-content" id="tab-communication">
+            <!-- ABONNÉS NEWSLETTER -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>📧 Abonnés Newsletter</h2>
+                    <div class="publish-bar">
+                        <span class="status saved" id="status-abonnes">✓ À jour</span>
+                        <button class="btn-publish" onclick="publish('abonnes')">🚀 Publier</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                        <button class="btn btn-primary" onclick="openAddAbonne()">+ Ajouter un abonné</button>
+                        <button class="btn btn-outline" onclick="exportAbonnes()">📥 Exporter (CSV)</button>
+                        <button class="btn btn-outline" onclick="document.getElementById('import-abonnes').click()">📤 Importer</button>
+                        <input type="file" id="import-abonnes" accept=".csv,.txt" style="display:none" onchange="importAbonnes(event)">
+                    </div>
+                    
+                    <div style="background: #e8f4fc; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                        <strong style="color: var(--bleu);">📊 Statistiques :</strong>
+                        <span id="stats-abonnes">0 abonnés actifs</span>
+                    </div>
+                    
+                    <div class="items-list">
+                        <div class="items-header">
+                            <h3>Liste des abonnés (<span id="abonnes-count">0</span>)</h3>
+                            <input type="text" id="search-abonnes" placeholder="🔍 Rechercher..." style="padding: 0.5rem 1rem; border: 2px solid var(--gris-border); border-radius: 8px; width: 200px;" oninput="renderAbonnes()">
+                        </div>
+                        <div id="abonnes-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PARTAGE FACEBOOK -->
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(135deg, #1877f2 0%, #42b72a 100%);">
+                    <h2>📘 Partage Facebook</h2>
+                </div>
+                <div class="card-body">
+                    <p style="margin-bottom: 1rem; color: var(--gris-texte);">Sélectionnez un article puis générez un post prêt à copier-coller sur Facebook.</p>
+                    
+                    <div class="form-group">
+                        <label>Choisir un article à partager</label>
+                        <select id="fb-article-select" onchange="previewFacebookPost()">
+                            <option value="">-- Sélectionnez un article --</option>
+                        </select>
+                    </div>
+                    
+                    <div id="fb-preview-zone" style="display: none;">
+                        <div class="form-group">
+                            <label>Texte du post (modifiable)</label>
+                            <textarea id="fb-post-text" rows="5" style="font-size: 1rem;"></textarea>
+                        </div>
+                        
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <button class="btn btn-primary" onclick="copyFacebookPost()" style="background: #1877f2;">
+                                📋 Copier le texte
+                            </button>
+                            <button class="btn btn-outline" onclick="window.open('https://www.facebook.com/', '_blank')">
+                                📘 Ouvrir Facebook
+                            </button>
+                        </div>
+                        
+                        <div style="background: #f0f2f5; padding: 1rem; border-radius: 8px; margin-top: 1.5rem;">
+                            <strong style="color: #1877f2;">💡 Mode d'emploi :</strong>
+                            <ol style="margin: 0.5rem 0 0 1.5rem; color: var(--gris-texte);">
+                                <li>Cliquez sur "Copier le texte"</li>
+                                <li>Ouvrez Facebook</li>
+                                <li>Créez un nouveau post et collez (Ctrl+V)</li>
+                                <li>Publiez !</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ÉDITEUR NEWSLETTER -->
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%);">
+                    <h2>📬 Rédiger la Newsletter</h2>
+                </div>
+                <div class="card-body">
+                    <p style="margin-bottom: 1.5rem; color: var(--gris-texte);">Composez votre newsletter hebdomadaire. Le contenu sera prêt à copier dans Brevo.</p>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Objet de l'email</label>
+                            <input type="text" id="nl-objet" placeholder="Ex: Vizille en Mouvement - Actualités de la semaine">
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" id="nl-date">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Introduction</label>
+                        <textarea id="nl-intro" rows="3" placeholder="Chers Vizillois, voici les actualités de la semaine..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Contenu principal</label>
+                        <textarea id="nl-contenu" rows="8" placeholder="- Événement 1&#10;- Événement 2&#10;- Actualité importante..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Appel à l'action (optionnel)</label>
+                        <input type="text" id="nl-cta" placeholder="Ex: Rejoignez-nous samedi à 18h pour notre réunion publique !">
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem;">
+                        <button class="btn btn-primary" onclick="generateNewsletter()" style="background: #9b59b6;">
+                            ✨ Générer la newsletter
+                        </button>
+                        <button class="btn btn-outline" onclick="clearNewsletter()">
+                            🗑️ Effacer
+                        </button>
+                    </div>
+                    
+                    <div id="nl-result" style="display: none; margin-top: 1.5rem;">
+                        <div class="form-group">
+                            <label>📄 Newsletter générée (prête à copier)</label>
+                            <textarea id="nl-output" rows="12" readonly style="background: #f8f9fa; font-family: monospace;"></textarea>
+                        </div>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <button class="btn btn-success" onclick="copyNewsletter()">
+                                📋 Copier le contenu
+                            </button>
+                            <button class="btn btn-outline" onclick="copyAbonnesEmails()">
+                                📧 Copier les emails des abonnés
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: PARAMÈTRES -->
+        <section class="tab-content" id="tab-config">
+            <div class="card">
+                <div class="card-header">
+                    <h2>⚙️ Paramètres du site</h2>
+                    <div class="publish-bar">
+                        <span class="status saved" id="status-config">✓ À jour</span>
+                        <button class="btn-publish" onclick="publish('config')">🚀 Publier</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3 style="color: var(--bleu); margin-bottom: 1rem;">📧 Coordonnées</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Email de contact</label>
+                            <input type="email" id="config-email" placeholder="contact@Vizille-en-mouvement.fr" onchange="markModified('config')">
+                        </div>
+                        <div class="form-group">
+                            <label>Téléphone</label>
+                            <input type="tel" id="config-telephone" placeholder="04 76 XX XX XX" onchange="markModified('config')">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Adresse / Lieu de permanence</label>
+                        <input type="text" id="config-adresse" placeholder="Vizille, France" onchange="markModified('config')">
+                    </div>
+
+                    <h3 style="color: var(--bleu); margin: 2rem 0 1rem;">📱 Réseaux sociaux</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>📘 Facebook (URL)</label>
+                            <input type="url" id="config-facebook" placeholder="https://facebook.com/Vizilleenmouvement" onchange="markModified('config')">
+                        </div>
+                        <div class="form-group">
+                            <label>📸 Instagram (URL)</label>
+                            <input type="url" id="config-instagram" placeholder="https://instagram.com/Vizilleenmouvement" onchange="markModified('config')">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>🐦 Twitter / X (URL)</label>
+                            <input type="url" id="config-twitter" placeholder="https://twitter.com/Vizilleenmouvement" onchange="markModified('config')">
+                        </div>
+                        <div class="form-group">
+                            <label>🔗 Autre lien</label>
+                            <input type="url" id="config-autre" placeholder="https://..." onchange="markModified('config')">
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--bleu); margin: 2rem 0 1rem;">🕐 Permanences</h3>
+                    <div class="form-group">
+                        <label>Informations sur les permanences</label>
+                        <textarea id="config-permanences" rows="3" placeholder="Ex: Tous les samedis de 10h à 12h à la salle des fêtes..." onchange="markModified('config')"></textarea>
+                    </div>
+
+                    <h3 style="color: var(--bleu); margin: 2rem 0 1rem;">🎨 Personnalisation</h3>
+                    <div class="form-group">
+                        <label>Slogan</label>
+                        <input type="text" id="config-slogan" placeholder="Vos questions pour une ville dynamique et solidaire" onchange="markModified('config')">
+                    </div>
+
+                    <h3 style="color: var(--bleu); margin: 2rem 0 1rem;">🔒 Tranquillité</h3>
+                    <div style="background: #fef3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                        <p style="margin: 0; color: #856404;">⚠️ Le mot de passe est stocké dans votre navigateur. Chaque utilisateur peut définir le sien.</p>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Ancien mot de passe</label>
+                            <input type="password" id="old-password" placeholder="••••••">
+                        </div>
+                        <div class="form-group">
+                            <label>Nouveau mot de passe</label>
+                            <input type="password" id="new-password" placeholder="••••••">
+                        </div>
+                        <div class="form-group">
+                            <label>Confirmer</label>
+                            <input type="password" id="confirm-password" placeholder="••••••">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="changePassword()">🔐 Changer le mot de passe</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modal-edit">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Modifier</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">Annuler</button>
+                <button class="btn" id="modal-preview" style="background: var(--or); color: var(--bleu);" onclick="previewCurrentItem()">👁️ Prévisualiser</button>
+                <button class="btn btn-primary" id="modal-save">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Prévisualisation -->
+    <div class="modal-overlay" id="modal-preview-overlay" onclick="closePreview(event)">
+        <div class="modal" style="max-width: 800px; max-height: 90vh; overflow: auto;">
+            <div class="modal-header" style="background: var(--or); color: var(--bleu);">
+                <h3>👁️ Prévisualisation</h3>
+                <button class="modal-close" onclick="closePreviewModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="preview-body" style="background: var(--gris-bg); padding: 2rem;">
+                <!-- Contenu de prévisualisation -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closePreviewModal()">Fermer</button>
+                <button class="btn btn-primary" onclick="closePreviewModal(); saveCurrentItem();">✅ Valider et enregistrer</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/admin.js?v=20260326"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+{
+  "bandeau": {
+    "visible": false,
+    "texte": "",
+    "lien": "",
+    "background": "#1a3a6b",
+    "couleur": "#ffffff"
+  },
+  "evenement": {
+    "visible": false,
+    "surtitre": "",
+    "titre": "",
+    "texte": "",
+    "detail": "",
+    "photo": "",
+    "lien_principal": "",
+    "texte_lien_principal": "",
+    "lien_secondaire": "",
+    "texte_lien_secondaire": ""
+  },
+  "sections": {
+    "vote_banner": {
+      "visible": true,
+      "label": "Bannière photo équipe"
+    },
+    "resultats": {
+      "visible": true,
+      "label": "Tableau résultats élections"
+    },
+    "themes": {
+      "visible": true,
+      "label": "Nos priorités (thèmes)"
+    },
+    "actualites": {
+      "visible": true,
+      "label": "Dernières actualités"
+    },
+    "facebook": {
+      "visible": true,
+      "label": "Widget Facebook"
+    },
+    "galerie": {
+      "visible": true,
+      "label": "Galerie photos"
+    },
+    "equipe_preview": {
+      "visible": true,
+      "label": "Aperçu équipe"
+    },
+    "rejoindre": {
+      "visible": true,
+      "label": "Rejoignez le mouvement"
+    }
+  },
+  "pages": {
+    "index": {
+      "hero_titre": "Vizille en Mouvement",
+      "hero_soustitre": "Mandat 2026-2032 — Au service des Vizillois",
+      "hero_axes": "🏥 L'accès à la santé · 🚶 Les déplacements · 🏗️ L'urbanisme · 🌿 L'environnement · 🤝 La solidarité",
+      "hero_appel": "Le programme 2026-2032 est en marche.",
+      "candidate_nom": "Catherine Troton",
+      "candidate_titre": "Maire de Vizille",
+      "candidate_role": "Mandat 2026-2032",
+      "slogan": "Ensemble pour une ville dynamique et solidaire",
+      "citation": "Notre projet a vocation à devenir votre projet."
+    },
+    "bilan": {
+      "hero_titre": "Bilan 2020-2026"
+    },
+    "projet": {
+      "hero_titre": "Notre Projet 2026-2032"
+    },
+    "equipe": {
+      "hero_titre": "🏛️ Le Conseil Municipal 2026-2032",
+      "hero_soustitre": "Notre liste rassemble des femmes et des hommes de tous horizons, engagés pour Vizille"
+    },
+    "blog": {
+      "hero_titre": "Actualités"
+    },
+    "faq": {
+      "hero_titre": "Construisons ensemble",
+      "hero_soustitre": "Vos questions, vos idées, vos suggestions — participez à la vie de votre ville"
+    }
+  }
+}

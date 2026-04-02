@@ -1,0 +1,112 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = "Site officiel de Vizille en Mouvement. Mandat 2026-2032. Catherine Troton, Maire de Vizille." } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title} — Vizille en Mouvement</title>
+  <meta name="description" content={description}>
+  <meta property="og:title" content={`${title} — Vizille en Mouvement`}>
+  <meta property="og:description" content={description}>
+  <meta property="og:image" content="https://vizilleenmouvement.fr/images/og-image.jpg">
+  <meta property="og:locale" content="fr_FR">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style is:global>
+    :root {
+      --vert: #1a3a2a;
+      --vert2: #2d5a40;
+      --vert3: #3d7a5a;
+      --or: #c9a84c;
+      --bleu: #1a3a6b;
+      --fond: #f7f4ef;
+      --blanc: #ffffff;
+      --texte: #1a1a2e;
+      --gris: #555;
+      --gris-clair: #e8e0d0;
+      --fn: 'Source Sans 3', sans-serif;
+      --fd: 'Playfair Display', serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--fn); color: var(--texte); background: var(--blanc); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    a { color: var(--bleu); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; height: auto; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+    /* Header */
+    .site-header { background: var(--vert); color: #fff; }
+    .header-top { font-size: .72rem; padding: .4rem 0; text-align: center; background: rgba(0,0,0,.15); color: rgba(255,255,255,.6); }
+    .header-main { display: flex; align-items: center; justify-content: space-between; padding: .8rem 1.5rem; max-width: 1100px; margin: 0 auto; }
+    .header-logo { height: 48px; }
+    .header-nav { display: flex; gap: 1.5rem; list-style: none; }
+    .header-nav a { color: rgba(255,255,255,.8); font-size: .85rem; font-weight: 600; transition: .15s; }
+    .header-nav a:hover, .header-nav a.active { color: #fff; text-decoration: none; }
+    .menu-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+    /* Footer */
+    .site-footer { background: var(--vert); color: rgba(255,255,255,.6); padding: 2rem 0; margin-top: 3rem; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-inner a { color: rgba(255,255,255,.7); }
+    /* Sections */
+    .section { padding: 3rem 0; }
+    .section-alt { background: var(--fond); }
+    .section-titre { font-family: var(--fd); font-size: 1.6rem; font-weight: 700; color: var(--bleu); margin-bottom: 1.5rem; }
+    /* Boutons */
+    .btn { display: inline-block; padding: .65rem 1.5rem; border-radius: 4px; font-size: .85rem; font-weight: 600; cursor: pointer; text-decoration: none; transition: .15s; }
+    .btn-primary { background: var(--bleu); color: #fff; }
+    .btn-primary:hover { background: #15305a; text-decoration: none; }
+    .btn-or { background: var(--or); color: #fff; }
+    .btn-or:hover { background: #b08a1e; text-decoration: none; }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-nav { display: none; }
+      .menu-toggle { display: block; }
+      .header-nav.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--vert); padding: 1rem; z-index: 100; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-top">Vizille en Mouvement — Mandat 2026-2032</div>
+    <div class="header-main">
+      <a href="/"><img src="/images/logo-header.png" alt="Vizille en Mouvement" class="header-logo"></a>
+      <button class="menu-toggle" onclick="this.nextElementSibling.classList.toggle('open')">☰</button>
+      <nav>
+        <ul class="header-nav">
+          <li><a href="/">Accueil</a></li>
+          <li><a href="/programme">Programme</a></li>
+          <li><a href="/equipe">L'équipe</a></li>
+          <li><a href="/actualites">Actualités</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <div style="font-weight:700;color:#fff;margin-bottom:.3rem">Vizille en Mouvement</div>
+        <div style="font-size:.75rem">145 chemin des Berthets, 38220 Vizille</div>
+        <div style="font-size:.75rem">contact@vizilleenmouvement.fr</div>
+      </div>
+      <div style="font-size:.75rem">
+        <a href="/mentions-legales">Mentions légales</a> ·
+        <a href="https://elus.vizilleenmouvement.fr">Espace élus</a> ·
+        <a href="https://www.facebook.com/Vizilleenmouvement">Facebook</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

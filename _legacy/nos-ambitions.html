@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nos Ambitions · Vizille en Mouvement</title>
+<meta name="description" content="6 ans d'actions, 90 engagements pour 2026-2032 — découvrez le bilan et le programme de Vizille en Mouvement, thème par thème.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vizilleenmouvement.fr/nos-ambitions.html">
+<meta property="og:title" content="Nos Ambitions · Vizille en Mouvement">
+<meta property="og:description" content="6 ans d'actions concrètes, 90 engagements pour le mandat 2026-2032. Culture, environnement, mobilités, tranquillité, solidarités… retrouvez bilan et programme thème par thème.">
+<meta property="og:image" content="https://vizilleenmouvement.fr/images/og-nos-ambitions.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nos Ambitions · Vizille en Mouvement">
+<meta name="twitter:description" content="6 ans d'actions concrètes, 90 engagements pour le mandat 2026-2032. Bilan et programme thème par thème.">
+<meta name="twitter:image" content="https://vizilleenmouvement.fr/images/og-nos-ambitions.jpg">
+<link rel="icon" href="images/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+<style>
+:root {
+  --or:#c9a227; --or-clair:#e8c35a;
+  --bleu:#1a3a5c; --fond:#0e1720;
+  --blanc:#f5f0e8; --gris:rgba(245,240,232,0.55);
+  --bilan-color:#2d7dd2; --prog-color:#c9a227;
+  --font-t:'Playfair Display',Georgia,serif;
+  --font-b:'DM Sans',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body.retro{background:var(--fond);color:var(--blanc);font-family:var(--font-b);font-weight:300;overflow-x:hidden}
+
+/* HERO */
+.rh{min-height:75vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  padding:8rem 2rem 4rem;position:relative;
+  background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(26,58,92,.7) 0%,transparent 70%)}
+.rh::before{content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a227' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E")}
+.rh-eye{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--or);margin-bottom:1.5rem;opacity:0;animation:fu .8s ease .3s forwards}
+.rh-title{font-family:var(--font-t);font-size:clamp(2.5rem,7vw,6rem);font-weight:900;line-height:1;margin-bottom:1.5rem;opacity:0;animation:fu .9s ease .5s forwards}
+.rh-title .acc{color:var(--or);font-style:italic}
+.rh-sub{font-size:clamp(.9rem,1.8vw,1.15rem);color:var(--gris);max-width:560px;line-height:1.7;opacity:0;animation:fu .9s ease .7s forwards}
+
+/* STATS GLOBALES */
+.global-stats{display:flex;gap:0;background:rgba(255,255,255,.03);border:1px solid rgba(201,162,39,.15);
+  border-radius:16px;margin:3rem auto 0;max-width:700px;overflow:hidden;
+  opacity:0;animation:fu .9s ease .9s forwards}
+.gs-item{flex:1;padding:1.5rem 1rem;text-align:center;border-right:1px solid rgba(201,162,39,.1)}
+.gs-item:last-child{border-right:none}
+.gs-val{font-family:var(--font-t);font-size:2.2rem;font-weight:900;line-height:1}
+.gs-val.bilan{color:var(--bilan-color)}
+.gs-val.prog{color:var(--or)}
+.gs-label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gris);margin-top:.35rem}
+
+/* LÉGENDE */
+.legend{display:flex;gap:2rem;justify-content:center;margin:3rem auto 1rem;flex-wrap:wrap}
+.leg-item{display:flex;align-items:center;gap:.5rem;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase}
+.leg-dot{width:12px;height:12px;border-radius:50%}
+
+/* FRISE THÉMATIQUE */
+.frise{max-width:1100px;margin:0 auto;padding:2rem 1.5rem 6rem;position:relative}
+.frise-spine{position:absolute;left:50%;top:0;bottom:0;width:2px;
+  background:linear-gradient(to bottom,transparent,rgba(201,162,39,.4) 3%,rgba(201,162,39,.4) 97%,transparent);
+  transform:translateX(-50%)}
+
+/* THÈME BLOCK */
+.theme-block{margin-bottom:3rem;position:relative}
+.theme-header{display:flex;align-items:center;justify-content:center;gap:.75rem;
+  margin-bottom:1.5rem;position:relative;z-index:2}
+.theme-icon-badge{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:1.4rem;border:2px solid rgba(201,162,39,.4);
+  background:var(--fond);box-shadow:0 0 0 6px var(--fond);flex-shrink:0;z-index:3}
+.theme-label{font-family:var(--font-t);font-size:1.3rem;font-weight:700;color:var(--blanc)}
+
+/* COLONNES */
+.theme-cols{display:grid;grid-template-columns:1fr 60px 1fr;gap:0 .5rem;align-items:start}
+.col-left{justify-self:end;max-width:440px;width:100%}
+.col-right{justify-self:start;max-width:440px;width:100%}
+.col-center{display:flex;flex-direction:column;align-items:center;gap:6px;padding-top:8px}
+.spine-dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--or);background:var(--fond);flex-shrink:0}
+
+/* CARD */
+.tc{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);
+  border-radius:12px;padding:1.1rem 1.3rem;
+  opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease,border-color .3s,box-shadow .3s}
+.tc.vis{opacity:1;transform:translateY(0)}
+.tc:hover{border-color:rgba(201,162,39,.35);box-shadow:0 10px 32px rgba(0,0,0,.35);transform:translateY(-2px)}
+.tc.bilan{border-left:3px solid var(--bilan-color);text-align:right}
+.tc.prog{border-left:3px solid var(--or)}
+.theme-contexte{font-size:.82rem;color:rgba(245,240,232,.6);font-style:italic;margin:.4rem 0 .8rem 1rem;line-height:1.6;border-left:2px solid rgba(201,162,39,.3);padding-left:.75rem}
+.tc.cont{border-left:3px dashed rgba(201,162,39,.5);opacity:.92}
+.tc-tag{display:inline-block;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:.18rem .55rem;border-radius:100px;margin-bottom:.45rem;font-weight:500}
+.tc.bilan .tc-tag{background:rgba(45,125,210,.18);color:#8abde8}
+.tc.prog .tc-tag{background:rgba(201,162,39,.12);color:var(--or-clair)}
+.tc-title{font-family:var(--font-t);font-size:.95rem;font-weight:700;line-height:1.3;margin-bottom:.4rem;color:var(--blanc)}
+.tc-desc{font-size:.8rem;color:var(--gris);line-height:1.6}
+.tc-metric{margin-top:.6rem;font-size:.75rem;font-weight:500;color:var(--or)}
+.tc-list{list-style:none;padding:0;margin:.5rem 0 0}
+.tc-list li{font-size:.78rem;color:rgba(245,240,232,.65);line-height:1.45;padding:.2rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.tc-list li:last-child{border-bottom:none}
+.tc-more{margin-top:.5rem;font-size:.72rem;color:var(--or);opacity:.8}
+
+/* EMPTY SIDE */
+.col-empty{height:10px}
+
+/* SECTION PIVOT */
+.pivot{background:linear-gradient(135deg,rgba(201,162,39,.07),rgba(26,58,92,.12));
+  border-top:1px solid rgba(201,162,39,.25);border-bottom:1px solid rgba(201,162,39,.25);
+  margin:1rem -1.5rem 2rem;padding:2.5rem 2rem;text-align:center}
+.pivot h2{font-family:var(--font-t);font-size:clamp(1.6rem,3.5vw,3rem);font-weight:900;margin-bottom:.75rem}
+.pivot h2 .acc{color:var(--or);font-style:italic}
+.pivot p{color:var(--gris);max-width:520px;margin:0 auto;line-height:1.7;font-size:.95rem}
+
+/* FOOTER */
+.rfooter{text-align:center;padding:4rem 2rem 6rem;border-top:1px solid rgba(201,162,39,.1)}
+.rfooter .ft{font-family:var(--font-t);font-size:clamp(1.4rem,2.5vw,2.2rem);font-weight:700;margin-bottom:1rem}
+.rfooter p{color:var(--gris);margin-bottom:1.8rem;font-size:.9rem}
+.rfooter a.btn{display:inline-block;padding:.85rem 2.2rem;background:var(--or);color:#0e1720;
+  font-size:.82rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;
+  border-radius:4px;transition:background .2s,transform .2s}
+.rfooter a.btn:hover{background:var(--or-clair);transform:translateY(-2px)}
+
+/* ANIMATIONS */
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* RESPONSIVE */
+@media(max-width:680px){
+  .frise-spine{left:24px}
+  .theme-cols{display:flex;flex-direction:column;gap:1rem}
+  .theme-cols .col-left{display:block;order:1}
+  .theme-cols .col-right{order:2}
+  .theme-cols .col-center{display:none}
+  .tc{text-align:left!important;border-left:3px solid var(--or)!important}
+  .tc.bilan{border-left:3px solid var(--bilan-color)!important}
+  .global-stats{flex-direction:column}
+  .gs-item{border-right:none;border-bottom:1px solid rgba(201,162,39,.1)}
+}
+
+.tc{cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+.tc:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.45)}
+#modal-overlay{display:none;position:fixed;inset:0;background:rgba(5,12,20,.88);z-index:9999;align-items:center;justify-content:center;padding:1.5rem}
+#modal-overlay.open{display:flex}
+#modal-box{background:#111e2b;border:1px solid rgba(201,162,39,.4);border-radius:16px;max-width:580px;width:100%;max-height:85vh;overflow-y:auto;padding:2rem;position:relative}
+#modal-close{position:absolute;top:.9rem;right:1.1rem;background:none;border:none;color:rgba(245,240,232,.45);font-size:1.3rem;cursor:pointer;padding:.2rem .4rem}
+#modal-close:hover{color:var(--or)}
+#modal-tag{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--or);opacity:.75;margin-bottom:.4rem}
+#modal-title{font-family:var(--font-t);font-size:1.05rem;font-weight:700;color:var(--blanc);margin-bottom:1rem;line-height:1.35;padding-right:1.5rem}
+#modal-list{list-style:none;padding:0;margin:0}
+#modal-list li{padding:.45rem 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:.81rem;color:rgba(245,240,232,.75);line-height:1.4;display:flex;gap:.5rem;align-items:flex-start}
+#modal-list li:last-child{border-bottom:none}
+.ibadge{font-size:.6rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.12rem .35rem;border-radius:3px;white-space:nowrap;flex-shrink:0;margin-top:.2rem}
+.sr{background:rgba(34,197,94,.18);color:#4ade80}
+.se{background:rgba(251,191,36,.18);color:#fbbf24}
+.sd{background:rgba(96,165,250,.18);color:#60a5fa}
+.sp{background:rgba(167,139,250,.18);color:#a78bfa}
+.so{background:rgba(201,162,39,.18);color:var(--or)}
+.idesc{display:block;font-size:.7rem;color:rgba(245,240,232,.38);margin-top:.1rem}
+</style>
+</head>
+<body class="retro">
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-top"><p>Vizille en Mouvement – Mandat 2026-2032 – <a href="index.html">vizilleenmouvement.fr</a></p></div>
+  <div class="header-main">
+    <a href="index.html"><img src="images/logo.png" alt="Vizille en Mouvement" class="nav-header-logo"></a>
+    <nav><ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="nos-ambitions.html" class="active">Nos Ambitions</a></li>
+                    <li><a href="retrospective.html">Rétrospective</a></li>
+                    <li><a href="bilan.html">Bilan</a></li>
+                    <li><a href="projet.html">Projet</a></li>
+                    <li><a href="blog.html">Actualités</a></li>
+                    <li><a href="equipe.html">Équipe</a></li>
+                    <li><a href="medias.html">Médias</a></li>
+                    <li><a href="faq.html">Construisons ensemble</a></li>
+                </ul></nav>
+  </div>
+</header>
+<script src="js/menu-mobile.js" defer></script>
+
+<!-- HERO -->
+<section class="rh">
+  <p class="rh-eye">Vizille en Mouvement · Bilan &amp; Programme</p>
+  <h1 class="rh-title">Ce que nous avons fait.<br><span class="acc">Ce que nous ferons.</span></h1>
+  <p class="rh-sub">Un bilan documenté, thème par thème — et les engagements pour le mandat 2026–2032.</p>
+  <div class="global-stats">
+    <div class="gs-item"><div class="gs-val prog" id="cnt-prog">90</div><div class="gs-label">engagements 2026–32</div></div>
+    <div class="gs-item"><div class="gs-val prog">15</div><div class="gs-label">thèmes couverts</div></div>
+  </div>
+</section>
+
+<!-- LÉGENDE -->
+<div class="legend">
+  <div class="leg-item"><div class="leg-dot" style="background:#2d7dd2"></div><span>Bilan 2020–2026</span></div>
+  <div class="leg-item"><div class="leg-dot" style="background:#c9a227"></div><span>Programme 2026–2032</span></div>
+  <div class="leg-item"><div class="leg-dot" style="background:rgba(201,162,39,.4);border:2px dashed #c9a227"></div><span>Continuité</span></div>
+</div>
+
+<!-- FRISE -->
+<div id="frise-root" class="frise">
+  <div class="frise-spine"></div>
+  <!-- Généré par JS -->
+</div>
+
+<!-- FOOTER -->
+<section class="rfooter">
+  <h2 class="ft">90 engagements, thème par thème.</h2>
+  <p>Consultez le programme complet en détail.</p>
+  <a href="projet.html" class="btn">Voir tous nos engagements <span aria-hidden="true">→</span></a>
+</section>
+
+<script>
+async function loadData() {
+  const [actRes, projRes] = await Promise.all([
+    fetch('actions.json?v=2026.03'),
+    fetch('projets.json?v=2026.03')
+  ]);
+  const actions = await actRes.json();
+  const projets = (await projRes.json()).filter(function(p){ return p.statut !== 'En veille'; });
+  return { actions: actions, projets: projets };
+}
+
+// Mapping thème bilan → config
+const THEMES = [
+  { key:"Intercommunalité",     prog:["Métropole"],                         icon:"🏙️", label:"Intercommunalité & Métropole",
+    continuite: "Un rapport du Sénat (sept. 2025) pointe un sentiment de dépossession des maires face aux intercommunalités. Vizille défend une Métropole partenaire, pas tutrice. Les décisions de proximité restent à Vizille : commerces, écoles, sécurité, cadre de vie." },
+  { key:"Culture",              prog:["Culture","Animations de proximité"], icon:"🎭", label:"Culture & Animations",
+    progLabel: "Culture et animations de proximité" },
+  { key:"Environnement",        prog:["Transition écologique"],             icon:"🌿", label:"Environnement & Transition écologique",
+    bilansup: ["Plan Climat"] },
+  { key:"Sport",                prog:[],                                    icon:"⚽", label:"Sport",
+    continuite: "Soutien constant aux clubs, conventions associatives reconduites. Maintien des équipements (piscine, gymnases, stades). Poursuite des événements sportifs emblématiques : Semi-marathon, Cyclosportive Claveyrolat, La Viziclette." },
+  { key:"Travaux",              prog:["Travaux"],                           icon:"🏗️", label:"Travaux & Infrastructures" },
+  { key:"Patrimoine",           prog:["Patrimoine"],                        icon:"🏛️", label:"Patrimoine" },
+  { key:"Solidarité",           prog:["Solidarités","Action sociale"],      icon:"🤝", label:"Solidarités & Action sociale",
+    progLabel: "Solidarités, seniors, action sociale" },
+  { key:"Enfance",              prog:["Enfance/Jeunesse"],                  icon:"👶", label:"Enfance & Jeunesse" },
+  { key:"Tranquillité publique",prog:["Tranquillité publique"],             icon:"🛡️", label:"Tranquillité publique" },
+  { key:"Mobilités",            prog:["Mobilités"],                         icon:"🚴", label:"Mobilités" },
+  { key:"Concertation Citoyenne",prog:["Concertation citoyenne"],           icon:"🗳️", label:"Concertation citoyenne" },
+  { key:"Urbanisme",            prog:["Urbanisme"],                         icon:"🏘️", label:"Urbanisme & Revitalisation" },
+  { key:"Santé",                prog:["Santé"],                             icon:"🏥", label:"Santé" },
+  { key:"Économie",             prog:["Économie"],                          icon:"💼", label:"Économie & Commerce" },
+  { key:"Finance",              prog:[],                                    icon:"💰", label:"Finances communales",
+    continuite: "Poursuite de la renégociation DEXIA et désensibilisation de l'emprunt structuré. Maintien d'une capacité d'autofinancement permettant d'investir sans alourdir la dette." },
+  { key:"Administration",       prog:[],                                    icon:"📋", label:"Administration & Services",
+    continuite: "Modernisation continue : dématérialisation des procédures, accessibilité numérique, suivi des commissions municipales. Gestion des ressources humaines et des marchés publics." },
+  { key:"Jumelages",            prog:["Jumelages"],                         icon:"🌍", label:"Jumelages" },
+];
+
+// Thèmes programme sans bilan direct
+const PROG_SEULS = [];
+
+function getTop(list, n) {
+  return list.sort(function(a,b){ return (b.importance||0)-(a.importance||0); }).slice(0, n||4);
+}
+
+function makeList(items, field) {
+  return items.map(function(x) {
+    var t = (x[field]||'').replace(/Objectif \d+ - /,'').replace(/^Objectif — /,'');
+    if (t.length > 55) t = t.slice(0,55)+'\u2026';
+    return '<li>' + t + '</li>';
+  }).join('');
+}
+
+function bilanCard(actions, cfg) {
+  var _bkeys = [cfg.key].concat(cfg.bilansup || []);
+  var acts = actions.filter(function(a){ return _bkeys.indexOf(a.theme) !== -1 && !a.titre.match(/^Vœu|^Voeu|^Motion/i); });
+  if (!acts.length) return '';
+  var realise = acts.filter(function(a){ return a.statut === 'Réalisé'; }).length;
+  var encours = acts.filter(function(a){ return a.statut === 'En cours' || a.statut === 'Décidé' || a.statut === 'Programmé'; }).length;
+  var top = getTop(acts.slice(), 4);
+  var _bid = regCard('Bilan 2020\u20132026', cfg.label + ' \u2014 ' + acts.length + ' actions menées', acts, 'titre');
+  return '<div class="tc bilan" data-cid="' + _bid + '">' +
+    '<span class="tc-tag">Bilan 2020\u20132026</span>' +
+    '<h3 class="tc-title">' + acts.length + ' actions menées</h3>' +
+    '<ul class="tc-list">' + makeList(top, 'titre') + '</ul>' +
+    '<p class="tc-more">' + (acts.length > 4 ? '+ ' + (acts.length-4) + ' autres \u2014 ' : '') + '\u2192 Voir la fiche</p>' +
+    '</div>';
+}
+
+function progCard(projets, cfg) {
+  if (!cfg.prog || !cfg.prog.length) return '';
+  var list = [];
+  cfg.prog.forEach(function(t) {
+    projets.filter(function(p){ return p.theme === t; }).forEach(function(p){ list.push(p); });
+  });
+  if (!list.length) return '';
+  var nObj = list.filter(function(p){ return p.type === 'objectif'; }).length;
+  var nEng = list.length - nObj;
+  var subtitle;
+  if (nObj > 0 && nEng > 0) subtitle = nObj + ' objectif' + (nObj>1?'s':'') + ' · ' + nEng + ' engagement' + (nEng>1?'s':'');
+  else if (nObj > 0) subtitle = nObj + ' objectif' + (nObj>1?'s':'');
+  else subtitle = nEng + ' engagement' + (nEng>1?'s':'');
+  var top = list.slice(0,4);
+  var _plb = cfg.progLabel||cfg.label;
+  var _pid = regCard('Programme 2026–2032', _plb + ' — ' + subtitle, list, 'titre');
+  return '<div class="tc prog" data-cid="' + _pid + '">' +
+    '<span class="tc-tag">Programme 2026–2032</span>' +
+    '<h3 class="tc-title">' + subtitle + ' pour ce mandat</h3>' +
+    '<ul class="tc-list">' + makeList(top, 'titre') + '</ul>' +
+    '<p class="tc-more">' + (list.length > 4 ? '+ ' + (list.length-4) + ' autres — ' : '') + '→ Voir la fiche</p>' +
+    '</div>';
+}
+
+function contCard(cfg) {
+  if (!cfg.continuite) return '';
+  var sents = cfg.continuite.replace(/([.!?])\s+/g, '$1|').split('|').filter(function(s){return s.trim().length>8;});
+  var items = sents.map(function(s){return {titre: s.trim().replace(/[.!?]$/, ''), statut: ''};});
+  var _cid = regCard('Continuité & programme 2026\u20132032', cfg.label + ' \u2014 orientations', items, 'titre');
+  return '<div class="tc prog cont" data-cid="' + _cid + '">' +
+    '<span class="tc-tag">Continuité & pistes 2026\u20132032</span>' +
+    '<p class="tc-desc">' + cfg.continuite.slice(0,120) + (cfg.continuite.length>120?'\u2026':'') + '</p>' +
+    '<p class="tc-more">\u2192 Voir le d\u00e9tail</p>' +
+    '</div>';
+}
+
+function makeBlock(icon, label, left, right, contexte) {
+  var ctx = contexte ? '<p class="theme-contexte">' + contexte + '</p>' : '';
+  return '<div class="theme-block">' +
+    '<div class="theme-header">' +
+      '<div class="theme-icon-badge">' + icon + '</div>' +
+      '<span class="theme-label">' + label + '</span>' +
+    '</div>' +
+    ctx +
+    '<div class="theme-cols">' +
+      '<div class="col-left">' + (left  || '<div class="col-empty"></div>') + '</div>' +
+      '<div class="col-center"><div class="spine-dot"></div></div>' +
+      '<div class="col-right">' + (right || '<div class="col-empty"></div>') + '</div>' +
+    '</div></div>';
+}
+
+var CARD_DATA = {};
+var _cidx = 0;
+function regCard(tag, title, items, field) {
+  var id = 'c' + (_cidx++);
+  CARD_DATA[id] = {tag:tag, title:title, items:items, field:field};
+  return id;
+}
+function _scl(s){var m={'R\u00e9alis\u00e9':'sr','En cours':'se','D\u00e9cid\u00e9':'sd','Programm\u00e9':'sp','Objectif':'so'};return m[s]||'so';}
+window.openModal = function(id) {
+  var d = CARD_DATA[id]; if(!d)return;
+  document.getElementById('modal-tag').textContent = d.tag;
+  document.getElementById('modal-title').textContent = d.title;
+  var ul = document.getElementById('modal-list');
+  ul.innerHTML = d.items.map(function(x){
+    var t=(x[d.field]||'')
+      .replace(/^Objectif \d+ - /,'')
+      .replace(/^Objectif \u2014 /,'');
+    var s=x.statut||'';
+    var badge=s?'<span class="ibadge '+_scl(s)+'">'+s+'</span>':''
+    var desc=x.resume?'<span class="idesc">'+x.resume+'</span>':''
+    return '<li>'+badge+'<span>'+t+desc+'</span></li>';
+  }).join('');
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+};
+document.addEventListener('click',function(e){
+  var ov=document.getElementById('modal-overlay');
+  if(!ov)return;
+  if(e.target.id==='modal-close'||e.target===ov){ov.classList.remove('open');document.body.style.overflow='';}
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){var ov=document.getElementById('modal-overlay');if(ov){ov.classList.remove('open');document.body.style.overflow='';}}
+});
+async function buildFrise() {
+  var data = await loadData();
+  var actions = data.actions;
+  var projets = data.projets;
+  var root = document.getElementById('frise-root');
+  var html = '<div class="frise-spine"></div>';
+
+  THEMES.forEach(function(cfg) {
+    var bc = bilanCard(actions, cfg);
+    var pc = progCard(projets, cfg);
+    var ctx = (pc && cfg.continuite) ? cfg.continuite : '';
+    if (!pc) pc = contCard(cfg);
+    if (!bc && !pc) return;
+    html += makeBlock(cfg.icon, cfg.label, bc, pc, ctx);
+  });
+
+  root.innerHTML = html;
+
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  root.querySelectorAll('.tc').forEach(function(c){ obs.observe(c); });
+  root.addEventListener('click', function(e) {
+    var card = e.target.closest('[data-cid]');
+    if (card) openModal(card.getAttribute('data-cid'));
+  });
+
+
+  function animCount(el, n) {
+    if (!el) return;
+    var v = 0; var inc = Math.ceil(n/40);
+    var t = setInterval(function() {
+      v = Math.min(v+inc, n);
+      el.textContent = v.toLocaleString('fr-FR');
+      if (v >= n) clearInterval(t);
+    }, 30);
+  }
+  setTimeout(function() {
+    animCount(document.getElementById('cnt-prog'), 90);
+  }, 800);
+}
+
+buildFrise();
+</script>
+
+<div id="modal-overlay" role="dialog" aria-modal="true">
+  <div id="modal-box">
+    <button id="modal-close" aria-label="Fermer">&#x2715;</button>
+    <div id="modal-tag"></div>
+    <div id="modal-title"></div>
+    <ul id="modal-list"></ul>
+  </div>
+</div>
+<!-- Admin -->
+<a href="admin.html" style="position:fixed;bottom:12px;right:12px;display:flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(26,58,107,0.85);color:#fff;font-size:0.78rem;font-family:system-ui,sans-serif;text-decoration:none;border-radius:20px;z-index:9999;opacity:0.7;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">⚙️ Admin</a>
+</body>
+</html>

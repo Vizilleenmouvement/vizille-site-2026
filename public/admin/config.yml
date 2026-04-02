@@ -1,0 +1,56 @@
+backend:
+  name: github
+  repo: Vizilleenmouvement/Vizille-en-mouvement
+  branch: main
+  base_url: https://vizilleenmouvement.fr
+
+media_folder: "public/images"
+public_folder: "/images"
+
+locale: 'fr'
+
+collections:
+  - name: "actualites"
+    label: "Actualites"
+    folder: "src/content/articles"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Categorie", name: "categorie", widget: "select", options: ["Vie municipale", "Urbanisme", "Mobilites", "Ecologie", "Culture", "Social", "Evenement"], required: false }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Extrait", name: "extrait", widget: "text", required: false }
+      - { label: "Contenu", name: "body", widget: "markdown" }
+
+  - name: "equipe"
+    label: "Equipe"
+    folder: "src/content/equipe"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Prenom", name: "prenom", widget: "string" }
+      - { label: "Nom", name: "nom", widget: "string" }
+      - { label: "Role", name: "role", widget: "string", required: false }
+      - { label: "Delegation", name: "delegation", widget: "string", required: false }
+      - { label: "Photo", name: "photo", widget: "image", required: false }
+      - { label: "Email", name: "email", widget: "string", required: false }
+      - { label: "Ordre", name: "ordre", widget: "number", default: 10 }
+
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "Accueil"
+        name: "accueil"
+        file: "content/accueil.md"
+        fields:
+          - { label: "Titre hero", name: "titre_hero", widget: "string" }
+          - { label: "Sous-titre hero", name: "soustitre_hero", widget: "text" }
+          - { label: "Image hero", name: "image_hero", widget: "image", required: false }
+      - label: "Contact"
+        name: "contact"
+        file: "content/contact.md"
+        fields:
+          - { label: "Adresse", name: "adresse", widget: "text" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Contenu", name: "body", widget: "markdown" }

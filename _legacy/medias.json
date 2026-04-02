@@ -1,0 +1,986 @@
+{
+  "albums": [
+    {
+      "id": "album_reunions",
+      "titre": "Réunions",
+      "type": "campagne",
+      "categorie": "reunion",
+      "date": "2026-02-27",
+      "lieu": "Vizille",
+      "description": "Réunions publiques et de quartier avec les Vizillois",
+      "cover": "images/articles/art_4_0.jpg",
+      "photos": [
+        1770199482972.77,
+        1770199482972.7898,
+        1770199482972.5332,
+        1770199482972.788,
+        1770199482972.9854,
+        1770199482972.5515,
+        1770127914621,
+        1770128308750,
+        1770199482972.4424,
+        1770199482972.848,
+        1770199482972.9185,
+        1770199482972.9792
+      ]
+    },
+    {
+      "id": "album_marches",
+      "titre": "Sur les marchés",
+      "type": "campagne",
+      "categorie": "marche",
+      "date": "2026-01-20",
+      "lieu": "Vizille",
+      "description": "À la rencontre des Vizillois sur les marchés",
+      "cover": "images/articles/art_2_0.jpg",
+      "photos": [
+        1770199482972.3562
+      ]
+    },
+    {
+      "id": "album_rencontres",
+      "titre": "Rencontres sur le terrain",
+      "type": "campagne",
+      "categorie": "rencontre",
+      "date": "2026-02-07",
+      "lieu": "Vizille",
+      "description": "Au contact des Vizillois au quotidien",
+      "cover": "images/articles/article_12_0.png",
+      "photos": [
+        1770199482972.231,
+        1770137790420,
+        9301
+      ]
+    },
+    {
+      "id": "album_culture",
+      "titre": "Culture et festivités",
+      "type": "bilan",
+      "categorie": "culture",
+      "date": "2024-06-21",
+      "lieu": "Vizille",
+      "description": "Vie culturelle et festivités à Vizille",
+      "cover": "images/actions/culture/fete-musique-2023.jpg",
+      "photos": [
+        9001,
+        9002,
+        9003,
+        9004,
+        9005,
+        9006,
+        9007
+      ]
+    },
+    {
+      "id": "album_patrimoine",
+      "titre": "Patrimoine de Vizille",
+      "type": "bilan",
+      "categorie": "patrimoine",
+      "date": "2024-01-01",
+      "lieu": "Vizille",
+      "description": "Architecture et patrimoine historique de Vizille",
+      "cover": "images/actions/patrimoine/place-chateau.jpg",
+      "photos": [
+        9101,
+        9102,
+        9103,
+        9104,
+        9105,
+        9106,
+        9107
+      ]
+    },
+    {
+      "id": "album_sport",
+      "titre": "Sport à Vizille",
+      "type": "bilan",
+      "categorie": "sport",
+      "date": "2024-01-01",
+      "lieu": "Vizille",
+      "description": "Vie sportive et événements à Vizille",
+      "cover": "images/actions/sport/rugby-champion-alpes.jpg",
+      "photos": [
+        9201,
+        9202,
+        9203,
+        9204,
+        9205,
+        9206,
+        9207,
+        9208
+      ]
+    }
+  ],
+  "categoriesAlbums": {
+    "campagne": [
+      {
+        "id": "reunion",
+        "label": "Réunions",
+        "icon": "🎤"
+      },
+      {
+        "id": "marche",
+        "label": "Marchés",
+        "icon": "🛒"
+      },
+      {
+        "id": "porte-a-porte",
+        "label": "Porte-à-porte",
+        "icon": "🚪"
+      },
+      {
+        "id": "rencontre",
+        "label": "Rencontres",
+        "icon": "🤝"
+      },
+      {
+        "id": "evenement",
+        "label": "Événements",
+        "icon": "📅"
+      },
+      {
+        "id": "autre",
+        "label": "Autre",
+        "icon": "📷"
+      }
+    ],
+    "bilan": [
+      {
+        "id": "environnement",
+        "label": "Environnement",
+        "icon": "🌿"
+      },
+      {
+        "id": "culture",
+        "label": "Culture",
+        "icon": "🎭"
+      },
+      {
+        "id": "sport",
+        "label": "Sport",
+        "icon": "⚽"
+      },
+      {
+        "id": "sante",
+        "label": "Santé",
+        "icon": "🏥"
+      },
+      {
+        "id": "solidarite",
+        "label": "Solidarité",
+        "icon": "🤝"
+      },
+      {
+        "id": "enfance",
+        "label": "Enfance",
+        "icon": "👶"
+      },
+      {
+        "id": "urbanisme",
+        "label": "Urbanisme",
+        "icon": "🏘️"
+      },
+      {
+        "id": "mobilites",
+        "label": "Mobilités",
+        "icon": "🚲"
+      },
+      {
+        "id": "patrimoine",
+        "label": "Patrimoine",
+        "icon": "🏛️"
+      },
+      {
+        "id": "securite",
+        "label": "Tranquillité",
+        "icon": "🛡️"
+      },
+      {
+        "id": "economie",
+        "label": "Économie",
+        "icon": "💼"
+      }
+    ],
+    "objectifs": [
+      {
+        "id": "transition",
+        "label": "Transition écologique",
+        "icon": "🌱"
+      },
+      {
+        "id": "cadre-vie",
+        "label": "Cadre de vie",
+        "icon": "🏡"
+      },
+      {
+        "id": "services",
+        "label": "Services publics",
+        "icon": "🏛️"
+      }
+    ]
+  },
+  "photos": [
+    {
+      "id": 2,
+      "titre": "Catherine Troton - Maire de Vizille",
+      "src": "images/catherine-troton.jpg",
+      "thumbnail": "images/catherine-troton.jpg",
+      "date": "2026-01-10",
+      "description": "Portrait de Catherine Troton",
+      "albumId": null
+    },
+    {
+      "id": 1770127914621,
+      "titre": "Réunion chez l'habitant",
+      "src": "images/medias/whatsapp_image_2026-02-02_at_14.24.15.jpeg",
+      "thumbnail": null,
+      "date": "2026-02-02",
+      "description": "",
+      "albumId": "album_reunions"
+    },
+    {
+      "id": 1770128308750,
+      "titre": "Réunion chez l'habitant",
+      "src": "images/medias/whatsapp_image_2026-02-02_at_14.24.01.jpeg",
+      "thumbnail": null,
+      "date": "2026-02-03",
+      "description": "",
+      "albumId": "album_reunions"
+    },
+    {
+      "id": 1770137790420,
+      "titre": "Pour une ville dynamique et solidaire",
+      "src": "images/medias/615406480_122109496719169933_2030527121759158223_n.jpg",
+      "thumbnail": null,
+      "date": "2026-02-03",
+      "description": "",
+      "albumId": "album_rencontres"
+    },
+    {
+      "id": 1770199482972.3562,
+      "titre": "Présence sur les marchés",
+      "src": "images/articles/art_2_0.jpg",
+      "thumbnail": "images/articles/art_2_0.jpg",
+      "categorie": "Événement",
+      "date": "2026-01-20",
+      "description": "Présence sur les marchés",
+      "albumId": "album_marches"
+    },
+    {
+      "id": 1770199482972.9854,
+      "titre": "Réunion de quartier - Les Mattons",
+      "src": "images/articles/art_3_0.jpg",
+      "thumbnail": "images/articles/art_3_0.jpg",
+      "categorie": "Réunion de quartier",
+      "date": "2026-01-23",
+      "description": "Réunion de quartier - Les Mattons",
+      "albumId": "album_reunions"
+    },
+    {
+      "id": 1770199482972.5515,
+      "titre": "Réunion de quartier - Les Mattons",
+      "src": "images/articles/art_3_1.jpg",
+      "thumbnail": "images/articles/art_3_1.jpg",
+      "categorie": "Réunion de quartier",
+      "date": "2026-01-23",
+      "description": "Réunion de quartier - Les Mattons",
+      "albumId": "album_reunions"
+    },
+    {
+      "id": 1770199482972.77,
+      "titre": "Réunion publique #1 — Bilan du mandat",
+      "src": "images/articles/art_4_0.jpg",
+      "thumbnail": "images/articles/art_4_0.jpg",
+      "categorie": "Événement",
+      "date": "2026-01-30",
+      "description": "Réunion publique #1 — Bilan du mandat",
+      "albumId": "album_reunions"
+    },
+    {
+      "id": 1770199482972.7898,
+      "titre": "Réunion publique #1 — Bilan du mandat",
+      "src": "images/articles/art_4_1.jpg",
+      "thumbnail": "images/articles/art_4_1.jpg",
+      "categorie": "Événement",
+      "date": "2026-01-30",
+      "description": "Réunion publique #1 — Bilan du mandat",
+      "albumId": "album_reunions"
+    },
+    {
+      "id": 1770199482972.5332,
+      "titre": "Réunion publique #1 — Bilan du mandat",
+      "src": "images/articles/art_4_2.jpg",
+      "thumbnail": "images/articles/art_4_2.jpg",
+      "categorie": "Événement",
+      "date": "2026-01-30",
+      "description": "Réunion publique #1 — Bilan du mandat",
+      "albumId": "album_reunions"
+    },
+    {
+      "id": 1770199482972.788,
+      "titre": "Réunion publique #2 — Projets pour Vizille",
+      "src": "images/articles/art_5_0.jpg",
+      "thumbnail": "images/articles/art_5_0.jpg",
+      "categorie": "Événement",
+      "date": "2026-02-27",
+      "description": "Réunion publique #2 — Projets pour Vizille",
+      "albumId": "album_reunions"
+    },
+    {
+      "id": 1770199482972.9185,
+      "titre": "Réunion de quartier - Centre-ville",
+      "src": "images/articles/art_8_0.jpg",
+      "thumbnail": "images/articles/art_8_0.jpg",
+      "categorie": "Réunion de quartier",
+      "date": "2026-02-04",
+      "description": "Réunion de quartier - Centre-ville",
+      "albumId": "album_reunions"
+    },
+    {
+      "id": 1770199482972.9792,
+      "titre": "Réunion de quartier - Le Péage",
+      "src": "images/articles/art_9_0.jpg",
+      "thumbnail": "images/articles/art_9_0.jpg",
+      "categorie": "Réunion de quartier",
+      "date": "2026-02-04",
+      "description": "Réunion de quartier - Le Péage",
+      "albumId": "album_reunions"
+    },
+    {
+      "id": 1770199482972.4424,
+      "titre": "Réunion de quartier - Chez l'habitant",
+      "src": "images/articles/art_10_0.jpg",
+      "thumbnail": "images/articles/art_10_0.jpg",
+      "categorie": "Réunion de quartier",
+      "date": "2026-02-02",
+      "description": "Réunion de quartier - Chez l'habitant",
+      "albumId": "album_reunions"
+    },
+    {
+      "id": 1770199482972.848,
+      "titre": "Réunion de quartier - Chez l'habitant",
+      "src": "images/articles/art_10_1.jpg",
+      "thumbnail": "images/articles/art_10_1.jpg",
+      "categorie": "Réunion de quartier",
+      "date": "2026-02-02",
+      "description": "Réunion de quartier - Chez l'habitant",
+      "albumId": "album_reunions"
+    },
+    {
+      "id": 1770199482972.231,
+      "titre": "Rencontre devant l'école Jean-Jaurès",
+      "src": "images/facebook/affiche-jean-jaures.webp",
+      "thumbnail": "images/facebook/affiche-jean-jaures.webp",
+      "categorie": "Événement",
+      "date": "2026-02-06",
+      "description": "Rencontre devant l'école Jean-Jaurès",
+      "albumId": "album_rencontres"
+    },
+    {
+      "id": 9001,
+      "titre": "Fête de la musique 2023",
+      "src": "images/actions/culture/fete-musique-2023.jpg",
+      "thumbnail": "images/actions/culture/fete-musique-2023.jpg",
+      "categorie": "Culture",
+      "date": "2023-06-21",
+      "description": "Fête de la musique à Vizille",
+      "albumId": "album_culture"
+    },
+    {
+      "id": 9002,
+      "titre": "Fête de l'amitié 2024",
+      "src": "images/actions/culture/fete-amitie-2024.jpg",
+      "thumbnail": "images/actions/culture/fete-amitie-2024.jpg",
+      "categorie": "Culture",
+      "date": "2024-07-01",
+      "description": "Fête de l'amitié à Vizille",
+      "albumId": "album_culture"
+    },
+    {
+      "id": 9003,
+      "titre": "Fête de la science",
+      "src": "images/actions/culture/fete-science.jpg",
+      "thumbnail": "images/actions/culture/fete-science.jpg",
+      "categorie": "Culture",
+      "date": "2024-10-01",
+      "description": "Fête de la science à Vizille",
+      "albumId": "album_culture"
+    },
+    {
+      "id": 9004,
+      "titre": "80 ans de la Libération",
+      "src": "images/actions/culture/80-ans-liberation.jpg",
+      "thumbnail": "images/actions/culture/80-ans-liberation.jpg",
+      "categorie": "Culture",
+      "date": "2024-08-25",
+      "description": "Commémoration des 80 ans de la Libération",
+      "albumId": "album_culture"
+    },
+    {
+      "id": 9005,
+      "titre": "Soirée Belledonne",
+      "src": "images/actions/culture/soiree-belledonne.jpg",
+      "thumbnail": "images/actions/culture/soiree-belledonne.jpg",
+      "categorie": "Culture",
+      "date": "2024-01-15",
+      "description": "Soirée culturelle Belledonne",
+      "albumId": "album_culture"
+    },
+    {
+      "id": 9006,
+      "titre": "Veillée Belledonne 2024",
+      "src": "images/actions/culture/veillee-belledonne-2024.jpg",
+      "thumbnail": "images/actions/culture/veillee-belledonne-2024.jpg",
+      "categorie": "Culture",
+      "date": "2024-12-01",
+      "description": "Veillée Belledonne 2024",
+      "albumId": "album_culture"
+    },
+    {
+      "id": 9101,
+      "titre": "Place du Château",
+      "src": "images/actions/patrimoine/place-chateau.jpg",
+      "thumbnail": "images/actions/patrimoine/place-chateau.jpg",
+      "categorie": "Patrimoine",
+      "date": "2024-01-01",
+      "description": "Place du Château de Vizille",
+      "albumId": "album_patrimoine"
+    },
+    {
+      "id": 9102,
+      "titre": "Ancienne Tannerie",
+      "src": "images/actions/patrimoine/ancienne-tannerie.jpg",
+      "thumbnail": "images/actions/patrimoine/ancienne-tannerie.jpg",
+      "categorie": "Patrimoine",
+      "date": "2022-01-01",
+      "description": "Ancienne tannerie de Vizille",
+      "albumId": "album_patrimoine"
+    },
+    {
+      "id": 9103,
+      "titre": "Poterne de Vizille",
+      "src": "images/actions/patrimoine/poterne-vizille.jpg",
+      "thumbnail": "images/actions/patrimoine/poterne-vizille.jpg",
+      "categorie": "Patrimoine",
+      "date": "2023-01-01",
+      "description": "Poterne historique de Vizille",
+      "albumId": "album_patrimoine"
+    },
+    {
+      "id": 9104,
+      "titre": "Restauration de la Poterne",
+      "src": "images/actions/patrimoine/restauration-poterne.jpg",
+      "thumbnail": "images/actions/patrimoine/restauration-poterne.jpg",
+      "categorie": "Patrimoine",
+      "date": "2023-06-01",
+      "description": "Travaux de restauration de la poterne",
+      "albumId": "album_patrimoine"
+    },
+    {
+      "id": 9105,
+      "titre": "Chapelle du Péage",
+      "src": "images/actions/patrimoine/chapelle-peage.jpg",
+      "thumbnail": "images/actions/patrimoine/chapelle-peage.jpg",
+      "categorie": "Patrimoine",
+      "date": "2024-01-01",
+      "description": "Chapelle du Péage",
+      "albumId": "album_patrimoine"
+    },
+    {
+      "id": 9106,
+      "titre": "Sites Clunisiens",
+      "src": "images/actions/patrimoine/sites-clunisiens.jpg",
+      "thumbnail": "images/actions/patrimoine/sites-clunisiens.jpg",
+      "categorie": "Patrimoine",
+      "date": "2024-01-01",
+      "description": "Sites clunisiens de Vizille",
+      "albumId": "album_patrimoine"
+    },
+    {
+      "id": 9201,
+      "titre": "Rugby — Champions des Alpes",
+      "src": "images/actions/sport/rugby-champion-alpes.jpg",
+      "thumbnail": "images/actions/sport/rugby-champion-alpes.jpg",
+      "categorie": "Sport",
+      "date": "2024-01-01",
+      "description": "L'entente rugby de Vizille championne des Alpes",
+      "albumId": "album_sport"
+    },
+    {
+      "id": 9202,
+      "titre": "Entente Rugby Vizille",
+      "src": "images/actions/sport/rugby-entente-vizille.jpg",
+      "thumbnail": "images/actions/sport/rugby-entente-vizille.jpg",
+      "categorie": "Sport",
+      "date": "2024-01-01",
+      "description": "Entente rugby de Vizille",
+      "albumId": "album_sport"
+    },
+    {
+      "id": 9203,
+      "titre": "Grenoble - Vizille",
+      "src": "images/actions/sport/grenoble-vizille.jpg",
+      "thumbnail": "images/actions/sport/grenoble-vizille.jpg",
+      "categorie": "Sport",
+      "date": "2024-01-01",
+      "description": "Événement sportif Grenoble-Vizille",
+      "albumId": "album_sport"
+    },
+    {
+      "id": 9204,
+      "titre": "Viziclette — Vélo smoothie",
+      "src": "images/actions/sport/viziclette-velo-smoothie.jpg",
+      "thumbnail": "images/actions/sport/viziclette-velo-smoothie.jpg",
+      "categorie": "Sport",
+      "date": "2024-01-01",
+      "description": "Viziclette — événement vélo et smoothie",
+      "albumId": "album_sport"
+    },
+    {
+      "id": 9007,
+      "titre": "Bilan culturel — Vizille en Mouvement",
+      "src": "images/facebook/bilan-culture.webp",
+      "thumbnail": "images/facebook/bilan-culture.webp",
+      "categorie": "Culture",
+      "date": "2026-01-19",
+      "description": "Culture à Vizille : bilan des actions — 44 actions sur 45 réalisées",
+      "albumId": "album_culture"
+    },
+    {
+      "id": 9107,
+      "titre": "Bilan patrimoine — Vizille en Mouvement",
+      "src": "images/facebook/bilan-patrimoine.webp",
+      "thumbnail": "images/facebook/bilan-patrimoine.webp",
+      "categorie": "Patrimoine",
+      "date": "2026-01-19",
+      "description": "Le patrimoine de Vizille : bilan des actions — 31 actions, 24 réalisées",
+      "albumId": "album_patrimoine"
+    },
+    {
+      "id": 9205,
+      "titre": "Bilan sportif — Vizille en Mouvement",
+      "src": "images/facebook/bilan-sport.jpg",
+      "thumbnail": "images/facebook/bilan-sport.jpg",
+      "categorie": "Sport",
+      "date": "2026-02-05",
+      "description": "Bilan sportif : modernisation, vitalité et perspectives sportives",
+      "albumId": "album_sport"
+    },
+    {
+      "id": 9206,
+      "titre": "Journée olympique au Domaine de Vizille",
+      "src": "images/facebook/journee-olympique-vizille.jpg",
+      "thumbnail": "images/facebook/journee-olympique-vizille.jpg",
+      "categorie": "Sport",
+      "date": "2024-07-26",
+      "description": "Journée olympique organisée par le Département de l'Isère au Domaine de Vizille",
+      "albumId": "album_sport"
+    },
+    {
+      "id": 9207,
+      "titre": "Piscine municipale de Vizille",
+      "src": "images/facebook/piscine-municipale.webp",
+      "thumbnail": "images/facebook/piscine-municipale.webp",
+      "categorie": "Sport",
+      "date": "2024-07-01",
+      "description": "La piscine municipale de Vizille, réouverte en 2021",
+      "albumId": "album_sport"
+    },
+    {
+      "id": 9301,
+      "titre": "Affiche — Rencontre école Jean-Jaurès",
+      "src": "images/facebook/affiche-jean-jaures.webp",
+      "thumbnail": "images/facebook/affiche-jean-jaures.webp",
+      "categorie": "Événement",
+      "date": "2026-02-06",
+      "description": "Venez nous rencontrer devant l'école Jean-Jaurès le 6 février 2026",
+      "albumId": "album_rencontres"
+    },
+    {
+      "id": 9208,
+      "titre": "Tour Auvergne Rhône-Alpes — Départ Vizille",
+      "src": "images/facebook/tour-auvergne-vizille.jpg",
+      "thumbnail": "images/facebook/tour-auvergne-vizille.jpg",
+      "categorie": "Sport",
+      "date": "2026-02-05",
+      "description": "78e édition du Tour Auvergne Rhône-Alpes — Étape 1 au départ de Vizille, 7 juin 2026",
+      "albumId": "album_sport"
+    },
+    {
+      "id": 1771341733577.8318,
+      "titre": "🚇 𝐌𝐎𝐁𝐈𝐋𝐈𝐓𝐄́𝐒 𝐒𝐓𝐑𝐔𝐂𝐓𝐔𝐑𝐀𝐍𝐓𝐄𝐒 : LE DÉFI",
+      "src": "images/articles/article_1770988386909.jpg",
+      "thumbnail": "images/articles/article_1770988386909.jpg",
+      "categorie": "Action",
+      "date": "2026-02-13",
+      "description": "🚇 𝐌𝐎𝐁𝐈𝐋𝐈𝐓𝐄́𝐒 𝐒𝐓𝐑𝐔𝐂𝐓𝐔𝐑𝐀𝐍𝐓𝐄𝐒 : LE DÉFI"
+    },
+    {
+      "id": 1771341733577.5999,
+      "titre": "Réunion de quartier  Ecole du Château, le 10 mars",
+      "src": "images/articles/article_1770459477243_img_0402.jpg",
+      "thumbnail": "images/articles/article_1770459477243_img_0402.jpg",
+      "categorie": "Événement",
+      "date": "2026-03-10",
+      "description": "Réunion de quartier  Ecole du Château, le 10 mars"
+    },
+    {
+      "id": 1771341733577.5125,
+      "titre": "A votre rencontre le 24 février au  Péage, école Langevin",
+      "src": "images/articles/article_1770458281599_img_0400.jpg",
+      "thumbnail": "images/articles/article_1770458281599_img_0400.jpg",
+      "categorie": "Réunion de quartier",
+      "date": "2026-02-24",
+      "description": "A votre rencontre le 24 février au  Péage, école Langevin"
+    },
+    {
+      "id": 1771341733577.6975,
+      "titre": "𝐍𝐨𝐬 𝐎𝐛𝐣𝐞𝐜𝐭𝐢𝐟𝐬 𝐌𝐨𝐛𝐢𝐥𝐢𝐭𝐞́𝐬 :",
+      "src": "images/articles/article_1770916645505.jpg",
+      "thumbnail": "images/articles/article_1770916645505.jpg",
+      "categorie": "Projet",
+      "date": "2026-02-12",
+      "description": "𝐍𝐨𝐬 𝐎𝐛𝐣𝐞𝐜𝐭𝐢𝐟𝐬 𝐌𝐨𝐛𝐢𝐥𝐢𝐭𝐞́𝐬 :"
+    },
+    {
+      "id": 1771341733577.0723,
+      "titre": "La concertation citoyenne",
+      "src": "images/articles/article_1770799700996_sans_titre_6.jpg",
+      "thumbnail": "images/articles/article_1770799700996_sans_titre_6.jpg",
+      "categorie": "Bilan",
+      "date": "2026-02-11",
+      "description": "La concertation citoyenne"
+    },
+    {
+      "id": 1771341733577.3977,
+      "titre": "Un cadre de vie fluide et serein",
+      "src": "images/articles/article_1770715434633_631765494_122114361057169933_1900431989562195837_n.jpg",
+      "thumbnail": "images/articles/article_1770715434633_631765494_122114361057169933_1900431989562195837_n.jpg",
+      "categorie": "Action",
+      "date": "2026-02-10",
+      "description": "Un cadre de vie fluide et serein"
+    },
+    {
+      "id": 1771341733577.598,
+      "titre": "𝐕𝐨𝐮𝐬 𝐧𝐨𝐮𝐬 𝐚𝐯𝐞𝐳 𝐝𝐢𝐭 𝐜𝐞 𝐪𝐮𝐢 𝐜𝐨𝐦𝐩𝐭𝐚𝐢𝐭. 𝐍𝐨𝐮𝐬 𝐥'𝐚𝐯𝐨𝐧𝐬 𝐟𝐚𝐢𝐭 𝐞𝐧𝐬𝐞𝐦𝐛𝐥𝐞.",
+      "src": "images/articles/article_1770576158353_climat.jpg",
+      "thumbnail": "images/articles/article_1770576158353_climat.jpg",
+      "categorie": "Bilan",
+      "date": "2026-02-08",
+      "description": "𝐕𝐨𝐮𝐬 𝐧𝐨𝐮𝐬 𝐚𝐯𝐞𝐳 𝐝𝐢𝐭 𝐜𝐞 𝐪𝐮𝐢 𝐜𝐨𝐦𝐩𝐭𝐚𝐢𝐭. 𝐍𝐨𝐮𝐬 𝐥'𝐚𝐯𝐨𝐧𝐬 𝐟𝐚𝐢𝐭 𝐞𝐧𝐬𝐞𝐦𝐛𝐥𝐞."
+    },
+    {
+      "id": 1771341733577.403,
+      "titre": "Vizille en Mouvement — Premières présentations !",
+      "src": "images/articles/article_1770538735092_couverture-facebook-equipe.jpg",
+      "thumbnail": "images/articles/article_1770538735092_couverture-facebook-equipe.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-02-08",
+      "description": "Vizille en Mouvement — Premières présentations !"
+    },
+    {
+      "id": 1771341733577.2441,
+      "titre": "Vizille en Mouvement : Bilan & Vision 2026 avec Catherine Troton",
+      "src": "images/articles/article_1770480896470.jpg",
+      "thumbnail": "images/articles/article_1770480896470.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-02-07",
+      "description": "Vizille en Mouvement : Bilan & Vision 2026 avec Catherine Troton"
+    },
+    {
+      "id": 1771341733577.8618,
+      "titre": "Vizille en Mouvement : Bilan & Vision 2026 avec Catherine Troton",
+      "src": "<iframe src=\"https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid0TZFMasuNX6eBY1hsAXQWTq4bDcgUsmPBZG6hoLakhHViJUML7ts4bMUfVcgT6fM3l%26id%3D61585097998743&show_text=true&width=500\" width=\"500\" height=\"370\" style=\"border:none;overflow:hidden\" scrolling=\"no\" frameborder=\"0\" allowfullscreen=\"true\" allow=\"autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share\"></iframe>",
+      "thumbnail": "<iframe src=\"https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid0TZFMasuNX6eBY1hsAXQWTq4bDcgUsmPBZG6hoLakhHViJUML7ts4bMUfVcgT6fM3l%26id%3D61585097998743&show_text=true&width=500\" width=\"500\" height=\"370\" style=\"border:none;overflow:hidden\" scrolling=\"no\" frameborder=\"0\" allowfullscreen=\"true\" allow=\"autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share\"></iframe>",
+      "categorie": "Communiqué",
+      "date": "2026-02-07",
+      "description": "Vizille en Mouvement : Bilan & Vision 2026 avec Catherine Troton"
+    },
+    {
+      "id": 1771341733577.7258,
+      "titre": "Rencontre devant l'école Jean-Jaurès",
+      "src": "images/articles/article_1770312964217_627675958_122113625025169933_7414508203650644926_n.jpg",
+      "thumbnail": "images/articles/article_1770312964217_627675958_122113625025169933_7414508203650644926_n.jpg",
+      "categorie": "Événement",
+      "date": "2026-02-06",
+      "description": "Rencontre devant l'école Jean-Jaurès"
+    },
+    {
+      "id": 1771341733577.042,
+      "titre": "Nos candidates et candidats",
+      "src": "images/articles/article_1771315458073_liste.jpg",
+      "thumbnail": "images/articles/article_1771315458073_liste.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-02-17",
+      "description": "Nos candidates et candidats"
+    },
+    {
+      "id": 1771609428937.29,
+      "titre": "𝐑𝐍𝟖𝟓 – 𝐅𝐞𝐮 𝐝𝐞 𝐉𝐚𝐫𝐫𝐢𝐞 : 𝐜𝐞 𝐪𝐮𝐞 𝐝𝐢𝐬𝐞𝐧𝐭 𝐥𝐞𝐬 𝐞́𝐭𝐮𝐝𝐞𝐬 𝐨𝐟𝐟𝐢𝐜𝐢𝐞𝐥𝐥𝐞𝐬 🚦",
+      "src": "images/articles/article_1771342900881.jpg",
+      "thumbnail": "images/articles/article_1771342900881.jpg",
+      "categorie": "Action",
+      "date": "2026-02-17",
+      "description": "𝐑𝐍𝟖𝟓 – 𝐅𝐞𝐮 𝐝𝐞 𝐉𝐚𝐫𝐫𝐢𝐞 : 𝐜𝐞 𝐪𝐮𝐞 𝐝𝐢𝐬𝐞𝐧𝐭 𝐥𝐞𝐬 𝐞́𝐭𝐮𝐝𝐞𝐬 𝐨𝐟𝐟𝐢𝐜𝐢𝐞𝐥𝐥𝐞𝐬 🚦"
+    },
+    {
+      "id": 1771609428937.4114,
+      "titre": "𝐀𝐂𝐓𝐈𝐎𝐍 𝐒𝐎𝐂𝐈𝐀𝐋𝐄 : 𝐋𝐄 𝐁𝐈𝐋𝐀𝐍 𝟐𝟎𝟐𝟎-𝟐𝟎𝟐𝟔",
+      "src": "images/articles/article_1771343019797.jpg",
+      "thumbnail": "images/articles/article_1771343019797.jpg",
+      "categorie": "Actualités",
+      "date": "2026-02-17",
+      "description": "𝐀𝐂𝐓𝐈𝐎𝐍 𝐒𝐎𝐂𝐈𝐀𝐋𝐄 : 𝐋𝐄 𝐁𝐈𝐋𝐀𝐍 𝟐𝟎𝟐𝟎-𝟐𝟎𝟐𝟔"
+    },
+    {
+      "id": 1773051805439.4663,
+      "titre": "A votre rencontre le 24 février au  Péage, école Langevin",
+      "src": "images/articles/article_1771695308949_640300047_122116217907169933_8066348312329664465_n.jpg",
+      "thumbnail": "images/articles/article_1771695308949_640300047_122116217907169933_8066348312329664465_n.jpg",
+      "categorie": "Réunion de quartier",
+      "date": "2026-02-24",
+      "description": "A votre rencontre le 24 février au  Péage, école Langevin"
+    },
+    {
+      "id": 1773051805439.967,
+      "titre": "Réunion publique #2 — Projets pour Vizille",
+      "src": "images/articles/article_1771695082983_whatsapp_image_2026-02-21_at_15.42.55.jpg",
+      "thumbnail": "images/articles/article_1771695082983_whatsapp_image_2026-02-21_at_15.42.55.jpg",
+      "categorie": "Événement",
+      "date": "2026-02-27",
+      "description": "Réunion publique #2 — Projets pour Vizille"
+    },
+    {
+      "id": 1773051805439.3665,
+      "titre": "𝐀𝐜𝐜𝐨𝐦𝐩𝐚𝐠𝐧𝐞𝐫 𝐞𝐭 𝐚𝐢𝐝𝐞𝐫 𝐭𝐨𝐮𝐬 𝐥𝐞𝐬 𝐣𝐞𝐮𝐧𝐞𝐬 — 𝐝𝐚𝐧𝐬 𝐥𝐞 𝐫𝐞𝐬𝐩𝐞𝐜𝐭 𝐝𝐞 𝐥𝐚 𝐬𝐢𝐧𝐠𝐮𝐥𝐚𝐫𝐢𝐭é 𝐝𝐞 𝐜𝐡𝐚𝐜𝐮𝐧, 𝐬𝐮𝐫 𝐥𝐞 𝐜𝐡𝐞𝐦𝐢𝐧 𝐝𝐞 𝐥𝐞𝐮𝐫 𝐝é𝐯𝐞𝐥𝐨𝐩𝐩𝐞𝐦𝐞𝐧𝐭 𝐩𝐞𝐫𝐬𝐨𝐧𝐧𝐞𝐥 𝐞𝐭 𝐜𝐢𝐭𝐨𝐲𝐞𝐧.",
+      "src": "images/articles/article_1771695217880.jpg",
+      "thumbnail": "images/articles/article_1771695217880.jpg",
+      "categorie": "Projet",
+      "date": "2026-02-21",
+      "description": "𝐀𝐜𝐜𝐨𝐦𝐩𝐚𝐠𝐧𝐞𝐫 𝐞𝐭 𝐚𝐢𝐝𝐞𝐫 𝐭𝐨𝐮𝐬 𝐥𝐞𝐬 𝐣𝐞𝐮𝐧𝐞𝐬 — 𝐝𝐚𝐧𝐬 𝐥𝐞 𝐫𝐞𝐬𝐩𝐞𝐜𝐭 𝐝𝐞 𝐥𝐚 𝐬𝐢𝐧𝐠𝐮𝐥𝐚𝐫𝐢𝐭é 𝐝𝐞 𝐜𝐡𝐚𝐜𝐮𝐧, 𝐬𝐮𝐫 𝐥𝐞 𝐜𝐡𝐞𝐦𝐢𝐧 𝐝𝐞 𝐥𝐞𝐮𝐫 𝐝é𝐯𝐞𝐥𝐨𝐩𝐩𝐞𝐦𝐞𝐧𝐭 𝐩𝐞𝐫𝐬𝐨𝐧𝐧𝐞𝐥 𝐞𝐭 𝐜𝐢𝐭𝐨𝐲𝐞𝐧."
+    },
+    {
+      "id": 1773051805439.9558,
+      "titre": "Nos soutiens",
+      "src": "images/articles/article_1772613458046_strappazzon.jpg",
+      "thumbnail": "images/articles/article_1772613458046_strappazzon.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-04",
+      "description": "Nos soutiens"
+    },
+    {
+      "id": 1773051805439.5562,
+      "titre": "Vizille en mouvement !￼",
+      "src": "images/articles/article_1772613620949.jpg",
+      "thumbnail": "images/articles/article_1772613620949.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-04",
+      "description": "Vizille en mouvement !￼"
+    },
+    {
+      "id": 1774719543880.1548,
+      "titre": "Organisation de l'équipe municipale — Les délégations se précisent",
+      "src": "images/articles/equipe-adjoints-2026.jpg",
+      "thumbnail": "images/articles/equipe-adjoints-2026.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-28",
+      "description": "Organisation de l'équipe municipale — Les délégations se précisent"
+    },
+    {
+      "id": 1774719543880.3354,
+      "titre": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés",
+      "src": "images/conseil-2026/conseil-01.jpg",
+      "thumbnail": "images/conseil-2026/conseil-01.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-22",
+      "description": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés"
+    },
+    {
+      "id": 1774719543880.549,
+      "titre": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés",
+      "src": "images/conseil-2026/conseil-02.jpg",
+      "thumbnail": "images/conseil-2026/conseil-02.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-22",
+      "description": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés"
+    },
+    {
+      "id": 1774719543880.233,
+      "titre": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés",
+      "src": "images/conseil-2026/conseil-03.jpg",
+      "thumbnail": "images/conseil-2026/conseil-03.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-22",
+      "description": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés"
+    },
+    {
+      "id": 1774719543880.4893,
+      "titre": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés",
+      "src": "images/conseil-2026/conseil-04.jpg",
+      "thumbnail": "images/conseil-2026/conseil-04.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-22",
+      "description": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés"
+    },
+    {
+      "id": 1774719543880.0269,
+      "titre": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés",
+      "src": "images/conseil-2026/conseil-05.jpg",
+      "thumbnail": "images/conseil-2026/conseil-05.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-22",
+      "description": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés"
+    },
+    {
+      "id": 1774719543880.5872,
+      "titre": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés",
+      "src": "images/conseil-2026/conseil-06.jpg",
+      "thumbnail": "images/conseil-2026/conseil-06.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-22",
+      "description": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés"
+    },
+    {
+      "id": 1774719543880.8787,
+      "titre": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés",
+      "src": "images/conseil-2026/conseil-07.jpg",
+      "thumbnail": "images/conseil-2026/conseil-07.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-22",
+      "description": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés"
+    },
+    {
+      "id": 1774719543880.3281,
+      "titre": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés",
+      "src": "images/conseil-2026/conseil-08.jpg",
+      "thumbnail": "images/conseil-2026/conseil-08.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-22",
+      "description": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés"
+    },
+    {
+      "id": 1774719543880.3335,
+      "titre": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés",
+      "src": "images/conseil-2026/conseil-09.jpg",
+      "thumbnail": "images/conseil-2026/conseil-09.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-22",
+      "description": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés"
+    },
+    {
+      "id": 1774719543880.9956,
+      "titre": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés",
+      "src": "images/conseil-2026/conseil-10.jpg",
+      "thumbnail": "images/conseil-2026/conseil-10.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-22",
+      "description": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés"
+    },
+    {
+      "id": 1774719543880.3186,
+      "titre": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés",
+      "src": "images/articles/article_1774203274906.jpg",
+      "thumbnail": "images/articles/article_1774203274906.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-22",
+      "description": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés"
+    },
+    {
+      "id": 1774719543880.2473,
+      "titre": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés",
+      "src": "images/articles/article_1774203337541.jpg",
+      "thumbnail": "images/articles/article_1774203337541.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-22",
+      "description": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés"
+    },
+    {
+      "id": 1774719543880.9473,
+      "titre": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés",
+      "src": "images/articles/article_1774203359582.jpg",
+      "thumbnail": "images/articles/article_1774203359582.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-22",
+      "description": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés"
+    },
+    {
+      "id": 1774719543880.0195,
+      "titre": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés",
+      "src": "images/articles/article_1774203439207.jpg",
+      "thumbnail": "images/articles/article_1774203439207.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-22",
+      "description": "Premier conseil municipal — Catherine Troton élue Maire, 8 adjoints désignés"
+    },
+    {
+      "id": 1774719543881.9788,
+      "titre": "(𝐈𝐀) 𝐨𝐮 (𝐀𝐈) ? 🤔",
+      "src": "images/articles/article_1773051838366.jpg",
+      "thumbnail": "images/articles/article_1773051838366.jpg",
+      "categorie": "Projet",
+      "date": "2026-03-09",
+      "description": "(𝐈𝐀) 𝐨𝐮 (𝐀𝐈) ? 🤔"
+    },
+    {
+      "id": 1774719543881.2979,
+      "titre": "🏆 Vizille en Mouvement élue !",
+      "src": "images/articles/article_1774082511562_sans_titre.jpg",
+      "thumbnail": "images/articles/article_1774082511562_sans_titre.jpg",
+      "categorie": "Communiqué",
+      "date": "2026-03-18",
+      "description": "🏆 Vizille en Mouvement élue !"
+    }
+  ],
+  "presse": [
+    {
+      "id": 1,
+      "titre": "Municipales 2026 : Catherine Troton candidate à sa succession",
+      "source": "Le Dauphiné Libéré",
+      "date": "2026-01-20",
+      "extrait": "La maire sortante de Vizille a officialisé sa candidature pour les élections municipales de mars 2026, portée par la liste Vizille en Mouvement.",
+      "lien": "",
+      "image": "images/article-dl-web.jpg"
+    }
+  ],
+  "videos": [
+    {
+      "id": 1770101663550.8564,
+      "titre": "Présence sur les marchés",
+      "type": "youtube",
+      "videoId": "FxuZfxrORLs",
+      "date": "2026-01-20",
+      "categorie": "Événement",
+      "description": "Présence sur les marchés"
+    },
+    {
+      "id": 1770101663550.021,
+      "titre": "Réunion de quartier - Les Mattons",
+      "type": "youtube",
+      "videoId": "0jqtkQCRHUM",
+      "date": "2026-01-23",
+      "categorie": "Réunion de quartier",
+      "description": "Réunion de quartier - Les Mattons"
+    },
+    {
+      "id": 1770101663550.5415,
+      "titre": "Réunion publique — Bilan du mandat",
+      "type": "youtube",
+      "videoId": "KWA9YgAsjQY",
+      "date": "2026-01-30",
+      "thumbnail": null,
+      "description": "Réunion publique #1 — Bilan du mandat"
+    }
+  ],
+  "documents": [
+    {
+      "id": 1,
+      "titre": "Lettre de candidature 2026",
+      "description": "Lettre de Catherine Troton aux Vizilloises et Vizillois",
+      "fichier": "documents/lettre-candidature-2026.pdf",
+      "type": "pdf",
+      "taille": "2 Mo",
+      "date": "2026-01-15"
+    }
+  ],
+  "bobines": []
+}
