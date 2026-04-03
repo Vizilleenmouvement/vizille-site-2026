@@ -1,9 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
-import elus from '../../_legacy/elus_complets.json';
-import articles from '../../_legacy/articles.json';
-import projets from '../../_legacy/projets.json';
-import themes from '../../_legacy/themes.json';
+import projets from '../../projets.json';
+import articles from '../../articles.json';
+import elus from '../../elus_complets.json';
+import themes from '../../themes.json';
 
 const recentArticles = articles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 3);
 const nbProjets = projets.length;
