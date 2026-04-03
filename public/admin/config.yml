@@ -1,13 +1,11 @@
 backend:
-  name: github
-  repo: Vizilleenmouvement/Vizille-en-mouvement
+  name: git-gateway
   branch: main
-  base_url: https://vizilleenmouvement.fr
 
 media_folder: "public/images"
 public_folder: "/images"
 
-locale: 'fr'
+locale: "fr"
 
 collections:
   - name: "actualites"
@@ -27,7 +25,6 @@ collections:
     label: "Equipe"
     folder: "src/content/equipe"
     create: true
-    slug: "{{slug}}"
     fields:
       - { label: "Prenom", name: "prenom", widget: "string" }
       - { label: "Nom", name: "nom", widget: "string" }
