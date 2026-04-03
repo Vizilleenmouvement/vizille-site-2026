@@ -21,17 +21,34 @@ collections:
       - { label: "Extrait", name: "extrait", widget: "text", required: false }
       - { label: "Contenu", name: "body", widget: "markdown" }
 
+  - name: "projets"
+    label: "Projets"
+    folder: "src/content/projets"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titre", name: "titre", widget: "string" }
+      - { label: "Theme", name: "theme", widget: "select", options: ["Concertation citoyenne", "Culture", "Patrimoine", "Animations de proximite", "Democratie locale", "Enfance", "Environnement", "Mobilites", "Metropole", "Sante", "Social", "Tranquillite publique", "Travaux", "Urbanisme", "Economie", "Jumelages"], required: false }
+      - { label: "Resume", name: "resume", widget: "text", required: false }
+      - { label: "Statut", name: "statut", widget: "select", options: ["Prioritaire", "Programme", "En cours", "Realise", "Etude", "ND"], default: "ND", required: false }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Importance", name: "importance", widget: "number", default: 1, required: false }
+      - { label: "Contenu", name: "body", widget: "markdown", required: false }
+
   - name: "equipe"
     label: "Equipe"
     folder: "src/content/equipe"
     create: true
+    slug: "{{fields.prenom}}-{{fields.nom}}"
     fields:
       - { label: "Prenom", name: "prenom", widget: "string" }
       - { label: "Nom", name: "nom", widget: "string" }
-      - { label: "Role", name: "role", widget: "string", required: false }
+      - { label: "Role", name: "role", widget: "select", options: ["Maire", "Adjoint", "Adjointe", "Conseiller delegue", "Conseillere deleguee", "Conseiller", "Conseillere"], required: false }
       - { label: "Delegation", name: "delegation", widget: "string", required: false }
       - { label: "Photo", name: "photo", widget: "image", required: false }
       - { label: "Email", name: "email", widget: "string", required: false }
+      - { label: "Telephone", name: "tel", widget: "string", required: false }
+      - { label: "Commission", name: "commission", widget: "string", required: false }
       - { label: "Ordre", name: "ordre", widget: "number", default: 10 }
 
   - name: "pages"
@@ -44,10 +61,26 @@ collections:
           - { label: "Titre hero", name: "titre_hero", widget: "string" }
           - { label: "Sous-titre hero", name: "soustitre_hero", widget: "text" }
           - { label: "Image hero", name: "image_hero", widget: "image", required: false }
+          - { label: "Contenu", name: "body", widget: "markdown", required: false }
+      - label: "Programme - Introduction"
+        name: "programme"
+        file: "content/programme.md"
+        fields:
+          - { label: "Titre", name: "titre", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Contenu", name: "body", widget: "markdown", required: false }
       - label: "Contact"
         name: "contact"
         file: "content/contact.md"
         fields:
           - { label: "Adresse", name: "adresse", widget: "text" }
           - { label: "Email", name: "email", widget: "string" }
+          - { label: "Telephone", name: "telephone", widget: "string", required: false }
+          - { label: "Facebook", name: "facebook", widget: "string", required: false }
+          - { label: "Instagram", name: "instagram", widget: "string", required: false }
+          - { label: "Contenu", name: "body", widget: "markdown", required: false }
+      - label: "Mentions legales"
+        name: "mentions"
+        file: "content/mentions-legales.md"
+        fields:
           - { label: "Contenu", name: "body", widget: "markdown" }
