@@ -1,6 +1,5 @@
 backend:
-  name: github
-  repo: Vizilleenmouvement/vizille-site-2026
+  name: git-gateway
   branch: main
 
 media_folder: "public/images"
